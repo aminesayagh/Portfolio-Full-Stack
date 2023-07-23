@@ -21,6 +21,7 @@
     "framer-motion": "^10.12.22",
     "lodash": "^4.17.21",
     "next": "13.4.10",
+    "next-i18next": "^14.0.0",
     "postcss": "8.4.26",
     "react": "18.2.0",
     "react-aria": "^3.26.0",
