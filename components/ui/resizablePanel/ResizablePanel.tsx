@@ -21,14 +21,42 @@ const ignoreCircularReferences = () => {
 
 const ResizablePanel = ({
   children,
+  duration = 0.4,
+  y = 20,
 }: {
   children: React.ReactElement | JSX.Element | boolean | null;
+  duration?: number;
+  y?: number;
 }) => {
   let [ref, { height }] = useMeasure();
+  const variationResizablePanel = {
+    initial: {
+        opacity: 0,
+        y: -1 * y,
+        height: 0,
+    },
+    animate: {
+        opacity: 1,
+        y: 0,
+        height: 'auto',
+        transition: {
+            duration: duration,
+            delay: duration
+        }
+    },
+    exit: {
+        y: -1 * y,
+        opacity: 0,
+        height: 0,
+        transition: {
+            duration: duration
+        }
+    }
+}
   return (
     <AnimatePresence initial={false} mode="sync">
       <motion.div
-        animate={{ height: height || "auto", transition: { duration: 0.1 } }}
+        animate={{ height: height || "auto", transition: { duration: duration / 2 } }}
         className="relative overflow-hidden"
       >
         <motion.div
