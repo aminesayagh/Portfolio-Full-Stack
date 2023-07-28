@@ -1,0 +1,85 @@
+{
+	"import lib": {
+		"prefix": "lib",
+		"body": [
+			"import $1 from '$2';"
+		],
+		"description": "Import lib"
+	},
+	"classname": {
+		"prefix": "ct",
+		"body": [
+			"className={twMerge('$1')}"
+		],
+		"description": "Add new className"
+	},
+	"my react components": {
+		"prefix": "mrc",
+		"body": [
+			"// ---------------- DEPENDANCIES ---------------------- //",
+			"import * as React from 'react';",
+			"",
+			"// ---------------- COMPONENTS ---------------------- //",
+			"",
+			"// ---------------- STYLES ---------------------- //",
+			"",
+			"// ---------------- TYPES ---------------------- //",
+			"",
+			"// ---------------- COMPONENTS ---------------------- //",
+			"",
+			"const ${TM_FILENAME_BASE}: React.FC = () => {",
+			"",
+			"return (",
+			"<>",
+			"$1",
+			"</>",
+			")",
+			"}",
+			"",
+			"export default ${TM_FILENAME_BASE};"
+		],
+		"description": "my react components"
+	},
+	"my react components with type": {
+		"prefix": "mrct",
+		"body": [
+			"// global resources",
+			"import React , { FC } from 'react'",
+			"",
+			"",
+			"// interne resources",
+			"import { Props } from './${TM_FILENAME_BASE}Type'",
+			"",
+			"const ${TM_FILENAME_BASE}:FC<Props> = ({ $2 }) => {",
+			"",
+			"return (",
+			"<>",
+			"$1",
+			"</>",
+			")",
+			"}",
+			"",
+			"export default ${TM_FILENAME_BASE};"
+		],
+		"description": "my react components typed"
+	},
+	"my try catch": {
+		"prefix": "tc",
+		"body": [
+			"try{",
+			"$2",
+			"} catch(err) {",
+			"console.log('error in $1', err);",
+			"}"
+		],
+		"description": "my try catch gestioner"
+	},
+	"add balise": {
+		"prefix": "b",
+		"body": [
+			"<$1 className={twMerge('$2')} $3>",
+			"",
+			"</$1>"
+		]
+	},
+}

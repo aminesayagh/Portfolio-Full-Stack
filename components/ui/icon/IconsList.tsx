@@ -1,5 +1,5 @@
 import { SVGAttributes } from "react";
-import { IconChevronRight, IconChevronDown, IconExclamationCircle } from '@tabler/icons-react';
+import { IconChevronRight, IconChevronDown, IconExclamationCircle, IconCornerLeftDown } from '@tabler/icons-react';
 
 export interface IconProps extends SVGAttributes<SVGElement> {
     color?: string;
@@ -10,6 +10,7 @@ const ListIconComponents = {
     IconChevronDown,
     IconChevronRight,
     IconExclamationCircle,
+    IconCornerLeftDown,
 } as const;
 
 export type IconNames = keyof typeof ListIconComponents;

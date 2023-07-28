@@ -122,7 +122,7 @@ const Content = ({ children, className, ...props }: ContentProps) => {
 
     return <>
         <ContentActiveItem.Provider value={{ activeItem, handleItemClick }}>
-            <div className={twMerge('flex flex-row items-center justify-between')}>
+            <div className={twMerge('flex flex-row items-center justify-between', className)} {...props}>
                 {children}
             </div>
         </ContentActiveItem.Provider>

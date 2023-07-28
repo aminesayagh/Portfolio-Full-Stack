@@ -5,7 +5,38 @@
             "description": "Mohamed Amine SAYAGH - Full Stack Web Developer",
             "keywords": "Mohamed Amine SAYAGH - Full Stack Web Developer",
             "author": "Mohamed Amine SAYAGH",
-            "url": "https://www.mohamedamine-sayagh.com"
+            "url": "https://ma-sayagh.vercel.app/"
         }
+    },
+    "header": {
+        "email": "AMINESAYAGH1997@GMAIL.COM",
+        "locale": "fr",
+        "langs": {
+            "fr": {
+                "label": "EN"
+            },
+            "en": {
+                "label": "FR"
+            }
+        },
+        "action": "LET'S TALK"
+    },
+    "home": {
+        "title": [
+            "interface",
+            "full Stack",
+            "Developer"
+        ],
+        "descriptions": [
+            "Mohamed Amine SAYAGH, An independent web developer, with experience in UI/UX design.",
+            "I am Creating agreeable web experience for next generation of customers facing companies"
+        ],
+        "menu": {
+            "Manifesto": "Manifesto",
+            "Experience": "Experience",
+            "Cases": "Cases",
+            "Contact": "Contact"
+        },
+        "copy": "© 2023"
     }
-}
+}  
