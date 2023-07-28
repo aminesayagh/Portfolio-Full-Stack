@@ -10,7 +10,7 @@ export default function Home() {
         description={t('head.home.description')}
         keywords={t('head.home.keywords')}
         author={t('head.home.author')}
-        logo='/logo/logo-noCard-degrader-dark-noShadow-noText.svg'
+        logo='/favicon.svg'
       />
       <LandingPage.Intro />
       <LandingPage.Manifesto />

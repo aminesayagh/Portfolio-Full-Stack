@@ -1,3 +1,11 @@
 {
-    
+    "head": {
+        "home": {
+            "title": "Mohamed Amine SAYAGH - Full Stack Web Developer",
+            "description": "Mohamed Amine SAYAGH - Full Stack Web Developer",
+            "keywords": "Mohamed Amine SAYAGH - Full Stack Web Developer",
+            "author": "Mohamed Amine SAYAGH",
+            "url": "https://www.mohamedamine-sayagh.com"
+        }
+    }
 }
