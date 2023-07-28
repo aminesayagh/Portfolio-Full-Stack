@@ -1,5 +1,5 @@
 import React from 'react';
-import Icons, { IconNames, IconProps as DefaultIconProps } from './IconList';
+import Icons, { IconNames, IconProps as DefaultIconProps } from './IconsList';
 import { SVGAttributes } from 'react';
 import { twJoin } from 'tailwind-merge';
 
