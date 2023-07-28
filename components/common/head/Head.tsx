@@ -10,8 +10,7 @@ const Head = ({ title, description, keywords, author, logo }: { title: string, d
             <meta name='author' content={author} />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-            <link rel='icon' href='/logo/logo-noCard-degrader-dark-noShadow-noText.svg' />
-            <link rel="icon" href={logo} />
+=            <link rel="icon" href={logo} />
         </HeadNext>
     </>
 }
