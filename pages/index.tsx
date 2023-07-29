@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next'
 import { Head, Header } from '@/components/common';
 import { LandingPage } from '@/components/pages';
 
-import { Container } from '@/components/ui';
+import { Container, Image } from '@/components/ui';
 
 export default function Home() {
   const { t } = useTranslation()
@@ -15,9 +15,12 @@ export default function Home() {
         author={t('head.home.author')}
         logo='/favicon.svg'
       />
-      <Header />
+      <Header  />
       <Container size='lg' >
         <LandingPage.Intro />
+      </Container>
+      <Container size='lg'>
+        <Image src='' alt='' />
       </Container>
       <Container size='lg' >
         <LandingPage.Manifesto />
