@@ -1,36 +1,42 @@
 
 import { useTranslation } from 'next-i18next'
 import { Head, Header } from '@/components/common';
-import { LandingPage } from '@/components/pages';
-
+import { Suspense } from 'react';
 import { Container, Image } from '@/components/ui';
+import '@/utils/i18n';
 
-export default function Home() {
-  const { t } = useTranslation()
+const Video = () => {
   return (
     <>
-      <Head title={t('head.home.title')}
-        description={t('head.home.description')}
-        keywords={t('head.home.keywords')}
-        author={t('head.home.author')}
+      <video width='100%' height='auto' autoPlay muted loop controls>
+        <source src='/video.mp4' type='video/mp4' />
+      </video>
+    </>
+  )
+}
+
+import { Loading } from 'components/ui';
+import "@/utils/i18n";
+import dynamic from 'next/dynamic';
+
+
+import { LandingPage } from '@/components/pages';
+
+export default function Home() {
+
+  return (
+    <>
+
+      <Head title={"Mohamed Amine SAYAGH - Full Stack Web Developer"}
+        description={"Mohamed Amine SAYAGH - Full Stack Web Developer"}
+        keywords="Mohamed Amine SAYAGH - Full Stack Web Developer"
+        author="Mohamed Amine SAYAGH"
         logo='/favicon.svg'
       />
-      <Header  />
-      <Container size='lg' >
-        <LandingPage.Intro />
-      </Container>
-      <Container size='lg'>
-        <Image src='' alt='' />
-      </Container>
-      <Container size='lg' >
-        <LandingPage.Manifesto />
-      </Container>
-      <Container size='lg' >
-        <LandingPage.Cases />
-      </Container>
-      <Container size='lg' >
-        <LandingPage.Action />
-      </Container>
+      <Suspense fallback={<Loading />}>
+        <LandingPage />
+      </Suspense>
+
     </>
   )
 }

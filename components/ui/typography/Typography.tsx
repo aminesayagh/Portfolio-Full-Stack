@@ -40,7 +40,7 @@ export const Title: FC<TitlePropsExtended> = ({ weight, degree = '1', exchange, 
 // TEXT
 import { TextNames, TextPropsExtended } from './Typography.type';
 
-export const Text: FC<TextPropsExtended> = ({ weight, degree=  '3', size, exchange, className, children, ...props }) => {
+export const Text: FC<TextPropsExtended> = ({ weight, degree = '3', size, exchange, className, children, ...props }) => {
     // @ts-ignore
     const ElementType = (Object.keys((props) as Array<TextNames>).find(prop => Boolean(props[prop]))) || 'p'
     const classes = twMerge(
@@ -60,9 +60,9 @@ export const Text: FC<TextPropsExtended> = ({ weight, degree=  '3', size, exchan
 // LINK
 import { LinkPropsExtended } from './Typography.type';
 
-export const Link: FC<LinkPropsExtended> = ({ weight, degree = '3', size, exchange, className, children, href,...props }) => {
+export const Link: FC<LinkPropsExtended> = ({ weight, degree = '3', size, exchange, className, children, href, ...props }) => {
     const classes = twMerge(textStyle({
-        size, weight, 
+        size, weight
     }), className, textColorDegree[exchange ? 'exchanged' : 'normal'][degree]);
 
     return <LinkNext href={href} className={classes} {...props}>{children}</LinkNext>

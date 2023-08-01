@@ -1,7 +1,13 @@
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-
-const App = () => {
-    return <></>
+const Project = () => {
+    return <div></div>
 }
 
-export default App;
+export const getServerSideProps = async ({ locale }: any) => ({
+    props: {
+        ...(await serverSideTranslations(locale, ["common"])),
+    },
+})
+
+export default Project;

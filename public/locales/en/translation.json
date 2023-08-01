@@ -39,5 +39,17 @@
             "Contact": "Contact"
         },
         "copy": "© 2023"
+    },
+    "contactCall": {
+        "title": "GOT A PROJECT?",
+        "action":"LET'S TALK",
+        "description": "FACE YOUR BEING WITH THE NECESSITY OF TRANSFORMATION"
+    },
+    "footer": {
+        "state": "I usually work on several projects, but I'll be happy to discuss new opportunities.",
+        "action": "BACK TOP",
+        "name": "Mohamed Amine SAYAGH",
+        "copy": "© 2023",
+        "socialNetwork": "FOLLOW US"
     }
 }  

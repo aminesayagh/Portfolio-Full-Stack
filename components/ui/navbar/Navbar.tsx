@@ -79,11 +79,16 @@ const Navbar: NavbarType = ({ children, size, className, ...props }: NavbarProps
                         ease: "easeInOut",
                     }
                 }
+            }} style={{ 
+                backgroundColor, 
+                backdropFilter: styles.blur, 
+                paddingTop: styles.containerPadding, paddingBottom: styles.containerPadding, 
+                display: styles.display
             }} className={twMerge(
                 'fixed top-0 left-0 w-full max-w-[100vw]', className, zIndex.navbar,
             )}
             >
-                <div className={twMerge('flex flex-row items-center w-full justify-between', containerStyle({ size }))}>
+                <div className={twMerge('flex flex-row items-center justify-between w-full', containerStyle({ size }))}>
                     {children}
                 </div>
             </motion.header>
@@ -122,7 +127,7 @@ const Content = ({ children, className, ...props }: ContentProps) => {
 
     return <>
         <ContentActiveItem.Provider value={{ activeItem, handleItemClick }}>
-            <div className={twMerge('flex flex-row items-center justify-between', className)} {...props}>
+            <div className={twMerge('flex flex-row items-center', className)} {...props}>
                 {children}
             </div>
         </ContentActiveItem.Provider>

@@ -1,29 +1,27 @@
 import React from "react";
 
 import { useTranslation } from "next-i18next";
-import { Button } from "@/components/ui";
+import { Link } from "@/components/ui";
+
+const langs = ['fr', 'en'];
 const SwitchLang = () => {
     const { t, i18n } = useTranslation();
 
     const changeLanguage = (lng: React.Key) => {
+        console.log(lng);
         i18n.changeLanguage(lng.toString());
     }
-    // get list of valid languages from i18n config
     const languages = i18n.options?.supportedLngs;
 
-    if(!languages) return null;
+    if (!languages) return null;
     return (
         <>
-            <div>
-                {languages.map(l => {
-                    return (
-                        <>
-                            <Button >
-                                {l}
-                            </Button>
-                        </>
-                    )
-                })}
+            <div className='flex flex-row items-center justify-start gap-8'>
+                {langs.map(l =>
+                    <Link key={l} degree="2" size='sm' href='' className="uppercase" onClick={() => changeLanguage(l)} >
+                        {l}
+                    </Link>
+                )}
             </div>
         </>
     )

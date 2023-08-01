@@ -5,6 +5,8 @@ import 'tailwindcss/tailwind.css';
 
 
 import { Montserrat } from 'next/font/google';
+import { appWithTranslation } from 'next-i18next'
+
 const montserrat = Montserrat({
   subsets: ['cyrillic'],
   variable: '--font-montserrat',
@@ -14,6 +16,10 @@ const montserrat = Montserrat({
 import '@/utils/i18n';
 
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <main className={`${montserrat.variable} font-sans`}><Component {...pageProps} /></main>
+ function App({ Component, pageProps }: AppProps) {
+  return <main className={`${montserrat.variable} font-sans`}>
+    <Component {...pageProps} />
+  </main>
 }
+
+export default appWithTranslation(App)

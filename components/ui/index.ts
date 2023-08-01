@@ -1,6 +1,7 @@
 // Compare this snippet from components/ui/icon/index.ts:
-export { default as Icon } from './icon';
-export type { IconNames } from './icon';
+export { Icon, IconNamesValues } from './icon';
+export { type IconNames } from './icon';
+
 export { default as Logo } from './logo';
 
 export { default as ResizablePanel } from './resizablePanel';
@@ -12,3 +13,5 @@ export type { ContainerProps } from './container';
 export { default as Button } from './button';
 export { default as Navbar } from './navbar';
 export { default as Image } from './image'
+
+export { default as Loading } from './loading';

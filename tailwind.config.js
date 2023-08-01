@@ -34,7 +34,7 @@ module.exports = {
       "14xl": "4rem",
       "15xl": "4.2rem",
     },
-    color: {
+    colors: {
       transparent: "transparent",
       current: "currentColor",
       'primary': {
@@ -50,7 +50,7 @@ module.exports = {
         '900': '#160D81',
       },
       'secondary': {
-        DEFAULT: '#F43F5E',
+        DEFAULT: '#49BCF6',
         '100': '#DAFBFE',
         '200': '#B6F3FE',
         '300': '#91E6FC',
@@ -75,18 +75,18 @@ module.exports = {
       },
       'gray': {
         DEFAULT: '#',
-        '100': '#',
-        '200': '#',
-        '300': '#',
-        '400': '#',
-        '500': '#',
-        '600': '#',
-        '700': '#',
-        '800': '#',
+        '100': '#F1F1F1',
+        '200': '#E5E5E5',
+        '300': '#D7D7D7',
+        '400': '#C9C9C9',
+        '500': '#BABABA',
+        '600': '#ACACAC',
+        '700': '#9D9D9D',
+        '800': '#8F8F8F',
         '900': '#808080'
       },
       'black': {
-        DEFAULT: '#',
+        DEFAULT: '#111517',
         '100': '#111517',
         '200': '#1F2224',
         '300': '#2D3031',

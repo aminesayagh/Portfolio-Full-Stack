@@ -6,7 +6,8 @@ import { FormProps, InputProps } from './Form.types';
 import { Label, TextField, Input, Select, Button, SelectValue, Popover, ListBox, Item, RadioProps, Radio, CheckboxGroup, CheckboxProps, Checkbox } from 'react-aria-components';
 import { TextFieldProps, SelectProps, ListBoxProps,CheckboxGroupProps, ItemProps, RadioGroup, RadioGroupProps } from 'react-aria-components';
 import { twJoin } from 'tailwind-merge';
-import { ResizablePanel, Icon, IconNames } from 'components/ui';
+import { ResizablePanel, Icon } from 'components/ui';
+import type { IconNames } from 'components/ui';
 
 const Form = <T extends {[x: string]: any}>({ onSubmit, children, className, ...props }: FormProps<T>) => {
     const methods = useForm<T>({ ...props, shouldFocusError: true });

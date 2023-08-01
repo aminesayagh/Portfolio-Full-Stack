@@ -1,0 +1,42 @@
+
+
+.underline-animation {
+    @apply relative;
+    animation-timing-function: linear;
+    &::after {
+        content: '';
+        @apply w-full absolute bottom-0 left-0 h-1 bg-primary-500;
+    }
+    &:hover {
+        @apply text-primary-500;
+        &::after {
+            animation: underline 0.3s forwards;
+        }
+    }
+    @apply transition-colors duration-300;
+    
+    &:not(:hover) {
+        @apply text-white-200;
+        &::after {
+            animation: underlineExit 0.3s forwards;
+        }
+    }
+}
+
+
+@keyframes underlineExit {
+    0% {
+        width: 45%;
+    }
+    100% {
+        width: 100%;
+    }
+}
+@keyframes underline {
+    0% {
+        width: 100%;
+    }
+    100% {
+        width: 45%;
+    }
+}

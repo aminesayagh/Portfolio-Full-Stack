@@ -72,8 +72,8 @@ export const textStyle = cva([textDefault, fontFamilyText], {
         size: {
             'lg': 'text-xl',
             'md': 'text-lg',
-            'sm': 'text-base',
-            'xs': 'text-tiny',
+            'sm': 'text-sm',
+            'xs': 'text-xs',
         },
     },
     defaultVariants: {

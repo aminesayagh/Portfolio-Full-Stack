@@ -1,13 +1,7 @@
-import { default as Intro } from './1-intro'
-import { default as Manifesto } from './2-manifesto';
-import { default as Cases } from './3-cases';
-import { default as Action } from './4-action';
+import dynamic from 'next/dynamic';
 
 
-export const LandingPage = {
-    Intro,
-    Manifesto,
-    Cases,
-    Action
-}
 
+export { default as LandingPage } from './LandingPage'
+
+// export const LandingPage = dynamic(() => import('./LandingPage'), { });

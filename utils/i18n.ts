@@ -20,8 +20,9 @@ i18n
   }))
   .use(initReactI18next)
   .init({
-    fallbackLng: 'fr',
+    fallbackLng: 'en',
     debug: false,
+    supportedLngs: ['fr', 'en'],
     detection: {
       order: ['queryString', 'cookie'],
     },
