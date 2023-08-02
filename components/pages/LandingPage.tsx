@@ -19,7 +19,7 @@ const Video = () => {
 const LandingPage = () => {
     return (
         <>
-            {/* <Header /> */}
+            <Header />
             {/* <Container size='lg' >
                 <Intro />
             </Container> */}

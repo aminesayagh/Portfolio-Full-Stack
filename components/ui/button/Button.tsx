@@ -44,7 +44,6 @@ const ButtonUi = ({ children, icon, iconRight, size, full, className, ...props }
                 'align-middle',
                 'transition-colors ease-in-out duration-200',
                 'transition-transform ease-in-out duration-100',
-                `touch-none select-none focus:outline-none`,
                 full && 'w-full',
                 typeof className == 'string' && className
             )} {...props} >

@@ -1,23 +1,44 @@
 import { useEffect, useState } from 'react';
-import { Navbar, Logo, Link, Button } from "@/components/ui";
-import { HamburgerMenu, SwitchLang } from '@/components/common';
 import { useTranslation } from "next-i18next";
 
 import { useRouter } from 'next/router';
 
 import { twMerge } from 'tailwind-merge';
 import StyleAnimation from '@/styles/animation.module.scss';
-import { Modal } from '@/components/ui';
-
+import { Navbar, Logo, Link, Button, containerStyle, Modal } from "@/components/ui";
+import { HamburgerMenu, SwitchLang } from '@/components/common';
 
 const GAP_SIZE = 'gap-8';
+
+const MENU_ITEMS = {
+    manifesto: {
+        attribute: 'manifesto',
+        link: '/#manifesto',
+    },
+    experience: {
+        attribute: 'experience',
+        link: '/#experience',
+    },
+    cases: {
+        attribute: 'cases',
+        link: '/#cases',
+    },
+    contact: {
+        attribute: 'contact',
+        link: '/contact',
+    }
+} as const;
+
+const BASE_LOCALE_MENU = 'header.menu';
+
+type MenuItems = keyof typeof MENU_ITEMS;
+const menuItems: MenuItems[] = Object.keys(MENU_ITEMS) as MenuItems[];
+
+
 const Header = () => {
     const { t } = useTranslation();
-    let [openMenu, setOpenMenu] = useState<boolean>(false);
+    let [ openMenu, setOpenMenu ] = useState<boolean>(false);
     const router = useRouter();
-    useEffect(() => {
-        console.log(openMenu);
-    }, [openMenu])
     return (
         <>
             <Navbar size='lg'>
@@ -45,10 +66,30 @@ const Header = () => {
                         </Modal.Button>
                         <Modal.Overlay>
                             <Modal.Content isDismissable >
-                                <div className="flex flex-col gap-6">
-                                    <Link href='/'>{t('header.home')}</Link>
-                                    <Link href='/about'>{t('header.about')}</Link>
-                                    <Link href='/contact'>{t('header.contact')}</Link>
+                                <div className={twMerge(
+                                    'flex flex-col justify-between', 
+                                    'min-h-screen w-screen',
+                                    containerStyle({ size: 'lg' })
+                                )}>
+                                    <div></div>
+                                    <ul>
+                                        {menuItems.map((item, index) => {
+                                            return <li key={index} >
+                                                <Link href={MENU_ITEMS[item].link} className='uppercase' >
+                                                    {t(`${BASE_LOCALE_MENU}.${MENU_ITEMS[item].attribute}.attribute`)}
+                                                </Link>
+                                                
+                                            </li>
+                                        })}
+                                    </ul>
+                                    <div>
+                                        <div>
+
+                                        </div>
+                                        <div>
+
+                                        </div>
+                                    </div>
                                 </div>
                             </Modal.Content>
                         </Modal.Overlay>

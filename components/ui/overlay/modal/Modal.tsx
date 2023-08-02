@@ -3,6 +3,7 @@ import { useModal } from 'react-aria';
 import { Button, Dialog, DialogTrigger, Modal, ModalOverlay, ModalRenderProps } from 'react-aria-components';
 import { DialogTriggerProps, ModalOverlayProps } from 'react-aria-components';
 import { mergeClassName } from '@/helpers/className'
+import { twMerge } from 'tailwind-merge';
 
 const ModalContext = React.createContext<{ isOpen: boolean, setOpen: React.Dispatch<React.SetStateAction<boolean>>}>({ isOpen: false, setOpen: () => {} });
 
@@ -31,10 +32,10 @@ const ModalUiOverlay = ({children, ...props }: { children: React.ReactNode[] | R
     return <ModalOverlay {...props}>{children}</ModalOverlay>
 }
 
-const ModalUiContent = ({ children, ...props }: { children: React.ReactNode | ((arg: { close: () => void }) => React.ReactNode) } & Omit<ModalOverlayProps, 'children'> & React.RefAttributes<HTMLDivElement>) => {
+const ModalUiContent = ({ children, className,...props }: { children: React.ReactNode | ((arg: { close: () => void }) => React.ReactNode) } & Omit<ModalOverlayProps, 'children'> & React.RefAttributes<HTMLDivElement>) => {
     const { isOpen, setOpen } = React.useContext(ModalContext);
-    return <Modal isOpen={isOpen} onOpenChange={setOpen} {...props}>
-        <Dialog>
+    return <Modal isOpen={isOpen} onOpenChange={setOpen} className={mergeClassName('remove_outline', className)}  {...props}>
+        <Dialog className='remove_outline'>
             {typeof children == 'function' ? (value) => children({ close: () => setOpen(false) }) : children}
         </Dialog>
     </Modal>

@@ -20,6 +20,18 @@
                 "label": "FR"
             }
         },
+        "menu": {
+            "manifesto": {"attribute": "Manifesto", "more": "null" },
+            "experience": {"attribute": "Experience", "more": "(40+)" },
+            "cases": {"attribute": "Cases", "more": "(☺ 90+)" },
+            "contact": {"attribute": "Contact", "more": "null" }
+        },
+        "socialNetwork": {
+            "instagram": "IN",
+            "linkedin": "LI",
+            "github": "GH"
+        },
+        "copyright": "© 2023 MOHAMED AMINE SAYAGH, ALL RIGHTS RESERVED.",
         "action": "LET'S TALK"
     },
     "home": {
@@ -52,4 +64,4 @@
         "copy": "© 2023",
         "socialNetwork": "FOLLOW US"
     }
-}  
+}

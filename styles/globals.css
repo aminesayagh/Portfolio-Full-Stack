@@ -13,3 +13,7 @@
   }
   
 }
+
+.remove_outline {
+  @apply outline-none focus:outline-none touch-none;
+}
