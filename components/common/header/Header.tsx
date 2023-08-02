@@ -4,9 +4,14 @@ import { useTranslation } from "next-i18next";
 import { useRouter } from 'next/router';
 
 import { twMerge } from 'tailwind-merge';
+
 import StyleAnimation from '@/styles/animation.module.scss';
 import { Navbar, Logo, Link, Button, containerStyle, Modal, Text } from "@/components/ui";
 import { HamburgerMenu, SwitchLang } from '@/components/common';
+
+import { getMenuItems } from '@/conf/router';
+const menuHamburgerItems = getMenuItems('hamburger');
+
 
 const GAP_SIZE = 'gap-8';
 
@@ -46,14 +51,13 @@ const socialNetwork = Object.keys(SOCIAL_NETWORKS) as (keyof typeof SOCIAL_NETWO
 const BASE_LOCALE_MENU = 'header.menu';
 const BASE_LOCALE_SOCIAL = 'header.socialNetwork';
 
-type MenuItems = keyof typeof MENU_ITEMS;
-const menuItems: MenuItems[] = Object.keys(MENU_ITEMS) as MenuItems[];
 
 
 const Header = () => {
     const { t } = useTranslation();
     let [ openMenu, setOpenMenu ] = useState<boolean>(false);
     const router = useRouter();
+    
     return (
         <>
             <Navbar size='lg'>
@@ -89,12 +93,11 @@ const Header = () => {
                                 )}>
                                     <div></div>
                                     <ul>
-                                        {menuItems.map((item, index) => {
+                                        {menuHamburgerItems.map((item, index) => {
                                             return <li key={index} >
-                                                <Link href={MENU_ITEMS[item].link} className='uppercase' >
-                                                    {t(`${BASE_LOCALE_MENU}.${MENU_ITEMS[item].attribute}.attribute`)}
+                                                <Link href={item.link} className='uppercase' >
+                                                    {t(`${BASE_LOCALE_MENU}.${item.id}.attribute`)}
                                                 </Link>
-
                                             </li>
                                         })}
                                     </ul>
