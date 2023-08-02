@@ -62,12 +62,19 @@ const Header = () => {
                                 containerStyle({ size: 'lg' })
                             )}>
                                 <div></div>
-                                <ul>
+                                <ul className={twMerge('flex  flex-wrap justify-center', 'gap-12')}>
                                     {menuHamburgerItems.map((item, index) => {
-                                        return <li key={index} >
-                                            <Link href={item.link} className='uppercase' >
+                                        return <li key={index} className={twMerge('flex flex=row justify-start', 'relative')}>
+                                            <Link href={item.link} className={
+                                                twMerge(
+                                                    'uppercase relative text-white-600 hover:text-primary-500',
+                                                    'after:absolute after:block after:content=[\'\'] after:h-[5px] after:w-full after:bg-white-600 hover:after:bg-primary-500 after:transition-colors after:duration-150',
+                                                    'text-13xl font-bold leading-tight tracking-wider transition-colors duration-150'
+                                                )
+                                            }>
                                                 {t(`${BASE_LOCALE_MENU}.${item.id}.attribute`)}
                                             </Link>
+                                            {t(`${BASE_LOCALE_MENU}.${item.id}.more`) !== 'null' ? <Text size='xs' p degree='4' className='absolute left-[calc(100%_+_4px)] whitespace-nowrap top-[19%]'>{t(`${BASE_LOCALE_MENU}.${item.id}.more`)}</Text> : null}
                                         </li>
                                     })}
                                 </ul>

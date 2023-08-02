@@ -60,7 +60,7 @@ export const Text: FC<TextPropsExtended> = ({ weight, degree = '3', size, exchan
 // LINK
 import { LinkPropsExtended } from './Typography.type';
 
-export const Link: FC<LinkPropsExtended> = ({ weight, degree = '3', size, exchange, className, children, href, ...props }) => {
+export const Link: FC<LinkPropsExtended> = ({ weight,degree = '3', size, exchange, className, children, href, ...props }) => {
     const classes = twMerge(textStyle({
         size, weight
     }), className, 'remove_outline',textColorDegree[exchange ? 'exchanged' : 'normal'][degree]);

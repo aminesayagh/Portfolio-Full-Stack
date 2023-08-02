@@ -1,6 +1,6 @@
 
 import { cva, VariantProps } from 'class-variance-authority';
-const textDefault = 'align-middle inline-block';
+const textDefault = 'inline-block align-middle';
 const fontFamilyTitle = 'font-sans';
 const fontFamilyText = 'font-sans';
 

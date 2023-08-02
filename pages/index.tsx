@@ -2,7 +2,6 @@
 import { useTranslation } from 'next-i18next'
 import { Head, Header } from '@/components/common';
 import { Suspense } from 'react';
-import { Container, Image } from '@/components/ui';
 import '@/utils/i18n';
 
 const Video = () => {
@@ -17,7 +16,6 @@ const Video = () => {
 
 import { Loading } from 'components/ui';
 import "@/utils/i18n";
-import dynamic from 'next/dynamic';
 
 
 import { LandingPage } from '@/components/pages';
