@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 import { twMerge } from 'tailwind-merge';
 import StyleAnimation from '@/styles/animation.module.scss';
-import { Navbar, Logo, Link, Button, containerStyle, Modal } from "@/components/ui";
+import { Navbar, Logo, Link, Button, containerStyle, Modal, Text } from "@/components/ui";
 import { HamburgerMenu, SwitchLang } from '@/components/common';
 
 const GAP_SIZE = 'gap-8';
@@ -29,7 +29,22 @@ const MENU_ITEMS = {
     }
 } as const;
 
+const SOCIAL_NETWORKS = {
+    instagram: {
+        link: 'https://www.instagram.com/',
+    },
+    linkedin: {
+        link: 'https://www.linkedin.com/',
+    },
+    github: {
+        link: 'https://www.github.com/'
+    }
+} as const;
+
+const socialNetwork = Object.keys(SOCIAL_NETWORKS) as (keyof typeof SOCIAL_NETWORKS)[];
+
 const BASE_LOCALE_MENU = 'header.menu';
+const BASE_LOCALE_SOCIAL = 'header.socialNetwork';
 
 type MenuItems = keyof typeof MENU_ITEMS;
 const menuItems: MenuItems[] = Object.keys(MENU_ITEMS) as MenuItems[];
@@ -65,10 +80,11 @@ const Header = () => {
                             <HamburgerMenu isOpen={openMenu} setOpen={setOpenMenu} />
                         </Modal.Button>
                         <Modal.Overlay>
-                            <Modal.Content isDismissable >
+                            <Modal.Content isDismissable className={twMerge('bg-black-200')}>
                                 <div className={twMerge(
                                     'flex flex-col justify-between', 
                                     'min-h-screen w-screen',
+                                    'py-12',
                                     containerStyle({ size: 'lg' })
                                 )}>
                                     <div></div>
@@ -78,17 +94,25 @@ const Header = () => {
                                                 <Link href={MENU_ITEMS[item].link} className='uppercase' >
                                                     {t(`${BASE_LOCALE_MENU}.${MENU_ITEMS[item].attribute}.attribute`)}
                                                 </Link>
-                                                
+
                                             </li>
                                         })}
                                     </ul>
-                                    <div>
-                                        <div>
-
+                                    <div className={twMerge('flex flex-row justify-between items-center')}>
+                                        <div className={twMerge('flex flex-row justify-start items-center')}>
+                                            <Text p degree='4' size='sm'>
+                                                {t('header.copyright')}
+                                            </Text>
                                         </div>
-                                        <div>
-
-                                        </div>
+                                        <ul className={twMerge('flex flex-row gap-8 items-center justify-end')}>
+                                            {socialNetwork.map((item, index) => {
+                                                return <li key={index}>
+                                                    <Link href={SOCIAL_NETWORKS[item].link} >
+                                                        {t(`${BASE_LOCALE_SOCIAL}.${item}`)}
+                                                    </Link>
+                                                </li>
+                                            })}
+                                        </ul>
                                     </div>
                                 </div>
                             </Modal.Content>
