@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Navbar, Logo, Link, Button } from "@/components/ui";
 import { HamburgerMenu, SwitchLang } from '@/components/common';
 import { useTranslation } from "next-i18next";
@@ -7,17 +7,17 @@ import { useRouter } from 'next/router';
 
 import { twMerge } from 'tailwind-merge';
 import StyleAnimation from '@/styles/animation.module.scss';
+import { Modal } from '@/components/ui';
 
-import { motion } from 'framer-motion'
-import { useHover } from 'react-aria';
 
 const GAP_SIZE = 'gap-8';
 const Header = () => {
     const { t } = useTranslation();
-    const [hamburgerOpen, setHamburgerOpen] = useState(false);
+    let [openMenu, setOpenMenu] = useState<boolean>(false);
     const router = useRouter();
-
-
+    useEffect(() => {
+        console.log(openMenu);
+    }, [openMenu])
     return (
         <>
             <Navbar size='lg'>
@@ -35,10 +35,24 @@ const Header = () => {
                         className={twMerge(
                             'py-2 border-none',
                             StyleAnimation['underline-animation'],
-                        )}>
+                        )}
+                    >
                         {t('header.action')}
                     </Button>
-                    <HamburgerMenu isOpen={hamburgerOpen} setOpen={setHamburgerOpen} />
+                    <Modal isOpenExternal={openMenu} setOpenExternal={setOpenMenu} >
+                        <Modal.Button>
+                            <HamburgerMenu isOpen={openMenu} setOpen={setOpenMenu} />
+                        </Modal.Button>
+                        <Modal.Overlay>
+                            <Modal.Content isDismissable >
+                                <div className="flex flex-col gap-6">
+                                    <Link href='/'>{t('header.home')}</Link>
+                                    <Link href='/about'>{t('header.about')}</Link>
+                                    <Link href='/contact'>{t('header.contact')}</Link>
+                                </div>
+                            </Modal.Content>
+                        </Modal.Overlay>
+                    </Modal>
                 </Navbar.Content>
             </Navbar>
         </>

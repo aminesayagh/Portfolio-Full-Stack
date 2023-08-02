@@ -1,7 +1,8 @@
 
-import { useState, Dispatch, SetStateAction } from 'react';
+import { useState, Dispatch, SetStateAction, useCallback, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { Button } from '@/components/ui';
+import { useKeyboard } from 'react-aria';
 
 const Y_PATH_01_CLOSED = '8';
 const Y_PATH_02_CLOSED = '18';
@@ -19,11 +20,11 @@ const path02Variants = {
 };
 
 
-const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: Dispatch<SetStateAction<boolean>>}) => {
-
+const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: Dispatch<SetStateAction<boolean>> }) => {
+    
     const path01Controls = useAnimation();
     const path02Controls = useAnimation();
-    const onClick = async () => {
+    const onClick = async (state?: boolean) => {
         setOpen(!isOpen);
         if (!isOpen) {
             await path02Controls.start(path02Variants.moving);
@@ -34,26 +35,41 @@ const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: Dispatch
             await path02Controls.start(path02Variants.moving);
             path02Controls.start(path02Variants.closed);
         }
-
     }
+    let { keyboardProps } = useKeyboard({
+        onKeyDown: (e) => {
+            console.log(e.key);
+            if(['Escape', 'Esc'].includes(e.key)) {
+            }
+        },
+        onKeyUp: (e) => {
+            console.log(e.key);
+            if(['Escape', 'Esc'].includes(e.key)) {
+                isOpen && onClick().then();
+            }
+        }
+    })
+
     return (
         <>
-            <Button onPress={onClick} >
-                <svg width='30' height='30' viewBox='0 0 24 24' strokeWidth={STROKE_WIDTH} >
-                    <motion.path
-                        {...path01Variants.closed}
-                        animate={path01Controls}
-                        transition={{ duration: DURATION }}
-                        stroke='#FFFFFF'
-                    />
-                    <motion.path
-                        {...path02Variants.closed}
-                        animate={path02Controls}
-                        transition={{ duration: DURATION }}
-                        stroke='#FFFFFF'
-                    />
-                </svg>
-            </Button>
+            <span  {...keyboardProps}>
+                <Button onPress={() => onClick()}>
+                    <svg width='30' height='30' viewBox='0 0 24 24' strokeWidth={STROKE_WIDTH} >
+                        <motion.path
+                            {...path01Variants.closed}
+                            animate={path01Controls}
+                            transition={{ duration: DURATION }}
+                            stroke='#FFFFFF'
+                        />
+                        <motion.path
+                            {...path02Variants.closed}
+                            animate={path02Controls}
+                            transition={{ duration: DURATION }}
+                            stroke='#FFFFFF'
+                        />
+                    </svg>
+                </Button>
+            </span>
         </>
     )
 }
