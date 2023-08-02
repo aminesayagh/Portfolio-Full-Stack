@@ -15,3 +15,4 @@ export { default as Navbar } from './navbar';
 export { default as Image } from './image'
 
 export { default as Loading } from './loading';
+export { Modal, Popover } from './overlay';
