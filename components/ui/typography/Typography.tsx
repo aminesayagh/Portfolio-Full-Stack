@@ -38,11 +38,12 @@ export const Title: FC<TitlePropsExtended> = ({ weight, degree = '1', exchange, 
 }
 
 // TEXT
-import { TextNames, TextPropsExtended } from './Typography.type';
+import { TextNames, TextPropsExtended, validTextElements } from './Typography.type';
 
 export const Text: FC<TextPropsExtended> = ({ weight, degree = '3', size, exchange, className, children, ...props }) => {
-    // @ts-ignore
-    const ElementType = (Object.keys((props) as Array<TextNames>).find(prop => Boolean(props[prop]))) || 'p'
+    const ElementType = (Object.keys(props) as Array<TextNames>).find(prop => validTextElements.includes(prop)) || 'p';
+    // @ts-expect-error
+    validTextElements.forEach(prop => delete props[prop]);
     const classes = twMerge(
         textStyle({
             size, weight
@@ -50,6 +51,7 @@ export const Text: FC<TextPropsExtended> = ({ weight, degree = '3', size, exchan
         className,
         textColorDegree[exchange ? 'exchanged' : 'normal'][degree]
     )
+    
     return React.createElement(ElementType, {
         className: classes,
         ...props

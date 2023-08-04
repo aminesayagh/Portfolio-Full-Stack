@@ -32,7 +32,9 @@ export type TitlePropsExtended = TitleElement & VariantProps<typeof titleStyle> 
     exchange?: boolean;
 }
 
-export type TextNames = 'p' | "span" | 'small' | 'strong' | 'em';
+export const validTextElements = ['p', 'span', 'small', 'strong', 'em'] as const;
+export type TextNames = typeof validTextElements[number];
+
 export type TextElement = { 
     p: true
 } | {

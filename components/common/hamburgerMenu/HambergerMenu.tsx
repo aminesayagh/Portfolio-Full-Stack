@@ -20,12 +20,12 @@ const path02Variants = {
 };
 
 
-const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: Dispatch<SetStateAction<boolean>> }) => {
+const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => void }) => {
     
     const path01Controls = useAnimation();
     const path02Controls = useAnimation();
     const onClick = async (state?: boolean) => {
-        setOpen(!isOpen);
+        setOpen();
         if (!isOpen) {
             await path02Controls.start(path02Variants.moving);
             path01Controls.start(path01Variants.open);
