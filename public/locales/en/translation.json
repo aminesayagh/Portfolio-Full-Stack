@@ -31,6 +31,10 @@
             "linkedin": "LI",
             "github": "GH"
         },
+        "description": {
+            "title": "Who's Behind the Screen?",
+            "content": "Mohamed Amine Sayagh, an independent full-stack developer with expertise in UI/UX design. Crafting seamless web experiences for the next generation of customer-facing companies."
+        },
         "copyright": "© 2023 MOHAMED AMINE SAYAGH, ALL RIGHTS RESERVED.",
         "action": "LET'S TALK"
     },

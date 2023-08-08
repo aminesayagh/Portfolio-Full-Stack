@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useModal } from 'react-aria';
-import { Button, Dialog, DialogTrigger, Modal, ModalOverlay, ModalRenderProps, } from 'react-aria-components';
-import { DialogTriggerProps, ModalOverlayProps } from 'react-aria-components';
+import React, { useState } from 'react';
+import { Button, Dialog, DialogTrigger, Modal, ModalOverlay} from 'react-aria-components';
+import { ModalOverlayProps } from 'react-aria-components';
 import { mergeClassName } from '@/helpers/className'
-import { twMerge } from 'tailwind-merge';
 
 const ModalContext = React.createContext<{ isOpen: boolean, handler: () => void }>({ isOpen: false, handler: () => console.log('error') });
 
@@ -46,19 +44,13 @@ const ButtonUi = ({ children, className = '', ...props }: { children: React.Reac
 
 const ModalUiOverlay = ({ children, ...props }: { children: React.ReactNode[] | React.ReactNode } & ModalOverlayProps) => {
     const { isOpen, handler } = React.useContext(ModalContext);
-    useEffect(() => {
-        console.log('ModalUiOverlay', isOpen)
-    }, [isOpen])
     if (typeof isOpen !== 'boolean' || typeof handler !== 'function') throw new Error('ModalUiOverlay: isOpen is undefined');
-
+    
     return <ModalOverlay isOpen={isOpen} onOpenChange={handler} {...props}>{children}</ModalOverlay>
 }
 
 const ModalUiContent = ({ children, className, ...props }: { children: React.ReactNode | ((arg: { handler: () => void }) => React.ReactNode) } & Omit<ModalOverlayProps, 'children'> & React.RefAttributes<HTMLDivElement>) => {
     const { isOpen, handler } = React.useContext(ModalContext);
-    useEffect(() => {
-        console.log('ModalUiContent', isOpen);
-    }, [isOpen])
     if(handler === undefined || typeof isOpen !== 'boolean') throw new Error('ModalUiContent: isOpen or handler is undefined');
 
     return <Modal isOpen={isOpen} onOpenChange={handler} className={mergeClassName('remove_outline', className)}  {...props}>

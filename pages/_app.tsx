@@ -3,6 +3,9 @@ import type { AppProps } from 'next/app'
 import 'styles/globals.css';
 import 'tailwindcss/tailwind.css';
 
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
 
 import { Montserrat } from 'next/font/google';
 import { appWithTranslation } from 'next-i18next'

@@ -1,12 +1,13 @@
-import { useState, useCallback, memo, useEffect } from 'react';
+import { useState, useCallback, memo, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
+import { gsap } from 'gsap';
 
 
 
 import StyleAnimation from '@/styles/animation.module.scss';
-import { Navbar, Logo, Link, Button, containerStyle, Modal, Text } from "@/components/ui";
+import { Navbar, Logo, Link, Button, containerStyle, Modal, Text, Title } from "@/components/ui";
 import { HamburgerMenu, SwitchLang } from '@/components/common';
 
 import { getMenuItems } from '@/conf/router';
@@ -20,35 +21,68 @@ const BASE_LOCALE_MENU = 'header.menu';
 const BASE_LOCALE_SOCIAL = 'header.socialNetwork';
 
 
+const DURATION = 0.4;
+
+const TRANSLATE_Y = -110;
+
+
 
 const Header = () => {
     const { t } = useTranslation();
     const router = useRouter();
-
-    // state of hamburger menu
     let [openMenu, setOpenMenu] = useState<boolean>(false);
-    let [counter, setCounter] = useState<number>(0);
-    const MenuHandler = () => {
-        console.log('MenuHandler');
-        setOpenMenu(!openMenu);
+    const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));;
+
+    const menuHandler = () => {
+        if (!openMenu) {
+            setOpenMenu(true);
+            setTimeout(() => {
+                tl.current.fromTo(['.modal-overlay', '.modal-content'], {
+                    opacity: 1,
+                    yPercent: TRANSLATE_Y,
+                    transformOrigin: 'right top',
+                    skewY: 2,
+                    ease: 'power3.inOut'
+                }, {
+                    duration: DURATION,
+                    yPercent: 0,
+                    skewY: 0,
+                    stagger: {
+                        amount: .2
+                    }
+                }).from(['.modal-item'], {
+                    duration: DURATION / 2,
+                    yPercent: 100,
+                    // delay: DELAY_2,
+                    opacity: 0,
+                    ease: 'power3.inOut',
+                    stagger: {
+                        amount: .2
+                    }
+                }).from('.modal-description', {
+                    duration: DURATION,
+                    yPercent: 100,
+                    ease: 'power3.inOut',
+                }, '<').from('.modal-footer', {
+                    duration: DURATION / 1.5,
+                    yPercent: 100,
+                    opacity: 0,
+                    ease: 'power3.inOut',
+                }, '<50%')
+                tl.current.play();
+            }, 10);
+        } else {
+            tl.current.reverse().then(() => setOpenMenu(false))
+        }
     }
-    useEffect(() => {
-        console.log('openMenu', openMenu);
-        setCounter(counter + 1);
-        console.log(counter);
-    }, [openMenu]);
+
     const onButtonClick = useCallback((path: string) => {
         router.push(path);
-        setOpenMenu(false);
+        menuHandler();
     }, [router.asPath, openMenu]);
 
-    const handlerItem = (link: string) => {
-        router.push(link);
-        setOpenMenu(false);
-    }
-
     return (
-        <Modal isOpenExternal={openMenu} menuHandler={MenuHandler}  >
+        <Modal isOpenExternal={openMenu} menuHandler={menuHandler}  >
             <Navbar size='lg'>
                 <Navbar.Content className={twMerge('flex-1', GAP_SIZE)}>
                     <Link href='/' size='xs'>{t('header.email')}</Link>
@@ -56,7 +90,9 @@ const Header = () => {
                     <SwitchLang />
                 </Navbar.Content>
                 <Navbar.Brand >
-                    <Logo size={60} href='/' alt={t('header.logo')} mode='dark' />
+                    <span onClick={() => menuHandler()}>
+                        <Logo size={60} href='/' alt={t('header.logo')} mode='dark' />
+                    </span>
                 </Navbar.Brand>
                 <Navbar.Content className={twMerge('flex-1 justify-end', GAP_SIZE)}>
                     <Button
@@ -71,9 +107,9 @@ const Header = () => {
                     <Modal.Button>
                         {({ isOpen, handler }) => <HamburgerMenu isOpen={isOpen} setOpen={handler} />}
                     </Modal.Button>
-                    <Modal.Overlay>
-                        <Modal.Content isDismissable className={twMerge('bg-black-200')}>
-                            {({  handler }) => (
+                    <Modal.Overlay className={twMerge('opacity-0 bg-primary-500 modal-overlay')}>
+                        <Modal.Content isDismissable className={twMerge('bg-black-200 modal-content')}>
+                            {({ handler }) => (
                                 <div className={twMerge(
                                     'flex flex-col justify-between',
                                     'min-h-screen w-screen',
@@ -81,38 +117,46 @@ const Header = () => {
                                     containerStyle({ size: 'lg' })
                                 )}>
                                     <div></div>
-                                    <ul className={twMerge('grid grid-cols-2 place-content-center', 'px-32', 'gap-x-40 gap-y-12')}>
-                                        {menuHamburgerItems.map((item, index) => {
-                                            return <li key={index} className={twMerge('flex flex=row items-start', index % 2 == 0 ? 'justify-end' : 'justify-start')}>
-                                                <div className={twMerge(
-                                                    'flex flex-row justify-start items-center relative cursor-pointer',
-                                                    index % 2 == 0 ? 'after:absolute after:h-[.2rem] after:w-24 after:bg-gray-100 after:left-full after:mt-2 after:mx-4' : ''
-                                                )}>
-                                                    <Button onPress={() => {
-                                                        onButtonClick(item.link);
-                                                    }} className={
-                                                        twMerge(
-                                                            'uppercase relative text-white-600 hover:text-primary-500',
-                                                            'text-15xl font-bold leading-tight tracking-wider transition-colors duration-150'
-                                                        )
-                                                    }>
-                                                        {t(`${BASE_LOCALE_MENU}.${item.id}.attribute`)}
-                                                    </Button>
-                                                    {t(`${BASE_LOCALE_MENU}.${item.id}.more`) !== 'null' ? <Text size='xs' p degree='4' className='absolute left-[calc(100%_+_4px)] whitespace-nowrap top-[19%]'>{t(`${BASE_LOCALE_MENU}.${item.id}.more`)}</Text> : null}
-                                                </div>
-                                            </li>
-                                        })}
-                                    </ul>
+                                    <div className={twMerge('flex flex-row justify-start', 'items-center')} >
+                                        <ul className={twMerge('flex flex-col gap-4', 'w-8/12')}>
+                                            {menuHamburgerItems.map((item, index) => {
+                                                return <li key={index} className={twMerge('flex flex-col items-start', 'overflow-hidden')}>
+                                                    <div className={twMerge('flex flex-row justify-start items-start relative cursor-pointer', 'modal-item')} >
+                                                        <Button onPress={() => onButtonClick(item.link)} className={
+                                                            twMerge(
+                                                                'capitalize relative text-white-600 hover:text-primary-500',
+                                                                'text-15xl font-bold leading-tight tracking-wide transition-colors duration-150'
+                                                            )}>
+                                                            {t(`${BASE_LOCALE_MENU}.${item.id}.attribute`)}
+                                                        </Button>
+                                                        {t(`${BASE_LOCALE_MENU}.${item.id}.more`) !== 'null' ? <Text size='xs' p degree='4' className='absolute left-[calc(100%_+_4px)] whitespace-nowrap top-[19%]'>{t(`${BASE_LOCALE_MENU}.${item.id}.more`)}</Text> : null}
+                                                    </div>
+                                                </li>
+                                            })}
+                                        </ul>
+                                        <div className={twMerge('flex flex-col gap-4', 'w-3/12')} >
+                                            <span className='overflow-hidden'>
+                                                <Title h5 degree='2' weight='semibold' className='uppercase tracking-widest overflow-hidden modal-description' >
+                                                    {t('header.description.title')}
+                                                </Title>
+                                            </span>
+                                            <span className='overflow-hidden'>
+                                                <Text p degree='4' size='sm' className='modal-description overflow-hidden'>
+                                                    {t('header.description.content')}
+                                                </Text>
+                                            </span>
+                                        </div>
+                                    </div>
                                     <div className={twMerge('flex flex-row justify-between items-center')}>
-                                        <div className={twMerge('flex flex-row justify-start items-center')}>
-                                            <Text p degree='4' size='sm'>
+                                        <div className={twMerge('flex flex-row justify-start items-center', 'overflow-hidden')}>
+                                            <Text p degree='4' size='sm' className='modal-footer'>
                                                 {t('header.copyright')}
                                             </Text>
                                         </div>
                                         <ul className={twMerge('flex flex-row items-center justify-end', GAP_SIZE)}>
                                             {menuSocialNetworks.map((item, index) => {
-                                                return <li key={index}>
-                                                    <Link href={item.link} >
+                                                return <li key={index} className='overflow-hidden'>
+                                                    <Link href={item.link} className='modal-footer' >
                                                         {t(`${BASE_LOCALE_SOCIAL}.${item.id}`)}
                                                     </Link>
                                                 </li>
