@@ -40,7 +40,7 @@ const Header = () => {
     const onButtonClick = useCallback((path: string) => {
         router.push(path);
         setOpenMenu(false);
-    }, [router]);
+    }, [router.asPath, openMenu]);
 
     const handlerItem = (link: string) => {
         router.push(link);
@@ -71,7 +71,7 @@ const Header = () => {
                     <Modal.Button>
                         {({ isOpen, handler }) => <HamburgerMenu isOpen={isOpen} setOpen={handler} />}
                     </Modal.Button>
-                    {/* <Modal.Overlay> */}
+                    <Modal.Overlay>
                         <Modal.Content isDismissable className={twMerge('bg-black-200')}>
                             {({  handler }) => (
                                 <div className={twMerge(
@@ -122,7 +122,7 @@ const Header = () => {
                                 </div>
                             )}
                         </Modal.Content>
-                    {/* </Modal.Overlay> */}
+                    </Modal.Overlay>
                 </Navbar.Content>
             </Navbar>
         </Modal>

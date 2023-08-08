@@ -17,7 +17,7 @@ const ModalUi = ({ children, isOpenExternal, menuHandler, ...props }: {
         setOpen(!isOpen);
     }
     if(menuHandler === undefined && isOpenExternal === undefined) throw new Error('ModalUi: isOpen or handler is undefined');
-    
+
     if (typeof isOpenExternal !== 'boolean' || menuHandler === undefined) {
         return (
             <DialogTrigger {...props}>
@@ -45,10 +45,13 @@ const ButtonUi = ({ children, className = '', ...props }: { children: React.Reac
 }
 
 const ModalUiOverlay = ({ children, ...props }: { children: React.ReactNode[] | React.ReactNode } & ModalOverlayProps) => {
-    const { isOpen } = React.useContext(ModalContext);
-    if (typeof isOpen !== 'boolean') throw new Error('ModalUiOverlay: isOpen is undefined');
+    const { isOpen, handler } = React.useContext(ModalContext);
+    useEffect(() => {
+        console.log('ModalUiOverlay', isOpen)
+    }, [isOpen])
+    if (typeof isOpen !== 'boolean' || typeof handler !== 'function') throw new Error('ModalUiOverlay: isOpen is undefined');
 
-    return <ModalOverlay {...props}>{children}</ModalOverlay>
+    return <ModalOverlay isOpen={isOpen} onOpenChange={handler} {...props}>{children}</ModalOverlay>
 }
 
 const ModalUiContent = ({ children, className, ...props }: { children: React.ReactNode | ((arg: { handler: () => void }) => React.ReactNode) } & Omit<ModalOverlayProps, 'children'> & React.RefAttributes<HTMLDivElement>) => {
