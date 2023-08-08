@@ -21,12 +21,10 @@ const path02Variants = {
 
 
 const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => void }) => {
-    
     const path01Controls = useAnimation();
     const path02Controls = useAnimation();
-    const onClick = async (state?: boolean) => {
-        setOpen();
-        if (!isOpen) {
+    const handlerHamburgerClick = useCallback(async () => {
+        if(isOpen) {
             await path02Controls.start(path02Variants.moving);
             path01Controls.start(path01Variants.open);
             path02Controls.start(path02Variants.open);
@@ -35,20 +33,29 @@ const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => vo
             await path02Controls.start(path02Variants.moving);
             path02Controls.start(path02Variants.closed);
         }
-    }
+    }, [isOpen]);
+    const onClick = useCallback(async (state?: boolean) => {
+        setOpen();
+    }, [isOpen])
+
+    useEffect(() => {
+        if(typeof isOpen === 'boolean'){
+            handlerHamburgerClick();
+        }
+    }, [isOpen])
     let { keyboardProps } = useKeyboard({
         onKeyDown: (e) => {
-            console.log(e.key);
             if(['Escape', 'Esc'].includes(e.key)) {
             }
         },
         onKeyUp: (e) => {
-            console.log(e.key);
             if(['Escape', 'Esc'].includes(e.key)) {
                 isOpen && onClick().then();
             }
         }
     })
+
+    if(typeof setOpen !== 'function' || typeof isOpen !== 'boolean') throw new Error('HamburgerMenu: setOpen is undefined');
 
     return (
         <>

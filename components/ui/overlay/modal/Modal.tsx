@@ -16,6 +16,8 @@ const ModalUi = ({ children, isOpenExternal, menuHandler, ...props }: {
     const menuHandlerIntern = () => {
         setOpen(!isOpen);
     }
+    if(menuHandler === undefined && isOpenExternal === undefined) throw new Error('ModalUi: isOpen or handler is undefined');
+    
     if (typeof isOpenExternal !== 'boolean' || menuHandler === undefined) {
         return (
             <DialogTrigger {...props}>
@@ -25,7 +27,6 @@ const ModalUi = ({ children, isOpenExternal, menuHandler, ...props }: {
             </DialogTrigger>
         )
     }
-    
     return (
         <DialogTrigger {...props}>
             <ModalContext.Provider value={{ isOpen: isOpenExternal, handler: menuHandler }} >
@@ -36,14 +37,17 @@ const ModalUi = ({ children, isOpenExternal, menuHandler, ...props }: {
 }
 
 
-const ButtonUi = ({ children, className = '', ...props }: { children: React.ReactNode | (({ handler }: { handler: () => void }) => React.ReactNode) } & { className?: string }) => {
+const ButtonUi = ({ children, className = '', ...props }: { children: React.ReactNode | (({ handler, isOpen }: { handler: () => void, isOpen: boolean }) => React.ReactNode) } & { className?: string }) => {
     const { isOpen, handler } = React.useContext(ModalContext);
     if(handler === undefined) throw new Error('ModalUiContent: isOpen or handler is undefined');
 
-    return typeof children == 'function' ? children({ handler }) : <Button className={mergeClassName('outline-none', className)} onPress={handler} {...props}>{children}</Button>
+    return typeof children == 'function' ? children({ isOpen ,handler}) : <Button className={mergeClassName('outline-none', className)} onPress={handler} {...props}>{children}</Button>
 }
 
 const ModalUiOverlay = ({ children, ...props }: { children: React.ReactNode[] | React.ReactNode } & ModalOverlayProps) => {
+    const { isOpen } = React.useContext(ModalContext);
+    if (typeof isOpen !== 'boolean') throw new Error('ModalUiOverlay: isOpen is undefined');
+
     return <ModalOverlay {...props}>{children}</ModalOverlay>
 }
 
@@ -52,7 +56,7 @@ const ModalUiContent = ({ children, className, ...props }: { children: React.Rea
     useEffect(() => {
         console.log('ModalUiContent', isOpen);
     }, [isOpen])
-    if(handler === undefined) throw new Error('ModalUiContent: isOpen or handler is undefined');
+    if(handler === undefined || typeof isOpen !== 'boolean') throw new Error('ModalUiContent: isOpen or handler is undefined');
 
     return <Modal isOpen={isOpen} onOpenChange={handler} className={mergeClassName('remove_outline', className)}  {...props}>
         <Dialog className='remove_outline'>

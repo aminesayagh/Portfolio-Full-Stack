@@ -35,6 +35,7 @@ module.exports = {
       "13xl": "3.8rem",
       "14xl": "4rem",
       "15xl": "4.2rem",
+      "16xl": "5rem",
     },
     colors: {
       transparent: "transparent",

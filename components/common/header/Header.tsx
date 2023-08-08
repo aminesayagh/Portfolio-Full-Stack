@@ -1,9 +1,9 @@
 import { useState, useCallback, memo, useEffect } from 'react';
-import { useTranslation } from "next-i18next";
-
 import { useRouter } from 'next/router';
-
+import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
+
+
 
 import StyleAnimation from '@/styles/animation.module.scss';
 import { Navbar, Logo, Link, Button, containerStyle, Modal, Text } from "@/components/ui";
@@ -27,22 +27,26 @@ const Header = () => {
 
     // state of hamburger menu
     let [openMenu, setOpenMenu] = useState<boolean>(false);
+    let [counter, setCounter] = useState<number>(0);
     const MenuHandler = () => {
         console.log('MenuHandler');
         setOpenMenu(!openMenu);
     }
     useEffect(() => {
         console.log('openMenu', openMenu);
+        setCounter(counter + 1);
+        console.log(counter);
     }, [openMenu]);
     const onButtonClick = useCallback((path: string) => {
-        router.push(path)
+        router.push(path);
+        setOpenMenu(false);
     }, [router]);
 
     const handlerItem = (link: string) => {
         router.push(link);
         setOpenMenu(false);
     }
-    
+
     return (
         <Modal isOpenExternal={openMenu} menuHandler={MenuHandler}  >
             <Navbar size='lg'>
@@ -64,32 +68,32 @@ const Header = () => {
                     >
                         {t('header.action')}
                     </Button>
-
                     <Modal.Button>
-                        {_ => <HamburgerMenu isOpen={openMenu} setOpen={MenuHandler} />}
+                        {({ isOpen, handler }) => <HamburgerMenu isOpen={isOpen} setOpen={handler} />}
                     </Modal.Button>
-                    <Modal.Overlay>
+                    {/* <Modal.Overlay> */}
                         <Modal.Content isDismissable className={twMerge('bg-black-200')}>
-                            {({ handler }) => {
-                                return <div className={twMerge(
+                            {({  handler }) => (
+                                <div className={twMerge(
                                     'flex flex-col justify-between',
                                     'min-h-screen w-screen',
                                     'py-12',
                                     containerStyle({ size: 'lg' })
                                 )}>
                                     <div></div>
-                                    <ul className={twMerge('grid grid-cols-2 place-content-center', 'px-32', 'gap-x-32 gap-y-12')}>
+                                    <ul className={twMerge('grid grid-cols-2 place-content-center', 'px-32', 'gap-x-40 gap-y-12')}>
                                         {menuHamburgerItems.map((item, index) => {
                                             return <li key={index} className={twMerge('flex flex=row items-start', index % 2 == 0 ? 'justify-end' : 'justify-start')}>
                                                 <div className={twMerge(
                                                     'flex flex-row justify-start items-center relative cursor-pointer',
-                                                    index % 2 == 0 ? 'after:absolute after:h-1 after:w-24 after:bg-gray-100 after:left-full ' : ''
+                                                    index % 2 == 0 ? 'after:absolute after:h-[.2rem] after:w-24 after:bg-gray-100 after:left-full after:mt-2 after:mx-4' : ''
                                                 )}>
-                                                    <Button onPress={() => handlerItem(item.link)} className={
+                                                    <Button onPress={() => {
+                                                        onButtonClick(item.link);
+                                                    }} className={
                                                         twMerge(
                                                             'uppercase relative text-white-600 hover:text-primary-500',
-                                                            'after:absolute after:block after:content=[\'\'] after:h-[5px] after:w-full after:bg-white-600 hover:after:bg-primary-500 after:transition-colors after:duration-150',
-                                                            'text-13xl font-bold leading-tight tracking-wider transition-colors duration-150'
+                                                            'text-15xl font-bold leading-tight tracking-wider transition-colors duration-150'
                                                         )
                                                     }>
                                                         {t(`${BASE_LOCALE_MENU}.${item.id}.attribute`)}
@@ -105,7 +109,7 @@ const Header = () => {
                                                 {t('header.copyright')}
                                             </Text>
                                         </div>
-                                        <ul className={twMerge('flex flex-row gap-8 items-center justify-end')}>
+                                        <ul className={twMerge('flex flex-row items-center justify-end', GAP_SIZE)}>
                                             {menuSocialNetworks.map((item, index) => {
                                                 return <li key={index}>
                                                     <Link href={item.link} >
@@ -116,10 +120,9 @@ const Header = () => {
                                         </ul>
                                     </div>
                                 </div>
-                            }}
-
+                            )}
                         </Modal.Content>
-                    </Modal.Overlay>
+                    {/* </Modal.Overlay> */}
                 </Navbar.Content>
             </Navbar>
         </Modal>
