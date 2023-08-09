@@ -43,9 +43,9 @@ const Header = () => {
                     yPercent: TRANSLATE_Y,
                     transformOrigin: 'right top',
                     skewY: 2,
-                    ease: 'power3.inOut'
                 }, {
                     duration: DURATION,
+                    ease: 'power3.inOut',
                     yPercent: 0,
                     skewY: 0,
                     stagger: {
@@ -54,10 +54,10 @@ const Header = () => {
                 }).to(['.subElement-item'], {
                     duration: DURATION / 2,
                     yPercent: 100,
-                }, '<').from(['.modal-item'], {
+                    ease: 'power3.inOut'
+                }, '<').from('.modal-item', {
                     duration: DURATION / 2,
                     yPercent: 100,
-                    // delay: DELAY_2,
                     opacity: 0,
                     ease: 'power3.inOut',
                     stagger: {
@@ -68,19 +68,24 @@ const Header = () => {
                     opacity: 0,
                 }, {
                     opacity: 1,
-                    duration: DURATION / 3,
+                    ease: 'power3.inOut',
+                    duration: DURATION / 2,
                     display: 'block',
                 }).from('.modal-description', {
                     duration: DURATION,
                     yPercent: 100,
+                    opacity: 0,
                     ease: 'power3.inOut',
                 }, '<').from('.modal-footer', {
                     duration: DURATION / 2,
                     yPercent: 100,
                     opacity: 0,
+                    transformOrigin: 'center bottom',
                     ease: 'power3.inOut',
                 }, '<50%').from('.modal-item-info', {
                     xPercent: -100,
+                    transformOrigin: 'left center',
+                    ease: 'power3.inOut',
                     duration: DURATION / 2,
                     opacity: 0,
                 }, '<')
@@ -149,7 +154,7 @@ const Header = () => {
                         {({ handler, isOpen }) => {
                             return <>
                                 <div className={twMerge('flex flex-row items-center gap-6 justify-end')} >
-                                    <span className='overflow-hidden'>
+                                    <span className='overflow-hidden' onClick={() => handler()}>
                                         <Text p size='xs' degree='3' className={twMerge('mr-2 hidden', 'modal-close')}>{t('header.close')}</Text>
                                     </span>
                                     <HamburgerMenu isOpen={isOpen} setOpen={handler} />
@@ -167,7 +172,7 @@ const Header = () => {
                                     containerStyle({ size: 'lg' })
                                 )}>
                                     <div></div>
-                                    <div className={twMerge('flex flex-row justify-start', 'items-center')} >
+                                    <div className={twMerge('flex flex-row justify-between', 'items-center')} >
                                         <ul className={twMerge('flex flex-col gap-4', 'w-8/12')}>
                                             {menuHamburgerItems.map((item, index) => {
                                                 return <li key={index} className={twMerge('flex flex-col items-start', 'overflow-hidden')}>
@@ -188,13 +193,13 @@ const Header = () => {
                                                 </li>
                                             })}
                                         </ul>
-                                        <div className={twMerge('flex flex-col gap-4', 'w-3/12')} >
-                                            <span className='overflow-hidden'>
-                                                <Title h5 degree='2' weight='semibold' className='uppercase tracking-widest overflow-hidden modal-description' >
+                                        <div className={twMerge('flex flex-col gap-4', 'w-min')} >
+                                            <span className='overflow-hidden w-max'>
+                                                <Title h5 degree='2' weight='bold' className='uppercase tracking-widest overflow-hidden modal-description' >
                                                     {t('header.description.title')}
                                                 </Title>
                                             </span>
-                                            <span className='overflow-hidden'>
+                                            <span className='overflow-hidden w-fit mr-5'>
                                                 <Text p degree='4' size='sm' className='modal-description overflow-hidden'>
                                                     {t('header.description.content')}
                                                 </Text>
