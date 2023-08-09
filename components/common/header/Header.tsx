@@ -51,7 +51,10 @@ const Header = () => {
                     stagger: {
                         amount: .2
                     }
-                }).from(['.modal-item'], {
+                }).to(['.subElement-item'], {
+                    duration: DURATION / 2,
+                    yPercent: 100,
+                }, '<').from(['.modal-item'], {
                     duration: DURATION / 2,
                     yPercent: 100,
                     // delay: DELAY_2,
@@ -115,11 +118,12 @@ const Header = () => {
                         <Logo onPress={() => onButtonClick('/')} size={60} alt={t('header.logo')} mode='dark' />
                     </span>
                 </Navbar.Brand>
-                <Navbar.Content className={twMerge('flex-1 justify-end', GAP_SIZE)}>
+                <Navbar.Content className={twMerge('flex-1 justify-end overflow-hidden', GAP_SIZE)}>
                     <Button
                         onPress={() => onButtonClick('/contact')}
                         className={twMerge(
-                            'py-2 border-none',
+                            'py-2 border-none overflow-hidden',
+                            'subElement-item',
                             StyleAnimation['underline-animation'],
                         )}
                     >
