@@ -75,11 +75,15 @@ const Header = () => {
                     yPercent: 100,
                     ease: 'power3.inOut',
                 }, '<').from('.modal-footer', {
-                    duration: DURATION / 1.5,
+                    duration: DURATION / 2,
                     yPercent: 100,
                     opacity: 0,
                     ease: 'power3.inOut',
-                }, '<50%')
+                }, '<50%').from('.modal-item-info', {
+                    xPercent: -100,
+                    duration: DURATION / 2,
+                    opacity: 0,
+                }, '<')
                 tl.current.play();
             });
             self.add('close', () => {
@@ -101,15 +105,15 @@ const Header = () => {
         }
     }, [router.asPath, openMenu]);
     useLayoutEffect(() => {
-        if(openMenu) {
+        if (openMenu) {
             ctx.current.open();
         }
     }, [openMenu])
 
     const onButtonClick = useCallback((path: string) => {
-        if(!openMenu) {
+        if (!openMenu) {
             router.push(path);
-        }else {
+        } else {
             tl.current.reverse().then(() => {
                 setOpenMenu(false);
                 router.push(path);
@@ -146,8 +150,7 @@ const Header = () => {
                             return <>
                                 <div className={twMerge('flex flex-row items-center gap-6 justify-end')} >
                                     <span className='overflow-hidden'>
-
-                                        <Text p size='xs' degree='3'  className={twMerge('mr-2 hidden', 'modal-close')}>{t('header.close')}</Text>
+                                        <Text p size='xs' degree='3' className={twMerge('mr-2 hidden', 'modal-close')}>{t('header.close')}</Text>
                                     </span>
                                     <HamburgerMenu isOpen={isOpen} setOpen={handler} />
                                 </div>
@@ -178,7 +181,9 @@ const Header = () => {
                                                             )}>
                                                             {t(`${BASE_LOCALE_MENU}.${item.id}.attribute`)}
                                                         </Button>
-                                                        {t(`${BASE_LOCALE_MENU}.${item.id}.more`) !== 'null' ? <Text size='xs' p degree='4' className='absolute left-[calc(100%_+_4px)] whitespace-nowrap top-[19%]'>{t(`${BASE_LOCALE_MENU}.${item.id}.more`)}</Text> : null}
+                                                        <span className='overflow-hidden'>
+                                                            {t(`${BASE_LOCALE_MENU}.${item.id}.more`) !== 'null' ? <Text size='xs' p degree='4' className='absolute left-[calc(100%_+_4px)] whitespace-nowrap top-[19%] modal-item-info'>{t(`${BASE_LOCALE_MENU}.${item.id}.more`)}</Text> : null}
+                                                        </span>
                                                     </div>
                                                 </li>
                                             })}
