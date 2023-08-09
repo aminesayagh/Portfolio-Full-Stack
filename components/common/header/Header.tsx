@@ -31,12 +31,13 @@ const Header = () => {
     const { t } = useTranslation();
     const router = useRouter();
     let [openMenu, setOpenMenu] = useState<boolean>(false);
-    const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));;
+    const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
+    const ctx = useRef<any>(null);
 
-    const menuHandler = () => {
-        if (!openMenu) {
-            setOpenMenu(true);
-            setTimeout(() => {
+    useLayoutEffect(() => {
+        let selector = () => gsap.utils.selector('.modal-overlay');
+        ctx.current = gsap.context((self) => {
+            self.add('open', () => {
                 tl.current.fromTo(['.modal-overlay', '.modal-content'], {
                     opacity: 1,
                     yPercent: TRANSLATE_Y,
@@ -70,15 +71,35 @@ const Header = () => {
                     ease: 'power3.inOut',
                 }, '<50%')
                 tl.current.play();
+            });
+            self.add('close', () => {
+                tl.current.reverse().then(() => setOpenMenu(false));
+            });
+        });
+        return () => {
+            ctx.current.revert();
+        }
+    })
+    const menuHandler = useCallback(() => {
+        if (!openMenu) {
+            setOpenMenu(true);
+            setTimeout(() => {
+                ctx.current.open();
             }, 10);
         } else {
-            tl.current.reverse().then(() => setOpenMenu(false))
+            ctx.current.close();
         }
-    }
+    }, [router.asPath, openMenu]);
 
     const onButtonClick = useCallback((path: string) => {
-        router.push(path);
-        menuHandler();
+        if(!openMenu) {
+            router.push(path);
+        }else {
+            tl.current.reverse().then(() => {
+                setOpenMenu(false);
+                router.push(path);
+            });
+        }
     }, [router.asPath, openMenu]);
 
     return (
@@ -90,8 +111,8 @@ const Header = () => {
                     <SwitchLang />
                 </Navbar.Content>
                 <Navbar.Brand >
-                    <span onClick={() => menuHandler()}>
-                        <Logo size={60} href='/' alt={t('header.logo')} mode='dark' />
+                    <span onClick={() => onButtonClick('/')}>
+                        <Logo onPress={() => onButtonClick('/')} size={60} alt={t('header.logo')} mode='dark' />
                     </span>
                 </Navbar.Brand>
                 <Navbar.Content className={twMerge('flex-1 justify-end', GAP_SIZE)}>
@@ -105,7 +126,7 @@ const Header = () => {
                         {t('header.action')}
                     </Button>
                     <Modal.Button>
-                        {({ isOpen, handler }) => <HamburgerMenu isOpen={isOpen} setOpen={handler} />}
+                        {({ handler, isOpen }) => <HamburgerMenu isOpen={isOpen} setOpen={handler} />}
                     </Modal.Button>
                     <Modal.Overlay className={twMerge('opacity-0 bg-primary-500 modal-overlay')}>
                         <Modal.Content isDismissable className={twMerge('bg-black-200 modal-content')}>
@@ -122,7 +143,9 @@ const Header = () => {
                                             {menuHamburgerItems.map((item, index) => {
                                                 return <li key={index} className={twMerge('flex flex-col items-start', 'overflow-hidden')}>
                                                     <div className={twMerge('flex flex-row justify-start items-start relative cursor-pointer', 'modal-item')} >
-                                                        <Button onPress={() => onButtonClick(item.link)} className={
+                                                        <Button onPress={() => {
+                                                            onButtonClick(item.link)
+                                                        }} className={
                                                             twMerge(
                                                                 'capitalize relative text-white-600 hover:text-primary-500',
                                                                 'text-15xl font-bold leading-tight tracking-wide transition-colors duration-150'
