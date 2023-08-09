@@ -19,16 +19,16 @@ export const Display: FC<DisplayPropsExtended> = ({ size, weight, exchange, chil
 }
 
 // TITLE
-import type { TitleElement, TitleNames, TitlePropsExtended } from './Typography.type';
+import type { TitleElement, TitleNames, TitlePropsExtended,  } from './Typography.type';
+import { validTitleElements } from './Typography.type'
 export const Title: FC<TitlePropsExtended> = ({ weight, degree = '1', exchange, className, children, ...props }) => {
-    // @ts-ignore
-    const ElementType = (Object.keys(props) as Array<TitleNames>).find(prop => Boolean(props[prop])) || 'h2';
+    const ElementType = (Object.keys(props) as Array<TitleNames>).find(prop => validTitleElements.includes(prop)) || 'h2';
     const classes = twMerge(
         titleStyle({
-            as: ElementType,
             weight
         }),
         className,
+        `title_${ElementType}`,
         textColorDegree[exchange ? 'exchanged' : 'normal'][degree]
     )
     return React.createElement(ElementType, {

@@ -63,6 +63,13 @@ const Header = () => {
                     stagger: {
                         amount: .2
                     }
+                }).fromTo('.modal-close', {
+                    display: 'none',
+                    opacity: 0,
+                }, {
+                    opacity: 1,
+                    duration: DURATION / 3,
+                    display: 'block',
                 }).from('.modal-description', {
                     duration: DURATION,
                     yPercent: 100,
@@ -76,23 +83,28 @@ const Header = () => {
                 tl.current.play();
             });
             self.add('close', () => {
-                tl.current.reverse().then(() => setOpenMenu(false));
+                tl.current.reverse().then(() => {
+                    setOpenMenu(false)
+                    ctx.current.revert();
+                });
             });
         });
         return () => {
             ctx.current.revert();
         }
-    })
+    }, [])
     const menuHandler = useCallback(() => {
         if (!openMenu) {
             setOpenMenu(true);
-            setTimeout(() => {
-                ctx.current.open();
-            }, 10);
         } else {
             ctx.current.close();
         }
     }, [router.asPath, openMenu]);
+    useLayoutEffect(() => {
+        if(openMenu) {
+            ctx.current.open();
+        }
+    }, [openMenu])
 
     const onButtonClick = useCallback((path: string) => {
         if(!openMenu) {
@@ -130,7 +142,17 @@ const Header = () => {
                         {t('header.action')}
                     </Button>
                     <Modal.Button>
-                        {({ handler, isOpen }) => <HamburgerMenu isOpen={isOpen} setOpen={handler} />}
+                        {({ handler, isOpen }) => {
+                            return <>
+                                <div className={twMerge('flex flex-row items-center gap-6 justify-end')} >
+                                    <span className='overflow-hidden'>
+
+                                        <Text p size='xs' degree='3'  className={twMerge('mr-2 hidden', 'modal-close')}>{t('header.close')}</Text>
+                                    </span>
+                                    <HamburgerMenu isOpen={isOpen} setOpen={handler} />
+                                </div>
+                            </>
+                        }}
                     </Modal.Button>
                     <Modal.Overlay className={twMerge('opacity-0 bg-primary-500 modal-overlay')}>
                         <Modal.Content isDismissable className={twMerge('bg-black-200 modal-content')}>

@@ -24,7 +24,9 @@ export type TitleElement = {
     h6: true
 }
 
-export type TitleNames = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+export const validTitleElements = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as const;
+export type TitleNames = typeof validTitleElements[number];
+
 export type TitlePropsExtended = TitleElement & VariantProps<typeof titleStyle> & {
     children: React.ReactNode | string;
     className?: string;
