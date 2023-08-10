@@ -1,6 +1,6 @@
 import React from 'react';
 import { cva } from 'class-variance-authority';
-
+import { twMerge } from 'tailwind-merge';
 export interface ContainerProps {
     children: React.ReactNode | React.ReactNode[];
     id?: string;
@@ -22,7 +22,9 @@ const Container = ({ as, children, className, ...props }: ContainerProps) => {
     return (
         <>
             {React.createElement(as || 'span', {
-                className,
+                className: twMerge(containerStyle(
+                    { size: props.size }
+                ), className),
                 ...props
             }, children)}
         </>

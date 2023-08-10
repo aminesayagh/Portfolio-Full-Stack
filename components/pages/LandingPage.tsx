@@ -20,9 +20,9 @@ const LandingPage = () => {
     return (
         <>
             <Header />
-            {/* <Container size='lg' >
+            <Container as='section' size='lg' >
                 <Intro />
-            </Container> */}
+            </Container>
             {/* <Container size='lg'>
                 <Video />
             </Container>

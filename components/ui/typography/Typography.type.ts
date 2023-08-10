@@ -53,6 +53,7 @@ export type TextPropsExtended = TextElement & VariantProps<typeof textStyle> & {
     children: React.ReactNode | string;
     className?: string;
     degree: '0' | '1' | '2' | '3' | '4';
+    size: 'lg' | 'md' | 'sm' | 'xs',
     exchange?: boolean;
 }
 
@@ -60,5 +61,6 @@ export type LinkPropsExtended = LinkProps & VariantProps<typeof textStyle> & {
     children: React.ReactNode | React.ReactNode[] | string;
     className?: string;
     degree?: '0' | '1' | '2' | '3' | '4';
+    size: 'lg' | 'md' | 'sm' | 'xs',
     exchange?: boolean;
 }

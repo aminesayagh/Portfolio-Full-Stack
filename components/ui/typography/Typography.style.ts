@@ -8,9 +8,9 @@ export const textColorDegree = {
     "normal": {
         "0": "",
         "1": "text-white-100",
-        "2": "text-white-300",
-        "3": "text-white-600",
-        "4": "text-gray-200",
+        "2": "text-gray-300",
+        "3": "text-gray-500",
+        "4": "text-gray-700",
     },
     "exchanged": {
         "0": "",
@@ -60,15 +60,8 @@ export const textStyle = cva([textDefault, fontFamilyText], {
             semibold: 'font-semibold',
             medium: 'font-medium',
         },
-        size: {
-            'lg': 'text-xl',
-            'md': 'text-lg',
-            'sm': 'text-sm',
-            'xs': 'text-xs',
-        },
     },
     defaultVariants: {
         weight: 'medium',
-        size: 'sm',
     }
 })

@@ -1,6 +1,5 @@
 
-import { useTranslation } from 'next-i18next'
-import { Head, Header } from '@/components/common';
+import { Head } from '@/components/common';
 import { Suspense } from 'react';
 import '@/utils/i18n';
 

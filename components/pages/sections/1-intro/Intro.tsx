@@ -19,7 +19,7 @@ const Title = () => {
     return (<>
         {/* title 1  */}
         <div className={twMerge('')} >
-            <Display  >{t('home.title.1')}</Display>
+            <Display >{t('home.title.1')}</Display>
         </div>
         {/* description */}
         <div className={twMerge('')} >
@@ -72,7 +72,7 @@ const Menu = () => {
 
 const Intro = () => {
     return (<>
-        <div className={twMerge()} >
+        <div className={twMerge('pt-40')} >
             <div className={twMerge('')} >
                 <Title />
             </div>

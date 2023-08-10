@@ -88,7 +88,7 @@ const Header = () => {
                     ease: 'power3.inOut',
                     duration: DURATION / 2,
                     opacity: 0,
-                }, '<')
+                }, '<25%')
                 tl.current.play();
             });
             self.add('close', () => {
@@ -162,7 +162,7 @@ const Header = () => {
                             </>
                         }}
                     </Modal.Button>
-                    <Modal.Overlay className={twMerge('opacity-0 bg-primary-500 modal-overlay')}>
+                    <Modal.Overlay className={twMerge('opacity-0 fixed left-0 top-0 w-full min-h-full  bg-primary-500 modal-overlay')}>
                         <Modal.Content isDismissable className={twMerge('bg-black-200 modal-content')}>
                             {({ handler }) => (
                                 <div className={twMerge(
