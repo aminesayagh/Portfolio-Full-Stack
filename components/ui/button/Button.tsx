@@ -5,7 +5,8 @@ import { twMerge } from 'tailwind-merge';
 import { cva } from 'class-variance-authority';
 
 import { mergeClassName } from '@/helpers/className';
-
+import { TextSizes } from '@/components/ui/typography';
+import StyleTypography from '@/components/ui/typography/Typography.module.scss';
 
 export const buttonStyle = cva(
     [
@@ -20,12 +21,6 @@ export const buttonStyle = cva(
     ],
     {
         variants: {
-            size: {
-                default: '',
-                xl: [''],
-                md: [''],
-                xs: [''],
-            }
         },
         defaultVariants: {
             size: 'default',
@@ -45,7 +40,9 @@ const ButtonUi = ({ children, icon, iconRight, size, full, className, ...props }
                 'transition-colors ease-in-out duration-200',
                 'transition-transform ease-in-out duration-100',
                 full && 'w-full',
-                typeof className == 'string' && className
+                typeof className == 'string' && className,
+                StyleTypography[`text_${size}`],
+                StyleTypography['text'],
             )} {...props} >
                 {children}
             </Button>

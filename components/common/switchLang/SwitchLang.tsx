@@ -16,9 +16,9 @@ const SwitchLang = () => {
     if (!languages) return null;
     return (
         <>
-            <div className='flex flex-row items-center justify-start gap-8'>
+            <div className='flex flex-row items-center justify-start gap-8 mdl:gap-6 lg:gap-8'>
                 {langs.map(l =>
-                    <Link key={l} degree="2" size='sm' href='' className="uppercase" onClick={() => changeLanguage(l)} >
+                    <Link key={l} degree="2" size='xs' href='' className="uppercase" onClick={() => changeLanguage(l)} >
                         {l}
                     </Link>
                 )}

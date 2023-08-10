@@ -4,6 +4,7 @@ import { motion, useAnimation } from 'framer-motion';
 import { Button } from '@/components/ui';
 import { useKeyboard } from 'react-aria';
 
+const SIZE = '26';
 const Y_PATH_01_CLOSED = '8';
 const Y_PATH_02_CLOSED = '18';
 const DURATION = 0.2;
@@ -61,7 +62,7 @@ const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => vo
         <>
             <span  {...keyboardProps}>
                 <Button onPress={() => onClick()}>
-                    <svg width='30' height='30' viewBox='0 0 24 24' strokeWidth={STROKE_WIDTH} >
+                    <svg width={`${SIZE}`} height={`${SIZE}`} viewBox='0 0 24 24' strokeWidth={STROKE_WIDTH} >
                         <motion.path
                             {...path01Variants.closed}
                             animate={path01Controls}

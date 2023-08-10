@@ -22,7 +22,7 @@ export const Display: FC<DisplayPropsExtended> = ({ size, weight, exchange, chil
 }
 
 // TITLE
-import type { TitleElement, TitleNames, TitlePropsExtended,  } from './Typography.type';
+import type { TitleElement, TitleNames, TitlePropsExtended, } from './Typography.type';
 import { validTitleElements } from './Typography.type'
 export const Title: FC<TitlePropsExtended> = ({ weight, degree = '1', exchange, className, children, ...props }) => {
     const ElementType = (Object.keys(props) as Array<TitleNames>).find(prop => validTitleElements.includes(prop)) || 'h2';
@@ -59,7 +59,7 @@ export const Text: FC<TextPropsExtended> = ({ weight, degree = '3', size, exchan
         className,
         textColorDegree[exchange ? 'exchanged' : 'normal'][degree]
     )
-    
+
     return React.createElement(ElementType, {
         className: classes,
         ...props
@@ -70,10 +70,16 @@ export const Text: FC<TextPropsExtended> = ({ weight, degree = '3', size, exchan
 // LINK
 import { LinkPropsExtended } from './Typography.type';
 
-export const Link: FC<LinkPropsExtended> = ({ weight,degree = '3', size, exchange, className, children, href, ...props }) => {
+export const Link: FC<LinkPropsExtended> = ({ weight, degree = '3', size, exchange, className, children, href, ...props }) => {
     const classes = twMerge(textStyle({
         weight
-    }), className, 'remove_outline',textColorDegree[exchange ? 'exchanged' : 'normal'][degree]);
+    }),
+        className,
+        Style[`text_${size}`],
+        Style['text'],
+        'remove_outline',
+        textColorDegree[exchange ? 'exchanged' : 'normal'][degree]
+    );
 
     return <LinkNext href={href} className={classes} {...props}>{children}</LinkNext>
 }
