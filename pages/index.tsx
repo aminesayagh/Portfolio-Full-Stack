@@ -1,6 +1,7 @@
 
 import { Head } from '@/components/common';
 import { Suspense } from 'react';
+import { Noise } from '@/components/ui';
 import '@/utils/i18n';
 
 const Video = () => {
@@ -32,8 +33,8 @@ export default function Home() {
       />
       <Suspense fallback={<Loading />}>
         <LandingPage />
+        <Noise />
       </Suspense>
-
     </>
   )
 }

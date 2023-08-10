@@ -26,7 +26,8 @@ import type { TitleElement, TitleNames, TitlePropsExtended,  } from './Typograph
 import { validTitleElements } from './Typography.type'
 export const Title: FC<TitlePropsExtended> = ({ weight, degree = '1', exchange, className, children, ...props }) => {
     const ElementType = (Object.keys(props) as Array<TitleNames>).find(prop => validTitleElements.includes(prop)) || 'h2';
-
+    // @ts-expect-error
+    validTitleElements.forEach(prop => delete props[prop]);
     const classes = twMerge(
         titleStyle({
             weight
