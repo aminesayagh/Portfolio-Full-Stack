@@ -11,9 +11,11 @@ export const Display: FC<DisplayPropsExtended> = ({ size, weight, exchange, chil
     return React.createElement('h1', {
         className: twMerge(
             displayStyle({
-                size, weight
+                weight
             }),
-            textColorDegree[exchange ? 'exchanged' : 'normal']['1']
+            textColorDegree[exchange ? 'exchanged' : 'normal']['1'],
+            Style[`display_${size}`],
+            Style['display']
         ),
         ...props
     }, children)

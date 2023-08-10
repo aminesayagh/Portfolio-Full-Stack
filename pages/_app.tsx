@@ -12,7 +12,7 @@ import { appWithTranslation } from 'next-i18next'
 
 const montserrat = Montserrat({
   subsets: ['cyrillic'],
-  variable: '--font-montserrat',
+  variable: '--font-sans',
   weight: ['100', '200' ,'300' ,'400', '500', '600', '700', '800', '900'],
 });
 

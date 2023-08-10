@@ -1,5 +1,5 @@
 import { VariantProps } from 'class-variance-authority';
-import React, { ComponentProps } from 'react';
+import React from 'react';
 import Link, { LinkProps } from 'next/link';
 
 import { titleStyle, textStyle, displayStyle } from './Typography.style';
@@ -8,6 +8,7 @@ export type DisplayPropsExtended = VariantProps<typeof displayStyle> & {
     children: React.ReactNode | string;
     className?: string;
     exchange?: boolean;
+    size: 'xl' | 'lg' | 'md';
 }
 
 export type TitleElement = {

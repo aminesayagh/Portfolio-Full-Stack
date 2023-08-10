@@ -6,7 +6,7 @@ import React from "react";
 
 const listText = 'flex flex-col gap-8';
 const TEXT_LOREM = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
-const title = (h: number) => `that is a title h${h} of my portfolio`;
+const title = (h: number) => `that is a title h${h} of my portfolio.`;
 const DEFAULT_TITLE_CLASSNAME = 'capitalize';
 
 const Divider = () => {
@@ -21,9 +21,9 @@ const TitleOfSection = ({ children }: { children: React.ReactNode }) => {
 
 const Section = ({ title, children }: { title: string, children: React.ReactNode }) => {
     return (
-        <div className='flex flex-row gap-6'>
+        <div className='flex flex-col md:flex-row gap-6'>
             <div className='w-32'>
-                <Text p weight='bold' degree='3' size='lg'>
+                <Text p weight='bold' degree='3' size='md'>
                     {title}
                 </Text>
             </div>
@@ -160,23 +160,23 @@ export default function App() {
                     <div>
                         <TitleOfSection >TYPOGRAPHY COLOR BRAND</TitleOfSection>
                     </div>
-                    <div className="flex flex-row gap-12 justify-between items-start">
-                        <Title h4 weight='bold' degree="1">TYPOGRAPHY TEXT BRAND</Title>
-                        <Title h4 weight='bold' degree="2">TYPOGRAPHY TEXT BRAND</Title>
-                        <Title h4 weight='bold' degree="3">TYPOGRAPHY TEXT BRAND</Title>
-                        <Title h4 weight='bold' degree="4">TYPOGRAPHY TEXT BRAND</Title>
+                    <div className="flex flex-row flex-wrap gap-4 lg:gap-12 justify-between items-start">
+                        <Title h4 weight='bold' degree="1" className='w-full md:w-1/2 xl:w-1/4'>TYPOGRAPHY TEXT BRAND</Title>
+                        <Title h4 weight='bold' degree="2" className='w-full md:w-1/2 xl:w-1/4'>TYPOGRAPHY TEXT BRAND</Title>
+                        <Title h4 weight='bold' degree="3" className='w-full md:w-1/2 xl:w-1/4'>TYPOGRAPHY TEXT BRAND</Title>
+                        <Title h4 weight='bold' degree="4" className='w-full md:w-1/2 xl:w-1/4'>TYPOGRAPHY TEXT BRAND</Title>
                     </div>
-                    <div className='flex flex-row gap-12 justify-between items-start'>
-                        <Text p weight='medium' degree='1' size='md'>
+                    <div className='flex flex-row flex-wrap gap-4 lg:gap-12 justify-between items-start'>
+                        <Text p weight='medium' degree='1' size='md' className='w-full xl:w-1/2' >
                             {TEXT_LOREM}
                         </Text>
-                        <Text p weight='medium' degree='2' size='md'>
+                        <Text p weight='medium' degree='2' size='md' className='w-full xl:w-1/2' >
                             {TEXT_LOREM}
                         </Text>
-                        <Text p weight='medium' degree='3' size='md'>
+                        <Text p weight='medium' degree='3' size='md' className='w-full xl:w-1/2' >
                             {TEXT_LOREM}
                         </Text>
-                        <Text p weight='medium' degree='4' size='md'>
+                        <Text p weight='medium' degree='4' size='md' className='w-full xl:w-1/2' >
                             {TEXT_LOREM}
                         </Text>
                     </div>

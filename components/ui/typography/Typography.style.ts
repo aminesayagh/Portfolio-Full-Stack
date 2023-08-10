@@ -26,24 +26,18 @@ export const displayStyle = cva([textDefault, fontFamilyTitle], {
         weight: {
             bold: 'font-black',
             semibold: 'font-semibold',
-            medium: 'font-medium',
-        },
-        size: {
-            'xl': '',
-            'lg': '',
-            'md': '',
+            medium: 'font-regular',
         }
     },
     defaultVariants: {
-        weight: 'bold',
-        size: 'xl',
+        weight: 'bold'
     }
 })
 
 export const titleStyle = cva([textDefault, fontFamilyTitle], {
     variants: {
         weight: {
-            bold: 'font-black',
+            bold: 'font-extrabold',
             semibold: 'font-semibold',
             medium: 'font-medium',
         }

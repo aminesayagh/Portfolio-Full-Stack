@@ -38,54 +38,106 @@ $h6: 1rem;
   @return $value / ($value * 0 + 1);
 }
 
-html{
-  
-}
-.title {
+.default-text {
   text-wrap: balance;
-  
   text-align: start;
   @apply align-middle whitespace-normal hyphens-manual;
-  
+}
+
+.title {
+  @apply default-text;
+  --degree-line-height: 1.2;
   &_h1 {
-    @include fluid-type(--font-size, $minScreen, $maxScreen, 1.6rem, 4.2rem);
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 1.6rem, 4rem);
     font-size: var(--font-size, $h1);
-    line-height: calc(var(--font-size, $h1) * 1.2);
-    margin-top: calc(#{$baseline} - var(--font-size, $h1) + #{$baseline});
+    line-height: calc(var(--font-size, $h1) * var(--degree-line-height, 1.2));
   }
   &_h2 {
-    @include fluid-type(--font-size, $minScreen, $maxScreen, 1.4rem, 3.8rem);
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 1.4rem, 3.4rem);
     font-size: var(--font-size, $h2);
-    line-height: calc(var(--font-size, $h2) * 1.2);
-    margin-top: calc(#{$baseline} - var(--font-size, $h2) + #{$baseline});
+    line-height: calc(var(--font-size, $h2) * var(--degree-line-height, 1.2));
   }
   &_h3 {
-    @include fluid-type(--font-size, $minScreen, $maxScreen, 1.2rem, 3rem);
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 1.2rem, 2.8rem);
     font-size: var(--font-size, $h3);
-    line-height: calc(var(--font-size, $h3) * 1.2);
-    margin-top: calc(#{$baseline} - var(--font-size, $h3) + #{$baseline});
+    line-height: calc(var(--font-size, $h3) * var(--degree-line-height, 1.2));
   }
   &_h4 {
     @include fluid-type(--font-size, $minScreen, $maxScreen, 1rem, 2.4rem);
     font-size: var(--font-size, $h4);
-    line-height: calc(var(--font-size, $h4) * 1.2);
-    margin-top: calc(#{$baseline} - var(--font-size, $h4) + #{$baseline});
+    line-height: calc(var(--font-size, $h4) * var(--degree-line-height, 1.2));
   }
   &_h5 {
     @include fluid-type(--font-size, $minScreen, $maxScreen, 0.9rem, 2rem);
     font-size: var(--font-size, $h5);
-    line-height: calc(var(--font-size, $h5) * 1.2);
-    margin-top: calc(#{$baseline} - var(--font-size, $h5) + #{$baseline});
+    line-height: calc(var(--font-size, $h5) * var(--degree-line-height, 1.2));
   }
   &_h6 {
     @include fluid-type(--font-size, $minScreen, $maxScreen, 0.8rem, 1.8rem);
     font-size: var(--font-size, $h6);
-    line-height: calc(var(--font-size, $h6) * 1.2);
-    margin-top: calc(#{$baseline} - var(--font-size, $h6) + #{$baseline});
+    line-height: calc(var(--font-size, $h6) * var(--degree-line-height, 1.2));
   }
   &::selection {
-    @apply bg-primary-600 text-gray-100;
+    @apply bg-primary-600 text-black-100;
   }
 }
 
+.text {
+  --degree-line-height: 1.6;
+  @apply default-text;
+  &_lg {
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.9rem, 1.2rem);
+    font-size: var(--font-size, 1.2rem);
+    line-height: calc(
+      var(--font-size, 1.2rem) * var(--degree-line-height, 1.5)
+    );
+    @apply tracking-tight;
+  }
+  &_md {
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.8rem, 1.1rem);
+    font-size: var(--font-size, 1rem);
+    line-height: calc(var(--font-size, 1rem) * var(--degree-line-height, 1.5));
+    @apply tracking-wide;
+  }
+  &_sm {
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.7rem, 1rem);
+    font-size: var(--font-size, 0.9rem);
+    line-height: calc(
+      var(--font-size, 0.9rem) * var(--degree-line-height, 1.5)
+    );
+    @apply tracking-wide;
+  }
+  &_xs {
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.8rem, 0.9rem);
+    font-size: var(--font-size, 0.8rem);
+    line-height: calc(
+      var(--font-size, 0.8rem) * var(--degree-line-height, 1.5)
+    );
+    @apply tracking-wide;
+  }
+  &::selection {
+    @apply bg-primary-500 text-black-300;
+  }
+}
 
+.display {
+  @apply default-text;
+  &_xl {
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 3rem, 8rem);
+    font-size: var(--font-size, 8rem);
+    line-height: calc(var(--font-size, 8rem) * var(--degree-line-height, 1.2));
+  }
+  &_lg {
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 2rem, 6rem);
+    font-size: var(--font-size, 6rem);
+    line-height: calc(var(--font-size, 6rem) * var(--degree-line-height, 1.2));
+  }
+  &_md {
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 1.2rem, 4.6rem);
+    font-size: var(--font-size, 4.6rem);
+    line-height: calc(var(--font-size, 4.6rem) * var(--degree-line-height, 1.2));
+  }
+  &::selection {
+    @apply bg-primary-500 text-black-200;
+  }
+}
