@@ -38,7 +38,7 @@ export const titleStyle = cva([textDefault, fontFamilyTitle], {
     variants: {
         weight: {
             bold: 'font-extrabold',
-            semibold: 'font-semibold',
+            semibold: 'font-bold',
             medium: 'font-medium',
         }
     },

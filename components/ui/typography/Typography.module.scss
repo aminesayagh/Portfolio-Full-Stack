@@ -46,19 +46,22 @@ $h6: 1rem;
   @apply default-text;
   --degree-line-height: 1.5;
   &_h1 {
-    @include fluid-type(--font-size, $minScreen, $maxScreen, 1.6rem, 4rem);
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 1.6rem, 4.4rem);
     font-size: var(--font-size, $h1);
     line-height: calc(var(--font-size, $h1) * var(--degree-line-height, 1.2));
+    @apply tracking-wider;
   }
   &_h2 {
     @include fluid-type(--font-size, $minScreen, $maxScreen, 1.4rem, 3.4rem);
     font-size: var(--font-size, $h2);
     line-height: calc(var(--font-size, $h2) * var(--degree-line-height, 1.2));
+
   }
   &_h3 {
     @include fluid-type(--font-size, $minScreen, $maxScreen, 1.2rem, 2.8rem);
     font-size: var(--font-size, $h3);
     line-height: calc(var(--font-size, $h3) * var(--degree-line-height, 1.2));
+    @apply tracking-wide;
   }
   &_h4 {
     @include fluid-type(--font-size, $minScreen, $maxScreen, 1rem, 2.4rem);

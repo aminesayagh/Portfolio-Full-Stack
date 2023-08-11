@@ -19,8 +19,8 @@ const montserrat = Montserrat({
 import '@/utils/i18n';
 
 
+gsap.registerPlugin(ScrollTrigger);
 function App({ Component, pageProps }: AppProps) {
-  gsap.registerPlugin(ScrollTrigger);
   return <main className={`${montserrat.variable} font-sans`}>
     <Component {...pageProps} />
   </main>
