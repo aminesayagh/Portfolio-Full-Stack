@@ -12,8 +12,9 @@ const Video = () => {
             if (!canvas) return;
             let context = canvas.getContext('2d');
 
-            canvas.width = 1588;
-            canvas.height = 900;
+            canvas.width = 1488;
+            canvas.height = 1100;
+
 
             const frameCount = 164;
             const currentFrame = (index: number) => `/framer-image/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
@@ -43,7 +44,7 @@ const Video = () => {
                 if (!context) return;
                 if (!ref.current) return;
                 context?.clearRect(0, 0, ref.current.width, ref.current.height);
-                context?.drawImage(images[hands.frame], 0, 0);
+                context?.drawImage(images[hands.frame], 0, -500);
             }
         }, []);
         return () => ctx.revert();
@@ -52,7 +53,7 @@ const Video = () => {
     return (
         <>
             <div className='block relative overflow-hidden w-full rounded-3xl'>
-                <canvas ref={ref} style={{}} />
+                <canvas ref={ref} style={{  }} />
             </div>
         </>
     )
