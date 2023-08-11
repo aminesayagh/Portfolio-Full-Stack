@@ -4,9 +4,8 @@ import 'styles/globals.css';
 import 'tailwindcss/tailwind.css';
 
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
 
 import { Montserrat } from 'next/font/google';
 import { appWithTranslation } from 'next-i18next'
@@ -14,13 +13,14 @@ import { appWithTranslation } from 'next-i18next'
 const montserrat = Montserrat({
   subsets: ['cyrillic'],
   variable: '--font-sans',
-  weight: ['100', '200' ,'300' ,'400', '500', '600', '700', '800', '900'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
 
 import '@/utils/i18n';
 
 
- function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
+  gsap.registerPlugin(ScrollTrigger);
   return <main className={`${montserrat.variable} font-sans`}>
     <Component {...pageProps} />
   </main>

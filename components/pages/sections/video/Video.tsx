@@ -51,11 +51,8 @@ const Video = () => {
 
     return (
         <>
-            <div className='block relative overflow-hidden w-full h-[90vh] rounded-3xl'>
+            <div className='block relative overflow-hidden w-full rounded-3xl'>
                 <canvas ref={ref} style={{}} />
-                {/* <video width='100%' height='100%' className="mt-[-20rem]"  muted loop controls>
-                    <source src='https://res.cloudinary.com/dvxn9nvjs/video/upload/v1691748873/portfolio/video/58ed8623-ece6-4924-b9ec-553dbfcbd26e_ipk0k5.mp4' type='video/mp4' />
-                </video> */}
             </div>
         </>
     )
