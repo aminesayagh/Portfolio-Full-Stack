@@ -1,6 +1,4 @@
-import { useTranslation } from 'next-i18next'
-
-import { Head, Header, Footer } from '@/components/common';
+import { Header, Footer } from '@/components/common';
 import { Container } from '@/components/ui';
 import { Intro, Manifesto, Cases, Action, Video } from '@/components/pages/sections';
 
