@@ -7,10 +7,10 @@ export interface IconProps extends SVGAttributes<SVGElement> {
 }
 
 const ListIconComponents = {
-    IconChevronDown,
-    IconChevronRight,
-    IconExclamationCircle,
-    IconCornerLeftDown,
+    IconChevronDown: (props: IconProps) => <IconChevronDown {...props} />,
+    IconChevronRight: (props: IconProps) => <IconChevronRight {...props} />,
+    IconExclamationCircle: (props: IconProps) => <IconExclamationCircle {...props} />,
+    IconCornerLeftDown: (props: IconProps) => <IconCornerLeftDown {...props} />,
 } as const;
 
 export type IconNames = keyof typeof ListIconComponents;

@@ -7,7 +7,7 @@ import Style from './Typography.module.scss';
 
 // DISPLAY
 export type { DisplayPropsExtended } from './Typography.type';
-export const Display: FC<DisplayPropsExtended> = ({ size, weight, exchange, children, ...props }) => {
+export const Display: FC<DisplayPropsExtended> = ({ size, weight, exchange, children, className, ...props }) => {
     return React.createElement('h1', {
         className: twMerge(
             displayStyle({
@@ -15,7 +15,8 @@ export const Display: FC<DisplayPropsExtended> = ({ size, weight, exchange, chil
             }),
             textColorDegree[exchange ? 'exchanged' : 'normal']['1'],
             Style[`display_${size}`],
-            Style['display']
+            Style['display'],
+            className,
         ),
         ...props
     }, children)

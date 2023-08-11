@@ -3,5 +3,7 @@ import dynamic from 'next/dynamic';
 export { default as Manifesto } from './2-manifesto';
 export { default as Cases } from './3-cases';
 export { default as Action } from './4-action';
+export { default as Video } from './video';
+
 
 export const Intro = dynamic(() => import('./1-intro'), { ssr: false });

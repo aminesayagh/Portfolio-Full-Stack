@@ -6,6 +6,7 @@ import 'tailwindcss/tailwind.css';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+gsap.registerPlugin(ScrollTrigger);
 
 import { Montserrat } from 'next/font/google';
 import { appWithTranslation } from 'next-i18next'

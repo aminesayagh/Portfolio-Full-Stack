@@ -39,10 +39,11 @@
         "copyright": "© 2023 MOHAMED AMINE SAYAGH.",
         "action": "LET'S TALK"
     },
-    "home": {
+    "intro": {
         "title": {
             "1":"interface",
-            "2": "full Stack",
+            "2_1": "full",
+            "2_2": "stack",
             "3": "Developer"
         },
         "descriptions": {
@@ -57,10 +58,54 @@
         },
         "copy": "© 2023"
     },
+    "manifesto": {
+        "title_1": "Unbiased Perspectives",
+        "title_2": "Manifesto",
+        "slogan": "We provide more than solutions, we deliver understanding.",
+        "subtitle": "HOW I DO",
+        "content": "Being correct is not enough, it's merely the inception. An exceptional engineer devotes a substantial amount of time to deep, unbiased listening. They consider real-world experimentation as their source of truth, adamantly differentiating between judgments drawn from perspectives and concrete facts."
+    },
+    "experience": {
+        "title": "Evolution through expertise",
+        "description": "Life hides in places we never look, the things we desire lie on the streets we haven't yet walked, it's these untraveled roads that call to me, igniting an endless quest in my heart.",
+        "stages": {
+            "1": {
+                "title": "WEB DESGIN",
+                "count": "01",
+                "description": "My journey began in the realm of Web Design, where the canvas of creativity met the structural rigidity of coding. Here, I learned to harmonize aesthetics with functionality, crafting compelling user interfaces that did not merely look good, but also worked seamlessly. "
+            },
+            "2": {
+                "title": "FRONT-eND DEVELOPMENT",
+                "count": "02",
+                "description": "As I delved deeper into the craft, I transitioned into the exciting domain of Front-End Development. Here, I became the bridge between design and technology, breathing life into static designs with robust coding languages. I started to see websites as more than just a visual interfaces."
+            },
+            "3": {
+                "title": "BACK-eND DEVELOPMENT",
+                "count": "03",
+                "description": "Next, I ventured into the mysterious depths of Back-End Development. If the front-end was about creating a perfect facade, the back-end was about ensuring the machinery behind it was flawless. Databases, servers, I learned to build scalable, efficient systems and began to appreciate the underlying complexity that makes a website's seamless operation possible."
+            },
+            "4": {
+                "title": "SYSTEM ARCHITECTURE",
+                "count": "04",
+                "description": "With a wealth of knowledge accumulated, my journey led me to the study of System Architecture. I began to see the broader perspective, understanding how every decision, every component, every line of code could impact the entire system. It was here that I honed my ability to design resilient, efficient, and scalable architectures."
+            }
+        }
+    },
+    "motivation": {
+        "action": "START THE PROJECT",
+        "content": {
+            "1": "Open, bold, and engaging, without the trappings of entrenched or outdated opinions. My work thrives in the freedom and room to grow, driven by responsibility and inner drive. I work within diverse teams, powered by remarkable personalities.",
+            "2": "My work aspires to be special, to spring from the creativity of diverse minds - irrespective of gender, age, or any other factors."
+        }
+    },
+    "cases": {
+        "title": "Selected Projects",
+        "description": "Creativity requires Aim, Orientation, Responsibility, and discipline. the willingness to make sacrifices which is the hallmark of maturity in the service of a higher goal."
+    },
     "contactCall": {
         "title": "GOT A PROJECT?",
         "action":"LET'S TALK",
-        "description": "FACE YOUR BEING WITH THE NECESSITY OF TRANSFORMATION"
+        "description": "Face your being with the necessity of transformation"
     },
     "footer": {
         "state": "I usually work on several projects, but I'll be happy to discuss new opportunities.",

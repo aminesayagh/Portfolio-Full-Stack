@@ -25,7 +25,7 @@ export const displayStyle = cva([textDefault, fontFamilyTitle], {
     variants: {
         weight: {
             bold: 'font-black',
-            semibold: 'font-semibold',
+            semibold: 'font-bold',
             medium: 'font-regular',
         }
     },

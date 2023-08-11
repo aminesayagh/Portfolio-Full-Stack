@@ -39,7 +39,6 @@ $h6: 1rem;
 }
 
 .default-text {
-  text-align: start;
   @apply align-middle hyphens-manual;
   text-wrap: balance;
 }
@@ -93,13 +92,13 @@ $h6: 1rem;
     @apply tracking-tight;
   }
   &_md {
-    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.8rem, 1.1rem);
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.8rem, 1rem);
     font-size: var(--font-size, 1rem);
     line-height: calc(var(--font-size, 1rem) * var(--degree-line-height, 1.5));
     @apply tracking-wider;
   }
   &_sm {
-    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.7rem, 0.9rem);
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.7rem, 0.84rem);
     font-size: var(--font-size, 0.9rem);
     line-height: calc(
       var(--font-size, 0.9rem) * var(--degree-line-height, 1.5)
@@ -121,8 +120,9 @@ $h6: 1rem;
 
 .display {
   @apply default-text;
+  --degree-line-height: 1;
   &_xl {
-    @include fluid-type(--font-size, $minScreen, $maxScreen, 3rem, 8rem);
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 3rem, 9.2rem);
     font-size: var(--font-size, 8rem);
     line-height: calc(var(--font-size, 8rem) * var(--degree-line-height, 1.2));
   }
@@ -132,7 +132,7 @@ $h6: 1rem;
     line-height: calc(var(--font-size, 6rem) * var(--degree-line-height, 1.2));
   }
   &_md {
-    @include fluid-type(--font-size, $minScreen, $maxScreen, 1.2rem, 4.6rem);
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 1.2rem, 4rem);
     font-size: var(--font-size, 4.6rem);
     line-height: calc(var(--font-size, 4.6rem) * var(--degree-line-height, 1.2));
   }

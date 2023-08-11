@@ -36,3 +36,6 @@ html {
   -webkit-touch-callout: none;
 }
 
+.whitespace-nowrap-important {
+  white-space: nowrap !important;
+}
