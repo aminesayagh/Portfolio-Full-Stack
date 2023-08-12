@@ -1,6 +1,6 @@
 import { Header, Footer } from '@/components/common';
 import { Container } from '@/components/ui';
-import { Intro, Manifesto, Cases, Action, Video } from '@/components/pages/sections';
+import { Intro, Manifesto, Cases, Action, Video, Expertise } from '@/components/pages/sections';
 
 
 
@@ -20,6 +20,9 @@ const LandingPage = () => {
                 <Manifesto />
             </Container>
             <span className='block h-40 w-full'></span>
+            <Container as='section' size='lg' >
+                <Expertise />
+            </Container>
             <Container as='section' size='lg' >
                 <Cases />
             </Container>

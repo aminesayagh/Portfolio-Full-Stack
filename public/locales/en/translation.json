@@ -63,7 +63,8 @@
         "title_2": "Manifesto",
         "image_alt": "Mohamed Amine SAYAGH",
         "slogan": "We provide more than solutions, we deliver understanding.",
-        "subtitle": "HOW I DO",
+        "subtitle_1": "HOW I DO",
+        "subtitle_2": "PROBLEM SOLVING",
         "content": "Being correct is not enough, it's merely the inception. An exceptional engineer devotes a substantial amount of time to deep, unbiased listening. They consider real-world experimentation as their source of truth, adamantly differentiating between judgments drawn from perspectives and concrete facts."
     },
     "experience": {
@@ -71,17 +72,17 @@
         "description": "Life hides in places we never look, the things we desire lie on the streets we haven't yet walked, it's these untraveled roads that call to me, igniting an endless quest in my heart.",
         "stages": {
             "1": {
-                "title": "WEB DESGIN",
+                "title": "WEB DESIGNER",
                 "count": "01",
                 "description": "My journey began in the realm of Web Design, where the canvas of creativity met the structural rigidity of coding. Here, I learned to harmonize aesthetics with functionality, crafting compelling user interfaces that did not merely look good, but also worked seamlessly. "
             },
             "2": {
-                "title": "FRONT-eND DEVELOPMENT",
+                "title": "FRONT-END DEVELOPMENT",
                 "count": "02",
                 "description": "As I delved deeper into the craft, I transitioned into the exciting domain of Front-End Development. Here, I became the bridge between design and technology, breathing life into static designs with robust coding languages. I started to see websites as more than just a visual interfaces."
             },
             "3": {
-                "title": "BACK-eND DEVELOPMENT",
+                "title": "BACK-END DEVELOPMENT",
                 "count": "03",
                 "description": "Next, I ventured into the mysterious depths of Back-End Development. If the front-end was about creating a perfect facade, the back-end was about ensuring the machinery behind it was flawless. Databases, servers, I learned to build scalable, efficient systems and began to appreciate the underlying complexity that makes a website's seamless operation possible."
             },

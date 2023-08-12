@@ -6,7 +6,7 @@ export interface ContainerProps {
     id?: string;
     size: 'lg',
     className?: string;
-    as?: 'span' | 'div' | 'section';
+    as?: 'span' | 'div' | 'section' | 'footer' | 'header';
 }
 
 export const containerStyle = cva(['mx-auto w-full max-w-full z-container overflow-x-hidden h-auto  2xl:max-w-[1400px] 3xl:max-w-[1500px] 4xl:max-w-[1600px]'], {

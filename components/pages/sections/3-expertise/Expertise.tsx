@@ -52,9 +52,9 @@ const ExpertiseStages = () => {
         <>
             <div className='grid grid-cols-4 grid-rows-2'>
                 {Array.apply('', Array(8)).map((_, i) => {
-                    if(i >= 4) return <EmptyCard key={i} />
+                    if (i >= 4) return <EmptyCard key={i} />
                     return (
-                        <Card key={i} title={t(`experience.card.${i}.title`)} description={t(`experience.card.${i}.description`)} number={i + 1} />
+                        <Card key={i} title={t(`experience.stages.${i + 1}.title`)} description={t(`experience.stages.${i + 1}.description`)} number={i + 1} />
                     )
                 })}
             </div>
@@ -64,12 +64,10 @@ const ExpertiseStages = () => {
 const Expertise = () => {
     return (
         <>
-            <section className='overflow-hidden'>
-                <div>
-                    <ExpertiseHead />
-                    <ExpertiseStages />
-                </div>
-            </section>
+            <div className={twMerge('flex flex-col gap-12')}>
+                <ExpertiseHead />
+                <ExpertiseStages />
+            </div>
         </>
     )
 }

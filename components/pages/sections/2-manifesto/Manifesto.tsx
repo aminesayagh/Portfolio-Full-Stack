@@ -5,6 +5,7 @@ import { Title, Text, Image } from '@/components/ui';
 
 const LINE_CLASSNAME = 'flex flex-row justify-between items-start gap-4';
 import { useMeasure } from "react-use";
+
 const Manifesto = () => {
     const { t } = useTranslation();
     const [ref, { width }] = useMeasure<HTMLDivElement>();
@@ -34,7 +35,10 @@ const Manifesto = () => {
                 </div>
             </div>
             <div className='flex flex-row justify-between items-start'>
-                <Text p size='md' weight='semibold' degree='3'>{t('manifesto.subtitle')}</Text>
+                <div className={twMerge('flex flex-col p-4')}>
+                    <Text p size='md' weight='semibold' degree='3'>{t('manifesto.subtitle_1')}</Text>
+                    <Text p size='md' weight='semibold' degree='3'>{t('manifesto.subtitle_2')}</Text>
+                </div>
                 <Title h3 weight='semibold' degree='3' style={{ width: `${width}px` }}>{t('manifesto.content')}</Title>
             </div>
         </div>
