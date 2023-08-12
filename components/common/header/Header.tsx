@@ -126,7 +126,7 @@ const Header = () => {
 
     return (
         <Modal isOpenExternal={openMenu} menuHandler={menuHandler}  >
-            <Navbar size='lg'>
+            <Navbar size='lg' inTopOfScroll={openMenu} >
                 <Navbar.Content className={twMerge('flex-1', GAP_SIZE_LG)}>
                     <Link href={`mailto:${t('header.email')}`} size='xs' weight='semibold' className='hidden mdl:flex'>{t('header.email')}</Link>
                     <span className="w-[1.2px] bg-gray-500 h-[14px] rotate-[25deg] hidden mdl:block" />
@@ -141,6 +141,7 @@ const Header = () => {
                     <Button
                         onPress={() => onButtonClick('/contact')}
                         size='sm'
+                        degree='1'
                         className={twMerge(
                             'py-2 border-none overflow-hidden',
                             'subElement-item hidden sm:block',
@@ -177,9 +178,9 @@ const Header = () => {
                                             {menuHamburgerItems.map((item, index) => {
                                                 return <li key={index} className={twMerge('flex flex-col items-start', 'overflow-hidden')}>
                                                     <div className={twMerge('flex flex-row justify-start items-start relative cursor-pointer', 'modal-item')} >
-                                                        <Button onPress={() => {
+                                                        <Button size='auto' onPress={() => {
                                                             onButtonClick(item.link)
-                                                        }} className={
+                                                        }} degree='1' className={
                                                             twMerge(
                                                                 'capitalize relative text-white-600 hover:text-primary-500',
                                                                 'text-7xl sm:text-8xl mdl:text-9xl lg:text-15xl xl:text-[5rem] font-bold leading-tight tracking-wide transition-colors duration-150'

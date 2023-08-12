@@ -51,7 +51,7 @@ export type TextElement = {
     em: true
 };
 
-export type TextSizes = 'lg' | 'md' | 'sm' | 'xs';
+export type TextSizes = 'lg' | 'md' | 'sm' | 'xs' | 'auto';
 export type TextPropsExtended = TextElement & VariantProps<typeof textStyle> & {
     children: React.ReactNode | string;
     className?: string;

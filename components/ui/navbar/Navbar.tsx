@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useContext, createContext } from 'react';
+import { useState, useRef, useEffect, useContext, createContext, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { Link as LinkUi } from '@/components/ui';
@@ -57,10 +57,11 @@ type Styles = ReturnType<typeof useAnimationScroll>[2];
 
 const NavbarAnimation = createContext<Styles | null>(null);
 
-const Navbar: NavbarType = ({ children, size, className, ...props }: NavbarProps) => {
+const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props }: NavbarProps) => {
     const [ref, controls, styles] = useAnimationScroll();
 
-    const backgroundColor = styles.backgroundColorDark;
+    const backgroundColor = useMemo(() => inTopOfScroll ? 'transparent' : styles.backgroundColorDark, [inTopOfScroll]);
+
     return <>
         <NavbarAnimation.Provider value={styles}>
             <motion.header ref={ref} initial='visible' animate={controls} variants={{
@@ -79,12 +80,12 @@ const Navbar: NavbarType = ({ children, size, className, ...props }: NavbarProps
                     }
                 }
             }} style={{ 
-                backgroundColor, 
-                // backdropFilter: styles.blur,
+                backgroundColor,
                 display: styles.display
             }} className={twMerge(
                 'fixed top-0 left-0 w-full max-w-[100vw] py-4 z-header', className, zIndex.navbar,
             )}
+            {...props}
             >
                 <div className={twMerge('flex flex-row items-center justify-between w-full', containerStyle({ size }))}>
                     {children}

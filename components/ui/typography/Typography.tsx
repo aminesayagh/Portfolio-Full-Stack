@@ -46,8 +46,9 @@ export const Title: FC<TitlePropsExtended> = ({ weight, degree = '1', exchange, 
 
 // TEXT
 import { TextNames, TextPropsExtended, validTextElements } from './Typography.type';
+export type TextPropsType = Pick<TextPropsExtended, 'exchange' | 'size' | 'weight' | 'degree'>;
 
-const textClassNames = ({ weight, size, degree, exchange }: { exchange: TextPropsExtended['exchange'] ,weight: TextPropsExtended['weight'], degree: TextPropsExtended['degree'], size: TextPropsExtended['size'] }) => {
+export const textClassNames = ({ weight, size, degree, exchange }: TextPropsType) => {
     return twMerge(
         textStyle({
             weight

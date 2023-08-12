@@ -8,6 +8,7 @@ import { TextType } from '../typography';
 export type NavbarProps = {
     children: React.ReactNode;
     className?: string;
+    inTopOfScroll?: boolean;
 } & VariantProps<typeof containerStyle>;
 
 export type BrandProps = {
