@@ -27,6 +27,7 @@ const LandingPage = () => {
             <Container as='section' size='lg' className=''>
                 <CallToAction />
             </Container>
+            <span className='block h-40 w-full'></span>
             <Container as='section' size='lg' >
                 <Cases />
             </Container>
