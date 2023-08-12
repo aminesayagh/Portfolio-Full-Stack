@@ -19,7 +19,7 @@ const LandingPage = () => {
             <Container as='section' size='lg' >
                 <Manifesto />
             </Container>
-            <span className='block h-40 w-full'></span>
+            <span className='block h-60 w-full'></span>
             <Container as='section' size='full' className='[&>*]:py-20 [&>*]:bg-white-200 relative overflow-hidden' >
                 <Expertise />
                 <Noise position='absolute' />

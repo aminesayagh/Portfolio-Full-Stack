@@ -8,11 +8,11 @@ const Cases = () => {
     return (
         <>
             <div className={twMerge('grid grid-cols-12')}>
-                <div>
-                    <Title h2 weight='bold' degree='2'>
+                <div className={twMerge('col-start-9 col-span-4', 'flex flex-col gap-8', 'w-min')}>
+                    <Title h1 weight='bold' degree='2' className={'w-fit'}>
                         {t('cases.title')}
                     </Title>
-                    <Text p size='sm' degree='3' weight='semibold' >
+                    <Text p size='md' degree='3' weight='semibold' className='w-fit mr-6' >
                         {t('cases.description')}
                     </Text>
                 </div>

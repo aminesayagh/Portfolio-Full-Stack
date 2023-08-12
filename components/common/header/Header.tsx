@@ -155,7 +155,7 @@ const Header = () => {
                         {({ handler, isOpen }) => {
                             return <>
                                 <div className={twMerge('flex flex-row items-center gap-6 justify-end')} >
-                                    <span className='overflow-hidden hidden xxs:block' onClick={() => handler()}>
+                                    <span className='overflow-hidden hidden xxs:block cursor-pointer' onClick={() => handler()}>
                                         <Text p size='xs' degree='3' className={twMerge('mr-2 hidden', 'modal-close')}>{t('header.close')}</Text>
                                     </span>
                                     <HamburgerMenu isOpen={isOpen} setOpen={handler} />
