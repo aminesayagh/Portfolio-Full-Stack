@@ -7,6 +7,10 @@ import '@/utils/i18n';
 import { Loading } from 'components/ui';
 import "@/utils/i18n";
 
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
+
 
 import { LandingPage } from '@/components/pages';
 

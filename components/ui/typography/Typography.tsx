@@ -47,22 +47,24 @@ export const Title: FC<TitlePropsExtended> = ({ weight, degree = '1', exchange, 
 // TEXT
 import { TextNames, TextPropsExtended, validTextElements } from './Typography.type';
 
-export const Text: FC<TextPropsExtended> = ({ weight, degree = '3', size, exchange, className, children, ...props }) => {
-    const ElementType = (Object.keys(props) as Array<TextNames>).find(prop => validTextElements.includes(prop)) || 'p';
-    // @ts-expect-error
-    validTextElements.forEach(prop => delete props[prop]);
-    const classes = twMerge(
+const textClassNames = ({ weight, size, degree, exchange }: { exchange: TextPropsExtended['exchange'] ,weight: TextPropsExtended['weight'], degree: TextPropsExtended['degree'], size: TextPropsExtended['size'] }) => {
+    return twMerge(
         textStyle({
             weight
         }),
         Style[`text_${size}`],
         Style['text'],
-        className,
-        textColorDegree[exchange ? 'exchanged' : 'normal'][degree]
+        textColorDegree[!!exchange ? "exchanged" : "normal"][degree]
     )
-
+}
+export const Text: FC<TextPropsExtended> = ({ weight, degree = '3', size, exchange, className, children, ...props }) => {
+    const ElementType = (Object.keys(props) as Array<TextNames>).find(prop => validTextElements.includes(prop)) || 'p';
+    // @ts-expect-error
+    validTextElements.forEach(prop => delete props[prop]);
     return React.createElement(ElementType, {
-        className: classes,
+        className: twMerge(
+            textClassNames({ weight, size, degree, exchange }), className
+        ),
         ...props
     }, children);
 }
@@ -72,15 +74,9 @@ export const Text: FC<TextPropsExtended> = ({ weight, degree = '3', size, exchan
 import { LinkPropsExtended } from './Typography.type';
 
 export const Link: FC<LinkPropsExtended> = ({ weight, degree = '3', size, exchange, className, children, href, ...props }) => {
-    const classes = twMerge(textStyle({
-        weight
-    }),
-        className,
-        Style[`text_${size}`],
-        Style['text'],
-        'remove_outline',
-        textColorDegree[exchange ? 'exchanged' : 'normal'][degree]
-    );
 
-    return <LinkNext href={href} className={classes} {...props}>{children}</LinkNext>
+
+    return <LinkNext href={href} className={twMerge(
+        textClassNames({ weight, size, degree, exchange }), 'remove_outline',className
+    )} {...props}>{children}</LinkNext>
 }

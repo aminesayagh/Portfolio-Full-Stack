@@ -36,8 +36,8 @@ const Title = () => {
         <div className={twMerge('w-2/12', 'flex flex-col items-start justify-end w-fit', 'my-4', 'col-span-2 col-start-1', 'row-start-2 row-span-1')} >
             <ButtonNext />
         </div>
-        <div className={twMerge('flex flex-row justify-end ', 'col-start-3 col-span-10', 'gap-5')}>
-            <div className={twMerge('flex flex-col items-end -space-y-2 pt-3')} >
+        <div className={twMerge('flex flex-row justify-end ', 'col-start-3 col-span-10', 'gap-8')}>
+            <div className={twMerge('flex flex-col items-end pt-3')} >
                 <Display size='md' weight='semibold' className={DISPLAY_2_CLASS_NAME}>{t('intro.title.2_1')}</Display>
                 <Display size='md' weight='semibold' className={DISPLAY_2_CLASS_NAME}>{t('intro.title.2_2')}</Display>
             </div>

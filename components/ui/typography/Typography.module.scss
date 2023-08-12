@@ -101,7 +101,7 @@ $h6: 1rem;
     @apply tracking-wider;
   }
   &_sm {
-    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.7rem, 0.84rem);
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.7rem, 0.82rem);
     font-size: var(--font-size, 0.9rem);
     line-height: calc(
       var(--font-size, 0.9rem) * var(--degree-line-height, 1.5)
@@ -126,7 +126,7 @@ $h6: 1rem;
   @apply default-text;
   --degree-line-height: 1;
   &_xl {
-    @include fluid-type(--font-size, $minScreen, $maxScreen, 3rem, 9.2rem);
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 3rem, 9.6rem);
     font-size: var(--font-size, 8rem);
     line-height: calc(var(--font-size, 8rem) * var(--degree-line-height, 1.2));
   }

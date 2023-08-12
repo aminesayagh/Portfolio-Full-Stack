@@ -9,5 +9,6 @@ export { default as Video } from './video';
 export const Intro = dynamic(() => import('./1-intro'), { ssr: false });
 export const Manifesto = dynamic(() => import('./2-manifesto'), { ssr: false });
 export const Expertise = dynamic(() => import('./3-expertise'), { ssr: false });
+export const CallToAction = dynamic(() => import('./3_1-action'), { ssr: false });
 export const Cases = dynamic(() => import('./4-cases'), { ssr: false });
 export const Action = dynamic(() => import('./5-action'), { ssr: false });

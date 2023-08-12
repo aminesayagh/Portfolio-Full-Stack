@@ -1,6 +1,6 @@
 import { Header, Footer } from '@/components/common';
-import { Container } from '@/components/ui';
-import { Intro, Manifesto, Cases, Action, Video, Expertise } from '@/components/pages/sections';
+import { Container, Noise } from '@/components/ui';
+import { Intro, Manifesto, Cases, Action, Video, Expertise, CallToAction } from '@/components/pages/sections';
 
 
 
@@ -14,14 +14,18 @@ const LandingPage = () => {
             <span className='block h-40 w-full'></span>
             <Container as='div' size='lg'>
                 <Video />
-            </Container> 
+            </Container>
             <span className='block h-40 w-full'></span>
             <Container as='section' size='lg' >
                 <Manifesto />
             </Container>
             <span className='block h-40 w-full'></span>
-            <Container as='section' size='lg' >
+            <Container as='section' size='full' className='[&>*]:py-20 [&>*]:bg-white-200 relative overflow-hidden' >
                 <Expertise />
+                <Noise position='absolute' />
+            </Container>
+            <Container as='section' size='lg' className=''>
+                <CallToAction />
             </Container>
             <Container as='section' size='lg' >
                 <Cases />

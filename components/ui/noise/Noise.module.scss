@@ -1,7 +1,6 @@
 
 
 .bg {
-    @apply fixed -top-1/2 -left-1/2 -bottom-1/2 -right-1/2 w-[200%] h-[200vh] visible z-bg;
     background: transparent url('http://assets.iceable.com/img/noise-transparent.png') repeat 0 0;
     background-repeat: repeat;
     animation: bg-animation .2s infinite;

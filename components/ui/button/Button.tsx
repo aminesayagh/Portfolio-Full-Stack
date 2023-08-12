@@ -3,6 +3,7 @@ import { Button } from 'react-aria-components'
 import { ButtonProps } from './Button.type';
 import { twMerge } from 'tailwind-merge';
 import { cva } from 'class-variance-authority';
+import { Text } from '@/components/ui';
 
 import { mergeClassName } from '@/helpers/className';
 import { TextSizes } from '@/components/ui/typography';
@@ -34,7 +35,7 @@ const ButtonUi = ({ children, icon, iconRight, size, full, className, ...props }
             <Button className={twMerge(
                 'touch-none select-none focus:outline-none',
                 'gap-2 flex flex-row flex-nowrap self-center items-center justify-center',
-                'font-body font-bold',
+                'font-sans font-bold',
                 'text-clip whitespace-nowrap overflow-hidden',
                 'align-middle',
                 'transition-colors ease-in-out duration-200',

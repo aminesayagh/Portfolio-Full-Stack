@@ -23,7 +23,6 @@ const useAnimationScroll = () => {
 
     useEffect(() => {
         scrollY.onChange(val => {
-
             const diff = Math.abs(val - lastScrollY.current);
             if (val >= lastScrollY.current) {
                 delta.current = delta.current >= 10 ? 10 : delta.current + diff;
@@ -40,12 +39,12 @@ const useAnimationScroll = () => {
         return () => {
             scrollY.destroy();
         }
-    }, [scrollY, controls, lastScrollY, delta]);
+    }, [scrollY]);
 
     const containerPadding = useTransform(scrollY, scrollYRange, ['1rem', '0.5rem', '0.5rem']);
-    const blur = useTransform(scrollY, scrollYRange, ['blur(0px)', 'blur(50px)', 'blur(50px)']);
+    const blur = useTransform(scrollY, scrollYRange, ['blur(0px)', 'blur(100px)', 'blur(100px)']);
     const backgroundColorWhite = useTransform(scrollY, scrollYRange, ['transparent', "#ffffff90", "#ffffff90"]);
-    const backgroundColorDark = useTransform(scrollY, scrollYRange, ['transparent', "#00000090", "#00000099"]);
+    const backgroundColorDark = useTransform(scrollY, scrollYRange, ['transparent', "#111517", "#111517"]);
     const display = useTransform(scrollY, scrollYRange, ['flex', 'hidden', 'hidden']);
     const scale = useTransform(scrollY, scrollYRange, ['100%', '90%', '90%']);
 
@@ -68,24 +67,23 @@ const Navbar: NavbarType = ({ children, size, className, ...props }: NavbarProps
                 visible: {
                     y: 0,
                     transition: {
-                        duration: 0.2,
-                        ease: "easeInOut",
+                        duration: 0.16,
+                        ease: "easeIn",
                     }
                 },
                 hidden: {
-                    y: '-100%',
+                    y: '-120%',
                     transition: {
-                        duration: 0.2,
-                        ease: "easeInOut",
+                        duration: 0.16,
+                        ease: "easeOut",
                     }
                 }
             }} style={{ 
                 backgroundColor, 
-                backdropFilter: styles.blur, 
-                paddingTop: styles.containerPadding, paddingBottom: styles.containerPadding, 
+                // backdropFilter: styles.blur,
                 display: styles.display
             }} className={twMerge(
-                'fixed top-0 left-0 w-full max-w-[100vw]', className, zIndex.navbar,
+                'fixed top-0 left-0 w-full max-w-[100vw] py-4 z-header', className, zIndex.navbar,
             )}
             >
                 <div className={twMerge('flex flex-row items-center justify-between w-full', containerStyle({ size }))}>

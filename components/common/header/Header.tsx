@@ -128,7 +128,7 @@ const Header = () => {
         <Modal isOpenExternal={openMenu} menuHandler={menuHandler}  >
             <Navbar size='lg'>
                 <Navbar.Content className={twMerge('flex-1', GAP_SIZE_LG)}>
-                    <Link href='/' size='xs' className='hidden mdl:flex'>{t('header.email')}</Link>
+                    <Link href={`mailto:${t('header.email')}`} size='xs' weight='semibold' className='hidden mdl:flex'>{t('header.email')}</Link>
                     <span className="w-[1.2px] bg-gray-500 h-[14px] rotate-[25deg] hidden mdl:block" />
                     <SwitchLang />
                 </Navbar.Content>
@@ -182,7 +182,7 @@ const Header = () => {
                                                         }} className={
                                                             twMerge(
                                                                 'capitalize relative text-white-600 hover:text-primary-500',
-                                                                'text-7xl sm:text-8xl mdl:text-9xl lg:text-13xl 2xl:text-15xl font-bold leading-tight tracking-wide transition-colors duration-150'
+                                                                'text-7xl sm:text-8xl mdl:text-9xl lg:text-15xl xl:text-[5rem] font-bold leading-tight tracking-wide transition-colors duration-150'
                                                             )}>
                                                             {t(`${BASE_LOCALE_MENU}.${item.id}.attribute`)}
                                                         </Button>

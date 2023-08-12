@@ -3,8 +3,7 @@ import type { AppProps } from 'next/app'
 import 'styles/globals.css';
 import 'tailwindcss/tailwind.css';
 
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+
 
 
 import { Montserrat } from 'next/font/google';
@@ -19,7 +18,6 @@ const montserrat = Montserrat({
 import '@/utils/i18n';
 
 
-gsap.registerPlugin(ScrollTrigger);
 function App({ Component, pageProps }: AppProps) {
   return <main className={`${montserrat.variable} font-sans`}>
     <Component {...pageProps} />
