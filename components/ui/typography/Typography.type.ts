@@ -9,6 +9,7 @@ export type DisplayPropsExtended = VariantProps<typeof displayStyle> & {
     className?: string;
     exchange?: boolean;
     size: 'xl' | 'lg' | 'md';
+    fitty?: boolean;
 }
 
 export type TitleElement = {

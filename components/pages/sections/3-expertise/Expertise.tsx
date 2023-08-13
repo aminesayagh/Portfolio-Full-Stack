@@ -31,7 +31,7 @@ const Card = ({ title, description, number }: { title: string, description: stri
         <div className={twMerge('flex flex-col gap-16 justify-between items-baseline', 'p-6', BORDER_CARD_CLASS_NAME , 'w-full h-full')}>
             <div className={twMerge('flex flex-row justify-between items-start', 'gap-4', 'w-full')}>
                 <Title h5 weight='bold' degree='2' exchange>{title}</Title>
-                <Text p weight='bold' degree='3' size="lg" exchange>{number}</Text>
+                <Text p weight='bold' degree='3' size="lg" exchange className='opacity-60'>{number}</Text>
             </div>
             <div className="">
                 <Text p weight='medium' degree='3' size="sm" exchange>{description}</Text>

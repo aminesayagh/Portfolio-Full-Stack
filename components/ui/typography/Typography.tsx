@@ -7,11 +7,12 @@ import { DisplayPropsExtended } from './Typography.type';
 import Style from './Typography.module.scss';
 import { useHover } from 'react-aria';
 
-
+import { ReactFitty } from 'react-fitty';
 // DISPLAY
 export type { DisplayPropsExtended } from './Typography.type';
-export const Display: FC<DisplayPropsExtended> = ({ size, weight, exchange, children, className, ...props }) => {
-    return React.createElement('h1', {
+export const Display: FC<DisplayPropsExtended> = ({ fitty, size, weight, exchange, children, className, ...props }) => {
+    const element = fitty ? ReactFitty : 'h1'
+    return React.createElement(element, {
         className: twMerge(
             displayStyle({
                 weight
