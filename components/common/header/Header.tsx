@@ -85,7 +85,6 @@ const Header = () => {
                     transformOrigin: 'left center',
                     ease: 'power3.inOut',
                     duration: DURATION / 2,
-                    opacity: 0,
                 }, '<25%')
                 tl.current.play();
             });
@@ -182,7 +181,7 @@ const Header = () => {
                                                             onButtonClick(item.link)
                                                         }} degree='1' className={
                                                             twMerge(
-                                                                'capitalize relative text-white-600 hover:text-primary-500',
+                                                                'capitalize relative text-white-600 bg-black-200 z-10 hover:text-primary-500',
                                                                 'text-7xl sm:text-8xl mdl:text-9xl lg:text-15xl xl:text-[5rem] font-bold leading-tight tracking-wide transition-colors duration-150'
                                                             )}>
                                                             {t(`${BASE_LOCALE_MENU}.${item.id}.attribute`)}

@@ -7,10 +7,9 @@ import { useTranslation } from "next-i18next";
 
 const ButtonNext = () => {
     return <>
-        <Button className={twMerge('border-dashed border-gray-100 border-2', 'rounded-full')}>
+        <Button className={twMerge('bg-white-200', 'rounded-full')}>
             <div className='p-6'>
-
-                <Icon name='IconCornerLeftDown' size='48' className='stroke-white-200 stroke-1' />
+                <Icon name='IconCornerLeftDown' size='44' className='stroke-black-200 stroke-1' />
             </div>
         </Button>
     </>

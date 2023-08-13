@@ -92,10 +92,10 @@ $h6: 1rem;
     line-height: calc(
       var(--font-size, 1.2rem) * var(--degree-line-height, 1.5)
     );
-    @apply tracking-tight;
+    @apply tracking-wider;
   }
   &_md {
-    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.8rem, 1rem);
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.8rem, 0.94rem);
     font-size: var(--font-size, 1rem);
     line-height: calc(var(--font-size, 1rem) * var(--degree-line-height, 1.5));
     @apply tracking-wider;

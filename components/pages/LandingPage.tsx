@@ -2,7 +2,7 @@ import { Header, Footer } from '@/components/common';
 import { Container, Noise } from '@/components/ui';
 import { Intro, Manifesto, Cases, Action, Video, Expertise, CallToAction } from '@/components/pages/sections';
 
-
+import { twMerge } from 'tailwind-merge';
 
 const LandingPage = () => {
     return (
@@ -19,7 +19,7 @@ const LandingPage = () => {
             <Container as='section' size='lg' >
                 <Manifesto />
             </Container>
-            <span className='block h-60 w-full'></span>
+            <span className='block h-72 w-full'></span>
             <Container as='section' size='full' className='[&>*]:py-20 [&>*]:bg-white-200 relative overflow-hidden' >
                 <Expertise />
                 <Noise position='absolute' />

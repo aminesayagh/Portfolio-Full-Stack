@@ -9,12 +9,12 @@ const Action = () => {
     return (
         <>
             <div className={twMerge('flex flex-row justify-between items-end', 'py-12')}>
-                <div className='w-auto'>
-                    <Button size='sm' className='border rounded-full' >
+                <div className='w-auto flex flex-row items-center justify-start'>
+                    <Button size='sm' className='border rounded-full py-4 px-6' degree='2' >
                         {t('motivation.action')}
                     </Button>
-                    <Button >
-                        <Icon name='IconArrowUpRight' size='20' className='stroker-white-100' />
+                    <Button className='border rounded-full p-4'>
+                        <Icon name='IconArrowUpRight' size='20' className='stroke-white-100' />
                     </Button>
                 </div>
                 <div className={twMerge('flex flex-col gap-4', 'w-5/12')} >

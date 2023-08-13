@@ -66,4 +66,5 @@ export type LinkPropsExtended = LinkProps & VariantProps<typeof textStyle> & {
     degree?: '0' | '1' | '2' | '3' | '4';
     size: TextSizes,
     exchange?: boolean;
+    animation?: 'animationHover';
 }

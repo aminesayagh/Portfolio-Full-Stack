@@ -15,9 +15,9 @@ export const textColorDegree = {
     "exchanged": {
         "0": "",
         "1": "text-black-100",
-        "2": "text-black-300",
-        "3": "text-black-600",
-        "4": "text-gray-800",
+        "2": "text-black-500",
+        "3": "text-gray-900",
+        "4": "text-gray-400",
     }
 }
 

@@ -1,9 +1,12 @@
 import React, { FC } from 'react';
+import { useRef, useLayoutEffect } from 'react';
 import LinkNext from 'next/link';
 import { twMerge } from 'tailwind-merge';
 import { textColorDegree, displayStyle, textStyle, titleStyle } from './Typography.style'
 import { DisplayPropsExtended } from './Typography.type';
 import Style from './Typography.module.scss';
+import { useHover } from 'react-aria';
+
 
 // DISPLAY
 export type { DisplayPropsExtended } from './Typography.type';
@@ -73,11 +76,15 @@ export const Text: FC<TextPropsExtended> = ({ weight, degree = '3', size, exchan
 
 // LINK
 import { LinkPropsExtended } from './Typography.type';
+const buttonHover = {
+    hoverColor: 'hover:text-primary-500 duration-200 ease-in-out',
+}
 
-export const Link: FC<LinkPropsExtended> = ({ weight, degree = '3', size, exchange, className, children, href, ...props }) => {
 
+
+export const Link: FC<LinkPropsExtended> = ({ weight, degree = '3', size, exchange, className, animation, children, href, ...props }) => {
 
     return <LinkNext href={href} className={twMerge(
-        textClassNames({ weight, size, degree, exchange }), 'remove_outline',className
+        textClassNames({ weight, size, degree, exchange }), 'remove_outline', className
     )} {...props}>{children}</LinkNext>
 }
