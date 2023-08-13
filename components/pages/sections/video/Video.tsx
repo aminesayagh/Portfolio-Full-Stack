@@ -4,7 +4,6 @@ import { gsap } from 'gsap';
 
 const Video = () => {
     let ref = useRef<HTMLCanvasElement>(null);
-    const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
     const [images, setImages] = useState<Array<HTMLImageElement>>([]);
     useLayoutEffect(() => {
         let ctx = gsap.context((self) => {
@@ -44,7 +43,7 @@ const Video = () => {
                 if (!context) return;
                 if (!ref.current) return;
                 context?.clearRect(0, 0, ref.current.width, ref.current.height);
-                context?.drawImage(images[hands.frame], 0, -500);
+                context?.drawImage(images[hands.frame], 0, 0);
             }
         }, []);
         return () => ctx.revert();

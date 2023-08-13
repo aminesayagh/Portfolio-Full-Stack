@@ -2,7 +2,8 @@ import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 
 import { Text, Icon, Container, Button } from '@/components/ui';
-
+import { useRouter } from 'next/router';
+import { MENU_ITEMS } from '@/conf/router';
 const FollowUs = () => {
     const { t } = useTranslation();
     return (
@@ -17,6 +18,8 @@ const FollowUs = () => {
 
 const Footer = () => {
     const { t } = useTranslation();
+    const router = useRouter();
+
     return (<>
         <Container as='footer' size='lg' className={twMerge('flex flex-col gap-12')}>  
             <div className={twMerge('max-w-[28vw]')} >
@@ -28,7 +31,7 @@ const Footer = () => {
             <div className={twMerge('flex flex-row justify-between', 'pb-10 pt-6')}>
                 <div className={twMerge('flex flex-row')} >
                     <Button onPress={() => {
-
+                        router.push(MENU_ITEMS.intro.link)
                     }} className={twMerge('flex flex-row justify-start items-center', 'gap-8', 'uppercase')}>
                         <Icon name='IconArrowUpRight' size='24' className='stroke-gray-400' />
                         <Text p size='sm' weight='semibold' degree='3' >

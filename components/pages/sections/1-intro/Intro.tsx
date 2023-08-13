@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 import { Text, Button, Display, Icon, Link } from '@/components/ui';
 import { useTranslation } from "next-i18next";
-
+import { MENU_ITEMS } from "@/conf/router";
 
 const ButtonNext = () => {
     return <>
@@ -48,10 +48,10 @@ const Title = () => {
 }
 
 const menuItems = {
-    "1": '#manifest',
-    "2": "#experience",
-    "3": "#cases",
-    "4": "#contact"
+    "1": MENU_ITEMS.manifesto.link,
+    "2": MENU_ITEMS.experience.link,
+    "3": MENU_ITEMS.cases.link,
+    "4": MENU_ITEMS.contact.link
 } as const;
 const menuKeys = ['manifesto', 'experience', 'cases', 'contact'];
 

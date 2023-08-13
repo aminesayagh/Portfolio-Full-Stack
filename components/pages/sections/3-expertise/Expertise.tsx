@@ -52,7 +52,7 @@ const ExpertiseStages = () => {
     const { t } = useTranslation();
     return (
         <>
-            <div className={twMerge('grid grid-cols-4 grid-rows-2 gap-6', 'relative -mb-[20vh]')}>
+            <div className={twMerge('grid grid-cols-4 grid-rows-2 gap-6', 'relative -mb-[32vh]')}>
                 {Array.apply('', Array(8)).map((_, i) => {
                     if (i >= 4) return <EmptyCard key={i} />
                     return (
