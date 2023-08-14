@@ -48,7 +48,7 @@ export default function App() {
                     <div className='flex flex-col gap-24'>
                         <Section title={`${listText}`}>
                             <div className='w-72 border border-white-500'>
-                                <Fit className='text-white-300'>
+                                <Fit degree='1' weight='semibold' className='text-white-300'>
                                     Text Fit
                                 </Fit>
                             </div>

@@ -141,7 +141,7 @@ $h6: 1rem;
   &_md {
     @include fluid-type(--font-size, $minScreen, 56.25rem, 1.7rem, 3rem);
     @screen mdl {
-      @include fluid-type(--font-size, 56.25rem, $maxScreen, 2rem, 3.6rem);
+      @include fluid-type(--font-size, 56.25rem, $maxScreen, 2.4rem, 3.6rem);
     }
     font-size: var(--font-size, 4.6rem);
     line-height: calc(var(--font-size, 4.6rem) * var(--degree-line-height, 1.2));
