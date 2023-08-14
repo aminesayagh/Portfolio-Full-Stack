@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
+const transpiledModules = require('next-transpile-modules')(['react-fitty', 'fitty']);
+
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
@@ -6,7 +9,7 @@ const nextConfig = {
     locales: ['en', 'fr'],
     defaultLocale: 'en'
   },
-  
+
 }
 
-module.exports = nextConfig;
+module.exports = transpiledModules(nextConfig);

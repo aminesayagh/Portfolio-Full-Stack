@@ -115,5 +115,40 @@
         "name": "Mohamed Amine SAYAGH",
         "copy": "© 2023",
         "socialNetwork": "FOLLOW ME"
+    },
+    "form": {
+        "field": {
+            "name": {
+                "placeholder": "Your name",
+                "label": "Name"
+            },
+            "email": {
+                "placeholder": "Your email",
+                "label": "Email"
+            },
+            "message": {
+                "placeholder": "Your message",
+                "label": "Message"
+            },
+            "Objective": {
+                "placeholder": "Your objective",
+                "label": "Objective",
+                "options": {
+                    "1": "Project Inquiry",
+                    "2": "Job Opportunity",
+                    "3": "Portfolio Feedback",
+                    "4": "Getting to know Each Other",
+                    "5": "Say Hello",
+                    "6": "Other"
+                }
+            }
+        },
+        "error": {
+            "required": "This field is required.",
+            "email": "Please enter a valid email address.",
+            "minLength": "Please enter at least {{min}} characters.",
+            "maxLength": "Please enter no more than {{max}} characters.",
+            "pattern": "Please match the requested format."
+        }
     }
 }

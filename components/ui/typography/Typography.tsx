@@ -1,18 +1,34 @@
-import React, { FC } from 'react';
-import { useRef, useLayoutEffect } from 'react';
+import React, { FC, useRef, useEffect, useState } from 'react';
 import LinkNext from 'next/link';
 import { twMerge } from 'tailwind-merge';
 import { textColorDegree, displayStyle, textStyle, titleStyle } from './Typography.style'
 import { DisplayPropsExtended } from './Typography.type';
 import Style from './Typography.module.scss';
-import { useHover } from 'react-aria';
 
 import { ReactFitty } from 'react-fitty';
+import { ReactFitProps } from './Typography.type';
+
+export const Fit = ({ children, className, exchange, weight, ...props }: ReactFitProps) => {
+    // const ref = useRef<HTMLDivElement>(null);
+    // const refSpan = useRef<HTMLDivElement>(null);
+    // useFLexFont(ref, refSpan);
+    return <ReactFitty className={twMerge(
+        displayStyle({
+            weight
+        }),
+        'leading-none',
+        textColorDegree[exchange ? 'exchanged' : 'normal']['1'],
+        className)}>
+        {children}
+    </ReactFitty>
+
+}
 // DISPLAY
 export type { DisplayPropsExtended } from './Typography.type';
-export const Display: FC<DisplayPropsExtended> = ({ fitty, size, weight, exchange, children, className, ...props }) => {
-    const element = fitty ? ReactFitty : 'h1'
-    return React.createElement(element, {
+
+
+export const Display: FC<DisplayPropsExtended> = ({ size, weight, exchange, children, className, ...props }) => {
+    return React.createElement('h1', {
         className: twMerge(
             displayStyle({
                 weight
@@ -77,9 +93,6 @@ export const Text: FC<TextPropsExtended> = ({ weight, degree = '3', size, exchan
 
 // LINK
 import { LinkPropsExtended } from './Typography.type';
-const buttonHover = {
-    hoverColor: 'hover:text-primary-500 duration-200 ease-in-out',
-}
 
 
 

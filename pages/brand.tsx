@@ -1,7 +1,7 @@
 import { Container } from "@/components/ui";
 import { Head } from '@/components/common';
 
-import { Title, Text, Display, Link } from '@/components/ui';
+import { Title, Text, Display, Link, Fit } from '@/components/ui';
 import React from "react";
 
 const listText = 'flex flex-col gap-8';
@@ -40,6 +40,24 @@ export default function App() {
                 author="Mohamed Amine SAYAGH"
                 logo='/favicon.svg'
             />
+            <Container as='section' size='lg' className='flex flex-col gap-40'>
+                <div className='flex flex-col gap-12'>
+                    <TitleOfSection >
+                        TYPOGRAPHY FIT TEXT
+                    </TitleOfSection>
+                    <div className='flex flex-col gap-24'>
+                        <Section title={`${listText}`}>
+                            <div className='w-72 border border-white-500'>
+                                <Fit className='text-white-300'>
+                                    Text Fit
+                                </Fit>
+                            </div>
+                        </Section>
+
+                    </div>
+
+                </div>
+            </Container>
 
             <Container as='section' size='lg' className='flex flex-col gap-40 py-40'>
                 <div className='flex flex-col gap-12'>

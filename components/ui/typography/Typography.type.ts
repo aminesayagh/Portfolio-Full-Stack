@@ -3,13 +3,21 @@ import React from 'react';
 import Link, { LinkProps } from 'next/link';
 
 import { titleStyle, textStyle, displayStyle } from './Typography.style';
+
+type TypeDegree = '0' | '1' | '2' | '3' | '4';
+export type ReactFitProps = VariantProps<typeof displayStyle> & {
+    children: React.ReactNode | string;
+    className?: string;
+    exchange?: boolean;
+    degree: TypeDegree;
+}
+
 // DISPLAY
 export type DisplayPropsExtended = VariantProps<typeof displayStyle> & {
     children: React.ReactNode | string;
     className?: string;
     exchange?: boolean;
     size: 'xl' | 'lg' | 'md';
-    fitty?: boolean;
 }
 
 export type TitleElement = {
@@ -32,7 +40,7 @@ export type TitleNames = typeof validTitleElements[number];
 export type TitlePropsExtended = TitleElement & VariantProps<typeof titleStyle> & {
     children: React.ReactNode | string;
     className?: string;
-    degree: '0' | '1' | '2' | '3' | '4';
+    degree: TypeDegree;
     exchange?: boolean;
     style?: React.CSSProperties;
 }

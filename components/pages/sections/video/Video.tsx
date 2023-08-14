@@ -1,11 +1,11 @@
-import { useRef, useLayoutEffect, useState } from 'react'
+import { useRef, useLayoutEffect, useState, useEffect } from 'react'
 import { gsap } from 'gsap';
 
 
 const Video = () => {
     let ref = useRef<HTMLCanvasElement>(null);
     const [images, setImages] = useState<Array<HTMLImageElement>>([]);
-    useLayoutEffect(() => {
+    useEffect(() => {
         let ctx = gsap.context((self) => {
             let canvas = ref.current;
             if (!canvas) return;
