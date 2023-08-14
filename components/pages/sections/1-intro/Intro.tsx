@@ -22,7 +22,7 @@ const FullStack = ({ className }: { className: string }) => {
 
     return (
         <>
-            <div className={twMerge(className, 'flex-col items-start xs:items-end pt-1 sm:pt-2 xl:pt-3', 'sm:-space-y-1 xl:-space-y-2')} >
+            <div className={twMerge(className, 'flex-col items-start xs:items-end pt-1 sm:pt-2 xl:pt-3', 'sm:-space-y-1 xl:space-y-0 2xl:-space-y-2')} >
                 <Display size='md' weight='semibold' className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider')}>{t('intro.title.2_1')}</Display>
                 <Display size='md' weight='semibold' className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider')}>{t('intro.title.2_2')}</Display>
             </div>
@@ -143,16 +143,16 @@ const Menu = () => {
     const { t } = useTranslation();
 
     return (<>
-        <div className={twMerge('flex flex-row justify-between items-start w-full')} >
+        <div className={twMerge('flex flex-row flex-wrap justify-between items-start w-full gap-y-6')} >
             {Array.apply(null, Array(4)).map((_, i) => {
                 if (i > 3) return null;
-                return <div key={i} className={twMerge('flex flex-col justify-start items-start gap-1')} >
+                return <div key={i} className={twMerge('flex flex-col justify-start items-start gap-1 w-1/2 sm:w-auto md:w-1/4')} >
                     <Text p weight='medium' size='sm' degree='3'>{`0${i + 1}`}</Text>
                     <Link degree='1' size='sm' weight='semibold' href={menuItems[`${i + 1}` as MenuItems]} className='uppercase' >{t(`header.menu.${menuKeys[i]}.attribute`)}</Link>
                 </div>
             })}
         </div>
-        <Text p weight='medium' size='sm' degree='3' className={twMerge('w-max whitespace-nowrap-important')} >
+        <Text p weight='medium' size='sm' degree='3' className={twMerge('w-max whitespace-nowrap-important', ' hidden xxs:flex sm:hidden md:flex')} >
             {t('intro.copy')}
         </Text>
     </>)
@@ -160,7 +160,7 @@ const Menu = () => {
 
 const Intro = () => {
     return (<>
-        <div className={twMerge('pt-28 sm:pt-36 md:pt-40', 'flex flex-col gap-40')} >
+        <div className={twMerge('pt-28 sm:pt-36 mdl:pt-40', 'flex flex-col gap-20 xs:gap-32 xl:gap-40')} >
             <div className={twMerge(
                 'flex flex-row flex-wrap gap-y-8',
                 'grid grid-cols-12 grid-row-4 xxs:grid-row-3 mdl:grid-row-2',
@@ -169,7 +169,7 @@ const Intro = () => {
             )} >
                 <Title />
             </div>
-            <div className={twMerge('flex flex-row justify-between items-end', 'gap-60')} >
+            <div className={twMerge('flex flex-row justify-between items-end', 'gap-0 xl:gap-6 4xl:gap-20')} >
                 <Menu />
             </div>
         </div>
