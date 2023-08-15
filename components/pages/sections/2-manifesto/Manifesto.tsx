@@ -93,7 +93,7 @@ const Manifesto = () => {
                 </div>
             </div>
             <div className='grid grid-cols-12 gap-4'>
-                {isLg && <div className={twMerge('flex-col p-4', 'col-start-1 col-span-3')}>
+                {isLg && <div className={twMerge('flex flex-col p-4', 'col-start-1 col-span-3')}>
                     <Text p size='md' weight='semibold' degree='3'>{t('manifesto.subtitle_1')}</Text>
                     <Text p size='md' weight='semibold' degree='3'>{t('manifesto.subtitle_2')}</Text>
                 </div>}
