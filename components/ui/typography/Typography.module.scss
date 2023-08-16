@@ -109,7 +109,15 @@ $h6: 1rem;
     @apply tracking-wider;
   }
   &_xs {
-    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.66rem, 0.79rem);
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.66rem, 0.7rem);
+    font-size: var(--font-size, 0.8rem);
+    line-height: calc(
+      var(--font-size, 0.8rem) * var(--degree-line-height, 1.5)
+    );
+    @apply tracking-wider lg:tracking-widest;
+  }
+  &_xxs {
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.53rem, 0.64rem);
     font-size: var(--font-size, 0.8rem);
     line-height: calc(
       var(--font-size, 0.8rem) * var(--degree-line-height, 1.5)
@@ -120,6 +128,7 @@ $h6: 1rem;
   &::selection {
     @apply bg-primary-500 text-black-300;
   }
+
 }
 
 .display {
@@ -134,7 +143,7 @@ $h6: 1rem;
     line-height: calc(var(--font-size, 8rem) * var(--degree-line-height, 1.2));
   }
   &_lg {
-    @include fluid-type(--font-size, $minScreen, $maxScreen, 2rem, 6rem);
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 3rem, 6rem);
     font-size: var(--font-size, 6rem);
     line-height: calc(var(--font-size, 6rem) * var(--degree-line-height, 1.2));
   }

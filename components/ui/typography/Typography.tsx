@@ -97,8 +97,8 @@ import { LinkPropsExtended } from './Typography.type';
 
 
 export const Link: FC<LinkPropsExtended> = ({ weight, degree = '3', size, exchange, className, animation, children, href, ...props }) => {
-
+    const classNameExtended = (size && weight) ? textClassNames({ weight, size, degree, exchange }) : className;
     return <LinkNext href={href} className={twMerge(
-        textClassNames({ weight, size, degree, exchange }), 'remove_outline', className
+        classNameExtended, 'remove_outline', className
     )} {...props}>{children}</LinkNext>
 }
