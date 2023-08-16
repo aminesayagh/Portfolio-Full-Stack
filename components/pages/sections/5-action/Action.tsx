@@ -3,7 +3,7 @@
 import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
 
-import { Title, Text, Display, Button, Link } from '@/components/ui';
+import { Text, Display, Link } from '@/components/ui';
 
 
 const Action = () => {

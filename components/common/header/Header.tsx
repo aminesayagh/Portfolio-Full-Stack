@@ -121,7 +121,7 @@ const Header = () => {
                 router.push(path);
             });
         }
-    }, [router.asPath, openMenu]);
+    }, [openMenu]);
 
     return (
         <Modal isOpenExternal={openMenu} menuHandler={menuHandler}  >

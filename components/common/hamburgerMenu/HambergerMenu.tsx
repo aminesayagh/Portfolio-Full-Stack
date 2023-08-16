@@ -35,9 +35,6 @@ const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => vo
             path02Controls.start(path02Variants.closed);
         }
     }, [isOpen]);
-    const onClick = useCallback(async (state?: boolean) => {
-        setOpen();
-    }, [isOpen])
 
     useEffect(() => {
         if(typeof isOpen === 'boolean'){
@@ -51,7 +48,7 @@ const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => vo
         },
         onKeyUp: (e) => {
             if(['Escape', 'Esc'].includes(e.key)) {
-                isOpen && onClick().then();
+                isOpen && setOpen();
             }
         }
     })
@@ -61,7 +58,7 @@ const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => vo
     return (
         <>
             <span  {...keyboardProps}>
-                <Button onPress={() => onClick()}>
+                <Button onPress={() => setOpen()}>
                     <svg width={`${SIZE}`} height={`${SIZE}`} viewBox='0 0 24 24' strokeWidth={STROKE_WIDTH} >
                         <motion.path
                             {...path01Variants.closed}

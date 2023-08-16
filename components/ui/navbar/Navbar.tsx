@@ -39,7 +39,7 @@ const useAnimationScroll = () => {
         return () => {
             scrollY.destroy();
         }
-    }, [scrollY]);
+    }, [scrollY, controls]);
 
     const containerPadding = useTransform(scrollY, scrollYRange, ['1rem', '0.5rem', '0.5rem']);
     const blur = useTransform(scrollY, scrollYRange, ['blur(0px)', 'blur(100px)', 'blur(100px)']);
@@ -60,7 +60,7 @@ const NavbarAnimation = createContext<Styles | null>(null);
 const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props }: NavbarProps) => {
     const [ref, controls, styles] = useAnimationScroll();
 
-    const backgroundColor = useMemo(() => inTopOfScroll ? 'transparent' : styles.backgroundColorDark, [inTopOfScroll]);
+    const backgroundColor = useMemo(() => inTopOfScroll ? 'transparent' : styles.backgroundColorDark, [inTopOfScroll, styles.backgroundColorDark]);
 
     return <>
         <NavbarAnimation.Provider value={styles}>
