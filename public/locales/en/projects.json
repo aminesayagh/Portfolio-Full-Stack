@@ -15,14 +15,14 @@
         }
     },
     "3": {
-        "title": "Cyber cohesion",
+        "title": "Cyber Cohesion",
         "tasks": {
             "1": "Database Consulter",
             "3": "Developer web experience"
         }
     },
     "4": {
-        "title": "Shinoby boy",
+        "title": "Shinoby Boy",
         "tasks": {
             "1": "Web designer",
             "2": "Web developer",
@@ -30,7 +30,7 @@
         }
     },
     "5": {
-        "title": "Web Application for management faculty project",
+        "title": "Web Application for managing university Projects",
         "tasks": {
             "1": "Full stack Web developer",
             "2": "Infra persona"
@@ -64,7 +64,7 @@
         }
     },
     "10": {
-        "title": "Freelancing Project",
+        "title": "FreeLance Projects",
         "tasks": {
             "1": "Designer", 
             "2": "Web developer"
