@@ -1,73 +1,11 @@
 {
-    "1": {
-        "title": "Happy Water",
-        "tasks": {
-            "1": "Web designer",
-            "2": "Web developer",
-            "3": "CryptoCurrency"
-        }
+    "tasks": {
+
     },
-    "2": {
-        "title": "Nft Musical",
-        "tasks": {
-            "1": "Web scraping for automation",
-            "2": "Marketing"
-        }
+    "jobTItle": {
+        
     },
-    "3": {
-        "title": "Cyber Cohesion",
-        "tasks": {
-            "1": "Database Consulter",
-            "3": "Developer web experience"
-        }
-    },
-    "4": {
-        "title": "Shinoby Boy",
-        "tasks": {
-            "1": "Web designer",
-            "2": "Web developer",
-            "3": "Scraping and database mantenance"
-        }
-    },
-    "5": {
-        "title": "Web Application for managing university Projects",
-        "tasks": {
-            "1": "Full stack Web developer",
-            "2": "Infra persona"
-        }
-    },
-    "6": {
-        "title": "SODDIAD",
-        "tasks": {
-            "1": "CTO",
-            "2": "Technical advisor"
-        }
-    },
-    "7": {
-        "title": "Jonas Agency",
-        "tasks": {
-            "1": "Web designer",
-            "2": "Web developer"
-        }
-    },
-    "8": {
-        "title": "Lavish Trading",
-        "tasks": {
-            "1": "Web designer",
-            "2": "Web developer"
-        }
-    },
-    "9": {
-        "title": "Maschool",
-        "tasks": {
-            "1": "Web developer"
-        }
-    },
-    "10": {
-        "title": "FreeLance Projects",
-        "tasks": {
-            "1": "Designer", 
-            "2": "Web developer"
-        }
+    "projects": {
+
     }
 }

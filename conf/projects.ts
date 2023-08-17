@@ -23,13 +23,14 @@ const TITLE = {
     'RECHERCHE_AND_DEVELOPMENT': 'RECHERCHE AND DEVELOPMENT',
     'FREELANCER': 'FREELANCER',
     'AUTOMATION_SPECIALIST': 'AUTOMATION SPECIALIST',
+    "ACADEMIC_PROJECT_PLATFORM_ARCHITECT" :'Academic Project Platform Architect'
 } as const;
 
 export type TaskProject = typeof TASK_PROJECTS[keyof typeof TASK_PROJECTS];
 export type TitleProject = typeof TITLE[keyof typeof TITLE];
 
 const { WEB_DESIGNER, WEB_DEVELOPER, MOBILE_DEVELOPER, CRYPTO_DEVELOPER, GRAPHIC_DESIGNER, MARKETER, DATABASE_CONSULTANT, SCRAPE_DEVELOPER, BACKEND_DEVELOPER, FRONTEND_DEVELOPER, FULLSTACK_DEVELOPER, INFRASTRUCTURE_DEVELOPER } = TASK_PROJECTS;
-const { CTO, CEO, CO_FOUNDER, FOUNDER, TECHNICAL_ADVISOR, RECHERCHE_AND_DEVELOPMENT, FREELANCER, AUTOMATION_SPECIALIST } = TITLE;
+const { CTO, CEO, CO_FOUNDER, FOUNDER, TECHNICAL_ADVISOR, RECHERCHE_AND_DEVELOPMENT, FREELANCER,ACADEMIC_PROJECT_PLATFORM_ARCHITECT, AUTOMATION_SPECIALIST } = TITLE;
 
 export type ProjectTitle = 'Happy Water' | 'Nft Musical' | 'Cyber Cohesion' | 'Shinoby boy' | 'Web Application for managing university Projects' | 'SODIADD' | 'Jonas Agency' | "Lavish Trading" | "Maschool" | "FreeLance Projects";
 
@@ -37,9 +38,9 @@ interface Project {
     id: `${number}`;
     title: ProjectTitle;
     tasks: TaskProject[];
-    jobTitle?: TitleProject[];
+    jobTitle: TitleProject[];
 }
-const PROJECTS = [
+const PROJECTS: Project[] = [
     {
         id: '1',
         title: 'Happy Water',
@@ -50,12 +51,12 @@ const PROJECTS = [
         id: '2',
         title: 'Nft Musical',
         tasks: [FRONTEND_DEVELOPER],
-        jobTitle: [FRONTEND_DEVELOPER, AUTOMATION_SPECIALIST]
+        jobTitle: [ AUTOMATION_SPECIALIST]
     },
     {
         id: '3',
         title: "Cyber Cohesion",
-        tasks: [WEB_DEVELOPER, TECHNICAL_ADVISOR],
+        tasks: [WEB_DEVELOPER, DATABASE_CONSULTANT],
         jobTitle: [TECHNICAL_ADVISOR, RECHERCHE_AND_DEVELOPMENT]
     },
     {
@@ -68,6 +69,7 @@ const PROJECTS = [
         id: '5',
         title: "Web Application for managing university Projects",
         tasks: [FULLSTACK_DEVELOPER],
+        jobTitle: [ACADEMIC_PROJECT_PLATFORM_ARCHITECT]
     },
     {
         id: '6',
@@ -96,6 +98,8 @@ const PROJECTS = [
     {
         id: '10',
         title: "FreeLance Projects",
+        tasks: [WEB_DESIGNER, GRAPHIC_DESIGNER, WEB_DEVELOPER],
+        jobTitle: [FREELANCER]
     }
 ];
 export default PROJECTS;
