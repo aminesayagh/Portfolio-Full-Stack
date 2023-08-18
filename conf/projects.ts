@@ -19,11 +19,11 @@ const TITLE = {
     'CEO': 'CEO',
     'CO_FOUNDER': 'CO-FOUNDER',
     'FOUNDER': 'FOUNDER',
-    'TECHNICAL_ADVISOR': 'TECHNICAL_ADVISOR',
+    'TECHNICAL_ADVISOR': 'TECHNICAL ADVISOR',
     'RECHERCHE_AND_DEVELOPMENT': 'RECHERCHE AND DEVELOPMENT',
     'FREELANCER': 'FREELANCER',
     'AUTOMATION_SPECIALIST': 'AUTOMATION SPECIALIST',
-    "ACADEMIC_PROJECT_PLATFORM_ARCHITECT" :'Academic Project Platform Architect'
+    "ACADEMIC_PROJECT_PLATFORM_ARCHITECT" :'ACADEMIC PROJECT PLATFORM ARCHITECT'
 } as const;
 
 export type TaskProject = typeof TASK_PROJECTS[keyof typeof TASK_PROJECTS];
@@ -32,7 +32,7 @@ export type TitleProject = typeof TITLE[keyof typeof TITLE];
 const { WEB_DESIGNER, WEB_DEVELOPER, MOBILE_DEVELOPER, CRYPTO_DEVELOPER, GRAPHIC_DESIGNER, MARKETER, DATABASE_CONSULTANT, SCRAPE_DEVELOPER, BACKEND_DEVELOPER, FRONTEND_DEVELOPER, FULLSTACK_DEVELOPER, INFRASTRUCTURE_DEVELOPER } = TASK_PROJECTS;
 const { CTO, CEO, CO_FOUNDER, FOUNDER, TECHNICAL_ADVISOR, RECHERCHE_AND_DEVELOPMENT, FREELANCER,ACADEMIC_PROJECT_PLATFORM_ARCHITECT, AUTOMATION_SPECIALIST } = TITLE;
 
-export type ProjectTitle = 'Happy Water' | 'Nft Musical' | 'Cyber Cohesion' | 'Shinoby boy' | 'Web Application for managing university Projects' | 'SODIADD' | 'Jonas Agency' | "Lavish Trading" | "Maschool" | "FreeLance Projects";
+export type ProjectTitle = 'Happy Water' | 'Nft Musical' | 'Cyber Cohesion' | 'Shinobi Boy' | 'Web Application for managing university Projects' | 'SODIADD' | 'Jonas Agency' | "Lavish Trading" | "Maschool" | "FreeLance Projects";
 
 interface Project {
     id: `${number}`;
@@ -61,7 +61,7 @@ const PROJECTS: Project[] = [
     },
     {
         id: '4',
-        title: "Shinoby boy",
+        title: "Shinobi Boy",
         tasks: [FULLSTACK_DEVELOPER, SCRAPE_DEVELOPER, INFRASTRUCTURE_DEVELOPER],
         jobTitle: [FOUNDER]
     },

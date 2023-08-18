@@ -1,11 +1,31 @@
 {
     "tasks": {
-
+        "Web Designer": "Web Designer",
+        "Web Developer": "Web Developer",
+        "Mobile Developer": "Mobile Developer",
+        "Crypto Developer": "Crypto Developer",
+        "Graphic Designer": "GRAPHIC DESIGNER",
+        "Marketer": "Marketer",
+        "Database Consultant": "Database Consultant",
+        "Scrape Developer": "Scrape Developer",
+        "Backend Developer": "Backend Developer",
+        "Frontend Developer": "Frontend Developer",
+        "Infrastructure Developer": "Infrastructure Developer",
+        "Technical Advisor": "Technical Advisor",
+        "Full Stack Developer": "Full Stack Developer"
     },
     "jobTItle": {
-        
+        "CTO": "CTO",
+        "CEO": "CEO",
+        "CO-FOUNDER": "CO-FOUNDER",
+        "FOUNDER": "FOUNDER",
+        "TECHNICAL ADVISOR": "TECHNICAL ADVISOR",
+        "RECHERCHE AND DEVELOPMENT": "RECHERCHE AND DEVELOPMENT",
+        "FREELANCER": "FREELANCER",
+        "AUTOMATION SPECIALIST": "AUTOMATION SPECIALIST",
+        "ACADEMIC PROJECT PLATFORM ARCHITECT": "ACADEMIC PROJECT PLATFORM ARCHITECT"
     },
     "projects": {
-
+        
     }
 }
