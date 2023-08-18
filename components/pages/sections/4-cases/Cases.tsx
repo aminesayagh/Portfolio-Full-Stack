@@ -15,8 +15,8 @@ const ListProject = () => {
                 if (!project['picture']) return null;
                 return (
                     <div key={index} className='relative rounded-2xl overflow-hidden'>
-                        <Image src={project['picture'][0]} alt={t(`projects.${project.id}.alt`)} width='1920' height='800' />
-                        <div className='absolute left-0 right-0 bottom-0 m-14'>
+                        <Image src={project['picture'][0]} alt={t(`projects.${project.id}.alt`)} width='1920' height='720' />
+                        <div className={twMerge('absolute left-0 right-0 bottom-0 m-14', 'flex flex-row items-end justify-between')}>
                             <div>
                                 <Title h4 weight='bold' degree='2' >
                                     {t(`projects.${project.id}.title`)}
@@ -44,16 +44,14 @@ const Cases = () => {
     const { t } = useTranslation()
     return (
         <>
-            <div className={twMerge('flex flex-col gap-4 w-full')}>
-                <div className={twMerge('flex flex-row justify-between gap-8', 'w-full')}>
+            <div className={twMerge('flex flex-col gap-12 w-full')}>
+                <div className={twMerge('flex flex-row justify-between items-end gap-12', 'w-full')}>
                     <Title h2 weight='bold' degree='2' className={'w-min'}>
                         {t('cases.title')}
                     </Title>
-                    <div className='flex flex-col justify-end items-end'>
-                        <Text p size='md' degree='3' weight='semibold' className='line-clamp-3 w-full py-4' >
-                            {t('cases.description')}
-                        </Text>
-                    </div>
+                    <Text p size='md' degree='3' weight='semibold' className='w-auto max-w-[30rem] my-4' >
+                        {t('cases.description')}
+                    </Text>
                 </div>
                 <ListProject />
 
