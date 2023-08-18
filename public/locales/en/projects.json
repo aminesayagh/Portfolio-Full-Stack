@@ -28,6 +28,7 @@
     "projects": {
         "1": {
             "title": "Happy Water",
+            "alt": "Happy Water",
             "description": "Happy Water: An eco-conscious NFT initiative dedicated to ocean conservation. I collaborated in shaping its identity through design and spearheaded the web development efforts, further extending my expertise to the creation and management of cryptocurrency contracts." 
         },
         "2": {
@@ -48,6 +49,7 @@
         },
         "6": {
             "title": "SODIADD",
+            "alt": "Sodiadd",
             "description": "An real estate investment agency catering to individual investors. As a co-founder and CEO, I played an integral role from conceptualizing the brand's identity to leading the full-stack web platform development essential to the project's success."
         },
         "7": {
@@ -56,6 +58,7 @@
         },
         "8": {
             "title": "Lavish Trading",
+            "alt": "Lavish Trading",
             "description": "A consultancy and investment agency in trading for individual clients. I took on the roles of both designer and developer, crafting their web identity, while also contributing significantly to the project's commercial messaging."
         },
         "9": {

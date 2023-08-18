@@ -45,7 +45,7 @@ export type TitlePropsExtended = TitleElement & VariantProps<typeof titleStyle> 
     style?: React.CSSProperties;
 }
 
-export const validTextElements = ['p', 'span', 'small', 'strong', 'em'] as const;
+export const validTextElements = ['p', 'span', 'small', 'strong', 'em', 'li'] as const;
 export type TextNames = typeof validTextElements[number];
 
 export type TextElement = { 
@@ -58,6 +58,8 @@ export type TextElement = {
     strong: true
 } | {
     em: true
+} | {
+    li: true
 };
 
 export type TextSizes = 'lg' | 'md' | 'sm' | 'xs' | 'xxs' | 'auto';
