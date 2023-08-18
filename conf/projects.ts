@@ -49,7 +49,7 @@ const PROJECTS: Project[] = [
         category: ['best', 'completed'],
         tasks: [WEB_DESIGNER, WEB_DEVELOPER, CRYPTO_DEVELOPER],
         jobTitle: [CTO, CO_FOUNDER],
-        picture: ['images/project/happy_water_mockup_main.jpg']
+        picture: ['/images/project/happy_water_mockup_main.jpg']
     },
     {
         id: '2',
@@ -85,7 +85,7 @@ const PROJECTS: Project[] = [
         category: ['best', 'ongoing'],
         tasks: [WEB_DESIGNER, FULLSTACK_DEVELOPER],
         jobTitle: [CTO, CO_FOUNDER],
-        picture: ['images/project/sodiadd_mockup_main.jpg'],
+        picture: ['/images/project/sodiadd_mockup_main.jpg'],
     },
     {
         id: '7',
@@ -100,7 +100,7 @@ const PROJECTS: Project[] = [
         title: "Lavish Trading",
         tasks: [WEB_DESIGNER,FULLSTACK_DEVELOPER],
         jobTitle: [FREELANCER],
-        picture: ['images/project/lavish_mockup_main.jpg']
+        picture: ['/images/project/lavish_mockup_main.jpg']
     },
     {
         id: '9',
