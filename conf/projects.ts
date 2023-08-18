@@ -32,24 +32,27 @@ export type TitleProject = typeof TITLE[keyof typeof TITLE];
 const { WEB_DESIGNER, WEB_DEVELOPER, MOBILE_DEVELOPER, CRYPTO_DEVELOPER, GRAPHIC_DESIGNER, MARKETER, DATABASE_CONSULTANT, SCRAPE_DEVELOPER, BACKEND_DEVELOPER, FRONTEND_DEVELOPER, FULLSTACK_DEVELOPER, INFRASTRUCTURE_DEVELOPER } = TASK_PROJECTS;
 const { CTO, CEO, CO_FOUNDER, FOUNDER, TECHNICAL_ADVISOR, RECHERCHE_AND_DEVELOPMENT, FREELANCER,ACADEMIC_PROJECT_PLATFORM_ARCHITECT, AUTOMATION_SPECIALIST } = TITLE;
 
-export type ProjectTitle = 'Happy Water' | 'Nft Musical' | 'Cyber Cohesion' | 'Shinobi Boy' | 'Web Application for managing university Projects' | 'SODIADD' | 'Jonas Agency' | "Lavish Trading" | "Maschool" | "FreeLance Projects";
+export type ProjectTitle = 'Happy Water' | "Sofiane Pamart's Musical NFT" | 'Cyber Cohesion' | 'Shinobi Boy' | 'Web Application for managing university Projects' | 'SODIADD' | 'Jonas Agency' | "Lavish Trading" | "Maschool" | "FreeLance Projects";
 
 interface Project {
     id: `${number}`;
     title: ProjectTitle;
     tasks: TaskProject[];
+    category: ('best' | 'ongoing' | 'completed')[];
     jobTitle: TitleProject[];
 }
 const PROJECTS: Project[] = [
     {
         id: '1',
         title: 'Happy Water',
+        category: ['best'],
         tasks: [WEB_DESIGNER, WEB_DEVELOPER, CRYPTO_DEVELOPER],
         jobTitle: [CTO, CO_FOUNDER]
     },
     {
         id: '2',
-        title: 'Nft Musical',
+        title: "Sofiane Pamart's Musical NFT",
+        category: ['completed'],
         tasks: [FRONTEND_DEVELOPER],
         jobTitle: [ AUTOMATION_SPECIALIST]
     },
@@ -57,11 +60,13 @@ const PROJECTS: Project[] = [
         id: '3',
         title: "Cyber Cohesion",
         tasks: [WEB_DEVELOPER, DATABASE_CONSULTANT],
+        category: ['ongoing'],
         jobTitle: [TECHNICAL_ADVISOR, RECHERCHE_AND_DEVELOPMENT]
     },
     {
         id: '4',
         title: "Shinobi Boy",
+        category: ['completed'],
         tasks: [FULLSTACK_DEVELOPER, SCRAPE_DEVELOPER, INFRASTRUCTURE_DEVELOPER],
         jobTitle: [FOUNDER]
     },
@@ -69,37 +74,44 @@ const PROJECTS: Project[] = [
         id: '5',
         title: "Web Application for managing university Projects",
         tasks: [FULLSTACK_DEVELOPER],
+        category: ['completed'],
         jobTitle: [ACADEMIC_PROJECT_PLATFORM_ARCHITECT]
     },
     {
         id: '6',
         title: "SODIADD",
+        category: ['best', 'ongoing'],
         tasks: [WEB_DESIGNER, FULLSTACK_DEVELOPER],
         jobTitle: [CTO, CO_FOUNDER]
     },
     {
         id: '7',
         title: "Jonas Agency",
+        category: ['completed'],
         tasks: [FULLSTACK_DEVELOPER],
         jobTitle: [FREELANCER]
     },
     {
         id: '8',
+        category: ['best', 'completed'],
         title: "Lavish Trading",
         tasks: [WEB_DESIGNER,FULLSTACK_DEVELOPER],
         jobTitle: [FREELANCER]
     },
     {
         id: '9',
+        category: ['completed'],
         title: "Maschool",
         tasks: [WEB_DESIGNER, FRONTEND_DEVELOPER],
         jobTitle: [CO_FOUNDER]
     },
     {
         id: '10',
+        category: ['completed'],
         title: "FreeLance Projects",
         tasks: [WEB_DESIGNER, GRAPHIC_DESIGNER, WEB_DEVELOPER],
         jobTitle: [FREELANCER]
     }
 ];
+
 export default PROJECTS;
