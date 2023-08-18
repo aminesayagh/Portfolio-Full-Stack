@@ -1,23 +1,15 @@
 
-import { useTranslation } from 'next-i18next'
-import { Head, Header } from '@/components/common';
+import { Head } from '@/components/common';
 import { Suspense } from 'react';
-import { Container, Image } from '@/components/ui';
+import { Noise } from '@/components/ui';
 import '@/utils/i18n';
-
-const Video = () => {
-  return (
-    <>
-      <video width='100%' height='auto' autoPlay muted loop controls>
-        <source src='/video.mp4' type='video/mp4' />
-      </video>
-    </>
-  )
-}
 
 import { Loading } from 'components/ui';
 import "@/utils/i18n";
-import dynamic from 'next/dynamic';
+
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 
 
 import { LandingPage } from '@/components/pages';
@@ -35,8 +27,8 @@ export default function Home() {
       />
       <Suspense fallback={<Loading />}>
         <LandingPage />
+        <Noise />
       </Suspense>
-
     </>
   )
 }

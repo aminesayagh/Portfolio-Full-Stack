@@ -1,6 +1,6 @@
 
 import { cva, VariantProps } from 'class-variance-authority';
-const textDefault = 'align-middle inline-block';
+const textDefault = 'inline-block align-middle';
 const fontFamilyTitle = 'font-sans';
 const fontFamilyText = 'font-sans';
 
@@ -8,16 +8,16 @@ export const textColorDegree = {
     "normal": {
         "0": "",
         "1": "text-white-100",
-        "2": "text-white-300",
-        "3": "text-white-600",
-        "4": "text-gray-200",
+        "2": "text-gray-300",
+        "3": "text-gray-500",
+        "4": "text-gray-700",
     },
     "exchanged": {
         "0": "",
         "1": "text-black-100",
-        "2": "text-black-300",
-        "3": "text-black-600",
-        "4": "text-gray-800",
+        "2": "text-black-500",
+        "3": "text-gray-900",
+        "4": "text-gray-400",
     }
 }
 
@@ -25,40 +25,25 @@ export const displayStyle = cva([textDefault, fontFamilyTitle], {
     variants: {
         weight: {
             bold: 'font-black',
-            semibold: 'font-semibold',
-            medium: 'font-medium',
-        },
-        size: {
-            'xl': '',
-            'lg': '',
-            'md': '',
+            semibold: 'font-bold',
+            medium: 'font-regular',
         }
     },
     defaultVariants: {
-        weight: 'bold',
-        size: 'xl',
+        weight: 'bold'
     }
 })
 
 export const titleStyle = cva([textDefault, fontFamilyTitle], {
     variants: {
         weight: {
-            bold: 'font-black',
-            semibold: 'font-semibold',
+            bold: 'font-extrabold',
+            semibold: 'font-bold',
             medium: 'font-medium',
-        },
-        as: {
-            h1: 'text-4xl',
-            h2: 'text-3xl',
-            h3: 'text-2xl',
-            h4: 'text-xl',
-            h5: 'text-lg',
-            h6: 'text-base',
         }
     },
     defaultVariants: {
-        weight: 'bold',
-        as: 'h1',
+        weight: 'bold'
     }
 })
 
@@ -69,15 +54,8 @@ export const textStyle = cva([textDefault, fontFamilyText], {
             semibold: 'font-semibold',
             medium: 'font-medium',
         },
-        size: {
-            'lg': 'text-xl',
-            'md': 'text-lg',
-            'sm': 'text-sm',
-            'xs': 'text-xs',
-        },
     },
     defaultVariants: {
         weight: 'medium',
-        size: 'sm',
     }
 })

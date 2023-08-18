@@ -4,6 +4,7 @@ import { motion, useAnimation } from 'framer-motion';
 import { Button } from '@/components/ui';
 import { useKeyboard } from 'react-aria';
 
+const SIZE = '26';
 const Y_PATH_01_CLOSED = '8';
 const Y_PATH_02_CLOSED = '18';
 const DURATION = 0.2;
@@ -20,13 +21,11 @@ const path02Variants = {
 };
 
 
-const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: Dispatch<SetStateAction<boolean>> }) => {
-    
+const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => void }) => {
     const path01Controls = useAnimation();
     const path02Controls = useAnimation();
-    const onClick = async (state?: boolean) => {
-        setOpen(!isOpen);
-        if (!isOpen) {
+    const handlerHamburgerClick = useCallback(async () => {
+        if(isOpen) {
             await path02Controls.start(path02Variants.moving);
             path01Controls.start(path01Variants.open);
             path02Controls.start(path02Variants.open);
@@ -35,26 +34,32 @@ const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: Dispatch
             await path02Controls.start(path02Variants.moving);
             path02Controls.start(path02Variants.closed);
         }
-    }
+    }, [isOpen]);
+
+    useEffect(() => {
+        if(typeof isOpen === 'boolean'){
+            handlerHamburgerClick();
+        }
+    }, [isOpen])
     let { keyboardProps } = useKeyboard({
         onKeyDown: (e) => {
-            console.log(e.key);
             if(['Escape', 'Esc'].includes(e.key)) {
             }
         },
         onKeyUp: (e) => {
-            console.log(e.key);
             if(['Escape', 'Esc'].includes(e.key)) {
-                isOpen && onClick().then();
+                isOpen && setOpen();
             }
         }
     })
 
+    if(typeof setOpen !== 'function' || typeof isOpen !== 'boolean') throw new Error('HamburgerMenu: setOpen is undefined');
+
     return (
         <>
             <span  {...keyboardProps}>
-                <Button onPress={() => onClick()}>
-                    <svg width='30' height='30' viewBox='0 0 24 24' strokeWidth={STROKE_WIDTH} >
+                <Button onPress={() => setOpen()}>
+                    <svg width={`${SIZE}`} height={`${SIZE}`} viewBox='0 0 24 24' strokeWidth={STROKE_WIDTH} >
                         <motion.path
                             {...path01Variants.closed}
                             animate={path01Controls}

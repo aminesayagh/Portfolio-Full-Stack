@@ -1,0 +1,70 @@
+{
+    "tasks": {
+        "Web Designer": "Web Designer",
+        "Web Developer": "Web Developer",
+        "Mobile Developer": "Mobile Developer",
+        "Crypto Developer": "Crypto Developer",
+        "Graphic Designer": "GRAPHIC DESIGNER",
+        "Marketer": "Marketer",
+        "Database Consultant": "Database Consultant",
+        "Scrape Developer": "Scrape Developer",
+        "Backend Developer": "Backend Developer",
+        "Frontend Developer": "Frontend Developer",
+        "Infrastructure Developer": "Infrastructure Developer",
+        "Technical Advisor": "Technical Advisor",
+        "Full Stack Developer": "Full Stack Developer"
+    },
+    "jobTItle": {
+        "CTO": "CTO",
+        "CEO": "CEO",
+        "CO-FOUNDER": "CO-FOUNDER",
+        "FOUNDER": "FOUNDER",
+        "TECHNICAL ADVISOR": "TECHNICAL ADVISOR",
+        "RECHERCHE AND DEVELOPMENT": "RECHERCHE AND DEVELOPMENT",
+        "FREELANCER": "FREELANCER",
+        "AUTOMATION SPECIALIST": "AUTOMATION SPECIALIST",
+        "ACADEMIC PROJECT PLATFORM ARCHITECT": "ACADEMIC PROJECT PLATFORM ARCHITECT"
+    },
+    "projects": {
+        "1": {
+            "title": "Happy Water",
+            "description": "Happy Water: An eco-conscious NFT initiative dedicated to ocean conservation. I collaborated in shaping its identity through design and spearheaded the web development efforts, further extending my expertise to the creation and management of cryptocurrency contracts." 
+        },
+        "2": {
+            "title": "Sofiane Pamart's Musical NFT",
+            "description": ""
+        },
+        "3": {
+            "title": "Cyber Cohesion",
+            "description": ""
+        },
+        "4": {
+            "title": "Shinobi Boy",
+            "description": ""
+        },
+        "5": {
+            "title": "Web Application for managing university Projects",
+            "description": ""
+        },
+        "6": {
+            "title": "SODIADD",
+            "description": "An real estate investment agency catering to individual investors. As a co-founder and CEO, I played an integral role from conceptualizing the brand's identity to leading the full-stack web platform development essential to the project's success."
+        },
+        "7": {
+            "title": "Jonas Agency",
+            "description": ""
+        },
+        "8": {
+            "title": "Lavish Trading",
+            "description": "A consultancy and investment agency in trading for individual clients. I took on the roles of both designer and developer, crafting their web identity, while also contributing significantly to the project's commercial messaging."
+        },
+        "9": {
+            "title": "Maschool",
+            "description": ""
+        },
+        "10": {
+            "title": "FreeLance Projects",
+            "description": ""
+        }
+    }
+}

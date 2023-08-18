@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+
+const defaultTheme = require("tailwindcss/defaultTheme");
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -33,6 +35,7 @@ module.exports = {
       "13xl": "3.8rem",
       "14xl": "4rem",
       "15xl": "4.2rem",
+      "16xl": "5rem",
     },
     colors: {
       transparent: "transparent",
@@ -110,7 +113,42 @@ module.exports = {
         '900': '#7A0B11'
       }
     },
-    extend: {},
+    screens: {
+      "xxs": "390px",
+      "xs": "475px",
+      "sm": "640px",
+      "md": "768px",
+      "mdl": "900px",
+      "lg": "1024px",
+      "xl": "1280px",
+      "2xl": "1536px",
+      "3xl": "1600px",
+      "4xl": "2100px",
+    },
+    zIndex: {
+      bg: "-1",
+      "0": "0",
+      "10": "10",
+      "20": "20",
+      "30": "30",
+      "40": "40",
+      "50": "50",
+      "container": "100",
+      "auto": "auto",
+      "dropdown": "2000",
+      "sticky": "3000",
+      "overlay": "4000",
+      "modal": "4010",
+      "header": "5000",
+      "loading": "7000",
+      "toast": "6500",
+      "tooltip": "6300",
+    },
+    extend: {
+      fontFamily: {
+        'sans': ['montserrat', ...defaultTheme.fontFamily.sans], 
+      }
+    },
   },
   plugins: [],
 };
