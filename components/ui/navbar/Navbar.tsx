@@ -39,7 +39,7 @@ const useAnimationScroll = () => {
         return () => {
             scrollY.destroy();
         }
-    }, [scrollY, controls]);
+    }, [scrollY]);
 
     const containerPadding = useTransform(scrollY, scrollYRange, ['1rem', '0.5rem', '0.5rem']);
     const blur = useTransform(scrollY, scrollYRange, ['blur(0px)', 'blur(100px)', 'blur(100px)']);
