@@ -3,6 +3,7 @@ import { useTranslation } from "next-i18next";
 
 import { twMerge } from "tailwind-merge";
 import { Title, Text } from '@/components/ui';
+import { rounded } from "@/components/style";
 
 const Icon = () => {
     return (
@@ -80,7 +81,7 @@ const ExpertiseStages = () => {
 const Expertise = () => {
     return (
         <>
-            <div className={twMerge('flex flex-col', 'gap-16 lg:gap-28 2xl:gap-44', 'justify-center items-center h-full', 'rounded-2xl', 'overflow-hidden')}>
+            <div className={twMerge('flex flex-col', 'gap-16 lg:gap-28 2xl:gap-44', 'justify-center items-center h-full', rounded({ size: 'xl' }), 'overflow-hidden')}>
                 <ExpertiseHead />
                 <ExpertiseStages />
                 <div className={twMerge('absolute w-full h-[26vh] bottom-0 left-0 z-999999999', 'bg-gradient-to-t from-black-100/25 via-black-100/10 to-black-100/0')}></div>

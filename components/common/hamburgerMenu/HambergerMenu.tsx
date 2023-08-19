@@ -24,21 +24,22 @@ const path02Variants = {
 const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => void }) => {
     const path01Controls = useAnimation();
     const path02Controls = useAnimation();
-    const handlerHamburgerClick = useCallback(async () => {
-        if(isOpen) {
-            await path02Controls.start(path02Variants.moving);
-            path01Controls.start(path01Variants.open);
-            path02Controls.start(path02Variants.open);
-        } else {
-            path01Controls.start(path01Variants.closed);
-            await path02Controls.start(path02Variants.moving);
-            path02Controls.start(path02Variants.closed);
-        }
-    }, [isOpen]);
-
+    
     useEffect(() => {
+        async function handlerHamburgerClick() {
+            if(!path02Controls || !path01Controls) return;
+            if(isOpen) {
+                await path02Controls.start(path02Variants.moving);
+                path01Controls.start(path01Variants.open);
+                path02Controls.start(path02Variants.open);
+            } else {
+                path01Controls.start(path01Variants.closed);
+                await path02Controls.start(path02Variants.moving);
+                path02Controls.start(path02Variants.closed);
+            }
+        };
         if(typeof isOpen === 'boolean'){
-            handlerHamburgerClick();
+            handlerHamburgerClick().then();
         }
     }, [isOpen])
     let { keyboardProps } = useKeyboard({
