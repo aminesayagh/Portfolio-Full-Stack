@@ -12,7 +12,8 @@
         "Frontend Developer": "Frontend Developer",
         "Infrastructure Developer": "Infrastructure Developer",
         "Technical Advisor": "Technical Advisor",
-        "Full Stack Developer": "Full Stack Developer"
+        "Full Stack Developer": "Full Stack Developer",
+        "Fullstack Developer": "Fullstack Developer"
     },
     "jobTItle": {
         "CTO": "CTO",
@@ -29,7 +30,7 @@
         "1": {
             "title": "Happy Water",
             "alt": "Happy Water",
-            "description": "Happy Water: An eco-conscious NFT initiative dedicated to ocean conservation. I collaborated in shaping its identity through design and spearheaded the web development efforts, further extending my expertise to the creation and management of cryptocurrency contracts." 
+            "description": "An eco-conscious NFT initiative dedicated to ocean conservation. I collaborated in shaping its identity through design and spearheaded the web development efforts, further extending my expertise to the creation and management of cryptocurrency contracts." 
         },
         "2": {
             "title": "Sofiane Pamart's Musical NFT",

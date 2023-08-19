@@ -11,7 +11,7 @@ const TASK_PROJECTS = {
     "FRONTEND_DEVELOPER": "Frontend Developer",
     "INFRASTRUCTURE_DEVELOPER": "Infrastructure Developer",
     "TECHNICAL_ADVISOR": "Technical Advisor",
-    'FULLSTACK_DEVELOPER': 'FULLSTACK DEVELOPER',
+    'FULLSTACK_DEVELOPER': 'Fullstack Developer',
 } as const;
 
 const TITLE = {
