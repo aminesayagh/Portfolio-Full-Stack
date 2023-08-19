@@ -59,6 +59,11 @@
         "copy": "© 2023"
     },
     "manifesto": {
+        "subtitle": "WHAT I THINK",
+        "description": "it's merely the inception. An exceptional engineer devotes a substantial amount of time to deep, unbiased listening. They consider real-world experimentation as their source of truth, adamantly differentiating between judgments drawn from perspectives and concrete facts.",
+        "slogan": "Being correct is not enough"
+    },
+    "manifesto_old": {
         "title_1": "Perspective",
         "title_1_2": "thinking",
         "title_2": "Manifesto",
