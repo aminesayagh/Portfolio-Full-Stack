@@ -109,7 +109,7 @@ $h6: 1rem;
     @apply tracking-wider;
   }
   &_xs {
-    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.66rem, 0.7rem);
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.64rem, 0.7rem);
     font-size: var(--font-size, 0.8rem);
     line-height: calc(
       var(--font-size, 0.8rem) * var(--degree-line-height, 1.5)

@@ -11,7 +11,7 @@ const TASK_PROJECTS = {
     "FRONTEND_DEVELOPER": "Frontend Developer",
     "INFRASTRUCTURE_DEVELOPER": "Infrastructure Developer",
     "TECHNICAL_ADVISOR": "Technical Advisor",
-    'FULLSTACK_DEVELOPER': 'FULLSTACK DEVELOPER',
+    'FULLSTACK_DEVELOPER': 'Fullstack Developer',
 } as const;
 
 const TITLE = {
@@ -40,14 +40,16 @@ interface Project {
     tasks: TaskProject[];
     category: ('best' | 'ongoing' | 'completed')[];
     jobTitle: TitleProject[];
+    picture?: string[];
 }
 const PROJECTS: Project[] = [
     {
         id: '1',
         title: 'Happy Water',
-        category: ['best'],
+        category: ['best', 'completed'],
         tasks: [WEB_DESIGNER, WEB_DEVELOPER, CRYPTO_DEVELOPER],
-        jobTitle: [CTO, CO_FOUNDER]
+        jobTitle: [CTO, CO_FOUNDER],
+        picture: ['/images/project/happy_water_mockup_main.jpg']
     },
     {
         id: '2',
@@ -82,7 +84,8 @@ const PROJECTS: Project[] = [
         title: "SODIADD",
         category: ['best', 'ongoing'],
         tasks: [WEB_DESIGNER, FULLSTACK_DEVELOPER],
-        jobTitle: [CTO, CO_FOUNDER]
+        jobTitle: [CTO, CO_FOUNDER],
+        picture: ['/images/project/sodiadd_mockup_main.jpg'],
     },
     {
         id: '7',
@@ -96,7 +99,8 @@ const PROJECTS: Project[] = [
         category: ['best', 'completed'],
         title: "Lavish Trading",
         tasks: [WEB_DESIGNER,FULLSTACK_DEVELOPER],
-        jobTitle: [FREELANCER]
+        jobTitle: [FREELANCER],
+        picture: ['/images/project/lavish_mockup_main.jpg']
     },
     {
         id: '9',
@@ -113,5 +117,8 @@ const PROJECTS: Project[] = [
         jobTitle: [FREELANCER]
     }
 ];
+
+export const getProject = (id: string) => PROJECTS.find(project => project.id === id);
+export const getProjectsByCategory = (category: 'best' | 'ongoing' | 'completed') => PROJECTS.filter(project => project.category.includes(category));
 
 export default PROJECTS;

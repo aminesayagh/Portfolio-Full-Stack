@@ -1,12 +1,15 @@
 import { useRef, useLayoutEffect, useState, useEffect } from 'react'
 import { gsap } from 'gsap';
+import { twMerge } from 'tailwind-merge';
 
 import { useMedia }  from '@/hook';
+import { rounded } from '@/components/style';
+
 
 const Video = () => {
     let ref = useRef<HTMLCanvasElement>(null);
     const [images, setImages] = useState<Array<HTMLImageElement>>([]);
-    const height = useMedia(['(min-width: 1024px)', '(min-width: 640px)'], ['100vh', '80vh'], '70vh')
+    const height = useMedia(['(min-width: 1024px)', '(min-width: 640px)'], ['100vh', '80vh'], '80vh')
     useEffect(() => {
         let ctx = gsap.context((self) => {
             let canvas = ref.current;
@@ -52,7 +55,7 @@ const Video = () => {
 
     return (
         <>
-            <div className='block relative overflow-hidden w-full h-auto rounded-3xl'>
+            <div className={twMerge('block relative overflow-hidden w-full h-auto rounded-3xl', rounded({ size: 'xl' }))}>
                 <canvas ref={ref} style={{ width: "100%", height: height, objectFit: 'cover', borderRadius: '1.5rem'  }} />
             </div>
         </>
