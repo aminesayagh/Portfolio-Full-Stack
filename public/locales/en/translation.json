@@ -60,8 +60,11 @@
     },
     "manifesto": {
         "subtitle": "WHAT I THINK",
+        "slogan": "Being correct is not enough",
         "description": "it's merely the inception. An exceptional engineer devotes a substantial amount of time to deep, unbiased listening. They consider real-world experimentation as their source of truth, adamantly differentiating between judgments drawn from perspectives and concrete facts.",
-        "slogan": "Being correct is not enough"
+        "who_i_am": "My name is Mohamed Amine SAYAGH, A Passionate and independent web developer, deeply versed in science and of Web Design Interface, With a keen eye for detail and a growth understanding of user-centric design principles, I constantly push the boundaries of what's possible in the digital realm.",
+        "what_i_do": "I love transforming everything by unique, problem solving and usable designs, whether it's about digital products, brands, website. I ensure that every digital interaction is not just functional, but also delightful and memorable.",
+        "action": "Want to know more about me?, just say hello."
     },
     "manifesto_old": {
         "title_1": "Perspective",
