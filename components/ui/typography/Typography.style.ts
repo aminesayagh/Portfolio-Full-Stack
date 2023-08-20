@@ -59,3 +59,17 @@ export const textStyle = cva([textDefault, fontFamilyText], {
         weight: 'medium',
     }
 })
+import { TextPropsType } from './Typography.type';
+import { twMerge } from 'tailwind-merge';
+import Style from './Typography.module.scss';
+
+export const textClassNames = ({ weight, size, degree, exchange }: TextPropsType) => {
+    return twMerge(
+        textStyle({
+            weight
+        }),
+        Style[`text_${size}`],
+        Style['text'],
+        textColorDegree[!!exchange ? "exchanged" : "normal"][degree]
+    )
+}

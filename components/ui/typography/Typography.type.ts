@@ -63,6 +63,8 @@ export type TextElement = {
 };
 
 export type TextSizes = 'lg' | 'md' | 'sm' | 'xs' | 'xxs' | 'auto';
+export type TextPropsType = Pick<TextPropsExtended, 'exchange' | 'size' | 'weight' | 'degree'>;
+
 export type TextPropsExtended = TextElement & VariantProps<typeof textStyle> & {
     children: React.ReactNode | string;
     className?: string;

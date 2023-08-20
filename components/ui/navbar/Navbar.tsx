@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { Link as LinkUi } from '@/components/ui';
 
-import { motion, useScroll, useTransform, useAnimation, MotionValue } from 'framer-motion';
+import { motion, useScroll, useTransform, useAnimation, MotionValue, useMotionValueEvent } from 'framer-motion';
 import { NavbarProps, NavbarType, BrandProps, ContentProps, ItemProps, LinkProps } from './Navbar.type';
 import { twMerge } from 'tailwind-merge';
 import { containerStyle } from '@/components/ui';
@@ -21,31 +21,27 @@ const useAnimationScroll = () => {
     const delta = useRef(0);
     const lastScrollY = useRef(0);
 
-    useEffect(() => {
-        scrollY.onChange(val => {
-            const diff = Math.abs(val - lastScrollY.current);
-            if (val >= lastScrollY.current) {
-                delta.current = delta.current >= 10 ? 10 : delta.current + diff;
-            } else {
-                delta.current = delta.current <= -10 ? -10 : delta.current - diff;
-            }
-            if (delta.current >= 10 && val > 600) {
-                controls.start("hidden");
-            } else if (delta.current <= -10 || val < 600) {
-                controls.start("visible");
-            }
-            lastScrollY.current = val;
-        })
-        return () => {
-            scrollY.destroy();
+    useMotionValueEvent(scrollY, 'change', (val) => {
+        const diff = Math.abs(val - lastScrollY.current);
+        if (val >= lastScrollY.current) {
+            delta.current = delta.current >= 10 ? 10 : delta.current + diff;
+        } else {
+            delta.current = delta.current <= -10 ? -10 : delta.current - diff;
         }
-    }, [scrollY]);
+        if (delta.current >= 10 && val > 600) {
+            controls.start("hidden");
+        } else if (delta.current <= -10 || val < 600) {
+            controls.start("visible");
+        }
+        lastScrollY.current = val;
+    })
+
 
     const containerPadding = useTransform(scrollY, scrollYRange, ['1rem', '0.5rem', '0.5rem']);
     const blur = useTransform(scrollY, scrollYRange, ['blur(0px)', 'blur(100px)', 'blur(100px)']);
     const backgroundColorWhite = useTransform(scrollY, scrollYRange, ['transparent', "#ffffff90", "#ffffff90"]);
     const backgroundColorDark = useTransform(scrollY, scrollYRange, ['transparent', "#111517", "#111517"]);
-    const display = useTransform(scrollY, scrollYRange, ['flex', 'hidden', 'hidden']);
+    const display = useTransform(scrollY, scrollYRange, ['hidden', 'flex', 'flex']);
     const scale = useTransform(scrollY, scrollYRange, ['100%', '90%', '90%']);
 
     return [containerRef, controls, { containerPadding, blur, backgroundColorWhite, backgroundColorDark, display, scale }] as const;
@@ -58,10 +54,10 @@ type Styles = ReturnType<typeof useAnimationScroll>[2];
 const NavbarAnimation = createContext<Styles | null>(null);
 
 const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props }: NavbarProps) => {
-    const [ref, controls, styles] = useAnimationScroll();
+    const [ref, controls, {...styles}] = useAnimationScroll();
 
-    const backgroundColor = useMemo(() => inTopOfScroll ? 'transparent' : styles.backgroundColorDark, [inTopOfScroll, styles.backgroundColorDark]);
-
+    const backgroundColor = inTopOfScroll ? 'transparent' : styles.backgroundColorDark;
+    console.log(backgroundColor, inTopOfScroll);
     return <>
         <NavbarAnimation.Provider value={styles}>
             <motion.header ref={ref} initial='visible' animate={controls} variants={{
@@ -81,7 +77,7 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
                 }
             }} style={{ 
                 backgroundColor,
-                display: styles.display
+                // display: styles.display
             }} className={twMerge(
                 'fixed top-0 left-0 w-full max-w-[100vw] py-4 z-header', className, zIndex.navbar,
             )}
