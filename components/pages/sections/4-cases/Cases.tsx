@@ -10,7 +10,7 @@ const blurButton = twMerge('backdrop-blur-xl', 'border border-white-100/20 bg-wh
 const ListProject = () => {
     const { t } = useTranslation('projects');
     const listProject = useMemo(() => getProjectsByCategory('best'), [])
-
+    
     return (
         <ul className={twMerge('flex flex-col','gap-8 xl:gap-12')}>
             {listProject.map((project, index) => {
@@ -18,8 +18,8 @@ const ListProject = () => {
                 return (
                     <div key={index} className='relative rounded-lg sm:rounded-2xl overflow-hidden'>
                         <Image src={project['picture'][0]} alt={t(`projects.${project.id}.alt`)} width={1920} height={720} className='h-[60vh] sm:h-[80vh] md:h-[110vh] object-cover' />
-                        <div className={twMerge('absolute w-full h-60', 'left-0 bottom-0','bg-gradient-to-t from-black-100/40 to-black-100/0')}></div>
-                        <div className={twMerge('absolute left-0 right-0 bottom-0 m-0 sm:m-7 lg:m-10 xl:m-14','gap-4', 'flex flex-col md:flex-row items-start md:items-end justify-between')}>
+                        <div className={twMerge(' w-full h-60', 'left-0 bottom-0','bg-gradient-to-t from-black-100/40 to-black-100/0')}></div>
+                        <div className={twMerge(' left-0 right-0 bottom-0 m-0 sm:m-7 lg:m-10 xl:m-14','gap-4', 'flex flex-col md:flex-row items-start md:items-end justify-between')}>
                             <div className={twMerge('w-full sm:w-10/12 md:w-7/12 lg:w-1/2 xl:w-5/12', 'order-2 md:order-1', 'sm:rounded-xl', 'backdrop-blur-xl', 'border-t sm:border  border-white-100/20 bg-white-100/[0.05]')}>
                                 <div className={twMerge('flex flex-col items-start justify-start', 'p-7 mdl:p-8')}>
                                     <Title h4 weight='bold' degree='1' className='flex' >
@@ -60,7 +60,7 @@ const Cases = () => {
                         {t('cases.description')}
                     </Text>
                 </div>
-                <ListProject />
+                {/* <ListProject /> */}
 
             </div>
         </>

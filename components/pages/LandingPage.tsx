@@ -6,7 +6,6 @@ import { MENU_ITEMS } from '@/conf/router';
 const LandingPage = () => {
     return (
         <>
-            <Header />
             <Container as='section' size='lg' id={MENU_ITEMS.intro.id} >
                 <Intro />
             </Container>

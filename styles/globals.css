@@ -39,3 +39,18 @@ html {
 .whitespace-nowrap-important {
   white-space: nowrap !important;
 }
+
+#scroller{
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+  height: 100vh;
+  width: 100%;
+}
+body {
+  max-width: 100vw;
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;;
+  width: 100%;
+  height: 100vh;
+  min-width: 100%;
+}
