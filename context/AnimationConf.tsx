@@ -109,18 +109,18 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
         const restartScroll = () => bodyScrollBar.updatePluginOptions('modal', {
             open: false
         });
-        bodyScrollBar.addListener((e) => {
-            if (e.offset.y < 0) {
-                gsap.to('#scroller', {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.4,
-                    scrollTrigger: {
-                        scroller: '#scroller',
-                    }
-                })
-            }
-        });
+        // bodyScrollBar.addListener((e) => {
+        //     if (e.offset.y < 0) {
+        //         gsap.to('#scroller', {
+        //             y: 0,
+        //             opacity: 1,
+        //             duration: 0.4,
+        //             scrollTrigger: {
+        //                 scroller: '#scroller',
+        //             }
+        //         })
+        //     }
+        // });
         scrollbar.current = bodyScrollBar;
         
         setPauseScroll(pauseScroll);
@@ -129,17 +129,18 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     useEffect(() => {
         const scrollToId = (url: URL) => {
             if(!scrollbar.current) return;
-            const id = window.location.hash.replace('#', '');
+            const id = url.hash.replace('#', '');
             if (!id) return;
             const element = document.getElementById(id);
             if (!element) return;
             const top = element.getBoundingClientRect().top - scrollbar.current.scrollTop;
             const direction = top > 0 ? 1 : -1;
             scrollbar.current.scrollTo(0, top, 0, {
-                easing: easing.easeInOut,
+                easing: easing.easeOutBack,
                 callback: () => {
                     gsap.fromTo('#scroller', {
                         y: 5 * direction + 'vh',
+                        opacity: 0,
                     }, {
                         y: 0,
                         opacity: 1,
