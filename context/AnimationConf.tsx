@@ -1,16 +1,16 @@
-import React, { createContext, useState, useEffect, useLayoutEffect, useRef } from 'react';
+import React, { createContext, useState, useEffect, useLayoutEffect, useRef, useContext } from 'react';
 
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin';
 import Scrollbar, { ScrollbarPlugin } from 'smooth-scrollbar';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import OverscrollPlugin from 'smooth-scrollbar/plugins/overscroll';
+import {useRouter } from 'next/router';
 
 import { useWindowSize } from 'react-use';
+import easing from 'easing-js';
 
-export const ScrollProvider = createContext<{
-    pauseScroll: null | (() => void),
-    restartScroll: null | (() => void)
-}>({ pauseScroll: null, restartScroll: null });
+import { ScrollProvider } from './ScrollContext';
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -28,6 +28,7 @@ class ModalPlugin extends ScrollbarPlugin {
     }
 }
 Scrollbar.use(ModalPlugin);
+Scrollbar.use(OverscrollPlugin);
 
 // @ts-ignore
 gsap.core?.globals('ScrollToPlugin', ScrollToPlugin);
@@ -36,29 +37,44 @@ ScrollTrigger.defaults({
     markers: false
 })
 
-const ScrollbarComponent = ({ children }: { children: React.ReactNode }) => {
-    const [pauseScroll, setPauseScroll] = useState<null | (() => void)>(null);
-    const [restartScroll, setRestartScroll] = useState<null | (() => void)>(null);
 
+const AnimationConf = ({ children }: { children: React.ReactNode }) => {
+    let app = useRef<HTMLDivElement | null>(null);
+    const router = useRouter();
+    const { width, height } = useWindowSize();
+    const { setPauseScroll, setRestartScroll, restartScroll } = useContext(ScrollProvider)
+    const scrollbar = useRef<Scrollbar | null>(null);
     useEffect(() => {
         const element = document.querySelector('#scroller') as HTMLElement;
         if (!element) {
             console.error('No element with id scroller');
             return;
         };
-
+    
         const bodyScrollBar = Scrollbar.init(element, {
             damping: 0.2,
             delegateTo: document,
-            // plugins: {
-            //     modal: {
-            //         open: false,
-            //     }
-            // },
+            plugins: {
+                modal: {
+                    open: false,
+                },
+                overscroll: {
+                    effect: 'glow',
+                    damping: 0.2,
+                    maxOverscroll: 150,
+                    glowColor: '#ffffff',
+                }
+            },
             alwaysShowTracks: false
         });
-
+    
         bodyScrollBar.setPosition(0, 0);
+        bodyScrollBar.updatePluginOptions('overscroll', {
+            effect: 'glow',
+            damping: 0.2,
+            maxOverscroll: 150,
+            glowColor: '#ffffff',
+        });
         ScrollTrigger.scrollerProxy(element, {
             scrollTop(value) {
                 if (typeof value !== 'number') return;
@@ -80,11 +96,11 @@ const ScrollbarComponent = ({ children }: { children: React.ReactNode }) => {
         });
         bodyScrollBar.addListener(ScrollTrigger.update);
         ScrollTrigger.defaults({ scroller: element });
-
+    
         ScrollTrigger.create({
             scroller: element,
         });
-
+    
         bodyScrollBar.track.xAxis.element.remove();
         const pauseScroll = () => bodyScrollBar.updatePluginOptions('modal', {
             open: true
@@ -92,37 +108,74 @@ const ScrollbarComponent = ({ children }: { children: React.ReactNode }) => {
         const restartScroll = () => bodyScrollBar.updatePluginOptions('modal', {
             open: false
         });
+        bodyScrollBar.addListener((e) => {
+            if (e.offset.y < 0) {
+                gsap.to('#scroller', {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.4,
+                    scrollTrigger: {
+                        scroller: '#scroller',
+                    }
+                })
+            }
+        });
+        scrollbar.current = bodyScrollBar;
+        
         setPauseScroll(pauseScroll);
         setRestartScroll(restartScroll);
     }, []);
-    return <ScrollProvider.Provider value={{ pauseScroll, restartScroll }}>{children}</ScrollProvider.Provider>
-}
+    useEffect(() => {
+        const scrollToId = (url: URL) => {
+            if(!scrollbar.current) return;
+            const id = window.location.hash.replace('#', '');
+            if (!id) return;
+            const element = document.getElementById(id);
+            if (!element) return;
+            const top = element.getBoundingClientRect().top - scrollbar.current.scrollTop;
+            const direction = top > 0 ? 1 : -1;
+            scrollbar.current.scrollTo(0, top, 0, {
+                easing: easing.easeInOut,
+                callback: () => {
+                    gsap.fromTo('#scroller', {
+                        y: 5 * direction + 'vh',
+                    }, {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.7,
+                        scrollTrigger: {
+                            scroller: '#scroller',
+                        }
+                    });
+                }
+            });
+        };
+        router.events.on('hashChangeComplete', scrollToId);
 
-const AnimationConf = ({ children }: { children: React.ReactNode }) => {
-    let app = useRef<HTMLDivElement | null>(null);
-    const { width, height } = useWindowSize();
+        return () => {
+            router.events.off('hashChangeComplete', scrollToId);
+        }
+    }, [router])
     useEffect(() => {
         ScrollTrigger.refresh();
     }, [width, height]);
     useEffect(() => {
-        gsap.config({
-            nullTargetWarn: false
+        let ctx = gsap.context(() => {
+            gsap.config({
+                nullTargetWarn: false
+            });
+            gsap.to(app, 0, { css: { visibility: 'visible' } });
         });
-        gsap.to(app, 0, { css: { visibility: 'visible' } });
-        // let ctx = gsap.context(() => {
-        // });
-        // return () => {
-        //     ctx.revert();
-        // }
+        return () => {
+            ctx.revert();
+        }
     }, []);
 
     return <><div ref={el => {
         // @ts-ignore
         app = el
     }} className="app-container" id='main-container'>
-        <ScrollbarComponent>
-            {children}
-        </ScrollbarComponent>
+        {children}
     </div>
         <style jsx>{`
             .app-container{
