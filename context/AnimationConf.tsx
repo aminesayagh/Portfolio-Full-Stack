@@ -8,6 +8,7 @@ import OverscrollPlugin from 'smooth-scrollbar/plugins/overscroll';
 import {useRouter } from 'next/router';
 
 import { useWindowSize } from 'react-use';
+// @ts-ignore
 import easing from 'easing-js';
 
 import { ScrollProvider } from './ScrollContext';
@@ -142,7 +143,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                     }, {
                         y: 0,
                         opacity: 1,
-                        duration: 0.7,
+                        duration: 0.4,
                         scrollTrigger: {
                             scroller: '#scroller',
                         }
