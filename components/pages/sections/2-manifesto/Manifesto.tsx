@@ -11,17 +11,23 @@ const Manifesto = () => {
     return (
         <div className={twMerge(`grid grid-cols-12 gap-y-12`)} >
             <div className={twMerge('flex flex-col gap-7', 'items-start justify-start', 'col-start-2 col-span-10')}>
-                <Title h6 degree='3' weight='semibold' >
-                    {t(`manifesto.subtitle`)}
-                </Title>
+                <div className='flex flex-row gap-6 justify-center items-center'>
+                    <Title h6 degree='3' weight='semibold' >
+                        {t(`manifesto.subtitle_1`)}
+                    </Title>
+                    <div className={twMerge('w-2 h-2 rounded-full bg-gray-500 items-center justify-start')} ></div>
+                    <Title h6 degree='3' weight='semibold' >
+                        {t(`manifesto.subtitle_2`)}
+                    </Title>
+                </div>
                 <Title h4 degree='2' weight='semibold' >
-                    <strong className='text-white-100 pr-2'>
+                    <strong className='text-white-200 pr-2'>
                         {t(`manifesto.slogan`)}
                     </strong>
                     {t(`manifesto.description`)}
                 </Title>
             </div>
-            <div className={twMerge('flex flex-row gap-12 items-start justify-between', 'col-start-5 col-span-7')}>
+            <div className={twMerge('flex flex-row gap-12 items-start justify-between', 'col-start-6 col-span-6')}>
                 <div className={twMerge('flex flex-col gap-5', '')}>
                     <Text p degree='2' weight='medium' size='lg' >
                         {t(`manifesto.who_i_am`)}
@@ -31,7 +37,7 @@ const Manifesto = () => {
                     </Text>
                     <Text p degree='2' weight='medium' size='xl' className='' >
                         {t(`manifesto.goal`)}
-                        <Link degree='1' weight='semibold' size='xl' href='/contact' className='ml-4' >
+                        <Link degree='1' weight='semibold' size='xl' href='/contact' className='ml-2' >
                             {t(`manifesto.action`)}
                         </Link>
                     </Text>
