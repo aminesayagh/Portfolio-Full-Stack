@@ -1,7 +1,9 @@
+
+import { memo } from 'react';
 import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 
-import { Text, Icon, Container, Button } from '@/components/ui';
+import { Text, Icon, Container, Link } from '@/components/ui';
 import { useRouter } from 'next/router';
 import { MENU_ITEMS } from '@/conf/router';
 
@@ -20,7 +22,6 @@ const FollowUs = () => {
 
 const Footer = () => {
     const { t } = useTranslation();
-    const router = useRouter();
 
     return (<>
         <Container as='footer' size='lg' className={twMerge('flex flex-col gap-8 md:gap-12')}>  
@@ -32,14 +33,12 @@ const Footer = () => {
             
             <div className={twMerge('flex flex-row flex-wrap sm:flex-nowrap justify-between', 'gap-y-4', 'pb-10 pt-6')}>
                 <div className={twMerge('flex flex-row', 'w-1/2 sm:w-auto', 'order-2 sm:order-1')} >
-                    <Button onPress={() => {
-                        router.push(MENU_ITEMS.intro.link)
-                    }} className={twMerge('flex flex-row justify-start items-center', 'gap-6 md:gap-8', 'uppercase')}>
+                    <Link href={MENU_ITEMS.intro.link} className={twMerge('flex flex-row justify-start items-center', 'gap-6 md:gap-8', 'uppercase')}>
                         <Icon name='IconArrowUpRight' size='24' className={twMerge('stroke-gray-400', ICON_SIZE_CLASS_NAME)} />
                         <Text p size='sm' weight='semibold' degree='3' >
                             {t('footer.action')}
                         </Text>
-                    </Button>
+                    </Link>
                 </div>  
                 <div className='flex flex-row justify-start sm:justify-center items-center w-full sm:w-auto order-1 sm:order-2'>
                     <Text p degree='3' weight='semibold' size='sm' className='uppercase'>
@@ -57,4 +56,4 @@ const Footer = () => {
     </>)
 }
 
-export default Footer;
+export default memo(Footer);
