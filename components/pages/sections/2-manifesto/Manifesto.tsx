@@ -9,7 +9,7 @@ import { Title, Text, Link } from '@/components/ui';
 const Manifesto = () => {
     const { t } = useTranslation();
     return (
-        <div className={twMerge(`grid grid-cols-12 gap-y-12`)} >
+        <div className={twMerge(`grid grid-cols-12 gap-y-12`, '')} >
             <div className={twMerge('flex flex-col gap-7', 'items-start justify-start', 'col-start-2 col-span-9')}>
                 <div className='flex flex-row gap-5 justify-center items-center'>
                     <Title h6 degree='4' weight='medium' >
