@@ -27,7 +27,7 @@ const Manifesto = () => {
                     {t(`manifesto.description`)}
                 </Title>
             </div>
-            <div className={twMerge('flex flex-row gap-12 items-start justify-between', 'col-start-5 col-span-6')}>
+            <div className={twMerge('flex flex-row gap-12 items-start justify-between', 'col-start-6 col-span-5')}>
                 <div className={twMerge('flex flex-col gap-5', '')}>
                     <Text p degree='2' weight='medium' size='lg' >
                         {t(`manifesto.who_i_am`)}
