@@ -11,7 +11,7 @@ import { useWindowSize } from 'react-use';
 // @ts-ignore
 import easing from 'easing-js';
 
-import ScrollContextProvider, { ScrollProvider } from './ScrollContext';
+import { ScrollProvider } from './ScrollContext';
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -103,12 +103,6 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
         });
 
         bodyScrollBar.track.xAxis.element.remove();
-        const pauseScroll = () => bodyScrollBar.updatePluginOptions('modal', {
-            open: true
-        });
-        const restartScroll = () => bodyScrollBar.updatePluginOptions('modal', {
-            open: false
-        });
         // bodyScrollBar.addListener((e) => {
         //     if (e.offset.y < 0) {
         //         gsap.to('#scroller', {
