@@ -1,4 +1,4 @@
-import { useState, useCallback, memo, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
+import { useState, useCallback, memo, useEffect, useLayoutEffect, useMemo, useRef, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
@@ -14,6 +14,7 @@ import { getMenuItems } from '@/conf/router';
 const menuHamburgerItems = getMenuItems('hamburger');
 const menuSocialNetworks = getMenuItems('socialNetworks');
 
+import { ScrollProvider } from '@/context/ScrollContext';
 
 const GAP_SIZE_LG = 'gap-4 sm:gap-6 lg:gap-7 xl:gap-8';
 const GAP_SIZE_XL = 'gap-8 mdl:gap-12';
@@ -31,7 +32,7 @@ const Header = () => {
     let [openMenu, setOpenMenu] = useState<boolean>(false);
     const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
     const ctx = useRef<any>(null);
-
+    const { scrollbar } = useContext(ScrollProvider);
     useLayoutEffect(() => {
         // let selector = () => gsap.utils.selector('.modal-overlay');
         ctx.current = gsap.context((self) => {
@@ -41,6 +42,7 @@ const Header = () => {
                     yPercent: TRANSLATE_Y,
                     transformOrigin: 'right top',
                     skewY: 2,
+                    onStartParams: [scrollbar]
                 }, {
                     duration: DURATION,
                     ease: 'power3.inOut',
@@ -87,11 +89,18 @@ const Header = () => {
                     duration: DURATION / 2,
                 }, '<25%')
                 tl.current.play();
+                scrollbar && scrollbar.updatePluginOptions('modal', {
+                    open: true,
+                })
+
             });
             self.add('close', () => {
                 tl.current.reverse().then(() => {
                     setOpenMenu(false)
-                    ctx.current.revert();
+                    ctx.current.revert(); // revert timeline to the beginning
+                    scrollbar && scrollbar.updatePluginOptions('modal', {
+                        open: false,
+                    });
                 });
             });
         });

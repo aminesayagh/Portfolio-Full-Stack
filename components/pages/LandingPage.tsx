@@ -6,7 +6,6 @@ import { MENU_ITEMS } from '@/conf/router';
 const LandingPage = () => {
     return (
         <>
-            <Header />
             <Container as='section' size='lg' id={MENU_ITEMS.intro.id} >
                 <Intro />
             </Container>
@@ -19,7 +18,7 @@ const LandingPage = () => {
                 <Manifesto />
             </Container>
             <span className='block h-60 w-full'></span>
-            <Container as='section' size='full' id={MENU_ITEMS.experience.id} className='py-10 [&>*]:py-20 [&>*]:bg-white-200 relative overflow-hidden' >
+            <Container as='section' size='full' id={MENU_ITEMS.experience.id} className='[&>*]:py-20 [&>*]:bg-white-200 relative overflow-hidden' >
                 <Expertise />
                 <Noise position='absolute' />
             </Container>

@@ -11,8 +11,10 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
-
+import AnimationConf from '@/context/AnimationConf';
+import ScrollContextProvider from '@/context/ScrollContext';
 import { LandingPage } from '@/components/pages';
+import { Header, Footer } from '@/components/common';
 
 export default function Home() {
 
@@ -25,10 +27,15 @@ export default function Home() {
         author="Mohamed Amine SAYAGH"
         logo='/favicon.svg'
       />
-      <Suspense fallback={<Loading />}>
-        <LandingPage />
-        <Noise />
-      </Suspense>
+      <ScrollContextProvider >
+        <AnimationConf>
+          <Header />
+          <div id='scroller'>
+            <LandingPage />
+          </div>
+          <Noise />
+        </AnimationConf>
+      </ScrollContextProvider>
     </>
   )
 }

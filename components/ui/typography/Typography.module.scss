@@ -84,8 +84,16 @@ $h6: 1rem;
 }
 
 .text {
-  --degree-line-height: 1.7;
+  --degree-line-height: 1.75;
   @apply default-text;
+  &_xl {
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 1.2rem, 1.6rem);
+    font-size: var(--font-size, 1.6rem);
+    line-height: calc(
+      var(--font-size, 1.6rem) * var(--degree-line-height, 1.5)
+    );
+    @apply tracking-wider;
+  }
   &_lg {
     @include fluid-type(--font-size, $minScreen, $maxScreen, 0.9rem, 1.2rem);
     font-size: var(--font-size, 1.2rem);

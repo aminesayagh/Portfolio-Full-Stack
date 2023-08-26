@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const transpiledModules = require('next-transpile-modules')(['react-fitty', 'fitty']);
+const transpiledModules = require('next-transpile-modules')(['react-fitty', 'fitty', 'smooth-scrollbar', 'easing-js']);
 
 
 const nextConfig = {

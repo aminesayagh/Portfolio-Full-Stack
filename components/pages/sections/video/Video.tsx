@@ -2,15 +2,14 @@ import { useRef, useLayoutEffect, useState, useEffect } from 'react'
 import { gsap } from 'gsap';
 import { twMerge } from 'tailwind-merge';
 
-// import { useMedia }  from '@/hook';
 import { rounded } from '@/components/style';
 
 import { useMedia } from 'react-use'
 const Video = () => {
     let ref = useRef<HTMLCanvasElement>(null);
     const [images, setImages] = useState<Array<HTMLImageElement>>([]);
-    const isLg = useMedia('(min-width: 1024px)');
-    const isSM = useMedia('(min-width: 640px)');
+    const isLg = useMedia('(min-width: 1024px)', true);
+    const isSM = useMedia('(min-width: 640px)', false);
     const [height, setHeight] = useState<string>('50vh');
     useEffect(() => {
         if(isLg) {

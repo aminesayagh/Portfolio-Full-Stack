@@ -23,8 +23,6 @@ export const Fit = ({ children, className, exchange, weight, ...props }: ReactFi
     </ReactFitty>
 
 }
-// DISPLAY
-export type { DisplayPropsExtended } from './Typography.type';
 
 
 export const Display: FC<DisplayPropsExtended> = ({ size, weight, exchange, children, className, ...props }) => {
@@ -65,19 +63,10 @@ export const Title: FC<TitlePropsExtended> = ({ weight, degree = '1', exchange, 
 }
 
 // TEXT
-import { TextNames, TextPropsExtended, validTextElements } from './Typography.type';
-export type TextPropsType = Pick<TextPropsExtended, 'exchange' | 'size' | 'weight' | 'degree'>;
+import { TextNames, TextPropsExtended, validTextElements, TextPropsType } from './Typography.type';
+import { textClassNames } from './Typography.style';
 
-export const textClassNames = ({ weight, size, degree, exchange }: TextPropsType) => {
-    return twMerge(
-        textStyle({
-            weight
-        }),
-        Style[`text_${size}`],
-        Style['text'],
-        textColorDegree[!!exchange ? "exchanged" : "normal"][degree]
-    )
-}
+
 export const Text: FC<TextPropsExtended> = ({ weight, degree = '3', size, exchange, className, children, ...props }) => {
     const ElementType = (Object.keys(props) as Array<TextNames>).find(prop => validTextElements.includes(prop)) || 'p';
     // @ts-expect-error

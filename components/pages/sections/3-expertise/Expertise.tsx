@@ -1,7 +1,7 @@
 
 import { useTranslation } from "next-i18next";
-
 import { twMerge } from "tailwind-merge";
+
 import { Title, Text } from '@/components/ui';
 import { rounded } from "@/components/style";
 
