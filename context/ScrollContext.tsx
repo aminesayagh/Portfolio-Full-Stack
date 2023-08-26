@@ -1,30 +1,20 @@
 
 import { useState, createContext } from 'react';
+import Scrollbar from 'smooth-scrollbar';
 
 export const ScrollProvider = createContext<{
-    pauseScroll: null | (() => void),
-    restartScroll: null | (() => void),
-    setPauseScroll: (pauseScroll: null | (() => void)) => void,
-    setRestartScroll: (restartScroll: null | (() => void)) => void
+    scrollbar: null | Scrollbar,
+    setScrollbar: (scrollbar: Scrollbar) => void
 }>({ 
-    pauseScroll: null,
-    restartScroll: null,
-    setPauseScroll: () => {},
-    setRestartScroll: () => {}
+    scrollbar: null,
+    setScrollbar: () => {}
 });
 
 export default function ScrollContextProvider({ children }: { children: React.ReactNode }) {
-    const [pauseScroll, setPauseScroll] = useState<null | (() => void)>(null);
-    const [restartScroll, setRestartScroll] = useState<null | (() => void)>(null);
+    const [scrollbar, setScrollbar] = useState<null | Scrollbar>(null);
 
-
-
-    return <ScrollProvider.Provider value={{ 
-        pauseScroll,
-        setPauseScroll,
-        restartScroll,
-        setRestartScroll,
-
+    return <ScrollProvider.Provider value={{
+        scrollbar, setScrollbar
     }}>
         {children}
     </ScrollProvider.Provider>

@@ -5,13 +5,13 @@ import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin';
 import Scrollbar, { ScrollbarPlugin } from 'smooth-scrollbar';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import OverscrollPlugin from 'smooth-scrollbar/plugins/overscroll';
-import {useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 import { useWindowSize } from 'react-use';
 // @ts-ignore
 import easing from 'easing-js';
 
-import { ScrollProvider } from './ScrollContext';
+import ScrollContextProvider, { ScrollProvider } from './ScrollContext';
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -43,7 +43,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     let app = useRef<HTMLDivElement | null>(null);
     const router = useRouter();
     const { width, height } = useWindowSize();
-    const { setPauseScroll, setRestartScroll, restartScroll } = useContext(ScrollProvider)
+    const { setScrollbar } = useContext(ScrollProvider)
     const scrollbar = useRef<Scrollbar | null>(null);
     useEffect(() => {
         const element = document.querySelector('#scroller') as HTMLElement;
@@ -51,7 +51,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             console.error('No element with id scroller');
             return;
         };
-    
+
         const bodyScrollBar = Scrollbar.init(element, {
             damping: 0.2,
             delegateTo: document,
@@ -68,7 +68,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             },
             alwaysShowTracks: false
         });
-    
+
         bodyScrollBar.setPosition(0, 0);
         bodyScrollBar.updatePluginOptions('overscroll', {
             effect: 'glow',
@@ -97,11 +97,11 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
         });
         bodyScrollBar.addListener(ScrollTrigger.update);
         ScrollTrigger.defaults({ scroller: element });
-    
+
         ScrollTrigger.create({
             scroller: element,
         });
-    
+
         bodyScrollBar.track.xAxis.element.remove();
         const pauseScroll = () => bodyScrollBar.updatePluginOptions('modal', {
             open: true
@@ -122,13 +122,12 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
         //     }
         // });
         scrollbar.current = bodyScrollBar;
-        
-        setPauseScroll(pauseScroll);
-        setRestartScroll(restartScroll);
-    }, []);
+
+        setScrollbar(bodyScrollBar);
+    }, [router]);
     useEffect(() => {
         const scrollToId = (url: string) => {
-            if(!scrollbar.current) return;
+            if (!scrollbar.current) return;
             const urlSplit = url.split('/');
             const id = urlSplit[urlSplit.length - 1].replace('#', '');
             if (!id) return;
