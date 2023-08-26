@@ -57,7 +57,6 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
     const [ref, controls, {...styles}] = useAnimationScroll();
 
     const backgroundColor = inTopOfScroll ? 'transparent' : styles.backgroundColorDark;
-    console.log(backgroundColor, inTopOfScroll);
     return <>
         <NavbarAnimation.Provider value={styles}>
             <motion.header ref={ref} initial='visible' animate={controls} variants={{

@@ -127,9 +127,10 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
         setRestartScroll(restartScroll);
     }, []);
     useEffect(() => {
-        const scrollToId = (url: URL) => {
+        const scrollToId = (url: string) => {
             if(!scrollbar.current) return;
-            const id = url.hash.replace('#', '');
+            const urlSplit = url.split('/');
+            const id = urlSplit[urlSplit.length - 1].replace('#', '');
             if (!id) return;
             const element = document.getElementById(id);
             if (!element) return;
@@ -138,16 +139,10 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             scrollbar.current.scrollTo(0, top, 0, {
                 easing: easing.easeOutBack,
                 callback: () => {
-                    gsap.fromTo('#scroller', {
-                        y: 5 * direction + 'vh',
+                    gsap.from('#scroller', {
+                        y: direction * 240,
                         opacity: 0,
-                    }, {
-                        y: 0,
-                        opacity: 1,
-                        duration: 0.4,
-                        scrollTrigger: {
-                            scroller: '#scroller',
-                        }
+                        duration: 0.6,
                     });
                 }
             });
