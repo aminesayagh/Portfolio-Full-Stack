@@ -92,6 +92,7 @@ const Header = () => {
                 scrollbar && scrollbar.updatePluginOptions('modal', {
                     open: true,
                 })
+
             });
             self.add('close', () => {
                 tl.current.reverse().then(() => {
@@ -105,9 +106,6 @@ const Header = () => {
         });
         return () => {
             ctx.current.revert();
-            scrollbar && scrollbar.updatePluginOptions('modal', {
-                open: false,
-            })
         }
     }, [])
     const menuHandler = useCallback(() => {

@@ -16,7 +16,7 @@ const Action = () => {
                         <Icon name='IconArrowUpRight' size='22' className='stroke-white-100 stroke-[2px]' />
                     </Button>
                 </div>
-                <div className={twMerge('flex flex-col gap-4', 'w-full xxs:w-11/12 xs:w-10/12 sm:w-7/12 lg:w-1/2 xl:w-5/12', 'order-1 md:order-2')} >
+                <div className={twMerge('flex flex-col gap-4', 'w-full xxs:w-11/12 xs:w-10/12 sm:w-7/12 lg:w-1/2 xl:w-4/12', 'order-1 md:order-2')} >
                     <Text p degree="3" weight='semibold' size='md' >
                         {t('motivation.content.1')}    
                     </Text> 
