@@ -2,6 +2,7 @@ import { Header, Footer } from '@/components/common';
 import { Container, Noise } from '@/components/ui';
 import { Intro, Manifesto, Cases, Action, Video, Expertise, CallToAction } from '@/components/pages/sections';
 import { MENU_ITEMS } from '@/conf/router';
+import { twMerge } from 'tailwind-merge';
 
 const LandingPage = () => {
     return (
@@ -33,7 +34,9 @@ const LandingPage = () => {
             <Container as='section' size='lg' >
                 <Action />
             </Container>
-            <Footer />
+            <Container as='footer' size='lg' className={twMerge('flex flex-col gap-8 md:gap-12')}>
+                <Footer />
+            </Container>
         </>
     )
 }

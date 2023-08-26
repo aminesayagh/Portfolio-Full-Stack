@@ -24,7 +24,7 @@ const Footer = () => {
     const { t } = useTranslation();
 
     return (<>
-        <Container as='footer' size='lg' className={twMerge('flex flex-col gap-8 md:gap-12')}>  
+        {/* <Container as='footer' size='lg' className={twMerge('flex flex-col gap-8 md:gap-12')}>   */}
             <div className={twMerge('max-w-[14rem] xxs:w-8/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[30vw] mdl:max-w-[26vw] xl:max-w-[20vw] 2xl:max-w-[28vw]')} >
                 <Text p degree='3' weight='medium' size='md' className='uppercase' >
                     {t('footer.state')}
@@ -52,7 +52,7 @@ const Footer = () => {
                     <FollowUs />
                 </div>
             </div>
-        </Container>
+        {/* </Container> */}
     </>)
 }
 
