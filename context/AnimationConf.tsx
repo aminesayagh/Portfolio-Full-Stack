@@ -141,7 +141,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             if (!element) return;
             const top = element.getBoundingClientRect().top - scrollbar.current.scrollTop;
             const direction = top > 0 ? 1 : -1;
-            scrollbar.current.scrollTo(0, top - 40, 0, {
+            scrollbar.current.scrollTo(0, top, 0, {
                 easing: easing.easeOutBack,
                 callback: () => {
                     gsap.from('#scroller', {
