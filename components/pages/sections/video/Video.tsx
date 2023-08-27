@@ -23,28 +23,25 @@ const Video = () => {
             setHeight('50vh');
         }
     }, [isLg, isSM])
-    useEffect(() => {
+    useLayoutEffect(() => {
         let ctx = gsap.context((self) => {
-            if(!ref.current) return;
-            if(images.length > 0) return;
-            const imagesLoaded: Array<HTMLImageElement> = [];
             let canvas = ref.current;
             if (!canvas) return;
             let context = canvas.getContext('2d');
-
+    
             canvas.width = 1488;
             canvas.height = 1100;
-
+    
             const frameCount = 164;
             const currentFrame = (index: number) => `/framer-image/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
             for (let i = 1; i <= frameCount; i++) {
                 const img = new Image();
                 img.src = currentFrame(i);
-                imagesLoaded.push(img);
+                images.push(img);
             }
-
+    
             const hands = { frame: 0 };
-
+    
             gsap.to(hands, {
                 frame: frameCount - 1,
                 snap: 'frame',
@@ -56,18 +53,18 @@ const Video = () => {
                 onUpdate: render
             })
             
-            imagesLoaded[0].onload = render;
-            setImages(() => imagesLoaded);
-
+            images[0].onload = render;
+            setImages(() => images);
+    
             function render() {
-                if (!context) return;
-                if (!ref.current) return;
+                if(!context) return;
+                if(!ref.current) return;
                 context?.clearRect(0, 0, ref.current.width, ref.current.height);
                 context?.drawImage(images[hands.frame], 0, 0);
             }
-        }, ref);
+        }, []);
         return () => ctx.revert();
-    }, []);
+    }, [ref.current]);
     
     return (
         <>
