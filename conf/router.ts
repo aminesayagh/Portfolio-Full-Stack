@@ -16,7 +16,7 @@ type MenuItems = {
 const MENU_ITEMS: MenuItems = {
     intro: {
         id: 'intro',
-        link: '/',
+        link: '/#intro',
         menu: []
     },
     manifesto: {
