@@ -7,13 +7,11 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import OverscrollPlugin from 'smooth-scrollbar/plugins/overscroll';
 import { useRouter } from 'next/router';
 
-import { useWindowSize } from 'react-use';
 // @ts-ignore
 import easing from 'easing-js';
 
 import { ScrollProvider } from './ScrollContext';
 
-gsap.registerPlugin(ScrollToPlugin);
 
 
 class ModalPlugin extends ScrollbarPlugin {
@@ -69,13 +67,23 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 maxOverscroll: 150,
                 glowColor: '#ffffff',
             });
+            gsap.registerPlugin(ScrollToPlugin);
             ScrollTrigger.scrollerProxy(element, {
                 scrollTop(value) {
-                    if (typeof value !== 'number') return;
                     if (arguments.length) {
-                        bodyScrollBar.scrollTop = value;
+                        if (bodyScrollBar.scrollTop !== value && typeof value === 'number') {
+                            bodyScrollBar.scrollTop = value;
+                        }
                     }
                     return bodyScrollBar.scrollTop;
+                },
+                scrollLeft(value) {
+                    if (arguments.length) {
+                        if (bodyScrollBar.scrollLeft !== value && typeof value === 'number') {
+                            bodyScrollBar.scrollLeft = value;
+                        }
+                    }
+                    return bodyScrollBar.scrollLeft;
                 },
                 getBoundingClientRect() {
                     return {
@@ -96,18 +104,18 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             });
     
             bodyScrollBar.track.xAxis.element.remove();
-            // bodyScrollBar.addListener((e) => {
-            //     if (e.offset.y < 0) {
-            //         gsap.to('#scroller', {
-            //             y: 0,
-            //             opacity: 1,
-            //             duration: 0.4,
-            //             scrollTrigger: {
-            //                 scroller: '#scroller',
-            //             }
-            //         })
-            //     }
-            // });
+            bodyScrollBar.addListener((e) => {
+                if (e.offset.y < 0) {
+                    gsap.to('#scroller', {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.4,
+                        scrollTrigger: {
+                            scroller: '#scroller',
+                        }
+                    })
+                }
+            });
             scrollbar.current = bodyScrollBar;
     
             setScrollbar(bodyScrollBar);

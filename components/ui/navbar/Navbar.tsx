@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useContext, createContext, useLayoutEffect } from 'react';
+import { useState, useRef, useEffect, useContext, createContext, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { Link as LinkUi } from '@/components/ui';
@@ -51,6 +51,10 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
         }
     }, [scrollbar]);
 
+    const padding = useMemo(() => active ? '0.8rem' : '1rem', [active]);
+    const backdropFilter = useMemo(() => active ? 'blur(40px)' : 'blur(0px)', [active]);
+    const backgroundColor = useMemo(() => active ? '#1f1f1f90' : 'transparent', [active]);
+
 
     return <>
         <NavbarAnimation.Provider value={{ scale: active ? 'scale(70%)' : 'scale(100%)' }}>
@@ -58,10 +62,10 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
                 'fixed top-0 left-0 w-full max-w-[100vw] py-4 z-header', className, zIndex.navbar, 'header-gsap'
             )}
             style={{ 
-                paddingTop: active ? '0.7rem' : '1rem',
-                paddingBottom: active ? '0.7rem' : '1rem',
-                backdropFilter: active ? 'blur(40px)' : 'blur(0px)',
-                backgroundColor: active ? '#1f1f1f90' : 'transparent',
+                paddingTop: padding,
+                paddingBottom: padding,
+                backdropFilter: backdropFilter,
+                backgroundColor: backgroundColor,
             }}
             {...props}
             >
@@ -161,5 +165,3 @@ Navbar.Item = Item;
 Navbar.Link = Link;
 
 export default Navbar;
-
-

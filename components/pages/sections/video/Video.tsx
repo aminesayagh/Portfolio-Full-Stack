@@ -1,8 +1,10 @@
-import { useRef, useLayoutEffect, useState, useEffect } from 'react'
+import { useRef, useLayoutEffect, useState, useEffect, useContext } from 'react'
 import { gsap } from 'gsap';
 import { twMerge } from 'tailwind-merge';
+import { ScrollProvider } from '@/context/ScrollContext';
 
 import { rounded } from '@/components/style';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
 import { useMedia } from 'react-use'
 const Video = () => {
@@ -11,6 +13,7 @@ const Video = () => {
     const isLg = useMedia('(min-width: 1024px)', true);
     const isSM = useMedia('(min-width: 640px)', false);
     const [height, setHeight] = useState<string>('50vh');
+    const { scrollbar } = useContext(ScrollProvider);
     useEffect(() => {
         if(isLg) {
             setHeight('100vh');
@@ -45,15 +48,16 @@ const Video = () => {
                 snap: 'frame',
                 ease: 'none',
                 scrollTrigger: {
-                    scrub: 0.5
+                    scrub: 0.5,
+                    trigger: canvas,
                 },
                 onUpdate: render
             })
+            
             images[0].onload = render;
             setImages(() => images);
 
             function render() {
-
                 if (!context) return;
                 if (!ref.current) return;
                 context?.clearRect(0, 0, ref.current.width, ref.current.height);
