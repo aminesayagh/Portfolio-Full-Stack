@@ -13,7 +13,7 @@ const Video = () => {
     const isLg = useMedia('(min-width: 1024px)', true);
     const isSM = useMedia('(min-width: 640px)', false);
     const [height, setHeight] = useState<string>('50vh');
-    const { scrollbar } = useContext(ScrollProvider);
+    
     useEffect(() => {
         if(isLg) {
             setHeight('100vh');
@@ -25,6 +25,9 @@ const Video = () => {
     }, [isLg, isSM])
     useEffect(() => {
         let ctx = gsap.context((self) => {
+            if(!ref.current) return;
+            if(images.length > 0) return;
+            const imagesLoaded: Array<HTMLImageElement> = [];
             let canvas = ref.current;
             if (!canvas) return;
             let context = canvas.getContext('2d');
@@ -34,11 +37,10 @@ const Video = () => {
 
             const frameCount = 164;
             const currentFrame = (index: number) => `/framer-image/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
-
             for (let i = 1; i <= frameCount; i++) {
                 const img = new Image();
                 img.src = currentFrame(i);
-                images.push(img);
+                imagesLoaded.push(img);
             }
 
             const hands = { frame: 0 };
@@ -54,8 +56,8 @@ const Video = () => {
                 onUpdate: render
             })
             
-            images[0].onload = render;
-            setImages(() => images);
+            imagesLoaded[0].onload = render;
+            setImages(() => imagesLoaded);
 
             function render() {
                 if (!context) return;
@@ -63,9 +65,9 @@ const Video = () => {
                 context?.clearRect(0, 0, ref.current.width, ref.current.height);
                 context?.drawImage(images[hands.frame], 0, 0);
             }
-        }, []);
+        }, ref);
         return () => ctx.revert();
-    }, [images])
+    }, []);
     
     return (
         <>

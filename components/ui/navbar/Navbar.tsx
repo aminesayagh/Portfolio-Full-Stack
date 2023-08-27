@@ -24,9 +24,9 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
     useEffect(() => {
         scrollbar && scrollbar.addListener((status) => {
             if (status.offset.y < 200) {
-                !!active && setActive(false);
+                setActive(false);
             } else {
-                !active && setActive(true);
+                setActive(true);
             }
 
             const diff = Math.abs(status.offset.y - lastScrollY.current);
