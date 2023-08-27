@@ -42,83 +42,87 @@ ScrollTrigger.defaults({
 const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     let app = useRef<HTMLDivElement | null>(null);
     const router = useRouter();
-    const { width, height } = useWindowSize();
     const { setScrollbar } = useContext(ScrollProvider)
     const scrollbar = useRef<Scrollbar | null>(null);
     useEffect(() => {
-        const element = document.querySelector('#scroller') as HTMLElement;
-        if (!element) {
-            console.error('No element with id scroller');
-            return;
-        };
-
-        const bodyScrollBar = Scrollbar.init(element, {
-            damping: 0.2,
-            delegateTo: document,
-            plugins: {
-                modal: {
-                    open: false,
+        let ctx = gsap.context((self) => {
+            const element = document.querySelector('#scroller') as HTMLElement;
+            if (!element) {
+                console.error('No element with id scroller');
+                return;
+            };
+    
+            const bodyScrollBar = Scrollbar.init(element, {
+                damping: 0.2,
+                delegateTo: document,
+                plugins: {
+                    modal: {
+                        open: false,
+                    }
+                }
+            });
+    
+            bodyScrollBar.setPosition(0, 0);
+            bodyScrollBar.updatePluginOptions('overscroll', {
+                effect: 'glow',
+                damping: 0.2,
+                maxOverscroll: 150,
+                glowColor: '#ffffff',
+            });
+            ScrollTrigger.scrollerProxy(element, {
+                scrollTop(value) {
+                    if (typeof value !== 'number') return;
+                    if (arguments.length) {
+                        bodyScrollBar.scrollTop = value;
+                    }
+                    return bodyScrollBar.scrollTop;
                 },
-                overscroll: {
-                    effect: 'glow',
-                    damping: 0.2,
-                    maxOverscroll: 150,
-                    glowColor: '#ffffff',
-                }
-            },
-            alwaysShowTracks: false
+                getBoundingClientRect() {
+                    return {
+                        top: 0,
+                        left: 0,
+                        width: window.innerWidth,
+                        height: window.innerHeight
+                    };
+                },
+                pinType: element.style.transform ? 'transform' : 'fixed',
+                fixedMarkers: true
+            });
+            bodyScrollBar.addListener(ScrollTrigger.update);
+            ScrollTrigger.defaults({ scroller: element });
+    
+            ScrollTrigger.create({
+                scroller: element,
+            });
+    
+            bodyScrollBar.track.xAxis.element.remove();
+            // bodyScrollBar.addListener((e) => {
+            //     if (e.offset.y < 0) {
+            //         gsap.to('#scroller', {
+            //             y: 0,
+            //             opacity: 1,
+            //             duration: 0.4,
+            //             scrollTrigger: {
+            //                 scroller: '#scroller',
+            //             }
+            //         })
+            //     }
+            // });
+            scrollbar.current = bodyScrollBar;
+    
+            setScrollbar(bodyScrollBar);
+            return () => {
+                bodyScrollBar.destroy();
+                ScrollTrigger.getAll().forEach((trigger) => {
+                    trigger.kill();
+                });
+                ScrollTrigger.defaults({ scroller: window });
+            }
         });
-
-        bodyScrollBar.setPosition(0, 0);
-        bodyScrollBar.updatePluginOptions('overscroll', {
-            effect: 'glow',
-            damping: 0.2,
-            maxOverscroll: 150,
-            glowColor: '#ffffff',
-        });
-        ScrollTrigger.scrollerProxy(element, {
-            scrollTop(value) {
-                if (typeof value !== 'number') return;
-                if (arguments.length) {
-                    bodyScrollBar.scrollTop = value;
-                }
-                return bodyScrollBar.scrollTop;
-            },
-            getBoundingClientRect() {
-                return {
-                    top: 0,
-                    left: 0,
-                    width: window.innerWidth,
-                    height: window.innerHeight
-                };
-            },
-            pinType: element.style.transform ? 'transform' : 'fixed',
-            fixedMarkers: true
-        });
-        bodyScrollBar.addListener(ScrollTrigger.update);
-        ScrollTrigger.defaults({ scroller: element });
-
-        ScrollTrigger.create({
-            scroller: element,
-        });
-
-        bodyScrollBar.track.xAxis.element.remove();
-        // bodyScrollBar.addListener((e) => {
-        //     if (e.offset.y < 0) {
-        //         gsap.to('#scroller', {
-        //             y: 0,
-        //             opacity: 1,
-        //             duration: 0.4,
-        //             scrollTrigger: {
-        //                 scroller: '#scroller',
-        //             }
-        //         })
-        //     }
-        // });
-        scrollbar.current = bodyScrollBar;
-
-        setScrollbar(bodyScrollBar);
-    }, [router]);
+        return () => {
+            ctx.revert();
+        }
+    }, []);
     useEffect(() => {
         const scrollToId = (url: string) => {
             if (!scrollbar.current) return;
@@ -129,7 +133,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             if (!element) return;
             const top = element.getBoundingClientRect().top - scrollbar.current.scrollTop;
             const direction = top > 0 ? 1 : -1;
-            scrollbar.current.scrollTo(0, top, 0, {
+            scrollbar.current.scrollTo(0, top - 40, 0, {
                 easing: easing.easeOutBack,
                 callback: () => {
                     gsap.from('#scroller', {
@@ -145,10 +149,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
         return () => {
             router.events.off('hashChangeComplete', scrollToId);
         }
-    }, [router])
-    useEffect(() => {
-        ScrollTrigger.refresh();
-    }, [width, height]);
+    }, [router]);
     useEffect(() => {
         let ctx = gsap.context(() => {
             gsap.config({

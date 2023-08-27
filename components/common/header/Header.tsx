@@ -34,7 +34,6 @@ const Header = () => {
     const ctx = useRef<any>(null);
     const { scrollbar } = useContext(ScrollProvider);
     useLayoutEffect(() => {
-        // let selector = () => gsap.utils.selector('.modal-overlay');
         ctx.current = gsap.context((self) => {
             self.add('open', () => {
                 tl.current.fromTo(['.modal-overlay', '.modal-content'], {
@@ -89,6 +88,7 @@ const Header = () => {
                     duration: DURATION / 2,
                 }, '<25%')
                 tl.current.play();
+                console.log('close scroll')
                 scrollbar && scrollbar.updatePluginOptions('modal', {
                     open: true,
                 })

@@ -43,20 +43,19 @@ const Cases = () => {
                                             </Text>
                                         </div>
                                     </div>
-                                    <div className={twMerge('w-10/12 md:w-5/12 lg:w-4/12 2xl:w-3/12', 'order-1 md:order-2','hidden md:flex flex-row flex-wrap gap-2', 'justify-start md:justify-end lg:justify-start')}>
+                                    <ul className={twMerge('w-10/12 md:w-5/12 lg:w-4/12 2xl:w-3/12', 'order-1 md:order-2','hidden md:flex flex-row flex-wrap gap-2', 'justify-start md:justify-end lg:justify-start')}>
                                         {project.tasks.map((task, index) => {
-                                            return <div key={index} className={twMerge(blurCard({ color: 'white' }),'p-1', rounded({ size: 'lg' }))}>
-                                                <Text degree='2' size='xs' li className='p-1 uppercase'>
+                                            return <li key={index} className={twMerge(blurCard({ color: 'white' }),'p-1', rounded({ size: 'lg' }))}>
+                                                <Text degree='2' size='xs' p className='p-1 uppercase'>
                                                     {t(`tasks.${task}`)}
                                                 </Text>
-                                            </div>
+                                            </li>
                                         })}
-                                    </div>
+                                    </ul>
                                 </div>
                             </li>
                         )
                     })}
-
                 </ul>
             </div>
         </>

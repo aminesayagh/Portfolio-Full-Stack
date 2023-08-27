@@ -44,8 +44,9 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
         });
         if(scrollbar) {
             return () => {
-                scrollbar.destroy();
-                scrollbar.removeListener(() => {});
+                scrollbar.removeListener(() => {
+                    console.log('remove listener');
+                });
             }
         }
     }, [scrollbar]);
