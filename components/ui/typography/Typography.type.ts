@@ -71,6 +71,7 @@ export type TextPropsExtended = TextElement & VariantProps<typeof textStyle> & {
     degree: '0' | '1' | '2' | '3' | '4';
     size: TextSizes,
     exchange?: boolean;
+    style?: React.CSSProperties;
 }
 
 export type LinkPropsExtended = LinkProps & VariantProps<typeof textStyle> & {

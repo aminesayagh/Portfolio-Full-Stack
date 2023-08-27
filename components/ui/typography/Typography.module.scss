@@ -44,7 +44,16 @@ $h6: 1rem;
 }
 .title {
   @apply default-text;
-  --degree-line-height: 1.3;
+  --degree-line-height: 1.6;
+  @media screen and (min-width: 390px) {
+    --degree-line-height: 1.55;
+  }
+  @media screen and (min-width: 640px) {
+    --degree-line-height: 1.4;
+  }
+  @media screen and (min-width: 1200px) {
+    --degree-line-height: 1.3;
+  }
   &_h1 {
     @include fluid-type(--font-size, $minScreen, $maxScreen, 2.2rem, 4.4rem);
     font-size: var(--font-size, $h1);
@@ -64,7 +73,7 @@ $h6: 1rem;
     @apply tracking-wide;
   }
   &_h4 {
-    @include fluid-type(--font-size, $minScreen, $maxScreen, 1rem, 2.4rem);
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 1.2rem, 2.4rem);
     font-size: var(--font-size, $h4);
     line-height: calc(var(--font-size, $h4) * var(--degree-line-height, 1.2));
   }
@@ -74,7 +83,7 @@ $h6: 1rem;
     line-height: calc(var(--font-size, $h5) * var(--degree-line-height, 1.2));
   }
   &_h6 {
-    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.75rem, 1.2rem);
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.75rem, 1.1rem);
     font-size: var(--font-size, $h6);
     line-height: calc(var(--font-size, $h6) * var(--degree-line-height, 1.2));
   }
@@ -95,7 +104,7 @@ $h6: 1rem;
     @apply tracking-wider;
   }
   &_lg {
-    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.9rem, 1.2rem);
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.86rem, 1.2rem);
     font-size: var(--font-size, 1.2rem);
     line-height: calc(
       var(--font-size, 1.2rem) * var(--degree-line-height, 1.5)

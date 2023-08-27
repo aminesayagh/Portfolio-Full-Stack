@@ -12,15 +12,18 @@ const Video = () => {
     const [images, setImages] = useState<Array<HTMLImageElement>>([]);
     const isLg = useMedia('(min-width: 1024px)', true);
     const isSM = useMedia('(min-width: 640px)', false);
+    const isXxs = useMedia('(min-width: 390px)', false);
     const [height, setHeight] = useState<string>('50vh');
     
     useEffect(() => {
         if(isLg) {
             setHeight('100vh');
         } else if(isSM) {
-            setHeight('75vh');
+            setHeight('87vh');
+        } else if(isXxs) {
+            setHeight('100vh');
         } else {
-            setHeight('50vh');
+            setHeight('70vh');
         }
     }, [isLg, isSM])
     useLayoutEffect(() => {
@@ -69,7 +72,7 @@ const Video = () => {
     return (
         <>
             <div className={twMerge('block relative overflow-hidden w-full h-auto rounded-3xl', rounded({ size: 'xl' }))}>
-                <canvas ref={ref} style={{ width: "100%", height: height, objectFit: 'cover', borderRadius: '1.5rem'  }} />
+                <canvas ref={ref} style={{ width: "100%", height: height, maxHeight: '950px', objectFit: 'cover', borderRadius: '1.5rem'  }} />
             </div>
         </>
     )

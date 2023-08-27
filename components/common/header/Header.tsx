@@ -88,7 +88,6 @@ const Header = () => {
                     duration: DURATION / 2,
                 }, '<25%')
                 tl.current.play();
-                console.log('close scroll')
                 scrollbar && scrollbar.updatePluginOptions('modal', {
                     open: true,
                 })
@@ -171,7 +170,7 @@ const Header = () => {
                             </>
                         }}
                     </Modal.Button>
-                    <Modal.Overlay className={twMerge('opacity-0 fixed left-0 top-0 w-full min-h-full  bg-primary-500 modal-overlay')}>
+                    <Modal.Overlay className={twMerge('opacity-0 fixed left-0 top-0 w-full min-h-full bg-primary-500 modal-overlay')}>
                         <Modal.Content isDismissable className={twMerge('bg-black-200 modal-content')}>
                             {({ handler }) => (
                                 <div className={twMerge(
