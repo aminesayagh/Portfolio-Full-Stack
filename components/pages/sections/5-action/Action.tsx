@@ -9,7 +9,7 @@ import { Text, Display, Link } from '@/components/ui';
 const Action = () => {
     const { t } = useTranslation()
     return <>
-        <div className={twMerge('flex flex-col gap-1 xs:gap-2 sm:gap-6', 'justify-start xs:justify-center items-start xs:items-center place-content-start', 'h-[64vh]')} >
+        <div className={twMerge('flex flex-col gap-1 xs:gap-2 sm:gap-6', 'justify-center items-start xs:items-center place-content-start', 'h-[64vh]')} >
             <Display size='lg' className={twMerge('uppercase text-start xs:text-center')} >
                 {t('contactCall.title')}
             </Display>

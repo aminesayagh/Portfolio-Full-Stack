@@ -34,7 +34,6 @@ const Header = () => {
     const ctx = useRef<any>(null);
     const { scrollbar } = useContext(ScrollProvider);
     useLayoutEffect(() => {
-        // let selector = () => gsap.utils.selector('.modal-overlay');
         ctx.current = gsap.context((self) => {
             self.add('open', () => {
                 tl.current.fromTo(['.modal-overlay', '.modal-content'], {
@@ -171,7 +170,7 @@ const Header = () => {
                             </>
                         }}
                     </Modal.Button>
-                    <Modal.Overlay className={twMerge('opacity-0 fixed left-0 top-0 w-full min-h-full  bg-primary-500 modal-overlay')}>
+                    <Modal.Overlay className={twMerge('opacity-0 fixed left-0 top-0 w-full min-h-full bg-primary-500 modal-overlay')}>
                         <Modal.Content isDismissable className={twMerge('bg-black-200 modal-content')}>
                             {({ handler }) => (
                                 <div className={twMerge(
@@ -217,14 +216,14 @@ const Header = () => {
                                     </div>
                                     <div className={twMerge('flex flex-col xxs:flex-row justify-between items-start xxs:items-end', 'gap-2 xxs:gap-0')}>
                                         <div className={twMerge('flex flex-row justify-start items-center', 'order-2 xxs:order-1' , 'overflow-hidden')}>
-                                            <Text p degree='4' size='xs' className='modal-footer'>
+                                            <Text p degree='4' size='sm' className='modal-footer'>
                                                 {t('header.copyright')}
                                             </Text>
                                         </div>
                                         <ul className={twMerge('flex flex-row items-center justify-end order-1 xxs:order-2', GAP_SIZE_XL)}>
                                             {menuSocialNetworks.map((item, index) => {
                                                 return <li key={index} className='overflow-hidden'>
-                                                    <Link size='xs' href={item.link} className='modal-footer' >
+                                                    <Link size='sm' href={item.link} degree='4' weight='semibold' className='modal-footer' >
                                                         {t(`${BASE_LOCALE_SOCIAL}.${item.id}`)}
                                                     </Link>
                                                 </li>

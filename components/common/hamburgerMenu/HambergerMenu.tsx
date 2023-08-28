@@ -24,18 +24,6 @@ const path02Variants = {
 const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => void }) => {
     const path01Controls = useAnimation();
     const path02Controls = useAnimation();
-    const clickHandler = async() => {
-        console.log('clickHandler', isOpen);
-        if(isOpen) {
-            await path02Controls.start(path02Variants.moving);
-            path01Controls.start(path01Variants.open);
-            path02Controls.start(path02Variants.open);
-        } else {
-            path01Controls.start(path01Variants.closed);
-            await path02Controls.start(path02Variants.moving)
-            path02Controls.start(path02Variants.closed);
-        }
-    }
     useEffect(() => {
         if(typeof isOpen !== 'boolean') return;
         async function handlerHamburgerClick() {
@@ -51,7 +39,7 @@ const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => vo
             }
         };
         if(typeof isOpen === 'boolean'){
-            handlerHamburgerClick().then().catch(err => console.log(err));
+            handlerHamburgerClick().then().catch(err => console.error(err));
         }
         // clickHandler().then().catch((err) => console.log(err));
     }, [isOpen])
