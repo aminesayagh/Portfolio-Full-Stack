@@ -75,7 +75,7 @@ const Title = () => {
             'mdl:col-start-7 mdl:col-span-6', // mdl
             'xl:col-start-8 xl:col-span-5', // xl
             '4xl:col-span-6 4xl:col-start-7', // 4xl
-            // "row-start-3 row-span-1",
+            // row grid
             'row-start-2 row-span-1', // none
             'mdl:row-start-1 mdl:row-span-1', //mdl
             // children

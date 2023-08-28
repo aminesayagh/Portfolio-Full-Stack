@@ -19,8 +19,8 @@ const Cases = () => {
                     <Title h2 weight='bold' degree='2' className={'sm:w-min'}>
                         {t('cases.title')}
                     </Title>
-                    <div className='w-4/12'>
-                        <Text p size='md' degree='3' weight='semibold' className='w-auto max-w-[38rem] sm:max-w-[36rem] my-4' >
+                    <div className='w-full xs:w-9/12 sm:w-7/12 md:w-6/12 lg:w-5/12 xl:w-4/12'>
+                        <Text p size='md' degree='3' weight='semibold' className='w-auto max-w-[38rem] sm:max-w-[36rem] my-2 md:my-4' >
                             {t('cases.description')}
                         </Text>
                     </div>
