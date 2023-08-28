@@ -1,10 +1,8 @@
-import { useRef, useLayoutEffect, useState, useEffect, useContext } from 'react'
+import { useRef, useLayoutEffect, useState, useEffect } from 'react'
 import { gsap } from 'gsap';
 import { twMerge } from 'tailwind-merge';
-import { ScrollProvider } from '@/context/ScrollContext';
 
 import { rounded } from '@/components/style';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
 import { useMedia } from 'react-use'
 const Video = () => {
@@ -26,7 +24,7 @@ const Video = () => {
             setHeight('70vh');
         }
     }, [isLg, isSM])
-    useLayoutEffect(() => {
+    useEffect(() => {
         let ctx = gsap.context((self) => {
             let canvas = ref.current;
             if (!canvas) return;
