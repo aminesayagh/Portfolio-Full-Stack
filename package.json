@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.0",
     "@react-aria/ssr": "^3.7.0",
     "@tabler/icons-react": "^2.26.0",
     "@types/lodash": "^4.14.196",
@@ -27,6 +28,8 @@
     "i18next-http-backend": "^2.2.1",
     "i18next-resources-to-backend": "^1.1.4",
     "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
     "next": "13.4.10",
     "next-i18next": "^14.0.0",
     "next-transpile-modules": "^10.0.1",

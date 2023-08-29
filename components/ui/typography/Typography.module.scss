@@ -152,7 +152,7 @@ $h6: 1rem;
   @apply default-text;
   --degree-line-height: 1;
   &_xl {
-    @include fluid-type(--font-size, $minScreen, 56.25rem, 3rem, 7rem);
+    @include fluid-type(--font-size, $minScreen, 56.25rem, 3rem, 6.5rem);
     @screen mdl {
       @include fluid-type(--font-size, 56.25rem, $maxScreen, 5rem, 9.4rem);
     }

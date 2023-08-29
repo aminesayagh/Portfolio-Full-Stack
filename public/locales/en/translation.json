@@ -127,11 +127,21 @@
         "copy": "© 2023",
         "socialNetwork": "FOLLOW ME"
     },
+    "contact": {
+        "title": "Get in touch",
+        "subtitle": "Tell me more",
+        "localTime": "MY LOCAL TIME IS",
+        "gmtTime": "GMT "
+    },
     "form": {
         "field": {
-            "name": {
+            "firstName": {
                 "placeholder": "Your name",
                 "label": "Name"
+            },
+            "lastName": {
+                "placeholder": "Your last name",
+                "label": "Last Name"
             },
             "email": {
                 "placeholder": "Your email",
@@ -140,6 +150,10 @@
             "message": {
                 "placeholder": "Your message",
                 "label": "Message"
+            },
+            "phoneNumber": {
+                "placeholder": "Your phone number",
+                "label": "Phone Number"
             },
             "Objective": {
                 "placeholder": "Your objective",
@@ -152,6 +166,9 @@
                     "5": "Say Hello",
                     "6": "Other"
                 }
+            },
+            "submit": {
+                "label": "Send"
             }
         },
         "error": {

@@ -26,18 +26,20 @@ export const Fit = ({ children, className, exchange, weight, ...props }: ReactFi
 
 
 export const Display: FC<DisplayPropsExtended> = ({ size, weight, exchange, children, className, ...props }) => {
-    return React.createElement('h1', {
-        className: twMerge(
-            displayStyle({
-                weight
-            }),
-            textColorDegree[exchange ? 'exchanged' : 'normal']['1'],
-            Style[`display_${size}`],
-            Style['display'],
-            className,
-        ),
-        ...props
-    }, children)
+    return <h1
+        {...{
+            className: twMerge(
+                displayStyle({
+                    weight
+                }),
+                textColorDegree[exchange ? 'exchanged' : 'normal']['1'],
+                Style[`display_${size}`],
+                Style['display'],
+                className,
+            ),
+            ...props
+        }}
+    >{children}</h1>
 }
 
 // TITLE
