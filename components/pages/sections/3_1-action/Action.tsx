@@ -20,10 +20,10 @@ const Action = () => {
                 'w-full xxs:w-11/12 xs:w-10/12 sm:w-full md:w-6/12 lg:w-5/12 xl:w-4/12', 
                 'order-1 md:order-2'
                 )} >
-                    <Text p degree="3" weight='semibold' size='md' className='w-full sm:w-1/2' >
+                    <Text p degree="3" weight='semibold' size='md' className='w-full sm:w-1/2 md:w-full' >
                         {t('motivation.content.1')}    
                     </Text> 
-                    <Text p degree='3' weight='semibold' size='md' className='w-full sm:w-1/2' >
+                    <Text p degree='3' weight='semibold' size='md' className='w-full sm:w-1/2 md:w-full' >
                         {t('motivation.content.2')}
                     </Text>
                 </div>
