@@ -67,7 +67,6 @@ const InputUi = ({ name, className, ...props }: InputUiProps) => {
     const { register, ...methods } = useFormContext();
     if (!name) {
         throw new Error('InputUi must have a name');
-        return null;
     }
 
     return <Input className={mergeClassName('w-full', className)} {...register(name)} {...props} />
@@ -98,7 +97,6 @@ const SelectUi = <T extends {}>({ label, name, children, ...props }: { label: st
                                     {children}
                                 </ListBox>
                             </Popover>
-
                         </Select>
                     )
                 }} />

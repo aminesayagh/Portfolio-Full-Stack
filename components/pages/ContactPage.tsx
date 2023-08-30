@@ -63,24 +63,22 @@ type TypeFormContact = {
     message: string;
     consent: boolean;
 }
-const contactSubjectEnum = z.union([
-    z.literal(contactSubjectKeys[0]),
-    z.literal(contactSubjectKeys[1]),
-    z.literal(contactSubjectKeys[2]),
-    z.literal(contactSubjectKeys[3]),
-    z.literal(contactSubjectKeys[4]),
-    z.literal(contactSubjectKeys[5]),
-]);
 const FormContact = () => {
     const { t } = useTranslation('translation');
-
+    
+    const required = () => z.string(
+        { required_error: t(`${ERROR_TRANSLATION_PATH}.required`) || 'required' }
+    )
     const contactFormDataSchema = z.object({
-        firstName: z.string().min(2, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 2 })).max(50, t(`${ERROR_TRANSLATION_PATH}.maxLength`)).nonempty().regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
-        lastName: z.string().min(2, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 2 })).max(50, t(`${ERROR_TRANSLATION_PATH}.maxLength`)).nonempty().regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
-        email: z.string().email(t(`${ERROR_TRANSLATION_PATH}.email`)),
-        objective: contactSubjectEnum,
-        message: z.string().min(10).max(500).nonempty(),
-        consent: z.boolean().refine(value => value === true, { message: t(`${ERROR_TRANSLATION_PATH}.consent`) })
+        firstName: required().min(2, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 2 })).max(50, t(`${ERROR_TRANSLATION_PATH}.maxLength`)).nonempty().regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
+        lastName: required().min(2, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 2 })).max(50, t(`${ERROR_TRANSLATION_PATH}.maxLength`)).nonempty().regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
+        email: required().email(t(`${ERROR_TRANSLATION_PATH}.email`)),
+        objective: required().refine(value => contactSubjectValues.includes(value as ContactSubject), { message: t(`${ERROR_TRANSLATION_PATH}.objective`) }),
+        message: required().min(10, {
+            message: t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 10 })
+        }).max(500, {
+            message: t(`${ERROR_TRANSLATION_PATH}.maxLength`, { max: 500 })
+        }).nonempty()
     });
 
     const onSubmitForm = (data: TypeFormContact) => {
