@@ -64,7 +64,7 @@ type TypeFormContact = {
     consent: boolean;
 }
 const FormContact = () => {
-    const { t } = useTranslation('translation');
+    const { t } = useTranslation();
     
     const required = () => z.string(
         { required_error: t(`${ERROR_TRANSLATION_PATH}.required`) || 'required' }
@@ -113,7 +113,7 @@ const FormContact = () => {
 }
 
 const AgencyList = () => {
-    const { t } = useTranslation('translation');
+    const { t } = useTranslation();
 
     const projects = useMemo(() => getProjectsByCategory('ongoing'), []);
 
@@ -157,7 +157,7 @@ const AgencyList = () => {
 
 const ContactPage = () => {
 
-    const { t } = useTranslation('translation');
+    const { t } = useTranslation();
     const socialNetworkItems = useMemo(() => getMenuItems('socialNetworks'), []);
 
     const timer = useTime({
@@ -233,7 +233,7 @@ const ContactPage = () => {
                                         <hr className='relative h-[2px] w-4 bg-gray-200'/>
                                     </div>
                                     <div className={twMerge('col-start-3 col-span-6')}>
-                                        <AgencyList />
+                                        {/* <AgencyList /> */}
                                     </div>
                                     <div className={twMerge('flex flex-col gap-4 justify-end items-end', 'col-start-11 col-span-2')} >
                                         {socialNetworkItems.map((item, index) => {

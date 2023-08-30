@@ -8,6 +8,9 @@ import 'tailwindcss/tailwind.css';
 
 import { Montserrat } from 'next/font/google';
 import { appWithTranslation } from 'next-i18next'
+import nextI18NextConfig from '../next-i18next.config.js';
+import '../utils/i18n';
+
 
 const montserrat = Montserrat({
   subsets: ['cyrillic'],
@@ -15,7 +18,6 @@ const montserrat = Montserrat({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
 
-import '@/utils/i18n';
 
 
 function App({ Component, pageProps }: AppProps) {
@@ -24,4 +26,4 @@ function App({ Component, pageProps }: AppProps) {
   </main>
 }
 
-export default appWithTranslation(App)
+export default appWithTranslation(App, nextI18NextConfig);

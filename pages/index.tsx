@@ -6,6 +6,8 @@ import '@/utils/i18n';
 
 import { Loading } from 'components/ui';
 import "@/utils/i18n";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
@@ -38,4 +40,13 @@ export default function Home() {
       </ScrollContextProvider>
     </>
   )
+}
+import nextI18NextConfig from '../next-i18next.config.js'
+
+export async function getStaticProps({ locale }: any) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'], nextI18NextConfig)),
+    },
+  };
 }

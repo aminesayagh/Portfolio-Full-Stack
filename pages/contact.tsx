@@ -3,6 +3,8 @@ import { Suspense } from 'react';
 import { Loading, Noise } from 'components/ui';
 import { ContactPage } from '@/components/pages';
 
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
@@ -22,6 +24,17 @@ const Contact = () => {
             </Suspense>
         </>
     )
+}
+
+import nextI18NextConfig from '../next-i18next.config.js'
+
+export async function getStaticProps({ locale }: any) {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, ['common'], nextI18NextConfig)),
+
+        },
+    };
 }
 
 export default Contact;
