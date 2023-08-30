@@ -26,8 +26,9 @@ const NotificationError = ({ message }: { message?: string }) => {
     return message ? (
         <div className='flex flex-row items-center justify-start w-full gap-2 p-2'>
             <div>
-                <Icon name='IconExclamationCircle' size='16' color='red' />
+                <Icon name='IconExclamationCircle' size='13' color='#DB482C' />
             </div>
+            <p className={twMerge('text-[0.7em] text-red-600 tracking-wide')}>{message}</p>
         </div>
     ) : <></>
 }
@@ -47,8 +48,7 @@ const LayoutField = ({ label, className, icon, name, children, width = 'full', .
     } = useFormContext();
 
     const { invalid, isDirty, isTouched, error } = getFieldState(name);
-
-    const childrenWithProps = React.isValidElement(children) ? React.cloneElement(children, { name, label, className: twMerge(children.props.className, Style['input']) }) : children;
+    const childrenWithProps = React.isValidElement(children) ? React.cloneElement(children, { name, label, className: twMerge(children.props.className, Style['input'], invalid ? Style['invalid'] : null) }) : children;
     return <>
         <TextField className={twJoin(Style['text-field'], WIDTH[width], className ? className : 'w-full')} {...props}>
             <Label className={twJoin(Style['label'])} htmlFor={name} suppressHydrationWarning>{label}</Label>
@@ -70,31 +70,31 @@ const InputUi = ({ name, className, ...props }: InputUiProps) => {
         return null;
     }
 
-    return <Input className={twJoin('w-full', Style['input'])} {...register(name)} {...props} />
+    return <Input className={mergeClassName('w-full', className)} {...register(name)} {...props} />
 }
 
 
 const SelectUi = <T extends {}>({ label, name, children, ...props }: { label: string, name: string, children: ListBoxProps<T>['children'] } & Omit<SelectProps<T>, 'children'>) => {
     const { register, getFieldState, control, ...methods } = useFormContext();
-
     return (
         <>
             <div className={twMerge('w-full col-span-12')}>
                 <Controller name={name} control={control} render={({ field, fieldState }) => {
+                    const { invalid, isDirty, isTouched, error } = fieldState;
                     return (
                         <Select {...props} onSelectionChange={field.onChange} selectedKey={field.value} className={twMerge(Style['text-field'])}>
                             <Label className={twJoin(Style['label'])} htmlFor={name}>{label}</Label>
-                            <Button className={twMerge(Style['input'])}>
+                            <Button className={twMerge(Style['input'], invalid ? Style['invalid'] : null)}>
                                 <SelectValue />
                                 <span aria-hidden='true' >▼</span>
                             </Button>
                             <span slot='errorMessage'>
                                 <ResizablePanel >
-                                    <NotificationError message={fieldState.error?.message} />
+                                    <NotificationError message={error?.message} />
                                 </ResizablePanel>
                             </span>
-                            <Popover className={twMerge('flex flex-col gap-2 p-2 w-72 rounded-md', 'bg-black-200/70 backdrop-blur-md z-dropdown')}>
-                                <ListBox className=''>
+                            <Popover className={twMerge('flex flex-col gap-2 p-2 w-72 rounded-sm', 'bg-black-200/70 backdrop-blur-md z-dropdown remove_outline')}>
+                                <ListBox className='remove_outline'>
                                     {children}
                                 </ListBox>
                             </Popover>

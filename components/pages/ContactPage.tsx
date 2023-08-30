@@ -56,7 +56,8 @@ const contactSubjectItems = [
 ]
 
 type TypeFormContact = {
-    name: string;
+    firstName: string;
+    lastName: string;
     email: string;
     objective: ContactSubject;
     message: string;
@@ -71,10 +72,11 @@ const contactSubjectEnum = z.union([
     z.literal(contactSubjectKeys[5]),
 ]);
 const FormContact = () => {
-    const { t } = useTranslation();
+    const { t } = useTranslation('translation');
 
     const contactFormDataSchema = z.object({
-        name: z.string().min(2, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 2 })).max(50, t(`${ERROR_TRANSLATION_PATH}.maxLength`)).nonempty().regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
+        firstName: z.string().min(2, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 2 })).max(50, t(`${ERROR_TRANSLATION_PATH}.maxLength`)).nonempty().regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
+        lastName: z.string().min(2, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 2 })).max(50, t(`${ERROR_TRANSLATION_PATH}.maxLength`)).nonempty().regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
         email: z.string().email(t(`${ERROR_TRANSLATION_PATH}.email`)),
         objective: contactSubjectEnum,
         message: z.string().min(10).max(500).nonempty(),
@@ -103,7 +105,7 @@ const FormContact = () => {
                 }}
             </Form.Select>
             <Form.LayoutField name='message' label={t('form.field.message.label')} >
-                <textarea placeholder={t('form.field.message.placeholder')} className='' />
+                <textarea placeholder={t('form.field.message.placeholder')} />
             </Form.LayoutField>
             <Form.Button className={twMerge('px-10 py-4 w=full bg-white-100 font-semibold', 'rounded-sm', 'col-span-12 w-3/12 place-self-end')} >
                 {t('form.field.submit.label')}
@@ -119,10 +121,10 @@ const AgencyList = () => {
 
     return (
         <>
-            <ul className={twMerge('flex flex-col gap-4')}>
+            <ul className={twMerge('flex flex-col gap-0', 'border-b border-gray-800')}>
                 {projects.map((project, index) => {
                     return (
-                        <li key={project.id} className={twMerge('flex flex-row gap-4 py-12', 'border-y  border-gray-800')}>
+                        <li key={project.id} className={twMerge('flex flex-row gap-4 py-10', 'border-t  border-gray-800')}>
                             <div className={twMerge('w-1/2')}>
                                 <Title h6 weight='semibold' degree='2' className='uppercase tracking-wider' >
                                     {t(`projects.${project.id}.title`)}
@@ -211,11 +213,11 @@ const ContactPage = () => {
                                     <div className={twMerge('col-start-3 col-span-6')}>
                                         <AgencyList />
                                     </div>
-                                    <div className={twMerge('flex flex-col gap-2 justify-end items-end', 'col-start-11 col-span-2')} >
+                                    <div className={twMerge('flex flex-col gap-4 justify-end items-end', 'col-start-11 col-span-2')} >
                                         {socialNetworkItems.map((item, index) => {
                                             return (
-                                                <Link key={index} weight='semibold' href={item.link} size='sm' degree='2'>
-                                                    {t(`socialNetworks.${item.id}.name`)}
+                                                <Link key={index} weight='medium' href={item.link} size='sm' degree='2'>
+                                                    {t(`socialNetwork.${item.id}.name`)}
                                                 </Link>
                                             )
                                         })}

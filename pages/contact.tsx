@@ -1,6 +1,6 @@
 import { Head } from '@/components/common';
 import { Suspense } from 'react';
-import { Loading } from 'components/ui';
+import { Loading, Noise } from 'components/ui';
 import { ContactPage } from '@/components/pages';
 
 import { gsap } from 'gsap';
@@ -18,6 +18,7 @@ const Contact = () => {
             />
             <Suspense fallback={<Loading />}>
                 <ContactPage />
+                <Noise />
             </Suspense>
         </>
     )

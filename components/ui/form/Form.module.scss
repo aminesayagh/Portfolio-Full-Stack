@@ -22,10 +22,14 @@
     @apply px-3 py-[1.15rem];
     @apply bg-black-200/60 backdrop-blur-xl;
     @apply transition-all duration-200 outline-none;
+    @apply focus:ring-0 focus:ring-offset-0 focus:ring-transparent;
+    &.invalid {
+        @apply border-b border-red-600/70;
+    }
     &:focus {
         @apply text-active;
         @apply outline-none scale-[1.004] translate-y-[-0.02rem];
-        @apply border-primary-500;
+        @apply border-primary-400;
     }
     &::placeholder {
         @apply text-inactive;
