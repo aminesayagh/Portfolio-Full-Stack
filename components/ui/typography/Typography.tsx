@@ -37,6 +37,7 @@ export const Display: FC<DisplayPropsExtended> = ({ size, weight, exchange, chil
                 Style['display'],
                 className,
             ),
+            suppressHydrationWarning: true,
             ...props
         }}
     >{children}</h1>
@@ -77,7 +78,8 @@ export const Text: FC<TextPropsExtended> = ({ weight, degree = '3', size, exchan
         className: twMerge(
             textClassNames({ weight, size, degree, exchange }), className
         ),
-        ...props
+        ...props,
+        suppressHydrationWarning: true
     }, children);
 }
 

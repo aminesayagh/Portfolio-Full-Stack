@@ -34,6 +34,16 @@ const { CTO, CEO, CO_FOUNDER, FOUNDER, TECHNICAL_ADVISOR, RECHERCHE_AND_DEVELOPM
 
 export type ProjectTitle = 'Happy Water' | "Sofiane Pamart's Musical NFT" | 'Cyber Cohesion' | 'Shinobi Boy' | 'Web Application for managing university Projects' | 'SODIADD' | 'Jonas Agency' | "Lavish Trading" | "Maschool" | "FreeLance Projects";
 
+const COUNTRY_NAMES = {
+    'FRANCE': 'France',
+    'MOROCCO': 'Morocco',
+    'UNITED_STATES': 'United States',
+    'SINGAPORE': 'Singapore',
+    'LITHUANIA': 'Lithuania',
+} as const;
+
+export type CountryNames = typeof COUNTRY_NAMES[keyof typeof COUNTRY_NAMES];
+
 interface Project {
     id: `${number}`;
     title: ProjectTitle;
@@ -41,6 +51,7 @@ interface Project {
     category: ('best' | 'ongoing' | 'completed')[];
     jobTitle: TitleProject[];
     picture?: string[];
+    country?: CountryNames;
 }
 const PROJECTS: Project[] = [
     {
@@ -63,7 +74,8 @@ const PROJECTS: Project[] = [
         title: "Cyber Cohesion",
         tasks: [WEB_DEVELOPER, DATABASE_CONSULTANT],
         category: ['ongoing'],
-        jobTitle: [TECHNICAL_ADVISOR, RECHERCHE_AND_DEVELOPMENT]
+        jobTitle: [TECHNICAL_ADVISOR, RECHERCHE_AND_DEVELOPMENT],
+        country: 'Singapore'
     },
     {
         id: '4',
@@ -86,13 +98,15 @@ const PROJECTS: Project[] = [
         tasks: [WEB_DESIGNER, FULLSTACK_DEVELOPER],
         jobTitle: [CTO, CO_FOUNDER],
         picture: ['/images/project/sodiadd_mockup_main.jpg'],
+        country: 'France'
     },
     {
         id: '7',
         title: "Jonas Agency",
-        category: ['completed'],
+        category: ['ongoing'],
         tasks: [FULLSTACK_DEVELOPER],
-        jobTitle: [FREELANCER]
+        jobTitle: [TECHNICAL_ADVISOR],
+        country: 'Lithuania'
     },
     {
         id: '8',

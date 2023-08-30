@@ -8,6 +8,28 @@
             "url": "https://ma-sayagh.vercel.app/"
         }
     },
+    "socialNetwork": {
+        "instagram": {
+            "key": "IN",
+            "name": "Instagram"
+        },
+        "linkedin": {
+            "key": "LI",
+            "name": "Linkedin"
+        },
+        "github": {
+            "key": "GH",
+            "name": "Github"
+        },
+        "dribbble": {
+            "key": "DR",
+            "name": "Dribbble"
+        },
+        "behance": {
+            "key": "BH",
+            "name": "Behance"
+        }
+    },
     "header": {
         "email": "AMINESAYAGH1997@GMAIL.COM",
         "locale": "fr",
@@ -131,13 +153,14 @@
         "title": "Get in touch",
         "subtitle": "Tell me more",
         "localTime": "MY LOCAL TIME IS",
-        "gmtTime": "GMT "
+        "gmtTime": "GMT ",
+        "reppedBy": "Repped by"
     },
     "form": {
         "field": {
             "firstName": {
-                "placeholder": "Your name",
-                "label": "Name"
+                "placeholder": "Your first name",
+                "label": "First Name"
             },
             "lastName": {
                 "placeholder": "Your last name",
@@ -155,7 +178,7 @@
                 "placeholder": "Your phone number",
                 "label": "Phone Number"
             },
-            "Objective": {
+            "objective": {
                 "placeholder": "Your objective",
                 "label": "Objective",
                 "options": {
@@ -195,6 +218,7 @@
         "Full Stack Developer": "Full Stack Developer",
         "Fullstack Developer": "Fullstack Developer"
     },
+
     "jobTItle": {
         "CTO": "CTO",
         "CEO": "CEO",
@@ -205,6 +229,13 @@
         "FREELANCER": "FREELANCER",
         "AUTOMATION SPECIALIST": "AUTOMATION SPECIALIST",
         "ACADEMIC PROJECT PLATFORM ARCHITECT": "ACADEMIC PROJECT PLATFORM ARCHITECT"
+    },
+    "country": {
+        "Morocco": "Morocco",
+        "France": "France",
+        "United States": "United States",
+        "Singapore": "Singapore",
+        "Lithuania": "Lithuania"
     },
     "projects": {
         "1": {

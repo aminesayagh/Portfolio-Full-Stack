@@ -3,6 +3,10 @@ import { Suspense } from 'react';
 import { Loading } from 'components/ui';
 import { ContactPage } from '@/components/pages';
 
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
+
 const Contact = () => {
     return (
         <>

@@ -4,16 +4,19 @@ import { useForm, FormProvider, Controller, useFormContext } from 'react-hook-fo
 import type { SubmitHandler } from 'react-hook-form';
 import { FormProps, InputProps } from './Form.types';
 import { Label, TextField, Input, Select, Button, SelectValue, Popover, ListBox, Item, RadioProps, Radio, CheckboxGroup, CheckboxProps, Checkbox } from 'react-aria-components';
-import { TextFieldProps, SelectProps, ListBoxProps,CheckboxGroupProps, ItemProps, RadioGroup, RadioGroupProps, ButtonProps } from 'react-aria-components';
+import { TextFieldProps, SelectProps, ListBoxProps, CheckboxGroupProps, ItemProps, RadioGroup, RadioGroupProps, ButtonProps } from 'react-aria-components';
 import { twJoin } from 'tailwind-merge';
 import { ResizablePanel, Icon } from 'components/ui';
 import type { IconNames } from 'components/ui';
+import { twMerge } from 'tailwind-merge';
+import Style from './Form.module.scss';
+import { mergeClassName } from '@/helpers/className';
 
-const Form = <T extends {[x: string]: any}>({ onSubmit, children, className, ...props }: FormProps<T>) => {
+const Form = <T extends { [x: string]: any }>({ onSubmit, children, className, ...props }: FormProps<T>) => {
     const methods = useForm<T>({ ...props, shouldFocusError: true });
 
     return <FormProvider<T> {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)} className={className}>
+        <form onSubmit={methods.handleSubmit(onSubmit)} className={twMerge('grid grid-cols-12 gap-x-4 gap-y-3', className)}>
             {children}
         </form>
     </FormProvider>
@@ -29,20 +32,26 @@ const NotificationError = ({ message }: { message?: string }) => {
     ) : <></>
 }
 
-const LayoutField = ({ label, className, icon, name, children, ...props }: { label: string, className?: string, icon?: IconNames, name: string, children: React.ReactElement<InputProps> } & TextFieldProps) => {
-    const { 
+const WIDTH = {
+    '1/2': 'col-span-6',
+    'full': 'col-span-12',
+} as const;
+
+type TypeWidth = keyof typeof WIDTH;
+
+const LayoutField = ({ label, className, icon, name, children, width = 'full', ...props }: { width?: TypeWidth, label: string, className?: string, icon?: IconNames, name: string, children: React.ReactElement<InputProps> } & TextFieldProps) => {
+    const {
         register,
         getFieldState,
         ...methods
     } = useFormContext();
 
     const { invalid, isDirty, isTouched, error } = getFieldState(name);
-    
-    const childrenWithProps = React.isValidElement(children) ? React.cloneElement(children, { name, label }) : children;
 
+    const childrenWithProps = React.isValidElement(children) ? React.cloneElement(children, { name, label, className: twMerge(children.props.className, Style['input']) }) : children;
     return <>
-        <TextField className={twJoin('font-sans', 'flex flex-col items-stretch justify-between', 'px-3', className ? className : 'w-full')} {...props}>
-            <Label className={twJoin('text-sm', 'font-semibold', 'mb-1')} htmlFor={name}>{label}</Label>
+        <TextField className={twJoin(Style['text-field'], WIDTH[width], className ? className : 'w-full')} {...props}>
+            <Label className={twJoin(Style['label'])} htmlFor={name} suppressHydrationWarning>{label}</Label>
             {childrenWithProps}
             <span slot='errorMessage'>
                 <ResizablePanel >
@@ -54,49 +63,53 @@ const LayoutField = ({ label, className, icon, name, children, ...props }: { lab
 }
 
 type InputUiProps = Omit<InputProps, 'name' | 'label'> & { name?: string, label?: string };
-const InputUi = ({ name, className, ...props }: InputUiProps ) => {
+const InputUi = ({ name, className, ...props }: InputUiProps) => {
     const { register, ...methods } = useFormContext();
-    if(!name) {
+    if (!name) {
         throw new Error('InputUi must have a name');
         return null;
     }
 
-    return <Input className={twJoin(['w-full'])} {...register(name)} {...props} />
-} 
+    return <Input className={twJoin('w-full', Style['input'])} {...register(name)} {...props} />
+}
+
 
 const SelectUi = <T extends {}>({ label, name, children, ...props }: { label: string, name: string, children: ListBoxProps<T>['children'] } & Omit<SelectProps<T>, 'children'>) => {
     const { register, getFieldState, control, ...methods } = useFormContext();
+
     return (
         <>
-            <Controller name={name} control={control} render={({field, fieldState}) => {
-                return (
-                    <Select {...props} onSelectionChange={field.onChange} selectedKey={field.value}>
-                        <Label>{label}</Label>
-                        <Button>
-                            <SelectValue />
-                            <span aria-hidden='true' >▼</span>
-                        </Button>
-                        <span slot='errorMessage'>
-                            <ResizablePanel >
-                                <NotificationError message={fieldState.error?.message} />
-                            </ResizablePanel>
-                        </span>
-                        <Popover>
-                            <ListBox>
-                                {children}
-                            </ListBox>
-                        </Popover>
+            <div className={twMerge('w-full col-span-12')}>
+                <Controller name={name} control={control} render={({ field, fieldState }) => {
+                    return (
+                        <Select {...props} onSelectionChange={field.onChange} selectedKey={field.value} className={twMerge(Style['text-field'])}>
+                            <Label className={twJoin(Style['label'])} htmlFor={name}>{label}</Label>
+                            <Button className={twMerge(Style['input'])}>
+                                <SelectValue />
+                                <span aria-hidden='true' >▼</span>
+                            </Button>
+                            <span slot='errorMessage'>
+                                <ResizablePanel >
+                                    <NotificationError message={fieldState.error?.message} />
+                                </ResizablePanel>
+                            </span>
+                            <Popover className={twMerge('flex flex-col gap-2 p-2 w-72 rounded-md', 'bg-black-200/70 backdrop-blur-md z-dropdown')}>
+                                <ListBox className=''>
+                                    {children}
+                                </ListBox>
+                            </Popover>
 
-                    </Select>
-                )
-            }} />
+                        </Select>
+                    )
+                }} />
+            </div>
         </>
     )
 }
 
-const ItemUi = (props: ItemProps) => {
+const ItemUi = ({className, ...props}: ItemProps) => {
     return (
-        <Item {...props} />
+        <Item className={mergeClassName(Style['item'], className)} {...props} />
     )
 }
 
@@ -109,7 +122,7 @@ const RadioGroupUi = ({ label, name, ...props }: RadioGroupUiProps) => {
     const { register, control, ...methods } = useFormContext();
     return (
         <>
-            <Controller name={name} control={control} render={({field, fieldState}) => {
+            <Controller name={name} control={control} render={({ field, fieldState }) => {
                 return (
                     <>
                         <Label>{label}</Label>
@@ -144,7 +157,7 @@ const CheckboxGroupUi = ({ label, name, ...props }: CheckboxGroupUiProps) => {
             <Controller name={name} control={control} render={({ field, fieldState }) => (
                 <>
                     <Label>{label}</Label>
-                    <CheckboxGroup value={field.value} onChange={field.onChange} {...props}  />
+                    <CheckboxGroup value={field.value} onChange={field.onChange} {...props} />
                     <span slot='errorMessage'>
                         <ResizablePanel >
                             <NotificationError message={fieldState.error?.message} />

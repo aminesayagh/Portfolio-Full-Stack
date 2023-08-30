@@ -1,11 +1,17 @@
 import { Header, Footer } from '@/components/common';
-import { Container, Display, Title, Text, Form } from '@/components/ui';
-import { useState, useEffect } from 'react';
+import { Container, Display, Title, Text, Form, Link } from '@/components/ui';
+import { useState, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { useTranslation } from 'next-i18next';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+
+import { getProjectsByCategory } from '@/conf/projects';
+import { getMenuItems } from '@/conf/router';
+
 import { useTime } from '@/hook';
+import AnimationConf from '@/context/AnimationConf';
+import ScrollContextProvider from '@/context/ScrollContext';
 
 const CONTACT_SUBJECTS = {
     "1": "Project Inquiry",
@@ -54,7 +60,6 @@ type TypeFormContact = {
     email: string;
     objective: ContactSubject;
     message: string;
-    phoneNumber?: string;
     consent: boolean;
 }
 const contactSubjectEnum = z.union([
@@ -73,7 +78,6 @@ const FormContact = () => {
         email: z.string().email(t(`${ERROR_TRANSLATION_PATH}.email`)),
         objective: contactSubjectEnum,
         message: z.string().min(10).max(500).nonempty(),
-        phoneNumber: z.string().min(10).max(15).regex(/^[0-9]+$/).optional(),
         consent: z.boolean().refine(value => value === true, { message: t(`${ERROR_TRANSLATION_PATH}.consent`) })
     });
 
@@ -82,13 +86,15 @@ const FormContact = () => {
     }
     return (
         <Form<TypeFormContact> onSubmit={onSubmitForm} resolver={zodResolver(contactFormDataSchema)} >
-            <Form.LayoutField name='firstName' label={t('form.field.firstName.label')} >
+            <Form.LayoutField width='1/2' name='firstName' label={t('form.field.firstName.label')} >
                 <Form.Input placeholder={t('form.field.firstName.placeholder')} />
             </Form.LayoutField>
-            <Form.LayoutField name='lastName' label={t('form.field.lastName.label')} >
-                <Form.Input name='lastName' label={t('form.field.lastName.label')} placeholder={t('form.field.lastName.placeholder')} />
+            <Form.LayoutField width='1/2' name='lastName' label={t('form.field.lastName.label')} >
+                <Form.Input placeholder={t('form.field.lastName.placeholder')} />
             </Form.LayoutField>
-            <Form.Input name='email' label={t('form.field.email.label')} placeholder={t('form.field.email.placeholder')} />
+            <Form.LayoutField name='email' inputMode='email' label={t('form.field.email.label')} >
+                <Form.Input placeholder={t('form.field.email.placeholder')} />
+            </Form.LayoutField>
             <Form.Select name='objective' label={t('form.field.objective.label')} placeholder={t('form.field.objective.placeholder')} items={contactSubjectItems}>
                 {(item) => {
                     return <Form.Item key={item.key} >
@@ -96,58 +102,133 @@ const FormContact = () => {
                     </Form.Item>
                 }}
             </Form.Select>
-            <Form.Input name='phoneNumber' label={t('form.field.phoneNumber.label')} placeholder={t('form.field.phoneNumber.placeholder')} />
-            <Form.Input name='message' label={t('form.field.message.label')} placeholder={t('form.field.message.placeholder')} />
-            <Form.Button >
-                {t('form.submit.label')}
+            <Form.LayoutField name='message' label={t('form.field.message.label')} >
+                <textarea placeholder={t('form.field.message.placeholder')} className='' />
+            </Form.LayoutField>
+            <Form.Button className={twMerge('px-10 py-4 w=full bg-white-100 font-semibold', 'rounded-sm', 'col-span-12 w-3/12 place-self-end')} >
+                {t('form.field.submit.label')}
             </Form.Button>
         </Form>
     )
 }
 
+const AgencyList = () => {
+    const { t } = useTranslation('translation');
+
+    const projects = useMemo(() => getProjectsByCategory('ongoing'), []);
+
+    return (
+        <>
+            <ul className={twMerge('flex flex-col gap-4')}>
+                {projects.map((project, index) => {
+                    return (
+                        <li key={project.id} className={twMerge('flex flex-row gap-4 py-12', 'border-y  border-gray-800')}>
+                            <div className={twMerge('w-1/2')}>
+                                <Title h6 weight='semibold' degree='2' className='uppercase tracking-wider' >
+                                    {t(`projects.${project.id}.title`)}
+                                </Title>
+                            </div>
+                            <div className={twMerge('w-1/2', 'flex flex-col gap-5 ')}>
+                                <Text p size='sm' weight='bold' degree='1' className='tracking-wider'>
+                                    {t(`country.${project.country}`)}
+                                </Text>
+                                <Text p size='sm' weight='medium' degree='2'>
+                                    {t(`projects.${project.id}.description`)}
+                                </Text>
+                                <Text className='inline' p size='sm' weight='medium' degree='2' style={{
+                                    display: '-webkit-box'
+                                }}>
+                                    {project.jobTitle.map((jobTitle, index) => {
+                                        return <>
+                                            <span key={index} className={twMerge('pr-2')}>
+                                                {t(`jobTItle.${jobTitle}`)}{index < project.jobTitle.length - 1 ? ',' : ''}
+                                            </span>
+                                        </>
+                                    })}
+                                </Text>
+                            </div>
+                        </li>
+                    )
+                })}
+            </ul>
+        </>
+    )
+}
+
 const ContactPage = () => {
-    
-    const { t } = useTranslation();
+
+    const { t } = useTranslation('translation');
+    const socialNetworkItems = useMemo(() => getMenuItems('socialNetworks'), []);
+
     const timer = useTime({
         city: 'Casablanca',
         country: 'Africa',
         format: 'HH:mm',
     })
-    console.log(timer)
-    if(!timer) return null;
+    if (!timer) return null;
     return (
         <>
-            <Header />
-            <Container as='section' size='lg' className={twMerge('grid grid-cols-12 gap-4', 'items-stretch')} >
-                <div className={twMerge('flex flex-col gap-12 py-40', 'col-start-1 col-span-10')}>
-                    <div className='grid grid-cols-12 gap-4'>
-                        <Display size='xl' weight='bold' className={twMerge('col-start-2 col-span-11')}  >
-                            {t('contact.title')}
-                        </Display>
+            <ScrollContextProvider >
+                <AnimationConf>
+                    <Header />
+                    <div id='scroller'>
+                        <Container as='section' size='lg' className={twMerge('flex flex-col gap-12', 'items-stretch')} >
+                            <div className={twMerge('flex flex-col gap-20 py-40')}>
+                                <div className='grid grid-cols-12 gap-4'>
+                                    <Display size='xl' weight='bold' className={twMerge('col-start-3 col-span-10')} >
+                                        {t('contact.title')}
+                                    </Display>
+                                </div>
+                                <div className={twMerge('grid grid-cols-12 gap-8')}>
+                                    <div className={twMerge('flex flex-col gap-3','col-start-1 col-span-2')}>
+                                        <Text p weight='medium' size='sm' degree='2' className='text-start uppercase' >
+                                            {t('contact.subtitle')}
+                                        </Text>
+                                        <hr className='relative h-[2px] w-4 bg-gray-200'/>
+                                    </div>
+                                    <div className={twMerge('col-start-3 col-span-8')}>
+                                        <FormContact />
+                                    </div>
+                                    <div className={twMerge('flex flex-col justify-end items-end', 'col-start-11 col-span-2')} >
+                                        <div className='flex flex-col gap-1'>
+                                            <Text size='sm' degree='2' p weight='medium' >
+                                                {t('contact.localTime')} {timer?.formattedTime}
+                                            </Text>
+                                            <Text size='sm' degree='2' p weight='medium' >
+                                                {t('contact.gmtTime')}({timer?.gmtOffset})
+                                            </Text>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span className='h-10'></span>
+                                <div className={twMerge('grid grid-cols-12 gap-8')}>
+                                    <div className={twMerge('flex flex-col gap-3', 'col-start-1 col-span-2')}>
+                                        <Text p weight='medium' size='sm' degree='2' className='text-start uppercase' >
+                                            {t('contact.reppedBy')}
+                                        </Text>
+                                        <hr className='relative h-[2px] w-4 bg-gray-200'/>
+                                    </div>
+                                    <div className={twMerge('col-start-3 col-span-6')}>
+                                        <AgencyList />
+                                    </div>
+                                    <div className={twMerge('flex flex-col gap-2 justify-end items-end', 'col-start-11 col-span-2')} >
+                                        {socialNetworkItems.map((item, index) => {
+                                            return (
+                                                <Link key={index} weight='semibold' href={item.link} size='sm' degree='2'>
+                                                    {t(`socialNetworks.${item.id}.name`)}
+                                                </Link>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                            </div>
+                        </Container>
+                        <Container as='section' size='lg' className='py-0' >
+                            <Footer />
+                        </Container>
                     </div>
-                    <div className={twMerge('flex flex-col', 'grid grid-cols-12 gap-8')}>
-                        <div className={twMerge('col-start-1 col-span-1')}>
-                            <Text p weight='medium' size='sm' degree='2' className='text-start capitalize' >
-                                {t('contact.subtitle')}
-                            </Text>
-                        </div>
-                        <div className={twMerge('col-start-2 col-span-11')}>
-                            <FormContact />
-                        </div>
-                    </div>
-                </div>
-                <div className={twMerge('flex flex-col gap-1 justify-end items-start', 'h-[90vh]', 'col-start-11 col-span-2')} >
-                    <Text size='sm' degree='2' p weight='medium' >
-                        {t('contact.localTime')} {timer?.formattedTime}
-                    </Text>
-                    <Text size='sm' degree='2' p weight='medium' >
-                        {t('contact.gmtTime')}({timer?.gmtOffset})
-                    </Text>
-                </div>
-            </Container>
-            <Container as='section' size='lg' className='py-0' >
-                <Footer />
-            </Container>
+                </AnimationConf>
+            </ScrollContextProvider >
         </>
     )
 }
