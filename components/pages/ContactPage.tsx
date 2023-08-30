@@ -86,10 +86,10 @@ const FormContact = () => {
     }
     return (
         <Form<TypeFormContact> onSubmit={onSubmitForm} resolver={zodResolver(contactFormDataSchema)} >
-            <Form.LayoutField width='1/2' name='firstName' label={t('form.field.firstName.label')} >
+            <Form.LayoutField width='col-span-12 md:col-span-6' name='firstName' label={t('form.field.firstName.label')} >
                 <Form.Input placeholder={t('form.field.firstName.placeholder')} />
             </Form.LayoutField>
-            <Form.LayoutField width='1/2' name='lastName' label={t('form.field.lastName.label')} >
+            <Form.LayoutField width='col-span-12 md:col-span-6' name='lastName' label={t('form.field.lastName.label')} >
                 <Form.Input placeholder={t('form.field.lastName.placeholder')} />
             </Form.LayoutField>
             <Form.LayoutField name='email' inputMode='email' label={t('form.field.email.label')} >
@@ -173,23 +173,46 @@ const ContactPage = () => {
                     <Header />
                     <div id='scroller'>
                         <Container as='section' size='lg' className={twMerge('flex flex-col gap-12', 'items-stretch')} >
-                            <div className={twMerge('flex flex-col gap-20 py-40')}>
+                            <div className={twMerge('flex flex-col gap-14 xl:gap-20 py-40')}>
+                                {/* title */}
                                 <div className='grid grid-cols-12 gap-4'>
-                                    <Display size='xl' weight='bold' className={twMerge('col-start-3 col-span-10')} >
+                                    <Display size='xl' weight='bold' className={twMerge('col-start-1 col-span-12','mdl:col-start-4 mdl:col-span-9', 'lg:col-start-3 lg:col-span-10')} >
                                         {t('contact.title')}
                                     </Display>
                                 </div>
-                                <div className={twMerge('grid grid-cols-12 gap-8')}>
-                                    <div className={twMerge('flex flex-col gap-3','col-start-1 col-span-2')}>
+                                {/* form */}
+                                <div className={twMerge('grid grid-cols-12 gap-8 mdl:gap-4 xl:gap-8', 'grid-rows-2')}>
+                                    <div className={twMerge(
+                                        'flex flex-col gap-3',
+                                        'col-start-9 col-span-4',
+                                        'md:col-start-10 md:col-span-3', 
+                                        'mdl:col-start-1 mdl:col-span-2', 
+                                        'row-start-1 row-span-1'
+                                    )}>
                                         <Text p weight='medium' size='sm' degree='2' className='text-start uppercase' >
                                             {t('contact.subtitle')}
                                         </Text>
                                         <hr className='relative h-[2px] w-4 bg-gray-200'/>
                                     </div>
-                                    <div className={twMerge('col-start-3 col-span-8')}>
+                                    <div className={twMerge(
+                                        'col-start-1 col-span-8',
+                                        'md:col-start-1 md:col-span-9',
+                                        'mdl:col-start-4 mdl:col-span-9',
+                                        'lg:col-start-3 lg:col-span-9',
+                                        'xl:col-start-3 xl:col-span-8',
+                                        'row-start-1 row-span-2'
+                                    )}>
                                         <FormContact />
                                     </div>
-                                    <div className={twMerge('flex flex-col justify-end items-end', 'col-start-11 col-span-2')} >
+                                    <div className={twMerge(
+                                        'flex flex-col justify-end items-start xl:items-end',
+                                        'col-start-9 col-span-4',
+                                        'md:col-start-10 md:col-span-3',
+                                        'mdl:col-start-1 mdl:col-span-3',
+                                        'lg:col-start-1 lg:col-span-2',
+                                        'xl:col-start-11 xl:col-span-2',
+                                        'row-start-2 row-span-1'
+                                    )} >
                                         <div className='flex flex-col gap-1'>
                                             <Text size='sm' degree='2' p weight='medium' >
                                                 {t('contact.localTime')} {timer?.formattedTime}
@@ -201,6 +224,7 @@ const ContactPage = () => {
                                     </div>
                                 </div>
                                 <span className='h-10'></span>
+                                {/* repped */}
                                 <div className={twMerge('grid grid-cols-12 gap-8')}>
                                     <div className={twMerge('flex flex-col gap-3', 'col-start-1 col-span-2')}>
                                         <Text p weight='medium' size='sm' degree='2' className='text-start uppercase' >

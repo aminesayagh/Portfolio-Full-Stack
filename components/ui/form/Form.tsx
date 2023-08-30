@@ -40,17 +40,16 @@ const WIDTH = {
 
 type TypeWidth = keyof typeof WIDTH;
 
-const LayoutField = ({ label, className, icon, name, children, width = 'full', ...props }: { width?: TypeWidth, label: string, className?: string, icon?: IconNames, name: string, children: React.ReactElement<InputProps> } & TextFieldProps) => {
+const LayoutField = ({ label, className, icon, name, children, width, ...props }: { width?: string, label: string, className?: string, icon?: IconNames, name: string, children: React.ReactElement<InputProps> } & TextFieldProps) => {
     const {
         register,
         getFieldState,
         ...methods
     } = useFormContext();
-
     const { invalid, isDirty, isTouched, error } = getFieldState(name);
     const childrenWithProps = React.isValidElement(children) ? React.cloneElement(children, { name, label, className: twMerge(children.props.className, Style['input'], invalid ? Style['invalid'] : null) }) : children;
     return <>
-        <TextField className={twJoin(Style['text-field'], WIDTH[width], className ? className : 'w-full')} {...props}>
+        <TextField className={twJoin(Style['text-field'], width ? width : 'col-span-12', className ? className : 'w-full')} {...props}>
             <Label className={twJoin(Style['label'])} htmlFor={name} suppressHydrationWarning>{label}</Label>
             {childrenWithProps}
             <span slot='errorMessage'>

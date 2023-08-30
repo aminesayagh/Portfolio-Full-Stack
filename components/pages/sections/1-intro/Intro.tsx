@@ -24,7 +24,7 @@ const FullStack = ({ className }: { className: string }) => {
         <>
             <div className={twMerge(
                 className, 
-                'flex-col items-start xs:items-end pt-0 sm:pt-[0.2rem] md:pt-[0.6rem] mdl:pt-0 lg:pt-[0.6rem] 3xl:pt-3',
+                'flex-col items-start xs:items-end pt-0 sm:pt-[0.2rem] mdl:pt-[0.1rem] lg:pt-[6%] 2xl:pt-[5%]',
                 '-space-y-1 md:space-y-0 mdl:-space-y-1 lg:-space-y-[3%] xl:-space-y-[2.6%] 2xl:-space-y-[4.62%] 3xl:-space-y-2 4xl:space-y-0'
             )} >
                 <Display size='md' weight='semibold' className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider')}>{t('intro.title.2_1')}</Display>
