@@ -3,4 +3,7 @@ import dynamic from 'next/dynamic';
 
 
 export { default as LandingPage } from './LandingPage';
-export { default as ContactPage } from './ContactPage';
+
+export const ContactPage = dynamic(() => import('./ContactPage'), {
+    ssr: false,
+});

@@ -8,6 +8,28 @@
             "url": "https://ma-sayagh.vercel.app/"
         }
     },
+    "socialNetwork": {
+        "instagram": {
+            "key": "IN",
+            "name": "Instagram"
+        },
+        "linkedin": {
+            "key": "LI",
+            "name": "Linkedin"
+        },
+        "github": {
+            "key": "GH",
+            "name": "Github"
+        },
+        "dribbble": {
+            "key": "DR",
+            "name": "Dribbble"
+        },
+        "behance": {
+            "key": "BH",
+            "name": "Behance"
+        }
+    },
     "header": {
         "email": "AMINESAYAGH1997@GMAIL.COM",
         "locale": "fr",
@@ -127,11 +149,22 @@
         "copy": "© 2023",
         "socialNetwork": "FOLLOW ME"
     },
+    "contact": {
+        "title": "Get in touch",
+        "subtitle": "Tell me more",
+        "localTime": "MY LOCAL TIME IS",
+        "gmtTime": "GMT ",
+        "reppedBy": "Repped by"
+    },
     "form": {
         "field": {
-            "name": {
-                "placeholder": "Your name",
-                "label": "Name"
+            "firstName": {
+                "placeholder": "Your first name",
+                "label": "First Name"
+            },
+            "lastName": {
+                "placeholder": "Your last name",
+                "label": "Last Name"
             },
             "email": {
                 "placeholder": "Your email",
@@ -141,7 +174,11 @@
                 "placeholder": "Your message",
                 "label": "Message"
             },
-            "Objective": {
+            "phoneNumber": {
+                "placeholder": "Your phone number",
+                "label": "Phone Number"
+            },
+            "objective": {
                 "placeholder": "Your objective",
                 "label": "Objective",
                 "options": {
@@ -152,6 +189,9 @@
                     "5": "Say Hello",
                     "6": "Other"
                 }
+            },
+            "submit": {
+                "label": "Send"
             }
         },
         "error": {
@@ -178,6 +218,7 @@
         "Full Stack Developer": "Full Stack Developer",
         "Fullstack Developer": "Fullstack Developer"
     },
+
     "jobTItle": {
         "CTO": "CTO",
         "CEO": "CEO",
@@ -188,6 +229,13 @@
         "FREELANCER": "FREELANCER",
         "AUTOMATION SPECIALIST": "AUTOMATION SPECIALIST",
         "ACADEMIC PROJECT PLATFORM ARCHITECT": "ACADEMIC PROJECT PLATFORM ARCHITECT"
+    },
+    "country": {
+        "Morocco": "Morocco",
+        "France": "France",
+        "United States": "United States",
+        "Singapore": "Singapore",
+        "Lithuania": "Lithuania"
     },
     "projects": {
         "1": {

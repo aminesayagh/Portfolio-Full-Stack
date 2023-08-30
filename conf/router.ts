@@ -8,7 +8,7 @@ interface MenuItem {
     menu: MenuType[];
 }
 
-type MenuItemNames = 'intro' | 'manifesto' | 'experience' | 'cases' | 'contact' | 'instagram' | 'linkedin' | 'github';
+type MenuItemNames = 'intro' | 'manifesto' | 'experience' | 'cases' | 'contact' | 'instagram' | 'linkedin' | 'github' | 'dribbble' | 'behance';
 
 type MenuItems = {
     [key in MenuItemNames]: MenuItem;
@@ -50,9 +50,19 @@ const MENU_ITEMS: MenuItems = {
         id: 'linkedin'
     },
     github: {
-        link: 'github',
+        link: 'https://www.github.com/',
         menu: ['socialNetworks'],
         id: 'github'
+    },
+    dribbble: {
+        link: 'https://www.dribbble.com/',
+        menu: ['socialNetworks'],
+        id: 'dribbble'
+    },
+    behance: {
+        link: 'https://www.behance.com/',
+        menu: ['socialNetworks'],
+        id: 'behance'
     }
 };
 
