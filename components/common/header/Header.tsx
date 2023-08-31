@@ -1,4 +1,4 @@
-import { useState, useCallback, memo, useEffect, useLayoutEffect, useMemo, useRef, useContext } from 'react';
+import { useState, useCallback, memo, useEffect, useLayoutEffect, useRef, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
@@ -33,7 +33,7 @@ const Header = () => {
     const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
     const ctx = useRef<any>(null);
     const { scrollbar } = useContext(ScrollProvider);
-    useLayoutEffect(() => {
+    useEffect(() => {
         ctx.current = gsap.context((self) => {
             self.add('open', () => {
                 tl.current.fromTo(['.modal-overlay', '.modal-content'], {
@@ -114,7 +114,7 @@ const Header = () => {
             ctx.current.close();
         }
     }, [router.asPath, openMenu]);
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (openMenu) {
             ctx.current.open();
         }

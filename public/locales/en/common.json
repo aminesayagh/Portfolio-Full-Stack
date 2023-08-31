@@ -241,44 +241,51 @@
         "1": {
             "title": "Happy Water",
             "alt": "Happy Water",
-            "description": "An eco-conscious NFT initiative dedicated to ocean conservation. I collaborated in shaping its identity through design and spearheaded the web development efforts, further extending my expertise to the creation and management of cryptocurrency contracts." 
+            "description": "Contributed as a key designer and developer for an ecologically-focused NFT platform website." 
         },
         "2": {
             "title": "Sofiane Pamart's Musical NFT",
-            "description": ""
+            "alt": "Sofiane Pamart's Musical NFT",
+            "description": "Collaborated within a 140-member team, including 40 international developers, under the leadership of entrepreneur Oussama Ommar. Spearheaded the creation of visual music NFTs capturing the unique identity of artist Sofiane Pamart, paving the way for a significant fundraising campaign."
         },
         "3": {
             "title": "Cyber Cohesion",
-            "description": ""
+            "alt": "Cyber Cohesion",
+            "description": "Singapore-based security firm offering technical consultation for appropriate development solutions."
         },
         "4": {
             "title": "Shinobi Boy",
+            "alt": "Shinobi boy",
             "description": ""
         },
         "5": {
             "title": "Web Application for managing university Projects",
+            "alt": "Web Application for managing university Projects",
             "description": ""
         },
         "6": {
             "title": "Sodiadd",
             "alt": "Sodiadd",
-            "description": "An real estate investment agency catering to individual investors. As a co-founder and CEO, I played an integral role from conceptualizing the brand's identity to leading the full-stack web platform development essential to the project's success."
+            "description": "Real estate investment agency; developed a monolithic web application for individual investors."
         },
         "7": {
             "title": "Jonas Agency",
-            "description": ""
+            "alt": "Jonas Agency",
+            "description": "Digital marketing agency; crafted websites tailored for strategic online promotion."
         },
         "8": {
             "title": "Lavish Trading",
             "alt": "Lavish Trading",
-            "description": "A consultancy and investment agency in trading for individual clients. I took on the roles of both designer and developer, crafting their web identity, while also contributing significantly to the project's commercial messaging."
+            "description": "Spearheaded the design and development of a web identity for an individual-focused trading agency, offering online investment plans and expert consulting services."
         },
         "9": {
             "title": "Maschool",
+            "alt": "Maschool",
             "description": ""
         },
         "10": {
             "title": "FreeLance Projects",
+            "alt": "FreeLance Projects",
             "description": ""
         }
     }

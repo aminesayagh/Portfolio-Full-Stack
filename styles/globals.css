@@ -39,6 +39,7 @@ html {
 .whitespace-nowrap-important {
   white-space: nowrap !important;
 }
+
 .whitespace-inherit-important {
   white-space: inherit !important;
 }

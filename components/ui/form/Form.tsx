@@ -16,7 +16,7 @@ const Form = <T extends { [x: string]: any }>({ onSubmit, children, className, .
     const methods = useForm<T>({ ...props, shouldFocusError: true });
 
     return <FormProvider<T> {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)} className={twMerge('grid grid-cols-12 gap-x-4 gap-y-3', className)}>
+        <form onSubmit={methods.handleSubmit(onSubmit)} className={twMerge('grid grid-cols-12 gap-x-0 sm:gap-x-4 gap-y-4 sm:gap-y-3', className)}>
             {children}
         </form>
     </FormProvider>

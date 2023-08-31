@@ -37,7 +37,6 @@ export const Display: FC<DisplayPropsExtended> = ({ size, weight, exchange, chil
                 Style['display'],
                 className,
             ),
-            suppressHydrationWarning: true,
             ...props
         }}
     >{children}</h1>
@@ -76,10 +75,10 @@ export const Text: FC<TextPropsExtended> = ({ weight, degree = '3', size, exchan
     validTextElements.forEach(prop => delete props[prop]);
     return React.createElement(ElementType, {
         className: twMerge(
-            textClassNames({ weight, size, degree, exchange }), className
+            textClassNames({ weight, size, degree, exchange }),
+            className
         ),
-        ...props,
-        suppressHydrationWarning: true
+        ...props
     }, children);
 }
 
