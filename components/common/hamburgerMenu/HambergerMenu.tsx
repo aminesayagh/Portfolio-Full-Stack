@@ -3,8 +3,9 @@ import { useState, Dispatch, SetStateAction, useCallback, useEffect } from 'reac
 import { motion, useAnimation } from 'framer-motion';
 import { Button } from '@/components/ui';
 import { useKeyboard } from 'react-aria';
+import { useMedia } from 'react-use'
 
-const SIZE = '26';
+const SIZE = 26;
 const Y_PATH_01_CLOSED = '8';
 const Y_PATH_02_CLOSED = '18';
 const DURATION = 0.2;
@@ -24,6 +25,8 @@ const path02Variants = {
 const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => void }) => {
     const path01Controls = useAnimation();
     const path02Controls = useAnimation();
+    const isXxs = useMedia('(min-width: 390px)', false);
+
     useEffect(() => {
         if(typeof isOpen !== 'boolean') return;
         async function handlerHamburgerClick() {
@@ -61,7 +64,7 @@ const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => vo
         <>
             <span  {...keyboardProps}>
                 <Button onPress={() => setOpen()}>
-                    <svg width={`${SIZE}`} height={`${SIZE}`} viewBox='0 0 24 24' strokeWidth={STROKE_WIDTH} >
+                    <svg width={`${isXxs ? SIZE : 22}`} height={`${isXxs ? SIZE : 22}`} viewBox='0 0 24 24' strokeWidth={STROKE_WIDTH} >
                         <motion.path
                             {...path01Variants.closed}
                             animate={path01Controls}

@@ -19,7 +19,7 @@ import { ScrollProvider } from '@/context/ScrollContext';
 const GAP_SIZE_LG = 'gap-4 sm:gap-6 lg:gap-7 xl:gap-8';
 const GAP_SIZE_XL = 'gap-8 mdl:gap-12';
 const BASE_LOCALE_MENU = 'header.menu';
-const BASE_LOCALE_SOCIAL = 'header.socialNetwork';
+const BASE_LOCALE_SOCIAL = 'socialNetwork';
 
 const DURATION = 0.4;
 const TRANSLATE_Y = -110;
@@ -224,7 +224,7 @@ const Header = () => {
                                             {menuSocialNetworks.map((item, index) => {
                                                 return <li key={index} className='overflow-hidden'>
                                                     <Link size='sm' href={item.link} degree='4' weight='semibold' className='modal-footer' >
-                                                        {t(`${BASE_LOCALE_SOCIAL}.${item.id}`)}
+                                                        {t(`${BASE_LOCALE_SOCIAL}.${item.id}.key`)}
                                                     </Link>
                                                 </li>
                                             })}

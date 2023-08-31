@@ -127,14 +127,17 @@ const AgencyList = () => {
             <ul className={twMerge('flex flex-col gap-0', 'border-b border-gray-800/60')}>
                 {projects.map((project, index) => {
                     return (
-                        <li key={index} className={twMerge('flex flex-row gap-4 py-10', 'border-t border-gray-800/60')}>
-                            <div className={twMerge('w-1/2')}>
+                        <li key={index} className={twMerge('flex flex-col md:flex-row gap-8 md:gap-4 py-10', 'items-start', 'border-t border-gray-800/60')}>
+                            <div className={twMerge('flex flex-row gap-12 items-start justify-between w-full md:w-5/12 2xl:w-1/2')}>
                                 <Title h6 weight='semibold' degree='1' className='uppercase tracking-wider opacity-80' >
                                     {t(`projects.${project.id}.title`)}
                                 </Title>
+                                <Text p size='sm' weight='bold' degree='1' className='block md:hidden tracking-wider opacity-80'>
+                                    {t(`country.${project.country}`)}
+                                </Text>
                             </div>
-                            <div className={twMerge('w-1/2', 'flex flex-col gap-5 ')}>
-                                <Text p size='sm' weight='bold' degree='1' className='tracking-wider opacity-80'>
+                            <div className={twMerge('w-full xxs:w-10/12 md:w-7/12 2xl:w-1/2', 'flex flex-col gap-5')}>
+                                <Text p size='sm' weight='bold' degree='1' className='hidden md:block tracking-wider opacity-80'>
                                     {t(`country.${project.country}`)}
                                 </Text>
                                 <Text p size='sm' weight='medium' degree='2'>
@@ -237,15 +240,16 @@ const ContactPage = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <span className='h-10'></span>
+                                <span className='h-6 md:h-10'></span>
                                 {/* repped */}
                                 <div className={twMerge(
-                                    'grid grid-cols-12 gap-8'
+                                    'grid grid-cols-12 gap-x-0 gap-y-8 xs:gap-8'
                                 )}>
                                     <div className={twMerge(
                                         'flex flex-col',
                                         'gap-3',
-                                        'col-start-1 col-span-2'
+                                        'col-start-1 col-span-12',
+                                        'sm:col-start-1 sm:col-span-2'
                                     )}>
                                         <Text p weight='medium' size='sm' degree='2' className='text-start uppercase' >
                                             {t('contact.reppedBy')}
@@ -253,13 +257,20 @@ const ContactPage = () => {
                                         <hr className='relative h-[2px] w-4 bg-gray-200' />
                                     </div>
                                     <div className={twMerge(
-                                        'col-start-3 col-span-6'
+                                        'col-start-1 col-span-12',
+                                        'xs:col-start-1 xs:col-span-11',
+                                        'sn:col-start-1 sm:col-span-9',
+                                        'mdl:col-start-3 mdl:col-span-8',
+                                        'lg:col-start-3 lg:col-span-7',
+                                        'xl:col-start-3 xl:col-span-6'
                                     )}>
                                         <AgencyList />
                                     </div>
                                     <div className={twMerge(
-                                        'flex flex-col gap-4 justify-end items-end',
-                                        'col-start-11 col-span-2'
+                                        'flex flex-row flex-wrap sm:flex-col gap-x-10 xs:gap-x-12 gap-y-4 sm:gap-4 justify-start xs:justify-end items-end',
+                                        'col-start-1 col-span-12',
+                                        'xs:col-start-1 xs:col-span-11',
+                                        'sm:col-start-11 sm:col-span-2'
                                     )} >
                                         {socialNetworkItems.map((item, index) => {
                                             return (
