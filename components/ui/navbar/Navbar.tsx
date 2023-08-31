@@ -23,7 +23,7 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
 
     useEffect(() => {
         scrollbar && scrollbar.addListener((status) => {
-            if (status.offset.y < 200) {
+            if (status.offset.y < 150) {
                 setActive(false);
             } else {
                 setActive(true);

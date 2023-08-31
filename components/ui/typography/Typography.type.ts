@@ -72,6 +72,7 @@ export type TextPropsExtended = TextElement & VariantProps<typeof textStyle> & {
     size: TextSizes,
     exchange?: boolean;
     style?: React.CSSProperties;
+    suppressHydrationWarning?: boolean;
 }
 
 export type LinkPropsExtended = LinkProps & VariantProps<typeof textStyle> & {

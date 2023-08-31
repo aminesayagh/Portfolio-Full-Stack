@@ -1,4 +1,4 @@
-import { useState, useCallback, memo, useEffect, useLayoutEffect, useMemo, useRef, useContext } from 'react';
+import { useState, useCallback, memo, useEffect, useLayoutEffect, useRef, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
@@ -19,7 +19,7 @@ import { ScrollProvider } from '@/context/ScrollContext';
 const GAP_SIZE_LG = 'gap-4 sm:gap-6 lg:gap-7 xl:gap-8';
 const GAP_SIZE_XL = 'gap-8 mdl:gap-12';
 const BASE_LOCALE_MENU = 'header.menu';
-const BASE_LOCALE_SOCIAL = 'header.socialNetwork';
+const BASE_LOCALE_SOCIAL = 'socialNetwork';
 
 const DURATION = 0.4;
 const TRANSLATE_Y = -110;
@@ -33,7 +33,7 @@ const Header = () => {
     const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
     const ctx = useRef<any>(null);
     const { scrollbar } = useContext(ScrollProvider);
-    useLayoutEffect(() => {
+    useEffect(() => {
         ctx.current = gsap.context((self) => {
             self.add('open', () => {
                 tl.current.fromTo(['.modal-overlay', '.modal-content'], {
@@ -114,7 +114,7 @@ const Header = () => {
             ctx.current.close();
         }
     }, [router.asPath, openMenu]);
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (openMenu) {
             ctx.current.open();
         }
@@ -224,7 +224,7 @@ const Header = () => {
                                             {menuSocialNetworks.map((item, index) => {
                                                 return <li key={index} className='overflow-hidden'>
                                                     <Link size='sm' href={item.link} degree='4' weight='semibold' className='modal-footer' >
-                                                        {t(`${BASE_LOCALE_SOCIAL}.${item.id}`)}
+                                                        {t(`${BASE_LOCALE_SOCIAL}.${item.id}.key`)}
                                                     </Link>
                                                 </li>
                                             })}

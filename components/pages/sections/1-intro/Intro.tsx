@@ -24,7 +24,8 @@ const FullStack = ({ className }: { className: string }) => {
         <>
             <div className={twMerge(
                 className, 
-                'flex-col items-start xs:items-end pt-0 sm:pt-[0.2rem] md:pt-[0.6rem] mdl:pt-0 lg:pt-[0.6rem] 3xl:pt-3',
+                'flex flex-col items-start xs:items-end justify-end',
+                'pb-2',
                 '-space-y-1 md:space-y-0 mdl:-space-y-1 lg:-space-y-[3%] xl:-space-y-[2.6%] 2xl:-space-y-[4.62%] 3xl:-space-y-2 4xl:space-y-0'
             )} >
                 <Display size='md' weight='semibold' className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider')}>{t('intro.title.2_1')}</Display>
@@ -79,7 +80,8 @@ const Title = () => {
             'row-start-2 row-span-1', // none
             'mdl:row-start-1 mdl:row-span-1', //mdl
             // children
-            "[&>*]:w-full [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-5/12 [&>*]:mdl:w-5/12 [&>*]:lg:w-full [&>*]:4xl:w-4/12",
+            "[&>*]:w-full [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-5/12 [&>*]:mdl:w-5/12 [&>*]:xl:w-full [&>*]:4xl:w-4/12",
+            '[&>*>p]:max-w-[14rem]',
             "[&>*]:flex [&>*]:flex-row [&>*]:justify-end",
             "[&>*]:mdl:ml-2 [&>*]:lg:ml-0"
         )} >

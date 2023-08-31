@@ -25,7 +25,7 @@ const Footer = () => {
 
     return (<>
         {/* <Container as='footer' size='lg' className={twMerge('flex flex-col gap-8 md:gap-12')}>   */}
-            <div className={twMerge('max-w-[14rem] xxs:w-8/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[30vw] mdl:max-w-[26vw] xl:max-w-[20vw] 2xl:max-w-[28vw]')} >
+            <div className={twMerge('max-w-[14rem] xxs:w-8/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[30vw] mdl:max-w-[26vw] xl:max-w-[20vw] 2xl:max-w-[28vw] 3xl:max-w-[22rem]')} >
                 <Text p degree='3' weight='medium' size='md' className='uppercase' >
                     {t('footer.state')}
                 </Text>

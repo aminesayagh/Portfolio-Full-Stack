@@ -22,7 +22,7 @@ const Action = () => {
                 )} >
                     <Text p degree="3" weight='semibold' size='md' className='w-full sm:w-1/2 md:w-full' >
                         {t('motivation.content.1')}    
-                    </Text> 
+                    </Text>
                     <Text p degree='3' weight='semibold' size='md' className='w-full sm:w-1/2 md:w-full' >
                         {t('motivation.content.2')}
                     </Text>
