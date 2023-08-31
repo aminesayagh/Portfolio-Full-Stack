@@ -44,7 +44,6 @@ const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => vo
         if(typeof isOpen === 'boolean'){
             handlerHamburgerClick().then().catch(err => console.error(err));
         }
-        // clickHandler().then().catch((err) => console.log(err));
     }, [isOpen])
     let { keyboardProps } = useKeyboard({
         onKeyDown: (e) => {

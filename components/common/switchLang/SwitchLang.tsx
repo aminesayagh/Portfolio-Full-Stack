@@ -6,12 +6,10 @@ import { Link, Button } from "@/components/ui";
 const langs = ['fr', 'en'];
 const SwitchLang = () => {
     const { t, i18n } = useTranslation();
-
-    console.log('lng', langs);
     const changeLanguage = (lng: React.Key) => {
         i18n.changeLanguage(lng.toString());
     }
-    
+
     return (
         <>
             <div className='flex flex-row items-center justify-start gap-4 xxs:gap-8 mdl:gap-6 lg:gap-8'>
