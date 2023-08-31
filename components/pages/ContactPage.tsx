@@ -65,7 +65,7 @@ type TypeFormContact = {
 }
 const FormContact = () => {
     const { t } = useTranslation();
-    
+
     const required = () => z.string(
         { required_error: t(`${ERROR_TRANSLATION_PATH}.required`) || 'required' }
     )
@@ -107,7 +107,7 @@ const FormContact = () => {
             </Form.LayoutField>
             <Form.Button className={twMerge(
                 'text-xs md:text-sm',
-                'px-10 py-4 w=full bg-white-100 font-semibold', 
+                'px-10 py-4 w=full bg-white-100 font-semibold',
                 'rounded-sm',
                 'col-span-12 w-1/2 xxs:w-5/12 sm:w-4/12 md:w-3/12 place-self-end'
             )} >
@@ -124,33 +124,31 @@ const AgencyList = () => {
 
     return (
         <>
-            <ul className={twMerge('flex flex-col gap-0', 'border-b border-gray-800')}>
+            <ul className={twMerge('flex flex-col gap-0', 'border-b border-gray-800/60')}>
                 {projects.map((project, index) => {
                     return (
-                        <li key={project.id} className={twMerge('flex flex-row gap-4 py-10', 'border-t  border-gray-800')}>
+                        <li key={index} className={twMerge('flex flex-row gap-4 py-10', 'border-t border-gray-800/60')}>
                             <div className={twMerge('w-1/2')}>
-                                <Title h6 weight='semibold' degree='2' className='uppercase tracking-wider' >
+                                <Title h6 weight='semibold' degree='1' className='uppercase tracking-wider opacity-80' >
                                     {t(`projects.${project.id}.title`)}
                                 </Title>
                             </div>
                             <div className={twMerge('w-1/2', 'flex flex-col gap-5 ')}>
-                                <Text p size='sm' weight='bold' degree='1' className='tracking-wider'>
+                                <Text p size='sm' weight='bold' degree='1' className='tracking-wider opacity-80'>
                                     {t(`country.${project.country}`)}
                                 </Text>
                                 <Text p size='sm' weight='medium' degree='2'>
                                     {t(`projects.${project.id}.description`)}
                                 </Text>
-                                <Text className='inline' p size='sm' weight='medium' degree='2' style={{
+                                <div className='inline' style={{
                                     display: '-webkit-box'
                                 }}>
                                     {project.jobTitle.map((jobTitle, index) => {
-                                        return <>
-                                            <b key={index} className={twMerge('pr-2')}>
-                                                {t(`jobTItle.${jobTitle}`)}{index < project.jobTitle.length - 1 ? ',' : ''}
-                                            </b>
-                                        </>
+                                        return <Text key={index} p size='sm' weight='medium' degree='2' className={twMerge('pr-2')}>
+                                            {t(`jobTItle.${jobTitle}`)}{index < project.jobTitle.length - 1 ? ',' : ''}
+                                        </Text>
                                     })}
-                                </Text>
+                                </div>
                             </div>
                         </li>
                     )
@@ -181,7 +179,7 @@ const ContactPage = () => {
                             <div className={twMerge('flex flex-col gap-14 xl:gap-20 py-40')}>
                                 {/* title */}
                                 <div className='grid grid-cols-12 gap-4'>
-                                    <Display size='xl' weight='bold' className={twMerge('col-start-1 col-span-12','mdl:col-start-4 mdl:col-span-9', 'lg:col-start-3 lg:col-span-10')} >
+                                    <Display size='xl' weight='bold' className={twMerge('col-start-1 col-span-12', 'mdl:col-start-4 mdl:col-span-9', 'lg:col-start-3 lg:col-span-10')} >
                                         {t('contact.title')}
                                     </Display>
                                 </div>
@@ -194,14 +192,14 @@ const ContactPage = () => {
                                         'flex flex-col gap-3',
                                         'col-start-1 col-span-12',
                                         'xxs:col-start-1 xxs:col-span-4',
-                                        'sm:col-start-10 sm:col-span-3', 
-                                        'mdl:col-start-1 mdl:col-span-2', 
+                                        'sm:col-start-10 sm:col-span-3',
+                                        'mdl:col-start-1 mdl:col-span-2',
                                         'row-start-1 row-span-1'
                                     )}>
                                         <Text p weight='medium' size='sm' degree='2' className='text-start uppercase' >
                                             {t('contact.subtitle')}
                                         </Text>
-                                        <hr className='relative h-[2px] w-4 bg-gray-200'/>
+                                        <hr className='relative h-[2px] w-4 bg-gray-200' />
                                     </div>
                                     <div className={twMerge(
                                         'col-start-1 col-span-12',
@@ -252,7 +250,7 @@ const ContactPage = () => {
                                         <Text p weight='medium' size='sm' degree='2' className='text-start uppercase' >
                                             {t('contact.reppedBy')}
                                         </Text>
-                                        <hr className='relative h-[2px] w-4 bg-gray-200'/>
+                                        <hr className='relative h-[2px] w-4 bg-gray-200' />
                                     </div>
                                     <div className={twMerge(
                                         'col-start-3 col-span-6'
