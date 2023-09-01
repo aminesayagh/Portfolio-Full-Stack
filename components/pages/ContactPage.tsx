@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { getProjectsByCategory } from '@/conf/projects';
 import { getMenuItems } from '@/conf/router';
+import { ToastRegion, addToast } from '@/components/common/toast';
 
 import { useTime } from '@/hook';
 import AnimationConf from '@/context/AnimationConf';
@@ -92,6 +93,13 @@ const FormContact = () => {
                 body: JSON.stringify({ ...data, locale: i18n.language })
             });
             const responseData = await response.json();
+            addToast({
+                variant: 'positive',
+                description: '😎 Success sending message'
+            }, {
+                timeout: 4000
+            })
+
         } catch (err) {
             console.error(err);
             throw new Error(err as string);
@@ -99,41 +107,33 @@ const FormContact = () => {
     }
     return (
         <Form<TypeFormContact> onSubmit={onSubmitForm} resolver={zodResolver(contactFormDataSchema)} >
-            {({ formState }) => {
-                if(formState.isSubmitted) {
-                    return null;
-                }
-                return <>
-                
-                    <Form.LayoutField width='col-span-12 mdl:col-span-6' name='firstName' label={t('form.field.firstName.label')} >
-                        <Input placeholder={t('form.field.firstName.placeholder')} />
-                    </Form.LayoutField>
-                    <Form.LayoutField width='col-span-12 mdl:col-span-6' name='lastName' label={t('form.field.lastName.label')} >
-                        <Input placeholder={t('form.field.lastName.placeholder')} />
-                    </Form.LayoutField>
-                    <Form.LayoutField name='email' inputMode='email' label={t('form.field.email.label')} >
-                        <Input placeholder={t('form.field.email.placeholder')} />
-                    </Form.LayoutField>
-                    <Form.Select name='objective' label={t('form.field.objective.label')} placeholder={t('form.field.objective.placeholder')} items={contactSubjectItems}>
-                        {(item) => {
-                            return <Form.Item key={item.key} id={item.text} >
-                                {t(`form.field.objective.options.${item.key}`)}
-                            </Form.Item>
-                        }}
-                    </Form.Select>
-                    <Form.LayoutField name='message' label={t('form.field.message.label')} >
-                        <textarea placeholder={t('form.field.message.placeholder')} />
-                    </Form.LayoutField>
-                    <Form.Button className={twMerge(
-                        'text-xs md:text-sm',
-                        'px-10 py-4 w=full bg-white-100 font-semibold',
-                        'rounded-sm',
-                        'col-span-12 w-1/2 xxs:w-5/12 sm:w-4/12 md:w-3/12 place-self-end'
-                    )} >
-                        {t('form.field.submit.label')}
-                    </Form.Button>
-                </>
-            }}
+            <Form.LayoutField width='col-span-12 mdl:col-span-6' name='firstName' label={t('form.field.firstName.label')} >
+                <Input placeholder={t('form.field.firstName.placeholder')} />
+            </Form.LayoutField>
+            <Form.LayoutField width='col-span-12 mdl:col-span-6' name='lastName' label={t('form.field.lastName.label')} >
+                <Input placeholder={t('form.field.lastName.placeholder')} />
+            </Form.LayoutField>
+            <Form.LayoutField name='email' inputMode='email' label={t('form.field.email.label')} >
+                <Input placeholder={t('form.field.email.placeholder')} />
+            </Form.LayoutField>
+            <Form.Select name='objective' label={t('form.field.objective.label')} placeholder={t('form.field.objective.placeholder')} items={contactSubjectItems}>
+                {(item) => {
+                    return <Form.Item key={item.key} id={item.text} >
+                        {t(`form.field.objective.options.${item.key}`)}
+                    </Form.Item>
+                }}
+            </Form.Select>
+            <Form.LayoutField name='message' label={t('form.field.message.label')} >
+                <textarea placeholder={t('form.field.message.placeholder')} />
+            </Form.LayoutField>
+            <Form.Button className={twMerge(
+                'text-xs md:text-sm',
+                'px-10 py-4 w=full bg-white-100 font-semibold',
+                'rounded-sm',
+                'col-span-12 w-1/2 xxs:w-5/12 sm:w-4/12 md:w-3/12 place-self-end'
+            )} >
+                {t('form.field.submit.label')}
+            </Form.Button>
         </Form>
     )
 }
@@ -310,6 +310,7 @@ const ContactPage = () => {
                     </div>
                 </AnimationConf>
             </ScrollContextProvider >
+            <ToastRegion />
         </>
     )
 }

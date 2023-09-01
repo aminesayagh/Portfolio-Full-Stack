@@ -77,6 +77,7 @@ export default async function handler(
           }
         },
       });
+      console.log('response ',response);
       return response;
     } catch (error: any) {
       throw new Error(error.body);

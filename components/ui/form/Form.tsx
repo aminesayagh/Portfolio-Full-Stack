@@ -12,10 +12,10 @@ import { twMerge } from 'tailwind-merge';
 import Style from './Form.module.scss';
 import { mergeClassName } from '@/helpers/className';
 
-const Form = <T extends { [x: string]: any }>({ onSubmit, children, className, ...props }: FormProps<T>) => {
+const Form = <T extends { [x: string]: any }>({ onSubmit, onError,children, className, ...props }: FormProps<T>) => {
     const methods = useForm<T>({ ...props, shouldFocusError: true });
     return <FormProvider<T> {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)} className={twMerge('grid grid-cols-12 gap-x-0 sm:gap-x-4 gap-y-4 sm:gap-y-3', className)}>
+        <form onSubmit={methods.handleSubmit(onSubmit, onError)} className={twMerge('grid grid-cols-12 gap-x-0 sm:gap-x-4 gap-y-4 sm:gap-y-3', className)}>
             {typeof children === 'function' ? children(methods) : children}
         </form>
     </FormProvider>
