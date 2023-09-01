@@ -26,7 +26,10 @@
     &.invalid {
         @apply border-b border-red-600/70;
     }
-    &:focus {
+    &.invalid:focus {
+        @apply border-b border-red-600;
+    }
+    &:focus:not(.invalid) {
         @apply text-active;
         @apply outline-none scale-[1.004] translate-y-[-0.02rem];
         @apply border-primary-400;
