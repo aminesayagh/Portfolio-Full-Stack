@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHover } from 'react-aria';
 import { useForm, FormProvider, Controller, useFormContext } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
@@ -14,7 +14,9 @@ import { mergeClassName } from '@/helpers/className';
 
 const Form = <T extends { [x: string]: any }>({ onSubmit, children, className, ...props }: FormProps<T>) => {
     const methods = useForm<T>({ ...props, shouldFocusError: true });
-
+    useEffect(() => {
+        console.log(methods.watch());
+    }, [methods.watch()])
     return <FormProvider<T> {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)} className={twMerge('grid grid-cols-12 gap-x-0 sm:gap-x-4 gap-y-4 sm:gap-y-3', className)}>
             {children}
@@ -47,7 +49,14 @@ const LayoutField = ({ label, className, icon, name, children, width, ...props }
         ...methods
     } = useFormContext();
     const { invalid, isDirty, isTouched, error } = getFieldState(name);
-    const childrenWithProps = React.isValidElement(children) ? React.cloneElement(children, { name, label, className: twMerge(children.props.className, Style['input'], invalid ? Style['invalid'] : null) }) : children;
+    
+    const childrenWithProps = React.isValidElement(children) ? React.cloneElement(children, {
+        label,
+        ...children.props,
+        ...register(name),
+        className: twMerge(children.props.className, Style['input'], invalid ? Style['invalid'] : null),
+    }) : children;
+
     return <>
         <TextField className={twJoin(Style['text-field'], width ? width : 'col-span-12', className ? className : 'w-full')} {...props}>
             <Label className={twJoin(Style['label'])} htmlFor={name} suppressHydrationWarning>{label}</Label>
@@ -59,16 +68,6 @@ const LayoutField = ({ label, className, icon, name, children, width, ...props }
             </span>
         </TextField>
     </>
-}
-
-type InputUiProps = Omit<InputProps, 'name' | 'label'> & { name?: string, label?: string };
-const InputUi = ({ name, className, ...props }: InputUiProps) => {
-    const { register, ...methods } = useFormContext();
-    if (!name) {
-        throw new Error('InputUi must have a name');
-    }
-
-    return <Input className={mergeClassName('w-full', className)} {...register(name)} {...props} />
 }
 
 
@@ -173,12 +172,12 @@ const CheckboxUi = (props: CheckboxProps) => {
 }
 
 const ButtonUi = (props: ButtonProps) => {
+    const { formState: { isSubmitting, isValid } } = useFormContext();
     return (
-        <Button {...props} type='submit' />
+        <Button {...props} type='submit' isDisabled={isSubmitting ? true : false} />
     )
 }
 
-Form.Input = InputUi;
 Form.LayoutField = LayoutField;
 Form.Select = SelectUi;
 Form.Item = ItemUi;

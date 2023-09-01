@@ -61,19 +61,19 @@ type TypeFormContact = {
     email: string;
     objective: ContactSubject;
     message: string;
-    consent: boolean;
 }
+import { Input } from  'react-aria-components'
 const FormContact = () => {
     const { t } = useTranslation();
 
     const required = () => z.string(
-        { required_error: t(`${ERROR_TRANSLATION_PATH}.required`) || 'required' }
-    )
+        { required_error: t(`${ERROR_TRANSLATION_PATH}.required`) }
+    ).nonempty(t(`${ERROR_TRANSLATION_PATH}.required`))
     const contactFormDataSchema = z.object({
-        firstName: required().min(2, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 2 })).max(50, t(`${ERROR_TRANSLATION_PATH}.maxLength`)).nonempty().regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
-        lastName: required().min(2, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 2 })).max(50, t(`${ERROR_TRANSLATION_PATH}.maxLength`)).nonempty().regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
+        firstName: required().min(2, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 2 })).max(50, t(`${ERROR_TRANSLATION_PATH}.maxLength`)).regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
+        lastName: required().min(2, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 2 })).max(50, t(`${ERROR_TRANSLATION_PATH}.maxLength`)).regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
         email: required().email(t(`${ERROR_TRANSLATION_PATH}.email`)),
-        objective: required().refine(value => contactSubjectValues.includes(value as ContactSubject), { message: t(`${ERROR_TRANSLATION_PATH}.objective`) }),
+        objective: required(),
         message: required().min(10, {
             message: t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 10 })
         }).max(500, {
@@ -82,22 +82,22 @@ const FormContact = () => {
     });
 
     const onSubmitForm = (data: TypeFormContact) => {
-
+        console.log(data);
     }
     return (
         <Form<TypeFormContact> onSubmit={onSubmitForm} resolver={zodResolver(contactFormDataSchema)} >
             <Form.LayoutField width='col-span-12 mdl:col-span-6' name='firstName' label={t('form.field.firstName.label')} >
-                <Form.Input placeholder={t('form.field.firstName.placeholder')} />
+                <Input placeholder={t('form.field.firstName.placeholder')} />
             </Form.LayoutField>
             <Form.LayoutField width='col-span-12 mdl:col-span-6' name='lastName' label={t('form.field.lastName.label')} >
-                <Form.Input placeholder={t('form.field.lastName.placeholder')} />
+                <Input placeholder={t('form.field.lastName.placeholder')} />
             </Form.LayoutField>
             <Form.LayoutField name='email' inputMode='email' label={t('form.field.email.label')} >
-                <Form.Input placeholder={t('form.field.email.placeholder')} />
+                <Input placeholder={t('form.field.email.placeholder')} />
             </Form.LayoutField>
             <Form.Select name='objective' label={t('form.field.objective.label')} placeholder={t('form.field.objective.placeholder')} items={contactSubjectItems}>
                 {(item) => {
-                    return <Form.Item key={item.key} >
+                    return <Form.Item key={item.key} id={item.text} >
                         {t(`form.field.objective.options.${item.key}`)}
                     </Form.Item>
                 }}
