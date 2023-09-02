@@ -23,7 +23,7 @@ const Manifesto = () => {
                     scrub: true,
                     // toggleActions: 'play none none reverse',
                     start: 'top',
-                    end: `+=${window.innerHeight / 1.5}`,
+                    end: `+=110%`,
                     // markers: true
                 }
     
