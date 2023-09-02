@@ -29,7 +29,7 @@ const Manifesto = () => {
                     // toggleActions: 'play none none reverse',
                     start: 'top 80%',
                     end: 'bottom 50%',
-                    markers: true
+                    // markers: true
                 }
             })
         });
