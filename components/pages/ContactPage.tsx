@@ -1,5 +1,5 @@
 import { Header, Footer } from '@/components/common';
-import { Container, Display, Title, Text, Form, Link } from '@/components/ui';
+import { Container, Display, Title, Text, Form, Link, OptionOnSubmit } from '@/components/ui';
 import { useState, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { useTranslation } from 'next-i18next';
@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { getProjectsByCategory } from '@/conf/projects';
 import { getMenuItems } from '@/conf/router';
+import { ToastRegion, addToast } from '@/components/common/toast';
 
 import { useTime } from '@/hook';
 import AnimationConf from '@/context/AnimationConf';
@@ -61,43 +62,72 @@ type TypeFormContact = {
     email: string;
     objective: ContactSubject;
     message: string;
-    consent: boolean;
 }
+import { Input } from 'react-aria-components'
 const FormContact = () => {
-    const { t } = useTranslation();
-
+    const { t, i18n } = useTranslation();
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isError, setIsError] = useState(false);
     const required = () => z.string(
-        { required_error: t(`${ERROR_TRANSLATION_PATH}.required`) || 'required' }
-    )
+        { required_error: t(`${ERROR_TRANSLATION_PATH}.required`) }
+    ).nonempty(t(`${ERROR_TRANSLATION_PATH}.required`))
     const contactFormDataSchema = z.object({
-        firstName: required().min(2, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 2 })).max(50, t(`${ERROR_TRANSLATION_PATH}.maxLength`)).nonempty().regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
-        lastName: required().min(2, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 2 })).max(50, t(`${ERROR_TRANSLATION_PATH}.maxLength`)).nonempty().regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
+        firstName: required().min(2, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 2 })).max(50, t(`${ERROR_TRANSLATION_PATH}.maxLength`)).regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
+        lastName: required().min(2, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 2 })).max(50, t(`${ERROR_TRANSLATION_PATH}.maxLength`)).regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
         email: required().email(t(`${ERROR_TRANSLATION_PATH}.email`)),
-        objective: required().refine(value => contactSubjectValues.includes(value as ContactSubject), { message: t(`${ERROR_TRANSLATION_PATH}.objective`) }),
+        objective: z.string().nonempty(t(`${ERROR_TRANSLATION_PATH}.required`)),
         message: required().min(10, {
             message: t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 10 })
         }).max(500, {
             message: t(`${ERROR_TRANSLATION_PATH}.maxLength`, { max: 500 })
         }).nonempty()
     });
+    const successMessage = useMemo(() => t('form.notification.success'), [i18n.language]);
+    const errorMessage = useMemo(() => t('form.notification.error'), [i18n.language]);
 
-    const onSubmitForm = (data: TypeFormContact) => {
+    const onSubmitForm = async (data: TypeFormContact, options: OptionOnSubmit<TypeFormContact> ) => {
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ...data, locale: i18n.language })
+            });
+            const responseData = await response.json();
+            addToast({
+                variant: 'positive',
+                description: successMessage,
+            }, {
+                timeout: 10000
+            });
+            options.reset();
 
+        } catch (err) {
+            addToast({
+                variant: 'negative',
+                description: errorMessage
+            }, {
+                timeout: 10000
+            });
+
+            options.reset();
+        }
     }
     return (
         <Form<TypeFormContact> onSubmit={onSubmitForm} resolver={zodResolver(contactFormDataSchema)} >
             <Form.LayoutField width='col-span-12 mdl:col-span-6' name='firstName' label={t('form.field.firstName.label')} >
-                <Form.Input placeholder={t('form.field.firstName.placeholder')} />
+                <Input placeholder={t('form.field.firstName.placeholder')} />
             </Form.LayoutField>
             <Form.LayoutField width='col-span-12 mdl:col-span-6' name='lastName' label={t('form.field.lastName.label')} >
-                <Form.Input placeholder={t('form.field.lastName.placeholder')} />
+                <Input placeholder={t('form.field.lastName.placeholder')} />
             </Form.LayoutField>
             <Form.LayoutField name='email' inputMode='email' label={t('form.field.email.label')} >
-                <Form.Input placeholder={t('form.field.email.placeholder')} />
+                <Input placeholder={t('form.field.email.placeholder')} />
             </Form.LayoutField>
-            <Form.Select name='objective' label={t('form.field.objective.label')} placeholder={t('form.field.objective.placeholder')} items={contactSubjectItems}>
+            <Form.Select name='objective' label={t('form.field.objective.label')} placeholder={t('form.field.objective.placeholder')} items={contactSubjectItems} defaultSelectedKey={'1'}>
                 {(item) => {
-                    return <Form.Item key={item.key} >
+                    return <Form.Item key={item.key} id={item.text} >
                         {t(`form.field.objective.options.${item.key}`)}
                     </Form.Item>
                 }}
@@ -289,6 +319,7 @@ const ContactPage = () => {
                     </div>
                 </AnimationConf>
             </ScrollContextProvider >
+            <ToastRegion />
         </>
     )
 }

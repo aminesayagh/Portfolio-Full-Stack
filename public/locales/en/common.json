@@ -200,6 +200,10 @@
             "minLength": "Please enter at least {{min}} characters.",
             "maxLength": "Please enter no more than {{max}} characters.",
             "pattern": "Please match the requested format."
+        },
+        "notification": {
+            "success": "😎 Awesome, I got your message! I'll get back to you soon",
+            "error": "😱 Oops! Something went wrong. Please try again"
         }
     },
     "tasks": {

@@ -1,9 +1,9 @@
 import React, { createContext, useState, useEffect, useLayoutEffect, useRef, useContext } from 'react';
 
-import { gsap } from 'gsap';
-import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin';
+import { gsap } from 'gsap-trial';
+import { ScrollToPlugin } from 'gsap-trial/dist/ScrollToPlugin';
+import { ScrollTrigger } from 'gsap-trial/dist/ScrollTrigger';
 import Scrollbar, { ScrollbarPlugin } from 'smooth-scrollbar';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import OverscrollPlugin from 'smooth-scrollbar/plugins/overscroll';
 import { useRouter } from 'next/router';
 
@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import easing from 'easing-js';
 
 import { ScrollProvider } from './ScrollContext';
+
 
 
 
@@ -169,6 +170,17 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             ctx.revert();
         }
     }, []);
+    useEffect(() => {
+        const resize = () => {
+            if (!scrollbar.current) return;
+            scrollbar.current.update();
+            ScrollTrigger.refresh();
+        };
+        window.addEventListener('resize', resize);
+        return () => {
+            window.removeEventListener('resize', resize);
+        }
+    }, [])
 
     return <><div ref={el => {
         // @ts-ignore

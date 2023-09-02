@@ -4,6 +4,7 @@ import { twMerge } from "tailwind-merge";
 
 import { Title, Text } from '@/components/ui';
 import { rounded } from "@/components/style";
+import { split } from "lodash";
 
 const Icon = () => {
     return (
@@ -60,6 +61,7 @@ const EmptyCard = () => {
 
 const ExpertiseStages = () => {
     const { t } = useTranslation();
+    const phrase = t('experience.phrase');
     return (
         <>
             <div className={twMerge(
