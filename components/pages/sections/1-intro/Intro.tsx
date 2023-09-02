@@ -9,7 +9,7 @@ import { MENU_ITEMS } from "@/conf/router";
 
 const ButtonNext = () => {
     return <>
-        <Button className={twMerge('bg-white-200', 'rounded-full splitText_button_gsap')}>
+        <Button className={twMerge('bg-white-200', 'rounded-full next_button_gsap')}>
             <div className='p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6'>
                 <Icon name='IconCornerLeftDown' className='stroke-black-200 stroke-1 w-8 h-8 xxs:w-6 xxs:h-6 xs:w-8 xs:h-8 xl:w-10 xl:h-10' />
             </div>
@@ -62,7 +62,7 @@ const Title = () => {
                 }
             }).from('.splitText_fullStack_gsap', {
                 yPercent: 120,
-                duration: 0.4,
+                duration: 0.6,
                 ease: 'power4.out',
             }, '<90%').from('.splitText_description_gsap', {
                 yPercent: 105,
@@ -71,10 +71,13 @@ const Title = () => {
                 stagger: {
                     amount: 0.1
                 }
-            }, '<').from('.splitText_button_gsap', {
+            }, '<').from('.next_button_gsap', {
                 opacity: 0,
                 duration: 0.4,
                 ease: 'power4.out',
+            }).from('.next_button_gsap', {
+                opacity: 0,
+                duration: 0.4,
             });
         });
         return () => ctx.revert();
@@ -129,11 +132,15 @@ const Title = () => {
             "[&>*]:flex [&>*]:flex-row [&>*]:justify-end",
             "[&>*]:mdl:ml-2 [&>*]:lg:ml-0"
         )} >
-            <div className={twMerge('overflow-hidden')}>
-                <Text p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'splitText_description_gsap')} degree="2">{t('intro.descriptions.1')}</Text>
+            <div >
+                <span className='overflow-hidden h-fit'>
+                    <Text p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')} degree="2">{t('intro.descriptions.1')}</Text>
+                </span>
             </div>
-            <div className={twMerge('overflow-hidden')}>
-                <Text p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')} degree='2'>{t('intro.descriptions.2')}</Text>
+            <div>
+                <span className='overflow-hidden h-fit'>
+                    <Text p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')} degree='2'>{t('intro.descriptions.2')}</Text>
+                </span>
             </div>
         </div>
         {/* button next */}
