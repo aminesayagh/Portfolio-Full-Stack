@@ -75,13 +75,15 @@ const FormContact = () => {
         firstName: required().min(2, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 2 })).max(50, t(`${ERROR_TRANSLATION_PATH}.maxLength`)).regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
         lastName: required().min(2, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 2 })).max(50, t(`${ERROR_TRANSLATION_PATH}.maxLength`)).regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
         email: required().email(t(`${ERROR_TRANSLATION_PATH}.email`)),
-        objective: required(),
+        objective: z.string().nonempty(t(`${ERROR_TRANSLATION_PATH}.required`)),
         message: required().min(10, {
             message: t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 10 })
         }).max(500, {
             message: t(`${ERROR_TRANSLATION_PATH}.maxLength`, { max: 500 })
         }).nonempty()
     });
+    const successMessage = useMemo(() => t('form.notification.success'), [i18n.language]);
+    const errorMessage = useMemo(() => t('form.notification.error'), [i18n.language]);
 
     const onSubmitForm = async (data: TypeFormContact, options: OptionOnSubmit<TypeFormContact> ) => {
         try {
@@ -95,7 +97,7 @@ const FormContact = () => {
             const responseData = await response.json();
             addToast({
                 variant: 'positive',
-                description: '😎 ' + t('form.notification.success'),
+                description: successMessage,
             }, {
                 timeout: 10000
             });
@@ -104,7 +106,7 @@ const FormContact = () => {
         } catch (err) {
             addToast({
                 variant: 'negative',
-                description: '😱 ' + t('form.notification.error'),
+                description: errorMessage
             }, {
                 timeout: 10000
             });
@@ -123,7 +125,7 @@ const FormContact = () => {
             <Form.LayoutField name='email' inputMode='email' label={t('form.field.email.label')} >
                 <Input placeholder={t('form.field.email.placeholder')} />
             </Form.LayoutField>
-            <Form.Select name='objective' label={t('form.field.objective.label')} placeholder={t('form.field.objective.placeholder')} items={contactSubjectItems}>
+            <Form.Select name='objective' label={t('form.field.objective.label')} placeholder={t('form.field.objective.placeholder')} items={contactSubjectItems} defaultSelectedKey={'1'}>
                 {(item) => {
                     return <Form.Item key={item.key} id={item.text} >
                         {t(`form.field.objective.options.${item.key}`)}
