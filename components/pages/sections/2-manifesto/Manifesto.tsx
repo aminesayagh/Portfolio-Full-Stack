@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useEffect } from 'react';
 import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 
@@ -10,41 +10,45 @@ const Manifesto = () => {
     const { t } = useTranslation();
     const phrase = t('manifesto.description');
     const refs = useRef<HTMLSpanElement[]>([]);
-    useLayoutEffect(() => {
+    const body = useRef<React.JSX.Element[]>([]);
+    useEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.fromTo(refs.current, {
+            gsap.set(refs.current, {
                 opacity: 0.4,
+            })
+            gsap.fromTo(refs.current, {
+                opacity: 0.2,
             }, {
-                opacity: 1,
+                opacity: 0.9,
                 ease: 'none',
-                stagger: 0.5,
+                stagger: 0.1,
+                skewX: 0.5,
                 scrollTrigger: {
                     trigger: '.manifesto_scroll_gsap',
                     scrub: true,
                     // toggleActions: 'play none none reverse',
-                    start: 'top',
-                    end: `+=110%`,
-                    // markers: true
+                    start: 'top 80%',
+                    end: 'bottom 50%',
+                    markers: true
                 }
-    
             })
         });
         return () => ctx.revert()
-    }, [])
-    const splitWords = () => {
-        let body: React.JSX.Element[] = [];
+    }, [body.current.length])
+
+    useEffect(() => {
+        if(body.current.length > 0) return;
         phrase.split(" ").forEach((word, index) => {
             const letters = splitLetters(word);
-            body.push(<p key={`word_${index}`} className='flex flex-row gap-0'>{letters}</p>)
+            body.current.push(<p key={`word_${index}`} className='flex flex-row gap-0'>{letters}</p>)
         })
-        return body;
-    }
+    }, [])
     const splitLetters = (word: string) => {
         let letters: React.JSX.Element[] = [];
         word.split("").forEach((letter, index) => {
             letters.push(<span ref={el => {refs.current.push(el as HTMLSpanElement)}} key={`letter_${index}`} >{letter}</span>)
         })
-        return letters;
+        return letters;;
     } 
     return (
         <div className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`)} >
@@ -61,11 +65,11 @@ const Manifesto = () => {
                         {t(`manifesto.subtitle_2`)}
                     </Title>
                 </div>
-                <Title h4 degree='2' weight='semibold' className='flex flex-row flex-wrap gap-x-[0.42rem]'>
+                <Title h4 degree='1' weight='semibold' className='flex flex-row flex-wrap gap-x-[0.42rem]'>
                     <strong className='text-white-200 pr-2'>
                         {t(`manifesto.slogan`)}
                     </strong>
-                    {splitWords()}
+                    {body.current.length > 0 && body.current}
                 </Title>
             </div>
             <div className={twMerge(
