@@ -182,7 +182,7 @@ const Intro = () => {
     const tl = useMemo(() => gsap.timeline({
         scrollTrigger: {
             trigger: '.intro_gsap',
-            toggleActions: 'play none restart none',
+            toggleActions: 'play play restart play',
             start: 'top 60%',
             // markers: true,
         }

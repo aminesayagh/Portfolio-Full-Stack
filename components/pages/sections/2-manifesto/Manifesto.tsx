@@ -1,35 +1,56 @@
-
+import { useLayoutEffect, useRef } from 'react';
 import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 
 import { Title, Text, Link } from '@/components/ui';
-
+import { gsap } from 'gsap-trial';
 
 
 const Manifesto = () => {
     const { t } = useTranslation();
     const phrase = t('manifesto.description');
-
+    const refs = useRef<HTMLSpanElement[]>([]);
+    useLayoutEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.fromTo(refs.current, {
+                opacity: 0.4,
+            }, {
+                opacity: 1,
+                ease: 'none',
+                stagger: 0.5,
+                scrollTrigger: {
+                    trigger: '.manifesto_scroll_gsap',
+                    scrub: true,
+                    // toggleActions: 'play none none reverse',
+                    start: 'top',
+                    end: `+=${window.innerHeight / 1.5}`,
+                    // markers: true
+                }
+    
+            })
+        });
+        return () => ctx.revert()
+    }, [])
     const splitWords = () => {
         let body: React.JSX.Element[] = [];
         phrase.split(" ").forEach((word, index) => {
             const letters = splitLetters(word);
             body.push(<p key={`word_${index}`} className='flex flex-row gap-0'>{letters}</p>)
-            body.push(<p key={`space_${index}`} className='flex flex-row gap-1'>&nbsp;</p>)
         })
         return body;
     }
     const splitLetters = (word: string) => {
         let letters: React.JSX.Element[] = [];
         word.split("").forEach((letter, index) => {
-            letters.push(<span key={`letter_${index}`} >{letter}</span>)
+            letters.push(<span ref={el => {refs.current.push(el as HTMLSpanElement)}} key={`letter_${index}`} >{letter}</span>)
         })
         return letters;
     } 
     return (
         <div className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`)} >
             <div className={twMerge('flex flex-col gap-7', 'items-start justify-start', 
-                'col-start-1 col-span-12 xs:col-start-2 xs:col-span-11 md:col-start-2 md:col-span-10 mdl:col-start-2 mdl:col-span-10 xl:col-start-2 xl:col-span-9'
+                'col-start-1 col-span-12 xs:col-start-2 xs:col-span-11 md:col-start-2 md:col-span-10 mdl:col-start-2 mdl:col-span-10 xl:col-start-2 xl:col-span-9',
+                'manifesto_scroll_gsap'
             )}>
                 <div className='flex flex-row gap-5 justify-center items-center'>
                     <Title h6 degree='4' weight='medium' >
@@ -40,7 +61,7 @@ const Manifesto = () => {
                         {t(`manifesto.subtitle_2`)}
                     </Title>
                 </div>
-                <Title h4 degree='2' weight='semibold' className='flex flex-row flex-wrap'>
+                <Title h4 degree='2' weight='semibold' className='flex flex-row flex-wrap gap-x-[0.42rem]'>
                     <strong className='text-white-200 pr-2'>
                         {t(`manifesto.slogan`)}
                     </strong>

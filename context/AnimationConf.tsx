@@ -14,6 +14,7 @@ import { ScrollProvider } from './ScrollContext';
 
 
 
+
 class ModalPlugin extends ScrollbarPlugin {
     static pluginName = 'modal';
     static defaultOptions = {
