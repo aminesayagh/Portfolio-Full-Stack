@@ -169,6 +169,17 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             ctx.revert();
         }
     }, []);
+    useEffect(() => {
+        const resize = () => {
+            if (!scrollbar.current) return;
+            scrollbar.current.update();
+            ScrollTrigger.refresh();
+        };
+        window.addEventListener('resize', resize);
+        return () => {
+            window.removeEventListener('resize', resize);
+        }
+    }, [])
 
     return <><div ref={el => {
         // @ts-ignore

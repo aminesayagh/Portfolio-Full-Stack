@@ -8,6 +8,24 @@ import { Title, Text, Link } from '@/components/ui';
 
 const Manifesto = () => {
     const { t } = useTranslation();
+    const phrase = t('manifesto.description');
+
+    const splitWords = () => {
+        let body: React.JSX.Element[] = [];
+        phrase.split(" ").forEach((word, index) => {
+            const letters = splitLetters(word);
+            body.push(<p key={`word_${index}`} className='flex flex-row gap-0'>{letters}</p>)
+            body.push(<p key={`space_${index}`} className='flex flex-row gap-1'>&nbsp;</p>)
+        })
+        return body;
+    }
+    const splitLetters = (word: string) => {
+        let letters: React.JSX.Element[] = [];
+        word.split("").forEach((letter, index) => {
+            letters.push(<span key={`letter_${index}`} >{letter}</span>)
+        })
+        return letters;
+    } 
     return (
         <div className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`)} >
             <div className={twMerge('flex flex-col gap-7', 'items-start justify-start', 
@@ -22,11 +40,11 @@ const Manifesto = () => {
                         {t(`manifesto.subtitle_2`)}
                     </Title>
                 </div>
-                <Title h4 degree='2' weight='semibold' >
+                <Title h4 degree='2' weight='semibold' className='flex flex-row flex-wrap'>
                     <strong className='text-white-200 pr-2'>
                         {t(`manifesto.slogan`)}
                     </strong>
-                    {t(`manifesto.description`)}
+                    {splitWords()}
                 </Title>
             </div>
             <div className={twMerge(
