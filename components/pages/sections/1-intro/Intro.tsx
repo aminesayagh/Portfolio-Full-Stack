@@ -1,13 +1,15 @@
 
 import { twMerge } from "tailwind-merge";
-
+import { useLayoutEffect, useMemo } from "react";
 import { Text, Button, Display, Icon, Link, Fit } from '@/components/ui';
 import { useTranslation } from "next-i18next";
+import gsap from 'gsap-trial';
 import { MENU_ITEMS } from "@/conf/router";
+
 
 const ButtonNext = () => {
     return <>
-        <Button className={twMerge('bg-white-200', 'rounded-full')}>
+        <Button className={twMerge('bg-white-200', 'rounded-full splitText_button_gsap')}>
             <div className='p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6'>
                 <Icon name='IconCornerLeftDown' className='stroke-black-200 stroke-1 w-8 h-8 xxs:w-6 xxs:h-6 xs:w-8 xs:h-8 xl:w-10 xl:h-10' />
             </div>
@@ -28,14 +30,55 @@ const FullStack = ({ className }: { className: string }) => {
                 'pb-2',
                 '-space-y-1 md:space-y-0 mdl:-space-y-1 lg:-space-y-[3%] xl:-space-y-[2.6%] 2xl:-space-y-[4.62%] 3xl:-space-y-2 4xl:space-y-0'
             )} >
-                <Display size='md' weight='semibold' className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider')}>{t('intro.title.2_1')}</Display>
-                <Display size='md' weight='semibold' className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider')}>{t('intro.title.2_2')}</Display>
+                <span className='overflow-hidden'>
+                    <Display size='md' weight='semibold' className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider', 'splitText_fullStack_gsap')}>{t('intro.title.2_1')}</Display>
+                </span>
+                <span className='overflow-hidden'>
+                    <Display size='md' weight='semibold' className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider', 'splitText_fullStack_gsap')}>{t('intro.title.2_2')}</Display>
+                </span>
             </div>
         </>
     )
 }
 const Title = () => {
     const { t } = useTranslation();
+    const tl = useMemo(() => gsap.timeline({
+        scrollTrigger: {
+            trigger: '.splitText_gsap',
+            toggleActions: 'play none restart none',
+            start: 'top 60%',
+            markers: true,
+        }
+    }), []);
+    useLayoutEffect(() => {
+        let ctx = gsap.context(() => {
+            tl.from('.splitText_gsap', {
+                yPercent: 120,
+                skewY: 6,
+                duration: 0.6,
+                ease: 'power4.out',
+                stagger: {
+                    amount: 0.4
+                }
+            }).from('.splitText_fullStack_gsap', {
+                yPercent: 120,
+                duration: 0.4,
+                ease: 'power4.out',
+            }, '<90%').from('.splitText_description_gsap', {
+                yPercent: 105,
+                duration: 0.7,
+                ease: 'power4.out',
+                stagger: {
+                    amount: 0.1
+                }
+            }, '<').from('.splitText_button_gsap', {
+                opacity: 0,
+                duration: 0.4,
+                ease: 'power4.out',
+            });
+        });
+        return () => ctx.revert();
+    }, [])
 
     return (<>
         {/* title 1  */}
@@ -47,9 +90,10 @@ const Title = () => {
             'xl:col-start-1 xl:col-span-6',
             '4xl:col-start-1 4xl:col-span-6',
             // row
-            'row-start-1 row-span-1'
+            'row-start-1 row-span-1',
+            'overflow-hidden',
         )} >
-            <Fit weight='bold' degree='1' className={twMerge(DISPLAY_1_CLASS_NAME)}>{t('intro.title.1')}</Fit>
+            <Fit weight='bold' degree='1' className={twMerge(DISPLAY_1_CLASS_NAME, 'splitText_gsap intro_scroll_gsap')}>{t('intro.title.1')}</Fit>
         </div>
         {/* description */}
         <div className={twMerge('flex flex-row xxs:flex-col justify-between items-start xs:hidden',
@@ -85,11 +129,11 @@ const Title = () => {
             "[&>*]:flex [&>*]:flex-row [&>*]:justify-end",
             "[&>*]:mdl:ml-2 [&>*]:lg:ml-0"
         )} >
-            <div>
-                <Text p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', '')} degree="2">{t('intro.descriptions.1')}</Text>
+            <div className={twMerge('overflow-hidden')}>
+                <Text p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'splitText_description_gsap')} degree="2">{t('intro.descriptions.1')}</Text>
             </div>
-            <div>
-                <Text p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full')} degree='2'>{t('intro.descriptions.2')}</Text>
+            <div className={twMerge('overflow-hidden')}>
+                <Text p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')} degree='2'>{t('intro.descriptions.2')}</Text>
             </div>
         </div>
         {/* button next */}
@@ -128,10 +172,10 @@ const Title = () => {
             'mdl:col-start-7 mdl:col-span-6', // xs
             'xl:col-start-7 xl:col-span-6', // xl
             'gap-2 sm:gap-1 md:gap-5 mdl:gap-8', // gap
-            'justify-end mdl:justify-center items-end mdl:items-center'
-            
+            'justify-end mdl:justify-center items-end mdl:items-center',
+            'overflow-hidden'
         )}>
-            <Fit weight='bold' degree='1' className={twMerge(DISPLAY_1_CLASS_NAME)}>{t('intro.title.3')}</Fit>
+            <Fit weight='bold' degree='1' className={twMerge(DISPLAY_1_CLASS_NAME, 'splitText_gsap')}>{t('intro.title.3')}</Fit>
         </div>
     </>)
 }

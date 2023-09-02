@@ -5,9 +5,8 @@ import { ContactPage } from '@/components/pages';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-gsap.registerPlugin(ScrollTrigger);
+import '@/components/InitGsap';
+
 
 const Contact = () => {
     return (

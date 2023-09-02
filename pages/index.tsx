@@ -8,10 +8,7 @@ import { Loading } from 'components/ui';
 import "@/utils/i18n";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-gsap.registerPlugin(ScrollTrigger);
+import '@/components/InitGsap';
 
 import AnimationConf from '@/context/AnimationConf';
 import ScrollContextProvider from '@/context/ScrollContext';

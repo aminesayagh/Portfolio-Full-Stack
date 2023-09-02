@@ -11,9 +11,7 @@ const AnimationGsap = ({ children }: { children: React.ReactNode }) => {
             })
         }, []);
         
-        return () => {
-            ctx.revert();
-        }
+        return () => ctx.revert();
     }, []);
     return (
         <div ref={ref}>
