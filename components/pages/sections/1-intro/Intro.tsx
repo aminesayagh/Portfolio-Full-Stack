@@ -42,46 +42,6 @@ const FullStack = ({ className }: { className: string }) => {
 }
 const Title = () => {
     const { t } = useTranslation();
-    const tl = useMemo(() => gsap.timeline({
-        scrollTrigger: {
-            trigger: '.splitText_gsap',
-            toggleActions: 'play none restart none',
-            start: 'top 60%',
-            markers: true,
-        }
-    }), []);
-    useLayoutEffect(() => {
-        let ctx = gsap.context(() => {
-            tl.from('.splitText_gsap', {
-                yPercent: 120,
-                skewY: 6,
-                duration: 0.6,
-                ease: 'power4.out',
-                stagger: {
-                    amount: 0.4
-                }
-            }).from('.splitText_fullStack_gsap', {
-                yPercent: 120,
-                duration: 0.6,
-                ease: 'power4.out',
-            }, '<90%').from('.splitText_description_gsap', {
-                yPercent: 105,
-                duration: 0.7,
-                ease: 'power4.out',
-                stagger: {
-                    amount: 0.1
-                }
-            }, '<').from('.next_button_gsap', {
-                opacity: 0,
-                duration: 0.4,
-                ease: 'power4.out',
-            }).from('.next_button_gsap', {
-                opacity: 0,
-                duration: 0.4,
-            });
-        });
-        return () => ctx.revert();
-    }, [])
 
     return (<>
         {/* title 1  */}
@@ -128,7 +88,7 @@ const Title = () => {
             'mdl:row-start-1 mdl:row-span-1', //mdl
             // children
             "[&>*]:w-full [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-5/12 [&>*]:mdl:w-5/12 [&>*]:xl:w-full [&>*]:4xl:w-4/12",
-            '[&>*>p]:max-w-[14rem]',
+            '[&>*>span]:max-w-[14rem]',
             "[&>*]:flex [&>*]:flex-row [&>*]:justify-end",
             "[&>*]:mdl:ml-2 [&>*]:lg:ml-0"
         )} >
@@ -204,20 +164,68 @@ const Menu = () => {
             {Array.apply(null, Array(4)).map((_, i) => {
                 if (i > 3) return null;
                 return <div key={i} className={twMerge('flex flex-col justify-start items-start gap-1 w-1/2 sm:w-auto md:w-1/4')} >
-                    <Text p weight='medium' size='sm' degree='3'>{`0${i + 1}`}</Text>
-                    <Link degree='1' size='sm' weight='semibold' href={menuItems[`${i + 1}` as MenuItems]} className='uppercase' >{t(`header.menu.${menuKeys[i]}.attribute`)}</Link>
+                    <Text p weight='medium' size='sm' degree='3' className='number_menu_gsap'>{`0${i + 1}`}</Text>
+                    <span className='overflow-hidden'>
+                        <Link degree='1' size='sm' weight='semibold' href={menuItems[`${i + 1}` as MenuItems]} className='uppercase item_menu_gsap' >{t(`header.menu.${menuKeys[i]}.attribute`)}</Link>
+                    </span>
                 </div>
             })}
         </div>
-        <Text p weight='medium' size='sm' degree='3' className={twMerge('w-max whitespace-nowrap-important', ' hidden xxs:flex sm:hidden md:flex')} >
+        <Text p weight='medium' size='sm' degree='3' className={twMerge('w-max whitespace-nowrap-important', ' hidden xxs:flex sm:hidden md:flex', 'item_menu_gsap')} >
             {t('intro.copy')}
         </Text>
     </>)
 }
 
 const Intro = () => {
+    
+    const tl = useMemo(() => gsap.timeline({
+        scrollTrigger: {
+            trigger: '.intro_gsap',
+            toggleActions: 'play none restart none',
+            start: 'top 60%',
+            // markers: true,
+        }
+    }), []);
+    
+    useLayoutEffect(() => {
+        let ctx = gsap.context(() => {
+            tl.from('.splitText_gsap', {
+                yPercent: 170,
+                skewY: 16,
+                duration: 0.6,
+                ease: 'power4.out',
+                stagger: {
+                    amount: 0.4
+                }
+            }).from('.splitText_fullStack_gsap', {
+                yPercent: 120,
+                duration: 0.6,
+                ease: 'power4.out',
+            }, '<90%').from('.splitText_description_gsap', {
+                yPercent: 105,
+                duration: 0.7,
+                ease: 'power4.out',
+                stagger: {
+                    amount: 0.1
+                }
+            }, '<').from('.next_button_gsap', {
+                opacity: 0,
+                duration: 0.4,
+                ease: 'power4.out',
+            }, '<').from('.number_menu_gsap', {
+                opacity: 0,
+                duration: 0.3,
+            }, '<').from('.item_menu_gsap', {
+                yPercent: 105,
+                duration: 0.4,
+                ease: 'power4.out',
+            }, '<60%');
+        });
+        return () => ctx.revert();
+    }, []);
     return (<>
-        <div className={twMerge('pt-28 sm:pt-36 mdl:pt-40', 'flex flex-col gap-20 xs:gap-32 xl:gap-40')} >
+        <div className={twMerge('pt-28 sm:pt-36 mdl:pt-40', 'flex flex-col gap-20 xs:gap-32 xl:gap-40 overflow-hidden', 'intro_gsap')} >
             <div className={twMerge(
                 'flex flex-row flex-wrap gap-y-8',
                 'grid grid-cols-12 grid-row-4 xxs:grid-row-3 mdl:grid-row-2',
