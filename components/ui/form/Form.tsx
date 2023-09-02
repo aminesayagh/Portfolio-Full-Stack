@@ -12,10 +12,11 @@ import { twMerge } from 'tailwind-merge';
 import Style from './Form.module.scss';
 import { mergeClassName } from '@/helpers/className';
 
-const Form = <T extends { [x: string]: any }>({ onSubmit, onError,children, className, ...props }: FormProps<T>) => {
+const Form = <T extends { [x: string]: any }>({ onSubmit, onError, children, className, ...props }: FormProps<T>) => {
     const methods = useForm<T>({ ...props, shouldFocusError: true });
+
     return <FormProvider<T> {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit, onError)} className={twMerge('grid grid-cols-12 gap-x-0 sm:gap-x-4 gap-y-4 sm:gap-y-3', className)}>
+        <form onSubmit={methods.handleSubmit((allData, event) => onSubmit(allData, { setError: methods.setError, reset: methods.reset }, event), onError)} className={twMerge('grid grid-cols-12 gap-x-0 sm:gap-x-4 gap-y-4 sm:gap-y-3', className)}>
             {typeof children === 'function' ? children(methods) : children}
         </form>
     </FormProvider>
@@ -46,18 +47,20 @@ const LayoutField = ({ label, className, icon, name, children, width, ...props }
         ...methods
     } = useFormContext();
     const { invalid, isDirty, isTouched, error } = getFieldState(name);
-    
+
     const childrenWithProps = React.isValidElement(children) ? React.cloneElement(children, {
         label,
         ...children.props,
         ...register(name),
-        className: twMerge(children.props.className, Style['input'], invalid ? Style['invalid'] : null),
+        className: twMerge(children.props.className, 'w-full', Style['input'], invalid ? Style['invalid'] : null),
     }) : children;
 
     return <>
-        <TextField className={twJoin(Style['text-field'], width ? width : 'col-span-12', className ? className : 'w-full')} {...props}>
-            <Label className={twJoin(Style['label'])} htmlFor={name} suppressHydrationWarning>{label}</Label>
-            {childrenWithProps}
+        <TextField className={twJoin(Style['text-field'], 'flex flex-col', width ? width : 'col-span-12', className ? className : 'w-full')} {...props}>
+            <div className='w-full flex flex-col gap-2'>
+                <Label className={twJoin(Style['label'])} htmlFor={name} suppressHydrationWarning>{label}</Label>
+                {childrenWithProps}
+            </div>
             <span slot='errorMessage'>
                 <ResizablePanel >
                     <NotificationError message={error?.message} />
@@ -80,7 +83,7 @@ const SelectUi = <T extends {}>({ label, name, children, ...props }: { label: st
                             <Label className={twJoin(Style['label'])} htmlFor={name}>{label}</Label>
                             <Button className={twMerge(Style['input'], invalid ? Style['invalid'] : null)}>
                                 <SelectValue />
-                                <span aria-hidden='true' >▼</span>
+                                <span aria-hidden='true' className='text-[10px] my-auto mx-3' >▼</span>
                             </Button>
                             <span slot='errorMessage'>
                                 <ResizablePanel >
@@ -100,7 +103,7 @@ const SelectUi = <T extends {}>({ label, name, children, ...props }: { label: st
     )
 }
 
-const ItemUi = ({className, ...props}: ItemProps) => {
+const ItemUi = ({ className, ...props }: ItemProps) => {
     return (
         <Item className={mergeClassName(Style['item'], className)} {...props} />
     )

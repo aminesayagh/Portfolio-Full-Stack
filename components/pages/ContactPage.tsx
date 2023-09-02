@@ -1,5 +1,5 @@
 import { Header, Footer } from '@/components/common';
-import { Container, Display, Title, Text, Form, Link } from '@/components/ui';
+import { Container, Display, Title, Text, Form, Link, OptionOnSubmit } from '@/components/ui';
 import { useState, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { useTranslation } from 'next-i18next';
@@ -83,7 +83,7 @@ const FormContact = () => {
         }).nonempty()
     });
 
-    const onSubmitForm = async (data: TypeFormContact) => {
+    const onSubmitForm = async (data: TypeFormContact, options: OptionOnSubmit<TypeFormContact> ) => {
         try {
             const response = await fetch('/api/contact', {
                 method: 'POST',
@@ -95,14 +95,21 @@ const FormContact = () => {
             const responseData = await response.json();
             addToast({
                 variant: 'positive',
-                description: '😎 Success sending message'
+                description: '😎 ' + t('form.notification.success'),
             }, {
-                timeout: 4000
-            })
+                timeout: 10000
+            });
+            options.reset();
 
         } catch (err) {
-            console.error(err);
-            throw new Error(err as string);
+            addToast({
+                variant: 'negative',
+                description: '😱 ' + t('form.notification.error'),
+            }, {
+                timeout: 10000
+            });
+
+            options.reset();
         }
     }
     return (
