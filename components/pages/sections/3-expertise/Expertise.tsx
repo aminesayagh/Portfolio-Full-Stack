@@ -88,6 +88,7 @@ const ExpertiseStages = () => {
         </>
     )
 }
+
 const Expertise = () => {
     const tl = useMemo(() => gsap.timeline({
         scrollTrigger: {
@@ -101,7 +102,7 @@ const Expertise = () => {
     }), [])
     useEffect(() => {
         tl.fromTo('.expetise-card-gsap', {
-            
+
         }, {
 
         })
