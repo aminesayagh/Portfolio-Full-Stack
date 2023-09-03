@@ -67,7 +67,7 @@ const Manifesto = () => {
             })
 
         }
-    }, [body.current.length])
+    }, [body.current])
     useEffect(() => {
         gsap.fromTo('.manifesto_description_gsap', {
             opacity: 0,
@@ -82,7 +82,7 @@ const Manifesto = () => {
                 scrub: true,
                 start: 'top 90%',
                 end: 'bottom 30%',
-                markers: true
+                markers: false
             }
         });
     }, [])
