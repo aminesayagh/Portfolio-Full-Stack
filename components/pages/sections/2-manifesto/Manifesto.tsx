@@ -5,29 +5,6 @@ import { twMerge } from 'tailwind-merge';
 import { Title, Text, Link } from '@/components/ui';
 import { gsap } from 'gsap-trial';
 
-// const TextList = ({ body }: { body: any[] }) => {
-//     useEffect(() => {
-//         let ctx = gsap.context(() => {
-//             gsap.fromTo('.letter_gsap', {
-//                 opacity: 0.2,
-//             }, {
-//                 opacity: 0.9,
-//                 ease: 'power',
-//                 stagger: 0.1,
-//                 skewX: 0.5,
-//                 scrollTrigger: {
-//                     trigger: '.manifesto_scroll_gsap',
-//                     scrub: true,
-//                     start: 'top 80%',
-//                     end: 'bottom 50%'
-//                 }
-//             });
-//         })
-//         return () => ctx.revert();
-//     }, []);
-//     if(!body?.current.length) return null;
-//     return body?.current;
-// }
 const Manifesto = () => {
     const { t } = useTranslation();
     const phrase = t('manifesto.description');
@@ -62,7 +39,8 @@ const Manifesto = () => {
                     trigger: '.manifesto_scroll_gsap',
                     scrub: true,
                     start: 'top 90%',
-                    end: 'bottom 30%',
+                    end: 'bottom 80%',
+                    markers: false
                 }
             })
 
@@ -80,9 +58,9 @@ const Manifesto = () => {
             scrollTrigger: {
                 trigger: '.manifesto_scroll_gsap',
                 scrub: true,
-                start: 'top 90%',
-                end: 'bottom 30%',
-                markers: false
+                start: 'top 40%',
+                end: 'bottom 80%',
+                markers: true
             }
         });
     }, [])
@@ -90,7 +68,6 @@ const Manifesto = () => {
         <div className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`, 'manifesto_scroll_gsap')} >
             <div className={twMerge('flex flex-col gap-7', 'items-start justify-start', 
                 'col-start-1 col-span-12 xs:col-start-2 xs:col-span-11 md:col-start-2 md:col-span-10 mdl:col-start-2 mdl:col-span-10 xl:col-start-2 xl:col-span-9',
-                
             )}>
                 <div className='flex flex-row gap-5 justify-center items-center'>
                     <Title h6 degree='4' weight='medium' >
@@ -105,7 +82,7 @@ const Manifesto = () => {
                     <strong className='text-white-200 pr-2'>
                         {t(`manifesto.slogan`)}
                     </strong>
-                    {body.current.length > 0 && body.current}
+                    {body.current.length > 0 ? body.current : null}
                 </Title>
             </div>
             <div className={twMerge(
