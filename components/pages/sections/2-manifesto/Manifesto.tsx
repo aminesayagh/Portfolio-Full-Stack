@@ -12,44 +12,44 @@ const Manifesto = () => {
     const refs = useRef<HTMLSpanElement[]>([]);
     const body = useRef<React.JSX.Element[]>([]);
     useEffect(() => {
+        gsap.set(refs.current, {
+            opacity: 0.4,
+        })
+        gsap.fromTo(refs.current, {
+            opacity: 0.2,
+        }, {
+            opacity: 0.9,
+            ease: 'none',
+            stagger: 0.1,
+            skewX: 0.5,
+            scrollTrigger: {
+                trigger: '.manifesto_scroll_gsap',
+                scrub: true,
+                // toggleActions: 'play none none reverse',
+                start: 'top 80%',
+                end: 'bottom 50%',
+                // markers: true
+            }
+        })
         const ctx = gsap.context(() => {
-            gsap.set(refs.current, {
-                opacity: 0.4,
-            })
-            gsap.fromTo(refs.current, {
-                opacity: 0.2,
-            }, {
-                opacity: 0.9,
-                ease: 'none',
-                stagger: 0.1,
-                skewX: 0.5,
-                scrollTrigger: {
-                    trigger: '.manifesto_scroll_gsap',
-                    scrub: true,
-                    // toggleActions: 'play none none reverse',
-                    start: 'top 80%',
-                    end: 'bottom 50%',
-                    // markers: true
-                }
-            })
-        });
+        }, refs.current);
         return () => ctx.revert()
-    }, [body.current.length])
+    }, [body.current])
 
     useEffect(() => {
+        const splitLetters = (word: string) => {
+            let letters: React.JSX.Element[] = [];
+            word.split("").map((letter, index) => {
+                letters.push(<span ref={el => {refs.current.push(el as HTMLSpanElement)}} key={`letter_${index}`} >{letter}</span>)
+            })
+            return letters;;
+        } 
         if(body.current.length > 0) return;
-        phrase.split(" ").forEach((word, index) => {
+        phrase.split(" ").map((word, index) => {
             const letters = splitLetters(word);
             body.current.push(<p key={`word_${index}`} className='flex flex-row gap-0'>{letters}</p>)
         })
     }, [])
-    const splitLetters = (word: string) => {
-        let letters: React.JSX.Element[] = [];
-        word.split("").forEach((letter, index) => {
-            letters.push(<span ref={el => {refs.current.push(el as HTMLSpanElement)}} key={`letter_${index}`} >{letter}</span>)
-        })
-        return letters;;
-    } 
     return (
         <div className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`)} >
             <div className={twMerge('flex flex-col gap-7', 'items-start justify-start', 
