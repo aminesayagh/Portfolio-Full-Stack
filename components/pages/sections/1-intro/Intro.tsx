@@ -193,14 +193,14 @@ const Intro = () => {
             tl.from('.splitText_gsap', {
                 yPercent: 170,
                 skewY: 16,
-                duration: 0.6,
+                duration: 0.8,
                 ease: 'power4.out',
                 stagger: {
                     amount: 0.4
                 }
             }).from('.splitText_fullStack_gsap', {
                 yPercent: 120,
-                duration: 0.6,
+                duration: 0.7,
                 ease: 'power4.out',
             }, '<90%').from('.splitText_description_gsap', {
                 yPercent: 105,
