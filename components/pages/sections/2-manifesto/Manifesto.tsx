@@ -48,7 +48,7 @@ const Manifesto = () => {
             body.current.push(<p key={`word_${index}`} className='flex flex-row gap-0 letter_gsap'>{letters}</p>)
         })
     }, []);
-
+    
     useEffect(() => {
         const tl = gsap.timeline({
             scrollTrigger: {

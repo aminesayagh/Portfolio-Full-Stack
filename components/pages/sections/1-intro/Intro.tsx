@@ -183,8 +183,7 @@ const Intro = () => {
         scrollTrigger: {
             trigger: '.intro_gsap',
             toggleActions: 'play play restart play',
-            start: 'top 60%',
-            // markers: true,
+            start: 'top 60%'
         }
     }), []);
     
