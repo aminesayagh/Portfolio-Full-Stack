@@ -113,8 +113,8 @@ const Manifesto = () => {
                     <style jsx>{`
                         .textLink {
                             text-wrap: inherit !important;
-                        }
-                    `}</style>
+                        }`}
+                    </style>
                 </div>
             </div>
         </div>
