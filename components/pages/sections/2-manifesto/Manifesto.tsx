@@ -50,23 +50,24 @@ const Manifesto = () => {
     }, []);
 
     useEffect(() => {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.manifesto_scroll_gsap',
+                scrub: true,
+                start: 'top 90%',
+                end: 'bottom 30%',
+                markers: true
+            }
+        })
         if(body.current.length > 0) {
-            gsap.fromTo('.letter_gsap', {
+            tl.fromTo('.letter_gsap', {
                 opacity: 0.2,
             }, {
                 opacity: 0.9,
                 ease: 'power4',
                 stagger: 0.1,
                 skewX: 0.5,
-                scrollTrigger: {
-                    trigger: '.manifesto_scroll_gsap',
-                    scrub: true,
-                    start: 'top 90%',
-                    end: 'bottom 65%',
-                    markers: true
-                }
-            });
-            gsap.fromTo('.manifesto_description_gsap', {
+            }).fromTo('.manifesto_description_gsap', {
                 opacity: 0,
                 y: 60,
             }, {
@@ -74,22 +75,16 @@ const Manifesto = () => {
                 y: 0,
                 ease: 'power4',
                 stagger: 0.5,
-                scrollTrigger: {
-                    trigger: '.manifesto_content_gsap',
-                    scrub: true,
-                    start: 'top 90%',
-                    end: 'bottom 50%',
-                }
             });
 
         }
     }, [body.current.length])
     
     return (
-        <div className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`)} >
+        <div className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`, 'manifesto_scroll_gsap')} >
             <div className={twMerge('flex flex-col gap-7', 'items-start justify-start', 
                 'col-start-1 col-span-12 xs:col-start-2 xs:col-span-11 md:col-start-2 md:col-span-10 mdl:col-start-2 mdl:col-span-10 xl:col-start-2 xl:col-span-9',
-                'manifesto_scroll_gsap'
+                
             )}>
                 <div className='flex flex-row gap-5 justify-center items-center'>
                     <Title h6 degree='4' weight='medium' >
@@ -111,7 +106,6 @@ const Manifesto = () => {
                 'flex flex-row gap-12 items-start justify-between', 
                 'mr-7 xl:mr-6 2xl:mr-0',
                 'col-start-1 col-span-12 xxs:col-start-2 xxs:col-span-11 xs:col-start-2 xs:col-span-10 sm:col-start-4 sm:col-span-9 md:col-start-5 md:col-span-7 lg:col-start-6 lg:col-span-6 xl:col-start-6 xl:col-span-5',
-                'manifesto_content_gsap'
             )}>
                 <div className={twMerge('flex flex-col gap-5')}>
                     <Text p degree='3' weight='medium' size='lg' className='manifesto_description_gsap' >
