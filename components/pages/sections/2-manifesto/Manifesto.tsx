@@ -50,7 +50,33 @@ const Manifesto = () => {
     }, []);
     
     useEffect(() => {
-        const tl = gsap.timeline({
+        if(body.current.length > 0) {
+            gsap.fromTo('.letter_gsap', {
+                opacity: 0.2,
+            }, {
+                opacity: 0.9,
+                ease: 'power4',
+                stagger: 0.1,
+                skewX: 0.5,
+                scrollTrigger: {
+                    trigger: '.manifesto_scroll_gsap',
+                    scrub: true,
+                    start: 'top 90%',
+                    end: 'bottom 30%',
+                }
+            })
+
+        }
+    }, [body.current.length])
+    useEffect(() => {
+        gsap.fromTo('.manifesto_description_gsap', {
+            opacity: 0,
+            y: 60,
+        }, {
+            opacity: 1,
+            y: 0,
+            ease: 'power4',
+            stagger: 0.5,
             scrollTrigger: {
                 trigger: '.manifesto_scroll_gsap',
                 scrub: true,
@@ -58,28 +84,8 @@ const Manifesto = () => {
                 end: 'bottom 30%',
                 markers: true
             }
-        })
-        if(body.current.length > 0) {
-            tl.fromTo('.letter_gsap', {
-                opacity: 0.2,
-            }, {
-                opacity: 0.9,
-                ease: 'power4',
-                stagger: 0.1,
-                skewX: 0.5,
-            }).fromTo('.manifesto_description_gsap', {
-                opacity: 0,
-                y: 60,
-            }, {
-                opacity: 1,
-                y: 0,
-                ease: 'power4',
-                stagger: 0.5,
-            });
-
-        }
-    }, [body.current.length])
-    
+        });
+    }, [])
     return (
         <div className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`, 'manifesto_scroll_gsap')} >
             <div className={twMerge('flex flex-col gap-7', 'items-start justify-start', 
