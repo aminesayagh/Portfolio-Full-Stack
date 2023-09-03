@@ -5,36 +5,57 @@ import { twMerge } from 'tailwind-merge';
 import { Title, Text, Link } from '@/components/ui';
 import { gsap } from 'gsap-trial';
 
-const ManifestoChild = ({ letters }: { letters: string[] }) => {}
+// const TextList = ({ body }: { body: any[] }) => {
+//     useEffect(() => {
+//         let ctx = gsap.context(() => {
+//             gsap.fromTo('.letter_gsap', {
+//                 opacity: 0.2,
+//             }, {
+//                 opacity: 0.9,
+//                 ease: 'power',
+//                 stagger: 0.1,
+//                 skewX: 0.5,
+//                 scrollTrigger: {
+//                     trigger: '.manifesto_scroll_gsap',
+//                     scrub: true,
+//                     start: 'top 80%',
+//                     end: 'bottom 50%'
+//                 }
+//             });
+//         })
+//         return () => ctx.revert();
+//     }, []);
+//     if(!body?.current.length) return null;
+//     return body?.current;
+// }
 const Manifesto = () => {
     const { t } = useTranslation();
     const phrase = t('manifesto.description');
     const refs = useRef<HTMLSpanElement[]>([]);
     const body = useRef<React.JSX.Element[]>([]);
-    const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
+        if(body.current.length > 0) return;
         const splitLetters = (word: string) => {
             let letters: React.JSX.Element[] = [];
-            word.split("").forEach((letter, index) => {
+            word.split("").map((letter, index) => {
                 letters.push(<span ref={el => {refs.current.push(el as HTMLSpanElement)}} key={`letter_${index}`} >{letter}</span>)
             })
             return letters;
         } 
-        phrase.split(" ").forEach((word, index) => {
+        phrase.split(" ").map((word, index) => {
             const letters = splitLetters(word);
             body.current.push(<p key={`word_${index}`} className='flex flex-row gap-0 letter_gsap'>{letters}</p>)
         })
-        setIsReady(true);
     }, []);
-    
+
     useEffect(() => {
-        let ctx = gsap.context(() => {
+        if(body.current.length > 0) {
             gsap.fromTo('.letter_gsap', {
                 opacity: 0.2,
             }, {
                 opacity: 0.9,
-                ease: 'none',
+                ease: 'power',
                 stagger: 0.1,
                 skewX: 0.5,
                 scrollTrigger: {
@@ -44,9 +65,8 @@ const Manifesto = () => {
                     end: 'bottom 50%'
                 }
             });
-        })
-        return () => ctx.revert();
-    }, [isReady]);
+        }
+    }, [])
     
     return (
         <div className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`)} >
@@ -67,7 +87,7 @@ const Manifesto = () => {
                     <strong className='text-white-200 pr-2'>
                         {t(`manifesto.slogan`)}
                     </strong>
-                    {body.current}
+                    {body.current.length > 0 && body.current}
                 </Title>
             </div>
             <div className={twMerge(
