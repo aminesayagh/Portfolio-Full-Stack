@@ -1,6 +1,8 @@
 
 import { useTranslation } from "next-i18next";
 import { twMerge } from "tailwind-merge";
+import { useEffect, useMemo } from 'react';
+import { gsap } from 'gsap-trial';
 
 import { Title, Text } from '@/components/ui';
 import { rounded } from "@/components/style";
@@ -39,7 +41,13 @@ const ExpertiseHead = () => {
 const BORDER_CARD_CLASS_NAME = 'rounded-xl border border-dashed border-black-500'
 const Card = ({ title, description, number }: { title: string, description: string, number: string }) => {
     return <>
-        <div className={twMerge('flex flex-col gap-8 sm:gap-12 lg:gap-16 justify-between items-baseline', 'p-5 sm:p-7 lg:p-5 xl:p-6', BORDER_CARD_CLASS_NAME, 'w-full h-full')}>
+        <div className={twMerge(
+            'flex flex-col gap-8 sm:gap-12 lg:gap-16 justify-between items-baseline',
+            'p-5 sm:p-7 lg:p-5 xl:p-6',
+            BORDER_CARD_CLASS_NAME,
+            'w-full h-full',
+            'expetise-card-gsap'
+        )}>
             <div className={twMerge('flex flex-row justify-between items-start', 'gap-4', 'w-full')}>
                 <Title h5 weight='bold' degree='2' className="max-w-[12rem]" exchange>{title}</Title>
                 <Text p weight='bold' degree='3' size="lg" exchange className='opacity-60'>{number}</Text>
@@ -53,7 +61,7 @@ const Card = ({ title, description, number }: { title: string, description: stri
 
 const EmptyCard = () => {
     return <>
-        <div className={twMerge('h-full w-full col-span-1 row-span-1', 'opacity-60', BORDER_CARD_CLASS_NAME)}>
+        <div className={twMerge('h-full w-full col-span-1 row-span-1', 'opacity-60', BORDER_CARD_CLASS_NAME, 'expetise-card-gsap')}>
             <span></span>
         </div>
     </>
@@ -61,14 +69,14 @@ const EmptyCard = () => {
 
 const ExpertiseStages = () => {
     const { t } = useTranslation();
-    const phrase = t('experience.phrase');
     return (
         <>
             <div className={twMerge(
                 'grid grid-cols-1 grid-rows-5 xs:grid-cols-2 xs:grid-rows-3 lg:grid-cols-4 lg:grid-rows-2',
                 'gap-6 xs:gap-3 sm:gap-5 lg:gap-3 xl:gap-4 2xl:gap-5 4xl:gap-6',
                 'relative -mb-[36vh] sm:-mb-[32vh] lg:-mb-[40vh] xl:-mb-[36vh] 3xl:-mb-[32vh]',
-                'w-full'
+                'w-full',
+                'expertise-scroll-gsap'
             )}>
                 {Array.apply('', Array(8)).map((_, i) => {
                     if (i >= 4) return <EmptyCard key={i} />
@@ -81,6 +89,23 @@ const ExpertiseStages = () => {
     )
 }
 const Expertise = () => {
+    const tl = useMemo(() => gsap.timeline({
+        scrollTrigger: {
+            trigger: '.expertise-scroll-gsap',
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 1,
+            pin: true,
+            pinSpacing: false,
+        }
+    }), [])
+    useEffect(() => {
+        tl.fromTo('.expetise-card-gsap', {
+            
+        }, {
+
+        })
+    }, [])
     return (
         <>
             <div className={twMerge('flex flex-col', 'gap-16 lg:gap-28 2xl:gap-44', 'justify-center items-center h-full', rounded({ size: 'xl' }), 'overflow-hidden')}>
