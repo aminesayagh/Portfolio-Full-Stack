@@ -61,7 +61,6 @@ const EmptyCard = () => {
 
 const ExpertiseStages = () => {
     const { t } = useTranslation();
-    const phrase = t('experience.phrase');
     return (
         <>
             <div className={twMerge(
