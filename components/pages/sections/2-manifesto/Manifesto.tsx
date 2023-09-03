@@ -10,7 +10,6 @@ const Manifesto = () => {
     const phrase = t('manifesto.description');
     const refs = useRef<HTMLSpanElement[]>([]);
     const body = useRef<React.JSX.Element[]>([]);
-
     useEffect(() => {
         if (body.current.length > 0) return;
         const splitLetters = (word: string) => {
@@ -24,47 +23,47 @@ const Manifesto = () => {
             const letters = splitLetters(word);
             body.current.push(<p key={`word_${index}`} className='flex flex-row gap-0 letter_gsap'>{letters}</p>)
         })
+        let ctx = gsap.context(() => {
+            setTimeout(() => {
+                gsap.fromTo('.letter_gsap', {
+                    opacity: 0.2,
+                }, {
+                    opacity: 0.9,
+                    ease: 'power4',
+                    stagger: 0.1,
+                    skewX: 0.5,
+                    scrollTrigger: {
+                        trigger: '.manifesto_scroll_gsap',
+                        scrub: true,
+                        start: 'top 90%',
+                        end: 'center 80%',
+                        markers: false
+                    }
+                })
+            }, 600);
+        })
+        return () => ctx.revert();
     }, []);
+
 
     useEffect(() => {
         let ctx = gsap.context(() => {
-            if (body.current.length == 0) return null;
-            gsap.fromTo('.letter_gsap', {
-                opacity: 0.2,
+            gsap.fromTo('.manifesto_description_gsap', {
+                opacity: 0,
+                y: 40,
             }, {
-                opacity: 0.9,
-                ease: 'power4',
-                stagger: 0.1,
-                skewX: 0.5,
+                opacity: 1,
+                y: 0,
+                ease: 'power3',
+                stagger: 0.5,
                 scrollTrigger: {
                     trigger: '.manifesto_scroll_gsap',
                     scrub: true,
-                    start: 'top 90%',
-                    end: 'bottom 80%',
+                    start: 'top 40%',
+                    end: 'bottom 60%',
                     markers: false
                 }
-            })
-        })
-        return () => ctx.revert();
-    }, [body.current])
-    useEffect(() => {
-        let ctx = gsap.context(() => {
-        gsap.fromTo('.manifesto_description_gsap', {
-            opacity: 0,
-            y: 50,
-        }, {
-            opacity: 1,
-            y: 0,
-            ease: 'power3',
-            stagger: 0.5,
-            scrollTrigger: {
-                trigger: '.manifesto_scroll_gsap',
-                scrub: true,
-                start: 'top 40%',
-                end: 'bottom 80%',
-                markers: false
-            }
-        });
+            });
         })
         return () => ctx.revert();
     }, [])
