@@ -1,14 +1,14 @@
 
 import { useTranslation } from "next-i18next";
 import { twMerge } from "tailwind-merge";
-import { useEffect, useMemo, useLayoutEffect } from 'react';
+import { useEffect, useMemo, useLayoutEffect, useCallback, useState } from 'react';
 import { gsap } from 'gsap-trial';
 
 import { Title, Text } from '@/components/ui';
 import { rounded } from "@/components/style";
 import { split } from "lodash";
 import { useHover } from "react-aria";
-import { useMedia } from "react-use";
+import { useMedia, useWindowSize } from "react-use";
 
 const Icon = () => {
     return (
@@ -47,8 +47,7 @@ const Card = ({ title, description, number }: { title: string, description: stri
         onHoverStart: (e) => {
             gsap.to(e.target, {
                 scale: 1.05,
-                // y: -15,
-                top: -15,
+                yPercent: -15,
                 rotate: 1.6,
                 duration: 0.3,
                 ease: 'power4.out',
@@ -58,7 +57,7 @@ const Card = ({ title, description, number }: { title: string, description: stri
         onHoverEnd: (e) => {
             gsap.to(e.target, {
                 scale: 1,
-                // y: 0,
+                yPercent: 0,
                 rotate: 0,
                 duration: 0.3,
                 ease: 'power4.out'
@@ -93,12 +92,40 @@ const EmptyCard = () => {
     </>
 }
 
-const ExpertiseStages = () => {
+const CardElement = ({ i }: { i: number }) => {
+    const [element, setElement] = useState<number>(0)
+    const [elementEmpty, setElementEmpty] = useState<number>(0)
     const { t } = useTranslation();
-    
-    let isLg = useMedia('(min-width: 1024px)');
-    let isXs = useMedia('(min-width: 475px)');
 
+    const isLg = useMedia('(min-width: 1024px)', true);
+    const isXs = useMedia('(min-width: 475px)', true);
+
+    useEffect(() => {
+        console.log('isLg', isLg);
+        console.log('isXs', isXs);
+        if(isLg) {
+            setElement(i + 1);
+            setElementEmpty(i + 1 - 4);
+        } else if(isXs) {
+            setElement((i % 2) + 1);
+            setElementEmpty((i % 2) + 1);
+        } else {
+            setElement(1);
+            setElementEmpty(1);
+        }
+    }, [element, elementEmpty, isLg, isXs]);
+
+    if (i >= 4) return <div key={i} className={`expertise-card-gsap-${elementEmpty}`}>
+            <EmptyCard  />
+        </div>
+    return (
+        <div className={`expertise-card-gsap-${element} relative`} key={i}>
+            <Card title={t(`experience.stages.${i + 1}.title`)} description={t(`experience.stages.${i + 1}.description`)} number={t(`experience.stages.${i + 1}.count`)} />
+        </div>
+    )
+}
+
+const ExpertiseStages = () => {
     return (
         <>
             <div className={twMerge(
@@ -111,25 +138,7 @@ const ExpertiseStages = () => {
                 'expertise-scroll-gsap'
             )}>
                 {Array.apply('', Array(8)).map((_, i) => {
-                    let element = i + 1;
-                    let elementEmpty = i + 1 - 4;
-                    if(isLg) {
-                    }else if(isXs) {
-                        // element can be 1 or 2, 3 will be 1, 4 will be 2, ...
-                        element = (i % 2) + 1;
-                        elementEmpty = (i % 2) + 1;
-                    } else {
-                        element = 1;
-                        elementEmpty = 1;
-                    }
-                    if (i >= 4) return <span className={`expertise-card-gsap-${elementEmpty}`}>
-                            <EmptyCard key={i / 4} />
-                        </span>
-                    return (
-                        <span className={`expertise-card-gsap-${element} relative`} key={i}>
-                            <Card title={t(`experience.stages.${i + 1}.title`)} description={t(`experience.stages.${i + 1}.description`)} number={t(`experience.stages.${i + 1}.count`)} />
-                        </span>
-                    )
+                    return <CardElement key={i} i={i} />
                 })}
             </div>
         </>
@@ -139,18 +148,16 @@ const ExpertiseStages = () => {
 const Expertise = () => {
     let isLg = useMedia('(min-width: 1024px)');
     let isXs = useMedia('(min-width: 475px)');
-    useLayoutEffect(() => {
+    useEffect(() => {
         let ctx = gsap.context(() => {
             let space = 25;
             let selectors = [];
+            selectors = ['.expertise-card-gsap-1', '.expertise-card-gsap-2', '.expertise-card-gsap-3', '.expertise-card-gsap-4'];
             if(isLg) {
-                selectors = [['.expertise-card-gsap-1', '.expertise-card-gsap-3'],['.expertise-card-gsap-2' , '.expertise-card-gsap-4']];
             } else if(isXs) {
                 space = 35;
-                selectors = ['.expertise-card-gsap-1', '.expertise-card-gsap-2'];
             } else {
-                space = 45;
-                selectors = ['.expertise-card-gsap-1'];
+                space = 40;
             }
             selectors.forEach((selector, i) => {
                 gsap.fromTo(selector, {
