@@ -144,7 +144,7 @@ const Expertise = () => {
             let space = 25;
             let selectors = [];
             if(isLg) {
-                selectors = ['.expertise-card-gsap-1', '.expertise-card-gsap-2', '.expertise-card-gsap-3', '.expertise-card-gsap-4'];
+                selectors = [['.expertise-card-gsap-1', '.expertise-card-gsap-3'],['.expertise-card-gsap-2' , '.expertise-card-gsap-4']];
             } else if(isXs) {
                 space = 35;
                 selectors = ['.expertise-card-gsap-1', '.expertise-card-gsap-2'];
