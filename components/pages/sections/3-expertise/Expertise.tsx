@@ -144,8 +144,8 @@ const ExpertiseStages = () => {
 }
 
 const Expertise = () => {
-    let isLg = useMedia('(min-width: 1024px)');
-    let isXs = useMedia('(min-width: 475px)');
+    let isLg = useMedia('(min-width: 1024px)', true);
+    let isXs = useMedia('(min-width: 475px)', true);
     useEffect(() => {
         let ctx = gsap.context(() => {
             let space = 25;
