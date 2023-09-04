@@ -178,7 +178,6 @@ const Menu = () => {
 }
 
 const Intro = () => {
-    
     const tl = useMemo(() => gsap.timeline({
         scrollTrigger: {
             trigger: '.intro_gsap',

@@ -1,7 +1,7 @@
 
 import { useTranslation } from "next-i18next";
 import { twMerge } from "tailwind-merge";
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useLayoutEffect } from 'react';
 import { gsap } from 'gsap-trial';
 
 import { Title, Text } from '@/components/ui';
@@ -24,7 +24,7 @@ const ExpertiseHead = () => {
                 <div className='block sm:hidden'>
                     <Icon />
                 </div>
-                <div className={twMerge('w-full xxs:w-9/12 sm:w-4/12 mdl:w-1/2')}>
+                <div className={twMerge('w-full xxs:w-9/12 sm:w-4/12 mdl:w-5/12')}>
                     <Title h2 weight='bold' degree='1' exchange className="capitalize">{t('experience.title')}</Title>
                 </div>
                 <div className={twMerge('w-11/12 xxs:w-10/12 sm:w-7/12 md:w-8/12 mdl:w-1/2 xl:w-5/12', 'flex flex-col gap-4 mdl:gap-5', 'sm:items-end')}>
@@ -46,7 +46,7 @@ const Card = ({ title, description, number }: { title: string, description: stri
             'p-5 sm:p-7 lg:p-5 xl:p-6',
             BORDER_CARD_CLASS_NAME,
             'w-full h-full',
-            'expetise-card-gsap'
+            
         )}>
             <div className={twMerge('flex flex-row justify-between items-start', 'gap-4', 'w-full')}>
                 <Title h5 weight='bold' degree='2' className="max-w-[12rem]" exchange>{title}</Title>
@@ -61,7 +61,7 @@ const Card = ({ title, description, number }: { title: string, description: stri
 
 const EmptyCard = () => {
     return <>
-        <div className={twMerge('h-full w-full col-span-1 row-span-1', 'opacity-60', BORDER_CARD_CLASS_NAME, 'expetise-card-gsap')}>
+        <div className={twMerge('h-full w-full col-span-1 row-span-1', 'opacity-60 relative', BORDER_CARD_CLASS_NAME)}>
             <span></span>
         </div>
     </>
@@ -79,9 +79,13 @@ const ExpertiseStages = () => {
                 'expertise-scroll-gsap'
             )}>
                 {Array.apply('', Array(8)).map((_, i) => {
-                    if (i >= 4) return <EmptyCard key={i} />
+                    if (i >= 4) return <span className={`expertise-card-gsap-${i + 1 - 4}`}>
+                            <EmptyCard key={i / 4} />
+                        </span>
                     return (
-                        <Card key={i} title={t(`experience.stages.${i + 1}.title`)} description={t(`experience.stages.${i + 1}.description`)} number={t(`experience.stages.${i + 1}.count`)} />
+                        <span className={`expertise-card-gsap-${i + 1} relative`} key={i}>
+                            <Card title={t(`experience.stages.${i + 1}.title`)} description={t(`experience.stages.${i + 1}.description`)} number={t(`experience.stages.${i + 1}.count`)} />
+                        </span>
                     )
                 })}
             </div>
@@ -90,26 +94,33 @@ const ExpertiseStages = () => {
 }
 
 const Expertise = () => {
-    const tl = useMemo(() => gsap.timeline({
-        scrollTrigger: {
-            trigger: '.expertise-scroll-gsap',
-            start: 'top top',
-            end: 'bottom bottom',
-            scrub: 1,
-            pin: true,
-            pinSpacing: false,
+    useLayoutEffect(() => {
+        let ctx = gsap.context(() => {
+            const space = 25;
+            const selectors = ['.expertise-card-gsap-1', '.expertise-card-gsap-2', '.expertise-card-gsap-3', '.expertise-card-gsap-4'];
+            selectors.forEach((selector, i) => {
+                gsap.fromTo(selector, {
+                    y: space * (i % 2 === 0 ? 1 : -1),
+                }, {
+                    y: -1 * space * (i % 2 === 0 ? 1 : -1),
+                    ease: 'power4.out',
+                    scrollTrigger: {
+                        trigger: selector,
+                        start: 'top bottom-=10%',
+                        end: 'bottom top-=20%',
+                        markers: false,
+                        scrub: true,
+                    },
+                })
+            });
+        });
+        return () => {
+            ctx.revert(); // clean up
         }
-    }), [])
-    useEffect(() => {
-        tl.fromTo('.expetise-card-gsap', {
-
-        }, {
-
-        })
-    }, [])
+    }, []);
     return (
         <>
-            <div className={twMerge('flex flex-col', 'gap-16 lg:gap-28 2xl:gap-44', 'justify-center items-center h-full', rounded({ size: 'xl' }), 'overflow-hidden')}>
+            <div className={twMerge('flex flex-col', 'gap-16 lg:gap-28 2xl:gap-44', 'justify-center items-center h-full', rounded({ size: 'xl' }), 'overflow-hidden', 'expertise-scroll-gsap')}>
                 <ExpertiseHead />
                 <ExpertiseStages />
                 <div className={twMerge('absolute w-full h-[26vh] bottom-0 left-0 z-999999999', 'bg-gradient-to-t from-black-100/25 via-black-100/10 to-black-100/0')}></div>

@@ -67,6 +67,7 @@ const Manifesto = () => {
         })
         return () => ctx.revert();
     }, [])
+
     return (
         <div className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`, 'manifesto_scroll_gsap')} >
             <div className={twMerge('flex flex-col gap-7', 'items-start justify-start',
