@@ -2,7 +2,7 @@
 import { useTranslation } from "next-i18next";
 import { twMerge } from "tailwind-merge";
 import { useEffect, useMemo, useLayoutEffect, useCallback, useState } from 'react';
-import { gsap } from 'gsap-trial';
+import { gsap } from 'gsap';
 
 import { Title, Text } from '@/components/ui';
 import { rounded } from "@/components/style";

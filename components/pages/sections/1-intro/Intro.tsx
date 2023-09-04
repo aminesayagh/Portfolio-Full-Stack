@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 import { useEffect, useLayoutEffect, useMemo } from "react";
 import { Text, Button, Display, Icon, Link, Fit } from '@/components/ui';
 import { useTranslation } from "next-i18next";
-import gsap from 'gsap-trial';
+import gsap from 'gsap';
 import { MENU_ITEMS } from "@/conf/router";
 
 
@@ -186,7 +186,7 @@ const Intro = () => {
         }
     }), []);
     
-    useEffect(() => {
+    useLayoutEffect(() => {
         let ctx = gsap.context(() => {
             tl.from('.splitText_gsap', {
                 yPercent: 170,

@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 
 import { Title, Text, Link } from '@/components/ui';
-import { gsap } from 'gsap-trial';
+import { gsap } from 'gsap';
 
 const Manifesto = () => {
     const { t } = useTranslation();
@@ -45,31 +45,33 @@ const Manifesto = () => {
         return () => ctx.revert();
     }, []);
 
-
-    useEffect(() => {
-        let ctx = gsap.context(() => {
-            gsap.fromTo('.manifesto_description_gsap', {
-                opacity: 0,
-                y: 40,
-            }, {
-                opacity: 1,
-                y: 0,
-                ease: 'power3',
-                stagger: 0.5,
-                scrollTrigger: {
-                    trigger: '.manifesto_scroll_gsap',
-                    scrub: true,
-                    start: 'top 40%',
-                    end: 'bottom 60%',
-                    markers: false
-                }
-            });
-        })
+    const refDescription = useRef<HTMLDivElement>(null);
+    useLayoutEffect(() => {
+        let ctx = gsap.context((self) => {
+            if(!self.selector) return;
+            console.log(self);
+            const descriptions = self?.selector('.manifesto_description_gsap');
+            descriptions.map((box: any) => {
+                gsap.from(box,  {
+                    opacity: 0,
+                    y: 80,
+                    ease: 'power3',
+                    stagger: 0.5,
+                    scrollTrigger: {
+                        trigger: box,
+                        start: 'bottom bottom',
+                        end: 'top 20%',
+                        scrub: true,
+                        markers: false
+                    }
+                });
+            })
+        }, refDescription)
         return () => ctx.revert();
     }, [])
 
     return (
-        <div className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`, 'manifesto_scroll_gsap')} >
+        <div className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`, 'manifesto_scroll_gsap')} ref={refDescription} >
             <div className={twMerge('flex flex-col gap-7', 'items-start justify-start',
                 'col-start-1 col-span-12 xs:col-start-2 xs:col-span-11 md:col-start-2 md:col-span-10 mdl:col-start-2 mdl:col-span-10 xl:col-start-2 xl:col-span-9',
             )}>

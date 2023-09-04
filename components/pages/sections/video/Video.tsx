@@ -1,5 +1,5 @@
 import { useRef, useLayoutEffect, useState, useEffect } from 'react'
-import { gsap } from 'gsap-trial';
+import { gsap } from 'gsap';
 import { twMerge } from 'tailwind-merge';
 
 import { rounded } from '@/components/style';

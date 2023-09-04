@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useContext, createContext, useMemo } from 
 import { useRouter } from 'next/router';
 
 import { Link as LinkUi } from '@/components/ui';
-import { gsap } from 'gsap-trial';
+import { gsap } from 'gsap';
 import Scrollbar from 'smooth-scrollbar';
 
 import { NavbarProps, NavbarType, BrandProps, ContentProps, ItemProps, LinkProps } from './Navbar.type';
