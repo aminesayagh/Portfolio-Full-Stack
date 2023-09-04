@@ -7,9 +7,6 @@ import Scrollbar, { ScrollbarPlugin } from 'smooth-scrollbar';
 import OverscrollPlugin from 'smooth-scrollbar/plugins/overscroll';
 import { useRouter } from 'next/router';
 
-// @ts-ignore
-import easing from 'easing-js';
-
 import { ScrollProvider } from './ScrollContext';
 
 
@@ -137,9 +134,9 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 easing,
                 callback: () => {
                     gsap.from('#scroller', {
-                        y: direction,
+                        y: direction * 200,
                         opacity: 0,
-                        duration: 0.6,
+                        duration: 1,
                         scrollTrigger: {
                             scroller: '#scroller',
                         }
