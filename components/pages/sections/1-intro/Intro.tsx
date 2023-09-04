@@ -1,9 +1,9 @@
 
 import { twMerge } from "tailwind-merge";
-import { useEffect, useLayoutEffect, useMemo } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { Text, Button, Display, Icon, Link, Fit } from '@/components/ui';
 import { useTranslation } from "next-i18next";
-import gsap from 'gsap-trial';
+import gsap from 'gsap';
 import { MENU_ITEMS } from "@/conf/router";
 
 
@@ -178,17 +178,14 @@ const Menu = () => {
 }
 
 const Intro = () => {
-    const tl = useMemo(() => gsap.timeline({
-        scrollTrigger: {
-            trigger: '.intro_gsap',
-            toggleActions: 'play play restart play',
-            start: 'top 60%'
-        }
-    }), []);
-    
-    useEffect(() => {
+    const introRef = useRef<HTMLDivElement>(null);
+    useLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            tl.from('.splitText_gsap', {
+            gsap.timeline({
+                trigger: '.intro_gsap',
+                toggleActions: 'play play restart play',
+                start: 'top 60%'
+            }).from('.splitText_gsap', {
                 yPercent: 170,
                 skewY: 16,
                 duration: 0.8,
@@ -219,11 +216,12 @@ const Intro = () => {
                 duration: 0.4,
                 ease: 'power4.out',
             }, '<60%');
+
         });
         return () => ctx.revert();
     }, []);
     return (<>
-        <div className={twMerge('pt-28 sm:pt-36 mdl:pt-40', 'flex flex-col gap-20 xs:gap-32 xl:gap-40 overflow-hidden', 'intro_gsap')} >
+        <div className={twMerge('pt-28 sm:pt-36 mdl:pt-40', 'flex flex-col gap-20 xs:gap-32 xl:gap-40 overflow-hidden')} ref={introRef}>
             <div className={twMerge(
                 'flex flex-row flex-wrap gap-y-8',
                 'grid grid-cols-12 grid-row-4 xxs:grid-row-3 mdl:grid-row-2',

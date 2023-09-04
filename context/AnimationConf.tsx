@@ -1,8 +1,8 @@
 import React, { createContext, useState, useEffect, useLayoutEffect, useRef, useContext } from 'react';
 
-import { gsap } from 'gsap-trial';
-import { ScrollToPlugin } from 'gsap-trial/dist/ScrollToPlugin';
-import { ScrollTrigger } from 'gsap-trial/dist/ScrollTrigger';
+import { gsap } from 'gsap';
+import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import Scrollbar, { ScrollbarPlugin } from 'smooth-scrollbar';
 import OverscrollPlugin from 'smooth-scrollbar/plugins/overscroll';
 import { useRouter } from 'next/router';

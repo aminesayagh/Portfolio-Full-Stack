@@ -1,5 +1,5 @@
 import { useRef, useLayoutEffect, useState, useEffect } from 'react'
-import { gsap } from 'gsap-trial';
+import { gsap } from 'gsap';
 import { twMerge } from 'tailwind-merge';
 
 import { rounded } from '@/components/style';
@@ -63,7 +63,7 @@ const Video = () => {
                 context?.clearRect(0, 0, ref.current.width, ref.current.height);
                 context?.drawImage(images[hands.frame], 0, 0);
             }
-        }, []);
+        });
         return () => ctx.revert();
     }, [ref.current]);
     

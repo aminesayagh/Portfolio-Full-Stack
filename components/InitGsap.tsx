@@ -1,7 +1,8 @@
-import gsap from 'gsap-trial';
+import { gsap } from 'gsap';
 
-import { ScrollTrigger } from 'gsap-trial/dist/ScrollTrigger';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 
