@@ -49,7 +49,6 @@ const Manifesto = () => {
     useLayoutEffect(() => {
         let ctx = gsap.context((self) => {
             if(!self.selector) return;
-            console.log(self);
             const descriptions = self?.selector('.manifesto_description_gsap');
             descriptions.map((box: any) => {
                 gsap.from(box,  {
@@ -88,7 +87,7 @@ const Manifesto = () => {
                     <strong className='text-white-200 pr-2'>
                         {t(`manifesto.slogan`)}
                     </strong>
-                    {body.current.length > 0 ? body.current : null}
+                    {body.current}
                 </Title>
             </div>
             <div className={twMerge(
