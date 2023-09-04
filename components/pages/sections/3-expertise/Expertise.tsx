@@ -1,7 +1,7 @@
 
 import { useTranslation } from "next-i18next";
 import { twMerge } from "tailwind-merge";
-import { useEffect, useMemo, useLayoutEffect, useCallback, useState } from 'react';
+import { useEffect, useMemo, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 
 import { Title, Text } from '@/components/ui';
@@ -42,12 +42,12 @@ const ExpertiseHead = () => {
 
 const BORDER_CARD_CLASS_NAME = 'rounded-xl border border-dashed border-black-500'
 const Card = ({ title, description, number }: { title: string, description: string, number: string }) => {
-    
+
     let { hoverProps, isHovered } = useHover({
         onHoverStart: (e) => {
             gsap.to(e.target, {
                 scale: 1.05,
-                yPercent: -15,
+                yPercent: -10,
                 rotate: 1.6,
                 duration: 0.3,
                 ease: 'power4.out',
@@ -63,9 +63,10 @@ const Card = ({ title, description, number }: { title: string, description: stri
                 ease: 'power4.out'
             })
         }
-    })
+    });
+
     return <>
-        <div  className={twMerge(
+        <div className={twMerge(
             'flex flex-col gap-8 sm:gap-12 lg:gap-16 justify-between items-baseline',
             'p-5 sm:p-7 lg:p-5 xl:p-6',
             'transition-colors duration-300 ease-in-out relative',
@@ -93,37 +94,50 @@ const EmptyCard = () => {
 }
 
 const CardElement = ({ i }: { i: number }) => {
-    const [element, setElement] = useState<number>(0)
-    const [elementEmpty, setElementEmpty] = useState<number>(0)
     const { t } = useTranslation();
+    let ref = useRef<HTMLDivElement>(null);
 
     const isLg = useMedia('(min-width: 1024px)', true);
     const isXs = useMedia('(min-width: 475px)', true);
 
-    useEffect(() => {
-        if(isLg) {
-            setElement(i + 1);
-            setElementEmpty(i + 1 - 4);
-        } else if(isXs) {
-            setElement((i % 2) + 1);
-            setElementEmpty((i % 2) + 1);
-        } else {
-            setElement(1);
-            setElementEmpty(1);
-        }
-    }, [element, elementEmpty, isLg, isXs]);
+    useLayoutEffect(() => {
+        let ctx = gsap.context(() => {
+            let space = 40;
+            if(isLg) {
+            } else if(isXs) {
+                space = 35;
+            } else {
+                space = 30;
+            }
+            gsap.fromTo(ref.current, {
+                y: space * (i % 2 === 0 ? 1 : -1),
+            }, {
+                y: -1 * space * (i % 2 === 0 ? 1 : -1),
+                ease: 'power4.out',
+                scrollTrigger: {
+                    trigger: '.container-expertise-gsap',
+                    start: 'top bottom-=20%',
+                    end: 'bottom top-=20%',
+                    scrub: true,
+                    // markers: true
+                }
+            });
+        });
+        return () => ctx.revert();
+    }, [ref.current])
 
-    if (i >= 4) return <div key={i} className={`expertise-card-gsap-${elementEmpty}`}>
-            <EmptyCard  />
-        </div>
+    if (i >= 4) return <div key={i} className={`expertise-card-gsap`} ref={ref}>
+        <EmptyCard />
+    </div>
     return (
-        <div className={`expertise-card-gsap-${element} relative`} key={i}>
+        <div className={`expertise-card-gsap relative`} key={i} ref={ref}>
             <Card title={t(`experience.stages.${i + 1}.title`)} description={t(`experience.stages.${i + 1}.description`)} number={t(`experience.stages.${i + 1}.count`)} />
         </div>
     )
 }
 
 const ExpertiseStages = () => {
+
     return (
         <>
             <div className={twMerge(
@@ -133,7 +147,6 @@ const ExpertiseStages = () => {
                 'gap-6 xs:gap-3 sm:gap-5 lg:gap-3 xl:gap-4 2xl:gap-5 4xl:gap-6',
                 'relative -mb-[42vh] sm:-mb-[34vh] lg:-mb-[40vh] xl:-mb-[36vh] 3xl:-mb-[32vh]',
                 'w-full relative z-[60]',
-                'expertise-scroll-gsap'
             )}>
                 {Array.apply('', Array(8)).map((_, i) => {
                     return <CardElement key={i} i={i} />
@@ -144,42 +157,9 @@ const ExpertiseStages = () => {
 }
 
 const Expertise = () => {
-    let isLg = useMedia('(min-width: 1024px)', true);
-    let isXs = useMedia('(min-width: 475px)', true);
-    useEffect(() => {
-        let ctx = gsap.context(() => {
-            let space = 25;
-            let selectors = [];
-            selectors = ['.expertise-card-gsap-1', '.expertise-card-gsap-2', '.expertise-card-gsap-3', '.expertise-card-gsap-4'];
-            if(isLg) {
-            } else if(isXs) {
-                space = 35;
-            } else {
-                space = 30;
-            }
-            selectors.forEach((selector, i) => {
-                gsap.fromTo(selector, {
-                    y: space * (i % 2 === 0 ? 1 : -1),
-                }, {
-                    y: -1 * space * (i % 2 === 0 ? 1 : -1),
-                    ease: 'power4.out',
-                    scrollTrigger: {
-                        trigger: selector,
-                        start: 'top bottom-=10%',
-                        end: 'bottom top-=20%',
-                        markers: false,
-                        scrub: true,
-                    },
-                })
-            });
-        });
-        return () => {
-            ctx.revert(); // clean up
-        }
-    }, [isLg, isXs]);
     return (
         <>
-            <div className={twMerge('flex flex-col', 'gap-16 lg:gap-28 2xl:gap-44', 'justify-center items-center h-full', rounded({ size: 'xl' }), 'overflow-hidden', 'expertise-scroll-gsap')}>
+            <div className={twMerge('flex flex-col', 'gap-16 lg:gap-28 2xl:gap-44', 'justify-center items-center h-full', rounded({ size: 'xl' }), 'overflow-hidden container-expertise-gsap')}>
                 <ExpertiseHead />
                 <ExpertiseStages />
                 <div className={twMerge('absolute w-full h-[26vh] bottom-0 left-0 z-999999999', 'bg-gradient-to-t from-black-100/25 via-black-100/10 to-black-100/0')}></div>

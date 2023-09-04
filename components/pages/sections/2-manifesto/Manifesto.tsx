@@ -7,12 +7,12 @@ import { gsap } from 'gsap';
 
 const Manifesto = () => {
     const { t } = useTranslation();
-    const phrase = t('manifesto.description');
     const refs = useRef<HTMLSpanElement[]>([]);
     const body = useRef<React.JSX.Element[]>([]);
     
     useEffect(() => {
         function generateText() {
+            const phrase = t('manifesto.description');
             const splitLetters = (word: string) => {
                 let letters: React.JSX.Element[] = [];
                 word.split("").map((letter, index) => {
@@ -42,16 +42,18 @@ const Manifesto = () => {
                 })
             }, 1000);
         }
+        console.log('generateText', body);
         if (body.current.length === 0) {
             generateText();
         }
-    }, [phrase]);
+    }, []);
     
     const refDescription = useRef<HTMLDivElement>(null);
     useLayoutEffect(() => {
         let ctx = gsap.context((self) => {
             if (!self.selector) return;
             const descriptions = self?.selector('.manifesto_description_gsap');
+            console.log('descriptions', descriptions);
             descriptions.map((box: any) => {
                 gsap.from(box, {
                     opacity: 0,
@@ -88,7 +90,7 @@ const Manifesto = () => {
                     <strong className='text-white-200 pr-2'>
                         {t(`manifesto.slogan`)}
                     </strong>
-                    {body.current}
+                    {body.current ? body.current.map((word, index) => word) : null}
                 </Title>
             </div>
             <div className={twMerge(
