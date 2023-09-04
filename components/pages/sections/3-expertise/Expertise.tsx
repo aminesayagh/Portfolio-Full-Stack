@@ -7,6 +7,8 @@ import { gsap } from 'gsap-trial';
 import { Title, Text } from '@/components/ui';
 import { rounded } from "@/components/style";
 import { split } from "lodash";
+import { useHover } from "react-aria";
+import { useMedia } from "react-use";
 
 const Icon = () => {
     return (
@@ -40,20 +42,44 @@ const ExpertiseHead = () => {
 
 const BORDER_CARD_CLASS_NAME = 'rounded-xl border border-dashed border-black-500'
 const Card = ({ title, description, number }: { title: string, description: string, number: string }) => {
+    
+    let { hoverProps, isHovered } = useHover({
+        onHoverStart: (e) => {
+            gsap.to(e.target, {
+                scale: 1.05,
+                // y: -15,
+                top: -15,
+                rotate: 1.6,
+                duration: 0.3,
+                ease: 'power4.out',
+                transformOrigin: 'bottom right'
+            })
+        },
+        onHoverEnd: (e) => {
+            gsap.to(e.target, {
+                scale: 1,
+                // y: 0,
+                rotate: 0,
+                duration: 0.3,
+                ease: 'power4.out'
+            })
+        }
+    })
     return <>
-        <div className={twMerge(
+        <div  className={twMerge(
             'flex flex-col gap-8 sm:gap-12 lg:gap-16 justify-between items-baseline',
             'p-5 sm:p-7 lg:p-5 xl:p-6',
+            'transition-colors duration-300 ease-in-out relative',
+            isHovered ? 'bg-black-200' : 'bg-transparent',
             BORDER_CARD_CLASS_NAME,
-            'w-full h-full',
-            
-        )}>
+            'w-full h-full'
+        )} {...hoverProps} >
             <div className={twMerge('flex flex-row justify-between items-start', 'gap-4', 'w-full')}>
-                <Title h5 weight='bold' degree='2' className="max-w-[12rem]" exchange>{title}</Title>
-                <Text p weight='bold' degree='3' size="lg" exchange className='opacity-60'>{number}</Text>
+                <Title h5 weight='bold' degree='2' className="max-w-[12rem] transition-all duration-100 delay-100" exchange={!isHovered} >{title}</Title>
+                <Text p weight='bold' degree='3' size="lg" exchange={!isHovered} className='opacity-60 duration-100 delay-100'>{number}</Text>
             </div>
             <div className="max-w-[18rem]">
-                <Text p weight='medium' degree='3' size="sm" exchange>{description}</Text>
+                <Text p weight='medium' degree='3' size="sm" exchange={!isHovered} className='duration-100 delay-100'>{description}</Text>
             </div>
         </div>
     </>
@@ -69,21 +95,38 @@ const EmptyCard = () => {
 
 const ExpertiseStages = () => {
     const { t } = useTranslation();
+    
+    let isLg = useMedia('(min-width: 1024px)');
+    let isXs = useMedia('(min-width: 475px)');
+
     return (
         <>
             <div className={twMerge(
-                'grid grid-cols-1 grid-rows-5 xs:grid-cols-2 xs:grid-rows-3 lg:grid-cols-4 lg:grid-rows-2',
+                'grid',
+                'grid-cols-1 xs:grid-cols-2 lg:grid-cols-4',
+                'grid-rows-5 xs:grid-rows-3 lg:grid-rows-2',
                 'gap-6 xs:gap-3 sm:gap-5 lg:gap-3 xl:gap-4 2xl:gap-5 4xl:gap-6',
                 'relative -mb-[36vh] sm:-mb-[32vh] lg:-mb-[40vh] xl:-mb-[36vh] 3xl:-mb-[32vh]',
-                'w-full',
+                'w-full relative z-[60]',
                 'expertise-scroll-gsap'
             )}>
                 {Array.apply('', Array(8)).map((_, i) => {
-                    if (i >= 4) return <span className={`expertise-card-gsap-${i + 1 - 4}`}>
+                    let element = i + 1;
+                    let elementEmpty = i + 1 - 4;
+                    if(isLg) {
+                    }else if(isXs) {
+                        // element can be 1 or 2, 3 will be 1, 4 will be 2, ...
+                        element = (i % 2) + 1;
+                        elementEmpty = (i % 2) + 1;
+                    } else {
+                        element = 1;
+                        elementEmpty = 1;
+                    }
+                    if (i >= 4) return <span className={`expertise-card-gsap-${elementEmpty}`}>
                             <EmptyCard key={i / 4} />
                         </span>
                     return (
-                        <span className={`expertise-card-gsap-${i + 1} relative`} key={i}>
+                        <span className={`expertise-card-gsap-${element} relative`} key={i}>
                             <Card title={t(`experience.stages.${i + 1}.title`)} description={t(`experience.stages.${i + 1}.description`)} number={t(`experience.stages.${i + 1}.count`)} />
                         </span>
                     )
@@ -94,10 +137,21 @@ const ExpertiseStages = () => {
 }
 
 const Expertise = () => {
+    let isLg = useMedia('(min-width: 1024px)');
+    let isXs = useMedia('(min-width: 475px)');
     useLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            const space = 25;
-            const selectors = ['.expertise-card-gsap-1', '.expertise-card-gsap-2', '.expertise-card-gsap-3', '.expertise-card-gsap-4'];
+            let space = 25;
+            let selectors = [];
+            if(isLg) {
+                selectors = ['.expertise-card-gsap-1', '.expertise-card-gsap-2', '.expertise-card-gsap-3', '.expertise-card-gsap-4'];
+            } else if(isXs) {
+                space = 35;
+                selectors = ['.expertise-card-gsap-1', '.expertise-card-gsap-2'];
+            } else {
+                space = 45;
+                selectors = ['.expertise-card-gsap-1'];
+            }
             selectors.forEach((selector, i) => {
                 gsap.fromTo(selector, {
                     y: space * (i % 2 === 0 ? 1 : -1),
@@ -117,7 +171,7 @@ const Expertise = () => {
         return () => {
             ctx.revert(); // clean up
         }
-    }, []);
+    }, [isLg, isXs]);
     return (
         <>
             <div className={twMerge('flex flex-col', 'gap-16 lg:gap-28 2xl:gap-44', 'justify-center items-center h-full', rounded({ size: 'xl' }), 'overflow-hidden', 'expertise-scroll-gsap')}>
