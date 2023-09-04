@@ -101,8 +101,6 @@ const CardElement = ({ i }: { i: number }) => {
     const isXs = useMedia('(min-width: 475px)', true);
 
     useEffect(() => {
-        console.log('isLg', isLg);
-        console.log('isXs', isXs);
         if(isLg) {
             setElement(i + 1);
             setElementEmpty(i + 1 - 4);
@@ -133,7 +131,7 @@ const ExpertiseStages = () => {
                 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-4',
                 'grid-rows-5 xs:grid-rows-3 lg:grid-rows-2',
                 'gap-6 xs:gap-3 sm:gap-5 lg:gap-3 xl:gap-4 2xl:gap-5 4xl:gap-6',
-                'relative -mb-[36vh] sm:-mb-[32vh] lg:-mb-[40vh] xl:-mb-[36vh] 3xl:-mb-[32vh]',
+                'relative -mb-[42vh] sm:-mb-[34vh] lg:-mb-[40vh] xl:-mb-[36vh] 3xl:-mb-[32vh]',
                 'w-full relative z-[60]',
                 'expertise-scroll-gsap'
             )}>
@@ -157,7 +155,7 @@ const Expertise = () => {
             } else if(isXs) {
                 space = 35;
             } else {
-                space = 40;
+                space = 30;
             }
             selectors.forEach((selector, i) => {
                 gsap.fromTo(selector, {

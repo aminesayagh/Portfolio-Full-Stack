@@ -46,7 +46,7 @@ const Manifesto = () => {
     }, []);
 
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         let ctx = gsap.context(() => {
             gsap.fromTo('.manifesto_description_gsap', {
                 opacity: 0,
