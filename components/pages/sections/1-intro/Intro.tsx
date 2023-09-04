@@ -1,6 +1,6 @@
 
 import { twMerge } from "tailwind-merge";
-import { useLayoutEffect, useMemo } from "react";
+import { useEffect, useLayoutEffect, useMemo } from "react";
 import { Text, Button, Display, Icon, Link, Fit } from '@/components/ui';
 import { useTranslation } from "next-i18next";
 import gsap from 'gsap-trial';
@@ -178,7 +178,6 @@ const Menu = () => {
 }
 
 const Intro = () => {
-    
     const tl = useMemo(() => gsap.timeline({
         scrollTrigger: {
             trigger: '.intro_gsap',
@@ -187,7 +186,7 @@ const Intro = () => {
         }
     }), []);
     
-    useLayoutEffect(() => {
+    useEffect(() => {
         let ctx = gsap.context(() => {
             tl.from('.splitText_gsap', {
                 yPercent: 170,

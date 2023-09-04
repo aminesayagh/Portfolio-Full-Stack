@@ -5,92 +5,73 @@ import { twMerge } from 'tailwind-merge';
 import { Title, Text, Link } from '@/components/ui';
 import { gsap } from 'gsap-trial';
 
-// const TextList = ({ body }: { body: any[] }) => {
-//     useEffect(() => {
-//         let ctx = gsap.context(() => {
-//             gsap.fromTo('.letter_gsap', {
-//                 opacity: 0.2,
-//             }, {
-//                 opacity: 0.9,
-//                 ease: 'power',
-//                 stagger: 0.1,
-//                 skewX: 0.5,
-//                 scrollTrigger: {
-//                     trigger: '.manifesto_scroll_gsap',
-//                     scrub: true,
-//                     start: 'top 80%',
-//                     end: 'bottom 50%'
-//                 }
-//             });
-//         })
-//         return () => ctx.revert();
-//     }, []);
-//     if(!body?.current.length) return null;
-//     return body?.current;
-// }
 const Manifesto = () => {
     const { t } = useTranslation();
     const phrase = t('manifesto.description');
     const refs = useRef<HTMLSpanElement[]>([]);
     const body = useRef<React.JSX.Element[]>([]);
-
     useEffect(() => {
-        if(body.current.length > 0) return;
+        if (body.current.length > 0) return;
         const splitLetters = (word: string) => {
             let letters: React.JSX.Element[] = [];
             word.split("").map((letter, index) => {
-                letters.push(<span ref={el => {refs.current.push(el as HTMLSpanElement)}} key={`letter_${index}`} >{letter}</span>)
+                letters.push(<span ref={el => { refs.current.push(el as HTMLSpanElement) }} key={`letter_${index}`} >{letter}</span>)
             })
             return letters;
-        } 
-        phrase.split(" ").map((word, index) => { 
+        }
+        phrase.split(" ").map((word, index) => {
             const letters = splitLetters(word);
             body.current.push(<p key={`word_${index}`} className='flex flex-row gap-0 letter_gsap'>{letters}</p>)
         })
+        let ctx = gsap.context(() => {
+            setTimeout(() => {
+                gsap.fromTo('.letter_gsap', {
+                    opacity: 0.2,
+                }, {
+                    opacity: 0.9,
+                    ease: 'power4',
+                    stagger: 0.1,
+                    skewX: 0.5,
+                    scrollTrigger: {
+                        trigger: '.manifesto_scroll_gsap',
+                        scrub: true,
+                        start: 'top 90%',
+                        end: 'center 80%',
+                        markers: false
+                    }
+                })
+            }, 600);
+        })
+        return () => ctx.revert();
     }, []);
-    
+
+
     useEffect(() => {
-        if(body.current.length > 0) {
-            gsap.fromTo('.letter_gsap', {
-                opacity: 0.2,
+        let ctx = gsap.context(() => {
+            gsap.fromTo('.manifesto_description_gsap', {
+                opacity: 0,
+                y: 40,
             }, {
-                opacity: 0.9,
-                ease: 'power4',
-                stagger: 0.1,
-                skewX: 0.5,
+                opacity: 1,
+                y: 0,
+                ease: 'power3',
+                stagger: 0.5,
                 scrollTrigger: {
                     trigger: '.manifesto_scroll_gsap',
                     scrub: true,
-                    start: 'top 90%',
-                    end: 'bottom 30%',
+                    start: 'top 40%',
+                    end: 'bottom 60%',
+                    markers: false
                 }
-            })
-
-        }
-    }, [body.current.length])
-    useEffect(() => {
-        gsap.fromTo('.manifesto_description_gsap', {
-            opacity: 0,
-            y: 60,
-        }, {
-            opacity: 1,
-            y: 0,
-            ease: 'power4',
-            stagger: 0.5,
-            scrollTrigger: {
-                trigger: '.manifesto_scroll_gsap',
-                scrub: true,
-                start: 'top 90%',
-                end: 'bottom 30%',
-                markers: true
-            }
-        });
+            });
+        })
+        return () => ctx.revert();
     }, [])
+
     return (
         <div className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`, 'manifesto_scroll_gsap')} >
-            <div className={twMerge('flex flex-col gap-7', 'items-start justify-start', 
+            <div className={twMerge('flex flex-col gap-7', 'items-start justify-start',
                 'col-start-1 col-span-12 xs:col-start-2 xs:col-span-11 md:col-start-2 md:col-span-10 mdl:col-start-2 mdl:col-span-10 xl:col-start-2 xl:col-span-9',
-                
             )}>
                 <div className='flex flex-row gap-5 justify-center items-center'>
                     <Title h6 degree='4' weight='medium' >
@@ -105,11 +86,11 @@ const Manifesto = () => {
                     <strong className='text-white-200 pr-2'>
                         {t(`manifesto.slogan`)}
                     </strong>
-                    {body.current.length > 0 && body.current}
+                    {body.current.length > 0 ? body.current : null}
                 </Title>
             </div>
             <div className={twMerge(
-                'flex flex-row gap-12 items-start justify-between', 
+                'flex flex-row gap-12 items-start justify-between',
                 'mr-7 xl:mr-6 2xl:mr-0',
                 'col-start-1 col-span-12 xxs:col-start-2 xxs:col-span-11 xs:col-start-2 xs:col-span-10 sm:col-start-4 sm:col-span-9 md:col-start-5 md:col-span-7 lg:col-start-6 lg:col-span-6 xl:col-start-6 xl:col-span-5',
             )}>
@@ -133,8 +114,8 @@ const Manifesto = () => {
                     <style jsx>{`
                         .textLink {
                             text-wrap: inherit !important;
-                        }
-                    `}</style>
+                        }`}
+                    </style>
                 </div>
             </div>
         </div>

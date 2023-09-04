@@ -7,9 +7,6 @@ import Scrollbar, { ScrollbarPlugin } from 'smooth-scrollbar';
 import OverscrollPlugin from 'smooth-scrollbar/plugins/overscroll';
 import { useRouter } from 'next/router';
 
-// @ts-ignore
-import easing from 'easing-js';
-
 import { ScrollProvider } from './ScrollContext';
 
 
@@ -62,27 +59,17 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             });
     
             bodyScrollBar.setPosition(0, 0);
-            bodyScrollBar.updatePluginOptions('overscroll', {
-                effect: 'glow',
-                damping: 0.2,
-                maxOverscroll: 150,
-                glowColor: '#ffffff',
-            });
             gsap.registerPlugin(ScrollToPlugin);
             ScrollTrigger.scrollerProxy(element, {
                 scrollTop(value) {
                     if (arguments.length) {
-                        if (bodyScrollBar.scrollTop !== value && typeof value === 'number') {
-                            bodyScrollBar.scrollTop = value;
-                        }
+                        bodyScrollBar.scrollTop = value as number;
                     }
                     return bodyScrollBar.scrollTop;
                 },
                 scrollLeft(value) {
                     if (arguments.length) {
-                        if (bodyScrollBar.scrollLeft !== value && typeof value === 'number') {
-                            bodyScrollBar.scrollLeft = value;
-                        }
+                        bodyScrollBar.scrollLeft = value as number;
                     }
                     return bodyScrollBar.scrollLeft;
                 },
@@ -95,13 +82,13 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                     };
                 },
                 pinType: element.style.transform ? 'transform' : 'fixed',
-                fixedMarkers: true
+                fixedMarkers: false
             });
             bodyScrollBar.addListener(ScrollTrigger.update);
             ScrollTrigger.defaults({ scroller: element });
     
             ScrollTrigger.create({
-                scroller: element,
+                scroller: element
             });
     
             bodyScrollBar.track.xAxis.element.remove();
@@ -140,15 +127,19 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             if (!id) return;
             const element = document.getElementById(id);
             if (!element) return;
-            const top = element.getBoundingClientRect().top - scrollbar.current.scrollTop;
+            const top = element.getBoundingClientRect().top + scrollbar.current.scrollTop;
+            const easing = gsap.parseEase('power4.out');
             const direction = top > 0 ? 1 : -1;
             scrollbar.current.scrollTo(0, top, 0, {
-                easing: easing.easeOutBack,
+                easing,
                 callback: () => {
                     gsap.from('#scroller', {
-                        y: direction * 240,
+                        y: direction * 200,
                         opacity: 0,
-                        duration: 0.6,
+                        duration: 1,
+                        scrollTrigger: {
+                            scroller: '#scroller',
+                        }
                     });
                 }
             });
