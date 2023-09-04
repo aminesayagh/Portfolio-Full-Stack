@@ -10,20 +10,20 @@ const Manifesto = () => {
     const phrase = t('manifesto.description');
     const refs = useRef<HTMLSpanElement[]>([]);
     const body = useRef<React.JSX.Element[]>([]);
+    
     useEffect(() => {
-        if (body.current.length > 0) return;
-        const splitLetters = (word: string) => {
-            let letters: React.JSX.Element[] = [];
-            word.split("").map((letter, index) => {
-                letters.push(<span ref={el => { refs.current.push(el as HTMLSpanElement) }} key={`letter_${index}`} >{letter}</span>)
+        function generateText() {
+            const splitLetters = (word: string) => {
+                let letters: React.JSX.Element[] = [];
+                word.split("").map((letter, index) => {
+                    letters.push(<span ref={el => { refs.current.push(el as HTMLSpanElement) }} key={`letter_${index}`} >{letter}</span>)
+                })
+                return letters;
+            }
+            phrase.split(" ").map((word, index) => {
+                const letters = splitLetters(word);
+                body.current.push(<p key={`word_${index}`} className='flex flex-row gap-0 letter_gsap'>{letters}</p>)
             })
-            return letters;
-        }
-        phrase.split(" ").map((word, index) => {
-            const letters = splitLetters(word);
-            body.current.push(<p key={`word_${index}`} className='flex flex-row gap-0 letter_gsap'>{letters}</p>)
-        })
-        let ctx = gsap.context(() => {
             setTimeout(() => {
                 gsap.fromTo('.letter_gsap', {
                     opacity: 0.2,
@@ -40,18 +40,20 @@ const Manifesto = () => {
                         markers: false
                     }
                 })
-            }, 600);
-        })
-        return () => ctx.revert();
-    }, []);
-
+            }, 1000);
+        }
+        if (body.current.length === 0) {
+            generateText();
+        }
+    }, [phrase]);
+    
     const refDescription = useRef<HTMLDivElement>(null);
     useLayoutEffect(() => {
         let ctx = gsap.context((self) => {
-            if(!self.selector) return;
+            if (!self.selector) return;
             const descriptions = self?.selector('.manifesto_description_gsap');
             descriptions.map((box: any) => {
-                gsap.from(box,  {
+                gsap.from(box, {
                     opacity: 0,
                     y: 80,
                     ease: 'power3',
@@ -67,8 +69,7 @@ const Manifesto = () => {
             })
         }, refDescription)
         return () => ctx.revert();
-    }, [])
-
+    }, []);
     return (
         <div className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`, 'manifesto_scroll_gsap')} ref={refDescription} >
             <div className={twMerge('flex flex-col gap-7', 'items-start justify-start',

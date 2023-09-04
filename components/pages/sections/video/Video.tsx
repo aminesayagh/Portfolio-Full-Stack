@@ -63,7 +63,7 @@ const Video = () => {
                 context?.clearRect(0, 0, ref.current.width, ref.current.height);
                 context?.drawImage(images[hands.frame], 0, 0);
             }
-        }, []);
+        });
         return () => ctx.revert();
     }, [ref.current]);
     
