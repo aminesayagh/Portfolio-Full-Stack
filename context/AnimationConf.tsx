@@ -82,7 +82,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                     };
                 },
                 pinType: element.style.transform ? 'transform' : 'fixed',
-                fixedMarkers: true
+                fixedMarkers: false
             });
             bodyScrollBar.addListener(ScrollTrigger.update);
             ScrollTrigger.defaults({ scroller: element });
