@@ -4,13 +4,14 @@ import { twMerge } from 'tailwind-merge';
 
 import { Title, Text, Link } from '@/components/ui';
 import { gsap } from 'gsap';
+import { useIsomorphicEffect} from '@/hook';
 
 const Manifesto = () => {
     const { t } = useTranslation();
     const refs = useRef<HTMLSpanElement[]>([]);
     const body = useRef<React.JSX.Element[]>([]);
     
-    useEffect(() => {
+    useIsomorphicEffect(() => {
         function generateText() {
             const phrase = t('manifesto.description');
             const splitLetters = (word: string) => {
@@ -49,7 +50,7 @@ const Manifesto = () => {
     }, []);
     
     const refDescription = useRef<HTMLDivElement>(null);
-    useLayoutEffect(() => {
+    useIsomorphicEffect(() => {
         let ctx = gsap.context((self) => {
             if (!self.selector) return;
             const descriptions = self?.selector('.manifesto_description_gsap');
