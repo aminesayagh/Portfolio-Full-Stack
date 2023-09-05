@@ -5,7 +5,6 @@ import { Title, Text, Image } from '@/components/ui';
 import { useTranslation } from 'next-i18next';
 import { getProjectsByCategory } from '@/conf/projects';
 import { rounded, blurCard } from '@/components/style';
-import { useIsomorphicEffect } from '@/hook';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 const blurButton = twMerge('backdrop-blur-xl', 'border border-white-100/20 bg-white-100/[0.05]')

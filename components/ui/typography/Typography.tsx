@@ -4,21 +4,34 @@ import { twMerge } from 'tailwind-merge';
 import { textColorDegree, displayStyle, textStyle, titleStyle } from './Typography.style'
 import { DisplayPropsExtended } from './Typography.type';
 import Style from './Typography.module.scss';
-
-import { ReactFitty } from 'react-fitty';
 import { ReactFitProps } from './Typography.type';
 
+import { ReactFitty } from 'react-fitty';
+
+
 export const Fit = ({ children, className, exchange, weight, ...props }: ReactFitProps) => {
-    // const ref = useRef<HTMLDivElement>(null);
-    // const refSpan = useRef<HTMLDivElement>(null);
-    // useFLexFont(ref, refSpan);
+    const [isClient, setIsClient] = useState(false);
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+    if(isClient === false) {
+        return <div className={twMerge(
+            displayStyle({
+                weight
+            }),
+            'leading-none',
+            textColorDegree[exchange ? 'exchanged' : 'normal']['1'],
+            className)} {...props}>
+            {children}
+        </div>
+    }
     return <ReactFitty className={twMerge(
         displayStyle({
             weight
         }),
         'leading-none',
         textColorDegree[exchange ? 'exchanged' : 'normal']['1'],
-        className)}>
+        className)} {...props}>
         {children}
     </ReactFitty>
 
