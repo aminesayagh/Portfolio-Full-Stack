@@ -42,7 +42,7 @@ const Cases = () => {
                     scrub: true,
                     pin: containerRef.current as any,
                     anticipatePin: 1,
-                    markers: true,
+                    markers: false,
                 }
             });
             tl.to('.image_gsap_0', { yPercent: 100 })
