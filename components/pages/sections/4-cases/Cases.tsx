@@ -16,7 +16,7 @@ const Cases = () => {
     const projects = useMemo(() => getProjectsByCategory('best'), []);
     const containerRef = useRef<HTMLDivElement>(null);
     useIsomorphicLayoutEffect(() => {
-        let ctx = gsap.context((self) => {
+        let ctx = gsap.context(() => {
             gsap.utils.toArray('.image_gsap').forEach((box) => {
                 gsap.fromTo(box as any, {
                     backgroundSize: '100%',
@@ -42,7 +42,7 @@ const Cases = () => {
                     scrub: true,
                     pin: containerRef.current as any,
                     anticipatePin: 1,
-                    markers: false,
+                    markers: true,
                 }
             });
             tl.to('.image_gsap_0', { yPercent: 100 })
