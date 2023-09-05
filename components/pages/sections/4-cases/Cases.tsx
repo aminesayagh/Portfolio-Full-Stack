@@ -40,7 +40,7 @@ const Cases = () => {
                     start: 'top top',
                     end: '+=4000',
                     scrub: true,
-                    pin: true,
+                    pin: containerRef.current as any,
                     anticipatePin: 1,
                     markers: true,
                 }
