@@ -20,6 +20,7 @@ export const Fit = ({ children, className, exchange, weight, ...props }: ReactFi
                 weight
             }),
             'leading-none',
+            Style['fit'],
             textColorDegree[exchange ? 'exchanged' : 'normal']['1'],
             className)} {...props}>
             {children}
@@ -30,6 +31,7 @@ export const Fit = ({ children, className, exchange, weight, ...props }: ReactFi
             weight
         }),
         'leading-none',
+        Style['fit'],
         textColorDegree[exchange ? 'exchanged' : 'normal']['1'],
         className)} {...props}>
         {children}

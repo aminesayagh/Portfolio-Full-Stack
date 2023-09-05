@@ -42,6 +42,9 @@ $h6: 1rem;
   @apply align-middle hyphens-manual;
   text-wrap: balance;
 }
+.fit{
+  @apply default-text;
+}
 .title {
   @apply default-text;
   --degree-line-height: 1.6;
