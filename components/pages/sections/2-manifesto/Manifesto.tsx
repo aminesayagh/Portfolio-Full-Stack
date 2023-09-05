@@ -4,51 +4,49 @@ import { twMerge } from 'tailwind-merge';
 
 import { Title, Text, Link } from '@/components/ui';
 import { gsap } from 'gsap';
-import { useIsomorphicEffect} from '@/hook';
-
+import { useIsomorphicEffect } from '@/hook';
+import _ from 'lodash';
 const Manifesto = () => {
     const { t } = useTranslation();
     const refs = useRef<HTMLSpanElement[]>([]);
     const body = useRef<React.JSX.Element[]>([]);
-    
+    useEffect(() => {
+        const phrase = t('manifesto.description');
+
+        const splitLetters = (word: string) => {
+            return _.map(word.split(''), (letter, index) => (
+                <span ref={el => { refs.current.push(el as HTMLSpanElement) }} key={`letter_${index}`} >{letter}</span>
+            ));
+        };
+
+        const elements = _.map(phrase.split(' '), (word, index) => {
+            const letters = splitLetters(word);
+            return <p key={`word_${index}`} className='flex flex-row gap-0 letter_gsap'>{letters}</p>;
+        });
+
+        body.current = elements;
+    }, [])
     useIsomorphicEffect(() => {
-        function generateText() {
-            const phrase = t('manifesto.description');
-            const splitLetters = (word: string) => {
-                let letters: React.JSX.Element[] = [];
-                word.split("").map((letter, index) => {
-                    letters.push(<span ref={el => { refs.current.push(el as HTMLSpanElement) }} key={`letter_${index}`} >{letter}</span>)
-                })
-                return letters;
-            }
-            phrase.split(" ").map((word, index) => {
-                const letters = splitLetters(word);
-                body.current.push(<p key={`word_${index}`} className='flex flex-row gap-0 letter_gsap'>{letters}</p>)
+        let ctx = gsap.context((self) => {
+            gsap.fromTo('.letter_gsap', {
+                opacity: 0.1,
+            }, {
+                opacity: 0.9,
+                ease: 'power4',
+                stagger: 0.1,
+                skewX: 0.3,
+                scrollTrigger: {
+                    trigger: '.manifesto_scroll_gsap',
+                    scrub: true,
+                    start: 'top 90%',
+                    end: 'center 70%',
+                    markers: false
+                }
             })
-            setTimeout(() => {
-                gsap.fromTo('.letter_gsap', {
-                    opacity: 0.2,
-                }, {
-                    opacity: 0.9,
-                    ease: 'power4',
-                    stagger: 0.1,
-                    skewX: 0.5,
-                    scrollTrigger: {
-                        trigger: '.manifesto_scroll_gsap',
-                        scrub: true,
-                        start: 'top 90%',
-                        end: 'center 80%',
-                        markers: false
-                    }
-                })
-            }, 1000);
-        }
-        console.log('generateText', body);
-        if (body.current.length === 0) {
-            generateText();
-        }
-    }, []);
-    
+        });
+        return () => ctx.revert();
+    }, [body.current]);
+
     const refDescription = useRef<HTMLDivElement>(null);
     useIsomorphicEffect(() => {
         let ctx = gsap.context((self) => {
@@ -58,13 +56,13 @@ const Manifesto = () => {
             descriptions.map((box: any) => {
                 gsap.from(box, {
                     opacity: 0,
-                    y: 80,
-                    ease: 'power3',
+                    y: 40,
+                    ease: 'power1',
                     stagger: 0.5,
                     scrollTrigger: {
                         trigger: box,
                         start: 'bottom bottom',
-                        end: 'top 20%',
+                        end: 'top 40%',
                         scrub: true,
                         markers: false
                     }
@@ -72,7 +70,7 @@ const Manifesto = () => {
             })
         }, refDescription)
         return () => ctx.revert();
-    }, []);
+    }, [refDescription.current]);
     return (
         <div className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`, 'manifesto_scroll_gsap')} ref={refDescription} >
             <div className={twMerge('flex flex-col gap-7', 'items-start justify-start',
