@@ -52,7 +52,6 @@ const Manifesto = () => {
         let ctx = gsap.context((self) => {
             if (!self.selector) return;
             const descriptions = self?.selector('.manifesto_description_gsap');
-            console.log('descriptions', descriptions);
             descriptions.map((box: any) => {
                 gsap.from(box, {
                     opacity: 0,
@@ -62,9 +61,9 @@ const Manifesto = () => {
                     scrollTrigger: {
                         trigger: box,
                         start: 'bottom bottom',
-                        end: 'top 40%',
+                        end: 'top 60%',
                         scrub: true,
-                        markers: false
+                        markers: false,
                     }
                 });
             })

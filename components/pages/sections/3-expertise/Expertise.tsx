@@ -119,8 +119,7 @@ const CardElement = ({ i }: { i: number }) => {
                     trigger: '.container-expertise-gsap',
                     start: 'top bottom-=20%',
                     end: 'bottom top-=20%',
-                    scrub: true,
-                    // markers: true
+                    scrub: true
                 }
             });
         });
