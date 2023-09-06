@@ -1,17 +1,19 @@
-import { useLayoutEffect, useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 
 import { Title, Text, Link } from '@/components/ui';
 import { gsap } from 'gsap';
-import { useIsomorphicEffect } from '@/hook';
+import { useIsomorphicLayoutEffect } from 'react-use';
+
 import _ from 'lodash';
+
 const Manifesto = () => {
     const { t } = useTranslation();
     const refs = useRef<HTMLSpanElement[]>([]);
     const body = useRef<React.JSX.Element[]>([]);
+    const phrase = t('manifesto.description');
     useEffect(() => {
-        const phrase = t('manifesto.description');
 
         const splitLetters = (word: string) => {
             return _.map(word.split(''), (letter, index) => (
@@ -25,8 +27,8 @@ const Manifesto = () => {
         });
 
         body.current = elements;
-    }, [])
-    useIsomorphicEffect(() => {
+    }, [phrase])
+    useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context((self) => {
             gsap.fromTo('.letter_gsap', {
                 opacity: 0.1,
@@ -48,7 +50,7 @@ const Manifesto = () => {
     }, [body.current]);
 
     const refDescription = useRef<HTMLDivElement>(null);
-    useIsomorphicEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context((self) => {
             if (!self.selector) return;
             const descriptions = self?.selector('.manifesto_description_gsap');

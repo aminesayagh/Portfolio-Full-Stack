@@ -3,7 +3,8 @@ import { useRouter } from 'next/router';
 
 import { Link as LinkUi } from '@/components/ui';
 import { gsap } from 'gsap';
-import { useIsomorphicEffect } from '@/hook';
+import { useIsomorphicLayoutEffect } from 'react-use';
+
 
 import { NavbarProps, NavbarType, BrandProps, ContentProps, ItemProps, LinkProps } from './Navbar.type';
 import { twMerge } from 'tailwind-merge';
@@ -21,7 +22,7 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
 
     const [active, setActive] = useState(false);
 
-    useIsomorphicEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
             scrollbar && scrollbar.addListener((status) => {
                 if (status.offset.y < 150) {
