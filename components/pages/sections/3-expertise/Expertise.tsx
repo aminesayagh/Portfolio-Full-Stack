@@ -3,6 +3,8 @@ import { useTranslation } from "next-i18next";
 import { twMerge } from "tailwind-merge";
 import { useEffect, useMemo, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { useIsomorphicLayoutEffect } from 'react-use';
+
 
 import { Title, Text } from '@/components/ui';
 import { rounded } from "@/components/style";
@@ -100,7 +102,7 @@ const CardElement = ({ i }: { i: number }) => {
     const isLg = useMedia('(min-width: 1024px)', true);
     const isXs = useMedia('(min-width: 475px)', true);
 
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
             let space = 40;
             if(isLg) {
@@ -118,8 +120,7 @@ const CardElement = ({ i }: { i: number }) => {
                     trigger: '.container-expertise-gsap',
                     start: 'top bottom-=20%',
                     end: 'bottom top-=20%',
-                    scrub: true,
-                    // markers: true
+                    scrub: true
                 }
             });
         });

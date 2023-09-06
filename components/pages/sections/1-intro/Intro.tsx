@@ -1,11 +1,11 @@
 
 import { twMerge } from "tailwind-merge";
-import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import { useRef } from "react";
 import { Text, Button, Display, Icon, Link, Fit } from '@/components/ui';
 import { useTranslation } from "next-i18next";
 import gsap from 'gsap';
 import { MENU_ITEMS } from "@/conf/router";
-
+import { useIsomorphicLayoutEffect } from 'react-use';
 
 const ButtonNext = () => {
     return <>
@@ -179,7 +179,7 @@ const Menu = () => {
 
 const Intro = () => {
     const introRef = useRef<HTMLDivElement>(null);
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
             gsap.timeline({
                 trigger: '.intro_gsap',
