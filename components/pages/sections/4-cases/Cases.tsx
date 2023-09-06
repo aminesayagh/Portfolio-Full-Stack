@@ -3,7 +3,6 @@ import { twMerge } from 'tailwind-merge';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { useTranslation } from 'next-i18next';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
 import { Title, Text, Image } from '@/components/ui';
 import { getProjectsByCategory } from '@/conf/projects';
@@ -47,11 +46,6 @@ const Case = ({ picture }: { picture?: string[] }) => {
         
     </div>
 } 
-const zIndexImages = [
-    'z-[20]',
-    'z-[30]',
-    'z-[40]',
-]
 const Cases = () => {
     const { t } = useTranslation();
     const projects = useMemo(() => getProjectsByCategory('best'), []);
