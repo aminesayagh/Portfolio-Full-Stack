@@ -7,7 +7,7 @@ import { gsap } from 'gsap';
 import { Title, Text } from '@/components/ui';
 import { getProjectsByCategory } from '@/conf/projects';
 import { ScrollProvider } from '@/context/ScrollContext';
-
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 const Case = ({ picture, height }: { picture?: string[], height: string }) => {
     let ref = useRef<HTMLDivElement>(null);
     
@@ -109,11 +109,9 @@ const Cases = () => {
                             delay: 0.1,
                             ease: 'power1.inOut',
                         },
-                        markers: true,
                         start: i == 0 ? 'top top' : undefined,
-                        // end: () => window.innerHeight * (sections.length - 1),
-
-                    }
+                    },
+                    onComplete: () => ScrollTrigger.refresh(),
                 })
             });
         });
