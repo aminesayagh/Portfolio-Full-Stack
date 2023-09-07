@@ -8,29 +8,43 @@ import { Title, Text } from '@/components/ui';
 import { getProjectsByCategory } from '@/conf/projects';
 import { ScrollProvider } from '@/context/ScrollContext';
 
-const Case = ({ picture }: { picture?: string[] }) => {
+const Case = ({ picture, height }: { picture?: string[], height: string }) => {
     let ref = useRef<HTMLDivElement>(null);
-    const { scrollbar } = useContext(ScrollProvider)
+    
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
+            gsap.to('.image_gsap_container', {
+                height: 0,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '.image_gsap_container' as any,
+                    scrub: 1,
+                    snap: {
+                        snapTo: 1 / 3,
+                        duration: 0.1,
+                        delay: 0.1,
+                        ease: 'power1.inOut',
+                    },
+                    start: 'top top',
+                    end: () => window.innerHeight * 3,
+                }
+            })
             let tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: ref.current as any,
                     start: 'top top',
                     end: 'bottom top',
                     scrub: true,
-                    markers: true,
+                    // markers: true,
                     toggleActions: 'play none reverse none',
                     invalidateOnRefresh: true,
                 }
             });
             tl.fromTo(ref.current as any, {
-                backgroundSize: '100%',
-                // backgroundPosition: 'center 10%',
+                backgroundSize: '100%'
             }, {
                 backgroundSize: '105%',
-                // backgroundPosition: 'center 80%',
-                ease: 'power1',
+                ease: 'power4',
                 scrollTrigger: {
                     trigger: ref.current as any,
                     scrub: 1,
@@ -38,51 +52,36 @@ const Case = ({ picture }: { picture?: string[] }) => {
                     markers: false,
                 }
             }).fromTo(ref.current as any, {
-                backgroundPosition: 'center 90%',
+                backgroundPosition: 'center 70%',
             }, {
-                backgroundPosition: 'center 10%',
+                backgroundPosition: 'center 20%',
                 ease: 'power1',
                 scrollTrigger: {
                     trigger: ref.current as any,
-                    scrub: 1,
                     start: 'top bottom',
                     markers: false,
                 }
-            });
+            }, '<')
         }, ref);
         return () => ctx.revert();
     }, [ref.current]);
-    const [top, setTop ] = useState(0);
-    useEffect(() => {
-        const onScroll = (e: any) => {
-            console.log(e.offset.y);
-            const topRef = ref.current?.getBoundingClientRect().top;
-            if(!topRef || topRef < 0) return;
-            setTop(e.offset.y - topRef);
-        }
-        if(!!scrollbar) {
-            scrollbar.addListener(onScroll);
-            return () => scrollbar.removeListener(onScroll);
-        }
-    }, [scrollbar]);
+
     return <div
         className={twMerge(
             'flex flex-col items-center justify-center',
             'bg-no-repeat bg-cover',
-            'h-[120vh] w-full',
-            'left-0 right-0 top-0',
+            'w-full',
             'image_gsap',
         )}
         ref={ref}
         style={{
             backgroundImage: `url(${!!picture ? picture[0] : ''})`,
-            backgroundSize: '100%',
-            top: top
+            height
         }}
     >
-        
+
     </div>
-} 
+}
 const Cases = () => {
     const { t } = useTranslation();
     const projects = useMemo(() => getProjectsByCategory('best'), []);
@@ -92,23 +91,31 @@ const Cases = () => {
         let ctx = gsap.context((self) => {
             gsap.set('.image_gsap_container', {
                 zIndex: (i, target, targets) => targets.length - i,
+                
             })
 
-            let images = gsap.utils.toArray('.image_gsap_container');
-            images.forEach((image, i) => {
-                // let tl = gsap.timeline({
-                //     scrollTrigger: {
-                //         trigger: image as any,
-                //         start: () => 'top top',
-                //         end: () => '+=' + window.innerHeight,
-                //         scrub: true,
-                //         markers: true,
-                //         toggleActions: 'play none reverse none',
-                //         invalidateOnRefresh: true,
-                //     }
-                // });
-                // tl.to(image as any, { height: 0 })
-            })
+            let sections = gsap.utils.toArray('.image_gsap_container');
+            sections.map((section: any, i) => {
+                if(i == 2) return;
+                gsap.to(section, {
+                    height: 0,
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: section as any,
+                        scrub: 1,
+                        snap: {
+                            snapTo: 1 / (sections.length - 1),
+                            duration: 0.1,
+                            delay: 0.1,
+                            ease: 'power1.inOut',
+                        },
+                        markers: true,
+                        start: i == 0 ? 'top top' : undefined,
+                        // end: () => window.innerHeight * (sections.length - 1),
+
+                    }
+                })
+            });
         });
         return () => ctx.revert();
     }, [containerRef.current]);
@@ -125,15 +132,23 @@ const Cases = () => {
                         </Text>
                     </div>
                 </div>
-                <div className={twMerge('w-full')} ref={containerRef} >
+                <div className={twMerge('w-full flex flex-col gap-0 h-fit')} ref={containerRef} >
                     {projects.map((project, index) => {
-                        return <div key={index} className={twMerge(
+                        let height = '100vh';
+                        if(index == 0){
+                            height = '120vh';
+                        } else if(index == 1) {
+                            height = '140vh';
+                        } else {
+                            height = '110vh';
+                        }
+
+                        return <div key={index} style={{
+                            height,
+                        }} className={twMerge(
                             'w-full', 'overflow-hidden',
-                            'h-[120vh] relative',
-                            `image_gsap_container`
-                        )} >
-                            <Case picture={project?.picture} />
-                        </div>
+                            `image_gsap_container`,
+                        )} ><Case picture={project?.picture} height={height}/></div>
                     })}
                 </div>
             </div>
