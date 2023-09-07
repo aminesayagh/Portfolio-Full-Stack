@@ -111,7 +111,6 @@ const Cases = () => {
                         },
                         start: i == 0 ? 'top top' : undefined,
                     },
-                    onComplete: () => ScrollTrigger.refresh(),
                 })
             });
         });
