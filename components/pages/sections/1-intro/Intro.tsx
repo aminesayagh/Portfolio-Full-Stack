@@ -182,9 +182,13 @@ const Intro = () => {
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
             gsap.timeline({
+                scrollTrigger: {
                 trigger: '.intro_gsap',
                 toggleActions: 'play play restart play',
-                start: 'top 60%'
+                start: 'top 60%',
+                
+                scroller: '#scroller',
+                }
             }).from('.splitText_gsap', {
                 yPercent: 170,
                 skewY: 16,

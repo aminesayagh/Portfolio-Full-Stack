@@ -63,7 +63,8 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             ScrollTrigger.scrollerProxy(element, {
                 scrollTop(value) {
                     if (arguments.length) {
-                        bodyScrollBar.scrollTop = value as number;
+                        // bodyScrollBar.scrollTop = value as number;
+                        bodyScrollBar.scrollTo(value as number, 0, 0    );
                     }
                     return bodyScrollBar.scrollTop;
                 },

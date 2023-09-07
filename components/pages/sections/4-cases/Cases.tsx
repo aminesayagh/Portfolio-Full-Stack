@@ -7,25 +7,26 @@ import { gsap } from 'gsap';
 import { Title, Text, Image } from '@/components/ui';
 import { getProjectsByCategory } from '@/conf/projects';
 import { ScrollProvider } from '@/context/ScrollContext';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
 const Case = ({ picture }: { picture?: string[] }) => {
     let ref = useRef(null);
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            gsap.fromTo(ref.current as any, {
-                backgroundSize: '100%',
-                backgroundPosition: 'center 10%',
-            }, {
-                backgroundSize: '110%',
-                backgroundPosition: 'center 80%',
-                ease: 'power1',
-                scrollTrigger: {
-                    trigger: ref.current as any,
-                    scrub: 1,
-                    start: 'top center',
-                    markers: false,
-                }
-            })
+            // gsap.fromTo(ref.current as any, {
+            //     backgroundSize: '100%',
+            //     backgroundPosition: 'center 20%',
+            // }, {
+            //     backgroundSize: '110%',
+            //     backgroundPosition: 'center 80%',
+            //     ease: 'power1',
+            //     scrollTrigger: {
+            //         trigger: ref.current as any,
+            //         // scrub: 1,
+            //         // start: 'top center',
+            //         markers: false,
+            //     }
+            // })
         }, ref);
         return () => ctx.revert();
     }, [ref.current]);
@@ -43,36 +44,32 @@ const Case = ({ picture }: { picture?: string[] }) => {
             backgroundSize: '100%',
         }}
     >
-        
+
     </div>
-} 
+}
 const Cases = () => {
     const { t } = useTranslation();
     const projects = useMemo(() => getProjectsByCategory('best'), []);
     const containerRef = useRef<HTMLDivElement>(null);
-    const { scrollbar } = useContext(ScrollProvider);
 
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context((self) => {
             gsap.set('.image_gsap_container', {
                 zIndex: (i, target, targets) => targets.length - i,
-            })
-
-            let images = gsap.utils.toArray('.image_gsap_container');
-            images.forEach((image, i) => {
-                let tl = gsap.timeline({
+            });
+            gsap.utils.toArray('.image_gsap_container').forEach((container, index) => {
+                const tl = gsap.timeline({
                     scrollTrigger: {
-                        trigger: containerRef.current as any,
-                        scroller: '#scroller',
-                        start: () => 'top -' + (window.innerHeight * (i + 0.5)),
-                        end: () => '+=' + window.innerHeight,
+                        trigger: container as any,
+                        pin: container as any,
+                        markers: true,
+                        pinSpacing: true,
+                        start: 'top top',
+                        end: 'bottom -=100%',
                         scrub: true,
-                        toggleActions: 'play none reverse none',
-                        invalidateOnRefresh: true,
                     }
                 });
-                tl.to(image as any, { height: 0 })
-            })
+            });
         });
         return () => ctx.revert();
     }, [containerRef.current]);
@@ -89,12 +86,13 @@ const Cases = () => {
                         </Text>
                     </div>
                 </div>
-                <div className={twMerge('w-full')} ref={containerRef} >
+                <div className={twMerge('w-full relative', 'flex flex-col gap-0')} ref={containerRef} >
                     {projects.map((project, index) => {
                         return <div key={index} className={twMerge(
                             'w-full',
+                            'flex flex-col',
                             `image_gsap_container`
-                        )} >
+                        )}  >
                             <Case picture={project?.picture} />
                         </div>
                     })}
@@ -105,3 +103,4 @@ const Cases = () => {
 }
 
 export default Cases;
+

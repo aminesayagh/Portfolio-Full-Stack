@@ -27,7 +27,7 @@ const LandingPage = () => {
                 <CallToAction />
             </Container>
             <span className='block h-24 w-full'></span>
-            <Container as='section' size='lg' id={MENU_ITEMS.cases.id} className='py-10' >
+            <Container as='section' size='lg' id={MENU_ITEMS.cases.id} className='py-10 overflow-hidden' >
                 <Cases />
             </Container>
             <span className='block h-6 xxs:h-10 xs:h-28 w-full'></span>
