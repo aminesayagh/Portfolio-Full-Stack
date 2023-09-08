@@ -32,7 +32,7 @@ const Header = () => {
     let [openMenu, setOpenMenu] = useState<boolean>(false);
     const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
     const ctx = useRef<any>(null);
-    const { scrollbar } = useContext(ScrollProvider);
+    // const { scrollbar } = useContext(ScrollProvider);
     useEffect(() => {
         ctx.current = gsap.context((self) => {
             self.add('open', () => {
@@ -41,7 +41,7 @@ const Header = () => {
                     yPercent: TRANSLATE_Y,
                     transformOrigin: 'right top',
                     skewY: 2,
-                    onStartParams: [scrollbar]
+                    onStartParams: []
                 }, {
                     duration: DURATION,
                     ease: 'power3.inOut',
@@ -88,18 +88,18 @@ const Header = () => {
                     duration: DURATION / 2,
                 }, '<25%')
                 tl.current.play();
-                scrollbar && scrollbar.updatePluginOptions('modal', {
-                    open: true,
-                })
+                // scrollbar && scrollbar.updatePluginOptions('modal', {
+                //     open: true,
+                // })
 
             });
             self.add('close', () => {
                 tl.current.reverse().then(() => {
                     setOpenMenu(false)
                     ctx.current.revert(); // revert timeline to the beginning
-                    scrollbar && scrollbar.updatePluginOptions('modal', {
-                        open: false,
-                    });
+                    // scrollbar && scrollbar.updatePluginOptions('modal', {
+                    //     open: false,
+                    // });
                 });
             });
         });

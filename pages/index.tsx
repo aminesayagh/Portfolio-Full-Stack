@@ -22,7 +22,7 @@ export default function Home() {
       />
       <ScrollContextProvider >
         <AnimationConf >
-          {/* <Header /> */}
+          <Header />
           <div id='scroller'>
             <LandingPage />
           </div>

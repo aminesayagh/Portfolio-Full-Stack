@@ -1,31 +1,10 @@
-import React, { createContext, useState, useEffect, useLayoutEffect, useRef, useContext } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 
+import { ScrollProvider } from './ScrollContext';
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import Scrollbar, { ScrollbarPlugin } from 'smooth-scrollbar';
-import OverscrollPlugin from 'smooth-scrollbar/plugins/overscroll';
-import { useRouter } from 'next/router';
-
-import { ScrollProvider } from './ScrollContext';
-
-
-
-
-class ModalPlugin extends ScrollbarPlugin {
-    static pluginName = 'modal';
-    static defaultOptions = {
-        open: false,
-    }
-    transformDelta(delta: any, fromEvent: any) {
-        if (this.options.open) {
-            return { x: 0, y: 0 };
-        }
-        return delta;
-    }
-}
-Scrollbar.use(ModalPlugin);
-Scrollbar.use(OverscrollPlugin);
+import LocomotiveScroll from 'locomotive-scroll';
 
 // @ts-ignore
 gsap.core?.globals('ScrollToPlugin', ScrollToPlugin);
@@ -37,120 +16,52 @@ ScrollTrigger.defaults({
 
 const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     let app = useRef<HTMLDivElement | null>(null);
-    const router = useRouter();
-    const { setScrollbar } = useContext(ScrollProvider)
-    const scrollbar = useRef<Scrollbar | null>(null);
-    useEffect(() => {
-        let ctx = gsap.context((self) => {
-            const element = document.querySelector('#scroller') as HTMLElement;
-            if (!element) {
-                console.error('No element with id scroller');
-                return;
-            };
-    
-            const bodyScrollBar = Scrollbar.init(element, {
-                damping: 0.2,
-                delegateTo: document,
-                plugins: {
-                    modal: {
-                        open: false,
-                    }
-                }
-            });
-    
-            bodyScrollBar.setPosition(0, 0);
-            gsap.registerPlugin(ScrollToPlugin);
-            ScrollTrigger.scrollerProxy(element, {
-                scrollTop(value) {
-                    if (arguments.length) {
-                        // bodyScrollBar.scrollTop = value as number;
-                        bodyScrollBar.scrollTo(value as number, 0, 0    );
-                    }
-                    return bodyScrollBar.scrollTop;
-                },
-                scrollLeft(value) {
-                    if (arguments.length) {
-                        bodyScrollBar.scrollLeft = value as number;
-                    }
-                    return bodyScrollBar.scrollLeft;
-                },
-                getBoundingClientRect() {
-                    return {
-                        top: 0,
-                        left: 0,
-                        width: window.innerWidth,
-                        height: window.innerHeight
-                    };
-                },
-                pinType: element.style.transform ? 'transform' : 'fixed',
-                fixedMarkers: false
-            });
-            bodyScrollBar.addListener(ScrollTrigger.update);
-            ScrollTrigger.defaults({ scroller: element });
-    
-            ScrollTrigger.create({
-                scroller: element
-            });
-    
-            bodyScrollBar.track.xAxis.element.remove();
-            bodyScrollBar.addListener((e) => {
-                if (e.offset.y < 0) {
-                    gsap.to('#scroller', {
-                        y: 0,
-                        opacity: 1,
-                        duration: 0.4,
-                        scrollTrigger: {
-                            scroller: '#scroller',
-                        }
-                    })
-                }
-            });
-            scrollbar.current = bodyScrollBar;
-    
-            setScrollbar(bodyScrollBar);
-            return () => {
-                bodyScrollBar.destroy();
-                ScrollTrigger.getAll().forEach((trigger) => {
-                    trigger.kill();
-                });
-                ScrollTrigger.defaults({ scroller: window });
-            }
-        });
-        return () => {
-            ctx.revert();
-        }
-    }, []);
-    useEffect(() => {
-        const scrollToId = (url: string) => {
-            if (!scrollbar.current) return;
-            const urlSplit = url.split('/');
-            const id = urlSplit[urlSplit.length - 1].replace('#', '');
-            if (!id) return;
-            const element = document.getElementById(id);
-            if (!element) return;
-            const top = element.getBoundingClientRect().top + scrollbar.current.scrollTop;
-            const easing = gsap.parseEase('power4.out');
-            const direction = top > 0 ? 1 : -1;
-            scrollbar.current.scrollTo(0, top, 0, {
-                easing,
-                callback: () => {
-                    gsap.from('#scroller', {
-                        y: direction * 200,
-                        opacity: 0,
-                        duration: 1,
-                        scrollTrigger: {
-                            scroller: '#scroller',
-                        }
-                    });
-                }
-            });
-        };
-        router.events.on('hashChangeComplete', scrollToId);
+    const { scrollbar, setScrollbar } = useContext(ScrollProvider)
 
-        return () => {
-            router.events.off('hashChangeComplete', scrollToId);
+    useEffect(() => {
+        const locomotiveInit = async () => {
+            try {
+                const LocomotiveScroll = (await import('locomotive-scroll')).default;
+                const selector = document.querySelector('#scroller') as HTMLElement;
+                const locomotiveScroll = new LocomotiveScroll({
+                    el: selector,
+                    smooth: true,
+                })
+                setScrollbar(locomotiveScroll);
+                locomotiveScroll.on("scroll", ScrollTrigger.update);
+                ScrollTrigger.scrollerProxy('#scroller', {
+                    scrollTop(value) {
+                        return arguments.length ?
+                            // @ts-ignore
+                            locomotiveScroll.scrollTo(value, 0, 0) : locomotiveScroll.scroll.instance.scroll.y;
+                    },
+                    getBoundingClientRect() {
+                        return {
+                            top: 0,
+                            left: 0,
+                            width: window.innerWidth,
+                            height: window.innerHeight
+                        };
+                    },
+                    pinType: selector.style.transform ? 'transform' : 'fixed',
+                    // fixedMarkers: false
+                });
+                // @ts-ignore
+                ScrollTrigger.addEventListener("refresh", () => locomotiveScroll.update());
+                ScrollTrigger.defaults({ scroller: "#scroller" });
+                ScrollTrigger.refresh();
+            } catch (error) {
+                console.error(error);
+                // throw Error(`[SmoothScrollProvider]: ${error}`)
+            }
         }
-    }, [router]);
+        if (!scrollbar) {
+            locomotiveInit();
+        }
+        return () => {
+            scrollbar && scrollbar.destroy();
+        }
+    }, [scrollbar]);
     useEffect(() => {
         let ctx = gsap.context(() => {
             gsap.config({
@@ -162,17 +73,6 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             ctx.revert();
         }
     }, []);
-    useEffect(() => {
-        const resize = () => {
-            if (!scrollbar.current) return;
-            scrollbar.current.update();
-            ScrollTrigger.refresh();
-        };
-        window.addEventListener('resize', resize);
-        return () => {
-            window.removeEventListener('resize', resize);
-        }
-    }, [])
 
     return <><div ref={el => {
         // @ts-ignore
