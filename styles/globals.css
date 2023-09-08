@@ -51,9 +51,9 @@ html {
   width: 100%; */
 }
 
-body {
+/* body {
   overflow: hidden !important;
-}
+} */
 
 /*! locomotive-scroll v4.1.3 | MIT License | https://github.com/locomotivemtl/locomotive-scroll */
 html.has-scroll-smooth {

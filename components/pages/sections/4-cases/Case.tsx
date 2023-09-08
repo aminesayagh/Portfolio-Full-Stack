@@ -6,8 +6,7 @@ import { gsap } from 'gsap';
 
 import { Title, Text } from '@/components/ui';
 import { getProjectsByCategory } from '@/conf/projects';
-import { ScrollProvider } from '@/context/ScrollContext';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+
 const Case = ({ picture, height }: { picture?: string[], height: string }) => {
     let ref = useRef<HTMLDivElement>(null);
     
@@ -87,7 +86,7 @@ const Cases = () => {
     const projects = useMemo(() => getProjectsByCategory('best'), []);
     const containerRef = useRef<HTMLDivElement>(null);
 
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context((self) => {
             gsap.set('.image_gsap_container', {
                 zIndex: (i, target, targets) => targets.length - i,

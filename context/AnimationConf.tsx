@@ -49,7 +49,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 // @ts-ignore
                 ScrollTrigger.addEventListener("refresh", () => locomotiveScroll.update());
                 ScrollTrigger.defaults({ scroller: "#scroller" });
-                ScrollTrigger.refresh();
+                // ScrollTrigger.refresh();
             } catch (error) {
                 console.error(error);
                 // throw Error(`[SmoothScrollProvider]: ${error}`)

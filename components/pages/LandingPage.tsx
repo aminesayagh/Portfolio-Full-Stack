@@ -10,8 +10,8 @@ const LandingPage = () => {
             <Container data-scroll-section as='section' size='lg' id={MENU_ITEMS.intro.id} >
                 <Intro />
             </Container>
-            <span className='block h-40 w-full' ></span>
-            <Container data-scroll-section as='div' size='lg' >
+            <span className='block h-screen w-full' ></span>
+            {/* <Container data-scroll-section as='div' size='lg' >
                 <Video />
             </Container>
             <span className='block h-18 xxs:h-24 w-full'></span>
@@ -38,7 +38,7 @@ const LandingPage = () => {
 
             <Container  data-scroll-section as='footer' size='lg' className={twMerge('flex flex-col gap-8 md:gap-12')}>
                 <Footer />
-            </Container>
+            </Container> */}
         </>
     )
 }

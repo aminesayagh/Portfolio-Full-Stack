@@ -32,6 +32,8 @@ const Header = () => {
     let [openMenu, setOpenMenu] = useState<boolean>(false);
     const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
     const ctx = useRef<any>(null);
+    const { scrollbar } = useContext(ScrollProvider);
+
     // const { scrollbar } = useContext(ScrollProvider);
     useEffect(() => {
         ctx.current = gsap.context((self) => {
@@ -88,9 +90,6 @@ const Header = () => {
                     duration: DURATION / 2,
                 }, '<25%')
                 tl.current.play();
-                // scrollbar && scrollbar.updatePluginOptions('modal', {
-                //     open: true,
-                // })
 
             });
             self.add('close', () => {
@@ -131,6 +130,10 @@ const Header = () => {
         }
     }, [openMenu]);
 
+    const goToSection = (section: string) => {
+        scrollbar && scrollbar.scrollTo(section, { duration: 500 });
+    }
+
     return (
         <Modal isOpenExternal={openMenu} menuHandler={menuHandler}  >
             <Navbar size='lg' inTopOfScroll={openMenu} >
@@ -141,7 +144,7 @@ const Header = () => {
                 </Navbar.Content>
                 <Navbar.Brand >
                     <span onClick={() => onButtonClick('/')}>
-                        <Logo onPress={() => onButtonClick('/')} size={80} alt={t('header.logo')} mode='dark' />
+                        <Logo onPress={() => onButtonClick('/')} size={70} alt={t('header.logo')} mode='dark' />
                     </span>
                 </Navbar.Brand>
                 <Navbar.Content className={twMerge('flex-1 justify-end overflow-hidden', GAP_SIZE_LG)}>
@@ -223,9 +226,9 @@ const Header = () => {
                                         <ul className={twMerge('flex flex-row items-center justify-end order-1 xxs:order-2', GAP_SIZE_XL)}>
                                             {menuSocialNetworks.map((item, index) => {
                                                 return <li key={index} className='overflow-hidden'>
-                                                    <Link size='sm' href={item.link} degree='4' weight='semibold' className='modal-footer' >
+                                                    <Button size='sm' onPress={() => goToSection(item.link)} degree='4' weight='semibold' className='modal-footer' >
                                                         {t(`${BASE_LOCALE_SOCIAL}.${item.id}.key`)}
-                                                    </Link>
+                                                    </Button>
                                                 </li>
                                             })}
                                         </ul>

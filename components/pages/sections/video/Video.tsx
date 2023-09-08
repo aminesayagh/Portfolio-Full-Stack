@@ -70,7 +70,7 @@ const Video = () => {
     return (
         <>
             <div className={twMerge('block relative  w-full h-auto rounded-3xl overflow-hidden', rounded({ size: 'xl' }))}>
-                <canvas ref={ref} data-scroll data-scroll-speed="1" className='overflow-hidden' style={{ width: "100%", height: height, maxHeight: '950px', objectFit: 'cover', borderRadius: '1.5rem'  }} />
+                <canvas ref={ref} data-scroll data-scroll-speed="1" className='overflow-hidden' style={{ width: "100%", maxHeight: height, objectFit: 'cover', borderRadius: '1.5rem'  }} />
             </div>
         </>
     )
