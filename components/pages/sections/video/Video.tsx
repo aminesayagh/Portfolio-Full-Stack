@@ -15,7 +15,7 @@ const Video = () => {
     
     useEffect(() => {
         if(isLg) {
-            setHeight('100vh');
+            setHeight('110vh');
         } else if(isSM) {
             setHeight('87vh');
         } else if(isXxs) {
@@ -23,7 +23,7 @@ const Video = () => {
         } else {
             setHeight('70vh');
         }
-    }, [isLg, isSM])
+    }, [isLg, isSM, isXxs])
     useEffect(() => {
         let ctx = gsap.context((self) => {
             let canvas = ref.current;
@@ -69,8 +69,8 @@ const Video = () => {
     
     return (
         <>
-            <div className={twMerge('block relative  w-full h-auto rounded-3xl overflow-hidden', rounded({ size: 'xl' }))}>
-                <canvas ref={ref} data-scroll data-scroll-speed="1" className='overflow-hidden' style={{ width: "100%", maxHeight: height, objectFit: 'cover', borderRadius: '1.5rem'  }} />
+            <div  className={twMerge('block relative w-full h-fit rounded-3xl', rounded({ size: 'xl' }))}>
+                <canvas data-scroll ref={ref} className='h-fit' style={{ width: "100%", maxHeight: height, objectFit: 'cover', borderRadius: '1.5rem'  }} />
             </div>
         </>
     )

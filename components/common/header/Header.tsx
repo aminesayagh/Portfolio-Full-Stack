@@ -96,9 +96,6 @@ const Header = () => {
                 tl.current.reverse().then(() => {
                     setOpenMenu(false)
                     ctx.current.revert(); // revert timeline to the beginning
-                    // scrollbar && scrollbar.updatePluginOptions('modal', {
-                    //     open: false,
-                    // });
                 });
             });
         });
@@ -112,7 +109,7 @@ const Header = () => {
         } else {
             ctx.current.close();
         }
-    }, [router.asPath, openMenu]);
+    }, [openMenu]);
     useEffect(() => {
         if (openMenu) {
             ctx.current.open();
@@ -128,7 +125,7 @@ const Header = () => {
                 router.push(path);
             });
         }
-    }, [openMenu]);
+    }, [openMenu, router]);
 
     const goToSection = (section: string) => {
         scrollbar && scrollbar.scrollTo(section, { duration: 500 });

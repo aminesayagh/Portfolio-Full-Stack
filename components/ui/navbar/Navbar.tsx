@@ -25,7 +25,6 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
             scrollbar && scrollbar.on('scroll', (e) => {
-                console.log(e.delta.y);
                 if(e.delta.y < 140) {
                     setActive(false);
                 } else {
@@ -45,34 +44,6 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
                 }
                 lastScrollY.current = e.delta.y;
             })
-
-            // scrollbar && scrollbar.addListener((status) => {
-            //     if (status.offset.y < 150) {
-            //         setActive(false);
-            //     } else {
-            //         setActive(true);
-            //     }
-    
-            //     const diff = Math.abs(status.offset.y - lastScrollY.current);
-            //     if (status.offset.y >= lastScrollY.current) {
-            //         delta.current = delta.current >= 10 ? 10 : delta.current + diff;
-            //     } else {
-            //         delta.current = delta.current <= -10 ? -10 : delta.current - diff;
-            //     }
-            //     if (delta.current >= 10 && status.offset.y > 200) {
-            //         gsap.to(".header-gsap", { duration: 0.3, y: -100, opacity: 0, ease: "power2.inOut"});
-            //     } else if (delta.current <= -10 || status.offset.y < 200) {
-            //         gsap.to(".header-gsap", { duration: 0.3, y: 0, opacity: 1, ease: "power2.inOut" });
-            //     }
-            //     lastScrollY.current = status.offset.y;
-            // });
-            // if(scrollbar) {
-            //     return () => {
-            //         scrollbar.removeListener(() => {
-            //             console.log('removeListener');
-            //         });
-            //     }
-            // }
         });
         return () => ctx.revert();
     }, [scrollbar, lastScrollY.current, delta.current]);

@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
-
+import React, { useEffect, useRef, useState,useContext } from 'react';
+import { useIsomorphicLayoutEffect } from 'react-use';
 import { ScrollProvider } from './ScrollContext';
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import LocomotiveScroll from 'locomotive-scroll';
 
 // @ts-ignore
 gsap.core?.globals('ScrollToPlugin', ScrollToPlugin);
@@ -18,8 +17,8 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     let app = useRef<HTMLDivElement | null>(null);
     const { scrollbar, setScrollbar } = useContext(ScrollProvider)
 
-    useEffect(() => {
-        const locomotiveInit = async () => {
+    useIsomorphicLayoutEffect(() => {
+        const ctx = gsap.context(async () => {
             try {
                 const LocomotiveScroll = (await import('locomotive-scroll')).default;
                 const selector = document.querySelector('#scroller') as HTMLElement;
@@ -47,21 +46,22 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                     // fixedMarkers: false
                 });
                 // @ts-ignore
-                ScrollTrigger.addEventListener("refresh", () => locomotiveScroll.update());
+                ScrollTrigger.addEventListener("refresh", () => {
+                    console.log('refresh');
+                    // locomotiveScroll.update()
+                });
                 ScrollTrigger.defaults({ scroller: "#scroller" });
                 // ScrollTrigger.refresh();
             } catch (error) {
                 console.error(error);
-                // throw Error(`[SmoothScrollProvider]: ${error}`)
+                throw Error(`[SmoothScrollProvider]: ${error}`)
             }
-        }
-        if (!scrollbar) {
-            locomotiveInit();
-        }
+        })
         return () => {
+            ctx.revert();
             scrollbar && scrollbar.destroy();
         }
-    }, [scrollbar]);
+    }, []);
     useEffect(() => {
         let ctx = gsap.context(() => {
             gsap.config({

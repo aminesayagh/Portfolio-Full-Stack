@@ -23,13 +23,14 @@ const Manifesto = () => {
 
         const elements = _.map(phrase.split(' '), (word, index) => {
             const letters = splitLetters(word);
-            return <p key={`word_${index}`} data-scroll data-scroll-speed="1" className='flex flex-row gap-0 letter_gsap'>{letters}</p>;
+            return <p key={`word_${index}`}className='flex flex-row gap-0 letter_gsap'>{letters}</p>;
         });
 
         body.current = elements;
     }, [phrase])
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context((self) => {
+            
             gsap.fromTo('.letter_gsap', {
                 opacity: 0.1,
             }, {
@@ -40,9 +41,9 @@ const Manifesto = () => {
                 scrollTrigger: {
                     trigger: '.manifesto_scroll_gsap',
                     scrub: true,
-                    start: 'top 90%',
-                    end: 'center 70%',
-                    markers: false
+                    start: 'top 70%',
+                    end: 'center 30%',
+                    markers: true
                 }
             })
         });
@@ -51,15 +52,17 @@ const Manifesto = () => {
 
     const refDescription = useRef<HTMLDivElement>(null);
     useIsomorphicLayoutEffect(() => {
-        let ctx = gsap.context((self) => {
-            if (!self.selector) return;
-            const descriptions = self?.selector('.manifesto_description_gsap');
-            descriptions.map((box: any) => {
-                gsap.from(box, {
+        let ctx = gsap.context(() => {
+            gsap.utils.toArray('.manifesto_description_gsap').map((box: any) => {
+                if(!box) return;
+                gsap.fromTo(box, {
                     opacity: 0,
                     y: 40,
+                }, {
+                    opacity: 1,
                     ease: 'power1',
                     stagger: 0.5,
+                    y: 0,
                     scrollTrigger: {
                         trigger: box,
                         start: 'bottom bottom',
@@ -67,13 +70,14 @@ const Manifesto = () => {
                         scrub: true,
                         markers: false,
                     }
+
                 });
             })
-        }, refDescription)
+        })
         return () => ctx.revert();
-    }, [refDescription.current]);
+    }, []);
     return (
-        <div className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`, 'manifesto_scroll_gsap')} data-scroll data-scroll-speed="1" ref={refDescription} >
+        <div className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12 py-40`, 'manifesto_scroll_gsap')} data-scroll data-scroll-position="top" data-scroll-speed="20"  ref={refDescription} >
             <div className={twMerge('flex flex-col gap-7', 'items-start justify-start',
                 'col-start-1 col-span-12 xs:col-start-2 xs:col-span-11 md:col-start-2 md:col-span-10 mdl:col-start-2 mdl:col-span-10 xl:col-start-2 xl:col-span-9',
             )}>
@@ -99,13 +103,13 @@ const Manifesto = () => {
                 'col-start-1 col-span-12 xxs:col-start-2 xxs:col-span-11 xs:col-start-2 xs:col-span-10 sm:col-start-4 sm:col-span-9 md:col-start-5 md:col-span-7 lg:col-start-6 lg:col-span-6 xl:col-start-6 xl:col-span-5',
             )}>
                 <div className={twMerge('flex flex-col gap-5')}>
-                    <Text p degree='3' weight='medium' size='lg' className='manifesto_description_gsap' data-scroll data-scroll-speed="1" >
+                    <Text p degree='3' weight='medium' size='lg' className='manifesto_description_gsap' >
                         {t(`manifesto.who_i_am`)}
                     </Text>
-                    <Text p degree='3' weight='medium' size='lg' className='manifesto_description_gsap' data-scroll data-scroll-speed="1" >
+                    <Text p degree='3' weight='medium' size='lg' className='manifesto_description_gsap'>
                         {t(`manifesto.what_i_do`)}
                     </Text>
-                    <Text p degree='3' size='xl' weight='semibold' className='textLink inline w-full whitespace-inherit-important manifesto_description_gsap' data-scroll data-scroll-speed="1" style={{
+                    <Text p degree='3' size='xl' weight='semibold' className='textLink inline w-full whitespace-inherit-important manifesto_description_gsap' style={{
                         WebkitLineClamp: 2,
                         WebkitBoxOrient: 'vertical',
                         overflow: 'hidden',

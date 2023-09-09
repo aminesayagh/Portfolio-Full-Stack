@@ -94,13 +94,13 @@ const Title = () => {
             "[&>*]:mdl:ml-2 [&>*]:lg:ml-0"
         )} >
             <div >
-                <span className='overflow-hidden h-fit'>
-                    <Text p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')}  degree="2">{t('intro.descriptions.1')}</Text>
+                <span data-scroll className='overflow-hidden h-fit'>
+                    <Text  p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')}  degree="2">{t('intro.descriptions.1')}</Text>
                 </span>
             </div>
             <div>
-                <span className='overflow-hidden h-fit'>
-                    <Text p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')}  degree='2'>{t('intro.descriptions.2')}</Text>
+                <span data-scroll className='overflow-hidden h-fit'>
+                    <Text p  weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')}  degree='2'>{t('intro.descriptions.2')}</Text>
                 </span>
             </div>
         </div>
@@ -189,10 +189,10 @@ const Intro = () => {
         let ctx = gsap.context(() => {
             gsap.timeline({
                 scrollTrigger: {
-                trigger: introRef.current,
-                toggleActions: 'play play restart play',
-                start: 'top 60%',
-                scroller: '#scroller',
+                    trigger: introRef.current,
+                    toggleActions: 'play play restart play',
+                    start: 'top 60%',
+                    scroller: '#scroller',
                 }
             }).from('.splitText_gsap', {
                 yPercent: 170,
@@ -231,7 +231,7 @@ const Intro = () => {
 
         });
         return () => ctx.revert();
-    }, []);
+    }, [introRef.current]);
     return (<>
         <div  className={twMerge('pt-28 sm:pt-36 mdl:pt-40', 'flex flex-col gap-20 xs:gap-32 xl:gap-40 overflow-hidden')} ref={introRef}>
             <div className={twMerge(

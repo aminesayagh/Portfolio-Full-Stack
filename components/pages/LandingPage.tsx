@@ -10,16 +10,16 @@ const LandingPage = () => {
             <Container data-scroll-section as='section' size='lg' id={MENU_ITEMS.intro.id} >
                 <Intro />
             </Container>
-            <span className='block h-screen w-full' ></span>
-            {/* <Container data-scroll-section as='div' size='lg' >
+            <span className='block h-24 w-full' ></span>
+            <Container data-scroll-section data-scroll-section-id='video' as='section' size='lg'  >
                 <Video />
             </Container>
-            <span className='block h-18 xxs:h-24 w-full'></span>
-            <Container data-scroll-section as='section' size='lg' className='py-20' id={MENU_ITEMS.manifesto.id} >
+            <span className='block h-16 xxs:h-44 w-full'></span>
+            <Container data-scroll-section id={MENU_ITEMS.manifesto.id} as='section' size='lg' className='py-20' >
                 <Manifesto />
             </Container>
             <span className='block h-24 xxs:h-44 w-full'></span>
-            <Container data-scroll-section as='section' size='full' id={MENU_ITEMS.experience.id} className='[&>*]:py-20 [&>*]:bg-white-200 relative overflow-hidden' >
+            {/* <Container data-scroll-section as='section' size='full' id={MENU_ITEMS.experience.id} className='[&>*]:py-20 [&>*]:bg-white-200 relative overflow-hidden' >
                 <Expertise />
                 <Noise position='absolute' />
             </Container>
