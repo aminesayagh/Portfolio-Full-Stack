@@ -24,36 +24,29 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
 
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            scrollbar && scrollbar.addListener((status) => {
-                if (status.offset.y < 150) {
+            scrollbar && scrollbar.on('scroll', (e) => {
+                if(e.delta.y < 140) {
                     setActive(false);
                 } else {
                     setActive(true);
                 }
-    
-                const diff = Math.abs(status.offset.y - lastScrollY.current);
-                if (status.offset.y >= lastScrollY.current) {
+
+                const diff = Math.abs(e.delta.y - lastScrollY.current); 
+                if (e.delta.y >= lastScrollY.current) {
                     delta.current = delta.current >= 10 ? 10 : delta.current + diff;
                 } else {
                     delta.current = delta.current <= -10 ? -10 : delta.current - diff;
                 }
-                if (delta.current >= 10 && status.offset.y > 200) {
+                if (delta.current >= 10 && e.delta.y > 200) {
                     gsap.to(".header-gsap", { duration: 0.3, y: -100, opacity: 0, ease: "power2.inOut"});
-                } else if (delta.current <= -10 || status.offset.y < 200) {
+                } else if (delta.current <= -10 || e.delta.y < 200) {
                     gsap.to(".header-gsap", { duration: 0.3, y: 0, opacity: 1, ease: "power2.inOut" });
                 }
-                lastScrollY.current = status.offset.y;
-            });
-            if(scrollbar) {
-                return () => {
-                    scrollbar.removeListener(() => {
-                        console.log('removeListener');
-                    });
-                }
-            }
+                lastScrollY.current = e.delta.y;
+            })
         });
         return () => ctx.revert();
-    }, [scrollbar]);
+    }, [scrollbar, lastScrollY.current, delta.current]);
 
     const padding = useMemo(() => active ? '0.8rem' : '1rem', [active]);
     const backdropFilter = useMemo(() => active ? 'blur(40px)' : 'blur(0px)', [active]);
@@ -92,6 +85,7 @@ const Brand = ({ children, className, ...props}: BrandProps) => {
         <style jsx>{`
             div {
                 transform: ${styled.scale};
+                transition: transform 0.2s ease;
             }
         `}</style>
     </>

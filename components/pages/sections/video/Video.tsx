@@ -1,8 +1,9 @@
-import { useRef, useLayoutEffect, useState, useEffect } from 'react'
+import { useRef, useLayoutEffect, useState, useEffect, useContext } from 'react'
 import { gsap } from 'gsap';
 import { twMerge } from 'tailwind-merge';
 
 import { rounded } from '@/components/style';
+import { ScrollProvider } from '@/context/ScrollContext';
 
 import { useMedia } from 'react-use'
 const Video = () => {
@@ -12,10 +13,10 @@ const Video = () => {
     const isSM = useMedia('(min-width: 640px)', false);
     const isXxs = useMedia('(min-width: 390px)', false);
     const [height, setHeight] = useState<string>('50vh');
-    
+    const { scrollbar } = useContext(ScrollProvider)
     useEffect(() => {
         if(isLg) {
-            setHeight('100vh');
+            setHeight('110vh');
         } else if(isSM) {
             setHeight('87vh');
         } else if(isXxs) {
@@ -23,7 +24,7 @@ const Video = () => {
         } else {
             setHeight('70vh');
         }
-    }, [isLg, isSM])
+    }, [isLg, isSM, isXxs])
     useEffect(() => {
         let ctx = gsap.context((self) => {
             let canvas = ref.current;
@@ -65,12 +66,12 @@ const Video = () => {
             }
         });
         return () => ctx.revert();
-    }, [ref.current]);
+    }, [scrollbar]);
     
     return (
         <>
-            <div className={twMerge('block relative overflow-hidden w-full h-auto rounded-3xl', rounded({ size: 'xl' }))}>
-                <canvas ref={ref} style={{ width: "100%", height: height, maxHeight: '950px', objectFit: 'cover', borderRadius: '1.5rem'  }} />
+            <div  className={twMerge('block relative w-full h-fit rounded-3xl', rounded({ size: 'xl' }))}>
+                <canvas data-scroll ref={ref} className='h-fit' style={{ width: "100%", maxHeight: height, objectFit: 'cover', borderRadius: '1.5rem'  }} />
             </div>
         </>
     )

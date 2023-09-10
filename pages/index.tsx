@@ -1,11 +1,6 @@
-
 import { Head } from '@/components/common';
-import { Suspense } from 'react';
 import { Noise } from '@/components/ui';
 import '@/utils/i18n';
-
-import { Loading } from 'components/ui';
-import "@/utils/i18n";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import '@/components/InitGsap';
@@ -19,7 +14,6 @@ export default function Home() {
 
   return (
     <>
-
       <Head title={"Mohamed Amine SAYAGH - Full Stack Web Developer"}
         description={"Mohamed Amine SAYAGH - Full Stack Web Developer"}
         keywords="Mohamed Amine SAYAGH - Full Stack Web Developer"
@@ -27,9 +21,9 @@ export default function Home() {
         logo='/favicon.svg'
       />
       <ScrollContextProvider >
-        <AnimationConf>
+        <AnimationConf >
           <Header />
-          <div id='scroller'>
+          <div data-scroll-container>
             <LandingPage />
           </div>
           <Noise />

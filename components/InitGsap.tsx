@@ -5,6 +5,4 @@ import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-
-
 gsap.defaults({ ease: "none", duration: 1 });

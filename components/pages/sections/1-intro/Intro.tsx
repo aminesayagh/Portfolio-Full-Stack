@@ -1,15 +1,18 @@
 
 import { twMerge } from "tailwind-merge";
-import { useRef } from "react";
+import { useRef, useContext, useEffect } from "react";
 import { Text, Button, Display, Icon, Link, Fit } from '@/components/ui';
 import { useTranslation } from "next-i18next";
 import gsap from 'gsap';
 import { MENU_ITEMS } from "@/conf/router";
 import { useIsomorphicLayoutEffect } from 'react-use';
+import { ScrollProvider } from '@/context/ScrollContext';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+
 
 const ButtonNext = () => {
     return <>
-        <Button className={twMerge('bg-white-200', 'rounded-full next_button_gsap')}>
+        <Button className={twMerge('bg-white-200', 'rounded-full next_button_gsap')}  >
             <div className='p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6'>
                 <Icon name='IconCornerLeftDown' className='stroke-black-200 stroke-1 w-8 h-8 xxs:w-6 xxs:h-6 xs:w-8 xs:h-8 xl:w-10 xl:h-10' />
             </div>
@@ -31,10 +34,10 @@ const FullStack = ({ className }: { className: string }) => {
                 '-space-y-1 md:space-y-0 mdl:-space-y-1 lg:-space-y-[3%] xl:-space-y-[2.6%] 2xl:-space-y-[4.62%] 3xl:-space-y-2 4xl:space-y-0'
             )} >
                 <span className='overflow-hidden'>
-                    <Display size='md' weight='semibold' className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider', 'splitText_fullStack_gsap')}>{t('intro.title.2_1')}</Display>
+                    <Display size='md' weight='semibold'  className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider', 'splitText_fullStack_gsap')}>{t('intro.title.2_1')}</Display>
                 </span>
                 <span className='overflow-hidden'>
-                    <Display size='md' weight='semibold' className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider', 'splitText_fullStack_gsap')}>{t('intro.title.2_2')}</Display>
+                    <Display size='md' weight='semibold'  className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider', 'splitText_fullStack_gsap')}>{t('intro.title.2_2')}</Display>
                 </span>
             </div>
         </>
@@ -56,7 +59,7 @@ const Title = () => {
             'row-start-1 row-span-1',
             'overflow-hidden',
         )} >
-            <Fit weight='bold' degree='1' className={twMerge(DISPLAY_1_CLASS_NAME, 'splitText_gsap intro_scroll_gsap')}>{t('intro.title.1')}</Fit>
+            <Fit weight='bold' degree='1'  className={twMerge(DISPLAY_1_CLASS_NAME, 'splitText_gsap intro_scroll_gsap')}>{t('intro.title.1')}</Fit>
         </div>
         {/* description */}
         <div className={twMerge('flex flex-row xxs:flex-col justify-between items-start xs:hidden',
@@ -93,13 +96,13 @@ const Title = () => {
             "[&>*]:mdl:ml-2 [&>*]:lg:ml-0"
         )} >
             <div >
-                <span className='overflow-hidden h-fit'>
-                    <Text p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')} degree="2">{t('intro.descriptions.1')}</Text>
+                <span data-scroll className='overflow-hidden h-fit'>
+                    <Text  p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')}  degree="2">{t('intro.descriptions.1')}</Text>
                 </span>
             </div>
             <div>
-                <span className='overflow-hidden h-fit'>
-                    <Text p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')} degree='2'>{t('intro.descriptions.2')}</Text>
+                <span data-scroll className='overflow-hidden h-fit'>
+                    <Text p  weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')}  degree='2'>{t('intro.descriptions.2')}</Text>
                 </span>
             </div>
         </div>
@@ -148,25 +151,30 @@ const Title = () => {
 }
 
 const menuItems = {
-    "1": MENU_ITEMS.manifesto.link,
-    "2": MENU_ITEMS.experience.link,
-    "3": MENU_ITEMS.cases.link,
-    "4": MENU_ITEMS.contact.link
+    "1": MENU_ITEMS.manifesto.id,
+    "2": MENU_ITEMS.experience.id,
+    "3": MENU_ITEMS.cases.id,
+    "4": MENU_ITEMS.contact.id
 } as const;
 const menuKeys = ['manifesto', 'experience', 'cases', 'contact'];
 
 type MenuItems = keyof typeof menuItems;
 const Menu = () => {
     const { t } = useTranslation();
-
+    const { scrollbar } = useContext(ScrollProvider);
+    const goToSection = (section: string) => {
+        scrollbar && scrollbar.scrollTo(section, { duration: 500 });
+    }
     return (<>
         <div className={twMerge('flex flex-row flex-wrap justify-between items-start w-full gap-y-6')} >
             {Array.apply(null, Array(4)).map((_, i) => {
                 if (i > 3) return null;
                 return <div key={i} className={twMerge('flex flex-col justify-start items-start gap-1 w-1/2 sm:w-auto md:w-1/4')} >
-                    <Text p weight='medium' size='sm' degree='3' className='number_menu_gsap'>{`0${i + 1}`}</Text>
+                    <Text p weight='medium' size='sm' degree='3' className='number_menu_gsap' >{`0${i + 1}`}</Text>
                     <span className='overflow-hidden'>
-                        <Link degree='1' size='sm' weight='semibold' href={menuItems[`${i + 1}` as MenuItems]} className='uppercase item_menu_gsap' >{t(`header.menu.${menuKeys[i]}.attribute`)}</Link>
+                        <Button degree='1' size='sm' weight='semibold' onPress={() => goToSection(menuItems[`${i + 1}` as MenuItems] as string)} className='uppercase item_menu_gsap' >
+                            {t(`header.menu.${menuKeys[i]}.attribute`)}
+                        </Button>
                     </span>
                 </div>
             })}
@@ -179,17 +187,21 @@ const Menu = () => {
 
 const Intro = () => {
     const introRef = useRef<HTMLDivElement>(null);
-    useIsomorphicLayoutEffect(() => {
+    const { scrollbar } = useContext(ScrollProvider);
+    useEffect(() => {
         let ctx = gsap.context(() => {
             gsap.timeline({
-                trigger: '.intro_gsap',
-                toggleActions: 'play play restart play',
-                start: 'top 60%'
+                scrollTrigger: {
+                    trigger: introRef.current,
+                    toggleActions: 'play play restart play',
+                    start: 'top 60%'
+                }
             }).from('.splitText_gsap', {
                 yPercent: 170,
                 skewY: 16,
                 duration: 0.8,
                 ease: 'power4.out',
+                delay: 0.3,
                 stagger: {
                     amount: 0.4
                 }
@@ -211,17 +223,19 @@ const Intro = () => {
             }, '<').from('.number_menu_gsap', {
                 opacity: 0,
                 duration: 0.3,
-            }, '<').from('.item_menu_gsap', {
+            }, '<').fromTo('.item_menu_gsap', {
                 yPercent: 105,
+            }, {
+                yPercent: 0,
                 duration: 0.4,
                 ease: 'power4.out',
             }, '<60%');
 
         });
         return () => ctx.revert();
-    }, []);
+    }, [scrollbar]);
     return (<>
-        <div className={twMerge('pt-28 sm:pt-36 mdl:pt-40', 'flex flex-col gap-20 xs:gap-32 xl:gap-40 overflow-hidden')} ref={introRef}>
+        <div  className={twMerge('pt-28 sm:pt-36 mdl:pt-40', 'flex flex-col gap-20 xs:gap-32 xl:gap-40 overflow-hidden')} ref={introRef}>
             <div className={twMerge(
                 'flex flex-row flex-wrap gap-y-8',
                 'grid grid-cols-12 grid-row-4 xxs:grid-row-3 mdl:grid-row-2',

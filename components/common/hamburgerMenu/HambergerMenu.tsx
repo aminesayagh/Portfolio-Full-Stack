@@ -44,7 +44,7 @@ const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => vo
         if(typeof isOpen === 'boolean'){
             handlerHamburgerClick().then().catch(err => console.error(err));
         }
-    }, [isOpen])
+    }, [isOpen, path02Controls, path01Controls])
     let { keyboardProps } = useKeyboard({
         onKeyDown: (e) => {
             if(['Escape', 'Esc'].includes(e.key)) {

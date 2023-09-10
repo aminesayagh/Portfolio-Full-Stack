@@ -13,8 +13,6 @@ const ButtonUi = ({ children, icon, iconRight, size = 'auto', full, weight, degr
                 'font-sans font-bold',
                 'text-clip whitespace-nowrap overflow-hidden',
                 'align-middle',
-                'transition-colors ease-in-out duration-200',
-                'transition-transform ease-in-out duration-100',
                 full && 'w-full',
                 textClassNames({ weight, size, degree, exchange }),
                 typeof className == 'string' && className,

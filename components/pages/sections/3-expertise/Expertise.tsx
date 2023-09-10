@@ -1,7 +1,7 @@
 
 import { useTranslation } from "next-i18next";
 import { twMerge } from "tailwind-merge";
-import { useEffect, useMemo, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useLayoutEffect, useRef, useContext } from 'react';
 import { gsap } from 'gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 
@@ -11,6 +11,8 @@ import { rounded } from "@/components/style";
 import { split } from "lodash";
 import { useHover } from "react-aria";
 import { useMedia, useWindowSize } from "react-use";
+import { ScrollProvider } from '@/context/ScrollContext';
+
 
 const Icon = () => {
     return (
@@ -102,6 +104,8 @@ const CardElement = ({ i }: { i: number }) => {
     const isLg = useMedia('(min-width: 1024px)', true);
     const isXs = useMedia('(min-width: 475px)', true);
 
+    const { scrollbar } = useContext(ScrollProvider);
+
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
             let space = 40;
@@ -125,7 +129,7 @@ const CardElement = ({ i }: { i: number }) => {
             });
         });
         return () => ctx.revert();
-    }, [ref.current])
+    }, [ref.current, scrollbar])
 
     if (i >= 4) return <div key={i} className={`expertise-card-gsap`} ref={ref}>
         <EmptyCard />
