@@ -1,12 +1,14 @@
 
 import { twMerge } from "tailwind-merge";
-import { useRef, useContext } from "react";
+import { useRef, useContext, useEffect } from "react";
 import { Text, Button, Display, Icon, Link, Fit } from '@/components/ui';
 import { useTranslation } from "next-i18next";
 import gsap from 'gsap';
 import { MENU_ITEMS } from "@/conf/router";
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { ScrollProvider } from '@/context/ScrollContext';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+
 
 const ButtonNext = () => {
     return <>
@@ -149,10 +151,10 @@ const Title = () => {
 }
 
 const menuItems = {
-    "1": MENU_ITEMS.manifesto.link,
-    "2": MENU_ITEMS.experience.link,
-    "3": MENU_ITEMS.cases.link,
-    "4": MENU_ITEMS.contact.link
+    "1": MENU_ITEMS.manifesto.id,
+    "2": MENU_ITEMS.experience.id,
+    "3": MENU_ITEMS.cases.id,
+    "4": MENU_ITEMS.contact.id
 } as const;
 const menuKeys = ['manifesto', 'experience', 'cases', 'contact'];
 
@@ -185,14 +187,14 @@ const Menu = () => {
 
 const Intro = () => {
     const introRef = useRef<HTMLDivElement>(null);
-    useIsomorphicLayoutEffect(() => {
+    const { scrollbar } = useContext(ScrollProvider);
+    useEffect(() => {
         let ctx = gsap.context(() => {
             gsap.timeline({
                 scrollTrigger: {
                     trigger: introRef.current,
                     toggleActions: 'play play restart play',
-                    start: 'top 60%',
-                    scroller: '#scroller',
+                    start: 'top 60%'
                 }
             }).from('.splitText_gsap', {
                 yPercent: 170,
@@ -231,7 +233,7 @@ const Intro = () => {
 
         });
         return () => ctx.revert();
-    }, [introRef.current]);
+    }, [scrollbar]);
     return (<>
         <div  className={twMerge('pt-28 sm:pt-36 mdl:pt-40', 'flex flex-col gap-20 xs:gap-32 xl:gap-40 overflow-hidden')} ref={introRef}>
             <div className={twMerge(

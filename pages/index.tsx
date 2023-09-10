@@ -23,7 +23,7 @@ export default function Home() {
       <ScrollContextProvider >
         <AnimationConf >
           <Header />
-          <div id='scroller'>
+          <div data-scroll-container>
             <LandingPage />
           </div>
           <Noise />

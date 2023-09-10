@@ -11,11 +11,11 @@ const LandingPage = () => {
                 <Intro />
             </Container>
             <span className='block h-24 w-full' ></span>
-            <Container data-scroll-section data-scroll-section-id='video' as='section' size='lg'  >
+            <Container data-scroll-section id='video' as='section' size='lg'  >
                 <Video />
             </Container>
-            <span className='block h-16 xxs:h-44 w-full'></span>
-            <Container data-scroll-section id={MENU_ITEMS.manifesto.id} as='section' size='lg' className='py-20' >
+            <span className='block h-16 xxs:h-0 w-full'></span>
+            <Container data-scroll-section id={MENU_ITEMS.manifesto.id} as='section' size='lg' className='' >
                 <Manifesto />
             </Container>
             <span className='block h-24 xxs:h-44 w-full'></span>

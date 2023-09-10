@@ -1,8 +1,9 @@
-import { useRef, useLayoutEffect, useState, useEffect } from 'react'
+import { useRef, useLayoutEffect, useState, useEffect, useContext } from 'react'
 import { gsap } from 'gsap';
 import { twMerge } from 'tailwind-merge';
 
 import { rounded } from '@/components/style';
+import { ScrollProvider } from '@/context/ScrollContext';
 
 import { useMedia } from 'react-use'
 const Video = () => {
@@ -12,7 +13,7 @@ const Video = () => {
     const isSM = useMedia('(min-width: 640px)', false);
     const isXxs = useMedia('(min-width: 390px)', false);
     const [height, setHeight] = useState<string>('50vh');
-    
+    const { scrollbar } = useContext(ScrollProvider)
     useEffect(() => {
         if(isLg) {
             setHeight('110vh');
@@ -65,7 +66,7 @@ const Video = () => {
             }
         });
         return () => ctx.revert();
-    }, [ref.current]);
+    }, [scrollbar]);
     
     return (
         <>

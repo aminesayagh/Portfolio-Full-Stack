@@ -141,7 +141,7 @@ const Header = () => {
                 </Navbar.Content>
                 <Navbar.Brand >
                     <span onClick={() => onButtonClick('/')}>
-                        <Logo onPress={() => onButtonClick('/')} size={70} alt={t('header.logo')} mode='dark' />
+                        <Logo onPress={() => onButtonClick('/')} size={64} alt={t('header.logo')} mode='dark' />
                     </span>
                 </Navbar.Brand>
                 <Navbar.Content className={twMerge('flex-1 justify-end overflow-hidden', GAP_SIZE_LG)}>
