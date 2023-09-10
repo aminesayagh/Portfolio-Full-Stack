@@ -43,9 +43,9 @@ const Manifesto = () => {
                 scrollTrigger: {
                     trigger: '.manifesto_quote_gsap',
                     scrub: true,
-                    start: 'top 86%',
-                    end: 'center 55%',
-                    markers: false
+                    start: 'top 70%',
+                    end: 'center 50%',
+                    markers: false,
                 }
             })
         }, refDescription);
@@ -58,7 +58,7 @@ const Manifesto = () => {
             gsap.utils.toArray('.manifesto_description_gsap').map((box: any) => {
                 gsap.fromTo(box, {
                     opacity: 0,
-                    y: 40,
+                    y: 30,
                 }, {
                     opacity: 1,
                     ease: 'power1',
@@ -66,7 +66,8 @@ const Manifesto = () => {
                     scrollTrigger: {
                         trigger: box,
                         start: 'bottom bottom',
-                        end: 'top 60%',
+                        end: 'top 70%',
+                        toggleActions: 'play none none none',
                         scrub: true,
                         markers: false,
                     }
@@ -77,7 +78,7 @@ const Manifesto = () => {
     }, [scrollbar]);
     return (
         <div className={twMerge('h-fit py-40')}  ref={refDescription} >
-            <div className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`, 'h-fit strick')}>
+            <div data-scroll data-scroll-position='start' data-scroll-speed='2' className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`, 'h-fit strick')}>
                 <div className={twMerge('flex flex-col gap-7', 'items-start justify-start manifesto_quote_gsap',
                     'col-start-1 col-span-12 xs:col-start-2 xs:col-span-11 md:col-start-2 md:col-span-10 mdl:col-start-2 mdl:col-span-10 xl:col-start-2 xl:col-span-9',
                 )}>

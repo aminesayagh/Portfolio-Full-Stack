@@ -3,12 +3,14 @@ import { twMerge } from 'tailwind-merge';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { useTranslation } from 'next-i18next';
 import { gsap } from 'gsap';
+import { ScrollProvider } from '@/context/ScrollContext';
 
 import { Title, Text } from '@/components/ui';
 import { getProjectsByCategory } from '@/conf/projects';
 
 const Case = ({ picture, height }: { picture?: string[], height: string }) => {
     let ref = useRef<HTMLDivElement>(null);
+    const { scrollbar } = useContext(ScrollProvider);
     
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
@@ -63,7 +65,7 @@ const Case = ({ picture, height }: { picture?: string[], height: string }) => {
             }, '<')
         }, ref);
         return () => ctx.revert();
-    }, [ref.current]);
+    }, [ref.current, scrollbar]);
 
     return <div
         className={twMerge(

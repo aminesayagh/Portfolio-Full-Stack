@@ -25,7 +25,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 resetNativeScroll: true,
                 getDirection: true,
                 getSpeed: true,
-                multiplier: 0.5
+                multiplier: 0.5,
             })
             setScrollbar(scroll);
 
@@ -69,7 +69,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
 
         window.addEventListener('resize', () => {
             if (!scroll) return;
-            scroll.update()
+            scroll.update();
         })
     }, [])
     useEffect(() => {
@@ -83,6 +83,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
         });
         return () => {
             ctx.revert();
+            scrollbar?.destroy();
         }
     }, [scrollbar]);
 

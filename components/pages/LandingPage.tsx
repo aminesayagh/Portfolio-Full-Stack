@@ -19,11 +19,11 @@ const LandingPage = () => {
                 <Manifesto />
             </Container>
             <span className='block h-24 xxs:h-44 w-full'></span>
-            {/* <Container data-scroll-section as='section' size='full' id={MENU_ITEMS.experience.id} className='[&>*]:py-20 [&>*]:bg-white-200 relative overflow-hidden' >
+            <Container data-scroll-section as='section' size='full' id={MENU_ITEMS.experience.id} className='[&>*]:py-20 [&>*]:bg-white-200 relative overflow-hidden' >
                 <Expertise />
                 <Noise position='absolute' />
             </Container>
-            <Container  data-scroll-section as='section' size='lg' className='' >
+            {/* <Container  data-scroll-section as='section' size='lg' className='' >
                 <CallToAction />
             </Container>
             <span className='block h-24 w-full'></span>
