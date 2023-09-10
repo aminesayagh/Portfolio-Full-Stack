@@ -15,7 +15,7 @@ const LandingPage = () => {
                 <Video />
             </Container>
             <span className='block h-16 xxs:h-0 w-full'></span>
-            <Container data-scroll-section id={MENU_ITEMS.manifesto.id} as='section' size='lg' className='' >
+            <Container data-scroll-section id={MENU_ITEMS.manifesto.id} as='section' size='lg' >
                 <Manifesto />
             </Container>
             <span className='block h-24 xxs:h-44 w-full'></span>

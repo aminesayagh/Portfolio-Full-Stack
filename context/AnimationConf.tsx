@@ -12,7 +12,7 @@ gsap.core?.globals('ScrollToPlugin', ScrollToPlugin);
 
 const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     let app = useRef<HTMLDivElement | null>(null);
-    const { setScrollbar } = useContext(ScrollProvider)
+    const { scrollbar, setScrollbar } = useContext(ScrollProvider)
     useEffect(() => {
         let scroll: LocomotiveScroll | null = null;
         import('locomotive-scroll').then((locomotiveModule) => {
@@ -36,6 +36,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             ScrollTrigger.scrollerProxy('[data-scroll-container]', {
                 scrollTop(value) {
                     return arguments.length
+                        // @ts-ignore
                         ? scroll.scrollTo(value, {duration: 0, disableLerp: true}) : scroll.scroll.instance.scroll.y
                 },
                 getBoundingClientRect() {
@@ -76,12 +77,14 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             gsap.config({
                 nullTargetWarn: false
             });
-            gsap.to(app, 0, { css: { visibility: 'visible' } });
+            if(scrollbar) {
+                gsap.to(app, 0, { css: { visibility: 'visible' } });
+            }
         });
         return () => {
             ctx.revert();
         }
-    }, []);
+    }, [scrollbar]);
 
     return <><div ref={el => {
         // @ts-ignore
