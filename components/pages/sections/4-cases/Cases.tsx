@@ -62,7 +62,7 @@ const Cases = () => {
                     scrollTrigger: {
                         trigger: container as any,
                         pin: container as any,
-                        markers: true,
+                        markers: false,
                         pinSpacing: true,
                         start: 'top top',
                         end: 'bottom -=100%',
