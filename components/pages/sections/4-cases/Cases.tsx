@@ -51,7 +51,7 @@ const Cases = () => {
     const { t } = useTranslation();
     const projects = useMemo(() => getProjectsByCategory('best'), []);
     const containerRef = useRef<HTMLDivElement>(null);
-
+w
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context((self) => {
             gsap.set('.image_gsap_container', {
