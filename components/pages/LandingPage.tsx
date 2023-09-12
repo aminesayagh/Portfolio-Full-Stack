@@ -19,26 +19,25 @@ const LandingPage = () => {
                 <Manifesto />
             </Container>
             <span className='block h-24 xxs:h-24 w-full'></span>
-            <Container data-scroll-section as='section' size='full' id={MENU_ITEMS.experience.id} className='[&>*]:py-20 [&>*]:bg-white-200' >
-                <div className='relative' data-scroll data-scroll-speed='1.2' >
+            <section data-scroll-section id={MENU_ITEMS.experience.id} >
+                <Container size='full' as='div' className='relative overflow-hidden [&>*]:py-20 [&>*]:bg-white-200' data-scroll data-scroll-position='end' data-scroll-speed='0.3'  >
                     <Expertise />
                     <Noise position='absolute' />
-                </div>
-            </Container>
-            <Container  data-scroll-section as='section' size='lg' className='' >
-                {/* <CallToAction /> */}
+                </Container>
+            </section>
+            <Container data-scroll-section as='section' size='lg' id='action-1' >
+                <CallToAction />
             </Container>
             <span className='block h-24 w-full'></span>
-            <Container  data-scroll-section as='section' size='lg' id={MENU_ITEMS.cases.id} className='py-10 overflow-hidden' >
-                {/* <Cases /> */}
+            <Container data-scroll-section as='section' size='lg' id={MENU_ITEMS.cases.id} className='py-10 h-fit' >
+                <Cases />
             </Container>
             <span className='block h-6 xxs:h-10 xs:h-28 w-full'></span>
-            <Container  data-scroll-section as='section' size='lg' >
-                {/* <Action /> */}
+            <Container data-scroll-section as='section' size='lg' id='action-contact' >
+                <Action />
             </Container>
             <span className='block h-6 xs:h-12 w-full'></span>
-
-            <Container  data-scroll-section as='footer' size='lg' className={twMerge('flex flex-col gap-8 md:gap-12')}>
+            <Container data-scroll-section as='footer' size='lg' id='footer' className={twMerge('flex flex-col gap-8 md:gap-12')}>
                 <Footer />
             </Container>
         </>

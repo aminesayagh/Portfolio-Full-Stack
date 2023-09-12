@@ -1,5 +1,6 @@
 import { Head } from '@/components/common';
-import { Noise } from '@/components/ui';
+import { useState, useEffect } from 'react';
+import { Noise, Preloader } from '@/components/ui';
 import '@/utils/i18n';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
@@ -11,7 +12,12 @@ import { LandingPage } from '@/components/pages';
 import { Header, Footer } from '@/components/common';
 
 export default function Home() {
-
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 3000)
+  }, [])
   return (
     <>
       <Head title={"Mohamed Amine SAYAGH - Full Stack Web Developer"}
@@ -20,6 +26,7 @@ export default function Home() {
         author="Mohamed Amine SAYAGH"
         logo='/favicon.svg'
       />
+      {isLoading && <Preloader />}
       <ScrollContextProvider >
         <AnimationConf >
           <Header />
