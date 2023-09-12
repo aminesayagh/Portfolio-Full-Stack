@@ -7,11 +7,11 @@ import { ScrollProvider } from '@/context/ScrollContext';
 
 import { Title, Text } from '@/components/ui';
 import { getProjectsByCategory } from '@/conf/projects';
+import { useTransform } from 'framer-motion';
 
 const Case = ({ picture, height }: { picture?: string[], height: string }) => {
     let ref = useRef<HTMLDivElement>(null);
     const { scrollbar } = useContext(ScrollProvider);
-    
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
             gsap.to('.image_gsap_container', {
