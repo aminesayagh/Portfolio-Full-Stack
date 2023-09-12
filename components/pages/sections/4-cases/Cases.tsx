@@ -6,7 +6,7 @@ import { useTranslation } from 'next-i18next';
 import { ScrollProvider } from '@/context/ScrollContext';
 import { getProjectsByCategory } from '@/conf/projects';
 import { gsap } from 'gsap';
-import { motion, useAnimation, useScroll, useTransform, ForwardRefComponent, HTMLMotionProps } from 'framer-motion';
+
 const Case = ({ picture, index, id }: { picture?: string[], index: number, id: string }) => {
     const container = useRef<HTMLDivElement>(null);
     const { scrollbar } = useContext(ScrollProvider);
@@ -95,9 +95,11 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
     return <div className={twMerge('relative h-[110vh]')} ref={container}>
     <div className='absolute left-0 right-0 w-full h-screen bg-no-repeat bg-cover' style={{
             backgroundImage: `url(${!!picture ? picture[0] : ''})`,
-            
+            zIndex: 10 + (index + 10),
         }} >
-            <div className='relative w-fit flex flex-col justify-end h-full px-24 py-40 gap-4 z-20'>
+            <div className='relative w-fit flex flex-col justify-end h-full px-24 py-40 gap-4 z-20' style={{
+                zIndex: 10 + (index + 10),
+            }}>
 
                 <span className='overflow-hidden' data-scroll data-scroll-position='end' data-scroll-speed='1'>
                     <Title h1 degree='1' className='case-title-gsap' >
@@ -110,7 +112,9 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                     </Text>
                 </span>
             </div>
-            <div className={twMerge('absolute left-0 right-0 bottom-0 w-full h-60 z-10 ', 'bg-gradient-to-t from-black-100 to-black-100/0')}></div>
+            <div className={twMerge('absolute left-0 right-0 bottom-0 w-full h-60', 'bg-gradient-to-t from-black-100 to-black-100/0')} style={{
+                zIndex: 10 + (index + 11),
+            }}></div>
         </div>
     </div>
 }
