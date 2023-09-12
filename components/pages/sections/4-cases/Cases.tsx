@@ -67,10 +67,10 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
             })
             // @ts-ignore
             const text = self?.selector('.case-title-gsap, .case-text-gsap');
+            gsap.set('.case-title-gsap, .case-text-gsap' as any, {
+                xPercent: -100,
+            });
             if(text) {
-                gsap.set(text as any, {
-                    xPercent: -100,
-                });
                 gsap.from(text as any, {
                     xPercent: -100,
                     duration: 1.6,
