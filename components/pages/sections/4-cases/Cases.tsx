@@ -7,18 +7,33 @@ import { ScrollProvider } from '@/context/ScrollContext';
 import { getProjectsByCategory } from '@/conf/projects';
 import { gsap } from 'gsap';
 import { motion, useAnimation, useScroll, useTransform, ForwardRefComponent, HTMLMotionProps } from 'framer-motion';
-const Case = ({ picture, id }: { picture?: string[], id: number }) => {
+const Case = ({ picture, index, id }: { picture?: string[], index: number, id: string }) => {
     const container = useRef<HTMLDivElement>(null);
     const { scrollbar } = useContext(ScrollProvider);
-    // const { scrollYProgress } = useScroll({
-    //     target: container,
-    //     offset: ['start end', 'end end']
-    // });
-    // const y = useTransform(scrollYProgress, [0, 1], [0, 100]);
+    const { t } = useTranslation();
 
     useEffect(() => {
-        const ctx = gsap.context(() => {
-            if(id < 2) {
+        const ctx = gsap.context((self) => {
+            gsap.set(container.current, {
+                zIndex: 100 - index,
+            });
+            if(index < 2) {
+                gsap.fromTo(container.current?.children[0] as any, {
+                    top: 0,
+                },{
+                    top: '100%',
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: container.current as any,
+                        scrub: true,
+                        start: 'top top',
+                        end: 'bottom top',
+                        toggleActions: 'play none reverse none',
+                        markers: false,
+                        invalidateOnRefresh: true,
+                    }
+                })
+            }else {
                 gsap.fromTo(container.current?.children[0] as any, {
                     top: 0,
                 },{
@@ -50,18 +65,51 @@ const Case = ({ picture, id }: { picture?: string[], id: number }) => {
                     invalidateOnRefresh: true,
                 }
             })
-        });
+            // @ts-ignore
+            const text = self?.selector('.case-title-gsap, .case-text-gsap');
+            if(text) {
+                gsap.from(text as any, {
+                    xPercent: -100,
+                    duration: 1.6,
+                    stagger: 0.4,
+                    ease: 'power4',
+                    scrollTrigger: {
+                        trigger: text as any,
+                        scrub: true,
+                        start: 'top bottom-=35%',
+                        end: 'bottom center',
+                        markers: true,
+                        invalidateOnRefresh: true,
+                    }
+                })
+            }
+
+        }, container);
         return () => {
             ctx.revert();
         }
     }, [scrollbar])
-    return <motion.div className='relative h-screen' ref={container}>
-        <motion.div className='absolute left-0 right-0 w-full h-full bg-no-repeat bg-cover' style={{
+    return <div className={twMerge('relative h-[110vh]')} ref={container}>
+    <div className='absolute left-0 right-0 w-full h-screen bg-no-repeat bg-cover' style={{
             backgroundImage: `url(${!!picture ? picture[0] : ''})`,
-        }} >
             
-        </motion.div>
-    </motion.div>
+        }} >
+            <div className='relative w-fit flex flex-col justify-end h-full px-24 py-40 gap-4 z-20'>
+
+                <span className='overflow-hidden' data-scroll data-scroll-position='end' data-scroll-speed='1'>
+                    <Title h1 degree='1' className='case-title-gsap' >
+                        {t(`projects.${id}.title`)}
+                    </Title>
+                </span>
+                <span className='overflow-hidden w-1/2' data-scroll data-scroll-position='end' data-scroll-speed='1'>
+                    <Text p size='md' degree='2' className='case-text-gsap'>
+                        {t(`projects.${id}.description`)}
+                    </Text>
+                </span>
+            </div>
+            <div className={twMerge('absolute left-0 right-0 bottom-0 w-full h-60 z-10 ', 'bg-gradient-to-t from-black-100 to-black-100/0')}></div>
+        </div>
+    </div>
 }
 const Cases = () => {
     const { t } = useTranslation();
@@ -80,9 +128,9 @@ const Cases = () => {
                 </Text>
             </div>
         </div>
-        <div className={twMerge(`w-full flex flex-col gap-0 h-fit`)}>
+        <div className={twMerge(`w-full flex flex-col gap-0 h-fit`, 'rounded-2xl overflow-hidden')}>
             {projects.map((project, index) => {
-                return <Case key={index} picture={project?.picture} id={index} />
+                return <Case key={index} picture={project?.picture} index={index} id={project.id} />
             })}
         </div>
     </div>
