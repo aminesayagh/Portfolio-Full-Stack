@@ -21,17 +21,17 @@ const MENU_ITEMS: MenuItems = {
     },
     manifesto: {
         id: 'manifesto',
-        link: '/#manifesto',
+        link: '/',
         menu: ['secondary', 'hamburger']
     },
     experience: {
         id: 'experience',
-        link: '/#experience',
+        link: '/',
         menu: ['secondary', 'hamburger']
     },
     cases: {
         id: 'cases',
-        link: '/#cases',
+        link: '/',
         menu: ['secondary', 'hamburger']
     },
     contact: {

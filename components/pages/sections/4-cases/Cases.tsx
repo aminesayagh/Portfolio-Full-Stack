@@ -79,7 +79,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                     trigger: container.current as any,
                     start: 'top bottom-=35%',
                     end: 'bottom center',
-                    markers: true,
+                    markers: false,
                     toggleActions: 'play none play reverse',
                 }
             })
@@ -95,7 +95,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
             zIndex: 10 + (index + 11),
         }} >
             <div className='relative w-fit flex flex-col justify-end h-full px-24 py-40 gap-4'
-                data-scroll data-scroll-position='start' data-scroll-speed='1.4'
+                data-scroll data-scroll-position='start' data-scroll-speed='2.4'
                 style={{
                     zIndex: 10 + (index + 14),
                 }}>
