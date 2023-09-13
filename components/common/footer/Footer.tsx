@@ -1,11 +1,12 @@
-
+import { useContext } from 'react';
 import { memo } from 'react';
 import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 
-import { Text, Icon, Container, Link } from '@/components/ui';
+import { Text, Icon, Container, Button } from '@/components/ui';
 import { useRouter } from 'next/router';
 import { MENU_ITEMS } from '@/conf/router';
+import { ScrollProvider } from '@/context/ScrollContext';
 
 const ICON_SIZE_CLASS_NAME = 'w-5 h-5 lg:w-6 lg:h-6';
 const FollowUs = () => {
@@ -22,9 +23,11 @@ const FollowUs = () => {
 
 const Footer = () => {
     const { t } = useTranslation();
-
+    const { scrollbar } = useContext(ScrollProvider)
+    const goToSection = () => {
+        scrollbar && scrollbar.scrollTo(0, { duration: 1000 });
+    }
     return (<>
-        {/* <Container as='footer' size='lg' className={twMerge('flex flex-col gap-8 md:gap-12')}>   */}
             <div className={twMerge('max-w-[14rem] xxs:w-8/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[30vw] mdl:max-w-[26vw] xl:max-w-[20vw] 2xl:max-w-[28vw] 3xl:max-w-[22rem]')} >
                 <Text p degree='3' weight='medium' size='md' className='uppercase' >
                     {t('footer.state')}
@@ -33,12 +36,12 @@ const Footer = () => {
             
             <div className={twMerge('flex flex-row flex-wrap sm:flex-nowrap justify-between', 'gap-y-4', 'pb-10 pt-6')}>
                 <div className={twMerge('flex flex-row', 'w-1/2 sm:w-auto', 'order-2 sm:order-1')} >
-                    <Link href={MENU_ITEMS.intro.link} className={twMerge('flex flex-row justify-start items-center', 'gap-6 md:gap-8', 'uppercase')}>
+                    <Button onPress={() => goToSection()} className={twMerge('flex flex-row justify-start items-center', 'gap-6 md:gap-8', 'uppercase')}>
                         <Icon name='IconArrowUpRight' size='24' className={twMerge('stroke-gray-400', ICON_SIZE_CLASS_NAME)} />
                         <Text p size='sm' weight='semibold' degree='3' >
                             {t('footer.action')}
                         </Text>
-                    </Link>
+                    </Button>
                 </div>  
                 <div className='flex flex-row justify-start sm:justify-center items-center w-full sm:w-auto order-1 sm:order-2'>
                     <Text p degree='3' weight='semibold' size='sm' className='uppercase'>
@@ -52,7 +55,6 @@ const Footer = () => {
                     <FollowUs />
                 </div>
             </div>
-        {/* </Container> */}
     </>)
 }
 

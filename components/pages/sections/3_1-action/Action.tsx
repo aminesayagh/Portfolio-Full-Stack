@@ -2,13 +2,25 @@ import { useTranslation } from "next-i18next";
 import { Text, Button, Icon } from '@/components/ui';
 
 import { twMerge } from 'tailwind-merge';
+import { useIsomorphicLayoutEffect } from 'react-use';
+import { gsap } from 'gsap';
+import { useHover } from "react-aria";
 
 const Action = () => {
-    const { t } = useTranslation()
+    const { t } = useTranslation();
+    let { hoverProps, isHovered } = useHover({
+        onHoverStart: (e) => {
+            
+        },
+        onHoverEnd: (e) => {},
+    })
+    useIsomorphicLayoutEffect(() => {
+
+    }, []);
     return (
         <>
             <div className={twMerge('flex flex-col md:flex-row justify-between items-start md:items-end', 'gap-8 md:gap-0', 'py-12')}>
-                <div className={twMerge('w-auto flex flex-row items-center justify-start', 'order-2 md:order-1')}>
+                <div {...hoverProps} className={twMerge('w-auto flex flex-row items-center justify-start', 'order-2 md:order-1')}>
                     <Button size='sm' className='border rounded-full py-4 px-6' degree='2' >
                         {t('motivation.action')}
                     </Button>

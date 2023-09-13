@@ -85,7 +85,7 @@ const FormContact = () => {
     const successMessage = useMemo(() => t('form.notification.success'), [i18n.language]);
     const errorMessage = useMemo(() => t('form.notification.error'), [i18n.language]);
 
-    const onSubmitForm = async (data: TypeFormContact, options: OptionOnSubmit<TypeFormContact> ) => {
+    const onSubmitForm = async (data: TypeFormContact, options: OptionOnSubmit<TypeFormContact>) => {
         try {
             const response = await fetch('/api/contact', {
                 method: 'POST',
@@ -204,122 +204,114 @@ const ContactPage = () => {
     if (!timer) return null;
     return (
         <>
-            <ScrollContextProvider >
-                <AnimationConf>
-                    <Header />
-                    <div id='scroller'>
-                        <Container as='section' size='lg' className={twMerge('flex flex-col gap-12', 'items-stretch')} >
-                            <div className={twMerge('flex flex-col gap-14 xl:gap-20 py-40')}>
-                                {/* title */}
-                                <div className='grid grid-cols-12 gap-4'>
-                                    <Display size='xl' weight='bold' className={twMerge('col-start-1 col-span-12', 'mdl:col-start-4 mdl:col-span-9', 'lg:col-start-3 lg:col-span-10')} >
-                                        {t('contact.title')}
-                                    </Display>
-                                </div>
-                                {/* form */}
-                                <div className={twMerge(
-                                    'grid grid-cols-12 gap-y-10 gap-x-0 xxs:gap-8 sm:gap-3 md:gap-8 mdl:gap-4 xl:gap-8',
-                                    'grid-rows-[repeat(3,_minmax(0,_auto))] xxs:grid-rows-[repeat(2,_minmax(0,_auto))] sm:grid-rows-2'
-                                )}>
-                                    <div className={twMerge(
-                                        'flex flex-col gap-3',
-                                        'col-start-1 col-span-12',
-                                        'xxs:col-start-1 xxs:col-span-4',
-                                        'sm:col-start-10 sm:col-span-3',
-                                        'mdl:col-start-1 mdl:col-span-2',
-                                        'row-start-1 row-span-1'
-                                    )}>
-                                        <Text p weight='medium' size='sm' degree='2' className='text-start uppercase' >
-                                            {t('contact.subtitle')}
-                                        </Text>
-                                        <hr className='relative h-[2px] w-4 bg-gray-200' />
-                                    </div>
-                                    <div className={twMerge(
-                                        'col-start-1 col-span-12',
-                                        'xxs:col-start-1 xxs:col-span-12',
-                                        'xs:col-start-1 xs:col-span-11',
-                                        'sm:col-start-1 sm:col-span-9',
-                                        'mdl:col-start-4 mdl:col-span-9',
-                                        'lg:col-start-3 lg:col-span-9',
-                                        'xl:col-start-3 xl:col-span-8',
-                                        'row-start-3 row-span-1',
-                                        'xxs:row-start-2 xxs:row-span-1',
-                                        'sm:row-start-1 sm:row-span-2'
-                                    )}>
-                                        <FormContact />
-                                    </div>
-                                    <div className={twMerge(
-                                        'flex flex-col sm:justify-end items-start xl:items-end',
-                                        'col-start-1 col-span-12',
-                                        'xxs:col-start-8 xxs:col-span-4',
-                                        'sm:col-start-10 sm:col-span-3',
-                                        'mdl:col-start-1 mdl:col-span-3',
-                                        'lg:col-start-1 lg:col-span-2',
-                                        'xl:col-start-11 xl:col-span-2',
-                                        'row-start-2 row-span-1',
-                                        'xxs:row-start-1 xxs:row-span-1',
-                                        'sm:row-start-2 sm:row-span-1'
-                                    )} >
-                                        <div className='flex flex-col gap-1'>
-                                            <Text size='sm' degree='2' p weight='medium' suppressHydrationWarning className='whitespace-nowrap-important'>
-                                                {t('contact.localTime')} {timer?.formattedTime}
-                                            </Text>
-                                            <Text size='sm' degree='2' p weight='medium' suppressHydrationWarning >
-                                                {t('contact.gmtTime')}({timer?.gmtOffset})
-                                            </Text>
-                                        </div>
-                                    </div>
-                                </div>
-                                <span className='h-6 md:h-10'></span>
-                                {/* repped */}
-                                <div className={twMerge(
-                                    'grid grid-cols-12 gap-x-0 gap-y-8 xs:gap-8'
-                                )}>
-                                    <div className={twMerge(
-                                        'flex flex-col',
-                                        'gap-3',
-                                        'col-start-1 col-span-12',
-                                        'sm:col-start-1 sm:col-span-2'
-                                    )}>
-                                        <Text p weight='medium' size='sm' degree='2' className='text-start uppercase' >
-                                            {t('contact.reppedBy')}
-                                        </Text>
-                                        <hr className='relative h-[2px] w-4 bg-gray-200' />
-                                    </div>
-                                    <div className={twMerge(
-                                        'col-start-1 col-span-12',
-                                        'xs:col-start-1 xs:col-span-11',
-                                        'sn:col-start-1 sm:col-span-9',
-                                        'mdl:col-start-3 mdl:col-span-8',
-                                        'lg:col-start-3 lg:col-span-7',
-                                        'xl:col-start-3 xl:col-span-6'
-                                    )}>
-                                        <AgencyList />
-                                    </div>
-                                    <div className={twMerge(
-                                        'flex flex-row flex-wrap sm:flex-col gap-x-10 xs:gap-x-12 gap-y-4 sm:gap-4 justify-start xs:justify-end items-end',
-                                        'col-start-1 col-span-12',
-                                        'xs:col-start-1 xs:col-span-11',
-                                        'sm:col-start-11 sm:col-span-2'
-                                    )} >
-                                        {socialNetworkItems.map((item, index) => {
-                                            return (
-                                                <Link key={index} weight='medium' href={item.link} size='sm' degree='2'>
-                                                    {t(`socialNetwork.${item.id}.name`)}
-                                                </Link>
-                                            )
-                                        })}
-                                    </div>
-                                </div>
-                            </div>
-                        </Container>
-                        <Container as='section' size='lg' className='py-0' >
-                            <Footer />
-                        </Container>
+            <Container as='section' size='lg' className={twMerge('flex flex-col gap-12', 'items-stretch')} >
+                <div className={twMerge('flex flex-col gap-14 xl:gap-20 py-40')}>
+                    {/* title */}
+                    <div className='grid grid-cols-12 gap-4'>
+                        <Display size='xl' weight='bold' className={twMerge('col-start-1 col-span-12', 'mdl:col-start-4 mdl:col-span-9', 'lg:col-start-3 lg:col-span-10')} >
+                            {t('contact.title')}
+                        </Display>
                     </div>
-                </AnimationConf>
-            </ScrollContextProvider >
-            <ToastRegion />
+                    {/* form */}
+                    <div className={twMerge(
+                        'grid grid-cols-12 gap-y-10 gap-x-0 xxs:gap-8 sm:gap-3 md:gap-8 mdl:gap-4 xl:gap-8',
+                        'grid-rows-[repeat(3,_minmax(0,_auto))] xxs:grid-rows-[repeat(2,_minmax(0,_auto))] sm:grid-rows-2'
+                    )}>
+                        <div className={twMerge(
+                            'flex flex-col gap-3',
+                            'col-start-1 col-span-12',
+                            'xxs:col-start-1 xxs:col-span-4',
+                            'sm:col-start-10 sm:col-span-3',
+                            'mdl:col-start-1 mdl:col-span-2',
+                            'row-start-1 row-span-1'
+                        )}>
+                            <Text p weight='medium' size='sm' degree='2' className='text-start uppercase' >
+                                {t('contact.subtitle')}
+                            </Text>
+                            <hr className='relative h-[2px] w-4 bg-gray-200' />
+                        </div>
+                        <div className={twMerge(
+                            'col-start-1 col-span-12',
+                            'xxs:col-start-1 xxs:col-span-12',
+                            'xs:col-start-1 xs:col-span-11',
+                            'sm:col-start-1 sm:col-span-9',
+                            'mdl:col-start-4 mdl:col-span-9',
+                            'lg:col-start-3 lg:col-span-9',
+                            'xl:col-start-3 xl:col-span-8',
+                            'row-start-3 row-span-1',
+                            'xxs:row-start-2 xxs:row-span-1',
+                            'sm:row-start-1 sm:row-span-2'
+                        )}>
+                            <FormContact />
+                        </div>
+                        <div className={twMerge(
+                            'flex flex-col sm:justify-end items-start xl:items-end',
+                            'col-start-1 col-span-12',
+                            'xxs:col-start-8 xxs:col-span-4',
+                            'sm:col-start-10 sm:col-span-3',
+                            'mdl:col-start-1 mdl:col-span-3',
+                            'lg:col-start-1 lg:col-span-2',
+                            'xl:col-start-11 xl:col-span-2',
+                            'row-start-2 row-span-1',
+                            'xxs:row-start-1 xxs:row-span-1',
+                            'sm:row-start-2 sm:row-span-1'
+                        )} >
+                            <div className='flex flex-col gap-1'>
+                                <Text size='sm' degree='2' p weight='medium' suppressHydrationWarning className='whitespace-nowrap-important'>
+                                    {t('contact.localTime')} {timer?.formattedTime}
+                                </Text>
+                                <Text size='sm' degree='2' p weight='medium' suppressHydrationWarning >
+                                    {t('contact.gmtTime')}({timer?.gmtOffset})
+                                </Text>
+                            </div>
+                        </div>
+                    </div>
+                    <span className='h-6 md:h-10'></span>
+                    {/* repped */}
+                    <div className={twMerge(
+                        'grid grid-cols-12 gap-x-0 gap-y-8 xs:gap-8'
+                    )}>
+                        <div className={twMerge(
+                            'flex flex-col',
+                            'gap-3',
+                            'col-start-1 col-span-12',
+                            'sm:col-start-1 sm:col-span-2'
+                        )}>
+                            <Text p weight='medium' size='sm' degree='2' className='text-start uppercase' >
+                                {t('contact.reppedBy')}
+                            </Text>
+                            <hr className='relative h-[2px] w-4 bg-gray-200' />
+                        </div>
+                        <div className={twMerge(
+                            'col-start-1 col-span-12',
+                            'xs:col-start-1 xs:col-span-11',
+                            'sn:col-start-1 sm:col-span-9',
+                            'mdl:col-start-3 mdl:col-span-8',
+                            'lg:col-start-3 lg:col-span-7',
+                            'xl:col-start-3 xl:col-span-6'
+                        )}>
+                            <AgencyList />
+                        </div>
+                        <div className={twMerge(
+                            'flex flex-row flex-wrap sm:flex-col gap-x-10 xs:gap-x-12 gap-y-4 sm:gap-4 justify-start xs:justify-end items-end',
+                            'col-start-1 col-span-12',
+                            'xs:col-start-1 xs:col-span-11',
+                            'sm:col-start-11 sm:col-span-2'
+                        )} >
+                            {socialNetworkItems.map((item, index) => {
+                                return (
+                                    <Link key={index} weight='medium' href={item.link} size='sm' degree='2'>
+                                        {t(`socialNetwork.${item.id}.name`)}
+                                    </Link>
+                                )
+                            })}
+                        </div>
+                    </div>
+                </div>
+            </Container>
+            <Container as='section' size='lg' className='py-0' >
+                <Footer />
+            </Container>
         </>
     )
 }

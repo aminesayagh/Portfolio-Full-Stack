@@ -40,6 +40,7 @@ const Manifesto = () => {
                 ease: 'power4',
                 stagger: 0.1,
                 skewX: 0.3,
+                duration: 0.5,
                 scrollTrigger: {
                     trigger: '.manifesto_quote_gsap',
                     scrub: true,
@@ -68,7 +69,7 @@ const Manifesto = () => {
                         start: 'bottom bottom',
                         end: 'top 70%',
                         toggleActions: 'play none none none',
-                        scrub: true,
+                        scrub: 2,
                         markers: false,
                     }
                 });
@@ -78,7 +79,7 @@ const Manifesto = () => {
     }, [scrollbar]);
     return (
         <div className={twMerge('h-fit py-40')}  ref={refDescription} >
-            <div data-scroll data-scroll-position='start' data-scroll-speed='2' className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`, 'h-fit strick')}>
+            <div data-scroll data-scroll-position='start' data-scroll-speed='1.1' className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`, 'h-fit strick')}>
                 <div className={twMerge('flex flex-col gap-7', 'items-start justify-start manifesto_quote_gsap',
                     'col-start-1 col-span-12 xs:col-start-2 xs:col-span-11 md:col-start-2 md:col-span-10 mdl:col-start-2 mdl:col-span-10 xl:col-start-2 xl:col-span-9',
                 )}>
@@ -110,7 +111,7 @@ const Manifesto = () => {
                         <Text p degree='3' weight='medium' size='lg' className='manifesto_description_gsap'>
                             {t(`manifesto.what_i_do`)}
                         </Text>
-                        <Text p degree='3' size='xl' weight='semibold' className='textLink inline w-full whitespace-inherit-important manifesto_description_gsap' style={{
+                        <Text p degree='3' size='xl' weight='semibold' data-scroll data-scroll-position='end' data-scroll-speed='0.4' className='textLink inline w-full whitespace-inherit-important manifesto_description_gsap' style={{
                             WebkitLineClamp: 2,
                             WebkitBoxOrient: 'vertical',
                             overflow: 'hidden',

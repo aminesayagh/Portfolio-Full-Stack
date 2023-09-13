@@ -1,9 +1,9 @@
 {
     "head": {
         "home": {
-            "title": "Mohamed Amine SAYAGH - Full Stack Web Developer",
-            "description": "Mohamed Amine SAYAGH - Full Stack Web Developer",
-            "keywords": "Mohamed Amine SAYAGH - Full Stack Web Developer",
+            "title": "Mohamed Amine SAYAGH - Développeur Web Full Stack",
+            "description": "Mohamed Amine SAYAGH - Développeur Web Full Stack",
+            "keywords": "Mohamed Amine SAYAGH - Développeur Web Full Stack",
             "author": "Mohamed Amine SAYAGH",
             "url": "https://ma-sayagh.vercel.app/"
         }
@@ -34,7 +34,7 @@
         "email": "AMINESAYAGH1997@GMAIL.COM",
         "locale": "fr",
         "logo": "Mohamed Amine SAYAGH",
-        "close": "Close",
+        "close": "Fermer",
         "langs": {
             "fr": {
                 "label": "EN"
@@ -44,9 +44,9 @@
             }
         },
         "menu": {
-            "manifesto": {"attribute": "Manifesto", "more": "null" },
-            "experience": {"attribute": "Experience", "more": "(40+)" },
-            "cases": {"attribute": "Cases", "more": "(☺ 90+)" },
+            "manifesto": {"attribute": "Manifeste", "more": "null" },
+            "experience": {"attribute": "Expérience", "more": "(40+)" },
+            "cases": {"attribute": "Projets", "more": "(☺ 90+)" },
             "contact": {"attribute": "Contact", "more": "null" }
         },
         "socialNetwork": {
@@ -55,232 +55,221 @@
             "github": "GH"
         },
         "description": {
-            "title": "Who's Behind the Screen?",
-            "content": "Mohamed Amine Sayagh, an independent full-stack developer with expertise in UI/UX design. Crafting seamless web experiences for the next generation of customer-facing companies."
+            "title": "Qui est derrière l'écran?",
+            "content": "Mohamed Amine Sayagh, un développeur full-stack indépendant spécialisé en design UI/UX. Il crée des expériences web fluides pour la nouvelle génération d'entreprises orientées client."
         },
         "copyright": "© 2023 MOHAMED AMINE SAYAGH.",
-        "action": "LET'S TALK"
+        "action": "PARLONS-EN"
     },
     "intro": {
         "title": {
-            "1":"interface",
+            "1": "interface",
             "2_1": "full",
             "2_2": "stack",
-            "3": "Developer"
+            "3": "Développeur"
         },
         "descriptions": {
-            "1": "Mohamed Amine SAYAGH, An independent web developer, with experience in UI/UX design.",
-            "2": "I am Creating agreeable web experience for next generation of customers facing companies."
+            "1": "Mohamed Amine SAYAGH, un développeur web indépendant, avec expérience en design UI/UX.",
+            "2": "Je crée des expériences web agréables pour la prochaine génération d'entreprises orientées client."
         },
         "menu": {
-            "Manifesto": "Manifesto",
-            "Experience": "Experience",
-            "Cases": "Cases",
+            "Manifesto": "Manifeste",
+            "Experience": "Expérience",
+            "Cases": "Projets",
             "Contact": "Contact"
         },
         "copy": "© 2023"
     },
     "manifesto": {
-        "subtitle_1": "Manifesto",
-        "subtitle_2": "What I Think",
-        "slogan": "Being correct is not enough",
-        "description": "it's merely the inception. An exceptional engineer devotes a substantial amount of time to deep, unbiased listening. They consider real-world experimentation as their source of truth, adamantly differentiating between judgments drawn from perspectives and concrete facts.",
-        "who_i_am": "My name is Mohamed Amine SAYAGH, A Passionate and independent web developer, deeply versed in science and of Web Design Interface, With a keen eye for detail and a growth understanding of user-centric design principles, I constantly push the boundaries of what's possible in the digital realm.",
-        "what_i_do": "I love transforming everything by unique, problem solving and usable designs, whether it's about digital products, brands, website. I ensure that every digital interaction is not just functional, but also delightful and memorable.",
-        "goal": "Want to know more about me?,",
-        "action": "just say hello"
-    },
-    "manifesto_old": {
-        "title_1": "Perspective",
-        "title_1_2": "thinking",
-        "title_2": "Manifesto",
-        "image_alt": "Mohamed Amine SAYAGH",
-        "slogan": "We provide more than solutions, we deliver understanding.",
-        "subtitle_1": "HOW I DO",
-        "subtitle_2": "PROBLEM SOLVING",
-        "content": "Being correct is not enough, it's merely the inception. An exceptional engineer devotes a substantial amount of time to deep, unbiased listening. They consider real-world experimentation as their source of truth, adamantly differentiating between judgments drawn from perspectives and concrete facts."
+        "subtitle_1": "Manifeste",
+        "subtitle_2": "Ce que je pense",
+        "slogan": "Être correct ne suffit pas",
+        "description": "c'est juste le début. Un ingénieur exceptionnel consacre beaucoup de temps à l'écoute profonde et impartiale. Ils considèrent l'expérimentation dans le monde réel comme leur source de vérité, différenciant fermement les jugements basés sur des perspectives et des faits concrets.",
+        "who_i_am": "Mon nom est Mohamed Amine SAYAGH, un développeur web passionné et indépendant, profondément versé dans la science et le design d'interface web. Avec un œil attentif aux détails et une compréhension approfondie des principes centrés sur l'utilisateur, je repousse constamment les limites de ce qui est possible dans le domaine numérique.",
+        "what_i_do": "J'aime transformer tout en designs uniques, résolvant des problèmes et utilisables, que ce soit pour des produits numériques, des marques ou des sites web. Je m'assure que chaque interaction numérique n'est pas seulement fonctionnelle, mais aussi agréable et mémorable.",
+        "goal": "Vous voulez en savoir plus sur moi?,",
+        "action": "dites simplement bonjour"
     },
     "experience": {
-        "title": "Evolution through expertise",
-        "description": "Life hides in places we never look, the things we desire lie on the streets we haven't yet walked, it's these untraveled roads that call to me, igniting an endless quest in my heart.",
+        "title": "Évolution à travers l'expertise",
+        "description": "La vie se cache dans des endroits que nous ne regardons jamais, les choses que nous désirons se trouvent dans les rues que nous n'avons pas encore parcourues. Ce sont ces routes inexplorées qui m'appellent, enflammant une quête sans fin dans mon cœur.",
         "stages": {
             "1": {
                 "title": "WEB DESIGNER",
                 "count": "01",
-                "description": "My journey began in the realm of Web Design, where the canvas of creativity met the structural rigidity of coding. Here, I learned to harmonize aesthetics with functionality, crafting compelling user interfaces that did not merely look good, but also worked seamlessly. "
+                "description": "Mon voyage a commencé dans le domaine du Web Design, où le canvas de la créativité a rencontré la rigueur structurelle de la programmation. Ici, j'ai appris à harmoniser l'esthétique avec la fonctionnalité, en créant des interfaces utilisateur convaincantes qui non seulement avaient une belle apparence, mais fonctionnaient également de manière fluide."
             },
             "2": {
-                "title": "FRONT-END DEVELOPMENT",
+                "title": "DÉVELOPPEMENT FRONT-END",
                 "count": "02",
-                "description": "As I delved deeper into the craft, I transitioned into the exciting domain of Front-End Development. Here, I became the bridge between design and technology, breathing life into static designs with robust coding languages. I started to see websites as more than just a visual interfaces."
+                "description": "En m'immergeant davantage dans le métier, je suis passé au domaine passionnant du développement Front-End. Ici, je suis devenu le pont entre le design et la technologie, donnant vie aux designs statiques avec des langages de codage robustes. J'ai commencé à voir les sites web comme bien plus que de simples interfaces visuelles."
             },
             "3": {
-                "title": "BACK-END DEVELOPMENT",
+                "title": "DÉVELOPPEMENT BACK-END",
                 "count": "03",
-                "description": "Next, I ventured into the mysterious depths of Back-End Development. If the front-end was about creating a perfect facade, the back-end was about ensuring the machinery behind it was flawless. Databases, servers, I learned to build scalable, efficient systems and began to appreciate the underlying complexity that makes a website's seamless operation possible."
+                "description": "Ensuite, je me suis aventuré dans les profondeurs mystérieuses du développement Back-End. Si le front-end concernait la création d'une façade parfaite, le back-end consistait à s'assurer que la machinerie derrière était irréprochable. Bases de données, serveurs, j'ai appris à construire des systèmes évolutifs et efficaces et j'ai commencé à apprécier la complexité sous-jacente qui rend possible le fonctionnement fluide d'un site web."
             },
             "4": {
-                "title": "SYSTEM ARCHITECTURE",
+                "title": "ARCHITECTURE SYSTÈME",
                 "count": "04",
-                "description": "With a wealth of knowledge accumulated, my journey led me to the study of System Architecture. I began to see the broader perspective, understanding how every decision, every component, every line of code could impact the entire system. It was here that I honed my ability to design resilient, efficient, and scalable architectures."
+                "description": "Avec une richesse de connaissances accumulées, mon voyage m'a conduit à l'étude de l'architecture système. J'ai commencé à voir la perspective plus large, comprenant comment chaque décision, chaque composant, chaque ligne de code pouvait impacter tout le système. C'est ici que j'ai affiné ma capacité à concevoir des architectures résilientes, efficaces et évolutives."
             }
         }
     },
     "motivation": {
-        "action": "START THE PROJECT",
+        "action": "LANCEZ LE PROJET",
         "content": {
-            "1": "Open, bold, and engaging, without the trappings of entrenched or outdated opinions. My work thrives in the freedom and room to grow, driven by responsibility and inner drive. I work within diverse teams, powered by remarkable personalities.",
-            "2": "My work aspires to be special, to spring from the creativity of diverse minds - irrespective of gender, age, or any other factors."
+            "1": "Ouvert, audacieux et engageant, sans être prisonnier des opinions enracinées ou obsolètes. Mon travail s'épanouit dans la liberté et l'espace pour grandir, animé par la responsabilité et la motivation intérieure. Je travaille au sein d'équipes diverses, portées par des personnalités remarquables.",
+            "2": "Mon travail aspire à être unique, à émaner de la créativité d'esprits diversifiés - indépendamment du genre, de l'âge ou de tout autre critère."
         }
     },
     "cases": {
-        "title": "Selected Projects",
-        "description": "Creativity requires Aim, Orientation, Responsibility, and discipline. the willingness to make sacrifices which is the hallmark of maturity in the service of a higher goal."
+        "title": "Projets Sélectionnés",
+        "description": "La créativité requiert un But, une Orientation, une Responsabilité et de la discipline. La volonté de faire des sacrifices, qui est le signe distinctif de la maturité au service d'un objectif plus élevé."
     },
     "contactCall": {
-        "title": "GOT A PROJECT?",
-        "action":"LET'S TALK",
-        "description": "Face your being with the necessity of transformation"
+        "title": "VOUS AVEZ UN PROJET ?",
+        "action":"PARLONS-EN",
+        "description": "Confrontez votre être à la nécessité de transformation"
     },
     "footer": {
-        "state": "I usually work on several projects, but I'll be happy to discuss new opportunities.",
-        "action": "BACK TOP",
+        "state": "Je travaille généralement sur plusieurs projets, mais je serais heureux de discuter de nouvelles opportunités.",
+        "action": "RETOUR EN HAUT",
         "name": "Mohamed Amine SAYAGH",
         "copy": "© 2023",
-        "socialNetwork": "FOLLOW ME"
+        "socialNetwork": "SUIVEZ-MOI"
     },
     "contact": {
-        "title": "Get in touch",
-        "subtitle": "Tell me more",
-        "localTime": "MY LOCAL TIME IS",
+        "title": "Entrez en contact",
+        "subtitle": "Parlez-moi davantage",
+        "localTime": "MON HEURE LOCALE EST",
         "gmtTime": "GMT ",
-        "reppedBy": "Repped by"
+        "reppedBy": "Représenté par"
     },
     "form": {
         "field": {
             "firstName": {
-                "placeholder": "Your first name",
-                "label": "First Name"
+                "placeholder": "Votre prénom",
+                "label": "Prénom"
             },
             "lastName": {
-                "placeholder": "Your last name",
-                "label": "Last Name"
+                "placeholder": "Votre nom de famille",
+                "label": "Nom"
             },
             "email": {
-                "placeholder": "Your email",
+                "placeholder": "Votre email",
                 "label": "Email"
             },
             "message": {
-                "placeholder": "Your message",
+                "placeholder": "Votre message",
                 "label": "Message"
             },
             "phoneNumber": {
-                "placeholder": "Your phone number",
-                "label": "Phone Number"
+                "placeholder": "Votre numéro de téléphone",
+                "label": "Numéro de Téléphone"
             },
             "objective": {
-                "placeholder": "Your objective",
-                "label": "Objective",
+                "placeholder": "Votre objectif",
+                "label": "Objectif",
                 "options": {
-                    "1": "Project Inquiry",
-                    "2": "Job Opportunity",
-                    "3": "Portfolio Feedback",
-                    "4": "Getting to know Each Other",
-                    "5": "Say Hello",
-                    "6": "Other"
+                    "1": "Demande de Projet",
+                    "2": "Opportunité d'Emploi",
+                    "3": "Retour sur Mon Portfolio",
+                    "4": "Faire connaissance",
+                    "5": "Dire Bonjour",
+                    "6": "Autre"
                 }
             },
             "submit": {
-                "label": "Send"
+                "label": "Envoyer"
             }
         },
         "error": {
-            "required": "This field is required.",
-            "email": "Please enter a valid email address.",
-            "minLength": "Please enter at least {{min}} characters.",
-            "maxLength": "Please enter no more than {{max}} characters.",
-            "pattern": "Please match the requested format."
+            "required": "Ce champ est obligatoire.",
+            "email": "Veuillez entrer une adresse email valide.",
+            "minLength": "Veuillez entrer au moins {{min}} caractères.",
+            "maxLength": "Veuillez ne pas entrer plus de {{max}} caractères.",
+            "pattern": "Veuillez respecter le format demandé."
         },
         "notification": {
-            "success": "Awesome, I got your message! I'll get back to you soon.",
-            "error": "Oops! Something went wrong. Please try again."
+            "success": "Génial, j'ai reçu votre message ! Je reviendrai vers vous bientôt.",
+            "error": "Oups ! Une erreur s'est produite. Veuillez réessayer."
         }
+    }, "tasks": {
+        "Web Designer": "Concepteur Web",
+        "Web Developer": "Développeur Web",
+        "Mobile Developer": "Développeur Mobile",
+        "Crypto Developer": "Développeur Crypto",
+        "Graphic Designer": "Graphiste",
+        "Marketer": "Marketeur",
+        "Database Consultant": "Consultant Base de Données",
+        "Scrape Developer": "Développeur de Scraping",
+        "Backend Developer": "Développeur Backend",
+        "Frontend Developer": "Développeur Frontend",
+        "Infrastructure Developer": "Développeur Infrastructure",
+        "Technical Advisor": "Conseiller Technique",
+        "Full Stack Developer": "Développeur Full Stack",
+        "Fullstack Developer": "Développeur Fullstack"
     },
-    "tasks": {
-        "Web Designer": "Web Designer",
-        "Web Developer": "Web Developer",
-        "Mobile Developer": "Mobile Developer",
-        "Crypto Developer": "Crypto Developer",
-        "Graphic Designer": "GRAPHIC DESIGNER",
-        "Marketer": "Marketer",
-        "Database Consultant": "Database Consultant",
-        "Scrape Developer": "Scrape Developer",
-        "Backend Developer": "Backend Developer",
-        "Frontend Developer": "Frontend Developer",
-        "Infrastructure Developer": "Infrastructure Developer",
-        "Technical Advisor": "Technical Advisor",
-        "Full Stack Developer": "Full Stack Developer",
-        "Fullstack Developer": "Fullstack Developer"
-    },
-
+    
     "jobTItle": {
-        "CTO": "CTO",
-        "CEO": "CEO",
-        "CO-FOUNDER": "CO-FOUNDER",
-        "FOUNDER": "FOUNDER",
-        "TECHNICAL ADVISOR": "TECHNICAL ADVISOR",
-        "RECHERCHE AND DEVELOPMENT": "RECHERCHE AND DEVELOPMENT",
-        "FREELANCER": "FREELANCER",
-        "AUTOMATION SPECIALIST": "AUTOMATION SPECIALIST",
-        "ACADEMIC PROJECT PLATFORM ARCHITECT": "ACADEMIC PROJECT PLATFORM ARCHITECT"
+        "CTO": "CTO (Directeur Technique)",
+        "CEO": "CEO (Directeur Général)",
+        "CO-FOUNDER": "CO-FONDATEUR",
+        "FOUNDER": "FONDATEUR",
+        "TECHNICAL ADVISOR": "CONSEILLER TECHNIQUE",
+        "RECHERCHE AND DEVELOPMENT": "RECHERCHE ET DÉVELOPPEMENT",
+        "FREELANCER": "TRAVAILLEUR INDÉPENDANT",
+        "AUTOMATION SPECIALIST": "SPÉCIALISTE DE L'AUTOMATISATION",
+        "ACADEMIC PROJECT PLATFORM ARCHITECT": "ARCHITECTE DE PLATEFORME DE PROJET ACADEMIQUE"
     },
     "country": {
-        "Morocco": "Morocco",
+        "Morocco": "Maroc",
         "France": "France",
-        "United States": "United States",
-        "Singapore": "Singapore",
-        "Lithuania": "Lithuania"
-    },
+        "United States": "États-Unis",
+        "Singapore": "Singapour",
+        "Lithuania": "Lituanie"
+    },    
     "projects": {
         "1": {
             "title": "Happy Water",
             "alt": "Happy Water",
-            "description": "Contributed as a key designer and developer for an ecologically-focused NFT platform website." 
+            "description": "Contribué en tant que concepteur et développeur principal pour un site web de plateforme NFT axé sur l'écologie."
         },
         "2": {
-            "title": "Sofiane Pamart's Musical NFT",
-            "alt": "Sofiane Pamart's Musical NFT",
-            "description": "Collaborated within a 140-member team, including 40 international developers, under the leadership of entrepreneur Oussama Ommar. Spearheaded the creation of visual music NFTs capturing the unique identity of artist Sofiane Pamart, paving the way for a significant fundraising campaign."
+            "title": "NFT Musical de Sofiane Pamart",
+            "alt": "NFT Musical de Sofiane Pamart",
+            "description": "Collaboration au sein d'une équipe de 140 membres, dont 40 développeurs internationaux, sous la direction de l'entrepreneur Oussama Ommar. Piloté la création de NFTs musicaux visuels capturant l'identité unique de l'artiste Sofiane Pamart, ouvrant la voie à une importante campagne de collecte de fonds."
         },
         "3": {
-            "title": "Cyber Cohesion",
-            "alt": "Cyber Cohesion",
-            "description": "Singapore-based security firm offering technical consultation for appropriate development solutions."
+            "title": "Cohésion Cyber",
+            "alt": "Cohésion Cyber",
+            "description": "Entreprise de sécurité basée à Singapour offrant des consultations techniques pour des solutions de développement appropriées."
         },
         "4": {
             "title": "Shinobi Boy",
-            "alt": "Shinobi boy",
+            "alt": "Shinobi Boy",
             "description": ""
         },
         "5": {
-            "title": "Web Application for managing university Projects",
-            "alt": "Web Application for managing university Projects",
+            "title": "Application Web pour la gestion des projets universitaires",
+            "alt": "Application Web pour la gestion des projets universitaires",
             "description": ""
         },
         "6": {
             "title": "Sodiadd",
             "alt": "Sodiadd",
-            "description": "Real estate investment agency; developed a monolithic web application for individual investors."
+            "description": "Agence d'investissement immobilier ; développé une application web monolithique pour les investisseurs individuels."
         },
         "7": {
-            "title": "Jonas Agency",
-            "alt": "Jonas Agency",
-            "description": "Digital marketing agency; crafted websites tailored for strategic online promotion."
+            "title": "Agence Jonas",
+            "alt": "Agence Jonas",
+            "description": "Agence de marketing digital ; réalisé des sites web sur mesure pour une promotion en ligne stratégique."
         },
         "8": {
             "title": "Lavish Trading",
             "alt": "Lavish Trading",
-            "description": "Spearheaded the design and development of a web identity for an individual-focused trading agency, offering online investment plans and expert consulting services."
+            "description": "Dirigé la conception et le développement d'une identité web pour une agence de trading axée sur les individus, proposant des plans d'investissement en ligne et des services de conseil d'experts."
         },
         "9": {
             "title": "Maschool",
@@ -288,9 +277,9 @@
             "description": ""
         },
         "10": {
-            "title": "FreeLance Projects",
-            "alt": "FreeLance Projects",
+            "title": "Projets FreeLance",
+            "alt": "Projets FreeLance",
             "description": ""
         }
-    }
+    }    
 }

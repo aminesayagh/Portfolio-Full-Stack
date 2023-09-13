@@ -1,106 +1,147 @@
-import { useMemo, useRef, useContext } from 'react';
+import { useMemo, useRef, useContext, useLayoutEffect, useState, useEffect } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { useIsomorphicLayoutEffect } from 'react-use';
+import { Title, Text } from '@/components/ui';
+
 import { useTranslation } from 'next-i18next';
+import { ScrollProvider } from '@/context/ScrollContext';
+import { getProjectsByCategory } from '@/conf/projects';
 import { gsap } from 'gsap';
 
-import { Title, Text, Image } from '@/components/ui';
-import { getProjectsByCategory } from '@/conf/projects';
-import { ScrollProvider } from '@/context/ScrollContext';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+const Case = ({ picture, index, id }: { picture?: string[], index: number, id: string }) => {
+    const container = useRef<HTMLDivElement>(null);
+    const { scrollbar } = useContext(ScrollProvider);
+    const { t } = useTranslation();
 
-const Case = ({ picture }: { picture?: string[] }) => {
-    let ref = useRef(null);
-    useIsomorphicLayoutEffect(() => {
-        let ctx = gsap.context(() => {
-            // gsap.fromTo(ref.current as any, {
-            //     backgroundSize: '100%',
-            //     backgroundPosition: 'center 20%',
-            // }, {
-            //     backgroundSize: '110%',
-            //     backgroundPosition: 'center 80%',
-            //     ease: 'power1',
-            //     scrollTrigger: {
-            //         trigger: ref.current as any,
-            //         // scrub: 1,
-            //         // start: 'top center',
-            //         markers: false,
-            //     }
-            // })
-        }, ref);
+    useEffect(() => {
+        const ctx = gsap.context((self) => {
+            // gsap.set(container.current, {
+            //     zIndex: 100 - (index + 10)
+            // });
+            if(index < 2) {
+                gsap.fromTo(container.current?.children[0] as any, {
+                    top: 0,
+                },{
+                    top: '100%',
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: container.current as any,
+                        scrub: true,
+                        start: 'top top',
+                        end: 'bottom top',
+                        toggleActions: 'play none reverse none',
+                        markers: false,
+                        invalidateOnRefresh: true,
+                    }
+                })
+            }else {
+                gsap.fromTo(container.current?.children[0] as any, {
+                    top: 0,
+                },{
+                    top: '100%',
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: container.current as any,
+                        scrub: true,
+                        start: 'top top',
+                        end: 'bottom top',
+                        toggleActions: 'play none reverse none',
+                        markers: false,
+                        invalidateOnRefresh: true,
+                    }
+                })
+            }
+            gsap.fromTo(container.current?.children[0] as any, {
+                backgroundSize: '100%',
+                backgroundPosition: 'center 60%',
+            }, {
+                backgroundSize: '105%',
+                backgroundPosition: 'center 20%',
+                ease: 'power4',
+                scrollTrigger: {
+                    trigger: container.current as any,
+                    scrub: true,
+                    start: 'top bottom',
+                    markers: false,
+                    invalidateOnRefresh: true,
+                }
+            })
+            // @ts-ignore
+            const text = self?.selector('.case-title-gsap, .case-text-gsap');
+            gsap.set('.case-title-gsap, .case-text-gsap' as any, {
+                xPercent: -100,
+            });
+            gsap.fromTo('.case-title-gsap, .case-text-gsap', {
+                xPercent: -100,
+            }, {
+                xPercent: 0,
+                duration: 2.2,
+                stagger: 0.6,
+                ease: 'power4',
+                scrollTrigger: {
+                    trigger: '.case-title-gsap, .case-text-gsap' as any,
+                    scrub: true,
+                    start: 'top bottom-=35%',
+                    end: 'bottom center',
+                    markers: false,
+                    invalidateOnRefresh: true,
+                }
+            })
+            
+        }, container);
         return () => ctx.revert();
-    }, [ref.current]);
-
-    return <div
-        className={twMerge(
-            'flex flex-col items-center justify-center',
-            'bg-no-repeat bg-cover',
-            'h-screen w-full',
-            'image_gsap',
-        )}
-        ref={ref}
-        style={{
+    }, [scrollbar])
+    return <div className={twMerge('relative h-[110vh]')} ref={container} style={{
+        zIndex: 10 + (index + 10),
+    }} >
+    <div className='absolute left-0 right-0 w-full h-screen bg-no-repeat bg-cover' style={{
             backgroundImage: `url(${!!picture ? picture[0] : ''})`,
-            backgroundSize: '100%',
-        }}
-    >
-
+            zIndex: 10 + (index + 11),
+        }} >
+            <div className='relative w-fit flex flex-col justify-end h-full px-24 py-40 gap-4'
+            // data-scroll data-scroll-position='end' data-scroll-speed='1.2'
+            style={{
+                zIndex: 10 + (index + 14),
+            }}>
+                <span className='overflow-hidden' >
+                    <Title h1 degree='1' className='case-title-gsap translate-x-[-100%]' >
+                        {t(`projects.${id}.title`)}
+                    </Title>
+                </span>
+                <span className='overflow-hidden w-1/2'>
+                    <Text p size='md' degree='2' className='case-text-gsap'>
+                        {t(`projects.${id}.description`)}
+                    </Text>
+                </span>
+            </div>
+            <div className={twMerge('absolute left-0 right-0 bottom-0 w-full h-60', 'bg-gradient-to-t from-black-100 to-black-100/0')} style={{
+                zIndex: 10 + (index + 12),
+            }}></div>
+        </div>
     </div>
 }
 const Cases = () => {
     const { t } = useTranslation();
+    const { scrollbar } = useContext(ScrollProvider);
     const projects = useMemo(() => getProjectsByCategory('best'), []);
-    const containerRef = useRef<HTMLDivElement>(null);
+    const container = useRef<HTMLDivElement>(null);
 
-    useIsomorphicLayoutEffect(() => {
-        let ctx = gsap.context((self) => {
-            gsap.set('.image_gsap_container', {
-                zIndex: (i, target, targets) => targets.length - i,
-            });
-            gsap.utils.toArray('.image_gsap_container').forEach((container, index) => {
-                const tl = gsap.timeline({
-                    scrollTrigger: {
-                        trigger: container as any,
-                        pin: container as any,
-                        markers: true,
-                        pinSpacing: true,
-                        start: 'top top',
-                        end: 'bottom -=100%',
-                        scrub: true,
-                    }
-                });
-            });
-        });
-        return () => ctx.revert();
-    }, [containerRef.current]);
-    return (
-        <>
-            <div className={twMerge('flex flex-col gap-14 sm:gap-12 w-full')}>
-                <div className={twMerge('flex flex-col sm:flex-row justify-between items-start sm:items-end', 'gap-2 sm:gap-12', 'w-full')}>
-                    <Title h2 weight='bold' degree='2' className={'sm:w-min'}>
-                        {t('cases.title')}
-                    </Title>
-                    <div className='w-full xs:w-9/12 sm:w-7/12 md:w-6/12 lg:w-5/12 xl:w-4/12'>
-                        <Text p size='md' degree='3' weight='semibold' className='w-auto max-w-[38rem] sm:max-w-[36rem] my-2 md:my-4' >
-                            {t('cases.description')}
-                        </Text>
-                    </div>
-                </div>
-                <div className={twMerge('w-full relative', 'flex flex-col gap-0')} ref={containerRef} >
-                    {projects.map((project, index) => {
-                        return <div key={index} className={twMerge(
-                            'w-full',
-                            'flex flex-col',
-                            `image_gsap_container`
-                        )}  >
-                            <Case picture={project?.picture} />
-                        </div>
-                    })}
-                </div>
+    return <div className={twMerge('flex flex-col gap-14 sm:gap-12 w-full h-fit')} >
+        <div className={twMerge('flex flex-col sm:flex-row justify-between items-start sm:items-end', 'gap-2 sm:gap-12', 'w-full')}>
+            <Title h2 weight='bold' degree='2' className={'sm:w-min'}>
+                {t('cases.title')}
+            </Title>
+            <div className='w-full xs:w-9/12 sm:w-7/12 md:w-6/12 lg:w-5/12 xl:w-4/12'>
+                <Text p size='md' degree='3' weight='semibold' className='w-auto max-w-[38rem] sm:max-w-[36rem] my-2 md:my-4' >
+                    {t('cases.description')}
+                </Text>
             </div>
-        </>
-    )
+        </div>
+        <div className={twMerge(`w-full flex flex-col gap-0 h-fit`, 'rounded-2xl overflow-hidden')}>
+            {projects.map((project, index) => {
+                return <Case key={index} picture={project?.picture} index={index} id={project.id} />
+            })}
+        </div>
+    </div>
 }
 
 export default Cases;
-

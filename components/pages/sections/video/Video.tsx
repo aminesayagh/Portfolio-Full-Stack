@@ -9,11 +9,14 @@ import { useMedia } from 'react-use'
 const Video = () => {
     let ref = useRef<HTMLCanvasElement>(null);
     const [images, setImages] = useState<Array<HTMLImageElement>>([]);
+
     const isLg = useMedia('(min-width: 1024px)', true);
     const isSM = useMedia('(min-width: 640px)', false);
     const isXxs = useMedia('(min-width: 390px)', false);
+
     const [height, setHeight] = useState<string>('50vh');
-    const { scrollbar } = useContext(ScrollProvider)
+
+    const { scrollbar } = useContext(ScrollProvider);
     useEffect(() => {
         if(isLg) {
             setHeight('110vh');
@@ -70,7 +73,7 @@ const Video = () => {
     
     return (
         <>
-            <div  className={twMerge('block relative w-full h-fit rounded-3xl', rounded({ size: 'xl' }))}>
+            <div className={twMerge('block relative w-full h-fit rounded-3xl', rounded({ size: 'xl' }))}>
                 <canvas data-scroll ref={ref} className='h-fit' style={{ width: "100%", maxHeight: height, objectFit: 'cover', borderRadius: '1.5rem'  }} />
             </div>
         </>

@@ -4,17 +4,24 @@ import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
 
 import { Text, Display, Link } from '@/components/ui';
-
+import { useHover } from 'react-aria';
 
 const Action = () => {
-    const { t } = useTranslation()
+    const { t } = useTranslation();
+    const { hoverProps, isHovered } = useHover({
+        onHoverStart: () => {
+
+        },
+        onHoverEnd: () => {
+        }
+    })
     return <>
         <div className={twMerge('flex flex-col gap-1 xs:gap-2 sm:gap-6', 'justify-center items-start xs:items-center place-content-start', 'h-[64vh]')} >
             <Display size='lg' className={twMerge('uppercase text-start xs:text-center')} >
                 {t('contactCall.title')}
             </Display>
             <div className='flex flex-row justify-start xs:justify-center items-start relative'>
-                <Link href='/contact' >
+                <Link href='/contact' {...hoverProps}>
                     <Display size='lg' weight='bold' className={twMerge('whitespace-nowrap-important uppercase text-primary-500')} >
                         {t('contactCall.action')}
                     </Display>

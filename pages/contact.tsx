@@ -6,6 +6,10 @@ import { ContactPage } from '@/components/pages';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import '@/components/InitGsap';
+import AnimationConf from '@/context/AnimationConf';
+import ScrollContextProvider from '@/context/ScrollContext';
+import { Header, Footer } from '@/components/common';
+import { ToastRegion, addToast } from '@/components/common/toast';
 
 
 const Contact = () => {
@@ -17,10 +21,17 @@ const Contact = () => {
                 author="Mohamed Amine SAYAGH"
                 logo='/favicon.svg'
             />
-            <Suspense fallback={<Loading />}>
-                <ContactPage />
-                <Noise />
-            </Suspense>
+            <ScrollContextProvider >
+                <AnimationConf>
+                    <Header />
+                    <div data-scroll-container>
+                        <ContactPage />
+                    </div>
+                    <Noise />
+                </AnimationConf>
+            </ScrollContextProvider>
+            <ToastRegion />
+
         </>
     )
 }
@@ -31,7 +42,6 @@ export async function getStaticProps({ locale }: any) {
     return {
         props: {
             ...(await serverSideTranslations(locale, ['common'], nextI18NextConfig)),
-
         },
     };
 }

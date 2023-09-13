@@ -7,11 +7,11 @@ import { ScrollProvider } from '@/context/ScrollContext';
 
 import { Title, Text } from '@/components/ui';
 import { getProjectsByCategory } from '@/conf/projects';
+import { useTransform } from 'framer-motion';
 
 const Case = ({ picture, height }: { picture?: string[], height: string }) => {
     let ref = useRef<HTMLDivElement>(null);
     const { scrollbar } = useContext(ScrollProvider);
-    
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
             gsap.to('.image_gsap_container', {
@@ -87,7 +87,7 @@ const Cases = () => {
     const { t } = useTranslation();
     const projects = useMemo(() => getProjectsByCategory('best'), []);
     const containerRef = useRef<HTMLDivElement>(null);
-
+    const { scrollbar } = useContext(ScrollProvider);
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context((self) => {
             gsap.set('.image_gsap_container', {
@@ -101,25 +101,28 @@ const Cases = () => {
                 gsap.to(section, {
                     height: 0,
                     ease: 'none',
+
+
+                    transformOrigin: 'bottom bottom',
                     scrollTrigger: {
                         trigger: section as any,
-                        scrub: 1,
-                        snap: {
-                            snapTo: 1 / (sections.length - 1),
-                            duration: 0.1,
-                            delay: 0.1,
-                            ease: 'power1.inOut',
-                        },
+                        scrub: true,
+                        // snap: {
+                        //     snapTo: 1 / (sections.length - 1),
+                        //     duration: 0.1,
+                        //     delay: 0.1,
+                        //     ease: 'power1.inOut',
+                        // },
                         start: i == 0 ? 'top top' : undefined,
                     },
                 })
             });
         });
         return () => ctx.revert();
-    }, [containerRef.current]);
+    }, [containerRef.current, scrollbar]);
     return (
         <>
-            <div className={twMerge('flex flex-col gap-14 sm:gap-12 w-full')}>
+            <div className={twMerge('flex flex-col gap-14 sm:gap-12 w-full h-fit')}>
                 <div className={twMerge('flex flex-col sm:flex-row justify-between items-start sm:items-end', 'gap-2 sm:gap-12', 'w-full')}>
                     <Title h2 weight='bold' degree='2' className={'sm:w-min'}>
                         {t('cases.title')}
@@ -136,7 +139,7 @@ const Cases = () => {
                         if(index == 0){
                             height = '120vh';
                         } else if(index == 1) {
-                            height = '140vh';
+                            height = '110vh';
                         } else {
                             height = '110vh';
                         }
