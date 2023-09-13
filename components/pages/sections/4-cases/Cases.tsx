@@ -70,50 +70,51 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
             gsap.set('.case-title-gsap, .case-text-gsap' as any, {
                 xPercent: -100,
             });
-            if(text) {
-                gsap.from(text as any, {
-                    xPercent: -100,
-                    duration: 1.6,
-                    stagger: 0.4,
-                    ease: 'power4',
-                    scrollTrigger: {
-                        trigger: text as any,
-                        scrub: true,
-                        start: 'top bottom-=35%',
-                        end: 'bottom center',
-                        markers: false,
-                        invalidateOnRefresh: true,
-                    }
-                })
-            }
-
+            gsap.fromTo('.case-title-gsap, .case-text-gsap', {
+                xPercent: -100,
+            }, {
+                xPercent: 0,
+                duration: 2.2,
+                stagger: 0.6,
+                ease: 'power4',
+                scrollTrigger: {
+                    trigger: '.case-title-gsap, .case-text-gsap' as any,
+                    scrub: true,
+                    start: 'top bottom-=35%',
+                    end: 'bottom center',
+                    markers: false,
+                    invalidateOnRefresh: true,
+                }
+            })
+            
         }, container);
-        return () => {
-            ctx.revert();
-        }
+        return () => ctx.revert();
     }, [scrollbar])
-    return <div className={twMerge('relative h-[110vh]')} ref={container}>
+    return <div className={twMerge('relative h-[110vh]')} ref={container} style={{
+        zIndex: 10 + (index + 10),
+    }} >
     <div className='absolute left-0 right-0 w-full h-screen bg-no-repeat bg-cover' style={{
             backgroundImage: `url(${!!picture ? picture[0] : ''})`,
-            zIndex: 10 + (index + 10),
+            zIndex: 10 + (index + 11),
         }} >
-            <div className='relative w-fit flex flex-col justify-end h-full px-24 py-40 gap-4 z-20' style={{
-                zIndex: 10 + (index + 10),
+            <div className='relative w-fit flex flex-col justify-end h-full px-24 py-40 gap-4'
+            // data-scroll data-scroll-position='end' data-scroll-speed='1.2'
+            style={{
+                zIndex: 10 + (index + 14),
             }}>
-
-                <span className='overflow-hidden' data-scroll data-scroll-position='end' data-scroll-speed='1'>
-                    <Title h1 degree='1' className='case-title-gsap' >
+                <span className='overflow-hidden' >
+                    <Title h1 degree='1' className='case-title-gsap translate-x-[-100%]' >
                         {t(`projects.${id}.title`)}
                     </Title>
                 </span>
-                <span className='overflow-hidden w-1/2' data-scroll data-scroll-position='end' data-scroll-speed='1'>
+                <span className='overflow-hidden w-1/2'>
                     <Text p size='md' degree='2' className='case-text-gsap'>
                         {t(`projects.${id}.description`)}
                     </Text>
                 </span>
             </div>
             <div className={twMerge('absolute left-0 right-0 bottom-0 w-full h-60', 'bg-gradient-to-t from-black-100 to-black-100/0')} style={{
-                zIndex: 10 + (index + 11),
+                zIndex: 10 + (index + 12),
             }}></div>
         </div>
     </div>

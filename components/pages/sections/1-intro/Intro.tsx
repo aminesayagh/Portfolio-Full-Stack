@@ -163,12 +163,7 @@ const Menu = () => {
     const { t } = useTranslation();
     const { scrollbar } = useContext(ScrollProvider);
     const goToSection = (section: string) => {
-        const target = document.querySelector(`#${section}`) as HTMLElement;
-        if(!target) {
-            console.log(`target ${section} not found`);
-            return;
-        }
-        scrollbar && scrollbar.scrollTo(target, { duration: 500 });
+        scrollbar && scrollbar.scrollTo(`#${section}`, { duration: 500 });
     }
     return (<>
         <div className={twMerge('flex flex-row flex-wrap justify-between items-start w-full gap-y-6')} >

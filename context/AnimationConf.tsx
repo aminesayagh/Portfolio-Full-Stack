@@ -25,7 +25,9 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 resetNativeScroll: true,
                 getDirection: true,
                 getSpeed: true,
-                multiplier: 0.5,
+                reloadOnContextChange: true,
+
+                multiplier: 0.9,
             })
             setScrollbar(scroll);
 
