@@ -86,7 +86,7 @@ const Manifesto = () => {
                         end: 'top 80%',
                         toggleActions: 'play none none none',
                         scrub: 2,
-                        markers: true,
+                        markers: false,
                     }
                 });
             })
