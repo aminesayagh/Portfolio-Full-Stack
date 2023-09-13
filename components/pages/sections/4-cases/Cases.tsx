@@ -87,7 +87,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
         }, container);
         return () => ctx.revert();
     }, [scrollbar, container.current])
-    return <div className={twMerge('relative h-[110vh]')} ref={container} style={{
+    return <div className={twMerge('relative h-[140vh]')} ref={container} style={{
         zIndex: 10 + (index + 10),
     }} >
         <div className='absolute left-0 right-0 w-full h-screen bg-no-repeat bg-cover' style={{
@@ -118,9 +118,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
 }
 const Cases = () => {
     const { t } = useTranslation();
-    const { scrollbar } = useContext(ScrollProvider);
     const projects = useMemo(() => getProjectsByCategory('best'), []);
-    const container = useRef<HTMLDivElement>(null);
 
     return <div className={twMerge('flex flex-col gap-14 sm:gap-12 w-full h-fit')} >
         <div className={twMerge('flex flex-col sm:flex-row justify-between items-start sm:items-end', 'gap-2 sm:gap-12', 'w-full')}>
