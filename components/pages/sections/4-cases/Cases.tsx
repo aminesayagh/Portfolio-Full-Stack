@@ -14,13 +14,10 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
 
     useEffect(() => {
         const ctx = gsap.context((self) => {
-            // gsap.set(container.current, {
-            //     zIndex: 100 - (index + 10)
-            // });
-            if(index < 2) {
+            if (index < 2) {
                 gsap.fromTo(container.current?.children[0] as any, {
                     top: 0,
-                },{
+                }, {
                     top: '100%',
                     ease: 'none',
                     scrollTrigger: {
@@ -33,10 +30,10 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                         invalidateOnRefresh: true,
                     }
                 })
-            }else {
+            } else {
                 gsap.fromTo(container.current?.children[0] as any, {
                     top: 0,
-                },{
+                }, {
                     top: '100%',
                     ease: 'none',
                     scrollTrigger: {
@@ -66,54 +63,54 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                 }
             })
             // @ts-ignore
-            const text = self?.selector('.case-title-gsap, .case-text-gsap');
-            gsap.set('.case-title-gsap, .case-text-gsap' as any, {
+            // gsap.set('.case-text-gsap' as any, {
+            //     xPercent: -100,
+            // });
+            gsap.fromTo('.case-text-gsap', {
                 xPercent: -100,
-            });
-            gsap.fromTo('.case-title-gsap, .case-text-gsap', {
-                xPercent: -100,
+                opacity: 0,
             }, {
                 xPercent: 0,
-                duration: 2.2,
-                stagger: 0.6,
-                ease: 'power4',
+                opacity: 1,
+                duration: 1,
+                stagger: 0.2,
+                ease: 'power4.inOut',
                 scrollTrigger: {
-                    trigger: '.case-title-gsap, .case-text-gsap' as any,
-                    scrub: true,
+                    trigger: container.current as any,
                     start: 'top bottom-=35%',
                     end: 'bottom center',
-                    markers: false,
-                    invalidateOnRefresh: true,
+                    markers: true,
+                    toggleActions: 'play none play reverse',
                 }
             })
-            
+
         }, container);
         return () => ctx.revert();
-    }, [scrollbar])
+    }, [scrollbar, container.current])
     return <div className={twMerge('relative h-[110vh]')} ref={container} style={{
         zIndex: 10 + (index + 10),
     }} >
-    <div className='absolute left-0 right-0 w-full h-screen bg-no-repeat bg-cover' style={{
+        <div className='absolute left-0 right-0 w-full h-screen bg-no-repeat bg-cover' style={{
             backgroundImage: `url(${!!picture ? picture[0] : ''})`,
             zIndex: 10 + (index + 11),
         }} >
             <div className='relative w-fit flex flex-col justify-end h-full px-24 py-40 gap-4'
-            // data-scroll data-scroll-position='end' data-scroll-speed='1.2'
-            style={{
-                zIndex: 10 + (index + 14),
-            }}>
-                <span className='overflow-hidden' >
-                    <Title h1 degree='1' className='case-title-gsap translate-x-[-100%]' >
+                data-scroll data-scroll-position='start' data-scroll-speed='1.4'
+                style={{
+                    zIndex: 10 + (index + 14),
+                }}>
+                <div className='w-full overflow-hidden' >
+                    <Title h1 degree='1' className='case-text-gsap' >
                         {t(`projects.${id}.title`)}
                     </Title>
-                </span>
-                <span className='overflow-hidden w-1/2'>
-                    <Text p size='md' degree='2' className='case-text-gsap'>
+                </div>
+                <div className='w-1/2 overflow-hidden'>
+                    <Text p size='md' degree='3' className='case-text-gsap'>
                         {t(`projects.${id}.description`)}
                     </Text>
-                </span>
+                </div>
             </div>
-            <div className={twMerge('absolute left-0 right-0 bottom-0 w-full h-60', 'bg-gradient-to-t from-black-100 to-black-100/0')} style={{
+            <div className={twMerge('absolute left-0 right-0 bottom-0 w-full h-72', 'bg-gradient-to-t from-black-100 to-black-100/0')} style={{
                 zIndex: 10 + (index + 12),
             }}></div>
         </div>
