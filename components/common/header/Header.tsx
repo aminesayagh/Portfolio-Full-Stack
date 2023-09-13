@@ -1,4 +1,4 @@
-import { useState, useCallback, memo, useEffect, useLayoutEffect, useRef, useContext } from 'react';
+import { useState, useCallback, memo, useEffect, useLayoutEffect, useRef, useContext, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
@@ -33,8 +33,6 @@ const Header = () => {
     const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
     const ctx = useRef<any>(null);
     const { scrollbar } = useContext(ScrollProvider);
-
-    // const { scrollbar } = useContext(ScrollProvider);
     useEffect(() => {
         ctx.current = gsap.context((self) => {
             self.add('open', () => {
@@ -116,7 +114,7 @@ const Header = () => {
         }
     }, [openMenu])
 
-    const onButtonClick = useCallback((path: string) => {
+    const onButtonClick = useCallback((path: string, id?: string) => {
         if (!openMenu) {
             router.push(path);
         } else {
@@ -125,17 +123,22 @@ const Header = () => {
                 router.push(path);
             });
         }
-    }, [openMenu, router]);
+        if(typeof id == 'string'){
+            scrollbar && scrollbar?.scrollTo(`#${id}`, { duration: 500 });
+        }
+    }, [openMenu, router, scrollbar]);
 
     const goToSection = (section: string) => {
         scrollbar && scrollbar.scrollTo(section, { duration: 500 });
     }
 
+    const pageName = useMemo(() => router.pathname.split('/')[1], [router]);
+
     return (
         <Modal isOpenExternal={openMenu} menuHandler={menuHandler}  >
             <Navbar size='lg' inTopOfScroll={openMenu} >
                 <Navbar.Content className={twMerge('flex-1', GAP_SIZE_LG)}>
-                    <Link href={`mailto:${t('header.email')}`} size='xs' weight='semibold' className='hidden mdl:flex'>{t('header.email')}</Link>
+                    <Link href={`mailto:${t('header.email')}?subject=Contact from Portfolio&body=Hello Mohamed Amine,`} size='xs' weight='semibold' className='hidden mdl:flex'>{t('header.email')}</Link>
                     <span className="w-[1.2px] bg-gray-500 h-[14px] rotate-[25deg] hidden mdl:block" />
                     <SwitchLang />
                 </Navbar.Content>
@@ -146,7 +149,7 @@ const Header = () => {
                 </Navbar.Brand>
                 <Navbar.Content className={twMerge('flex-1 justify-end overflow-hidden', GAP_SIZE_LG)}>
                     <Button
-                        onPress={() => onButtonClick('/contact')}
+                        onPress={() => onButtonClick(pageName !== 'contact' ? '/contact' : '/')}
                         size='sm'
                         degree='1'
                         className={twMerge(
@@ -156,7 +159,7 @@ const Header = () => {
                             StyleAnimation['underline-animation'],
                         )}
                     >
-                        {t('header.action')}
+                        {pageName !== 'contact' ? t('header.action') : t('header.home')}
                     </Button>
                     <Modal.Button>
                         {({ handler, isOpen }) => {
@@ -186,7 +189,7 @@ const Header = () => {
                                                 return <li key={index} className={twMerge('flex flex-col items-start', 'overflow-hidden')}>
                                                     <div className={twMerge('flex flex-row justify-start items-start relative cursor-pointer', 'modal-item')} >
                                                         <Button size='auto' onPress={() => {
-                                                            onButtonClick(item.link)
+                                                            onButtonClick(item.link, item.id)
                                                         }} degree='1' className={
                                                             twMerge(
                                                                 'capitalize relative text-white-600 bg-black-200 z-10 hover:text-primary-500',
