@@ -58,7 +58,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 scroll?.update()
             })
 
-            ScrollTrigger.refresh();
+            // ScrollTrigger.refresh();
         })
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -70,6 +70,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
         })
         return () => {
             scroll?.destroy();
+            scrollbar?.destroy();
             ScrollTrigger.getAll().forEach((trigger) => {
                 trigger.kill(true);
             });
