@@ -21,7 +21,6 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             scroll = new locomotiveModule.default({
                 el: el,
                 smooth: true,
-                // // smoothMobile: false,
                 resetNativeScroll: true,
                 getDirection: true,
                 getSpeed: true,
@@ -73,6 +72,12 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             if (!scroll) return;
             scroll.update();
         })
+        return () => {
+            scroll?.destroy();
+            ScrollTrigger.getAll().forEach((trigger) => {
+                trigger.kill(true);
+            });
+        }
     }, [])
     useEffect(() => {
         let ctx = gsap.context(() => {
