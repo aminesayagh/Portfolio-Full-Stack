@@ -57,8 +57,6 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             ScrollTrigger.addEventListener('refresh', () => {
                 scroll?.update()
             })
-
-            // ScrollTrigger.refresh();
         })
 
         window.addEventListener('DOMContentLoaded', () => {
