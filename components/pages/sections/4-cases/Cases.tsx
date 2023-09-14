@@ -15,21 +15,26 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
     useEffect(() => {
         const ctx = gsap.context((self) => {
             if (index < 2) {
-                gsap.fromTo(container.current?.children[0] as any, {
-                    top: 0,
-                }, {
-                    top: '100%',
-                    ease: 'none',
+                gsap.timeline({
                     scrollTrigger: {
                         trigger: container.current as any,
                         scrub: true,
                         start: 'top top',
-                        end: 'bottom top',
+                        end: 'bottom-=10% top',
                         toggleActions: 'play none reverse none',
-                        markers: false,
+                        markers: true,
                         invalidateOnRefresh: true,
                     }
+                }).fromTo(container.current?.children[0] as any, {
+                    top: 0,
+                }, {
+                    top: '82%',
+                    ease: 'none',
                 })
+                // .to(container.current?.children[0] as any, {
+                //     top: '70%',
+                //     duration: 1,
+                // })
             } else {
                 gsap.fromTo(container.current?.children[0] as any, {
                     top: 0,
@@ -51,13 +56,14 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                 backgroundSize: '100%',
                 backgroundPosition: 'center 60%',
             }, {
-                backgroundSize: '105%',
+                backgroundSize: '112%',
                 backgroundPosition: 'center 20%',
                 ease: 'power4',
                 scrollTrigger: {
                     trigger: container.current as any,
                     scrub: true,
-                    start: 'top bottom',
+                    start: 'top top',
+                    end: 'bottom top',
                     markers: false,
                     invalidateOnRefresh: true,
                 }
@@ -86,13 +92,13 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
 
         }, container);
         return () => ctx.revert();
-    }, [scrollbar, container.current])
+    }, [scrollbar])
     return <div className={twMerge('relative h-[140vh]')} ref={container} style={{
         zIndex: 10 + (index + 10),
     }} >
         <div className='absolute left-0 right-0 w-full h-screen bg-no-repeat bg-cover' style={{
             backgroundImage: `url(${!!picture ? picture[0] : ''})`,
-            zIndex: 10 + (index + 11),
+            zIndex: 10 + (index + 11)
         }} >
             <div className='relative w-fit flex flex-col justify-end h-full px-24 py-40 gap-4'
                 data-scroll data-scroll-position='start' data-scroll-speed='2.4'
