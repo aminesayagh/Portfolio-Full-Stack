@@ -14,6 +14,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     let app = useRef<HTMLDivElement | null>(null);
     const { scrollbar, setScrollbar } = useContext(ScrollProvider)
     useEffect(() => {
+        
         let scroll: LocomotiveScroll | null = null;
         import('locomotive-scroll').then((locomotiveModule) => {
             // gsap.registerPlugin(ScrollTrigger);
@@ -61,10 +62,12 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
 
         window.addEventListener('DOMContentLoaded', () => {
             scroll?.update()
+            ScrollTrigger.refresh()
         })
 
         window.addEventListener('resize', () => {
             scroll?.update();
+            ScrollTrigger.refresh()
         })
         return () => {
             scroll?.destroy();

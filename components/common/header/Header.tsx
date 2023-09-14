@@ -24,11 +24,12 @@ const BASE_LOCALE_SOCIAL = 'socialNetwork';
 const DURATION = 0.4;
 const TRANSLATE_Y = -110;
 
-
+import useRouterChange from '@/hook/SafePush';
 
 const Header = () => {
     const { t } = useTranslation();
     const router = useRouter();
+    const { safePush } = useRouterChange();
     let [openMenu, setOpenMenu] = useState<boolean>(false);
     const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
     const ctx = useRef<any>(null);
@@ -116,16 +117,14 @@ const Header = () => {
 
     const onButtonClick = useCallback((path: string, id?: string) => {
         if (!openMenu) {
-            router.push(path).then().catch(err => {
-                console.error(err);
-            });
+            safePush(path)
         } else {
             tl.current.reverse().then(() => {
                 setOpenMenu(false);
-                router.push(path);
+                safePush(path);
             });
         }
-    }, [openMenu, router, scrollbar]);
+    }, [openMenu, scrollbar]);
 
     const goToSection = (section: string) => {
         scrollbar && scrollbar.scrollTo(section, { duration: 500 });
