@@ -22,13 +22,13 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                         start: 'top top',
                         end: 'bottom-=10% top',
                         toggleActions: 'play none reverse none',
-                        markers: true,
+                        markers: false,
                         invalidateOnRefresh: true,
                     }
                 }).fromTo(container.current?.children[0] as any, {
                     top: 0,
                 }, {
-                    top: '82%',
+                    top: '100%',
                     ease: 'none',
                 })
                 // .to(container.current?.children[0] as any, {
