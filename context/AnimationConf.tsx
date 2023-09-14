@@ -26,8 +26,10 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 getDirection: true,
                 getSpeed: true,
                 reloadOnContextChange: true,
-
                 multiplier: 0.9,
+                smartphone: {
+                    smooth: true,
+                },
             })
             setScrollbar(scroll);
 
