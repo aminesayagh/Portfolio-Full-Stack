@@ -116,15 +116,14 @@ const Header = () => {
 
     const onButtonClick = useCallback((path: string, id?: string) => {
         if (!openMenu) {
-            router.push(path);
+            router.push(path).then().catch(err => {
+                console.error(err);
+            });
         } else {
             tl.current.reverse().then(() => {
                 setOpenMenu(false);
                 router.push(path);
             });
-        }
-        if(typeof id == 'string'){
-            scrollbar && scrollbar?.scrollTo(`#${id}`, { duration: 500 });
         }
     }, [openMenu, router, scrollbar]);
 

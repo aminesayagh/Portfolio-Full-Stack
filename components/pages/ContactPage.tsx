@@ -204,8 +204,8 @@ const ContactPage = () => {
     if (!timer) return null;
     return (
         <>
-            <Container as='section' size='lg' className={twMerge('flex flex-col gap-12', 'items-stretch')} >
-                <div className={twMerge('flex flex-col gap-14 xl:gap-20 py-40')}>
+            <Container as='section' size='lg' data-scroll-section id='contact' className={twMerge('flex flex-col gap-12', 'items-stretch')} >
+                <section className={twMerge('flex flex-col gap-14 xl:gap-20 py-40')}>
                     {/* title */}
                     <div className='grid grid-cols-12 gap-4'>
                         <Display size='xl' weight='bold' className={twMerge('col-start-1 col-span-12', 'mdl:col-start-4 mdl:col-span-9', 'lg:col-start-3 lg:col-span-10')} >
@@ -307,7 +307,7 @@ const ContactPage = () => {
                             })}
                         </div>
                     </div>
-                </div>
+                </section>
             </Container>
             <Container as='section' size='lg' className='py-0' >
                 <Footer />
