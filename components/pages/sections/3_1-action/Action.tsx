@@ -3,7 +3,8 @@ import { Text, Button, Icon } from '@/components/ui';
 
 import { twMerge } from 'tailwind-merge';
 import { useIsomorphicLayoutEffect } from 'react-use';
-import { gsap } from 'gsap';
+import { gsap } from '@/utils/gsap';
+
 import { useHover } from "react-aria";
 
 const Action = () => {

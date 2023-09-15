@@ -5,7 +5,7 @@ import { ContactPage } from '@/components/pages';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-import '@/components/InitGsap';
+import '@/utils/gsap';
 import AnimationConf from '@/context/AnimationConf';
 import ScrollContextProvider from '@/context/ScrollContext';
 import { Header, Footer } from '@/components/common';

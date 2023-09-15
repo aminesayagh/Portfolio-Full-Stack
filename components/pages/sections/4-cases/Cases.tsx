@@ -5,7 +5,8 @@ import { Title, Text } from '@/components/ui';
 import { useTranslation } from 'next-i18next';
 import { ScrollProvider } from '@/context/ScrollContext';
 import { getProjectsByCategory } from '@/conf/projects';
-import { gsap } from 'gsap';
+import { gsap } from '@/utils/gsap';
+
 
 const Case = ({ picture, index, id }: { picture?: string[], index: number, id: string }) => {
     const container = useRef<HTMLDivElement>(null);

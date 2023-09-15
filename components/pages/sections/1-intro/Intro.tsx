@@ -1,21 +1,22 @@
 import { twMerge } from "tailwind-merge";
-import React, { useRef, useContext, useEffect, useLayoutEffect } from "react";
+import React, { useRef, useContext, useEffect, useLayoutEffect, useMemo } from "react";
 import { Text, Button, Display, Icon, Link, Fit } from '@/components/ui';
 import { useTranslation } from "next-i18next";
-import gsap from 'gsap';
+import { gsap } from '@/utils/gsap';
 import { MENU_ITEMS } from "@/conf/router";
 import { ScrollProvider } from '@/context/ScrollContext';
 import { useIsomorphicLayoutEffect } from "react-use";
+import { useHover } from "react-aria";
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<HTMLDivElement>(null);
     const xTo = gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' });
     const yTo = gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' });
     const { scrollbar } = useContext(ScrollProvider);
-    
+
     useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            if(!!ref.current) {
+            if (!!ref.current) {
                 const mouseMove = (e: any) => {
                     const { clientX, clientY } = e;
                     // @ts-ignore
@@ -29,7 +30,7 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
                     xTo(0);
                     yTo(0);
                 }
-                
+
                 ref.current.addEventListener('mousemove', mouseMove);
                 ref.current.addEventListener('mouseleave', mouseLeave);
                 return () => {
@@ -60,16 +61,16 @@ const FullStack = ({ className }: { className: string }) => {
     return (
         <>
             <div className={twMerge(
-                className, 
+                className,
                 'flex flex-col items-start xs:items-end justify-end',
                 'pb-2',
                 '-space-y-1 md:space-y-0 mdl:-space-y-1 lg:-space-y-[3%] xl:-space-y-[2.6%] 2xl:-space-y-[4.62%] 3xl:-space-y-2 4xl:space-y-0'
             )} >
                 <span className='overflow-hidden'>
-                    <Display size='md' weight='semibold'  className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider', 'splitText_fullStack_gsap')}>{t('intro.title.2_1')}</Display>
+                    <Display size='md' weight='semibold' className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider', 'splitText_fullStack_gsap')}>{t('intro.title.2_1')}</Display>
                 </span>
                 <span className='overflow-hidden'>
-                    <Display size='md' weight='semibold'  className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider', 'splitText_fullStack_gsap')}>{t('intro.title.2_2')}</Display>
+                    <Display size='md' weight='semibold' className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider', 'splitText_fullStack_gsap')}>{t('intro.title.2_2')}</Display>
                 </span>
             </div>
         </>
@@ -91,7 +92,7 @@ const Title = () => {
             'row-start-1 row-span-1',
             'overflow-hidden',
         )} >
-            <Fit weight='bold' degree='1'  className={twMerge(DISPLAY_1_CLASS_NAME, 'splitText_gsap intro_scroll_gsap')}>{t('intro.title.1')}</Fit>
+            <Fit weight='bold' degree='1' className={twMerge(DISPLAY_1_CLASS_NAME, 'splitText_gsap intro_scroll_gsap')}>{t('intro.title.1')}</Fit>
         </div>
         {/* description */}
         <div className={twMerge('flex flex-row xxs:flex-col justify-between items-start xs:hidden',
@@ -129,12 +130,12 @@ const Title = () => {
         )} >
             <div >
                 <span data-scroll className='overflow-hidden h-fit'>
-                    <Text  p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')}  degree="2">{t('intro.descriptions.1')}</Text>
+                    <Text p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')} degree="2">{t('intro.descriptions.1')}</Text>
                 </span>
             </div>
             <div>
                 <span data-scroll className='overflow-hidden h-fit'>
-                    <Text p  weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')}  degree='2'>{t('intro.descriptions.2')}</Text>
+                    <Text p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')} degree='2'>{t('intro.descriptions.2')}</Text>
                 </span>
             </div>
         </div>
@@ -191,6 +192,24 @@ const menuItems = {
 const menuKeys = ['manifesto', 'experience', 'cases', 'contact'];
 
 type MenuItems = keyof typeof menuItems;
+
+const Item = ({ children }: {
+    children: React.ReactElement,
+}) => {
+    let { isHovered, hoverProps } = useHover({
+        onHoverStart: (e) => {
+            console.log('hover start', e);
+            gsap.timeline().itemMenuHoverPlay(e.target.children[0])
+        },
+        onHoverEnd: (e) => {
+            console.log('hover end', e);
+            gsap.timeline().itemMenuHoverReverse(e.target.children[0]);
+        }
+    });
+    return <div {...hoverProps} className='cursor-pointer'>{
+            children
+        }</div>
+}
 const Menu = () => {
     const { t } = useTranslation();
     const { scrollbar } = useContext(ScrollProvider);
@@ -204,15 +223,17 @@ const Menu = () => {
                 return <div key={i} className={twMerge('flex flex-col justify-start items-start gap-1 w-1/2 sm:w-auto md:w-1/4')} >
                     <Text p weight='medium' size='sm' degree='3' className='number_menu_gsap' >{`0${i + 1}`}</Text>
                     <span className='overflow-hidden'>
-                        <Button degree='1' size='sm' weight='semibold' onPress={() => goToSection(menuItems[`${i + 1}` as MenuItems] as string)} className='uppercase item_menu_gsap' >
-                            {t(`header.menu.${menuKeys[i]}.attribute`)}
-                        </Button>
+                        <Item>
+                            <Button degree='1' size='sm' weight='semibold' onPress={() => goToSection(menuItems[`${i + 1}` as MenuItems] as string)} className='uppercase item_menu_gsap' >
+                                {t(`header.menu.${menuKeys[i]}.attribute`)}
+                            </Button>
+                        </Item>
                     </span>
                 </div>
             })}
         </div>
         <span className='overflow-hidden'>
-            <Text p weight='medium' size='sm' degree='3' className={twMerge('w-max whitespace-nowrap-important', ' hidden xxs:flex sm:hidden md:flex', 'item_menu_gsap')} >
+            <Text p weight='medium' size='sm' degree='3' className={twMerge('w-max whitespace-nowrap-important', 'pr-1 hidden xxs:flex sm:hidden md:flex', 'item_menu_gsap')} >
                 {t('intro.copy')}
             </Text>
         </span>
@@ -269,7 +290,7 @@ const Intro = () => {
         return () => ctx.revert();
     }, [scrollbar]);
     return (<>
-        <div  className={twMerge('pt-28 sm:pt-36 mdl:pt-40', 'flex flex-col gap-20 xs:gap-32 xl:gap-40')} ref={introRef}>
+        <div className={twMerge('pt-28 sm:pt-36 mdl:pt-40', 'flex flex-col gap-20 xs:gap-32 xl:gap-40')} ref={introRef}>
             <div className={twMerge(
                 'flex flex-row flex-wrap gap-y-8',
                 'grid grid-cols-12 grid-row-4 xxs:grid-row-3 mdl:grid-row-2',

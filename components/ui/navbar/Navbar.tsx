@@ -2,7 +2,8 @@ import { useState, useRef, useEffect, useContext, createContext, useMemo } from 
 import { useRouter } from 'next/router';
 
 import { Link as LinkUi } from '@/components/ui';
-import { gsap } from 'gsap';
+import { gsap } from '@/utils/gsap';
+
 import { useIsomorphicLayoutEffect } from 'react-use';
 
 

@@ -2,7 +2,7 @@ import { useMemo, useRef, useContext, useLayoutEffect, useState, useEffect } fro
 import { twMerge } from 'tailwind-merge';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { useTranslation } from 'next-i18next';
-import { gsap } from 'gsap';
+import { gsap } from '@/utils/gsap';
 import { ScrollProvider } from '@/context/ScrollContext';
 
 import { Title, Text } from '@/components/ui';

@@ -2,7 +2,7 @@
 import { useTranslation } from "next-i18next";
 import { twMerge } from "tailwind-merge";
 import { useEffect, useMemo, useLayoutEffect, useRef, useContext } from 'react';
-import { gsap } from 'gsap';
+import { gsap } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 
 

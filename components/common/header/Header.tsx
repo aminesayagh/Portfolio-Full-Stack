@@ -2,7 +2,7 @@ import { useState, useCallback, memo, useEffect, useLayoutEffect, useRef, useCon
 import { useRouter } from 'next/router';
 import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
-import { gsap } from 'gsap';
+import { gsap } from '@/utils/gsap';
 
 
 

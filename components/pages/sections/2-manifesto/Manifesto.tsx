@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 
 import { Title, Text, Link } from '@/components/ui';
-import { gsap } from 'gsap';
+import { gsap } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { ScrollProvider } from '@/context/ScrollContext';
 
@@ -44,7 +44,7 @@ const Manifesto = () => {
                 scrollTrigger: {
                     trigger: '.manifesto_quote_gsap',
                     scrub: true,
-                    start: 'top 70%',
+                    start: 'top 75%',
                     end: 'center 50%',
                     markers: false,
                 }
@@ -68,7 +68,7 @@ const Manifesto = () => {
                         trigger: box,
                         start: 'bottom bottom',
                         end: 'top 70%',
-                        toggleActions: 'play none none none',
+                        toggleActions: 'play pause reverse pause',
                         scrub: 2,
                         markers: false,
                     }
@@ -111,16 +111,19 @@ const Manifesto = () => {
                         <Text p degree='3' weight='medium' size='lg' className='manifesto_description_gsap'>
                             {t(`manifesto.what_i_do`)}
                         </Text>
-                        <Text p degree='3' size='xl' weight='semibold' data-scroll data-scroll-position='end' data-scroll-speed='0.4' className='textLink inline w-full whitespace-inherit-important manifesto_description_gsap' style={{
-                            WebkitLineClamp: 2,
-                            WebkitBoxOrient: 'vertical',
-                            overflow: 'hidden',
-                        }} >
-                            {t(`manifesto.goal`)}
-                            <Link degree='2' href='/contact' className='ml-2' weight='bold' >
-                                {t(`manifesto.action`)}
-                            </Link>
-                        </Text>
+                        <span data-scroll data-scroll-position='end' data-scroll-speed='0.8'>
+                            <Text p degree='3' size='xl' weight='semibold'  className='textLink inline w-full whitespace-inherit-important manifesto_description_gsap' style={{
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
+                            }} >
+                                {t(`manifesto.goal`)}
+                                <Link degree='2' href='/contact' className='ml-2 text-primary-500 hover:text-primary-400/70 hover:underline transition-all duration-300' weight='bold' >
+                                    {t(`manifesto.action`)}
+                                </Link>
+                                .
+                            </Text>
+                        </span>
                         <style jsx>{`
                             .textLink {
                                 text-wrap: inherit !important;
