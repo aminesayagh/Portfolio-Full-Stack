@@ -1,6 +1,6 @@
 
 import { twMerge } from "tailwind-merge";
-import { useRef, useContext, useEffect } from "react";
+import React, { useRef, useContext, useEffect, useLayoutEffect } from "react";
 import { Text, Button, Display, Icon, Link, Fit } from '@/components/ui';
 import { useTranslation } from "next-i18next";
 import gsap from 'gsap';
@@ -8,16 +8,50 @@ import { MENU_ITEMS } from "@/conf/router";
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { ScrollProvider } from '@/context/ScrollContext';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { useHover } from "react-aria";
 
-
+const GsapMagic = ({ children }: { children: React.ReactElement }) => {
+    const ref = useRef<HTMLDivElement>(null);
+    const xTo = gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' });
+    const yTo = gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' });
+    useLayoutEffect(() => {
+        
+        const ctx = gsap.context(() => {
+            if(!!ref.current) {
+                const mouseMove = (e: any) => {
+                    const { clientX, clientY } = e;
+                    // @ts-ignore
+                    const { left, top, width, height } = ref.current?.getBoundingClientRect();
+                    const x = clientX - (left + width / 2);
+                    const y = clientY - (top + height / 2);
+                    xTo(x);
+                    yTo(y);
+                }
+                const mouseLeave = (e: any) => {
+                    xTo(0);
+                    yTo(0);
+                }
+                
+                ref.current.addEventListener('mousemove', mouseMove);
+                ref.current.addEventListener('mouseleave', mouseLeave);
+                return () => {
+                    ref.current?.removeEventListener('mousemove', mouseMove);
+                    ref.current?.removeEventListener('mouseleave', mouseLeave);
+                }
+            }
+        });
+        return () => ctx.revert();
+    }, [])
+    return <>{React.cloneElement(children, { ref })}</>
+}
 const ButtonNext = () => {
-    return <>
-        <Button className={twMerge('bg-white-200', 'rounded-full next_button_gsap')}  >
-            <div className='p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6'>
-                <Icon name='IconCornerLeftDown' className='stroke-black-200 stroke-1 w-8 h-8 xxs:w-6 xxs:h-6 xs:w-8 xs:h-8 xl:w-10 xl:h-10' />
+    return <GsapMagic>
+        <div className={twMerge('', 'rounded-full overflow-hidden next_button_gsap')}  >
+            <div className=' bg-white-200 hover:bg-primary-500 [&>*]:stroke-black-200 [&>*]:hover:stroke-white-100 transition-colors duration-300 p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6'>
+                <Icon name='IconCornerLeftDown' className='stroke-1 w-8 h-8 xxs:w-6 xxs:h-6 xs:w-8 xs:h-8 xl:w-10 xl:h-10' />
             </div>
-        </Button>
-    </>
+        </div>
+    </GsapMagic>
 }
 
 const DISPLAY_1_CLASS_NAME = 'capitalize';
@@ -235,7 +269,7 @@ const Intro = () => {
         return () => ctx.revert();
     }, [scrollbar]);
     return (<>
-        <div  className={twMerge('pt-28 sm:pt-36 mdl:pt-40', 'flex flex-col gap-20 xs:gap-32 xl:gap-40 overflow-hidden')} ref={introRef}>
+        <div  className={twMerge('pt-28 sm:pt-36 mdl:pt-40', 'flex flex-col gap-20 xs:gap-32 xl:gap-40')} ref={introRef}>
             <div className={twMerge(
                 'flex flex-row flex-wrap gap-y-8',
                 'grid grid-cols-12 grid-row-4 xxs:grid-row-3 mdl:grid-row-2',
