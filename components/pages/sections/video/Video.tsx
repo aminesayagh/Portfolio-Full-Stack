@@ -5,7 +5,7 @@ import { twMerge } from 'tailwind-merge';
 import { rounded } from '@/components/style';
 import { ScrollProvider } from '@/context/ScrollContext';
 
-import { useMedia } from 'react-use'
+import { useIsomorphicLayoutEffect, useMedia } from 'react-use'
 const Video = () => {
     let ref = useRef<HTMLCanvasElement>(null);
     const [images, setImages] = useState<Array<HTMLImageElement>>([]);
@@ -70,10 +70,25 @@ const Video = () => {
         });
         return () => ctx.revert();
     }, [scrollbar]);
+    useIsomorphicLayoutEffect(() => {
+        let ctx = gsap.context(() => {
+            gsap.fromTo('.video_gsap', {
+                opacity: 0,
+            }, {
+                opacity: 1,
+                ease: 'power4',
+                duration: 0.5,
+                scrollTrigger: {
+                    trigger: '.video_gsap',
+                }
+            })   
+        })
+        return () => ctx.revert();
+    }, [scrollbar])
     
     return (
         <>
-            <div className={twMerge('block relative w-full h-fit rounded-3xl', rounded({ size: 'xl' }))}>
+            <div className={twMerge('block relative w-full h-fit rounded-3xl video_gsap', rounded({ size: 'xl' }))}>
                 <canvas data-scroll ref={ref} className='h-fit' style={{ width: "100%", maxHeight: height, objectFit: 'cover', borderRadius: '1.5rem'  }} />
             </div>
         </>

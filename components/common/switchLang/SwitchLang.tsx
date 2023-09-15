@@ -10,7 +10,6 @@ const SwitchLang = () => {
     // const { t, i18n } = useTranslation();
     const router = useRouter();
     const changeLanguage = (lng: React.Key) => {
-        // i18n.changeLanguage(lng as string).then();
         router.push(router.pathname, router.asPath, { locale: lng as string });
     }
 
