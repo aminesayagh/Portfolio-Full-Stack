@@ -15,7 +15,6 @@ const Manifesto = () => {
     const body = useRef<React.JSX.Element[]>([]);
     const phrase = t('manifesto.description');
     const { scrollbar } = useContext(ScrollProvider);
-    const [bodyExist, setBodyExist] = useState(false);
     useEffect(() => {
         const splitLetters = (word: string) => {
             return _.map(word.split(''), (letter, index) => (
@@ -25,15 +24,16 @@ const Manifesto = () => {
 
         const elements = _.map(phrase.split(' '), (word, index) => {
             const letters = splitLetters(word);
-            return <p key={`word_${index}`}className='flex flex-row gap-0 letter_gsap'>{letters}</p>;
+            return <p key={`word_${index}`}className='flex flex-row gap-[0.09rem] letter_gsap'>{letters}</p>;
         });
 
         body.current = elements;
-        setBodyExist(true)
-    }, [phrase])
+    }, [phrase, t])
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            gsap.fromTo('.letter_gsap', {
+            const letter = gsap.utils.toArray('.letter_gsap');
+
+            gsap.fromTo(letter, {
                 opacity: 0.1,
             }, {
                 opacity: 0.9,
@@ -51,7 +51,7 @@ const Manifesto = () => {
             })
         }, refDescription);
         return () => ctx.revert();
-    }, [scrollbar, phrase, bodyExist]);
+    }, [scrollbar]);
 
     const refDescription = useRef<HTMLDivElement>(null);
     useIsomorphicLayoutEffect(() => {
@@ -96,7 +96,7 @@ const Manifesto = () => {
                         <strong className='text-white-200 pr-2'>
                             {t(`manifesto.slogan`)}
                         </strong>
-                        {body.current ? body.current.map((word, index) => word) : null}
+                        {body.current ? body.current.map((word, index) => <span key={index} className='mr-[0.3rem]' >{word}</span>) : null}
                     </Title>
                 </div>
                 <div className={twMerge(

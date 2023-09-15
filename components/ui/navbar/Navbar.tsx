@@ -54,7 +54,7 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
 
 
     return <>
-        <NavbarAnimation.Provider value={{ scale: active ? 'scale(70%)' : 'scale(100%)' }}>
+        <NavbarAnimation.Provider value={{ scale: active ? 'scale(80%)' : 'scale(100%)' }}>
             <header className={twMerge(
                 'fixed top-0 left-0 w-full max-w-[100vw] py-4 z-header', className, zIndex.navbar, 'header-gsap'
             )}

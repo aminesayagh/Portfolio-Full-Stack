@@ -11,6 +11,10 @@ import { appWithTranslation } from 'next-i18next'
 import nextI18NextConfig from '../next-i18next.config.js';
 import '../utils/i18n';
 import { DefaultSeo } from 'next-seo';
+import { useState, useEffect } from 'react';
+
+
+
 
 
 const montserrat = Montserrat({
@@ -18,10 +22,13 @@ const montserrat = Montserrat({
   variable: '--font-sans',
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
-
-
-
 function App({ Component, pageProps }: AppProps) {
+  
+  const [val, setVal] = useState<string>();
+  useEffect(() => {
+    setVal(montserrat.variable)
+  }, [])
+
   return <>
     <DefaultSeo 
       title={"Mohamed Amine SAYAGH - Full Stack Web Developer"}
@@ -33,7 +40,7 @@ function App({ Component, pageProps }: AppProps) {
         site_name: 'Mohamed Amine SAYAGH - Full Stack Web Developer',
       }}
     />
-    <main className={`${montserrat.variable} font-sans`}>
+    <main className={`${val} font-sans`}>
       <Component {...pageProps} />
     </main>
   </>

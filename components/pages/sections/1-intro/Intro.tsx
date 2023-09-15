@@ -1,21 +1,19 @@
-
 import { twMerge } from "tailwind-merge";
 import React, { useRef, useContext, useEffect, useLayoutEffect } from "react";
 import { Text, Button, Display, Icon, Link, Fit } from '@/components/ui';
 import { useTranslation } from "next-i18next";
 import gsap from 'gsap';
 import { MENU_ITEMS } from "@/conf/router";
-import { useIsomorphicLayoutEffect } from 'react-use';
 import { ScrollProvider } from '@/context/ScrollContext';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import { useHover } from "react-aria";
+import { useIsomorphicLayoutEffect } from "react-use";
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<HTMLDivElement>(null);
     const xTo = gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' });
     const yTo = gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' });
-    useLayoutEffect(() => {
-        
+    const { scrollbar } = useContext(ScrollProvider);
+    
+    useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(() => {
             if(!!ref.current) {
                 const mouseMove = (e: any) => {
@@ -41,13 +39,13 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
             }
         });
         return () => ctx.revert();
-    }, [])
+    }, [scrollbar])
     return <>{React.cloneElement(children, { ref })}</>
 }
 const ButtonNext = () => {
     return <GsapMagic>
         <div className={twMerge('', 'rounded-full overflow-hidden next_button_gsap')}  >
-            <div className=' bg-white-200 hover:bg-primary-500 [&>*]:stroke-black-200 [&>*]:hover:stroke-white-100 transition-colors duration-300 p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6'>
+            <div className=' bg-white-200 hover:bg-primary-600 [&>*]:stroke-black-200 [&>*]:hover:stroke-black-200 transition-colors duration-300 p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6'>
                 <Icon name='IconCornerLeftDown' className='stroke-1 w-8 h-8 xxs:w-6 xxs:h-6 xs:w-8 xs:h-8 xl:w-10 xl:h-10' />
             </div>
         </div>
@@ -213,9 +211,11 @@ const Menu = () => {
                 </div>
             })}
         </div>
-        <Text p weight='medium' size='sm' degree='3' className={twMerge('w-max whitespace-nowrap-important', ' hidden xxs:flex sm:hidden md:flex', 'item_menu_gsap')} >
-            {t('intro.copy')}
-        </Text>
+        <span className='overflow-hidden'>
+            <Text p weight='medium' size='sm' degree='3' className={twMerge('w-max whitespace-nowrap-important', ' hidden xxs:flex sm:hidden md:flex', 'item_menu_gsap')} >
+                {t('intro.copy')}
+            </Text>
+        </span>
     </>)
 }
 
@@ -233,7 +233,7 @@ const Intro = () => {
             }).from('.splitText_gsap', {
                 yPercent: 170,
                 skewY: 16,
-                duration: 0.8,
+                duration: 1,
                 ease: 'power4.out',
                 delay: 0.3,
                 stagger: {
@@ -241,11 +241,11 @@ const Intro = () => {
                 }
             }).from('.splitText_fullStack_gsap', {
                 yPercent: 120,
-                duration: 0.7,
+                duration: 0.9,
                 ease: 'power4.out',
             }, '<90%').from('.splitText_description_gsap', {
                 yPercent: 105,
-                duration: 0.7,
+                duration: 0.9,
                 ease: 'power4.out',
                 stagger: {
                     amount: 0.1

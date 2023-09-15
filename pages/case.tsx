@@ -2,7 +2,6 @@ import { Container } from '@/components/ui';
 import { Head } from '@/components/common';
 import { useRef } from 'react';
 import { Noise } from '@/components/ui';
-import '@/utils/i18n';
 import ScrollContextProvider from '@/context/ScrollContext';
 import AnimationConf from '@/context/AnimationConf';
 import { useEffect } from 'react';

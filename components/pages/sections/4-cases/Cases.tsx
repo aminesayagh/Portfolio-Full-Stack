@@ -20,7 +20,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                         trigger: container.current as any,
                         scrub: true,
                         start: 'top top',
-                        end: 'bottom-=10% top',
+                        end: 'bottom top',
                         toggleActions: 'play none reverse none',
                         markers: false,
                         invalidateOnRefresh: true,
@@ -31,10 +31,6 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                     top: '100%',
                     ease: 'none',
                 })
-                // .to(container.current?.children[0] as any, {
-                //     top: '70%',
-                //     duration: 1,
-                // })
             } else {
                 gsap.fromTo(container.current?.children[0] as any, {
                     top: 0,
@@ -46,7 +42,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                         scrub: true,
                         start: 'top top',
                         end: 'bottom top',
-                        toggleActions: 'play none reverse none',
+                        toggleActions: 'play pause reverse pause',
                         markers: false,
                         invalidateOnRefresh: true,
                     }
@@ -58,7 +54,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
             }, {
                 backgroundSize: '112%',
                 backgroundPosition: 'center 20%',
-                ease: 'power4',
+                ease: 'Power3.easeIn',
                 scrollTrigger: {
                     trigger: container.current as any,
                     scrub: true,

@@ -1,7 +1,6 @@
 import { Head } from '@/components/common';
 import { useState, useEffect } from 'react';
 import { Noise, Preloader } from '@/components/ui';
-import '@/utils/i18n';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import '@/components/InitGsap';

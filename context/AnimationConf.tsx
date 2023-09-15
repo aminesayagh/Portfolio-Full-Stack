@@ -64,12 +64,12 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
 
         window.addEventListener('DOMContentLoaded', () => {
             scroll?.update()
-            ScrollTrigger.refresh()
+            // ScrollTrigger.refresh() // typed error here
         })
 
         window.addEventListener('resize', () => {
-            scroll?.update();
-            ScrollTrigger.refresh()
+            scroll?.update();            
+            // ScrollTrigger.refresh() // typed error here
         })
         return () => {
             scroll?.destroy();
