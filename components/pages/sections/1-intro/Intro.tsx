@@ -41,15 +41,74 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
         });
         return () => ctx.revert();
     }, [scrollbar])
-    return <>{React.cloneElement(children, { ref })}</>
+    return <div ref={ref} >
+        {children}
+    </div>
 }
+
+const GsapCircleBlue = ({ children, ...props }: { children: React.ReactElement, className: string }) => {
+    const circle = useRef<HTMLDivElement>(null);
+    const tl = useMemo(() => gsap.timeline({ paused: true }), []);
+    const getPosition = (e: any) => {
+        const { clientX, clientY } = e; // get the mouse position relative to the circle element
+        const { left, top, width, height } = circle.current?.getBoundingClientRect() as DOMRect;
+        const x = clientX - left;
+        const y = clientY - top;
+        return { x, y };
+    }
+    useIsomorphicLayoutEffect(() => {
+        if (!!circle.current) {
+            const mouseEnter = (e: any) => {
+                const { x, y } = getPosition(e);
+
+                // init the animation
+                tl.clear();
+                tl.fromTo(circle.current, {
+                    background: `radial-gradient(circle at ${x}px ${y}px, #7E74F1 0%, #FEFEFE 0%)`,
+                }, {
+                    background: `radial-gradient(circle at ${x}px ${y}px, #7E74F1 100%, #FEFEFE 0%)`,
+                    duration: 0.4,
+                    ease: 'power4.out',
+                });
+                tl.play();
+
+            }
+            const mouseLeave = (e: any) => {
+                console.log('leave');
+                const { x, y } = getPosition(e);
+
+                tl.clear();
+                tl.fromTo(circle.current, {
+                    background: `radial-gradient(circle at ${x}px ${y}px, #7E74F1 100%, #FEFEFE 0%)`,
+                }, {
+                    background: `radial-gradient(circle at ${x}px ${y}px, #7E74F1 0%, #FEFEFE 0%)`,
+                    duration: 0.4,
+                    ease: 'power4.out',
+                });
+                tl.play();
+            }
+
+            circle.current.addEventListener('pointerenter', mouseEnter);
+            circle.current.addEventListener('mouseleave', mouseLeave);
+            return () => {
+                circle.current?.removeEventListener('pointerenter', mouseEnter);
+                circle.current?.removeEventListener('mouseleave', mouseLeave);
+            }
+        }
+    }, []);
+
+    return React.cloneElement(children, { ref: circle, className: twMerge(children.props.className, 'relative rounded-full bg-white-100') })
+}
+
 const ButtonNext = () => {
     return <GsapMagic>
-        <div className={twMerge('', 'rounded-full overflow-hidden next_button_gsap')}  >
-            <div className=' bg-white-200 hover:bg-primary-600 [&>*]:stroke-black-200 [&>*]:hover:stroke-black-200 transition-colors duration-300 p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6'>
-                <Icon name='IconCornerLeftDown' className='stroke-1 w-8 h-8 xxs:w-6 xxs:h-6 xs:w-8 xs:h-8 xl:w-10 xl:h-10' />
+        <GsapCircleBlue className="rounded-full bg-white-100">
+            <div className={twMerge('', 'rounded-full overflow-hidden next_button_gsap')}  >
+                <div className=' [&>*]:stroke-black-200 [&>*]:hover:stroke-black-200 transition-colors duration-300 p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6'>
+                    <Icon name='IconCornerLeftDown' className='stroke-1 w-8 h-8 xxs:w-6 xxs:h-6 xs:w-8 xs:h-8 xl:w-10 xl:h-10' />
+                </div>
             </div>
-        </div>
+        </GsapCircleBlue>
     </GsapMagic>
 }
 
@@ -207,8 +266,8 @@ const Item = ({ children }: {
         }
     });
     return <div {...hoverProps} className='cursor-pointer'>{
-            children
-        }</div>
+        children
+    }</div>
 }
 const Menu = () => {
     const { t } = useTranslation();
