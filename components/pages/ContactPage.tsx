@@ -208,7 +208,7 @@ const ContactPage = () => {
                     trigger: '#contact',
                     start: 'top 60%',
                     toggleActions: 'play play restart play',
-                    markers: true,
+                    markers: false,
                 }
             }).from('.splitText_gsap', {
                 yPercent: 220,
