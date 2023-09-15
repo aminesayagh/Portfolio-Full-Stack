@@ -5,7 +5,8 @@ import { Title, Text } from '@/components/ui';
 import { useTranslation } from 'next-i18next';
 import { ScrollProvider } from '@/context/ScrollContext';
 import { getProjectsByCategory } from '@/conf/projects';
-import { gsap } from 'gsap';
+import { gsap } from '@/utils/gsap';
+
 
 const Case = ({ picture, index, id }: { picture?: string[], index: number, id: string }) => {
     const container = useRef<HTMLDivElement>(null);
@@ -15,11 +16,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
     useEffect(() => {
         const ctx = gsap.context((self) => {
             if (index < 2) {
-                gsap.fromTo(container.current?.children[0] as any, {
-                    top: 0,
-                }, {
-                    top: '100%',
-                    ease: 'none',
+                gsap.timeline({
                     scrollTrigger: {
                         trigger: container.current as any,
                         scrub: true,
@@ -29,6 +26,11 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                         markers: false,
                         invalidateOnRefresh: true,
                     }
+                }).fromTo(container.current?.children[0] as any, {
+                    top: 0,
+                }, {
+                    top: '100%',
+                    ease: 'none',
                 })
             } else {
                 gsap.fromTo(container.current?.children[0] as any, {
@@ -41,7 +43,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                         scrub: true,
                         start: 'top top',
                         end: 'bottom top',
-                        toggleActions: 'play none reverse none',
+                        toggleActions: 'play pause reverse pause',
                         markers: false,
                         invalidateOnRefresh: true,
                     }
@@ -51,13 +53,14 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                 backgroundSize: '100%',
                 backgroundPosition: 'center 60%',
             }, {
-                backgroundSize: '105%',
+                backgroundSize: '112%',
                 backgroundPosition: 'center 20%',
-                ease: 'power4',
+                ease: 'Power3.easeIn',
                 scrollTrigger: {
                     trigger: container.current as any,
                     scrub: true,
-                    start: 'top bottom',
+                    start: 'top top',
+                    end: 'bottom top',
                     markers: false,
                     invalidateOnRefresh: true,
                 }
@@ -86,13 +89,13 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
 
         }, container);
         return () => ctx.revert();
-    }, [scrollbar, container.current])
+    }, [scrollbar])
     return <div className={twMerge('relative h-[140vh]')} ref={container} style={{
         zIndex: 10 + (index + 10),
     }} >
         <div className='absolute left-0 right-0 w-full h-screen bg-no-repeat bg-cover' style={{
             backgroundImage: `url(${!!picture ? picture[0] : ''})`,
-            zIndex: 10 + (index + 11),
+            zIndex: 10 + (index + 11)
         }} >
             <div className='relative w-fit flex flex-col justify-end h-full px-24 py-40 gap-4'
                 data-scroll data-scroll-position='start' data-scroll-speed='2.4'

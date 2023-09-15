@@ -2,12 +2,15 @@ import React from "react";
 
 import { useTranslation } from "next-i18next";
 import { Link, Button } from "@/components/ui";
+import i18n from '@/utils/i18n';
 
+import { useRouter } from 'next/router';
 const langs = ['fr', 'en'];
 const SwitchLang = () => {
-    const { t, i18n } = useTranslation();
+    // const { t, i18n } = useTranslation();
+    const router = useRouter();
     const changeLanguage = (lng: React.Key) => {
-        i18n.changeLanguage(lng.toString());
+        router.push(router.pathname, router.asPath, { locale: lng as string });
     }
 
     return (

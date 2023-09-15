@@ -21,6 +21,7 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: 'en',
+    ns: ['common'],
     debug: false,
     supportedLngs: ['fr', 'en'],
     detection: {

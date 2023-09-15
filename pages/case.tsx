@@ -2,18 +2,17 @@ import { Container } from '@/components/ui';
 import { Head } from '@/components/common';
 import { useRef } from 'react';
 import { Noise } from '@/components/ui';
-import '@/utils/i18n';
 import ScrollContextProvider from '@/context/ScrollContext';
 import AnimationConf from '@/context/AnimationConf';
 import { useEffect } from 'react';
 import { Header, Footer } from '@/components/common';
 import { useIsomorphicLayoutEffect } from 'react-use';
-import { gsap } from 'gsap';
-import '@/components/InitGsap';
+import { gsap } from '@/utils/gsap';
+
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { twMerge } from 'tailwind-merge';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { ScrollTrigger } from '@/utils/gsap';
 
 
 const Test = () => {

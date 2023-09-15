@@ -1,12 +1,9 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { ScrollProvider } from './ScrollContext';
-import { gsap } from 'gsap';
-import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin';
+import { gsap } from '@/utils/gsap';
 import LocomotiveScroll from 'locomotive-scroll';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-// @ts-ignore
-gsap.core?.globals('ScrollToPlugin', ScrollToPlugin);
+import { ScrollTrigger } from '@/utils/gsap';
 
 
 
@@ -17,7 +14,6 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
         
         let scroll: LocomotiveScroll | null = null;
         import('locomotive-scroll').then((locomotiveModule) => {
-            // gsap.registerPlugin(ScrollTrigger);
             let el = document.querySelector('[data-scroll-container]') as HTMLElement;
             scroll = new locomotiveModule.default({
                 el: el,
@@ -26,8 +22,10 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 getDirection: true,
                 getSpeed: true,
                 reloadOnContextChange: true,
-
                 multiplier: 0.9,
+                smartphone: {
+                    smooth: true,
+                },
             })
             setScrollbar(scroll);
 
@@ -62,12 +60,12 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
 
         window.addEventListener('DOMContentLoaded', () => {
             scroll?.update()
-            ScrollTrigger.refresh()
+            // ScrollTrigger.refresh() // typed error here
         })
 
         window.addEventListener('resize', () => {
-            scroll?.update();
-            ScrollTrigger.refresh()
+            scroll?.update();            
+            // ScrollTrigger.refresh() // typed error here
         })
         return () => {
             scroll?.destroy();

@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 
 import { Title, Text, Link } from '@/components/ui';
-import { gsap } from 'gsap';
+import { gsap } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { ScrollProvider } from '@/context/ScrollContext';
 
@@ -15,7 +15,6 @@ const Manifesto = () => {
     const body = useRef<React.JSX.Element[]>([]);
     const phrase = t('manifesto.description');
     const { scrollbar } = useContext(ScrollProvider);
-    const [bodyExist, setBodyExist] = useState(false);
     useEffect(() => {
         const splitLetters = (word: string) => {
             return _.map(word.split(''), (letter, index) => (
@@ -25,15 +24,16 @@ const Manifesto = () => {
 
         const elements = _.map(phrase.split(' '), (word, index) => {
             const letters = splitLetters(word);
-            return <p key={`word_${index}`}className='flex flex-row gap-0 letter_gsap'>{letters}</p>;
+            return <p key={`word_${index}`}className='flex flex-row gap-[0.09rem] letter_gsap'>{letters}</p>;
         });
 
         body.current = elements;
-        setBodyExist(true)
-    }, [phrase])
+    }, [phrase, t])
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            gsap.fromTo('.letter_gsap', {
+            const letter = gsap.utils.toArray('.letter_gsap');
+
+            gsap.fromTo(letter, {
                 opacity: 0.1,
             }, {
                 opacity: 0.9,
@@ -44,14 +44,14 @@ const Manifesto = () => {
                 scrollTrigger: {
                     trigger: '.manifesto_quote_gsap',
                     scrub: true,
-                    start: 'top 70%',
+                    start: 'top 75%',
                     end: 'center 50%',
                     markers: false,
                 }
             })
         }, refDescription);
         return () => ctx.revert();
-    }, [scrollbar, phrase, bodyExist]);
+    }, [scrollbar]);
 
     const refDescription = useRef<HTMLDivElement>(null);
     useIsomorphicLayoutEffect(() => {
@@ -68,7 +68,7 @@ const Manifesto = () => {
                         trigger: box,
                         start: 'bottom bottom',
                         end: 'top 70%',
-                        toggleActions: 'play none none none',
+                        toggleActions: 'play pause reverse pause',
                         scrub: 2,
                         markers: false,
                     }
@@ -96,7 +96,7 @@ const Manifesto = () => {
                         <strong className='text-white-200 pr-2'>
                             {t(`manifesto.slogan`)}
                         </strong>
-                        {body.current ? body.current.map((word, index) => word) : null}
+                        {body.current ? body.current.map((word, index) => <span key={index} className='mr-[0.3rem]' >{word}</span>) : null}
                     </Title>
                 </div>
                 <div className={twMerge(
@@ -111,16 +111,19 @@ const Manifesto = () => {
                         <Text p degree='3' weight='medium' size='lg' className='manifesto_description_gsap'>
                             {t(`manifesto.what_i_do`)}
                         </Text>
-                        <Text p degree='3' size='xl' weight='semibold' data-scroll data-scroll-position='end' data-scroll-speed='0.4' className='textLink inline w-full whitespace-inherit-important manifesto_description_gsap' style={{
-                            WebkitLineClamp: 2,
-                            WebkitBoxOrient: 'vertical',
-                            overflow: 'hidden',
-                        }} >
-                            {t(`manifesto.goal`)}
-                            <Link degree='2' href='/contact' className='ml-2' weight='bold' >
-                                {t(`manifesto.action`)}
-                            </Link>
-                        </Text>
+                        <span data-scroll data-scroll-position='end' data-scroll-speed='0.8'>
+                            <Text p degree='3' size='xl' weight='semibold'  className='textLink inline w-full whitespace-inherit-important manifesto_description_gsap' style={{
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
+                            }} >
+                                {t(`manifesto.goal`)}
+                                <Link degree='2' href='/contact' className='ml-2 text-primary-500 hover:text-primary-400/70 hover:underline transition-all duration-300' weight='bold' >
+                                    {t(`manifesto.action`)}
+                                </Link>
+                                .
+                            </Text>
+                        </span>
                         <style jsx>{`
                             .textLink {
                                 text-wrap: inherit !important;

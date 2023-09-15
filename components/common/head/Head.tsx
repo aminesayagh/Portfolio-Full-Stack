@@ -1,8 +1,10 @@
 
 import HeadNext from 'next/head';
+import { NextSeo } from 'next-seo';
 
 const Head = ({ title, description, keywords, author, logo }: { title: string, description: string, keywords: string, author: string, logo: string }) => {
     return <>
+        <NextSeo title={title} description={description}  />
         <HeadNext>
             <title>{title}</title>
             <meta name='description' content={description} />

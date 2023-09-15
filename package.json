@@ -37,6 +37,7 @@
     "moment-timezone": "^0.5.43",
     "next": "13.4.10",
     "next-i18next": "^14.0.0",
+    "next-seo": "^6.1.0",
     "next-transpile-modules": "^10.0.1",
     "notion-client": "^6.16.0",
     "postcss": "8.4.26",
