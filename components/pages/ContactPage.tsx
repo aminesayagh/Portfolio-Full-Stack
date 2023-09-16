@@ -1,18 +1,18 @@
 import { Header, Footer } from '@/components/common';
 import { Container, Display, Title, Text, Form, Link, OptionOnSubmit } from '@/components/ui';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useContext } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { useTranslation } from 'next-i18next';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-
+import { gsap } from '@/utils/gsap';
 import { getProjectsByCategory } from '@/conf/projects';
 import { getMenuItems } from '@/conf/router';
 import { ToastRegion, addToast } from '@/components/common/toast';
 
 import { useTime } from '@/hook';
 import AnimationConf from '@/context/AnimationConf';
-import ScrollContextProvider from '@/context/ScrollContext';
+import ScrollContextProvider, { ScrollProvider } from '@/context/ScrollContext';
 
 const CONTACT_SUBJECTS = {
     "1": "Project Inquiry",
@@ -195,20 +195,39 @@ const ContactPage = () => {
 
     const { t } = useTranslation();
     const socialNetworkItems = useMemo(() => getMenuItems('socialNetworks'), []);
-
+    const { scrollbar } = useContext(ScrollProvider);
     const timer = useTime({
         city: 'Casablanca',
         country: 'Africa',
         format: 'HH:mm',
     })
-    if (!timer) return null;
+    useEffect(() => {
+        let ctx = gsap.context(() => {
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: '#contact',
+                    start: 'top 60%',
+                    toggleActions: 'play play restart play',
+                    markers: false,
+                }
+            }).from('.splitText_gsap', {
+                yPercent: 220,
+                skewY: 7,
+                duration: 1.2,
+                ease: 'Power4.easeOut',
+                delay: 0.2,
+            });
+        });
+        return () => ctx.revert();
+    }, [scrollbar]);
+    // if (!timer) return null;
     return (
         <>
             <Container as='section' size='lg' data-scroll-section id='contact' className={twMerge('flex flex-col gap-12', 'items-stretch')} >
                 <section className={twMerge('flex flex-col gap-14 xl:gap-20 py-40')}>
                     {/* title */}
-                    <div className='grid grid-cols-12 gap-4'>
-                        <Display size='xl' weight='bold' className={twMerge('col-start-1 col-span-12', 'mdl:col-start-4 mdl:col-span-9', 'lg:col-start-3 lg:col-span-10')} >
+                    <div className='grid grid-cols-12 gap-4 overflow-hidden'>
+                        <Display size='xl' weight='bold' className={twMerge('col-start-1 col-span-12', 'mdl:col-start-4 mdl:col-span-9', 'lg:col-start-3 lg:col-span-10', 'splitText_gsap')} >
                             {t('contact.title')}
                         </Display>
                     </div>
@@ -309,7 +328,7 @@ const ContactPage = () => {
                     </div>
                 </section>
             </Container>
-            <Container as='section' size='lg' className='py-0' >
+            <Container as='section' size='lg' className='py-0'  data-scroll-section id='footer' >
                 <Footer />
             </Container>
         </>

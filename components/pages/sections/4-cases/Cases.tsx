@@ -49,6 +49,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                     }
                 })
             }
+
             gsap.fromTo(container.current?.children[0] as any, {
                 backgroundSize: '100%',
                 backgroundPosition: 'center 60%',
@@ -95,7 +96,8 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
     }} >
         <div className='absolute left-0 right-0 w-full h-screen bg-no-repeat bg-cover' style={{
             backgroundImage: `url(${!!picture ? picture[0] : ''})`,
-            zIndex: 10 + (index + 11)
+            zIndex: 10 + (index + 11),
+            backgroundPosition: 'center 60%',
         }} >
             <div className='relative w-fit flex flex-col justify-end h-full px-24 py-40 gap-4'
                 data-scroll data-scroll-position='start' data-scroll-speed='2.4'
