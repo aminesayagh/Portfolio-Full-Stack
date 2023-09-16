@@ -51,7 +51,7 @@ const Manifesto = () => {
             })
         }, refDescription);
         return () => ctx.revert();
-    }, [scrollbar]);
+    }, [scrollbar, phrase, t]);
 
     const refDescription = useRef<HTMLDivElement>(null);
     useIsomorphicLayoutEffect(() => {
@@ -66,13 +66,26 @@ const Manifesto = () => {
                     y: 0,
                     scrollTrigger: {
                         trigger: box,
-                        start: 'bottom bottom',
-                        end: 'top 70%',
+                        start: 'top bottom-=100px',
+                        end: 'top bottom-=260px',
                         toggleActions: 'play pause reverse pause',
-                        scrub: 2,
+                        scrub: true,
                         markers: false,
                     }
                 });
+            });
+            gsap.fromTo('.manifesto_description_action_gsap', {
+                opacity: 0,
+            }, {
+                opacity: 1,
+                scrollTrigger: {
+                    trigger: '.manifesto_description_action_gsap',
+                    start: 'top bottom-=100px',
+                    end: 'top bottom-=260px',
+                    toggleActions: 'play pause reverse pause',
+                    scrub: true,
+                    markers: false,
+                }
             })
         }, refDescription)
         return () => ctx.revert();
@@ -112,7 +125,7 @@ const Manifesto = () => {
                             {t(`manifesto.what_i_do`)}
                         </Text>
                         <span data-scroll data-scroll-position='end' data-scroll-speed='0.8'>
-                            <Text p degree='3' size='xl' weight='semibold'  className='textLink inline w-full whitespace-inherit-important manifesto_description_gsap' style={{
+                            <Text p degree='3' size='xl' weight='semibold'  className='textLink inline w-full whitespace-inherit-important manifesto_description_action_gsap' style={{
                                 WebkitLineClamp: 2,
                                 WebkitBoxOrient: 'vertical',
                                 overflow: 'hidden',
