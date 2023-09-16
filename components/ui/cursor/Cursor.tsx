@@ -56,7 +56,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 .ball_gsap {
                     transform: translate(-50%, -50%);
                     pointer-events: none;
-                    z-index: 100;
+                    z-index: 99999999999;
                     mix-blend-mode: difference;
                 }
             `}
