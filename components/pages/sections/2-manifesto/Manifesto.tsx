@@ -32,7 +32,6 @@ const Manifesto = () => {
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
             const letter = gsap.utils.toArray('.letter_gsap');
-
             gsap.fromTo(letter, {
                 opacity: 0.1,
             }, {
@@ -49,13 +48,7 @@ const Manifesto = () => {
                     markers: false,
                 }
             })
-        }, refDescription);
-        return () => ctx.revert();
-    }, [scrollbar, phrase, t]);
-
-    const refDescription = useRef<HTMLDivElement>(null);
-    useIsomorphicLayoutEffect(() => {
-        let ctx = gsap.context(() => {
+            
             gsap.utils.toArray('.manifesto_description_gsap').map((box: any) => {
                 gsap.fromTo(box, {
                     opacity: 0,
@@ -87,9 +80,11 @@ const Manifesto = () => {
                     markers: false,
                 }
             })
-        }, refDescription)
+        }, refDescription);
         return () => ctx.revert();
-    }, [scrollbar]);
+    }, [scrollbar, phrase, t]);
+
+    const refDescription = useRef<HTMLDivElement>(null);
     return (
         <div className={twMerge('h-fit py-40')}  ref={refDescription} >
             <div data-scroll data-scroll-position='start' data-scroll-speed='1.1' className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`, 'h-fit strick')}>

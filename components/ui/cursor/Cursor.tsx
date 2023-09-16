@@ -12,30 +12,24 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
             });
             let xTo = gsap.quickTo('.ball_gsap', 'x', {
                 duration: 0.4,
-                ease: 'power3',
+                ease: 'Back.easeOut',
             })
             let yTo = gsap.quickTo('.ball_gsap', 'y', {
                 duration: 0.4,
-                ease: 'power3',
+                ease: 'Back.easeOut',
             })
             
             let scaleTo = gsap.quickTo('.ball_gsap', 'scale', {
                 duration: 0.4,
-                ease: 'power3',
+                ease: 'Back.easeOut',
             })
             let opacityTo = gsap.quickTo('.ball_gsap', 'opacity', {
                 duration: 0.4,
-                ease: 'power3',
+                ease: 'Back.easeOut',
             })
             window.addEventListener("mousemove", e => {
                 xTo(e.clientX);
                 yTo(e.clientY);
-                gsap.to('.ball_gsap', {
-                    keyframes: {
-                        scale: [1, 0.6, 1],
-                    },
-                    duration: 0.4,
-                });
             });
             window.addEventListener("mouseenter", e => {
                 scaleTo(1);

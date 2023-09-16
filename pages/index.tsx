@@ -27,17 +27,17 @@ export default function Home() {
         logo='/favicon.svg'
       />
       {isLoading && <Preloader />}
-      <ScrollContextProvider >
-        <AnimationConf >
-          <Cursor>
+      <Cursor>
+        <ScrollContextProvider >
+          <AnimationConf >
             <Header />
             <div data-scroll-container>
               <LandingPage />
             </div>
             <Noise />
-          </Cursor>
-        </AnimationConf>
-      </ScrollContextProvider>
+          </AnimationConf>
+        </ScrollContextProvider>
+      </Cursor>
     </>
   )
 }
