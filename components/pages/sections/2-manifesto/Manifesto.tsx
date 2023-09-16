@@ -32,7 +32,6 @@ const Manifesto = () => {
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
             const letter = gsap.utils.toArray('.letter_gsap');
-
             gsap.fromTo(letter, {
                 opacity: 0.1,
             }, {
@@ -49,13 +48,7 @@ const Manifesto = () => {
                     markers: false,
                 }
             })
-        }, refDescription);
-        return () => ctx.revert();
-    }, [scrollbar]);
-
-    const refDescription = useRef<HTMLDivElement>(null);
-    useIsomorphicLayoutEffect(() => {
-        let ctx = gsap.context(() => {
+            
             gsap.utils.toArray('.manifesto_description_gsap').map((box: any) => {
                 gsap.fromTo(box, {
                     opacity: 0,
@@ -66,17 +59,32 @@ const Manifesto = () => {
                     y: 0,
                     scrollTrigger: {
                         trigger: box,
-                        start: 'bottom bottom',
-                        end: 'top 70%',
+                        start: 'top bottom-=100px',
+                        end: 'top bottom-=260px',
                         toggleActions: 'play pause reverse pause',
-                        scrub: 2,
+                        scrub: true,
                         markers: false,
                     }
                 });
+            });
+            gsap.fromTo('.manifesto_description_action_gsap', {
+                opacity: 0,
+            }, {
+                opacity: 1,
+                scrollTrigger: {
+                    trigger: '.manifesto_description_action_gsap',
+                    start: 'top bottom-=100px',
+                    end: 'top bottom-=260px',
+                    toggleActions: 'play pause reverse pause',
+                    scrub: true,
+                    markers: false,
+                }
             })
-        }, refDescription)
+        }, refDescription);
         return () => ctx.revert();
-    }, [scrollbar]);
+    }, [scrollbar, phrase, t]);
+
+    const refDescription = useRef<HTMLDivElement>(null);
     return (
         <div className={twMerge('h-fit py-40')}  ref={refDescription} >
             <div data-scroll data-scroll-position='start' data-scroll-speed='1.1' className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`, 'h-fit strick')}>
@@ -112,7 +120,7 @@ const Manifesto = () => {
                             {t(`manifesto.what_i_do`)}
                         </Text>
                         <span data-scroll data-scroll-position='end' data-scroll-speed='0.8'>
-                            <Text p degree='3' size='xl' weight='semibold'  className='textLink inline w-full whitespace-inherit-important manifesto_description_gsap' style={{
+                            <Text p degree='3' size='xl' weight='semibold'  className='textLink inline w-full whitespace-inherit-important manifesto_description_action_gsap' style={{
                                 WebkitLineClamp: 2,
                                 WebkitBoxOrient: 'vertical',
                                 overflow: 'hidden',

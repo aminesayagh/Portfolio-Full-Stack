@@ -9,6 +9,7 @@ import AnimationConf from '@/context/AnimationConf';
 import ScrollContextProvider from '@/context/ScrollContext';
 import { LandingPage } from '@/components/pages';
 import { Header, Footer } from '@/components/common';
+import { Cursor } from '@/components/ui';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,15 +27,17 @@ export default function Home() {
         logo='/favicon.svg'
       />
       {isLoading && <Preloader />}
-      <ScrollContextProvider >
-        <AnimationConf >
-          <Header />
-          <div data-scroll-container>
-            <LandingPage />
-          </div>
-          <Noise />
-        </AnimationConf>
-      </ScrollContextProvider>
+      <Cursor>
+        <ScrollContextProvider >
+          <AnimationConf >
+            <Header />
+            <div data-scroll-container>
+              <LandingPage />
+            </div>
+            <Noise />
+          </AnimationConf>
+        </ScrollContextProvider>
+      </Cursor>
     </>
   )
 }
