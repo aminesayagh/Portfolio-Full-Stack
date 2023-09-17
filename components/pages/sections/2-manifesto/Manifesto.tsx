@@ -24,31 +24,34 @@ const Manifesto = () => {
 
         const elements = _.map(phrase.split(' '), (word, index) => {
             const letters = splitLetters(word);
-            return <p key={`word_${index}`}className='flex flex-row gap-[0.09rem] letter_gsap'>{letters}</p>;
+            return <p key={`word_${index}`} className='flex flex-row gap-[0.09rem] letter_gsap'>{letters}</p>;
         });
 
         body.current = elements;
     }, [phrase, t])
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            const letter = gsap.utils.toArray('.letter_gsap');
-            gsap.fromTo(letter, {
-                opacity: 0.1,
-            }, {
-                opacity: 0.9,
-                ease: 'power4',
-                stagger: 0.1,
-                skewX: 0.3,
-                duration: 0.5,
-                scrollTrigger: {
-                    trigger: '.manifesto_quote_gsap',
-                    scrub: true,
-                    start: 'top 75%',
-                    end: 'center 50%',
-                    markers: false,
-                }
-            })
-            
+            // verify if .letter_gsap is in the dom
+            if (refs.current.length > 0) {
+                const letter = gsap.utils.toArray('.letter_gsap');
+                gsap.fromTo(letter, {
+                    opacity: 0.1,
+                }, {
+                    opacity: 0.9,
+                    ease: 'power4',
+                    stagger: 0.1,
+                    skewX: 0.3,
+                    duration: 0.5,
+                    scrollTrigger: {
+                        trigger: '.manifesto_quote_gsap',
+                        scrub: true,
+                        start: 'top 75%',
+                        end: 'center 50%',
+                        markers: false,
+                    }
+                })
+            }
+
             gsap.utils.toArray('.manifesto_description_gsap').map((box: any) => {
                 gsap.fromTo(box, {
                     opacity: 0,
@@ -82,12 +85,12 @@ const Manifesto = () => {
             })
         }, refDescription);
         return () => ctx.revert();
-    }, [scrollbar, phrase, t]);
+    }, [scrollbar, phrase]);
 
     const refDescription = useRef<HTMLDivElement>(null);
     return (
-        <div className={twMerge('h-fit py-40')}  ref={refDescription} >
-            <div data-scroll data-scroll-position='start' data-scroll-speed='1.1' className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`, 'h-fit strick')}>
+        <div className={twMerge('h-fit py-40')} ref={refDescription} >
+            <div data-scroll data-scroll-position='end' data-scroll-speed='1.4' className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`, 'h-fit strick')}>
                 <div className={twMerge('flex flex-col gap-7', 'items-start justify-start manifesto_quote_gsap',
                     'col-start-1 col-span-12 xs:col-start-2 xs:col-span-11 md:col-start-2 md:col-span-10 mdl:col-start-2 mdl:col-span-10 xl:col-start-2 xl:col-span-9',
                 )}>
@@ -120,7 +123,7 @@ const Manifesto = () => {
                             {t(`manifesto.what_i_do`)}
                         </Text>
                         <span data-scroll data-scroll-position='end' data-scroll-speed='0.8'>
-                            <Text p degree='3' size='xl' weight='semibold'  className='textLink inline w-full whitespace-inherit-important manifesto_description_action_gsap' style={{
+                            <Text p degree='3' size='xl' weight='semibold' className='textLink inline w-full whitespace-inherit-important manifesto_description_action_gsap' style={{
                                 WebkitLineClamp: 2,
                                 WebkitBoxOrient: 'vertical',
                                 overflow: 'hidden',

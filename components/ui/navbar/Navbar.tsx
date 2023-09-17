@@ -26,7 +26,8 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
             scrollbar && scrollbar.on('scroll', (e) => {
-                if(e.delta.y < 140) {
+                console.log(e);
+                if(e?.delta?.y < 140) {
                     setActive(false);
                 } else {
                     setActive(true);

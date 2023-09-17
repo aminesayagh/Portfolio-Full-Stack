@@ -13,17 +13,13 @@ import { Cursor } from '@/components/ui';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 3000)
-  }, [])
+  const { t } = useTranslation('common');
   return (
     <>
-      <Head title={"Mohamed Amine SAYAGH - Full Stack Web Developer"}
-        description={"Mohamed Amine SAYAGH - Full Stack Web Developer"}
-        keywords="Mohamed Amine SAYAGH - Full Stack Web Developer"
-        author="Mohamed Amine SAYAGH"
+      <Head title={t('head.home.title')}
+        description={t('head.home.description')}
+        keywords={t('head.home.keywords')}
+        author={t('head.home.author')}
         logo='/favicon.svg'
       />
       {isLoading && <Preloader />}
@@ -42,6 +38,7 @@ export default function Home() {
   )
 }
 import nextI18NextConfig from '../next-i18next.config.js'
+import { useTranslation } from 'react-i18next';
 
 export async function getStaticProps({ locale }: any) {
   return {

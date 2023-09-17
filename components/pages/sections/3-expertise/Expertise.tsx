@@ -1,7 +1,7 @@
 
 import { useTranslation } from "next-i18next";
 import { twMerge } from "tailwind-merge";
-import { useEffect, useMemo, useLayoutEffect, useRef, useContext } from 'react';
+import {memo, useRef, useContext } from 'react';
 import { gsap } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 
@@ -21,6 +21,7 @@ const Icon = () => {
         </svg>
     )
 }
+const IconMemo = memo(Icon);
 
 const ExpertiseHead = () => {
     const { t } = useTranslation();
@@ -28,14 +29,14 @@ const ExpertiseHead = () => {
         <>
             <div className={twMerge('flex flex-col sm:flex-row gap-5 sm:gap-0 items-start sm:items-end justify-between', 'w-full')}>
                 <div className='block sm:hidden'>
-                    <Icon />
+                    <IconMemo />
                 </div>
                 <div className={twMerge('w-full xxs:w-9/12 sm:w-4/12 mdl:w-5/12')}>
                     <Title h2 weight='bold' degree='1' exchange className="capitalize">{t('experience.title')}</Title>
                 </div>
                 <div className={twMerge('w-11/12 xxs:w-10/12 sm:w-7/12 md:w-8/12 mdl:w-1/2 xl:w-5/12', 'flex flex-col gap-4 mdl:gap-5', 'sm:items-end')}>
                     <div className='hidden sm:block'>
-                        <Icon />
+                        <IconMemo />
                     </div>
                     <Text p weight='medium' degree='3' size='md' className='text-start sm:text-end' exchange>{t('experience.description')}</Text>
                 </div>
@@ -43,6 +44,7 @@ const ExpertiseHead = () => {
         </>
     )
 }
+const ExpertiseHeadMemo = memo(ExpertiseHead);
 
 const BORDER_CARD_CLASS_NAME = 'rounded-xl border border-dashed border-black-500'
 const Card = ({ title, description, number }: { title: string, description: string, number: string }) => {
@@ -88,6 +90,7 @@ const Card = ({ title, description, number }: { title: string, description: stri
         </div>
     </>
 }
+const CardMemo = memo(Card);
 
 const EmptyCard = () => {
     return <>
@@ -96,6 +99,7 @@ const EmptyCard = () => {
         </div>
     </>
 }
+const EmptyCardMemo = memo(EmptyCard);
 
 const CardElement = ({ i }: { i: number }) => {
     const { t } = useTranslation();
@@ -132,14 +136,15 @@ const CardElement = ({ i }: { i: number }) => {
     }, [ref.current, scrollbar])
 
     if (i >= 4) return <div key={i} className={`expertise-card-gsap`} ref={ref}>
-        <EmptyCard />
+        <EmptyCardMemo />
     </div>
     return (
         <div className={`expertise-card-gsap relative`} key={i} ref={ref}>
-            <Card title={t(`experience.stages.${i + 1}.title`)} description={t(`experience.stages.${i + 1}.description`)} number={t(`experience.stages.${i + 1}.count`)} />
+            <CardMemo title={t(`experience.stages.${i + 1}.title`)} description={t(`experience.stages.${i + 1}.description`)} number={t(`experience.stages.${i + 1}.count`)} />
         </div>
     )
 }
+const CardElementMemo = memo(CardElement);
 
 const ExpertiseStages = () => {
 
@@ -154,19 +159,20 @@ const ExpertiseStages = () => {
                 'w-full relative z-[60]',
             )}>
                 {Array.apply('', Array(8)).map((_, i) => {
-                    return <CardElement key={i} i={i} />
+                    return <CardElementMemo key={i} i={i} />
                 })}
             </div>
         </>
     )
 }
+const ExpertiseStagesMemo = memo(ExpertiseStages);
 
 const Expertise = () => {
     return (
         <>
             <div className={twMerge('flex flex-col', 'gap-16 lg:gap-28 2xl:gap-44', 'justify-center items-center h-full', rounded({ size: 'xl' }), 'overflow-hidden container-expertise-gsap')}>
-                <ExpertiseHead />
-                <ExpertiseStages />
+                <ExpertiseHeadMemo />
+                <ExpertiseStagesMemo />
                 <div className={twMerge('absolute w-full h-[26vh] bottom-0 left-0 z-999999999', 'bg-gradient-to-t from-black-100/25 via-black-100/10 to-black-100/0')}></div>
             </div>
         </>

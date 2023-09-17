@@ -8,17 +8,20 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import '@/utils/gsap';
 import AnimationConf from '@/context/AnimationConf';
 import ScrollContextProvider from '@/context/ScrollContext';
-import { Header, Footer } from '@/components/common';
-import { ToastRegion, addToast } from '@/components/common/toast';
+import { Header } from '@/components/common';
+import { ToastRegion } from '@/components/common/toast';
 
 
 const Contact = () => {
+    const { t } = useTranslation('common');
+
     return (
         <>
-            <Head title={"Mohamed Amine SAYAGH - Full Stack Web Developer"}
-                description={"Mohamed Amine SAYAGH - Full Stack Web Developer"}
-                keywords="Mohamed Amine SAYAGH - Full Stack Web Developer"
-                author="Mohamed Amine SAYAGH"
+            <Head 
+                title={t('head.contact.title')}
+                description={t('head.contact.description')}
+                keywords={t('head.contact.keywords')}
+                author={t('head.contact.author')}
                 logo='/favicon.svg'
             />
             <ScrollContextProvider >
@@ -37,6 +40,7 @@ const Contact = () => {
 }
 
 import nextI18NextConfig from '../next-i18next.config.js'
+import { useTranslation } from 'react-i18next';
 
 export async function getStaticProps({ locale }: any) {
     return {

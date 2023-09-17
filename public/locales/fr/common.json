@@ -6,6 +6,13 @@
             "keywords": "Mohamed Amine SAYAGH - Développeur Web Full Stack",
             "author": "Mohamed Amine SAYAGH",
             "url": "https://ma-sayagh.vercel.app/"
+        },
+        "contact": {
+            "title": "Mohamed Amine SAYAGH - Contact",
+            "description": "Mohamed Amine SAYAGH - Contact",
+            "keywords": "Mohamed Amine SAYAGH - Contact",
+            "author": "Mohamed Amine SAYAGH",
+            "url": "https://ma-sayagh.vercel.app/contact"
         }
     },
     "socialNetwork": {
