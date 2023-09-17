@@ -54,7 +54,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                 backgroundSize: '100%',
                 backgroundPosition: 'center 60%',
             }, {
-                backgroundSize: '112%',
+                backgroundSize: '120%',
                 backgroundPosition: 'center 20%',
                 ease: 'Power3.easeIn',
                 scrollTrigger: {
@@ -66,10 +66,6 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                     invalidateOnRefresh: true,
                 }
             })
-            // @ts-ignore
-            // gsap.set('.case-text-gsap' as any, {
-            //     xPercent: -100,
-            // });
             gsap.fromTo('.case-text-gsap', {
                 xPercent: -100,
                 opacity: 0,

@@ -19,13 +19,25 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 xPercent: -50,
                 yPercent: -50,
             });
+            gsap.set('.ball_secondary_gsap', {
+                xPercent: -50,
+                yPercent: -50,
+            });
             let xTo = gsap.quickTo('.ball_gsap', 'x', {
-                duration: 0.4,
-                ease: 'Back.easeOut',
+                duration: 0.5,
+                ease: 'Elastic.easeOut',
             })
             let yTo = gsap.quickTo('.ball_gsap', 'y', {
-                duration: 0.4,
-                ease: 'Back.easeOut',
+                duration: 0.5,
+                ease: 'Elastic.easeOut',
+            })
+            let xToSecondary = gsap.quickTo('.ball_secondary_gsap', 'x', {
+                duration: 0.3,
+                ease: 'Power4.easeOut',
+            })
+            let yToSecondary = gsap.quickTo('.ball_secondary_gsap', 'y', {
+                duration: 0.3,
+                ease: 'Power4.easeOut',
             })
             
             window.addEventListener("mousemove", e => {
@@ -34,6 +46,10 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
 
                 xTo(e.clientX);
                 yTo(e.clientY);
+
+                xToSecondary(e.clientX);
+                yToSecondary(e.clientY);
+
             });
             return () => {
                 window.removeEventListener("mousemove", e => {
@@ -45,45 +61,6 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
 
         return () => ctx.revert();
     }, []);
-    useEffect(() => {
-        const followMouse = () => {
-            const { 
-                mouseX,
-                mouseY,
-                destinationX,
-                destinationY,
-                distanceX,
-                distanceY,
-            } = positionRef.current;
-            if(!destinationX || !destinationY) {
-                positionRef.current.destinationX = mouseX;
-                positionRef.current.destinationY = mouseY;
-            }else {
-                positionRef.current.distanceX = (mouseX - destinationX) * 0.1;
-                positionRef.current.distanceY = (mouseY - destinationY) * 0.1;
-    
-                if(Math.abs(positionRef.current.distanceX) + Math.abs(positionRef.current.distanceY ) < 0.1) {
-                    positionRef.current.destinationX = mouseX;
-                    positionRef.current.destinationY = mouseY;
-                } else {
-                    positionRef.current.destinationX += distanceX;
-                    positionRef.current.destinationY += distanceY;
-                }
-
-            }
-
-
-            gsap.to(secondaryCursor.current, {
-                duration: 0.3,
-                x: positionRef.current.destinationX,
-                y: positionRef.current.destinationY,
-                ease: 'Back.easeOut',
-            })
-        }
-        window.addEventListener("mousemove", e => {
-            followMouse()
-        });
-    }, [positionRef.current.mouseX, positionRef.current.mouseY])
     return <>
         <div className='relative md:cursor-none'>
             {children}
