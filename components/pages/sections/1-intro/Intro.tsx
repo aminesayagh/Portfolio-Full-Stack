@@ -11,8 +11,8 @@ import { useRouter } from 'next/router';
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<HTMLDivElement>(null);
-    const xTo = gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' });
-    const yTo = gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' });
+    const xTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref.current]);
+    const yTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref.current]);
     const { scrollbar } = useContext(ScrollProvider);
 
     useIsomorphicLayoutEffect(() => {
@@ -24,12 +24,12 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
                     const { left, top, width, height } = ref.current?.getBoundingClientRect();
                     const x = clientX - (left + width / 2);
                     const y = clientY - (top + height / 2);
-                    xTo(x);
-                    yTo(y);
+                    xTo && xTo(x);
+                    yTo && yTo(y);
                 }
                 const mouseLeave = (e: any) => {
-                    xTo(0);
-                    yTo(0);
+                    xTo && xTo(0);
+                    yTo && yTo(0);
                 }
 
                 ref.current.addEventListener('mousemove', mouseMove);

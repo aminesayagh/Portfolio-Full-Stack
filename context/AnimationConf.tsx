@@ -25,7 +25,13 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 multiplier: 0.9,
                 smartphone: {
                     smooth: true,
+
                 },
+                // @ts-ignore
+                tablet: {
+                  smooth: true
+                },
+
             })
             setScrollbar(scroll);
 
@@ -56,6 +62,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             ScrollTrigger.addEventListener('refresh', () => {
                 scroll?.update()
             })
+            ScrollTrigger.refresh()
         })
 
         window.addEventListener('DOMContentLoaded', () => {
