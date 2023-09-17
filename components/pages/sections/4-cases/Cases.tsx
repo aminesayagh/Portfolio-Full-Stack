@@ -1,4 +1,4 @@
-import { useMemo, useRef, useContext, useLayoutEffect, useState, useEffect } from 'react';
+import React, { useMemo, useRef, useContext } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Title, Text } from '@/components/ui';
 
@@ -6,14 +6,14 @@ import { useTranslation } from 'next-i18next';
 import { ScrollProvider } from '@/context/ScrollContext';
 import { getProjectsByCategory } from '@/conf/projects';
 import { gsap } from '@/utils/gsap';
-
+import { useIsomorphicLayoutEffect } from 'react-use';
 
 const Case = ({ picture, index, id }: { picture?: string[], index: number, id: string }) => {
     const container = useRef<HTMLDivElement>(null);
     const { scrollbar } = useContext(ScrollProvider);
     const { t } = useTranslation();
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context((self) => {
             if (index < 2) {
                 gsap.timeline({
@@ -22,7 +22,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                         scrub: true,
                         start: 'top top',
                         end: 'bottom top',
-                        toggleActions: 'play none reverse none',
+                        toggleActions: 'play pause reverse pause',
                         markers: false,
                         invalidateOnRefresh: true,
                     }
@@ -80,7 +80,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                     start: 'top bottom-=35%',
                     end: 'bottom center',
                     markers: false,
-                    toggleActions: 'play none play reverse',
+                    toggleActions: 'play pause play reverse',
                 }
             })
 
@@ -117,6 +117,8 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
         </div>
     </div>
 }
+
+const CaseMemo = React.memo(Case);
 const Cases = () => {
     const { t } = useTranslation();
     const projects = useMemo(() => getProjectsByCategory('best'), []);
@@ -134,7 +136,7 @@ const Cases = () => {
         </div>
         <div className={twMerge(`w-full flex flex-col gap-0 h-fit`, 'rounded-2xl overflow-hidden')}>
             {projects.map((project, index) => {
-                return <Case key={index} picture={project?.picture} index={index} id={project.id} />
+                return <CaseMemo key={index} picture={project?.picture} index={index} id={project.id} />
             })}
         </div>
     </div>
