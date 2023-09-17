@@ -75,7 +75,6 @@ const GsapCircleBlue = ({ children, ...props }: { children: React.ReactElement, 
 
             }
             const mouseLeave = (e: any) => {
-                console.log('leave');
                 const { x, y } = getPosition(e);
 
                 tl.clear();
@@ -258,11 +257,9 @@ const Item = ({ children }: {
 }) => {
     let { isHovered, hoverProps } = useHover({
         onHoverStart: (e) => {
-            console.log('hover start', e);
             gsap.timeline().itemMenuHoverPlay(e.target.children[0])
         },
         onHoverEnd: (e) => {
-            console.log('hover end', e);
             gsap.timeline().itemMenuHoverReverse(e.target.children[0]);
         }
     });
