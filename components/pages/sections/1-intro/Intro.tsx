@@ -7,6 +7,7 @@ import { MENU_ITEMS } from "@/conf/router";
 import { ScrollProvider } from '@/context/ScrollContext';
 import { useIsomorphicLayoutEffect } from "react-use";
 import { useHover } from "react-aria";
+import { useRouter } from 'next/router';
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<HTMLDivElement>(null);
@@ -272,7 +273,11 @@ const Item = ({ children }: {
 const Menu = () => {
     const { t } = useTranslation();
     const { scrollbar } = useContext(ScrollProvider);
+    const router = useRouter();
     const goToSection = (section: string) => {
+        if(section == 'contact') {
+            router.push('/contact');
+        }
         scrollbar && scrollbar.scrollTo(`#${section}`, { duration: 500 });
     }
     return (<>
