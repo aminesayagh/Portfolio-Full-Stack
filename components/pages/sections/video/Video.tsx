@@ -16,13 +16,14 @@ const Video = () => {
     const isXxs = useMedia('(min-width: 390px)', false);
 
     const [height, setHeight] = useState<string>('50vh');
+    const [maxHeight, setMaxHeight] = useState<string>('1100px');
 
     const { scrollbar } = useContext(ScrollProvider);
     useEffect(() => {
         if(isLg) {
-            setHeight('110vh');
+            setHeight('100vh');
         } else if(isSM) {
-            setHeight('87vh');
+            setHeight('96vh');
         } else if(isXxs) {
             setHeight('100vh');
         } else {
@@ -89,8 +90,8 @@ const Video = () => {
     
     return (
         <>
-            <div className={twMerge('block relative w-full h-fit rounded-3xl video_gsap', rounded({ size: 'xl' }))}>
-                <canvas data-scroll ref={ref} className='h-fit' style={{ width: "100%", maxHeight: height, objectFit: 'cover', borderRadius: '1.5rem'  }} />
+            <div className={twMerge('block relative w-full h-fit rounded-3xl video_gsap overflow-hidden', rounded({ size: 'xl' }))}>
+                <canvas ref={ref} className={twMerge('h-full', rounded({ size: 'xl' }))} style={{ width: "100%", height: height, maxHeight: maxHeight, objectFit: 'cover'  }} />
             </div>
         </>
     )

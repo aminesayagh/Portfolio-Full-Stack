@@ -15,7 +15,7 @@ const SwitchLang = () => {
 
     return (
         <>
-            <div className='flex flex-row items-center justify-start gap-4 xxs:gap-8 mdl:gap-6 lg:gap-8'>
+            <div className='flex flex-row items-center justify-start gap-6 xxs:gap-8 mdl:gap-6 lg:gap-8'>
                 {langs.map(l =>
                     <Button key={l} degree="2" size='xs' className="uppercase" onPress={() => changeLanguage(l)} >
                         {l}

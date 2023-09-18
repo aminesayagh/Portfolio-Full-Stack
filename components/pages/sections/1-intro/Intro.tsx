@@ -184,7 +184,7 @@ const Title = () => {
             // children
             "[&>*]:w-full [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-5/12 [&>*]:mdl:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-4/12",
             '[&>*>span]:max-w-[14rem]',
-            "[&>*]:flex [&>*]:flex-row [&>*]:justify-start [&>*]:sn:justify-end",
+            "[&>*]:flex [&>*]:flex-row [&>*]:justify-start [&>*]:sm:justify-end",
             "[&>*]:mdl:ml-2 [&>*]:lg:ml-0"
         )} >
             <div >
@@ -301,11 +301,16 @@ const Menu = () => {
     </>)
 }
 
+const MenuMemo = React.memo(Menu);
+
+
+
 const Intro = () => {
     const introRef = useRef<HTMLDivElement>(null);
     const { scrollbar } = useContext(ScrollProvider);
     useEffect(() => {
         let ctx = gsap.context(() => {
+            
             gsap.timeline({
                 scrollTrigger: {
                     trigger: introRef.current,
@@ -361,7 +366,7 @@ const Intro = () => {
                 <Title />
             </div>
             <div className={twMerge('flex flex-row justify-between items-end', 'gap-0 xl:gap-6 4xl:gap-20')} >
-                <Menu />
+                <MenuMemo />
             </div>
         </div>
     </>)
