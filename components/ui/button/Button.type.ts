@@ -8,5 +8,6 @@ interface PropsIcon {
 }
 
 export interface ButtonProps extends PropsIcon, AriaButtonProps, Partial<TextPropsType> {
+    title?: string;
     full?: boolean;
 }
