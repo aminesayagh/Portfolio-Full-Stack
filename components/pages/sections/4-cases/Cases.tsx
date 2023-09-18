@@ -54,7 +54,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                 scale: 1,
                 backgroundPosition: 'center 60%',
             }, {
-                scale: 1.2,
+                scale: 1.3,
                 backgroundPosition: 'center 20%',
                 ease: 'Power3.easeIn',
                 scrollTrigger: {
