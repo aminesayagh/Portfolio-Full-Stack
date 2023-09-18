@@ -89,9 +89,9 @@ const Manifesto = () => {
 
     const refDescription = useRef<HTMLDivElement>(null);
     return (
-        <div className={twMerge('h-fit py-40')} ref={refDescription} >
-            <div data-scroll data-scroll-position='end' data-scroll-speed='1.4' className={twMerge(`grid grid-cols-12 gap-y-4 xxs:gap-y-5 xs:gap-y-8 mdl:gap-y-12`, 'h-fit strick')}>
-                <div className={twMerge('flex flex-col gap-7', 'items-start justify-start manifesto_quote_gsap',
+        <div className={twMerge('h-fit py-20 xxs:py-28 md:py-32 2xl:py-40')} ref={refDescription} >
+            <div data-scroll data-scroll-position='end' data-scroll-speed='1.4' className={twMerge(`grid grid-cols-12 gap-y-8 xxs:gap-y-12 xs:gap-y-8 mdl:gap-y-12`, 'h-fit strick')}>
+                <div className={twMerge('flex flex-col gap-6 xs:gap-7', 'items-start justify-start manifesto_quote_gsap',
                     'col-start-1 col-span-12 xs:col-start-2 xs:col-span-11 md:col-start-2 md:col-span-10 mdl:col-start-2 mdl:col-span-10 xl:col-start-2 xl:col-span-9',
                 )}>
                     <div className='flex flex-row gap-5 justify-center items-center'>
@@ -103,7 +103,7 @@ const Manifesto = () => {
                             {t(`manifesto.subtitle_2`)}
                         </Title>
                     </div>
-                    <Title h4 degree='1' weight='semibold' className='flex flex-row flex-wrap gap-x-[0.3rem]'>
+                    <Title h4 degree='1' weight='semibold' className='flex flex-row flex-wrap gap-x-[0.1rem]'>
                         <strong className='text-white-200 pr-2'>
                             {t(`manifesto.slogan`)}
                         </strong>
@@ -115,7 +115,7 @@ const Manifesto = () => {
                     'mr-7 xl:mr-6 2xl:mr-0',
                     'col-start-1 col-span-12 xxs:col-start-2 xxs:col-span-11 xs:col-start-2 xs:col-span-10 sm:col-start-4 sm:col-span-9 md:col-start-5 md:col-span-7 lg:col-start-6 lg:col-span-6 xl:col-start-6 xl:col-span-5',
                 )}>
-                    <div className={twMerge('flex flex-col gap-5', 'manifesto_description_container_gsap')}>
+                    <div className={twMerge('flex flex-col gap-4 xxs:gap-5', 'manifesto_description_container_gsap')}>
                         <Text p degree='3' weight='medium' size='lg' className='manifesto_description_gsap' >
                             {t(`manifesto.who_i_am`)}
                         </Text>
@@ -123,7 +123,7 @@ const Manifesto = () => {
                             {t(`manifesto.what_i_do`)}
                         </Text>
                         <span data-scroll data-scroll-position='end' data-scroll-speed='0.8'>
-                            <Text p degree='3' size='xl' weight='semibold' className='textLink inline w-full whitespace-inherit-important manifesto_description_action_gsap' style={{
+                            <Text p degree='3' size='xl' weight='semibold' className='textLink inline mt-5 xs:mt-2 w-full whitespace-inherit-important manifesto_description_action_gsap' style={{
                                 WebkitLineClamp: 2,
                                 WebkitBoxOrient: 'vertical',
                                 overflow: 'hidden',

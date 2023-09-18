@@ -81,7 +81,7 @@ $h6: 1rem;
     line-height: calc(var(--font-size, $h4) * var(--degree-line-height, 1.2));
   }
   &_h5 {
-    @include fluid-type(--font-size, $minScreen, $maxScreen, 1rem, 1.4rem);
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 1.1rem, 1.4rem);
     font-size: var(--font-size, $h5);
     line-height: calc(var(--font-size, $h5) * var(--degree-line-height, 1.2));
   }
@@ -121,12 +121,15 @@ $h6: 1rem;
     @apply tracking-wider;
   }
   &_sm {
-    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.6rem, 0.74rem);
+    @include fluid-type(--font-size, $minScreen, $maxScreen, 0.6rem, 0.64rem);
+    @screen lg {
+      @include fluid-type(--font-size, $minScreen, $maxScreen, 0.6rem, 0.74rem);
+    }
     font-size: var(--font-size, 0.9rem);
     line-height: calc(
       var(--font-size, 0.9rem) * var(--degree-line-height, 1.5)
     );
-    @apply tracking-wider;
+    @apply tracking-widest lg:tracking-wider;
   }
   &_xs {
     @include fluid-type(--font-size, $minScreen, $maxScreen, 0.64rem, 0.7rem);

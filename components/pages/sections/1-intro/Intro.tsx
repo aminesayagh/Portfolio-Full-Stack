@@ -75,7 +75,6 @@ const GsapCircleBlue = ({ children, ...props }: { children: React.ReactElement, 
 
             }
             const mouseLeave = (e: any) => {
-                console.log('leave');
                 const { x, y } = getPosition(e);
 
                 tl.clear();
@@ -106,7 +105,7 @@ const ButtonNext = () => {
         <GsapCircleBlue className="rounded-full bg-white-100">
             <div className={twMerge('', 'rounded-full overflow-hidden next_button_gsap')}  >
                 <div className=' [&>*]:stroke-black-200 [&>*]:hover:stroke-black-200 transition-colors duration-300 p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6'>
-                    <Icon name='IconCornerLeftDown' className='stroke-1 w-8 h-8 xxs:w-6 xxs:h-6 xs:w-8 xs:h-8 xl:w-10 xl:h-10' />
+                    <Icon name='IconCornerLeftDown' className='stroke-1 w-8 h-8 xxs:w-7 xxs:h-7 xs:w-8 xs:h-8 xl:w-10 xl:h-10' />
                 </div>
             </div>
         </GsapCircleBlue>
@@ -123,8 +122,8 @@ const FullStack = ({ className }: { className: string }) => {
             <div className={twMerge(
                 className,
                 'flex flex-col items-start xs:items-end justify-end',
-                'pb-2',
-                '-space-y-1 md:space-y-0 mdl:-space-y-1 lg:-space-y-[3%] xl:-space-y-[2.6%] 2xl:-space-y-[4.62%] 3xl:-space-y-2 4xl:space-y-0'
+                'pb-[1%] xxs:pb-[2%] xs:pb-[4.2%] lg:pb-[5.5%] xl:pb-[6.5%] 2xl:pb-2',
+                'space-y-0 xs:-space-y-1 md:space-y-0 mdl:-space-y-1 lg:-space-y-[3%] xl:-space-y-[3%] 2xl:-space-y-[4.62%] 3xl:-space-y-2 4xl:space-y-0'
             )} >
                 <span className='overflow-hidden'>
                     <Display size='md' weight='semibold' className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider', 'splitText_fullStack_gsap')}>{t('intro.title.2_1')}</Display>
@@ -175,7 +174,7 @@ const Title = () => {
             'xxs:col-start-5 xxs:col-span-8', // none
             'xs:col-start-1 xs:col-span-12', // xxs
             'sm:col-start-2 sm:col-span-11', // sm
-            'md:col-start-3 md:col-span-10', // md
+            'md:col-start-4 md:col-span-9', // md
             'mdl:col-start-7 mdl:col-span-6', // mdl
             'xl:col-start-8 xl:col-span-5', // xl
             '4xl:col-span-6 4xl:col-start-7', // 4xl
@@ -183,9 +182,9 @@ const Title = () => {
             'row-start-2 row-span-1', // none
             'mdl:row-start-1 mdl:row-span-1', //mdl
             // children
-            "[&>*]:w-full [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-5/12 [&>*]:mdl:w-5/12 [&>*]:xl:w-full [&>*]:4xl:w-4/12",
+            "[&>*]:w-full [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-5/12 [&>*]:mdl:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-4/12",
             '[&>*>span]:max-w-[14rem]',
-            "[&>*]:flex [&>*]:flex-row [&>*]:justify-end",
+            "[&>*]:flex [&>*]:flex-row [&>*]:justify-start [&>*]:sm:justify-end",
             "[&>*]:mdl:ml-2 [&>*]:lg:ml-0"
         )} >
             <div >
@@ -258,11 +257,9 @@ const Item = ({ children }: {
 }) => {
     let { isHovered, hoverProps } = useHover({
         onHoverStart: (e) => {
-            console.log('hover start', e);
             gsap.timeline().itemMenuHoverPlay(e.target.children[0])
         },
         onHoverEnd: (e) => {
-            console.log('hover end', e);
             gsap.timeline().itemMenuHoverReverse(e.target.children[0]);
         }
     });
@@ -304,11 +301,16 @@ const Menu = () => {
     </>)
 }
 
+const MenuMemo = React.memo(Menu);
+
+
+
 const Intro = () => {
     const introRef = useRef<HTMLDivElement>(null);
     const { scrollbar } = useContext(ScrollProvider);
     useEffect(() => {
         let ctx = gsap.context(() => {
+            
             gsap.timeline({
                 scrollTrigger: {
                     trigger: introRef.current,
@@ -356,15 +358,15 @@ const Intro = () => {
     return (<>
         <div className={twMerge('pt-28 sm:pt-36 mdl:pt-40', 'flex flex-col gap-20 xs:gap-32 xl:gap-40')} ref={introRef}>
             <div className={twMerge(
-                'flex flex-row flex-wrap gap-y-8',
+                'flex flex-row flex-wrap',
                 'grid grid-cols-12 grid-row-4 xxs:grid-row-3 mdl:grid-row-2',
-                'gap-x-4 gap-y-6 xxs:gap-y-8 xs:gap-y-6 sm:gap-y-8 lg:gap-y-10',
+                'gap-x-3 md:gap-x-4 gap-y-6 xxs:gap-y-8 xs:gap-y-6 sm:gap-y-8 mdl:gap-y-8 lg:gap-y-10',
                 'justify-items-stretch'
             )} >
                 <Title />
             </div>
             <div className={twMerge('flex flex-row justify-between items-end', 'gap-0 xl:gap-6 4xl:gap-20')} >
-                <Menu />
+                <MenuMemo />
             </div>
         </div>
     </>)

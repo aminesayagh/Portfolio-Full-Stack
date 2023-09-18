@@ -1,7 +1,7 @@
 
 import { useTranslation } from "next-i18next";
 import { twMerge } from "tailwind-merge";
-import {memo, useRef, useContext } from 'react';
+import { memo, useRef, useContext } from 'react';
 import { gsap } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 
@@ -31,10 +31,10 @@ const ExpertiseHead = () => {
                 <div className='block sm:hidden'>
                     <IconMemo />
                 </div>
-                <div className={twMerge('w-full xxs:w-9/12 sm:w-4/12 mdl:w-5/12')}>
+                <div className={twMerge('w-full xs:w-9/12 sm:w-1/2 xl:w-5/12')}>
                     <Title h2 weight='bold' degree='1' exchange className="capitalize">{t('experience.title')}</Title>
                 </div>
-                <div className={twMerge('w-11/12 xxs:w-10/12 sm:w-7/12 md:w-8/12 mdl:w-1/2 xl:w-5/12', 'flex flex-col gap-4 mdl:gap-5', 'sm:items-end')}>
+                <div className={twMerge('w-11/12 xs:w-10/12 sm:w-1/2 xl:w-5/12', 'flex flex-col gap-4 mdl:gap-5', 'sm:items-end')}>
                     <div className='hidden sm:block'>
                         <IconMemo />
                     </div>
@@ -73,16 +73,16 @@ const Card = ({ title, description, number }: { title: string, description: stri
 
     return <>
         <div className={twMerge(
-            'flex flex-col gap-8 sm:gap-12 lg:gap-16 justify-between items-baseline',
+            'flex flex-col gap-8 sm:gap-12 lg:gap-6 xl:gap-16 justify-between items-baseline',
             'p-5 sm:p-7 lg:p-5 xl:p-6',
             'transition-colors duration-300 ease-in-out relative',
             isHovered ? 'bg-black-200' : 'bg-transparent',
             BORDER_CARD_CLASS_NAME,
             'w-full h-full'
         )} {...hoverProps} >
-            <div className={twMerge('flex flex-row justify-between items-start', 'gap-4', 'w-full')}>
-                <Title h5 weight='bold' degree='2' className="max-w-[12rem] transition-all duration-100 delay-100" exchange={!isHovered} >{title}</Title>
-                <Text p weight='bold' degree='3' size="lg" exchange={!isHovered} className='opacity-60 duration-100 delay-100'>{number}</Text>
+            <div className={twMerge('flex flex-row lg:flex-col xl:flex-row justify-between items-start', 'gap-4 lg:gap-2 xl:gap-4', 'w-full')}>
+                <Title h5 weight='bold' degree='2' className="max-w-[12rem] transition-all duration-100 delay-100 order-1 lg:order-2 xl:order-1" exchange={!isHovered} >{title}</Title>
+                <Text p weight='bold' degree='3' size="lg" exchange={!isHovered} className='opacity-60 duration-100 delay-100 order-2 lg:order-1 xl:order-2'>{number}</Text>
             </div>
             <div className="max-w-[18rem]">
                 <Text p weight='medium' degree='3' size="sm" exchange={!isHovered} className='duration-100 delay-100'>{description}</Text>
@@ -113,17 +113,19 @@ const CardElement = ({ i }: { i: number }) => {
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
             let space = 40;
-            if(isLg) {
-            } else if(isXs) {
+            let y = (i % 2 === 0 ? 1 : -1);
+            if (isLg) {
+            } else if (isXs) {
                 space = 35;
             } else {
                 space = 30;
+                y = 1;
             }
             gsap.fromTo(ref.current, {
-                y: space * (i % 2 === 0 ? 1 : -1),
+                y: space * y,
             }, {
-                y: -1 * space * (i % 2 === 0 ? 1 : -1),
-                ease: 'power4.out',
+                y: -1 * space * y,
+                ease: 'Power4.easeOut',
                 scrollTrigger: {
                     trigger: '.container-expertise-gsap',
                     start: 'top bottom-=20%',
@@ -138,11 +140,9 @@ const CardElement = ({ i }: { i: number }) => {
     if (i >= 4) return <div key={i} className={`expertise-card-gsap`} ref={ref}>
         <EmptyCardMemo />
     </div>
-    return (
-        <div className={`expertise-card-gsap relative`} key={i} ref={ref}>
-            <CardMemo title={t(`experience.stages.${i + 1}.title`)} description={t(`experience.stages.${i + 1}.description`)} number={t(`experience.stages.${i + 1}.count`)} />
-        </div>
-    )
+    return <div className={`expertise-card-gsap relative`} key={i} ref={ref}>
+        <CardMemo title={t(`experience.stages.${i + 1}.title`)} description={t(`experience.stages.${i + 1}.description`)} number={t(`experience.stages.${i + 1}.count`)} />
+    </div>
 }
 const CardElementMemo = memo(CardElement);
 
@@ -154,9 +154,9 @@ const ExpertiseStages = () => {
                 'grid',
                 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-4',
                 'grid-rows-5 xs:grid-rows-3 lg:grid-rows-2',
-                'gap-6 xs:gap-3 sm:gap-5 lg:gap-3 xl:gap-4 2xl:gap-5 4xl:gap-6',
-                'relative -mb-[42vh] sm:-mb-[34vh] lg:-mb-[40vh] xl:-mb-[36vh] 3xl:-mb-[32vh]',
-                'w-full relative z-[60]',
+                'gap-4 xs:gap-3 sm:gap-5 lg:gap-3 xl:gap-4 2xl:gap-5 4xl:gap-6',
+                'relative -mb-[32vh] sm:-mb-[34vh] lg:-mb-[40vh] xl:-mb-[36vh] 3xl:-mb-[32vh]',
+                'w-full relative z-[60]'
             )}>
                 {Array.apply('', Array(8)).map((_, i) => {
                     return <CardElementMemo key={i} i={i} />
@@ -170,7 +170,7 @@ const ExpertiseStagesMemo = memo(ExpertiseStages);
 const Expertise = () => {
     return (
         <>
-            <div className={twMerge('flex flex-col', 'gap-16 lg:gap-28 2xl:gap-44', 'justify-center items-center h-full', rounded({ size: 'xl' }), 'overflow-hidden container-expertise-gsap')}>
+            <div className={twMerge('flex flex-col', 'gap-20 xs:gap-32 sm:gap-16 mdl:gap-32 lg:gap-28 2xl:gap-44', 'justify-center items-center h-full', rounded({ size: 'xl' }), 'overflow-hidden container-expertise-gsap')}>
                 <ExpertiseHeadMemo />
                 <ExpertiseStagesMemo />
                 <div className={twMerge('absolute w-full h-[26vh] bottom-0 left-0 z-999999999', 'bg-gradient-to-t from-black-100/25 via-black-100/10 to-black-100/0')}></div>

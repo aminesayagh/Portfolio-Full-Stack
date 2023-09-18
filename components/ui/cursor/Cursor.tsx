@@ -62,18 +62,35 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
         return () => ctx.revert();
     }, []);
     return <>
-        <div className='relative md:cursor-none'>
+        <div className='cursor_container relative'>
             {children}
         </div>
         <style >
             {`
-                .ball_gsap, .ball_secondary_gsap {
+                .cursor_container {
+                    cursor: default;
+                }
+                @media (hover: hover) {
+                    .cursor_container {
+                        cursor: none;
+                    }
+                    
+                }
+                .ball_gsap {
                     transform: translate(-50%, -50%);
                     pointer-events: none;
                     z-index: 99999999999;
                     mix-blend-mode: difference;
                 }
                 .ball_gsap {
+                    display: none;
+                }
+                @media (hover: hover) {
+                    .ball_gsap {
+                        display: flex;
+                    }
+                }
+                .ball_main_gsap {
                     z-index: 99999999999;
                 }
                 .ball_secondary_gsap {
@@ -81,8 +98,8 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 }
             `}
         </style>
-        <div className='ball_secondary_gsap hidden md:flex h-6 w-6 bg-primary-600/80 fixed top-0 left-0 rounded-full' ref={secondaryCursor} ></div>
-        <div className='ball_gsap hidden md:flex fixed top-0 left-0 w-14 h-14 rounded-full border-2 border-primary-500 bg-white-300/5 backdrop-blur-xs'></div>
+        <div className='ball_gsap ball_secondary_gsap h-6 w-6 bg-primary-600/80 fixed top-0 left-0 rounded-full' ref={secondaryCursor} ></div>
+        <div className='ball_gsap ball_main_gsap fixed top-0 left-0 w-14 h-14 rounded-full border-2 border-primary-500 bg-white-300/5 backdrop-blur-xs'></div>
     </>;
 }
 
