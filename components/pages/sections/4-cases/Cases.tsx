@@ -27,7 +27,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                         invalidateOnRefresh: true,
                     }
                 }).fromTo(container.current?.children as any, {
-                    top: 0,
+                    top: "0%",
                 }, {
                     top: '100%',
                     ease: 'none',
@@ -52,9 +52,10 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
 
             gsap.fromTo(container.current?.children[0] as any, {
                 scale: 1,
-                backgroundPosition: 'center 60%',
+                backgroundPosition: 'center 80%',
             }, {
                 scale: 1.3,
+                transformOrigin: 'center 10%',
                 backgroundPosition: 'center 20%',
                 ease: 'Power3.easeIn',
                 scrollTrigger: {
@@ -86,8 +87,8 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
 
         }, container);
         return () => ctx.revert();
-    }, [scrollbar])
-    return <div className={twMerge('relative h-[140vh] overflow-hidden')} ref={container} style={{
+    }, [scrollbar, index])
+    return <div className={twMerge('relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden')} ref={container} style={{
         zIndex: 10 + (index + 10),
     }} >
         <div className='absolute left-0 right-0 w-full h-screen bg-no-repeat bg-cover' style={{
@@ -97,10 +98,10 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
             backgroundPosition: 'center 60%',
         }} >
         </div>
-        <div className='absolute left-0 right-0 w-full min-h-screen h-screen bg-no-repeat bg-cover' style={{
+        <div className='absolute top-0 left-0 right-0 w-full min-h-screen h-screen bg-no-repeat bg-cover' style={{
             
         }}>
-            <div className='relative w-fit flex flex-col justify-end h-full px-5 xs:px-10 lg:px-24 py-20 lg:py-40 gap-4'
+            <div className='relative w-fit flex flex-col justify-end h-full px-5 xs:px-10 lg:px-24 py-20 mdl:py-28 lg:py-40 gap-4'
                 data-scroll data-scroll-position='start' data-scroll-speed='2.4'
                 style={{
                     zIndex: 10 + (index + 14),

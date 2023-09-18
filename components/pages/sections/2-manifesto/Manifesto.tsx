@@ -1,4 +1,4 @@
-import { useRef, useEffect, useContext, useState } from 'react';
+import { useRef, useEffect, useContext, useLayoutEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 
@@ -10,12 +10,20 @@ import { ScrollProvider } from '@/context/ScrollContext';
 import _ from 'lodash';
 
 const Manifesto = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const refs = useRef<HTMLSpanElement[]>([]);
+    const refDescription = useRef<HTMLDivElement>(null);
     const body = useRef<React.JSX.Element[]>([]);
-    const phrase = t('manifesto.description');
+    const [phrase, setPhrase]  = useState(t('manifesto.description'));
+    
     const { scrollbar } = useContext(ScrollProvider);
+
     useEffect(() => {
+        setPhrase(t('manifesto.description'));
+    }, [i18n.language]);
+    useIsomorphicLayoutEffect(() => {
+        body.current = [];
+
         const splitLetters = (word: string) => {
             return _.map(word.split(''), (letter, index) => (
                 <span ref={el => { refs.current.push(el as HTMLSpanElement) }} key={`letter_${index}`} >{letter}</span>
@@ -85,9 +93,9 @@ const Manifesto = () => {
             })
         }, refDescription);
         return () => ctx.revert();
-    }, [scrollbar, phrase]);
+    }, [scrollbar, phrase, body.current]);
 
-    const refDescription = useRef<HTMLDivElement>(null);
+    if(!body.current || body.current.length == 0) return null;
     return (
         <div className={twMerge('h-fit py-20 xxs:py-28 md:py-32 2xl:py-40')} ref={refDescription} >
             <div data-scroll data-scroll-position='end' data-scroll-speed='1.4' className={twMerge(`grid grid-cols-12 gap-y-8 xxs:gap-y-12 xs:gap-y-8 mdl:gap-y-12`, 'h-fit strick')}>
@@ -103,7 +111,7 @@ const Manifesto = () => {
                             {t(`manifesto.subtitle_2`)}
                         </Title>
                     </div>
-                    <Title h4 degree='1' weight='semibold' className='flex flex-row flex-wrap gap-x-[0.1rem]'>
+                    <Title h4 degree='1' weight='semibold' className={twMerge('flex flex-row flex-wrap gap-x-[0.1rem]', i18n.language == 'en' ? 'gap-x-[0.1rem]' : 'gap-x-[.36rem]')}>
                         <strong className='text-white-200 pr-2'>
                             {t(`manifesto.slogan`)}
                         </strong>
