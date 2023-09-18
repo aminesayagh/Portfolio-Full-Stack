@@ -26,14 +26,14 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                         markers: false,
                         invalidateOnRefresh: true,
                     }
-                }).fromTo(container.current?.children[0] as any, {
+                }).fromTo(container.current?.children as any, {
                     top: 0,
                 }, {
                     top: '100%',
                     ease: 'none',
                 })
             } else {
-                gsap.fromTo(container.current?.children[0] as any, {
+                gsap.fromTo(container.current?.children as any, {
                     top: 0,
                 }, {
                     top: '100%',
@@ -51,10 +51,10 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
             }
 
             gsap.fromTo(container.current?.children[0] as any, {
-                backgroundSize: '100%',
+                scale: 1,
                 backgroundPosition: 'center 60%',
             }, {
-                backgroundSize: '120%',
+                scale: 1.2,
                 backgroundPosition: 'center 20%',
                 ease: 'Power3.easeIn',
                 scrollTrigger: {
@@ -87,14 +87,19 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
         }, container);
         return () => ctx.revert();
     }, [scrollbar])
-    return <div className={twMerge('relative h-[140vh]')} ref={container} style={{
+    return <div className={twMerge('relative h-[140vh] overflow-hidden')} ref={container} style={{
         zIndex: 10 + (index + 10),
     }} >
         <div className='absolute left-0 right-0 w-full h-screen bg-no-repeat bg-cover' style={{
             backgroundImage: `url(${!!picture ? picture[0] : ''})`,
             zIndex: 10 + (index + 11),
+            backgroundSize: 'cover',
             backgroundPosition: 'center 60%',
         }} >
+        </div>
+        <div className='absolute left-0 right-0 w-full h-screen bg-no-repeat bg-cover' style={{
+            
+        }}>
             <div className='relative w-fit flex flex-col justify-end h-full px-24 py-40 gap-4'
                 data-scroll data-scroll-position='start' data-scroll-speed='2.4'
                 style={{
@@ -114,6 +119,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
             <div className={twMerge('absolute left-0 right-0 bottom-0 w-full h-72', 'bg-gradient-to-t from-black-100 to-black-100/0')} style={{
                 zIndex: 10 + (index + 12),
             }}></div>
+
         </div>
     </div>
 }
@@ -135,9 +141,7 @@ const Cases = () => {
             </div>
         </div>
         <div className={twMerge(`w-full flex flex-col gap-0 h-fit`, 'rounded-2xl overflow-hidden')}>
-            {projects.map((project, index) => {
-                return <CaseMemo key={index} picture={project?.picture} index={index} id={project.id} />
-            })}
+            {projects.map((project, index) => <CaseMemo key={index} picture={project?.picture} index={index} id={project.id} />)}
         </div>
     </div>
 }
