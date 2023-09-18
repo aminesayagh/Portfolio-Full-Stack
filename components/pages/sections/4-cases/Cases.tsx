@@ -54,7 +54,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                 scale: 1,
                 backgroundPosition: 'center 60%',
             }, {
-                scale: 1.2,
+                scale: 1.3,
                 backgroundPosition: 'center 20%',
                 ease: 'Power3.easeIn',
                 scrollTrigger: {
@@ -97,10 +97,10 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
             backgroundPosition: 'center 60%',
         }} >
         </div>
-        <div className='absolute left-0 right-0 w-full h-screen bg-no-repeat bg-cover' style={{
+        <div className='absolute left-0 right-0 w-full min-h-screen h-screen bg-no-repeat bg-cover' style={{
             
         }}>
-            <div className='relative w-fit flex flex-col justify-end h-full px-24 py-40 gap-4'
+            <div className='relative w-fit flex flex-col justify-end h-full px-5 xs:px-10 lg:px-24 py-20 lg:py-40 gap-4'
                 data-scroll data-scroll-position='start' data-scroll-speed='2.4'
                 style={{
                     zIndex: 10 + (index + 14),
@@ -110,7 +110,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                         {t(`projects.${id}.title`)}
                     </Title>
                 </div>
-                <div className='w-1/2 overflow-hidden'>
+                <div className='w-full xxs:w-8/12 md:w-1/2 overflow-hidden'>
                     <Text p size='md' degree='3' className='case-text-gsap'>
                         {t(`projects.${id}.description`)}
                     </Text>
