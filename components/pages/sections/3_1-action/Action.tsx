@@ -25,8 +25,8 @@ const Action = () => {
                     <Button size='sm' className='border rounded-full py-4 px-6' degree='2' >
                         {t('motivation.action')}
                     </Button>
-                    <Button className='border rounded-full p-4'>
-                        <Icon name='IconArrowUpRight' size='22' className='stroke-white-100 stroke-[2px]' />
+                    <Button className='border rounded-full p-4' title={t('motivation.action')}>
+                        <Icon name='IconArrowUpRight' size='22' className='stroke-white-100 stroke-[1.2px] lg:stroke-[2px]' />
                     </Button>
                 </div>
                 <div className={twMerge('flex flex-col sm:flex-row md:flex-col gap-4 sm:gap-16 md:gap-4', 

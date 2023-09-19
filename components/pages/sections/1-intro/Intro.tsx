@@ -136,7 +136,7 @@ const FullStack = ({ className }: { className: string }) => {
     )
 }
 const Title = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     return (<>
         {/* title 1  */}
@@ -218,7 +218,7 @@ const Title = () => {
             'mdl:row-start-2 mdl:row-span-1',
             'col-start-1 col-span-3',
             'mdl:col-start-5 mdl:col-span-2',
-            'xl:col-start-5 xl:col-span-2',
+            i18n.language == 'en' ? 'xl:col-start-5 xl:col-span-2' : 'xl:col-start-4 xl:col-span-2',
             'justify-self-end'
         )}>
             <FullStack className='hidden xxs:flex w-min' />
@@ -232,7 +232,7 @@ const Title = () => {
             'col-start-1 col-span-12',
             'xs:col-start-4 xs:col-span-9',
             'mdl:col-start-7 mdl:col-span-6', // xs
-            'xl:col-start-7 xl:col-span-6', // xl
+            i18n.language == 'en' ? 'xl:col-start-7 xl:col-span-6' : 'xl:col-start-6 xl:col-span-7', // xl
             'gap-2 sm:gap-1 md:gap-5 mdl:gap-8', // gap
             'justify-end mdl:justify-center items-end mdl:items-center',
             'overflow-hidden'

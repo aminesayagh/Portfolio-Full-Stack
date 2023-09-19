@@ -27,7 +27,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                         invalidateOnRefresh: true,
                     }
                 }).fromTo(container.current?.children as any, {
-                    top: 0,
+                    top: "0%",
                 }, {
                     top: '100%',
                     ease: 'none',
@@ -52,9 +52,10 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
 
             gsap.fromTo(container.current?.children[0] as any, {
                 scale: 1,
-                backgroundPosition: 'center 60%',
+                backgroundPosition: 'center 80%',
             }, {
                 scale: 1.3,
+                transformOrigin: 'center 10%',
                 backgroundPosition: 'center 20%',
                 ease: 'Power3.easeIn',
                 scrollTrigger: {
@@ -80,27 +81,40 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                     start: 'top bottom-=35%',
                     end: 'bottom center',
                     markers: false,
-                    toggleActions: 'play pause play reverse',
+                    toggleActions: 'play pause play pause',
+                }
+            })
+            gsap.fromTo('.content-gsap', {
+                yPercent: 0,
+            }, {
+                yPercent: -50,
+                ease: 'Power4.easeIn',
+                scrollTrigger: {
+                    trigger: container.current as any,
+                    start: 'top top',
+                    end: 'bottom top',
+                    markers: false,
+                    toggleActions: 'play pause reverse pause',
                 }
             })
 
         }, container);
         return () => ctx.revert();
-    }, [scrollbar])
-    return <div className={twMerge('relative h-[140vh] overflow-hidden')} ref={container} style={{
+    }, [scrollbar, container.current, index])
+    return <div className={twMerge('relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden')} ref={container} style={{
         zIndex: 10 + (index + 10),
     }} >
         <div className='absolute left-0 right-0 w-full h-screen bg-no-repeat bg-cover' style={{
             backgroundImage: `url(${!!picture ? picture[0] : ''})`,
             zIndex: 10 + (index + 11),
             backgroundSize: 'cover',
-            backgroundPosition: 'center 60%',
+            backgroundPosition: 'center 80%',
         }} >
         </div>
-        <div className='absolute left-0 right-0 w-full min-h-screen h-screen bg-no-repeat bg-cover' style={{
+        <div className='absolute top-0 left-0 right-0 w-full min-h-screen h-screen bg-no-repeat bg-cover' style={{
             
         }}>
-            <div className='relative w-fit flex flex-col justify-end h-full px-5 xs:px-10 lg:px-24 py-20 lg:py-40 gap-4'
+            <div className='relative w-fit flex flex-col justify-end h-full px-5 xs:px-10 lg:px-24 py-20 mdl:py-28 lg:py-40 gap-4 content-gsap'
                 data-scroll data-scroll-position='start' data-scroll-speed='2.4'
                 style={{
                     zIndex: 10 + (index + 14),
@@ -119,7 +133,6 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
             <div className={twMerge('absolute left-0 right-0 bottom-0 w-full h-72', 'bg-gradient-to-t from-black-100 to-black-100/0')} style={{
                 zIndex: 10 + (index + 12),
             }}></div>
-
         </div>
     </div>
 }
@@ -141,7 +154,7 @@ const Cases = () => {
             </div>
         </div>
         <div className={twMerge(`w-full flex flex-col gap-0 h-fit`, 'rounded-2xl overflow-hidden')}>
-            {projects.map((project, index) => <CaseMemo key={index} picture={project?.picture} index={index} id={project.id} />)}
+            {projects.map((project, index) => <CaseMemo key={project.id} picture={project?.picture} index={index} id={project.id} />)}
         </div>
     </div>
 }

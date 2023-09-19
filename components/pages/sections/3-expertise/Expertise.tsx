@@ -135,7 +135,7 @@ const CardElement = ({ i }: { i: number }) => {
             });
         });
         return () => ctx.revert();
-    }, [ref.current, scrollbar])
+    }, [ref.current, scrollbar, isLg, isXs])
 
     if (i >= 4) return <div key={i} className={`expertise-card-gsap`} ref={ref}>
         <EmptyCardMemo />
