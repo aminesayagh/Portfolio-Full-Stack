@@ -84,6 +84,19 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                     toggleActions: 'play pause play reverse',
                 }
             })
+            gsap.fromTo('.content-gsap', {
+                yPercent: 0,
+            }, {
+                yPercent: -50,
+                ease: 'Power4.easeIn',
+                scrollTrigger: {
+                    trigger: container.current as any,
+                    start: 'top top',
+                    end: 'bottom top',
+                    markers: false,
+                    toggleActions: 'play pause play reverse',
+                }
+            })
 
         }, container);
         return () => ctx.revert();
@@ -101,7 +114,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
         <div className='absolute top-0 left-0 right-0 w-full min-h-screen h-screen bg-no-repeat bg-cover' style={{
             
         }}>
-            <div className='relative w-fit flex flex-col justify-end h-full px-5 xs:px-10 lg:px-24 py-20 mdl:py-28 lg:py-40 gap-4'
+            <div className='relative w-fit flex flex-col justify-end h-full px-5 xs:px-10 lg:px-24 py-20 mdl:py-28 lg:py-40 gap-4 content-gsap'
                 data-scroll data-scroll-position='start' data-scroll-speed='2.4'
                 style={{
                     zIndex: 10 + (index + 14),
