@@ -29,11 +29,16 @@ const LandingPage = () => {
                 <CallToAction />
             </Container>
             <span data-scroll-section className='block h-24 w-full'></span>
-            <Container data-scroll-section as='section' size='lg' id={MENU_ITEMS.cases.id} className='py-10 h-fit' >
+            <Container data-scroll-section as='section' size='lg' id={MENU_ITEMS.cases.id} className='py-10 h-fit' style={{
+                zIndex: 20,
+                position: 'relative'
+            }} >
                 <Cases />
             </Container>
-            <span data-scroll-section className='block h-6 xxs:h-10 xs:h-28 w-full'></span>
-            <Container data-scroll-section as='section' size='lg' id='action-contact' >
+            <Container data-scroll-section as='section' size='lg' id='action-contact' style={{
+                zIndex: 10,
+                position: 'relative'
+            }}>
                 <Action />
             </Container>
             <span data-scroll-section className='block h-6 xs:h-12 w-full'></span>

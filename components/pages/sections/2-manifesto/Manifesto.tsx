@@ -150,7 +150,7 @@ const Manifesto = () => {
                     <Text p degree='3' weight='medium' size='lg' className='manifesto_description_gsap'>
                         {t(`manifesto.what_i_do`)}
                     </Text>
-                    <span data-scroll data-scroll-position='end' data-scroll-speed='0.8' className='mt-5 xs:mt-10' >
+                    <span data-scroll data-scroll-position='start' data-scroll-speed='0.8' className='mt-5 xs:mt-10' >
                         <Text p degree='3' size='xl' weight='semibold' className='textLink inline  w-full whitespace-inherit-important manifesto_description_action_gsap' style={{
                             WebkitLineClamp: 2,
                             WebkitBoxOrient: 'vertical',

@@ -81,7 +81,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                     start: 'top bottom-=35%',
                     end: 'bottom center',
                     markers: false,
-                    toggleActions: 'play pause play reverse',
+                    toggleActions: 'play pause play pause',
                 }
             })
             gsap.fromTo('.content-gsap', {
@@ -94,13 +94,13 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                     start: 'top top',
                     end: 'bottom top',
                     markers: false,
-                    toggleActions: 'play pause play reverse',
+                    toggleActions: 'play pause reverse pause',
                 }
             })
 
         }, container);
         return () => ctx.revert();
-    }, [scrollbar])
+    }, [scrollbar, container.current, index])
     return <div className={twMerge('relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden')} ref={container} style={{
         zIndex: 10 + (index + 10),
     }} >
@@ -108,7 +108,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
             backgroundImage: `url(${!!picture ? picture[0] : ''})`,
             zIndex: 10 + (index + 11),
             backgroundSize: 'cover',
-            backgroundPosition: 'center 60%',
+            backgroundPosition: 'center 80%',
         }} >
         </div>
         <div className='absolute top-0 left-0 right-0 w-full min-h-screen h-screen bg-no-repeat bg-cover' style={{
