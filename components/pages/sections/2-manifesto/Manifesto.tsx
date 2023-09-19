@@ -41,15 +41,9 @@ const Manifesto = () => {
         let ctx = gsap.context(() => {
             // verify if .letter_gsap is in the dom
             if (refs.current.length > 0) {
-                const letter = gsap.utils.toArray('.letter_gsap');
-                gsap.fromTo(letter, {
-                    opacity: 0.1,
-                }, {
-                    opacity: 0.9,
-                    ease: 'power4',
-                    stagger: 0.1,
-                    skewX: 0.3,
-                    duration: 0.5,
+                const descriptions = gsap.utils.toArray('.manifesto_description_gsap');
+                const letters = gsap.utils.toArray('.letter_gsap');
+                gsap.timeline({
                     scrollTrigger: {
                         trigger: '.manifesto_quote_gsap',
                         scrub: true,
@@ -57,48 +51,74 @@ const Manifesto = () => {
                         end: 'center 10%',
                         markers: false,
                     }
-                })
-            }
-
-            gsap.utils.toArray('.manifesto_description_gsap').map((box: any) => {
-                gsap.fromTo(box, {
+                }).fromTo(letters, {
+                    opacity: 0.1,
+                }, {
+                    opacity: 0.9,
+                    ease: 'power4',
+                    stagger: 0.1,
+                    skewX: 0.3,
+                    duration: 0.5,
+                }).fromTo(descriptions[0] as any, {
                     opacity: 0,
                     y: 30,
                 }, {
                     opacity: 1,
                     ease: 'power1',
-                    delay: 0.5,
+                    y: 0
+                }, "-=50%").fromTo(descriptions[1] as any, {
+                    opacity: 0,
+                    y: 30,
+                }, {
+                    opacity: 1,
+                    ease: 'power1',
                     y: 0,
-                    scrollTrigger: {
-                        trigger: box,
-                        start: 'top bottom',
-                        end: 'top bottom-=160px',
-                        toggleActions: 'play pause reverse pause',
-                        scrub: true,
-                        markers: true,
-                    }
-                });
-            });
-            gsap.fromTo('.manifesto_description_action_gsap', {
-                opacity: 0,
-            }, {
-                opacity: 1,
-                scrollTrigger: {
-                    trigger: '.manifesto_description_action_gsap',
-                    start: 'top bottom-=100px',
-                    end: 'top bottom-=260px',
-                    toggleActions: 'play pause reverse pause',
-                    scrub: true,
-                    markers: false,
-                }
-            })
+                }).fromTo('.manifesto_description_action_gsap', {
+                    opacity: 0,
+                }, {
+                    opacity: 1,
+                })
+            }
+
+            // gsap.utils.toArray('.manifesto_description_gsap').map((box: any) => {
+            //     gsap.fromTo(box, {
+            //         opacity: 0,
+            //         y: 30,
+            //     }, {
+            //         opacity: 1,
+            //         ease: 'power1',
+            //         delay: 0.5,
+            //         y: 0,
+            //         scrollTrigger: {
+            //             trigger: box,
+            //             start: 'top bottom',
+            //             end: 'top bottom-=160px',
+            //             toggleActions: 'play pause reverse pause',
+            //             scrub: true,
+            //             markers: true,
+            //         }
+            //     });
+            // });
+            // gsap.fromTo('.manifesto_description_action_gsap', {
+            //     opacity: 0,
+            // }, {
+            //     opacity: 1,
+            //     scrollTrigger: {
+            //         trigger: '.manifesto_description_action_gsap',
+            //         start: 'top bottom-=100px',
+            //         end: 'top bottom-=260px',
+            //         toggleActions: 'play pause reverse pause',
+            //         scrub: true,
+            //         markers: false,
+            //     }
+            // })
         }, refDescription);
         return () => ctx.revert();
     }, [scrollbar, phrase, body.current]);
 
     if (!body.current || body.current.length == 0) return null;
     return <div data-scroll data-scroll-sticky data-scroll-target="#manifesto" data-scroll-speed="4" className={twMerge('h-fit py-20 xxs:py-28 md:py-32 2xl:py-40', ' relative')} ref={refDescription} >
-        <div data-scroll data-scroll-position='end' data-scroll-speed='1.4' className={twMerge(`grid grid-cols-12 gap-y-8 xxs:gap-y-12 xs:gap-y-8 mdl:gap-y-12`, 'h-fit strick')}>
+        <div className={twMerge(`grid grid-cols-12 gap-y-8 xxs:gap-y-12 xs:gap-y-8 mdl:gap-y-12`, 'h-fit strick')}>
             <div className={twMerge('flex flex-col gap-6 xs:gap-7', 'items-start justify-start manifesto_quote_gsap',
                 'col-start-1 col-span-12 xs:col-start-2 xs:col-span-11 md:col-start-2 md:col-span-10 mdl:col-start-2 mdl:col-span-10 xl:col-start-2 xl:col-span-9',
             )}>

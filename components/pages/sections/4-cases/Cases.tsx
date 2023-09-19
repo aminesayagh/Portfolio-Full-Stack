@@ -87,7 +87,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
 
         }, container);
         return () => ctx.revert();
-    }, [scrollbar, index])
+    }, [scrollbar])
     return <div className={twMerge('relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden')} ref={container} style={{
         zIndex: 10 + (index + 10),
     }} >
@@ -120,7 +120,6 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
             <div className={twMerge('absolute left-0 right-0 bottom-0 w-full h-72', 'bg-gradient-to-t from-black-100 to-black-100/0')} style={{
                 zIndex: 10 + (index + 12),
             }}></div>
-
         </div>
     </div>
 }
@@ -142,7 +141,7 @@ const Cases = () => {
             </div>
         </div>
         <div className={twMerge(`w-full flex flex-col gap-0 h-fit`, 'rounded-2xl overflow-hidden')}>
-            {projects.map((project, index) => <CaseMemo key={index} picture={project?.picture} index={index} id={project.id} />)}
+            {projects.map((project, index) => <CaseMemo key={project.id} picture={project?.picture} index={index} id={project.id} />)}
         </div>
     </div>
 }
