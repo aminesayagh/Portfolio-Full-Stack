@@ -15,7 +15,7 @@ const LandingPage = () => {
                 <Video />
             </Container>
             <span data-scroll-section className='block h-16 xxs:h-0 w-full'></span>
-            <Container data-scroll-section id={MENU_ITEMS.manifesto.id} as='section' size='lg' className='h-[150vh]' >
+            <Container data-scroll-section id={MENU_ITEMS.manifesto.id} as='section' size='lg' className='h-[180vh]' >
                 <Manifesto />
             </Container>
             <span data-scroll-section className='block h-24 xxs:h-24 w-full'></span>
@@ -29,16 +29,10 @@ const LandingPage = () => {
                 <CallToAction />
             </Container>
             <span data-scroll-section className='block h-24 w-full'></span>
-            <Container data-scroll-section as='section' size='lg' id={MENU_ITEMS.cases.id} className='py-10 h-fit' style={{
-                zIndex: 20,
-                position: 'relative'
-            }} >
+            <Container data-scroll-section as='section' size='lg' id={MENU_ITEMS.cases.id} className='py-10 h-fit' >
                 <Cases />
             </Container>
-            <Container data-scroll-section as='section' size='lg' id='action-contact' style={{
-                zIndex: 10,
-                position: 'relative'
-            }}>
+            <Container data-scroll-section as='section' size='lg' id='action-contact' >
                 <Action />
             </Container>
             <span data-scroll-section className='block h-6 xs:h-12 w-full'></span>
