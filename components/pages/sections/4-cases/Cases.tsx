@@ -7,100 +7,97 @@ import { ScrollProvider } from '@/context/ScrollContext';
 import { getProjectsByCategory } from '@/conf/projects';
 import { gsap } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
+import useGsap from '@/hook/useGsap';
 
 const Case = ({ picture, index, id }: { picture?: string[], index: number, id: string }) => {
     const container = useRef<HTMLDivElement>(null);
-    const { scrollbar } = useContext(ScrollProvider);
     const { t } = useTranslation();
 
-    useIsomorphicLayoutEffect(() => {
-        const ctx = gsap.context((self) => {
-            if (index < 2) {
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: container.current as any,
-                        scrub: true,
-                        start: 'top top',
-                        end: 'bottom top',
-                        toggleActions: 'play pause reverse pause',
-                        markers: false,
-                        invalidateOnRefresh: true,
-                    }
-                }).fromTo(container.current?.children as any, {
-                    top: "0%",
-                }, {
-                    top: '100%',
-                    ease: 'none',
-                })
-            } else {
-                gsap.fromTo(container.current?.children as any, {
-                    top: 0,
-                }, {
-                    top: '100%',
-                    ease: 'none',
-                    scrollTrigger: {
-                        trigger: container.current as any,
-                        scrub: true,
-                        start: 'top top',
-                        end: 'bottom top',
-                        toggleActions: 'play pause reverse pause',
-                        markers: false,
-                        invalidateOnRefresh: true,
-                    }
-                })
-            }
-
-            gsap.fromTo(container.current?.children[0] as any, {
-                scale: 1,
-                backgroundPosition: 'center 80%',
-            }, {
-                scale: 1.3,
-                transformOrigin: 'center 10%',
-                backgroundPosition: 'center 20%',
-                ease: 'Power3.easeIn',
+    useGsap(() => {
+        if (index < 2) {
+            gsap.timeline({
                 scrollTrigger: {
                     trigger: container.current as any,
                     scrub: true,
                     start: 'top top',
                     end: 'bottom top',
+                    toggleActions: 'play pause reverse pause',
+                    markers: false,
+                    invalidateOnRefresh: true,
+                }
+            }).fromTo(container.current?.children as any, {
+                top: "0%",
+            }, {
+                top: '100%',
+                ease: 'none',
+            })
+        } else {
+            gsap.fromTo(container.current?.children as any, {
+                top: 0,
+            }, {
+                top: '100%',
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: container.current as any,
+                    scrub: true,
+                    start: 'top top',
+                    end: 'bottom top',
+                    toggleActions: 'play pause reverse pause',
                     markers: false,
                     invalidateOnRefresh: true,
                 }
             })
-            gsap.fromTo('.case-text-gsap', {
-                xPercent: -100,
-                opacity: 0,
-            }, {
-                xPercent: 0,
-                opacity: 1,
-                duration: 1,
-                stagger: 0.2,
-                ease: 'power4.inOut',
-                scrollTrigger: {
-                    trigger: container.current as any,
-                    start: 'top bottom-=35%',
-                    end: 'bottom center',
-                    markers: false,
-                    toggleActions: 'play pause play pause',
-                }
-            })
-            gsap.fromTo('.content-gsap', {
-                yPercent: 0,
-            }, {
-                yPercent: -50,
-                ease: 'Power4.easeIn',
-                scrollTrigger: {
-                    trigger: container.current as any,
-                    start: 'top top',
-                    end: 'bottom top',
-                    markers: false,
-                    toggleActions: 'play pause reverse pause',
-                }
-            })
+        }
 
-        }, container);
-        return () => ctx.revert();
-    }, [scrollbar, container.current, index])
+        gsap.fromTo(container.current?.children[0] as any, {
+            scale: 1,
+            backgroundPosition: 'center 80%',
+        }, {
+            scale: 1.3,
+            transformOrigin: 'center 10%',
+            backgroundPosition: 'center 20%',
+            ease: 'Power3.easeIn',
+            scrollTrigger: {
+                trigger: container.current as any,
+                scrub: true,
+                start: 'top top',
+                end: 'bottom top',
+                markers: false,
+                invalidateOnRefresh: true,
+            }
+        })
+        gsap.fromTo('.case-text-gsap', {
+            xPercent: -100,
+            opacity: 0,
+        }, {
+            xPercent: 0,
+            opacity: 1,
+            duration: 1,
+            stagger: 0.2,
+            ease: 'power4.inOut',
+            scrollTrigger: {
+                trigger: container.current as any,
+                start: 'top bottom-=35%',
+                end: 'bottom center',
+                markers: false,
+                toggleActions: 'play pause play pause',
+            }
+        })
+        gsap.fromTo('.content-gsap', {
+            yPercent: 0,
+        }, {
+            yPercent: -50,
+            ease: 'Power4.easeIn',
+            scrollTrigger: {
+                trigger: container.current as any,
+                start: 'top top',
+                end: 'bottom top',
+                markers: false,
+                toggleActions: 'play pause reverse pause',
+            }
+        })
+    }, container);
+
     return <div className={twMerge('relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden')} ref={container} style={{
         zIndex: 10 + (index + 10),
     }} >

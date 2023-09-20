@@ -144,10 +144,6 @@ const Header = () => {
         }
     }, [openMenu, scrollbar]);
 
-    const goToSection = (section: string) => {
-        scrollbar && scrollbar.scrollTo(section, { duration: 500 });
-    }
-
     const pageName = useMemo(() => router.pathname.split('/')[1], [router]);
 
     return (
@@ -243,7 +239,7 @@ const Header = () => {
                                             <ul className={twMerge('flex flex-row items-center justify-end order-1 xxs:order-2', GAP_SIZE_XL)}>
                                                 {menuSocialNetworks.map((item, index) => {
                                                     return <li key={index} className='overflow-hidden'>
-                                                        <Button size='sm' onPress={() => goToSection(item.link)} degree='4' weight='semibold' className='modal-footer' >
+                                                        <Button size='sm' onPress={() => onButtonClick(item.link)} degree='4' weight='semibold' className='modal-footer' >
                                                             {t(`${BASE_LOCALE_SOCIAL}.${item.id}.key`)}
                                                         </Button>
                                                     </li>

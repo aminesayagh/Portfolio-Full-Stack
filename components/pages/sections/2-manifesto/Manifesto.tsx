@@ -8,6 +8,7 @@ import { useIsomorphicLayoutEffect } from 'react-use';
 import { ScrollProvider } from '@/context/ScrollContext';
 
 import _ from 'lodash';
+import useGsap from '@/hook/useGsap';
 
 const Manifesto = () => {
     const { t, i18n } = useTranslation();
@@ -37,52 +38,49 @@ const Manifesto = () => {
         });
         setBody(() => elements);
     }, [phrase])
-    useIsomorphicLayoutEffect(() => {
-        let ctx = gsap.context(() => {
-            if (refs.current.length > 0) {
-                const descriptions = gsap.utils.toArray('.manifesto_description_gsap');
-                const letters = gsap.utils.toArray('.letter_gsap');
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: '.manifesto_quote_gsap',
-                        scrub: true,
-                        start: 'top 75%',
-                        end: 'center 10%',
-                        markers: false,
-                        invalidateOnRefresh: true,
-                        toggleActions: 'play pause reverse pause',
-                    }
-                }).fromTo(letters, {
-                    opacity: 0.1,
-                }, {
-                    opacity: 0.9,
-                    ease: 'power4',
-                    stagger: 0.1,
-                    skewX: 0.3,
-                    duration: 0.5,
-                }).fromTo(descriptions[0] as any, {
-                    opacity: 0,
-                    y: 30,
-                }, {
-                    opacity: 1,
-                    ease: 'power1',
-                    y: 0
-                }, "-=50%").fromTo(descriptions[1] as any, {
-                    opacity: 0,
-                    y: 30,
-                }, {
-                    opacity: 1,
-                    ease: 'power1',
-                    y: 0,
-                }).fromTo('.manifesto_description_action_gsap', {
-                    opacity: 0,
-                }, {
-                    opacity: 1,
-                })
-            }
-        }, refDescription);
-        return () => ctx.revert();
-    }, [scrollbar, body]);
+    useGsap(() => {
+        if (refs.current.length > 0) {
+            const descriptions = gsap.utils.toArray('.manifesto_description_gsap');
+            const letters = gsap.utils.toArray('.letter_gsap');
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.manifesto_quote_gsap',
+                    scrub: true,
+                    start: 'top 75%',
+                    end: 'center 10%',
+                    markers: false,
+                    invalidateOnRefresh: true,
+                    toggleActions: 'play pause reverse pause',
+                }
+            }).fromTo(letters, {
+                opacity: 0.1,
+            }, {
+                opacity: 0.9,
+                ease: 'power4',
+                stagger: 0.1,
+                skewX: 0.3,
+                duration: 0.5,
+            }).fromTo(descriptions[0] as any, {
+                opacity: 0,
+                y: 30,
+            }, {
+                opacity: 1,
+                ease: 'power1',
+                y: 0
+            }, "-=50%").fromTo(descriptions[1] as any, {
+                opacity: 0,
+                y: 30,
+            }, {
+                opacity: 1,
+                ease: 'power1',
+                y: 0,
+            }).fromTo('.manifesto_description_action_gsap', {
+                opacity: 0,
+            }, {
+                opacity: 1,
+            })
+        }
+    }, refDescription);
 
     return <div data-scroll data-scroll-sticky data-scroll-target="#manifesto" data-scroll-speed="4" className={twMerge('h-fit py-20 xxs:py-28 md:py-32 2xl:py-40', ' relative')} ref={refDescription} >
         <div className={twMerge(`grid grid-cols-12 gap-y-8 xxs:gap-y-12 xs:gap-y-8 mdl:gap-y-12`, 'h-fit strick')}>

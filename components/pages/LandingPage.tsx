@@ -3,7 +3,7 @@ import { Container, Noise } from '@/components/ui';
 import { Intro, Manifesto, Cases, Action, Video, Expertise, CallToAction } from '@/components/pages/sections';
 import { MENU_ITEMS } from '@/conf/router';
 import { twMerge } from 'tailwind-merge';
-
+import { Suspense } from 'react';
 const LandingPage = () => {
     return (
         <>
@@ -12,10 +12,12 @@ const LandingPage = () => {
             </Container>
             <span data-scroll-section className='block h-24 w-full' ></span>
             <Container data-scroll-section id='video' as='section' size='lg'  >
-                <Video />
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Video />
+                </Suspense>
             </Container>
             <span data-scroll-section className='block h-16 xxs:h-0 w-full'></span>
-            <Container data-scroll-section id={MENU_ITEMS.manifesto.id} as='section' size='lg' className='h-[150vh]' >
+            <Container data-scroll-section id={MENU_ITEMS.manifesto.id} as='section' size='lg' className='h-[160vh]' >
                 <Manifesto />
             </Container>
             <span data-scroll-section className='block h-24 xxs:h-24 w-full'></span>
@@ -29,16 +31,12 @@ const LandingPage = () => {
                 <CallToAction />
             </Container>
             <span data-scroll-section className='block h-24 w-full'></span>
-            <Container data-scroll-section as='section' size='lg' id={MENU_ITEMS.cases.id} className='py-10 h-fit' style={{
-                zIndex: 20,
-                position: 'relative'
-            }} >
-                <Cases />
+            <Container data-scroll-section as='section' size='lg' id={MENU_ITEMS.cases.id} className='py-10 h-fit' >
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Cases />
+                </Suspense>
             </Container>
-            <Container data-scroll-section as='section' size='lg' id='action-contact' style={{
-                zIndex: 10,
-                position: 'relative'
-            }}>
+            <Container data-scroll-section as='section' size='lg' id='action-contact' >
                 <Action />
             </Container>
             <span data-scroll-section className='block h-6 xs:h-12 w-full'></span>

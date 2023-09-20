@@ -7,8 +7,10 @@ import { rounded } from '@/components/style';
 import { ScrollProvider } from '@/context/ScrollContext';
 
 import { useIsomorphicLayoutEffect, useMedia } from 'react-use'
+import useGsap from '@/hook/useGsap';
 const Video = () => {
     let ref = useRef<HTMLCanvasElement>(null);
+    let refContainer = useRef<HTMLDivElement>(null);
     const [images, setImages] = useState<Array<HTMLImageElement>>([]);
 
     const isLg = useMedia('(min-width: 1024px)', true);
@@ -30,9 +32,9 @@ const Video = () => {
             setHeight('70vh');
         }
     }, [isLg, isSM, isXxs])
-    useEffect(() => {
-        let ctx = gsap.context((self) => {
-            let canvas = ref.current;
+    
+    useGsap(() => {
+        let canvas = ref.current;
             if (!canvas) return;
             let context = canvas.getContext('2d');
     
@@ -69,28 +71,23 @@ const Video = () => {
                 context?.clearRect(0, 0, ref.current.width, ref.current.height);
                 context?.drawImage(images[hands.frame], 0, 0);
             }
-        });
-        return () => ctx.revert();
-    }, [scrollbar]);
-    useIsomorphicLayoutEffect(() => {
-        let ctx = gsap.context(() => {
-            gsap.fromTo('.video_gsap', {
-                opacity: 0,
-            }, {
-                opacity: 1,
-                ease: 'power4',
-                duration: 0.5,
-                scrollTrigger: {
-                    trigger: '.video_gsap',
-                }
-            })   
-        })
-        return () => ctx.revert();
-    }, [scrollbar])
+    }, ref);
+    useGsap(() => {
+        gsap.fromTo('.video_gsap', {
+            opacity: 0,
+        }, {
+            opacity: 1,
+            ease: 'power4',
+            duration: 0.5,
+            scrollTrigger: {
+                trigger: '.video_gsap',
+            }
+        })  
+    }, refContainer)
     
     return (
         <>
-            <div className={twMerge('block relative w-full h-fit rounded-3xl video_gsap overflow-hidden', rounded({ size: 'xl' }))}>
+            <div  ref={refContainer} className={twMerge('block relative w-full h-fit rounded-3xl video_gsap overflow-hidden', rounded({ size: 'xl' }))}>
                 <canvas ref={ref} className={twMerge('h-full', rounded({ size: 'xl' }))} style={{ width: "100%", height: height, maxHeight: maxHeight, objectFit: 'cover'  }} />
             </div>
         </>

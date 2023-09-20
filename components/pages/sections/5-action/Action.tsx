@@ -8,51 +8,38 @@ import { useHover } from 'react-aria';
 import { useIsomorphicLayoutEffect } from "react-use";
 import { gsap } from "@/utils/gsap";
 import { ScrollProvider } from "@/context/ScrollContext";
+import useGsap from "@/hook/useGsap";
 
 const Action = () => {
     const { t, i18n } = useTranslation();
-
-    const { scrollbar } = useContext(ScrollProvider);
     const refContainer = useRef<HTMLDivElement>(null);
 
-    useIsomorphicLayoutEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.timeline({
-                scrollTrigger: {
-                    trigger: refContainer.current as any,
-                    scrub: true,
-                    start: 'top center+=20%',
-                    end: 'top top+=10%',
-                    toggleActions: 'play pause reverse pause',
-                    markers: false,
-                    invalidateOnRefresh: true,
-                }
-            }).fromTo('.contact-title-gsap', {
-                yPercent: -100,
-            }, {
-                yPercent: 0,
-                duration: 1,
-                stagger: 0.4,
-                ease: 'Power3.easeOut',
-            }).fromTo('.contact_quota_gsap', {
-                opacity: 0,
-                left: "-100%",
-            }, {
-                opacity: 1,
-                left: "0%"
-            }, '-=0.5')
-        }, refContainer);
-        return () => {
-            ctx.revert();
-        }
-    }, [scrollbar])
-    const { hoverProps, isHovered } = useHover({
-        onHoverStart: () => {
-
-        },
-        onHoverEnd: () => {
-        }
-    })
+    useGsap(() => {
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: refContainer.current as any,
+                scrub: true,
+                start: 'top center+=20%',
+                end: 'top top+=10%',
+                toggleActions: 'play pause reverse pause',
+                markers: false,
+                invalidateOnRefresh: true,
+            }
+        }).fromTo('.contact-title-gsap', {
+            yPercent: -100,
+        }, {
+            yPercent: 0,
+            duration: 1,
+            stagger: 0.4,
+            ease: 'Power3.easeOut',
+        }).fromTo('.contact_quota_gsap', {
+            opacity: 0,
+            left: "-100%",
+        }, {
+            opacity: 1,
+            left: "0%"
+        }, '-=0.5')
+    }, refContainer);
     return <>
         <div className='relative h-[64vh]' ref={refContainer}>
             <div className='absolute left-0 top-0 right-0'>
@@ -63,7 +50,7 @@ const Action = () => {
                         </Display>
                     </span>
                     <div className='flex flex-row justify-start xs:justify-center items-start relative'>
-                        <Link href='/contact' className='overflow-hidden' {...hoverProps}>
+                        <Link href='/contact' className='overflow-hidden'>
                             <Display size='lg' weight='bold' className={twMerge('whitespace-nowrap-important uppercase text-primary-500', 'contact-title-gsap')} >
                                 {t('contactCall.action')}
                             </Display>
