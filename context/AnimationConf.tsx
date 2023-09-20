@@ -22,7 +22,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 getSpeed: true,
                 getDirection: true,
                 smartphone: {
-                    smooth: false
+                    smooth: true
                 },
                 // @ts-ignore
                 tablet: {
