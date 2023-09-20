@@ -1,13 +1,10 @@
 
 
-import React, { useRef, useContext } from "react";
+import React, { useRef } from "react";
 import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
 import { Text, Display, Link } from '@/components/ui';
-import { useHover } from 'react-aria';
-import { useIsomorphicLayoutEffect } from "react-use";
 import { gsap } from "@/utils/gsap";
-import { ScrollProvider } from "@/context/ScrollContext";
 import useGsap from "@/hook/useGsap";
 
 const Action = () => {

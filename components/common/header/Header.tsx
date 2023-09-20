@@ -35,7 +35,7 @@ const Header = () => {
     const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
     const ctx = useRef<any>(null);
     const { scrollbar } = useContext(ScrollProvider);
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         ctx.current = gsap.context((self) => {
             self.add('open', () => {
                 tl.current.fromTo(['.modal-overlay', '.modal-content'], {

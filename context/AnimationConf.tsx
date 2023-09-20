@@ -11,7 +11,6 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     let app = useRef<HTMLDivElement | null>(null);
     const { scrollbar, setScrollbar } = useContext(ScrollProvider)
     useEffect(() => {
-        
         let scroll: LocomotiveScroll | null = null;
         import('locomotive-scroll').then((locomotiveModule) => {
             let el = document.querySelector('[data-scroll-container]') as HTMLElement;
