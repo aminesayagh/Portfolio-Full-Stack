@@ -13,16 +13,17 @@ const Manifesto = () => {
     const { t, i18n } = useTranslation();
     const refs = useRef<HTMLSpanElement[]>([]);
     const refDescription = useRef<HTMLDivElement>(null);
-    const body = useRef<React.JSX.Element[]>([]);
+    // const body = useRef<React.JSX.Element[]>([]);
+    const [body, setBody] = useState<React.JSX.Element[] | null>(null);
     const [phrase, setPhrase] = useState(t('manifesto.description'));
 
     const { scrollbar } = useContext(ScrollProvider);
 
     useEffect(() => {
         setPhrase(t('manifesto.description'));
-    }, [i18n.language]);
-    useIsomorphicLayoutEffect(() => {
-        body.current = [];
+    }, [i18n.language, phrase, t]);
+    useEffect(() => {
+        setBody(null);
 
         const splitLetters = (word: string) => {
             return _.map(word.split(''), (letter, index) => (
@@ -34,12 +35,10 @@ const Manifesto = () => {
             const letters = splitLetters(word);
             return <p key={`word_${index}`} className='flex flex-row gap-[0.09rem] letter_gsap'>{letters}</p>;
         });
-
-        body.current = elements;
-    }, [phrase, t])
+        setBody(() => elements);
+    }, [phrase])
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            // verify if .letter_gsap is in the dom
             if (refs.current.length > 0) {
                 const descriptions = gsap.utils.toArray('.manifesto_description_gsap');
                 const letters = gsap.utils.toArray('.letter_gsap');
@@ -50,6 +49,8 @@ const Manifesto = () => {
                         start: 'top 75%',
                         end: 'center 10%',
                         markers: false,
+                        invalidateOnRefresh: true,
+                        toggleActions: 'play pause reverse pause',
                     }
                 }).fromTo(letters, {
                     opacity: 0.1,
@@ -79,44 +80,10 @@ const Manifesto = () => {
                     opacity: 1,
                 })
             }
-
-            // gsap.utils.toArray('.manifesto_description_gsap').map((box: any) => {
-            //     gsap.fromTo(box, {
-            //         opacity: 0,
-            //         y: 30,
-            //     }, {
-            //         opacity: 1,
-            //         ease: 'power1',
-            //         delay: 0.5,
-            //         y: 0,
-            //         scrollTrigger: {
-            //             trigger: box,
-            //             start: 'top bottom',
-            //             end: 'top bottom-=160px',
-            //             toggleActions: 'play pause reverse pause',
-            //             scrub: true,
-            //             markers: true,
-            //         }
-            //     });
-            // });
-            // gsap.fromTo('.manifesto_description_action_gsap', {
-            //     opacity: 0,
-            // }, {
-            //     opacity: 1,
-            //     scrollTrigger: {
-            //         trigger: '.manifesto_description_action_gsap',
-            //         start: 'top bottom-=100px',
-            //         end: 'top bottom-=260px',
-            //         toggleActions: 'play pause reverse pause',
-            //         scrub: true,
-            //         markers: false,
-            //     }
-            // })
         }, refDescription);
         return () => ctx.revert();
-    }, [scrollbar, phrase, body.current]);
+    }, [scrollbar, body]);
 
-    if (!body.current || body.current.length == 0) return null;
     return <div data-scroll data-scroll-sticky data-scroll-target="#manifesto" data-scroll-speed="4" className={twMerge('h-fit py-20 xxs:py-28 md:py-32 2xl:py-40', ' relative')} ref={refDescription} >
         <div className={twMerge(`grid grid-cols-12 gap-y-8 xxs:gap-y-12 xs:gap-y-8 mdl:gap-y-12`, 'h-fit strick')}>
             <div className={twMerge('flex flex-col gap-6 xs:gap-7', 'items-start justify-start manifesto_quote_gsap',
@@ -131,11 +98,11 @@ const Manifesto = () => {
                         {t(`manifesto.subtitle_2`)}
                     </Title>
                 </div>
-                <Title h4 degree='1' weight='semibold' className={twMerge('flex flex-row flex-wrap gap-x-[0.1rem]', i18n.language == 'en' ? 'gap-x-[0.1rem]' : 'gap-x-[.36rem]')}>
+                <Title h4 degree='1' weight='semibold' className={twMerge('flex flex-row flex-wrap', i18n.language == 'en' ? 'gap-y-[0.15rem] gap-x-[0.23rem]' : 'gap-y-[0.19rem] gap-x-[.3rem]')}>
                     <strong className='text-white-200 pr-2'>
                         {t(`manifesto.slogan`)}
                     </strong>
-                    {body.current ? body.current.map((word, index) => <span key={index} className='mr-[0.3rem]' >{word}</span>) : null}
+                    {body ? body.map((word, index) => <span key={index} className='mr-[0.3rem]' >{word}</span>) : null}
                 </Title>
             </div>
             <div className={twMerge(

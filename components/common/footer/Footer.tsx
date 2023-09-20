@@ -22,13 +22,15 @@ const FollowUs = () => {
 }
 
 const Footer = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { scrollbar } = useContext(ScrollProvider)
     const goToSection = () => {
         scrollbar && scrollbar.scrollTo(0, { duration: 1000 });
     }
     return (<>
-            <div className={twMerge('max-w-[14rem] xxs:w-8/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[30vw] mdl:max-w-[26vw] xl:max-w-[20vw] 2xl:max-w-[28vw] 3xl:max-w-[22rem]')} >
+            <div className={twMerge(
+                'max-w-[14rem] xxs:w-8/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[30vw] mdl:max-w-[26vw] xl:max-w-[20vw] 2xl:max-w-[28vw] 3xl:max-w-[22rem]'
+            )} >
                 <Text p degree='3' weight='medium' size='md' className='uppercase' >
                     {t('footer.state')}
                 </Text>

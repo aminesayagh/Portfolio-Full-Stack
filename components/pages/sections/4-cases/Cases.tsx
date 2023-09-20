@@ -130,7 +130,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                     </Text>
                 </div>
             </div>
-            <div className={twMerge('absolute left-0 right-0 bottom-0 w-full h-72', 'bg-gradient-to-t from-black-100 to-black-100/0')} style={{
+            <div className={twMerge('absolute left-0 right-0 bottom-0 w-full h-72', 'bg-gradient-to-t from-black-100/80 to-black-100/0')} style={{
                 zIndex: 10 + (index + 12),
             }}></div>
         </div>

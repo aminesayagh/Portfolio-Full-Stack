@@ -176,14 +176,14 @@ const Title = () => {
             'sm:col-start-2 sm:col-span-11', // sm
             'md:col-start-4 md:col-span-9', // md
             'mdl:col-start-7 mdl:col-span-6', // mdl
-            'xl:col-start-8 xl:col-span-5', // xl
+            i18n.language == 'en' ? 'xl:col-start-8 xl:col-span-5' : 'xl:col-start-7 xl:col-span-6', // xl
             '4xl:col-span-6 4xl:col-start-7', // 4xl
             // row grid
             'row-start-2 row-span-1', // none
             'mdl:row-start-1 mdl:row-span-1', //mdl
             // children
             "[&>*]:w-full [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-5/12 [&>*]:mdl:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-4/12",
-            '[&>*>span]:max-w-[14rem]',
+            i18n.language == 'en' ? '[&>*>span]:max-w-[14rem]' : '[&>*>span]:max-w-[15rem]',
             "[&>*]:flex [&>*]:flex-row [&>*]:justify-start [&>*]:sm:justify-end",
             "[&>*]:mdl:ml-2 [&>*]:lg:ml-0"
         )} >
@@ -318,7 +318,7 @@ const Intro = () => {
                     start: 'top 60%'
                 }
             }).from('.splitText_gsap', {
-                yPercent: 170,
+                yPercent: 200,
                 skewY: 16,
                 duration: 1,
                 ease: 'power4.out',
