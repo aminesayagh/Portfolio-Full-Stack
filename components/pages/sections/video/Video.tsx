@@ -37,8 +37,8 @@ const Video = () => {
             if (!canvas) return;
             let context = canvas.getContext('2d');
     
-            canvas.width = 1200;
-            canvas.height = 625;
+            canvas.width = 1980;
+            canvas.height = 1000;
     
             const frameCount = 164;
             const currentFrame = (index: number) => `/framer-image/ezgif-frame-${index.toString().padStart(3, '0')}.webp`;

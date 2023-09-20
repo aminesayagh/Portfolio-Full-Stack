@@ -108,29 +108,33 @@ const CardElement = ({ i, refContainer }: { i: number, refContainer: React.RefOb
 
     const isLg = useMedia('(min-width: 1024px)', true);
     const isXs = useMedia('(min-width: 475px)', true);
-    useGsap(() => {
-        let space = 40;
-        let y = (i % 2 === 0 ? 1 : -1);
-        if (isLg) {
-        } else if (isXs) {
-            space = 35;
-        } else {
-            space = 30;
-            y = 1;
-        }
-        gsap.fromTo(ref.current, {
-            y: space * y,
-        }, {
-            y: -1 * space * y,
-            ease: 'Power4.easeOut',
-            scrollTrigger: {
-                trigger: '.container-expertise-gsap',
-                start: 'top bottom-=20%',
-                end: 'bottom top-=20%',
-                scrub: true
+    const { scrollbar } = useContext(ScrollProvider);
+    useIsomorphicLayoutEffect(() => {
+        let ctx = gsap.context(() => {
+            let space = 40;
+            let y = (i % 2 === 0 ? 1 : -1);
+            if (isLg) {
+            } else if (isXs) {
+                space = 35;
+            } else {
+                space = 30;
+                y = 1;
             }
+            gsap.fromTo(ref.current, {
+                y: space * y,
+            }, {
+                y: -1 * space * y,
+                ease: 'Power4.easeOut',
+                scrollTrigger: {
+                    trigger: '.container-expertise-gsap',
+                    start: 'top bottom-=20%',
+                    end: 'bottom top-=20%',
+                    scrub: true
+                }
+            });
         });
-    }, refContainer, [isLg, isXs]);
+        return () => ctx.revert();
+    }, [scrollbar, isLg, isXs])
 
     if (i >= 4) return <div key={i} className={`expertise-card-gsap`} ref={ref}>
         <EmptyCardMemo />
