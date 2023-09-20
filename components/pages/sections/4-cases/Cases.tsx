@@ -6,13 +6,14 @@ import { useTranslation } from 'next-i18next';
 import { ScrollProvider } from '@/context/ScrollContext';
 import { getProjectsByCategory } from '@/conf/projects';
 import { gsap } from '@/utils/gsap';
-import { useIsomorphicLayoutEffect } from 'react-use';
+import { Image } from '@/components/ui';
 import useGsap from '@/hook/useGsap';
 
 const Case = ({ picture, index, id }: { picture?: string[], index: number, id: string }) => {
     const container = useRef<HTMLDivElement>(null);
     const { t } = useTranslation();
-
+    const pic = useMemo(() => picture ? picture[0] : '', [picture]);
+    
     useGsap(() => {
         if (index < 2) {
             gsap.timeline({
@@ -49,7 +50,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
             })
         }
 
-        gsap.fromTo(container.current?.children[0] as any, {
+        gsap.fromTo(container.current?.children[0]?.children[0] as any, {
             scale: 1,
             backgroundPosition: 'center 80%',
         }, {
@@ -101,12 +102,12 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
     return <div className={twMerge('relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden')} ref={container} style={{
         zIndex: 10 + (index + 10),
     }} >
-        <div className='absolute left-0 right-0 w-full h-screen bg-no-repeat bg-cover' style={{
-            backgroundImage: `url(${!!picture ? picture[0] : ''})`,
-            zIndex: 10 + (index + 11),
-            backgroundSize: 'cover',
-            backgroundPosition: 'center 80%',
-        }} >
+        <div className='absolute left-0 right-0 top-0 w-full h-screen'  >
+            <Image src={pic} alt={t(`projects.${id}.description`)} className='' fill style={{
+                zIndex: 10 + (index + 11),
+                objectFit: 'cover',
+                objectPosition: 'center 80%',
+            }} />
         </div>
         <div className='absolute top-0 left-0 right-0 w-full min-h-screen h-screen bg-no-repeat bg-cover' style={{
             

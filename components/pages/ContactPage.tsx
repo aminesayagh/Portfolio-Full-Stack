@@ -82,8 +82,8 @@ const FormContact = () => {
             message: t(`${ERROR_TRANSLATION_PATH}.maxLength`, { max: 500 })
         }).nonempty()
     });
-    const successMessage = useMemo(() => t('form.notification.success'), [i18n.language]);
-    const errorMessage = useMemo(() => t('form.notification.error'), [i18n.language]);
+    const successMessage = useMemo(() => t('form.notification.success'), [t]);
+    const errorMessage = useMemo(() => t('form.notification.error'), [t]);
 
     const onSubmitForm = async (data: TypeFormContact, options: OptionOnSubmit<TypeFormContact>) => {
         try {

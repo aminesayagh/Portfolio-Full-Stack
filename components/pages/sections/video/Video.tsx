@@ -20,7 +20,6 @@ const Video = () => {
     const [height, setHeight] = useState<string>('50vh');
     const [maxHeight, setMaxHeight] = useState<string>('1100px');
 
-    const { scrollbar } = useContext(ScrollProvider);
     useEffect(() => {
         if(isLg) {
             setHeight('100vh');
@@ -38,11 +37,11 @@ const Video = () => {
             if (!canvas) return;
             let context = canvas.getContext('2d');
     
-            canvas.width = 1488;
-            canvas.height = 1100;
+            canvas.width = 1920;
+            canvas.height = 1080;
     
             const frameCount = 164;
-            const currentFrame = (index: number) => `/framer-image/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
+            const currentFrame = (index: number) => `/framer-image/ezgif-frame-${index.toString().padStart(3, '0')}.webp`;
             for (let i = 1; i <= frameCount; i++) {
                 const img = new Image();
                 img.src = currentFrame(i);

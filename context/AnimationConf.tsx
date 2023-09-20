@@ -18,14 +18,12 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             scroll = new locomotiveModule.default({
                 el: el,
                 smooth: true,
-                resetNativeScroll: true,
-                getDirection: true,
-                getSpeed: true,
                 reloadOnContextChange: true,
-                multiplier: 0.9,
+                multiplier: 1,
+                getSpeed: true,
+                getDirection: true,
                 smartphone: {
-                    smooth: true,
-
+                    smooth: false
                 },
                 // @ts-ignore
                 tablet: {
@@ -100,7 +98,6 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             scrollbar?.destroy();
         }
     }, [scrollbar]);
-
     return <><div ref={el => {
         // @ts-ignore
         app = el

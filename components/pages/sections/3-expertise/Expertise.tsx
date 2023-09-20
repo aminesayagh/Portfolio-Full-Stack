@@ -141,7 +141,7 @@ const CardElement = ({ i, refContainer }: { i: number, refContainer: React.RefOb
 }
 const CardElementMemo = memo(CardElement);
 
-const ExpertiseStages = ({ ref }: { ref: React.RefObject<HTMLDivElement> }) => {
+const ExpertiseStages = ({ refContainer }: { refContainer: React.RefObject<HTMLDivElement> }) => {
 
     return (
         <>
@@ -154,7 +154,7 @@ const ExpertiseStages = ({ ref }: { ref: React.RefObject<HTMLDivElement> }) => {
                 'w-full relative z-[60]'
             )}>
                 {Array.apply('', Array(8)).map((_, i) => {
-                    return <CardElementMemo key={i} refContainer={ref} i={i} />
+                    return <CardElementMemo key={i} refContainer={refContainer} i={i} />
                 })}
             </div>
         </>
@@ -168,7 +168,7 @@ const Expertise = () => {
         <>
             <div className={twMerge('flex flex-col', 'gap-20 xs:gap-32 sm:gap-16 mdl:gap-32 lg:gap-28 2xl:gap-44', 'justify-center items-center h-full', rounded({ size: 'xl' }), 'overflow-hidden container-expertise-gsap')}>
                 <ExpertiseHeadMemo />
-                <ExpertiseStagesMemo ref={refExpertise} />
+                <ExpertiseStagesMemo refContainer={refExpertise} />
                 <div className={twMerge('absolute w-full h-[26vh] bottom-0 left-0 z-999999999', 'bg-gradient-to-t from-black-100/25 via-black-100/10 to-black-100/0')}></div>
             </div>
         </>
