@@ -10,35 +10,42 @@ import { gsap } from "@/utils/gsap";
 import { ScrollProvider } from "@/context/ScrollContext";
 
 const Action = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const { scrollbar } = useContext(ScrollProvider);
     const refContainer = useRef<HTMLDivElement>(null);
 
     useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.fromTo(refContainer.current?.children[0] as any, {
-                yPercent: -100,
-                opacity: 0.2,
-            }, {
-                opacity: 1,
-                yPercent: 0,
-                ease: 'Power4.easeIn',
+            gsap.timeline({
                 scrollTrigger: {
-                    trigger: refContainer.current?.children[0] as any,
+                    trigger: refContainer.current as any,
                     scrub: true,
-                    start: 'top bottom',
-                    end: 'bottom top+=80%',
+                    start: 'top center+=20%',
+                    end: 'top top+=10%',
                     toggleActions: 'play pause reverse pause',
                     markers: true,
                     invalidateOnRefresh: true,
                 }
-            });
+            }).fromTo('.contact-title-gsap', {
+                yPercent: -100,
+            }, {
+                yPercent: 0,
+                duration: 1,
+                stagger: 0.4,
+                ease: 'Power3.easeOut',
+            }).fromTo('.contact_quota_gsap', {
+                opacity: 0,
+                left: "-100%",
+            }, {
+                opacity: 1,
+                left: "0%"
+            }, '-=0.5')
         }, refContainer);
         return () => {
             ctx.revert();
         }
-    }, [scrollbar, refContainer.current])
+    }, [scrollbar])
     const { hoverProps, isHovered } = useHover({
         onHoverStart: () => {
 
@@ -50,26 +57,30 @@ const Action = () => {
         <div className='relative h-[64vh]' ref={refContainer}>
             <div className='absolute left-0 top-0 right-0'>
                 <div className={twMerge('flex flex-col gap-1 xs:gap-2 sm:gap-6', 'justify-center items-start xs:items-center place-content-start', 'h-[64vh]')} >
-                    <Display size='lg' className={twMerge('uppercase text-start xs:text-center')} >
-                        {t('contactCall.title')}
-                    </Display>
+                    <span className='overflow-hidden'>
+                        <Display size='lg' className={twMerge('uppercase text-start xs:text-center', 'contact-title-gsap')} >
+                            {t('contactCall.title')}
+                        </Display>
+                    </span>
                     <div className='flex flex-row justify-start xs:justify-center items-start relative'>
-                        <Link href='/contact' {...hoverProps}>
-                            <Display size='lg' weight='bold' className={twMerge('whitespace-nowrap-important uppercase text-primary-500')} >
+                        <Link href='/contact' className='overflow-hidden' {...hoverProps}>
+                            <Display size='lg' weight='bold' className={twMerge('whitespace-nowrap-important uppercase text-primary-500', 'contact-title-gsap')} >
                                 {t('contactCall.action')}
                             </Display>
                         </Link>
-                        <Text p degree='3' size='xxs' weight='medium' className={twMerge(
+                        <Text p degree='3' size={i18n.language == 'en' ? 'xxs' : 'xs'} weight='medium' className={twMerge(
                             'absolute',
-                            'quota_gsap',
                             'left-[-1.5%] xs:left-auto sm:left-[103%]',
                             'top-[100%] sm:top-[-6px]',
                             'xs:right-[-1%] md:right-auto', // right
                             'mt-3 xl:mt-4', // margin top
-                            'ml-2 w-32 xl:w-40 4xl:w-52', // width
-                            'text-start xs:text-end sm:text-start' // text alignment
+                            'ml-2',
+                            i18n.language == 'en' ? 'w-32 xl:w-40 4xl:w-52' : 'w-36 xl:w-46 4xl:w-52', // width
+                            'text-start xs:text-end sm:text-start'
                         )} >
-                            {t('contactCall.description')}
+                            <span className='contact_quota_gsap'>
+                                {t('contactCall.description')}
+                            </span>
                         </Text>
                     </div>
                 </div>

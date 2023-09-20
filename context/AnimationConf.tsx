@@ -63,6 +63,10 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 scroll?.update()
             })
             // ScrollTrigger.refresh()
+        }).catch((err) => {
+            console.error('Error importing locomotive-scroll');
+            console.error(err);
+            setScrollbar(null);
         })
 
         window.addEventListener('DOMContentLoaded', () => {

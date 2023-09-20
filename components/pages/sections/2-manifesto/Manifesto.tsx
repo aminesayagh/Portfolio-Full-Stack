@@ -23,8 +23,7 @@ const Manifesto = () => {
         setPhrase(t('manifesto.description'));
     }, [i18n.language, phrase, t]);
     useEffect(() => {
-        setBody([]);
-        console.log(phrase);
+        setBody(null);
 
         const splitLetters = (word: string) => {
             return _.map(word.split(''), (letter, index) => (

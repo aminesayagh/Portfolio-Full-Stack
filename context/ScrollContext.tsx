@@ -4,7 +4,7 @@ import { useState, createContext } from 'react';
 import LocomotiveScroll from 'locomotive-scroll';
 export const ScrollProvider = createContext<{
     scrollbar: null | LocomotiveScroll,
-    setScrollbar: (scrollbar: LocomotiveScroll) => void
+    setScrollbar: (scrollbar: LocomotiveScroll | null) => void
 }>({ 
     scrollbar: null,
     setScrollbar: () => {}
