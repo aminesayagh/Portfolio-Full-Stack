@@ -15,45 +15,30 @@ const Action = () => {
     const { scrollbar } = useContext(ScrollProvider);
     const refContainer = useRef<HTMLDivElement>(null);
 
-    // useIsomorphicLayoutEffect(() => {
-    //     const ctx = gsap.context(() => {
-    //         gsap.fromTo(refContainer.current?.children[0] as any, {
-    //             yPercent: -100,
-    //             opacity: 0.2,
-    //         }, {
-    //             opacity: 1,
-    //             yPercent: 0,
-    //             ease: 'Power4.easeIn',
-    //             scrollTrigger: {
-    //                 trigger: refContainer.current?.children[0] as any,
-    //                 scrub: true,
-    //                 start: 'top bottom',
-    //                 end: 'bottom top+=80%',
-    //                 toggleActions: 'play pause reverse pause',
-    //                 markers: true,
-    //                 invalidateOnRefresh: true,
-    //             }
-
-    //         });
-    //         gsap.fromTo('.quota_gsap', {
-    //             xPercent: -100,
-    //         }, {
-    //             xPercent: 0,
-    //             duration: 1,
-    //             ease: 'Elastic.easeOut.config(1, 0.3)',
-    //             scrollTrigger: {
-    //                 trigger: '.quota_gsap' as any,
-    //                 scrub: true,
-    //                 start: 'top bottom',
-    //                 end: 'bottom top+=80%',
-    //                 markers: true,
-    //             }
-    //         });
-    //     }, refContainer);
-    //     return () => {
-    //         ctx.revert();
-    //     }
-    // }, [scrollbar, refContainer.current])
+    useIsomorphicLayoutEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.fromTo(refContainer.current?.children[0] as any, {
+                yPercent: -100,
+                opacity: 0.2,
+            }, {
+                opacity: 1,
+                yPercent: 0,
+                ease: 'Power4.easeIn',
+                scrollTrigger: {
+                    trigger: refContainer.current?.children[0] as any,
+                    scrub: true,
+                    start: 'top bottom',
+                    end: 'bottom top+=80%',
+                    toggleActions: 'play pause reverse pause',
+                    markers: true,
+                    invalidateOnRefresh: true,
+                }
+            });
+        }, refContainer);
+        return () => {
+            ctx.revert();
+        }
+    }, [scrollbar, refContainer.current])
     const { hoverProps, isHovered } = useHover({
         onHoverStart: () => {
 
@@ -74,20 +59,18 @@ const Action = () => {
                                 {t('contactCall.action')}
                             </Display>
                         </Link>
-                        <span className='overflow-hidden relative'>
-                            <Text p degree='3' size='xxs' weight='medium' className={twMerge(
-                                'absolute',
-                                'quota_gsap',
-                                'left-[-1.5%] xs:left-auto sm:left-[103%]',
-                                'top-[100%] sm:top-[-6px]',
-                                'xs:right-[-1%] md:right-auto', // right
-                                'mt-3 xl:mt-4', // margin top
-                                'ml-2 w-32 xl:w-40 4xl:w-52', // width
-                                'text-start xs:text-end sm:text-start' // text alignment
-                            )} >
-                                {t('contactCall.description')}
-                            </Text>
-                        </span>
+                        <Text p degree='3' size='xxs' weight='medium' className={twMerge(
+                            'absolute',
+                            'quota_gsap',
+                            'left-[-1.5%] xs:left-auto sm:left-[103%]',
+                            'top-[100%] sm:top-[-6px]',
+                            'xs:right-[-1%] md:right-auto', // right
+                            'mt-3 xl:mt-4', // margin top
+                            'ml-2 w-32 xl:w-40 4xl:w-52', // width
+                            'text-start xs:text-end sm:text-start' // text alignment
+                        )} >
+                            {t('contactCall.description')}
+                        </Text>
                     </div>
                 </div>
             </div>

@@ -176,7 +176,7 @@ const Title = () => {
             'sm:col-start-2 sm:col-span-11', // sm
             'md:col-start-4 md:col-span-9', // md
             'mdl:col-start-7 mdl:col-span-6', // mdl
-            'xl:col-start-8 xl:col-span-5', // xl
+            i18n.language == 'en' ? 'xl:col-start-8 xl:col-span-5' : 'xl:col-start-7 xl:col-span-6', // xl
             '4xl:col-span-6 4xl:col-start-7', // 4xl
             // row grid
             'row-start-2 row-span-1', // none
