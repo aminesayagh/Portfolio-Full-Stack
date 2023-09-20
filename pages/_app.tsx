@@ -15,6 +15,7 @@ import { useState, useEffect } from 'react';
 
 
 
+import { Analytics } from '@vercel/analytics/react';
 
 
 const montserrat = Montserrat({
@@ -23,14 +24,14 @@ const montserrat = Montserrat({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
 function App({ Component, pageProps }: AppProps) {
-  
+
   const [val, setVal] = useState<string>();
   useEffect(() => {
     setVal(montserrat.variable)
   }, [])
 
   return <>
-    <DefaultSeo 
+    <DefaultSeo
       title={"Mohamed Amine SAYAGH - Full Stack Web Developer"}
       description={"Mohamed Amine SAYAGH - Full Stack Web Developer"}
       openGraph={{
@@ -42,6 +43,7 @@ function App({ Component, pageProps }: AppProps) {
     />
     <main className={`${val} font-sans`}>
       <Component {...pageProps} />
+      <Analytics />
     </main>
   </>
 }
