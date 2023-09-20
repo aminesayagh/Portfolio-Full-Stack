@@ -98,7 +98,6 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             scrollbar?.destroy();
         }
     }, [scrollbar]);
-
     return <><div ref={el => {
         // @ts-ignore
         app = el
