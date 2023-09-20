@@ -24,7 +24,7 @@ const Action = () => {
                     start: 'top center+=20%',
                     end: 'top top+=10%',
                     toggleActions: 'play pause reverse pause',
-                    markers: true,
+                    markers: false,
                     invalidateOnRefresh: true,
                 }
             }).fromTo('.contact-title-gsap', {
