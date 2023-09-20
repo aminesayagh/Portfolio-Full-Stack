@@ -4,74 +4,50 @@ import { gsap } from '@/utils/gsap';
 import { twMerge } from 'tailwind-merge';
 
 import { rounded } from '@/components/style';
-import { ScrollProvider } from '@/context/ScrollContext';
+import ImageUi from 'next/image';
 
 import { useIsomorphicLayoutEffect, useMedia } from 'react-use'
 import useGsap from '@/hook/useGsap';
 const Video = () => {
-    let ref = useRef<HTMLCanvasElement>(null);
-    let refContainer = useRef<HTMLDivElement>(null);
-    const [images, setImages] = useState<Array<HTMLImageElement>>([]);
 
+    let refContainer = useRef<HTMLDivElement>(null);
     const isLg = useMedia('(min-width: 1024px)', true);
     const isSM = useMedia('(min-width: 640px)', false);
     const isXxs = useMedia('(min-width: 390px)', false);
 
     const [height, setHeight] = useState<string>('50vh');
     const [maxHeight, setMaxHeight] = useState<string>('1100px');
-
-    const { scrollbar } = useContext(ScrollProvider);
+    const [frame, setFrame] = useState<number>(1);
     useEffect(() => {
-        if(isLg) {
+        if (isLg) {
             setHeight('100vh');
-        } else if(isSM) {
+        } else if (isSM) {
             setHeight('96vh');
-        } else if(isXxs) {
+        } else if (isXxs) {
             setHeight('100vh');
         } else {
             setHeight('70vh');
         }
     }, [isLg, isSM, isXxs])
-    
     useGsap(() => {
-        let canvas = ref.current;
-            if (!canvas) return;
-            let context = canvas.getContext('2d');
-    
-            canvas.width = 1488;
-            canvas.height = 1100;
-    
-            const frameCount = 164;
-            const currentFrame = (index: number) => `/framer-image/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
-            for (let i = 1; i <= frameCount; i++) {
-                const img = new Image();
-                img.src = currentFrame(i);
-                images.push(img);
+        const myCountObj = { number: 1 };
+        gsap.to(myCountObj, {
+            duration: 0.1,
+            ease: 'none',
+            number: 164,
+            scrollTrigger: {
+                trigger: '.video_gsap',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true,
+                invalidateOnRefresh: true,
+                markers: false,
+            },
+            onUpdate: () => {
+                setFrame(myCountObj.number++);
             }
-    
-            const hands = { frame: 0 };
-    
-            gsap.to(hands, {
-                frame: frameCount - 1,
-                snap: 'frame',
-                ease: 'none',
-                scrollTrigger: {
-                    scrub: 0.5,
-                    trigger: canvas,
-                },
-                onUpdate: render
-            })
-            
-            images[0].onload = render;
-            setImages(() => images);
-    
-            function render() {
-                if(!context) return;
-                if(!ref.current) return;
-                context?.clearRect(0, 0, ref.current.width, ref.current.height);
-                context?.drawImage(images[hands.frame], 0, 0);
-            }
-    }, ref);
+        })
+    }, refContainer, [frame]);
     useGsap(() => {
         gsap.fromTo('.video_gsap', {
             opacity: 0,
@@ -82,16 +58,22 @@ const Video = () => {
             scrollTrigger: {
                 trigger: '.video_gsap',
             }
-        })  
+        })
     }, refContainer)
-    
+    useEffect(() => {
+        console.log(frame)
+    }, [frame])
     return (
         <>
-            <div  ref={refContainer} className={twMerge('block relative w-full h-fit rounded-3xl video_gsap overflow-hidden', rounded({ size: 'xl' }))}>
-                <canvas ref={ref} className={twMerge('h-full', rounded({ size: 'xl' }))} style={{ width: "100%", height: height, maxHeight: maxHeight, objectFit: 'cover'  }} />
+            <div ref={refContainer} className={twMerge('block relative w-full h-fit rounded-3xl video_gsap overflow-hidden', rounded({ size: 'xl' }))}>
+                <ImageVideo frame={frame} />
             </div>
         </>
     )
+}
+
+const ImageVideo = ({ frame  }: { frame: number }) => {
+    return <ImageUi src={`/framer-image/ezgif-frame-${frame.toString().padStart(3, '0')}.jpg`} alt='video' width={1488} height={1100} className='w-full h-full object-cover' />
 }
 
 export default Video;
