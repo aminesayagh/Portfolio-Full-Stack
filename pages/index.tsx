@@ -10,6 +10,9 @@ import ScrollContextProvider from '@/context/ScrollContext';
 import { LandingPage } from '@/components/pages';
 import { Header, Footer } from '@/components/common';
 import { Cursor } from '@/components/ui';
+import dynamic from 'next/dynamic';
+
+const DynamicHeader = dynamic(() => import('@/components/common/header'), {});
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,7 +29,7 @@ export default function Home() {
       <Cursor>
         <ScrollContextProvider >
           <AnimationConf >
-            <Header />
+            <DynamicHeader />
             <div data-scroll-container>
               <LandingPage />
             </div>
