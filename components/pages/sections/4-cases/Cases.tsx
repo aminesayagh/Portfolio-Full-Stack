@@ -103,7 +103,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
         zIndex: 10 + (index + 10),
     }} >
         <div className='absolute left-0 right-0 top-0 w-full h-screen'  >
-            <Image src={pic} alt={t(`projects.${id}.description`)} className='' fill style={{
+            <Image src={pic} alt={t(`projects.${id}.description`)} className='' priority sizes='100vw' fill style={{
                 zIndex: 10 + (index + 11),
                 objectFit: 'cover',
                 objectPosition: 'center 80%',
