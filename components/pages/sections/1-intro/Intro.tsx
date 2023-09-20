@@ -13,8 +13,8 @@ import useRouterChange from '@/hook/SafePush';
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<HTMLDivElement>(null);
-    const xTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref.current]);
-    const yTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref.current]);
+    const xTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' }), []);
+    const yTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' }), []);
     const { scrollbar } = useContext(ScrollProvider);
 
     useIsomorphicLayoutEffect(() => {
