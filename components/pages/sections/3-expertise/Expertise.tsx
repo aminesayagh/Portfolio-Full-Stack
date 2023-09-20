@@ -1,7 +1,7 @@
 
 import { useTranslation } from "next-i18next";
 import { twMerge } from "tailwind-merge";
-import { memo, useRef, useContext, useMemo } from 'react';
+import React, { memo, useRef, useContext, useMemo } from 'react';
 import { gsap } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 
@@ -102,7 +102,7 @@ const EmptyCard = () => {
 }
 const EmptyCardMemo = memo(EmptyCard);
 
-const CardElement = ({ i }: { i: number }) => {
+const CardElement = ({ i, refContainer }: { i: number, refContainer: React.RefObject<HTMLDivElement> }) => {
     const { t } = useTranslation();
     let ref = useRef<HTMLDivElement>(null);
 
@@ -130,7 +130,7 @@ const CardElement = ({ i }: { i: number }) => {
                 scrub: true
             }
         });
-    }, ref, [isLg, isXs]);
+    }, refContainer, [isLg, isXs]);
 
     if (i >= 4) return <div key={i} className={`expertise-card-gsap`} ref={ref}>
         <EmptyCardMemo />
@@ -141,7 +141,7 @@ const CardElement = ({ i }: { i: number }) => {
 }
 const CardElementMemo = memo(CardElement);
 
-const ExpertiseStages = () => {
+const ExpertiseStages = ({ ref }: { ref: React.RefObject<HTMLDivElement> }) => {
 
     return (
         <>
@@ -154,7 +154,7 @@ const ExpertiseStages = () => {
                 'w-full relative z-[60]'
             )}>
                 {Array.apply('', Array(8)).map((_, i) => {
-                    return <CardElementMemo key={i} i={i} />
+                    return <CardElementMemo key={i} refContainer={ref} i={i} />
                 })}
             </div>
         </>
@@ -163,11 +163,12 @@ const ExpertiseStages = () => {
 const ExpertiseStagesMemo = memo(ExpertiseStages);
 
 const Expertise = () => {
+    let refExpertise = useRef<HTMLDivElement>(null);
     return (
         <>
             <div className={twMerge('flex flex-col', 'gap-20 xs:gap-32 sm:gap-16 mdl:gap-32 lg:gap-28 2xl:gap-44', 'justify-center items-center h-full', rounded({ size: 'xl' }), 'overflow-hidden container-expertise-gsap')}>
                 <ExpertiseHeadMemo />
-                <ExpertiseStagesMemo />
+                <ExpertiseStagesMemo ref={refExpertise} />
                 <div className={twMerge('absolute w-full h-[26vh] bottom-0 left-0 z-999999999', 'bg-gradient-to-t from-black-100/25 via-black-100/10 to-black-100/0')}></div>
             </div>
         </>

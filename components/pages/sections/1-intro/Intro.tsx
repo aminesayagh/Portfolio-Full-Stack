@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import React, { useRef, useContext, useCallback, useLayoutEffect, useMemo } from "react";
+import React, { useRef, useContext, useCallback, useMemo } from "react";
 import { Text, Button, Display, Icon, Link, Fit } from '@/components/ui';
 import { useTranslation } from "next-i18next";
 import { gsap } from '@/utils/gsap';
@@ -9,6 +9,7 @@ import { useIsomorphicLayoutEffect } from "react-use";
 import { useHover } from "react-aria";
 import { useRouter } from 'next/router';
 import useGsap from "@/hook/useGsap";
+import useRouterChange from '@/hook/SafePush';
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<HTMLDivElement>(null);
@@ -39,7 +40,7 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
                     ref.current?.removeEventListener('mousemove', mouseMove);
                     ref.current?.removeEventListener('mouseleave', mouseLeave);
                 }
-            });
+            }, ref);
             return () => ctx.revert();
         }
     }, [scrollbar])
@@ -66,9 +67,9 @@ const GsapCircleBlue = ({ children, ...props }: { children: React.ReactElement, 
                 // init the animation
                 tl.clear();
                 tl.fromTo(circle.current, {
-                    background: `radial-gradient(circle at ${x}px ${y}px, #7E74F1 0%, #FEFEFE 0%)`,
+                    background: `radial-gradient(circle at ${x}px ${y}px, #948BF4 0%, #FEFEFE 0%)`,
                 }, {
-                    background: `radial-gradient(circle at ${x}px ${y}px, #7E74F1 100%, #FEFEFE 0%)`,
+                    background: `radial-gradient(circle at ${x}px ${y}px, #948BF4 100%, #FEFEFE 0%)`,
                     duration: 0.4,
                     ease: 'power4.out',
                 });
@@ -80,9 +81,9 @@ const GsapCircleBlue = ({ children, ...props }: { children: React.ReactElement, 
 
                 tl.clear();
                 tl.fromTo(circle.current, {
-                    background: `radial-gradient(circle at ${x}px ${y}px, #7E74F1 100%, #FEFEFE 0%)`,
+                    background: `radial-gradient(circle at ${x}px ${y}px, #948BF4 100%, #FEFEFE 0%)`,
                 }, {
-                    background: `radial-gradient(circle at ${x}px ${y}px, #7E74F1 0%, #FEFEFE 0%)`,
+                    background: `radial-gradient(circle at ${x}px ${y}px, #948BF4 0%, #FEFEFE 0%)`,
                     duration: 0.4,
                     ease: 'power4.out',
                 });
@@ -272,9 +273,11 @@ const Menu = () => {
     const { t } = useTranslation();
     const { scrollbar } = useContext(ScrollProvider);
     const router = useRouter();
+    const { safePush } = useRouterChange();
+
     const goToSection = useCallback((section: string) => {
         if (section == 'contact') {
-            router.push('/contact');
+            safePush('/contact');
         } else {
             scrollbar && scrollbar.scrollTo(`#${section}`, { duration: 500 });
         }
