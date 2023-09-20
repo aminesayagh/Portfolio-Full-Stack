@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import React, { useRef, useContext, useEffect, useLayoutEffect, useMemo } from "react";
+import React, { useRef, useContext, useCallback, useLayoutEffect, useMemo } from "react";
 import { Text, Button, Display, Icon, Link, Fit } from '@/components/ui';
 import { useTranslation } from "next-i18next";
 import { gsap } from '@/utils/gsap';
@@ -8,6 +8,7 @@ import { ScrollProvider } from '@/context/ScrollContext';
 import { useIsomorphicLayoutEffect } from "react-use";
 import { useHover } from "react-aria";
 import { useRouter } from 'next/router';
+import useGsap from "@/hook/useGsap";
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<HTMLDivElement>(null);
@@ -16,8 +17,8 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const { scrollbar } = useContext(ScrollProvider);
 
     useIsomorphicLayoutEffect(() => {
-        const ctx = gsap.context(() => {
-            if (!!ref.current) {
+        if (!!ref.current) {
+            const ctx = gsap.context(() => {
                 const mouseMove = (e: any) => {
                     const { clientX, clientY } = e;
                     // @ts-ignore
@@ -32,15 +33,15 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
                     yTo && yTo(0);
                 }
 
-                ref.current.addEventListener('mousemove', mouseMove);
-                ref.current.addEventListener('mouseleave', mouseLeave);
+                ref.current?.addEventListener('mousemove', mouseMove);
+                ref.current?.addEventListener('mouseleave', mouseLeave);
                 return () => {
                     ref.current?.removeEventListener('mousemove', mouseMove);
                     ref.current?.removeEventListener('mouseleave', mouseLeave);
                 }
-            }
-        });
-        return () => ctx.revert();
+            });
+            return () => ctx.revert();
+        }
     }, [scrollbar])
     return <div ref={ref} >
         {children}
@@ -104,7 +105,7 @@ const ButtonNext = () => {
     return <GsapMagic>
         <GsapCircleBlue className="rounded-full bg-white-100">
             <div className={twMerge('', 'rounded-full overflow-hidden next_button_gsap')}  >
-                <div className=' [&>*]:stroke-black-200 [&>*]:hover:stroke-black-200 transition-colors duration-300 p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6'>
+                <div className=' [&>*]:stroke-black-200 transition-colors duration-300 p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6'>
                     <Icon name='IconCornerLeftDown' className='stroke-1 w-8 h-8 xxs:w-7 xxs:h-7 xs:w-8 xs:h-8 xl:w-10 xl:h-10' />
                 </div>
             </div>
@@ -271,12 +272,13 @@ const Menu = () => {
     const { t } = useTranslation();
     const { scrollbar } = useContext(ScrollProvider);
     const router = useRouter();
-    const goToSection = (section: string) => {
-        if(section == 'contact') {
+    const goToSection = useCallback((section: string) => {
+        if (section == 'contact') {
             router.push('/contact');
+        } else {
+            scrollbar && scrollbar.scrollTo(`#${section}`, { duration: 500 });
         }
-        scrollbar && scrollbar.scrollTo(`#${section}`, { duration: 500 });
-    }
+    }, [scrollbar, router])
     return (<>
         <div className={twMerge('flex flex-row flex-wrap justify-between items-start w-full gap-y-6')} >
             {Array.apply(null, Array(4)).map((_, i) => {
@@ -307,54 +309,48 @@ const MenuMemo = React.memo(Menu);
 
 const Intro = () => {
     const introRef = useRef<HTMLDivElement>(null);
-    const { scrollbar } = useContext(ScrollProvider);
-    useEffect(() => {
-        let ctx = gsap.context(() => {
-            
-            gsap.timeline({
-                scrollTrigger: {
-                    trigger: introRef.current,
-                    toggleActions: 'play play restart play',
-                    start: 'top 60%'
-                }
-            }).from('.splitText_gsap', {
-                yPercent: 200,
-                skewY: 16,
-                duration: 1,
-                ease: 'power4.out',
-                delay: 0.3,
-                stagger: {
-                    amount: 0.4
-                }
-            }).from('.splitText_fullStack_gsap', {
-                yPercent: 120,
-                duration: 0.9,
-                ease: 'power4.out',
-            }, '<90%').from('.splitText_description_gsap', {
-                yPercent: 105,
-                duration: 0.9,
-                ease: 'power4.out',
-                stagger: {
-                    amount: 0.1
-                }
-            }, '<').from('.next_button_gsap', {
-                opacity: 0,
-                duration: 0.4,
-                ease: 'power4.out',
-            }, '<').from('.number_menu_gsap', {
-                opacity: 0,
-                duration: 0.3,
-            }, '<').fromTo('.item_menu_gsap', {
-                yPercent: 105,
-            }, {
-                yPercent: 0,
-                duration: 0.4,
-                ease: 'power4.out',
-            }, '<60%');
-
-        });
-        return () => ctx.revert();
-    }, [scrollbar]);
+    useGsap((self) => {
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: introRef.current,
+                toggleActions: 'play play restart play',
+                start: 'top 60%'
+            }
+        }).from('.splitText_gsap', {
+            yPercent: 200,
+            skewY: 16,
+            duration: 1,
+            ease: 'power4.out',
+            delay: 0.3,
+            stagger: {
+                amount: 0.4
+            }
+        }).from('.splitText_fullStack_gsap', {
+            yPercent: 120,
+            duration: 0.9,
+            ease: 'power4.out',
+        }, '<90%').from('.splitText_description_gsap', {
+            yPercent: 105,
+            duration: 0.9,
+            ease: 'power4.out',
+            stagger: {
+                amount: 0.1
+            }
+        }, '<').from('.next_button_gsap', {
+            opacity: 0,
+            duration: 0.4,
+            ease: 'power4.out',
+        }, '<').from('.number_menu_gsap', {
+            opacity: 0,
+            duration: 0.3,
+        }, '<').fromTo('.item_menu_gsap', {
+            yPercent: 105,
+        }, {
+            yPercent: 0,
+            duration: 0.4,
+            ease: 'power4.out',
+        }, '<60%');
+    }, introRef);
     return (<>
         <div className={twMerge('pt-28 sm:pt-36 mdl:pt-40', 'flex flex-col gap-20 xs:gap-32 xl:gap-40')} ref={introRef}>
             <div className={twMerge(

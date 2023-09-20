@@ -46,13 +46,6 @@ const Action = () => {
             ctx.revert();
         }
     }, [scrollbar])
-    const { hoverProps, isHovered } = useHover({
-        onHoverStart: () => {
-
-        },
-        onHoverEnd: () => {
-        }
-    })
     return <>
         <div className='relative h-[64vh]' ref={refContainer}>
             <div className='absolute left-0 top-0 right-0'>
@@ -63,7 +56,7 @@ const Action = () => {
                         </Display>
                     </span>
                     <div className='flex flex-row justify-start xs:justify-center items-start relative'>
-                        <Link href='/contact' className='overflow-hidden' {...hoverProps}>
+                        <Link href='/contact' className='overflow-hidden'>
                             <Display size='lg' weight='bold' className={twMerge('whitespace-nowrap-important uppercase text-primary-500', 'contact-title-gsap')} >
                                 {t('contactCall.action')}
                             </Display>

@@ -1,7 +1,7 @@
 
 import { useTranslation } from "next-i18next";
 import { twMerge } from "tailwind-merge";
-import { memo, useRef, useContext } from 'react';
+import { memo, useRef, useContext, useMemo } from 'react';
 import { gsap } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 
@@ -12,6 +12,7 @@ import { split } from "lodash";
 import { useHover } from "react-aria";
 import { useMedia, useWindowSize } from "react-use";
 import { ScrollProvider } from '@/context/ScrollContext';
+import useGsap from "@/hook/useGsap";
 
 
 const Icon = () => {
@@ -107,35 +108,29 @@ const CardElement = ({ i }: { i: number }) => {
 
     const isLg = useMedia('(min-width: 1024px)', true);
     const isXs = useMedia('(min-width: 475px)', true);
-
-    const { scrollbar } = useContext(ScrollProvider);
-
-    useIsomorphicLayoutEffect(() => {
-        let ctx = gsap.context(() => {
-            let space = 40;
-            let y = (i % 2 === 0 ? 1 : -1);
-            if (isLg) {
-            } else if (isXs) {
-                space = 35;
-            } else {
-                space = 30;
-                y = 1;
+    useGsap(() => {
+        let space = 40;
+        let y = (i % 2 === 0 ? 1 : -1);
+        if (isLg) {
+        } else if (isXs) {
+            space = 35;
+        } else {
+            space = 30;
+            y = 1;
+        }
+        gsap.fromTo(ref.current, {
+            y: space * y,
+        }, {
+            y: -1 * space * y,
+            ease: 'Power4.easeOut',
+            scrollTrigger: {
+                trigger: '.container-expertise-gsap',
+                start: 'top bottom-=20%',
+                end: 'bottom top-=20%',
+                scrub: true
             }
-            gsap.fromTo(ref.current, {
-                y: space * y,
-            }, {
-                y: -1 * space * y,
-                ease: 'Power4.easeOut',
-                scrollTrigger: {
-                    trigger: '.container-expertise-gsap',
-                    start: 'top bottom-=20%',
-                    end: 'bottom top-=20%',
-                    scrub: true
-                }
-            });
         });
-        return () => ctx.revert();
-    }, [ref.current, scrollbar, isLg, isXs])
+    }, ref, [isLg, isXs]);
 
     if (i >= 4) return <div key={i} className={`expertise-card-gsap`} ref={ref}>
         <EmptyCardMemo />
