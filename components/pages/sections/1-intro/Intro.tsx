@@ -183,7 +183,7 @@ const Title = () => {
             'mdl:row-start-1 mdl:row-span-1', //mdl
             // children
             "[&>*]:w-full [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-5/12 [&>*]:mdl:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-4/12",
-            '[&>*>span]:max-w-[14rem]',
+            i18n.language == 'en' ? '[&>*>span]:max-w-[14rem]' : '[&>*>span]:max-w-[15rem]',
             "[&>*]:flex [&>*]:flex-row [&>*]:justify-start [&>*]:sm:justify-end",
             "[&>*]:mdl:ml-2 [&>*]:lg:ml-0"
         )} >
@@ -318,7 +318,7 @@ const Intro = () => {
                     start: 'top 60%'
                 }
             }).from('.splitText_gsap', {
-                yPercent: 170,
+                yPercent: 200,
                 skewY: 16,
                 duration: 1,
                 ease: 'power4.out',
