@@ -36,7 +36,7 @@ const LandingPage = () => {
                     <Noise position='absolute' />
                 </Container>
             </section>
-            {/* <Container data-scroll-section as='section' size='lg' id='action-1' >
+            <Container data-scroll-section as='section' size='lg' id='action-1' >
                 <DynamicCallToAction />
             </Container>
             <span data-scroll-section className='block h-24 w-full'></span>
@@ -51,7 +51,7 @@ const LandingPage = () => {
             <span data-scroll-section className='block h-6 xs:h-12 w-full'></span>
             <Container data-scroll-section as='footer' size='lg' id='footer' className={twMerge('flex flex-col gap-8 md:gap-12')}>
                 <DynamicFooter />
-            </Container> */}
+            </Container>
         </>
     )
 }
