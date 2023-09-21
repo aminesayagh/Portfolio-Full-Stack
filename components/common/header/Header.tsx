@@ -2,7 +2,7 @@ import { useState, useCallback, memo, useEffect, useLayoutEffect, useRef, useCon
 import { useRouter } from 'next/router';
 import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
-import { gsap } from '@/utils/gsap';
+import { gsap, Power3 } from '@/utils/gsap';
 
 
 
@@ -32,84 +32,88 @@ const Header = () => {
     const router = useRouter();
     const { safePush } = useRouterChange();
     let [openMenu, setOpenMenu] = useState<boolean>(false);
+
     const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
     const ctx = useRef<any>(null);
+    
     const { scrollbar } = useContext(ScrollProvider);
-    useIsomorphicLayoutEffect(() => {
-        ctx.current = gsap.context((self) => {
-            self.add('open', () => {
-                tl.current.fromTo(['.modal-overlay', '.modal-content'], {
-                    opacity: 1,
-                    yPercent: TRANSLATE_Y,
-                    transformOrigin: 'right top',
-                    skewY: 2,
-                    onStartParams: []
-                }, {
-                    duration: DURATION,
-                    ease: 'power3.inOut',
-                    yPercent: 0,
-                    skewY: 0,
-                    stagger: {
-                        amount: .2
-                    }
-                }).to(['.subElement-item'], {
-                    duration: DURATION / 2,
-                    yPercent: 100,
-                    ease: 'power3.inOut'
-                }, '<').from('.modal-item', {
-                    duration: DURATION / 2,
-                    yPercent: 100,
-                    opacity: 0,
-                    ease: 'power3.inOut',
-                    stagger: {
-                        amount: .2
-                    }
-                }).fromTo('.modal-close', {
-                    display: 'none',
-                    opacity: 0,
-                }, {
-                    opacity: 1,
-                    ease: 'power3.inOut',
-                    duration: DURATION / 2,
-                    display: 'block',
-                }).from('.modal-description', {
-                    duration: DURATION,
-                    yPercent: 100,
-                    opacity: 0,
-                    ease: 'power3.inOut',
-                }, '<').from('.modal-footer', {
-                    duration: DURATION / 2,
-                    yPercent: 100,
-                    opacity: 0,
-                    transformOrigin: 'center bottom',
-                    ease: 'power3.inOut',
-                }, '<50%').from('.modal-item-info', {
-                    xPercent: -100,
-                    transformOrigin: 'left center',
-                    ease: 'power3.inOut',
-                    duration: DURATION / 2,
-                }, '<25%')
-                tl.current.play();
 
-            });
-            self.add('close', () => {
-                tl.current.reverse().then(() => {
-                    setOpenMenu(false)
-                    ctx.current.revert(); // revert timeline to the beginning
+    useIsomorphicLayoutEffect(() => {
+        if(!!scrollbar) {
+            ctx.current = gsap.context((self) => {
+                self.add('open', () => {
+                    tl.current.fromTo(['.modal-overlay', '.modal-content'], {
+                        opacity: 1,
+                        yPercent: TRANSLATE_Y,
+                        transformOrigin: 'right top',
+                        skewY: 2,
+                        onStartParams: []
+                    }, {
+                        duration: DURATION,
+                        ease: Power3.easeInOut,
+                        yPercent: 0,
+                        skewY: 0,
+                        stagger: {
+                            amount: .2
+                        }
+                    }).to(['.subElement-item'], {
+                        duration: DURATION / 2,
+                        yPercent: 100,
+                        ease: Power3.easeInOut,
+                    }, '<').from('.modal-item', {
+                        duration: DURATION / 2,
+                        yPercent: 100,
+                        opacity: 0,
+                        ease: Power3.easeInOut,
+                        stagger: {
+                            amount: .2
+                        }
+                    }).fromTo('.modal-close', {
+                        display: 'none',
+                        opacity: 0,
+                    }, {
+                        opacity: 1,
+                        ease: Power3.easeInOut,
+                        duration: DURATION / 2,
+                        display: 'block',
+                    }).from('.modal-description', {
+                        duration: DURATION,
+                        yPercent: 100,
+                        opacity: 0,
+                        ease: Power3.easeInOut,
+                    }, '<').from('.modal-footer', {
+                        duration: DURATION / 2,
+                        yPercent: 100,
+                        opacity: 0,
+                        transformOrigin: 'center bottom',
+                        ease: Power3.easeInOut,
+                    }, '<50%').from('.modal-item-info', {
+                        xPercent: -100,
+                        transformOrigin: 'left center',
+                        ease: Power3.easeInOut,
+                        duration: DURATION / 2,
+                    }, '<25%')
+                    tl.current.play();
+    
+                });
+                self.add('close', () => {
+                    tl.current.reverse().then(() => {
+                        setOpenMenu(false)
+                        ctx.current.revert(); // revert timeline to the beginning
+                    });
                 });
             });
-        });
-        return () => {
-            ctx.current.revert();
+            return () => {
+                ctx.current.revert();
+            }
         }
-    }, [])
+    }, [scrollbar])
     useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(() => {
             gsap.timeline({
                 scrollTrigger: {
                     trigger: '.navbar_gsap',
                     markers: false,
-                    // start: 'top top+=140%',
                     toggleActions: 'play pause restart pause'
                 }
             }).from('.navbar_gsap', {
