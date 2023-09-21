@@ -14,11 +14,8 @@ const Manifesto = () => {
     const { t, i18n } = useTranslation();
     const refs = useRef<HTMLSpanElement[]>([]);
     const refDescription = useRef<HTMLDivElement>(null);
-    // const body = useRef<React.JSX.Element[]>([]);
     const [body, setBody] = useState<React.JSX.Element[] | null>(null);
     const [phrase, setPhrase] = useState(t('manifesto.description'));
-
-    const { scrollbar } = useContext(ScrollProvider);
 
     useEffect(() => {
         setPhrase(t('manifesto.description'));
@@ -46,9 +43,9 @@ const Manifesto = () => {
                 scrollTrigger: {
                     trigger: '.manifesto_quote_gsap',
                     scrub: true,
-                    start: 'top 75%',
+                    start: 'top bottom-=100px',
                     end: 'center top',
-                    markers: true,
+                    markers: false,
                     invalidateOnRefresh: true,
                     toggleActions: 'play pause reverse pause',
                 }
@@ -65,7 +62,7 @@ const Manifesto = () => {
                 y: 30,
             }, {
                 opacity: 1,
-                ease: 'power1',
+                ease: 'Power1',
                 y: 0
             }, "-=50%").fromTo(descriptions[1] as any, {
                 opacity: 0,
@@ -96,7 +93,12 @@ const Manifesto = () => {
                         {t(`manifesto.subtitle_2`)}
                     </Title>
                 </div>
-                <Title h4 degree='1' weight='semibold' className={twMerge('flex flex-row flex-wrap', i18n.language == 'en' ? 'gap-y-[0.15rem] gap-x-[0.23rem]' : 'gap-y-[0.19rem] gap-x-[.3rem]')}>
+                <Title h4 degree='1' weight='semibold' className={twMerge(
+                    'flex flex-row flex-wrap',
+                    i18n.language == 'en' ?
+                        'gap-y-[0.01rem] xxs:gap-y-[0.04rem] gap-x-[0.06rem] sm:gap-y-[0.07rem] sm:gap-x-[0.1rem] mdl:gap-y-[0.08rem] mdl:gap-x-[0.16rem] lg:gap-y-[0.15rem] lg:gap-x-[0.23rem]' :
+                        'gap-y-[0rem] xxs:gap-y-[0.03rem] gap-x-[0.06rem] sm:gap-y-[0.06rem] sm:gap-x-[0.1rem] mdl:gap-y-[0.07rem] mdl:gap-x-[0.16rem] lg:gap-y-[0.13rem] lg:gap-x-[0.23rem]'
+                )}>
                     <strong className='text-white-200 pr-2'>
                         {t(`manifesto.slogan`)}
                     </strong>
@@ -115,12 +117,18 @@ const Manifesto = () => {
                     <Text p degree='3' weight='medium' size='lg' className='manifesto_description_gsap'>
                         {t(`manifesto.what_i_do`)}
                     </Text>
-                    <span data-scroll data-scroll-position='start' data-scroll-speed='0.8' className='mt-5 xl:mt-6 3xl:mt-8' >
-                        <Text p degree='3' size='xl' weight='semibold' className='textLink inline  w-full whitespace-inherit-important manifesto_description_action_gsap' style={{
-                            WebkitLineClamp: 2,
-                            WebkitBoxOrient: 'vertical',
-                            overflow: 'hidden',
-                        }} >
+                    <span
+                        data-scroll
+                        data-scroll-position='start'
+                        data-scroll-speed='0.4'
+                        className='mt-[1.6%] 3xl:mt-[3%]'
+                    >
+                        <Text p degree='3' size='xl' weight='semibold'
+                            className='textLink inline w-full whitespace-inherit-important manifesto_description_action_gsap' style={{
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
+                            }} >
                             {t(`manifesto.goal`)}
                             <Link degree='2' href='/contact' className='ml-2 text-primary-500 hover:text-primary-400/70 hover:underline transition-all duration-300' weight='bold' >
                                 {t(`manifesto.action`)}

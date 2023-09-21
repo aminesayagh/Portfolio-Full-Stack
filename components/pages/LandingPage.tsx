@@ -22,8 +22,10 @@ const LandingPage = () => {
             </Container>
             <span data-scroll-section className='block h-16 xxs:h-0 w-full'></span>
             <Container data-scroll-section id={MENU_ITEMS.manifesto.id} as='section' size='lg' className={twMerge(
-                'h-[180vh] 2xl:h-[190vh]',
-                'min-h-[1400px] 3xl:min-h-[1500px]',
+                // 'h-[180vh] 2xl:h-[190vh]',
+                // '2xl:min-h-[1200px]'
+                // 'h-[1700px]',
+                'h-[210%] mdl:h-[190%]'
             )} >
                 <DynamicManifesto />
             </Container>
@@ -34,7 +36,7 @@ const LandingPage = () => {
                     <Noise position='absolute' />
                 </Container>
             </section>
-            <Container data-scroll-section as='section' size='lg' id='action-1' >
+            {/* <Container data-scroll-section as='section' size='lg' id='action-1' >
                 <DynamicCallToAction />
             </Container>
             <span data-scroll-section className='block h-24 w-full'></span>
@@ -49,7 +51,7 @@ const LandingPage = () => {
             <span data-scroll-section className='block h-6 xs:h-12 w-full'></span>
             <Container data-scroll-section as='footer' size='lg' id='footer' className={twMerge('flex flex-col gap-8 md:gap-12')}>
                 <DynamicFooter />
-            </Container>
+            </Container> */}
         </>
     )
 }
