@@ -117,15 +117,15 @@ const ButtonNext = () => {
 const DISPLAY_1_CLASS_NAME = 'capitalize';
 const DISPLAY_2_CLASS_NAME = 'uppercase italic text-primary-500';
 const FullStack = ({ className }: { className: string }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     return (
         <>
             <div className={twMerge(
                 className,
                 'flex flex-col items-start xs:items-end justify-end',
-                'pb-[1%] xxs:pb-[2%] xs:pb-[4.2%] lg:pb-[5.5%] xl:pb-[6.5%] 2xl:pb-2',
-                'space-y-0 xs:-space-y-1 md:space-y-0 mdl:-space-y-1 lg:-space-y-[3%] xl:-space-y-[3%] 2xl:-space-y-[4.62%] 3xl:-space-y-2 4xl:space-y-0'
+                i18n.language == 'en' ? 'pb-[1%] xxs:pb-[2%] xs:pb-[4.2%] lg:pb-[5.5%] xl:pb-[6.5%] 2xl:pb-2' : 'pb-[0%] xxs:pb-[1.4%] sm:pb-[2%] lg:pb-[5.5%] xl:pb-[6.5%] 2xl:pb-2',
+                'space-y-0 xs:-space-y-1 md:space-y-0 mdl:-space-y-1 lg:-space-y-[3%] xl:-space-y-[3%] 2xl:-space-y-[4.62%] 3xl:-space-y-2 4xl:-space-y-1'
             )} >
                 <span className='overflow-hidden'>
                     <Display size='md' weight='semibold' className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider', 'splitText_fullStack_gsap')}>{t('intro.title.2_1')}</Display>
@@ -144,7 +144,7 @@ const Title = () => {
         {/* title 1  */}
         <div className={twMerge(
             // col
-            'col-start-1 col-span-12',
+            i18n.language == 'en' ? 'col-start-1 col-span-12' : 'col-start-1 col-span-11',
             'xs:col-start-1 xs:col-span-9',
             'mdl:col-start-1 mdl:col-span-6',
             'xl:col-start-1 xl:col-span-6',
@@ -176,7 +176,7 @@ const Title = () => {
             'xxs:col-start-5 xxs:col-span-8', // none
             'xs:col-start-1 xs:col-span-12', // xxs
             'sm:col-start-2 sm:col-span-11', // sm
-            'md:col-start-4 md:col-span-9', // md
+            i18n.language == 'en' ? 'md:col-start-4 md:col-span-9' : 'md:col-start-3 md:col-span-10', // md
             'mdl:col-start-7 mdl:col-span-6', // mdl
             i18n.language == 'en' ? 'xl:col-start-8 xl:col-span-5' : 'xl:col-start-7 xl:col-span-6', // xl
             '4xl:col-span-6 4xl:col-start-7', // 4xl
@@ -184,8 +184,10 @@ const Title = () => {
             'row-start-2 row-span-1', // none
             'mdl:row-start-1 mdl:row-span-1', //mdl
             // children
-            "[&>*]:w-full [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-5/12 [&>*]:mdl:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-4/12",
-            i18n.language == 'en' ? '[&>*>span]:max-w-[14rem]' : '[&>*>span]:max-w-[15rem]',
+            i18n.language == 'en' ? 
+                "[&>*]:w-full [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-5/12 [&>*]:mdl:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-4/12" : 
+                "[&>*]:w-10/12 [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-5/12",
+            i18n.language == 'en' ? '[&>*>span]:max-w-[14rem]' : '[&>*>span]:xxs:max-w-[12rem] [&>*>span]:sm:max-w-[17rem] [&>*>span]:mdl:max-w-[12rem] [&>*>span]:lg:max-w-[17rem]',
             "[&>*]:flex [&>*]:flex-row [&>*]:justify-start [&>*]:sm:justify-end",
             "[&>*]:mdl:ml-2 [&>*]:lg:ml-0"
         )} >
@@ -205,7 +207,7 @@ const Title = () => {
             'mdl:w-2/12',
             'hidden xs:flex flex-col items-end mdl:items-start justify-end w-fit mdl:w-fit',
             'mt-1 lg:mt-4',
-            'mb-0 xxs:mb-3 mdl:mb-0 lg:mb-4',
+            i18n.language == 'en' ?'mb-0 xxs:mb-3 mdl:mb-0 lg:mb-4' : 'mb-0 xxs:mb-3 mdl:mb-2 lg:mb-4',
             'col-start-11 col-span-2',
             'mdl:col-span-2 mdl:col-start-1',
             'row-start-1 row-span-1',
@@ -219,7 +221,7 @@ const Title = () => {
             'row-start-3 row-span-1',
             'mdl:row-start-2 mdl:row-span-1',
             'col-start-1 col-span-3',
-            'mdl:col-start-5 mdl:col-span-2',
+            i18n.language == 'en' ? 'mdl:col-start-5 mdl:col-span-2' : 'mdl:col-start-4 mdl:col-span-2',
             i18n.language == 'en' ? 'xl:col-start-5 xl:col-span-2' : 'xl:col-start-4 xl:col-span-2',
             'justify-self-end'
         )}>
@@ -233,7 +235,7 @@ const Title = () => {
             'mdl:row-start-2 mdl:row-span-1',
             'col-start-1 col-span-12',
             'xs:col-start-4 xs:col-span-9',
-            'mdl:col-start-7 mdl:col-span-6', // xs
+            i18n.language == 'en' ? 'mdl:col-start-7 mdl:col-span-6' : 'mdl:col-start-6 mdl:col-span-7', // xs
             i18n.language == 'en' ? 'xl:col-start-7 xl:col-span-6' : 'xl:col-start-6 xl:col-span-7', // xl
             'gap-2 sm:gap-1 md:gap-5 mdl:gap-8', // gap
             'justify-end mdl:justify-center items-end mdl:items-center',
