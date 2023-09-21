@@ -7,7 +7,7 @@ import { twMerge } from 'tailwind-merge';
 import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 
-const DynamicFooter = dynamic(() => import('@/components/common/footer'), {}); 
+const DynamicFooter = dynamic(() => import('@/components/common/footer'), {});
 const LandingPage = () => {
     return (
         <>
@@ -21,7 +21,10 @@ const LandingPage = () => {
                 </Suspense>
             </Container>
             <span data-scroll-section className='block h-16 xxs:h-0 w-full'></span>
-            <Container data-scroll-section id={MENU_ITEMS.manifesto.id} as='section' size='lg' className='h-[160vh]' >
+            <Container data-scroll-section id={MENU_ITEMS.manifesto.id} as='section' size='lg' className={twMerge(
+                'h-[180vh] 2xl:h-[190vh]',
+                'min-h-[1400px] 3xl:min-h-[1500px]',
+            )} >
                 <DynamicManifesto />
             </Container>
             <span data-scroll-section className='block h-24 xxs:h-24 w-full'></span>
