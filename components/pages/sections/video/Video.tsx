@@ -26,6 +26,12 @@ const Video = () => {
         for (let i = 1; i <= frameCount; i++) {
             const img = new Image();
             img.src = currentFrame(i);
+            img.width = 1488;
+            img.height = 1100;
+            img.alt = 'video' + '_' + i.toString().padStart(3, '0');
+            img.style.objectFit = 'cover';
+            img.style.objectPosition = 'center'; 
+
             images.push(img);
         }
 
