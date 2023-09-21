@@ -38,36 +38,36 @@ const Action = () => {
         }, '-=0.5')
     }, refContainer);
     return <>
-        <div className='relative h-[64vh]' ref={refContainer}>
-            <div className='absolute left-0 top-0 right-0'>
-                <div className={twMerge('flex flex-col gap-1 xs:gap-2 sm:gap-6', 'justify-center items-start xs:items-center place-content-start', 'h-[64vh]')} >
-                    <span className='overflow-hidden'>
-                        <Display size='lg' className={twMerge('uppercase text-start xs:text-center', 'contact-title-gsap')} >
-                            {t('contactCall.title')}
-                        </Display>
+        <div ref={refContainer} className={twMerge(
+            'h-[64vh]',
+            'flex flex-col gap-1 xs:gap-2 sm:gap-6',
+            'justify-center items-start xs:items-center place-content-start')} 
+        >
+            <span className='overflow-hidden'>
+                <Display size='lg' className={twMerge('uppercase text-start xs:text-center', 'contact-title-gsap')} >
+                    {t('contactCall.title')}
+                </Display>
+            </span>
+            <div className='flex flex-row justify-start xs:justify-center items-start relative'>
+                <Link href='/contact' className='overflow-hidden'>
+                    <Display size='lg' weight='bold' className={twMerge('whitespace-nowrap-important uppercase text-primary-500', 'contact-title-gsap')} >
+                        {t('contactCall.action')}
+                    </Display>
+                </Link>
+                <Text p degree='3' size={i18n.language == 'en' ? 'xxs' : 'xs'} weight='medium' className={twMerge(
+                    'absolute',
+                    'left-[-1.5%] xs:left-auto sm:left-[103%]',
+                    'top-[100%] sm:top-[-6px]',
+                    'xs:right-[-1%] md:right-auto', // right
+                    'mt-3 xl:mt-4', // margin top
+                    'ml-2',
+                    i18n.language == 'en' ? 'w-32 xl:w-40 4xl:w-52' : 'w-36 xl:w-46 4xl:w-52', // width
+                    'text-start xs:text-end sm:text-start'
+                )} >
+                    <span className='contact_quota_gsap'>
+                        {t('contactCall.description')}
                     </span>
-                    <div className='flex flex-row justify-start xs:justify-center items-start relative'>
-                        <Link href='/contact' className='overflow-hidden'>
-                            <Display size='lg' weight='bold' className={twMerge('whitespace-nowrap-important uppercase text-primary-500', 'contact-title-gsap')} >
-                                {t('contactCall.action')}
-                            </Display>
-                        </Link>
-                        <Text p degree='3' size={i18n.language == 'en' ? 'xxs' : 'xs'} weight='medium' className={twMerge(
-                            'absolute',
-                            'left-[-1.5%] xs:left-auto sm:left-[103%]',
-                            'top-[100%] sm:top-[-6px]',
-                            'xs:right-[-1%] md:right-auto', // right
-                            'mt-3 xl:mt-4', // margin top
-                            'ml-2',
-                            i18n.language == 'en' ? 'w-32 xl:w-40 4xl:w-52' : 'w-36 xl:w-46 4xl:w-52', // width
-                            'text-start xs:text-end sm:text-start'
-                        )} >
-                            <span className='contact_quota_gsap'>
-                                {t('contactCall.description')}
-                            </span>
-                        </Text>
-                    </div>
-                </div>
+                </Text>
             </div>
         </div>
     </>

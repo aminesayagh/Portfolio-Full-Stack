@@ -62,7 +62,7 @@ const Manifesto = () => {
                 y: 30,
             }, {
                 opacity: 1,
-                ease: 'Power1',
+                ease: 'power1',
                 y: 0
             }, "-=50%").fromTo(descriptions[1] as any, {
                 opacity: 0,

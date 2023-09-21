@@ -2,7 +2,7 @@ import { twMerge } from "tailwind-merge";
 import React, { useRef, useContext, useCallback, useMemo } from "react";
 import { Text, Button, Display, Icon, Link, Fit } from '@/components/ui';
 import { useTranslation } from "next-i18next";
-import { gsap } from '@/utils/gsap';
+import { gsap, Elastic } from '@/utils/gsap';
 import { MENU_ITEMS } from "@/conf/router";
 import { ScrollProvider } from '@/context/ScrollContext';
 import { useIsomorphicLayoutEffect } from "react-use";
@@ -105,7 +105,7 @@ const GsapCircleBlue = ({ children, ...props }: { children: React.ReactElement, 
 const ButtonNext = () => {
     return <GsapMagic>
         <GsapCircleBlue className="rounded-full bg-white-100">
-            <div className={twMerge('', 'rounded-full overflow-hidden next_button_gsap')}  >
+            <div data-scroll className={twMerge('', 'rounded-full overflow-hidden next_button_gsap')}  >
                 <div className=' [&>*]:stroke-black-200 transition-colors duration-300 p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6'>
                     <Icon name='IconCornerLeftDown' className='stroke-1 w-8 h-8 xxs:w-7 xxs:h-7 xs:w-8 xs:h-8 xl:w-10 xl:h-10' />
                 </div>
@@ -127,10 +127,10 @@ const FullStack = ({ className }: { className: string }) => {
                 i18n.language == 'en' ? 'pb-[1%] xxs:pb-[2%] xs:pb-[4.2%] lg:pb-[5.5%] xl:pb-[6.5%] 2xl:pb-2' : 'pb-[0%] xxs:pb-[1.4%] sm:pb-[2%] lg:pb-[5.5%] xl:pb-[6.5%] 2xl:pb-2',
                 'space-y-0 xs:-space-y-1 md:space-y-0 mdl:-space-y-1 lg:-space-y-[3%] xl:-space-y-[3%] 2xl:-space-y-[4.62%] 3xl:-space-y-2 4xl:-space-y-1'
             )} >
-                <span className='overflow-hidden'>
+                <span data-scroll className='overflow-hidden'>
                     <Display size='md' weight='semibold' className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider', 'splitText_fullStack_gsap')}>{t('intro.title.2_1')}</Display>
                 </span>
-                <span className='overflow-hidden'>
+                <span data-scroll className='overflow-hidden'>
                     <Display size='md' weight='semibold' className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider', 'splitText_fullStack_gsap')}>{t('intro.title.2_2')}</Display>
                 </span>
             </div>
@@ -193,12 +193,12 @@ const Title = () => {
         )} >
             <div >
                 <span data-scroll className='overflow-hidden h-fit'>
-                    <Text p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')} degree="2">{t('intro.descriptions.1')}</Text>
+                    <Text data-scroll p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')} degree="2">{t('intro.descriptions.1')}</Text>
                 </span>
             </div>
             <div>
                 <span data-scroll className='overflow-hidden h-fit'>
-                    <Text p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')} degree='2'>{t('intro.descriptions.2')}</Text>
+                    <Text data-scroll p weight='semibold' size='sm' className={twMerge('text-start sm:text-end', 'w-full splitText_description_gsap')} degree='2'>{t('intro.descriptions.2')}</Text>
                 </span>
             </div>
         </div>

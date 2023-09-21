@@ -99,7 +99,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
         })
     }, container);
 
-    return <div className={twMerge('relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden')} ref={container} style={{
+    return <div data-scroll className={twMerge('relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden')} ref={container} style={{
         zIndex: 10 + (index + 10),
     }} >
         <div className='absolute left-0 right-0 top-0 w-full h-screen'  >
@@ -141,7 +141,7 @@ const Cases = () => {
     const projects = useMemo(() => getProjectsByCategory('best'), []);
 
     return <div className={twMerge('flex flex-col gap-14 sm:gap-12 w-full h-fit')} >
-        <div className={twMerge('flex flex-col sm:flex-row justify-between items-start sm:items-end', 'gap-2 sm:gap-12', 'w-full')}>
+        <div data-scroll className={twMerge('flex flex-col sm:flex-row justify-between items-start sm:items-end', 'gap-2 sm:gap-12', 'w-full')}>
             <Title h2 weight='bold' degree='2' className={'sm:w-min'}>
                 {t('cases.title')}
             </Title>

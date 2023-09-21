@@ -29,7 +29,7 @@ const ExpertiseHead = () => {
     return (
         <>
             <div className={twMerge('flex flex-col sm:flex-row gap-5 sm:gap-0 items-start sm:items-end justify-between', 'w-full')}>
-                <div className='block sm:hidden'>
+                <div  className='block sm:hidden'>
                     <IconMemo />
                 </div>
                 <div className={twMerge('w-full xs:w-9/12 sm:w-1/2 xl:w-5/12')}>
@@ -95,45 +95,49 @@ const CardMemo = memo(Card);
 
 const EmptyCard = () => {
     return <>
-        <div className={twMerge('h-full w-full col-span-1 row-span-1', 'opacity-60 relative', BORDER_CARD_CLASS_NAME)}>
+        <div className={twMerge(
+            'h-full w-full col-span-1 row-span-1', 'opacity-60 relative', BORDER_CARD_CLASS_NAME)}>
             <span></span>
         </div>
     </>
 }
 const EmptyCardMemo = memo(EmptyCard);
 
-const CardElement = ({ i, refContainer }: { i: number, refContainer: React.RefObject<HTMLDivElement> }) => {
+const CardElement = ({ i }: { i: number }) => {
     const { t } = useTranslation();
     let ref = useRef<HTMLDivElement>(null);
 
     const isLg = useMedia('(min-width: 1024px)', true);
     const isXs = useMedia('(min-width: 475px)', true);
     const { scrollbar } = useContext(ScrollProvider);
+
     useIsomorphicLayoutEffect(() => {
-        let ctx = gsap.context(() => {
-            let space = 40;
-            let y = (i % 2 === 0 ? 1 : -1);
-            if (isLg) {
-            } else if (isXs) {
-                space = 35;
-            } else {
-                space = 30;
-                y = 1;
-            }
-            gsap.fromTo(ref.current, {
-                y: space * y,
-            }, {
-                y: -1 * space * y,
-                ease: 'Power4.easeOut',
-                scrollTrigger: {
-                    trigger: '.container-expertise-gsap',
-                    start: 'top bottom-=20%',
-                    end: 'bottom top-=20%',
-                    scrub: true
+        if(scrollbar) {
+            let ctx = gsap.context(() => {
+                let space = 40;
+                let y = (i % 2 === 0 ? 1 : -1);
+                if (isLg) {
+                } else if (isXs) {
+                    space = 35;
+                } else {
+                    space = 30;
+                    y = 1;
                 }
+                gsap.fromTo(ref.current, {
+                    y: space * y,
+                }, {
+                    y: -1 * space * y,
+                    ease: 'Power4.easeOut',
+                    scrollTrigger: {
+                        trigger: '.container-expertise-gsap',
+                        start: 'top bottom-=20%',
+                        end: 'bottom top-=20%',
+                        scrub: true
+                    }
+                });
             });
-        });
-        return () => ctx.revert();
+            return () => ctx.revert();
+        }
     }, [scrollbar, isLg, isXs])
 
     if (i >= 4) return <div key={i} className={`expertise-card-gsap`} ref={ref}>
@@ -145,7 +149,7 @@ const CardElement = ({ i, refContainer }: { i: number, refContainer: React.RefOb
 }
 const CardElementMemo = memo(CardElement);
 
-const ExpertiseStages = ({ refContainer }: { refContainer: React.RefObject<HTMLDivElement> }) => {
+const ExpertiseStages = () => {
 
     return (
         <>
@@ -158,7 +162,7 @@ const ExpertiseStages = ({ refContainer }: { refContainer: React.RefObject<HTMLD
                 'w-full relative z-[60]'
             )}>
                 {Array.apply('', Array(8)).map((_, i) => {
-                    return <CardElementMemo key={i} refContainer={refContainer} i={i} />
+                    return <CardElementMemo key={i} i={i} />
                 })}
             </div>
         </>
@@ -167,12 +171,11 @@ const ExpertiseStages = ({ refContainer }: { refContainer: React.RefObject<HTMLD
 const ExpertiseStagesMemo = memo(ExpertiseStages);
 
 const Expertise = () => {
-    let refExpertise = useRef<HTMLDivElement>(null);
     return (
         <>
-            <div className={twMerge('flex flex-col', 'gap-20 xs:gap-32 sm:gap-16 mdl:gap-32 lg:gap-28 2xl:gap-44', 'justify-center items-center h-full', rounded({ size: 'xl' }), 'overflow-hidden container-expertise-gsap')}>
+            <div data-scroll data-scroll-speed='0.5' className={twMerge('flex flex-col', 'gap-20 xs:gap-32 sm:gap-16 mdl:gap-32 lg:gap-28 2xl:gap-44', 'justify-center items-center h-full', rounded({ size: 'xl' }), 'overflow-hidden container-expertise-gsap')}>
                 <ExpertiseHeadMemo />
-                <ExpertiseStagesMemo refContainer={refExpertise} />
+                <ExpertiseStagesMemo />
                 <div className={twMerge('absolute w-full h-[26vh] bottom-0 left-0 z-999999999', 'bg-gradient-to-t from-black-100/25 via-black-100/10 to-black-100/0')}></div>
             </div>
         </>

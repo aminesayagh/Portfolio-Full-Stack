@@ -22,9 +22,6 @@ const LandingPage = () => {
             </Container>
             <span data-scroll-section className='block h-16 xxs:h-0 w-full'></span>
             <Container data-scroll-section id={MENU_ITEMS.manifesto.id} as='section' size='lg' className={twMerge(
-                // 'h-[180vh] 2xl:h-[190vh]',
-                // '2xl:min-h-[1200px]'
-                // 'h-[1700px]',
                 'h-[210%] mdl:h-[190%]'
             )} >
                 <DynamicManifesto />

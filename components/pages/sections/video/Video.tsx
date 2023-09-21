@@ -67,8 +67,8 @@ const Video = () => {
     
     return (
         <>
-            <div  ref={refContainer} className={twMerge('block relative w-full h-fit rounded-3xl video_gsap overflow-hidden', rounded({ size: 'xl' }))}>
-                <canvas ref={ref} className={twMerge(
+            <div data-scroll ref={refContainer} className={twMerge('block relative w-full h-fit rounded-3xl video_gsap overflow-hidden', rounded({ size: 'xl' }))}>
+                <canvas data-scroll ref={ref} className={twMerge(
                     'h-full w-full', 
                     'h-[70vh] xxs:h-screen sm:h-[96vh] lg:h-screen',
                     'max-h-[720px] xxs:max-h-[900px] sm:max-h-[800px] lg:max-h-[900px]', 
