@@ -1,5 +1,3 @@
-import { Footer } from '@/components/common';
-
 import { Container, Noise } from '@/components/ui';
 import { DynamicIntro, DynamicManifesto, DynamicCases, DynamicAction, DynamicVideo, DynamicExpertise, DynamicCallToAction } from '@/components/pages/sections';
 import { MENU_ITEMS } from '@/conf/router';
@@ -14,7 +12,7 @@ const LandingPage = () => {
             <Container data-scroll-section as='section' size='lg' id={MENU_ITEMS.intro.id} >
                 <DynamicIntro />
             </Container>
-            <span data-scroll-section className='block h-24 w-full' ></span>
+            {/* <span data-scroll-section className='block h-24 w-full' ></span>
             <Container data-scroll-section id='video' as='section' size='lg'  >
                 <Suspense fallback={<div>Loading...</div>}>
                     <DynamicVideo />
@@ -35,20 +33,20 @@ const LandingPage = () => {
             </section>
             <Container data-scroll-section as='section' size='lg' id='action-1' >
                 <DynamicCallToAction />
-            </Container>
+            </Container> */}
             <span data-scroll-section className='block h-24 w-full'></span>
             <Container data-scroll-section as='section' size='lg' id={MENU_ITEMS.cases.id} className='py-10 h-fit' >
                 <Suspense fallback={<div>Loading...</div>}>
                     <DynamicCases />
                 </Suspense>
             </Container>
-            <Container data-scroll-section as='section' size='lg' id='action-contact' >
+            {/* <Container data-scroll-section as='section' size='lg' id='action-contact' >
                 <DynamicAction />
             </Container>
             <span data-scroll-section className='block h-6 xs:h-12 w-full'></span>
             <Container data-scroll-section as='footer' size='lg' id='footer' className={twMerge('flex flex-col gap-8 md:gap-12')}>
                 <DynamicFooter />
-            </Container>
+            </Container> */}
         </>
     )
 }

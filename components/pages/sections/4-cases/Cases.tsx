@@ -5,7 +5,7 @@ import { Title, Text } from '@/components/ui';
 import { useTranslation } from 'next-i18next';
 import { ScrollProvider } from '@/context/ScrollContext';
 import { getProjectsByCategory } from '@/conf/projects';
-import { gsap } from '@/utils/gsap';
+import { gsap, Power4 } from '@/utils/gsap';
 import { Image } from '@/components/ui';
 import useGsap from '@/hook/useGsap';
 
@@ -13,7 +13,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
     const container = useRef<HTMLDivElement>(null);
     const { t } = useTranslation();
     const pic = useMemo(() => picture ? picture[0] : '', [picture]);
-    
+
     useGsap(() => {
         if (index < 2) {
             gsap.timeline({
@@ -27,7 +27,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                     invalidateOnRefresh: true,
                 }
             }).fromTo(container.current?.children as any, {
-                top: "0%",
+                top: 0,
             }, {
                 top: '100%',
                 ease: 'none',
@@ -67,6 +67,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                 invalidateOnRefresh: true,
             }
         })
+
         gsap.fromTo('.case-text-gsap', {
             xPercent: -100,
             opacity: 0,
@@ -75,26 +76,13 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
             opacity: 1,
             duration: 1,
             stagger: 0.2,
-            ease: 'power4.inOut',
+            ease: Power4.easeInOut,
             scrollTrigger: {
                 trigger: container.current as any,
                 start: 'top bottom-=35%',
                 end: 'bottom center',
                 markers: false,
-                toggleActions: 'play pause play pause',
-            }
-        })
-        gsap.fromTo('.content-gsap', {
-            yPercent: 0,
-        }, {
-            yPercent: -50,
-            ease: 'Power4.easeIn',
-            scrollTrigger: {
-                trigger: container.current as any,
-                start: 'top top',
-                end: 'bottom top',
-                markers: false,
-                toggleActions: 'play pause reverse pause',
+                toggleActions: 'play none play none',
             }
         })
     }, container);
@@ -103,32 +91,32 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
         zIndex: 10 + (index + 10),
     }} >
         <div className='absolute left-0 right-0 top-0 w-full h-screen'  >
-            <Image src={pic} alt={t(`projects.${id}.description`)} className='' priority sizes='100vw' fill style={{
-                zIndex: 10 + (index + 11),
-                objectFit: 'cover',
-                objectPosition: 'center 80%',
+            <Image src={pic} alt={t(`projects.${id}.description`)} className='h-screen object-cover object-center mdl:object-[center_80%]' priority sizes='100vw' width='6000' height='4500' style={{
+                zIndex: 10 + (index + 11)
             }} />
         </div>
-        <div className='absolute top-0 left-0 right-0 w-full min-h-screen h-screen bg-no-repeat bg-cover' style={{
-            
-        }}>
-            <div className='relative w-fit flex flex-col justify-end h-full px-5 xs:px-10 lg:px-24 py-20 mdl:py-28 lg:py-40 gap-4 content-gsap'
-                data-scroll data-scroll-position='start' data-scroll-speed='2.4'
+        <div className='absolute top-0 left-0 right-0 w-full min-h-screen h-screen bg-no-repeat bg-cover' >
+            <div data-scroll data-scroll-speed='3' className={twMerge(
+                'relative w-fit flex flex-col justify-end h-full',
+                'px-5 xs:px-10 lg:px-24 py-24 xs:py-20 mdl:py-28 lg:py-40',
+                'gap-2 xs:gap-4 content-gsap'
+            )}
                 style={{
                     zIndex: 10 + (index + 14),
-                }}>
+                }}
+            >
                 <div className='w-full overflow-hidden' >
                     <Title h1 degree='1' className='case-text-gsap' >
                         {t(`projects.${id}.title`)}
                     </Title>
                 </div>
-                <div className='w-full xxs:w-8/12 md:w-1/2 overflow-hidden'>
+                <div className='w-full xs:w-8/12 md:w-1/2 overflow-hidden'>
                     <Text p size='md' degree='3' className='case-text-gsap'>
                         {t(`projects.${id}.description`)}
                     </Text>
                 </div>
             </div>
-            <div className={twMerge('absolute left-0 right-0 bottom-0 w-full h-72', 'bg-gradient-to-t from-black-100/80 to-black-100/0')} style={{
+            <div className={twMerge('absolute left-0 right-0 bottom-0 w-full h-80 xs:h-72', 'bg-gradient-to-t from-black-100/80 to-black-100/0')} style={{
                 zIndex: 10 + (index + 12),
             }}></div>
         </div>
