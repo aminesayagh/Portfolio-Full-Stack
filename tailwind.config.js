@@ -78,7 +78,7 @@ module.exports = {
         '900': '#DCDCDC'
       },
       'gray': {
-        DEFAULT: '#',
+        DEFAULT: '#BABABA',
         '100': '#F1F1F1',
         '200': '#E5E5E5',
         '300': '#D7D7D7',

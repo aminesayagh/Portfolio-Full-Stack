@@ -14,9 +14,7 @@ const LandingPage = () => {
             </Container>
             <span data-scroll-section className='block h-24 w-full' ></span>
             <Container data-scroll-section id='video' as='section' size='lg'  >
-                <Suspense fallback={<div>Loading...</div>}>
-                    <DynamicVideo />
-                </Suspense>
+                <DynamicVideo />
             </Container>
             <span data-scroll-section className='block h-16 xxs:h-0 w-full'></span>
             <Container data-scroll-section id={MENU_ITEMS.manifesto.id} as='section' size='lg' className={twMerge(
@@ -36,9 +34,7 @@ const LandingPage = () => {
             </Container>
             <span data-scroll-section className='block h-24 w-full'></span>
             <Container data-scroll-section as='section' size='lg' id={MENU_ITEMS.cases.id} className='py-10 h-fit' >
-                <Suspense fallback={<div>Loading...</div>}>
-                    <DynamicCases />
-                </Suspense>
+                <DynamicCases />
             </Container>
             <Container data-scroll-section as='section' size='lg' id='action-contact' >
                 <DynamicAction />
