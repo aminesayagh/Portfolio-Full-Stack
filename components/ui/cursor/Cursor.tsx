@@ -30,7 +30,6 @@ export const CursorContent = ({ children, name, ...props }: {
     }, [props, name, addCursor])
 
     useEffect(() => {
-        console.log(isHovered, name);
         if (isHovered) {
             setKey && setKey(name);
         } else {
@@ -180,7 +179,6 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_inner_top','w-full', 'flex justify-center items-center uppercase')}>
                     {CursorsArray.map((item, index) => {
                         const isActive = item == currentCursor?.component;
-                        console.log(isActive, item);
                         let otherProps = {};
                         if (isActive) {
                             otherProps = currentCursor?.props;

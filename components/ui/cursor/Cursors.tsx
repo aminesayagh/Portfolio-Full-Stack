@@ -50,7 +50,6 @@ const CursorScroll = ({ isActive, tl, title }: {
     }, [tl, ref, timelineCursor.current]);
     useEffect(() => {
         let ctx = gsap.context(() => {
-            console.log('scroll', timelineCursor.current?.getChildren());
             if (!timelineCursor.current) return;
             if (isActive) {
                 timelineCursor.current?.play()
@@ -76,7 +75,6 @@ const CursorActionIcon = ({ isActive, tl, iconName }: {
 }) => {
     const ref = useRef<HTMLDivElement>(null);
     let timelineCursor = useRef<gsap.core.Timeline | null | undefined>(null);
-    console.log('icon', iconName);
     useEffect(() => {
         let ctx = gsap.context((self) => {
             gsap.set(ref.current, {
@@ -119,7 +117,6 @@ const CursorActionIcon = ({ isActive, tl, iconName }: {
             if (isActive) {
                 timelineCursor.current?.play()
             } else {
-
                 timelineCursor.current?.reverse();
             }
         }
