@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect, useState, useEffect, useMemo } from 'react'
+import { useRef, useState } from 'react'
 import { gsap } from '@/utils/gsap';
 
 import { twMerge } from 'tailwind-merge';
@@ -74,7 +74,7 @@ const Video = () => {
     return (
         <>
             <div data-scroll ref={refContainer} className={twMerge('block relative w-full h-fit rounded-3xl video_gsap overflow-hidden', rounded({ size: 'xl' }))}>
-                <CursorContent name='CursorScroll'>
+                <CursorContent name='CursorScrollVideo' component='CursorScroll' props={{ title: 'scroll' }}> 
                     <canvas data-scroll ref={ref} className={twMerge(
                         'h-full w-full', 
                         'h-[70vh] xxs:h-screen sm:h-[96vh] lg:h-screen',

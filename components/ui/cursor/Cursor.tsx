@@ -1,21 +1,20 @@
-import React, { useEffect, useRef, useState, createContext, useContext, useMemo, useCallback, useLayoutEffect } from 'react';
+import React, { useEffect, useRef, useState, createContext, useContext, useMemo, useCallback } from 'react';
 
 import { gsap } from '@/utils/gsap';
 import { useHover } from 'react-aria';
 import { twMerge } from 'tailwind-merge';
-import Cursors,{ CursorsArray } from './Cursors';
+import Cursors, { CursorsArray } from './Cursors';
 
-type TContent = ({ isAnimated }: { isAnimated: boolean; }) => JSX.Element;
 const cursorContext = createContext<{
     addCursor?: (item: ItemCursor) => void,
-    setKey?: (key: TCursor | null) => void,
+    setKey?: (key: string | null) => void,
 }>({});
 
-
-import { TCursor } from './Cursors';
-export const CursorContent = ({ children, name }: {
+import { useIsomorphicLayoutEffect } from 'react-use';
+export const CursorContent = ({ children, name, ...props }: {
     children: React.ReactElement,
-    name: TCursor
+} & Omit<ItemCursor, 'key'> & {
+    name: string
 }) => {
     const { addCursor, setKey } = useContext(cursorContext);
     const { isHovered, hoverProps } = useHover({});
@@ -23,6 +22,7 @@ export const CursorContent = ({ children, name }: {
     useEffect(() => {
         addCursor && addCursor({
             key: name,
+            ...props
         })
     }, [])
 
@@ -38,9 +38,14 @@ export const CursorContent = ({ children, name }: {
     return React.cloneElement(children, { ...hoverProps })
 }
 
-type ItemCursor = {
-    key: TCursor
-}
+type ItemCursor = ({
+    key: string,
+} & ({
+    component: 'CursorScroll',
+    props: {
+        title: string
+    }
+}))
 
 const DEFAULT_BALL_CLASS_NAME = ['fixed rounded-full pointer-events-none cursor-none', 'top-0 left-0']
 const Cursor = ({ children }: { children: React.ReactElement }) => {
@@ -50,44 +55,48 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
     const list = useRef<ItemCursor[]>([]);
 
     const addCursor = useCallback(({
-        key
+        ...props
     }: ItemCursor) => {
         list.current.push({
-            key
+            ...props
         });
     }, []);
 
-    const [isHovered, setIsHovered] = useState<boolean>(false);
-    const [isAnimated, setIsAnimated] = useState<boolean>(false);
-    const [key, setKey] = useState<TCursor | null>(null);
+    const [key, setKey] = useState<string | null>(null);
 
-    const [tl, setTl] = useState<gsap.core.Timeline>();
 
-    useLayoutEffect(() => {
+    const [tl, setTl] = useState<gsap.core.Timeline | null>(null);
+
+    // change cursor timeline
+    useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            const tl = gsap.timeline({
+
+            const timeline = gsap.timeline({
                 paused: true,
             });
-            tl.to('.ball_main_gsap', {
+            timeline.to('.ball_main_gsap', {
                 duration: 0.3,
                 scale: 0,
                 ease: 'Power4.easeOut',
-            }, 0).to('.ball_secondary_gsap', {
+            }, 0).fromTo('.ball_secondary_gsap', {
+                scale: 1
+            },{
                 duration: 0.2,
                 scale: 0,
                 ease: 'Power4.easeOut',
-            }).to('.ball_inner_top', {
+            })
+            .to('.ball_inner_top', {
                 duration: 0.1,
                 scale: 1,
-                backgroundColor: '#FEFEFE',
                 ease: 'Power4.easeOut',
-            }, 0.2);
-
-            setTl(tl);
+            }, 0.2)
+            
+            setTl(timeline);
         });
         return () => ctx.revert();
     }, [])
 
+    // default ball animation
     useEffect(() => {
         const ctx = gsap.context(() => {
             // set initial position
@@ -122,8 +131,6 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 ease: 'Power4.easeOut',
             })
 
-
-
             ref.current?.addEventListener("mouseenter", e => {
                 opacityTo(1);
             });
@@ -157,15 +164,11 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
         return () => ctx.revert();
     }, []);
 
-    // useEffect(() => {
-    //     if (!!key) {
-    //         tl?.play();
-    //     } else {
-    //         tl?.reverse();
-    //     }
-    // }, [key, tl])
-    const blend = useMemo(() => isHovered ? '' : 'mix-blend-difference', [isHovered])
-    
+    const blend = useMemo(() => typeof key == 'string' ? '' : 'mix-blend-difference', [key])
+    const currentCursor = useMemo(() => list.current.find(item => item.key == key), [key]);
+    useEffect(() => {
+        console.log('change key', key, currentCursor);
+    }, [key])
     return <>
         <span ref={ref}>
             <cursorContext.Provider value={{
@@ -176,10 +179,15 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 </span>
                 <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_secondary_gsap pointer-events-none', 'h-6 w-6', 'bg-primary-600/80')} ref={secondaryCursor} ></div>
                 <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_main_gsap', 'w-14 h-14', 'border-2 border-primary-500 bg-white-300/5 backdrop-blur-xs')}></div>
-                <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_inner_top', 'scale-0 ', 'h-32 w-32 p-10', 'flex justify-center items-center uppercase')}>
+                <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_inner_top', 'scale-0 ', 'flex justify-center items-center uppercase')}>
                     {CursorsArray.map((item, index) => {
+                        const isActive = item == currentCursor?.component;
+                        let otherProps = {};
+                        if (isActive) {
+                            otherProps = currentCursor?.props;
+                        }
                         return <span key={item}>
-                            {Cursors[item]({ tl, isActive: item == key })}
+                            {Cursors[item]({ tl, isActive, ...otherProps })}
                         </span>
                     })}
                 </div>
@@ -188,7 +196,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
         <style >
             {`
                 .cursor_container {
-                    cursor: default;
+                    cursor: none;
                 }
                 @media (hover: hover) {
                     .cursor_container {
@@ -203,7 +211,6 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 }
                 .ball_gsap {
                     // transform: translate(-50%, -50%);
-                    ${!isAnimated ? 'mix-blend-mode: difference;' : ''}
                 }
                 @media (hover: hover) {
                     .ball_gsap {
