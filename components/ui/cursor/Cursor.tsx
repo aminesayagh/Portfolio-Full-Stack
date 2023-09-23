@@ -11,6 +11,8 @@ const cursorContext = createContext<{
 }>({});
 
 import { useIsomorphicLayoutEffect } from 'react-use';
+import { IconNames } from '../icon';
+
 export const CursorContent = ({ children, name, ...props }: {
     children: React.ReactElement,
 } & Omit<ItemCursor, 'key'> & {
@@ -20,11 +22,12 @@ export const CursorContent = ({ children, name, ...props }: {
     const { isHovered, hoverProps } = useHover({});
 
     useEffect(() => {
+        // @ts-ignore
         addCursor && addCursor({
-            key: name,
+            name,
             ...props
         })
-    }, [])
+    }, [props, name, addCursor])
 
     useEffect(() => {
         console.log(isHovered, name);
@@ -39,13 +42,19 @@ export const CursorContent = ({ children, name, ...props }: {
 }
 
 type ItemCursor = ({
-    key: string,
+    name: string,
 } & ({
     component: 'CursorScroll',
     props: {
         title: string
     }
-}))
+} | {
+    component: 'CursorActionIcon',
+    props: {
+        icon: IconNames,
+        degree: number,
+    }
+}));
 
 const DEFAULT_BALL_CLASS_NAME = ['fixed rounded-full pointer-events-none cursor-none', 'top-0 left-0']
 const Cursor = ({ children }: { children: React.ReactElement }) => {
@@ -64,37 +73,28 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
 
     const [key, setKey] = useState<string | null>(null);
 
-
-    const [tl, setTl] = useState<gsap.core.Timeline | null>(null);
-
-    // change cursor timeline
-    useIsomorphicLayoutEffect(() => {
-        const ctx = gsap.context(() => {
-
-            const timeline = gsap.timeline({
-                paused: true,
-            });
-            timeline.to('.ball_main_gsap', {
-                duration: 0.3,
-                scale: 0,
-                ease: 'Power4.easeOut',
-            }, 0).fromTo('.ball_secondary_gsap', {
-                scale: 1
-            },{
-                duration: 0.2,
-                scale: 0,
-                ease: 'Power4.easeOut',
-            })
-            .to('.ball_inner_top', {
-                duration: 0.1,
-                scale: 1,
-                ease: 'Power4.easeOut',
-            }, 0.2)
-            
-            setTl(timeline);
+    const tl = useCallback(() => {
+        const timeline = gsap.timeline({
+            paused: true,
         });
-        return () => ctx.revert();
-    }, [])
+        timeline.to('.ball_main_gsap', {
+            duration: 0.3,
+            scale: 0,
+            ease: 'Power4.easeOut',
+        }, 0).fromTo('.ball_secondary_gsap', {
+            scale: 1
+        },{
+            duration: 0.2,
+            scale: 0,
+            ease: 'Power4.easeOut',
+        })
+        .to('.ball_inner_top', {
+            duration: 0.1,
+            scale: 1,
+            ease: 'Power4.easeOut',
+        }, 0.2);
+        return timeline;
+    }, []);
 
     // default ball animation
     useEffect(() => {
@@ -165,10 +165,8 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
     }, []);
 
     const blend = useMemo(() => typeof key == 'string' ? '' : 'mix-blend-difference', [key])
-    const currentCursor = useMemo(() => list.current.find(item => item.key == key), [key]);
-    useEffect(() => {
-        console.log('change key', key, currentCursor);
-    }, [key])
+    const currentCursor = useMemo(() => list.current.find(item => item.name == key), [key]);
+
     return <>
         <span ref={ref}>
             <cursorContext.Provider value={{
@@ -179,9 +177,10 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 </span>
                 <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_secondary_gsap pointer-events-none', 'h-6 w-6', 'bg-primary-600/80')} ref={secondaryCursor} ></div>
                 <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_main_gsap', 'w-14 h-14', 'border-2 border-primary-500 bg-white-300/5 backdrop-blur-xs')}></div>
-                <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_inner_top', 'scale-0 ', 'flex justify-center items-center uppercase')}>
+                <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_inner_top','w-full', 'flex justify-center items-center uppercase')}>
                     {CursorsArray.map((item, index) => {
                         const isActive = item == currentCursor?.component;
+                        console.log(isActive, item);
                         let otherProps = {};
                         if (isActive) {
                             otherProps = currentCursor?.props;
@@ -196,7 +195,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
         <style >
             {`
                 .cursor_container {
-                    cursor: none;
+                    cursor: default;
                 }
                 @media (hover: hover) {
                     .cursor_container {

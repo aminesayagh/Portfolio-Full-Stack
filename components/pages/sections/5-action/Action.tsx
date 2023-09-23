@@ -3,10 +3,9 @@
 import React, { useRef } from "react";
 import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
-import { Text, Display, Link } from '@/components/ui';
+import { Text, Display, Link, CursorContent } from '@/components/ui';
 import { gsap } from "@/utils/gsap";
 import useGsap from "@/hook/useGsap";
-
 
 
 const Action = () => {
@@ -51,11 +50,16 @@ const Action = () => {
                 </Display>
             </span>
             <div className='flex flex-row justify-start xs:justify-center items-start relative'>
+                <CursorContent name='CursorActionIconContactAction' component='CursorActionIcon' props={{
+                    degree: -45,
+                    icon: 'IconArrowUpRight',
+                }} >
                     <Link href='/contact' className='overflow-hidden'>
                         <Display size='lg' weight='bold' className={twMerge('whitespace-nowrap-important uppercase text-primary-500', 'contact-title-gsap')} >
                             {t('contactCall.action')}
                         </Display>
                     </Link>
+                </CursorContent>
                 <Text p degree='3' size={i18n.language == 'en' ? 'xxs' : 'xs'} weight='medium' className={twMerge(
                     'absolute',
                     'left-[-1.5%] xs:left-auto sm:left-[103%]',
