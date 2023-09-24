@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, createContext, useContext, useMemo, useCallback } from 'react';
+import React, { useEffect, useRef, useState, createContext, useContext, useMemo, useCallback, RefObject } from 'react';
 
 import { gsap } from '@/utils/gsap';
 import { useHover } from 'react-aria';
@@ -71,29 +71,56 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
     }, []);
 
     const [key, setKey] = useState<string | null>(null);
-
-    const tl = useCallback(() => {
-        const timeline = gsap.timeline({
-            paused: true,
+    let ctx = useRef<gsap.Context>();
+    useEffect(() => {
+        ctx.current = gsap.context((context) => {
+            const timeline = gsap.timeline({
+                paused: true,
+            });
+            timeline.to('.ball_main_gsap', {
+                duration: 0.3,
+                scale: 0,
+                ease: 'Power4.easeOut',
+            }, 0).fromTo('.ball_secondary_gsap', {
+                scale: 1
+            },{
+                duration: 0.2,
+                scale: 0,
+                ease: 'Power4.easeOut',
+            }).to('.ball_inner_top', {
+                duration: 0.1,
+                scale: 1,
+                ease: 'Power4.easeOut',
+            }, 0.2);
+            context.add('cursorScroll', () => {
+                
+                timeline.to('.cursor_scroll_gsap', {
+                    duration: 0.1,
+                    display: 'flex',
+                }).fromTo('.cursor_scroll_gsap', {
+                    scale: 0,
+                    ease: 'Power4.easeOut',
+                    backgroundColor: 'transparent',
+                }, {
+                    duration: 0.3,
+                    scale: 1,
+                    backgroundColor: '#F1F1F1',
+                    ease: 'Power4.easeOut',
+                }, '>').fromTo('.cursor_scroll_gsap .cursor_text_gsap', {
+                    rotate: -45,
+                    opacity: 0,
+                }, {
+                    opacity: 1,
+                    duration: 0.3,
+                    ease: 'Expo.easeOut',
+                    rotate: 0,
+                }, '-=0.2').play();
+            });
+            return () => timeline.kill();
         });
-        timeline.to('.ball_main_gsap', {
-            duration: 0.3,
-            scale: 0,
-            ease: 'Power4.easeOut',
-        }, 0).fromTo('.ball_secondary_gsap', {
-            scale: 1
-        },{
-            duration: 0.2,
-            scale: 0,
-            ease: 'Power4.easeOut',
-        })
-        .to('.ball_inner_top', {
-            duration: 0.1,
-            scale: 1,
-            ease: 'Power4.easeOut',
-        }, 0.2);
-        return timeline;
-    }, []);
+        return () => ctx.current?.revert();
+    }, [ctx]);
+
 
     // default ball animation
     useEffect(() => {
@@ -161,11 +188,13 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
         }, ref);
 
         return () => ctx.revert();
-    }, []);
+    }, [ref]);
 
     const blend = useMemo(() => typeof key == 'string' ? '' : 'mix-blend-difference', [key])
     const currentCursor = useMemo(() => list.current.find(item => item.name == key), [key]);
-
+    useEffect(() => {
+        console.log(key, currentCursor);
+    }, [key]);
     return <>
         <span ref={ref}>
             <cursorContext.Provider value={{
@@ -183,8 +212,9 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                         if (isActive) {
                             otherProps = currentCursor?.props;
                         }
+                        console.log(isActive);
                         return <span key={item}>
-                            {Cursors[item]({ tl, isActive, ...otherProps })}
+                            {Cursors[item]({ ctx, isActive, ...otherProps })}
                         </span>
                     })}
                 </div>
