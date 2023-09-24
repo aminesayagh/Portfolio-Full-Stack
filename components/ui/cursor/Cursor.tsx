@@ -74,49 +74,87 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
     let ctx = useRef<gsap.Context>();
     useEffect(() => {
         ctx.current = gsap.context((context) => {
-            const timeline = gsap.timeline({
-                paused: true,
-            });
-            timeline.to('.ball_main_gsap', {
-                duration: 0.3,
-                scale: 0,
-                ease: 'Power4.easeOut',
-            }, 0).fromTo('.ball_secondary_gsap', {
-                scale: 1
-            },{
-                duration: 0.2,
-                scale: 0,
-                ease: 'Power4.easeOut',
-            }).to('.ball_inner_top', {
-                duration: 0.1,
-                scale: 1,
-                ease: 'Power4.easeOut',
-            }, 0.2);
-            context.add('cursorScroll', () => {
-                
-                timeline.to('.cursor_scroll_gsap', {
-                    duration: 0.1,
-                    display: 'flex',
-                }).fromTo('.cursor_scroll_gsap', {
+            let timeline = () => {
+                let tl = gsap.timeline({
+                    paused: true,
+                });
+                return tl.to('.ball_main_gsap', {
+                    duration: 0.3,
                     scale: 0,
                     ease: 'Power4.easeOut',
-                    backgroundColor: 'transparent',
+                }, 0).fromTo('.ball_secondary_gsap', {
+                    scale: 1
                 }, {
-                    duration: 0.3,
-                    scale: 1,
-                    backgroundColor: '#F1F1F1',
+                    duration: 0.2,
+                    scale: 0,
                     ease: 'Power4.easeOut',
-                }, '>').fromTo('.cursor_scroll_gsap .cursor_text_gsap', {
-                    rotate: -45,
-                    opacity: 0,
-                }, {
-                    opacity: 1,
-                    duration: 0.3,
-                    ease: 'Expo.easeOut',
-                    rotate: 0,
-                }, '-=0.2').play();
+                }).to('.ball_inner_top', {
+                    duration: 0.1,
+                    scale: 1,
+                    ease: 'Power4.easeOut',
+                }, 0.2);
+            }
+            let cursorScrollTimeline = timeline().to('.cursor_scroll_gsap', {
+                duration: 0.1,
+                display: 'flex',
+            }).fromTo('.cursor_scroll_gsap', {
+                scale: 0,
+                ease: 'Power4.easeOut',
+                backgroundColor: 'transparent',
+            }, {
+                duration: 0.3,
+                scale: 1,
+                backgroundColor: '#F1F1F1',
+                ease: 'Power4.easeOut',
+            }, '>').fromTo('.cursor_scroll_gsap .cursor_text_gsap', {
+                rotate: -45,
+                opacity: 0,
+            }, {
+                opacity: 1,
+                duration: 0.3,
+                ease: 'Expo.easeOut',
+                rotate: 0,
+            }, '-=0.2');
+
+            let cursorActionIconTimeline = timeline().to('.cursor_action_icon_gsap', {
+                duration: 0.1,
+                display: 'flex',
+            }).fromTo('.cursor_action_icon_gsap', {
+                scale: 0,
+                backgroundColor: 'transparent',
+            }, {
+                duration: 0.3,
+                scale: 1,
+                backgroundColor: '#F1F1F1',
+                ease: 'Power4.easeOut',
+            }, '>').fromTo('.cursor_action_icon_gsap .cursorIconGsap', {
+                rotate: 0,
+                opacity: 0,
+            }, {
+                opacity: 1,
+                duration: 0.3,
+                ease: 'Expo.easeOut',
+                rotate: 45,
+            }, '-=0.2');
+
+            context.add('cursorScroll', (isActive: boolean) => {
+                if (isActive) {
+                    cursorScrollTimeline.play();
+                } else {
+                    cursorScrollTimeline.reverse();
+                }
             });
-            return () => timeline.kill();
+            context.add('cursorActionIcon', (isActive: boolean) => {
+                if (isActive) {
+                    cursorActionIconTimeline.play();
+                } else {
+                    cursorActionIconTimeline.reverse();
+                }
+            });
+            return () => {
+                cursorScrollTimeline.kill();
+                cursorActionIconTimeline.kill();
+            }
         });
         return () => ctx.current?.revert();
     }, [ctx]);
@@ -205,7 +243,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 </span>
                 <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_secondary_gsap pointer-events-none', 'h-6 w-6', 'bg-primary-600/80')} ref={secondaryCursor} ></div>
                 <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_main_gsap', 'w-14 h-14', 'border-2 border-primary-500 bg-white-300/5 backdrop-blur-xs')}></div>
-                <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_inner_top','w-full', 'flex justify-center items-center uppercase')}>
+                <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_inner_top', 'w-full', 'flex justify-center items-center uppercase')}>
                     {CursorsArray.map((item, index) => {
                         const isActive = item == currentCursor?.component;
                         let otherProps = {};

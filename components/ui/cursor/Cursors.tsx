@@ -11,7 +11,7 @@ const CursorScroll = ({ isActive, ctx, title }: {
     title?: string
 }) => {
     const ref = useRef<HTMLDivElement>(null);
-    
+
     useEffect(() => {
         const ctx = gsap.context(() => {
             gsap.set(ref.current, {
@@ -24,21 +24,11 @@ const CursorScroll = ({ isActive, ctx, title }: {
             });
 
         }, ref);
-        
+
         return () => ctx.revert();
     }, [ctx, ref]);
     useEffect(() => {
-        // let ctx = gsap.context(() => {
-            if (isActive) {
-                // timelineCursor.current?.play()
-                console.log('play');
-                ctx.current?.cursorScroll();
-            } else {
-
-                // timelineCursor.current?.reverse();
-            }
-        // });
-        // return () => ctx.revert();
+        ctx.current?.cursorScroll(isActive);
     }, [isActive, ctx]);
 
     return (
@@ -92,17 +82,17 @@ const CursorActionIcon = ({ isActive, ctx, iconName }: {
 
         });
         return () => ctx.revert();
-    }, [ctx, ref , timelineCursor.current]);
+    }, [ctx, ref, timelineCursor.current]);
     useEffect(() => {
         // if (!!tl) {
-            if (isActive) {
-                timelineCursor.current?.play()
-            } else {
-                timelineCursor.current?.reverse();
-            }
+        if (isActive) {
+            timelineCursor.current?.play()
+        } else {
+            timelineCursor.current?.reverse();
+        }
         // }
     }, [isActive, timelineCursor.current]);
-    return <div ref={ref} className={twMerge('w-32 h-32', 'rounded-full', 'flex-col justify-center items-center')}>
+    return <div ref={ref} className={twMerge('w-32 h-32', 'rounded-full', 'flex-col justify-center items-center cursor_action_icon_gsap')}>
         {iconName ? <Icon name={iconName} className='cursorIconGsap' size='20' color='#111517' /> : null}
     </div>
 }
