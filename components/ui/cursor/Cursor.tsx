@@ -144,7 +144,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                     cursorScrollTimeline.reverse();
                 }
             });
-            context.add('cursorActionIcon', (isActive: boolean) => {
+            context.add('cursorActionIcon', (isActive: boolean, degree: number) => {
                 if (isActive) {
                     cursorActionIconTimeline.play();
                 } else {

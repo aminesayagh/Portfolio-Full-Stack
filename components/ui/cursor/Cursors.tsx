@@ -38,14 +38,13 @@ const CursorScroll = ({ isActive, ctx, title }: {
     )
 }
 
-const CursorActionIcon = ({ isActive, ctx, iconName }: {
+const CursorActionIcon = ({ isActive, ctx, iconName, degree = 45 }: {
     isActive: boolean,
     ctx: MutableRefObject<gsap.Context | undefined>,
     iconName?: IconNames,
     degree?: number,
 }) => {
     const ref = useRef<HTMLDivElement>(null);
-    let timelineCursor = useRef<gsap.core.Timeline | null | undefined>(null);
     useEffect(() => {
         let ctx = gsap.context((self) => {
             gsap.set(ref.current, {
@@ -58,16 +57,10 @@ const CursorActionIcon = ({ isActive, ctx, iconName }: {
             });
         });
         return () => ctx.revert();
-    }, [ctx, ref, timelineCursor.current]);
+    }, [ctx, ref]);
     useEffect(() => {
-        // if (!!tl) {
-        if (isActive) {
-            timelineCursor.current?.play()
-        } else {
-            timelineCursor.current?.reverse();
-        }
-        // }
-    }, [isActive, timelineCursor.current]);
+        ctx.current?.cursorActionIcon(isActive, degree);
+    }, [isActive, ctx]);
     return <div ref={ref} className={twMerge('w-32 h-32', 'rounded-full', 'flex-col justify-center items-center cursor_action_icon_gsap')}>
         {iconName ? <Icon name={iconName} className='cursorIconGsap' size='20' color='#111517' /> : null}
     </div>
