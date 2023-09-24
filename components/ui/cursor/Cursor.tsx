@@ -230,9 +230,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
 
     const blend = useMemo(() => typeof key == 'string' ? '' : 'mix-blend-difference', [key])
     const currentCursor = useMemo(() => list.current.find(item => item.name == key), [key]);
-    useEffect(() => {
-        console.log(key, currentCursor);
-    }, [key]);
+    
     return <>
         <span ref={ref}>
             <cursorContext.Provider value={{

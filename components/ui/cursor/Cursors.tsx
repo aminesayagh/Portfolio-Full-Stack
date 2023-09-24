@@ -56,30 +56,6 @@ const CursorActionIcon = ({ isActive, ctx, iconName }: {
                 rotate: 0,
                 opacity: 0,
             });
-            // if(!tl) return;
-            // timelineCursor.current = tl();
-            // timelineCursor.current?.to(ref.current, {
-            //     duration: 0.1,
-            //     display: 'flex',
-            // }).fromTo(ref.current, {
-            //     scale: 0,
-            //     ease: 'Power4.easeOut',
-            //     backgroundColor: 'transparent'
-            // }, {
-            //     duration: 0.3,
-            //     scale: 1,
-            //     backgroundColor: '#F6F6F690',
-            //     ease: 'Power4.easeOut',
-            // }, '>').fromTo('.cursorIconGsap', {
-            //     rotate: 0,
-            //     opacity: 0,
-            // }, {
-            //     opacity: 1,
-            //     duration: 0.3,
-            //     ease: 'Expo.easeOut',
-            //     rotate: 45,
-            // }, '-=0.2');
-
         });
         return () => ctx.revert();
     }, [ctx, ref, timelineCursor.current]);
