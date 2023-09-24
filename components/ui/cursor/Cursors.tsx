@@ -52,7 +52,7 @@ const CursorActionIcon = ({ isActive, ctx, iconName, degree = 45 }: {
                 display: 'none',
             });
             gsap.set('.cursorIconGsap', {
-                rotate: 0,
+                rotate: 45,
                 opacity: 0,
             });
         });
@@ -61,8 +61,11 @@ const CursorActionIcon = ({ isActive, ctx, iconName, degree = 45 }: {
     useEffect(() => {
         ctx.current?.cursorActionIcon(isActive, degree);
     }, [isActive, ctx]);
-    return <div ref={ref} className={twMerge('w-32 h-32', 'rounded-full', 'flex-col justify-center items-center cursor_action_icon_gsap')}>
-        {iconName ? <Icon name={iconName} className='cursorIconGsap' size='20' color='#111517' /> : null}
+    return <div ref={ref} className={twMerge('w-28 h-28', 'rounded-full', 'flex-col justify-center items-center cursor_action_icon_gsap')}>
+        <span className='cursorIconGsap'>
+
+        {iconName ? <Icon name={iconName} className='cursorIconGsap' size='30' color='#111517' /> : null}
+        </span>
     </div>
 }
 

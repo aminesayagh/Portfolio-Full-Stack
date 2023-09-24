@@ -52,7 +52,7 @@ const Action = () => {
             <div className='flex flex-row justify-start xs:justify-center items-start relative'>
                 <CursorContent name='CursorActionIconContactAction' component='CursorActionIcon' props={{
                     degree: -45,
-                    icon: 'IconArrowUpRight',
+                    iconName: 'IconArrowUpRight',
                 }} >
                     <Link href='/contact' className='overflow-hidden'>
                         <Display size='lg' weight='bold' className={twMerge('whitespace-nowrap-important uppercase text-primary-500', 'contact-title-gsap')} >

@@ -50,7 +50,7 @@ type ItemCursor = ({
 } | {
     component: 'CursorActionIcon',
     props: {
-        icon: IconNames,
+        iconName: IconNames,
         degree: number,
     }
 }));
@@ -128,14 +128,14 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 backgroundColor: '#F1F1F1',
                 ease: 'Power4.easeOut',
             }, '>').fromTo('.cursor_action_icon_gsap .cursorIconGsap', {
-                rotate: 0,
+                rotate: 45,
                 opacity: 0,
             }, {
                 opacity: 1,
-                duration: 0.3,
+                duration: 0.6,
                 ease: 'Expo.easeOut',
-                rotate: 45,
-            }, '-=0.2');
+                rotate: 0,
+            });
 
             context.add('cursorScroll', (isActive: boolean) => {
                 if (isActive) {
