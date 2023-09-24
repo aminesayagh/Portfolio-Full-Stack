@@ -1,11 +1,9 @@
-import { useRef, useEffect, useContext, useLayoutEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 
 import { Title, Text, Link } from '@/components/ui';
 import { gsap } from '@/utils/gsap';
-import { useIsomorphicLayoutEffect } from 'react-use';
-import { ScrollProvider } from '@/context/ScrollContext';
 
 import _ from 'lodash';
 import useGsap from '@/hook/useGsap';

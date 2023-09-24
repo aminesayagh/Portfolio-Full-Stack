@@ -10,7 +10,7 @@ const useGsap = (gsapCallback: gsap.ContextFunc, ref: RefObject<HTMLDivElement> 
             let ctx = gsap.context(gsapCallback, ref);
             return () => ctx.revert();
         }
-    }, [scrollbar, ...rendered]);
+    }, [scrollbar, ref, ...rendered]);
 }
 
 export default useGsap;

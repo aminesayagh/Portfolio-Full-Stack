@@ -13,7 +13,7 @@ const ListIconComponents = {
     IconCornerLeftDown: (props: IconProps) => <IconCornerLeftDown {...props} />,
     IconArrowUpRight: (props: IconProps) => <IconArrowUpRight {...props} />,
     IconShare: (props: IconProps) => <IconShare {...props} />,
-
+    
 } as const;
 
 export type IconNames = keyof typeof ListIconComponents;
