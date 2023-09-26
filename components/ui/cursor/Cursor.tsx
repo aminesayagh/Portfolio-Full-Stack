@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, createContext, useContext, useMemo, useCallback, RefObject } from 'react';
+import React, { useEffect, useRef, useState, createContext, useContext, useMemo, useCallback } from 'react';
 
 import { gsap } from '@/utils/gsap';
 import { useHover } from 'react-aria';
@@ -239,8 +239,8 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 <span className='cursor_container relative' >
                     {children}
                 </span>
-                <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_secondary_gsap pointer-events-none', 'h-6 w-6', 'bg-primary-600/80')} ref={secondaryCursor} ></div>
-                <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_main_gsap', 'w-14 h-14', 'border-2 border-primary-500 bg-white-300/5 backdrop-blur-xs')}></div>
+                <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_secondary_gsap pointer-events-none', 'h-4 sm:h-6 w-4 sm:w-6', 'bg-primary-600/80')} ref={secondaryCursor} ></div>
+                <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_main_gsap', 'w-10 sm:w-14 h-10 sm:h-14', 'border-2 border-primary-500 bg-white-300/5 backdrop-blur-xs')}></div>
                 <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_inner_top', 'w-full', 'flex justify-center items-center uppercase')}>
                     {CursorsArray.map((item, index) => {
                         const isActive = item == currentCursor?.component;
@@ -261,11 +261,16 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 .cursor_container {
                     cursor: default;
                 }
+                .ball_gsap {
+                    display: none;
+                }
                 @media (hover: hover) {
                     .cursor_container {
                         cursor: none;
                     }
-                    
+                    .ball_gsap{
+                        display: black;
+                    }
                 }
                 @media (prefers-reduced-motion) {
                     .ball_gsap {
