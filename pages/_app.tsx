@@ -4,7 +4,7 @@ import '../styles/globals.css';
 // import 'tailwindcss/tailwind.css';
 
 
-
+import Script from 'next/script';
 
 import { Montserrat } from 'next/font/google';
 import { appWithTranslation } from 'next-i18next'
@@ -45,6 +45,15 @@ function App({ Component, pageProps }: AppProps) {
         site_name: 'Mohamed Amine SAYAGH - Full Stack Web Developer',
       }}
     />
+    <Script async src="https://www.googletagmanager.com/gtag/js?id=G-LBW0TBMSD6"></Script>
+    <Script id="google-analytics">{
+      `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-LBW0TBMSD6');
+      `}
+    </Script>
     <main className={`${val} font-sans`}>
       <Component {...pageProps} />
       <Analytics />
