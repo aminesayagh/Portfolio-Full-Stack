@@ -109,20 +109,22 @@ const Header = () => {
         }
     }, [scrollbar])
     useIsomorphicLayoutEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.timeline({
-                scrollTrigger: {
-                    trigger: '.navbar_gsap',
-                    markers: false,
-                    toggleActions: 'play pause restart pause'
-                }
-            }).from('.navbar_gsap', {
-                delay: 0.5,
-                yPercent: 160,
-                duration: 0.5,
-            })
-        });
-        return () => ctx.revert()
+        if(!!scrollbar) {
+            const ctx = gsap.context(() => {
+                gsap.timeline({
+                    scrollTrigger: {
+                        trigger: '.navbar_gsap',
+                        markers: false,
+                        toggleActions: 'play pause restart pause'
+                    }
+                }).from('.navbar_gsap', {
+                    delay: 0.5,
+                    yPercent: 160,
+                    duration: 0.5,
+                })
+            });
+            return () => ctx.revert()
+        }
     }, [scrollbar])
     const menuHandler = useCallback(() => {
         if (!openMenu) {
@@ -144,6 +146,11 @@ const Header = () => {
             tl.current.reverse().then(() => {
                 setOpenMenu(false);
                 safePush(path);
+                setTimeout(() => {
+                    scrollbar && scrollbar.scrollTo(`#${id}`, {
+                        duration: 500,
+                    });
+                }, 100);
             });
         }
     }, [openMenu, scrollbar]);
