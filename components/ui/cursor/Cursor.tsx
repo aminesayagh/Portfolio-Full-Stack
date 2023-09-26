@@ -160,6 +160,8 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
     }, [ctx]);
 
 
+
+
     // default ball animation
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -181,6 +183,10 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 duration: 0.6,
                 ease: 'Elastic.easeOut',
             })
+            let scaleTo = gsap.quickTo('.ball_secondary_gsap', 'scale', {
+                duration: 0.6,
+                ease: 'Elastic.easeOut',
+            })
             let xToSecondary = gsap.quickTo(['.ball_secondary_gsap', '.ball_inner_top'], 'x', {
                 duration: 0.3,
                 ease: 'Power4.easeOut',
@@ -195,12 +201,26 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 ease: 'Power4.easeOut',
             })
 
+
             ref.current?.addEventListener("mouseenter", e => {
                 opacityTo(1);
             });
             ref.current?.addEventListener("mouseleave", e => {
                 opacityTo(0);
             });
+
+            // get all element with this class
+            let cursorPointer = ref.current?.querySelectorAll('.cursor-pointer');
+            cursorPointer?.forEach((el) => {
+                el.addEventListener("mouseenter", e => {
+                    scaleTo(0);
+                });
+                el.addEventListener("mouseleave", e => {
+                    scaleTo(0);
+                });
+            });
+            // cursorPointer.addEventListener("mouseenter", e => {
+            // });
 
             ref.current?.addEventListener("mousemove", e => {
                 xTo(e.clientX);
