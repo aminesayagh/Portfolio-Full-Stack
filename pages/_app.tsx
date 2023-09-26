@@ -16,6 +16,7 @@ import { useState, useEffect } from 'react';
 
 
 import { Analytics } from '@vercel/analytics/react';
+import TagManager from 'react-gtm-module';
 
 
 const montserrat = Montserrat({
@@ -28,6 +29,9 @@ function App({ Component, pageProps }: AppProps) {
   const [val, setVal] = useState<string>();
   useEffect(() => {
     setVal(montserrat.variable)
+  }, [])
+  useEffect(() => {
+    TagManager.initialize({ gtmId: 'GTM-5L7DRGL9' });
   }, [])
 
   return <>

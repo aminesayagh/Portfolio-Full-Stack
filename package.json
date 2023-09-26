@@ -49,6 +49,7 @@
     "react-aria-components": "^1.0.0-alpha.5",
     "react-dom": "18.2.0",
     "react-fitty": "^1.0.1",
+    "react-gtm-module": "^2.0.11",
     "react-hook-form": "^7.45.2",
     "react-i18next": "^13.0.2",
     "react-stately": "^3.24.0",
@@ -61,6 +62,7 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
-    "@types/locomotive-scroll": "^4.1.1"
+    "@types/locomotive-scroll": "^4.1.1",
+    "@types/react-gtm-module": "^2.0.1"
   }
 }
