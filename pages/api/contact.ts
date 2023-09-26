@@ -86,7 +86,6 @@ export default async function handler(
     await addItem();
     res.status(200).json({ status: 'success' });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ status: 'error', message: 'Error back end' });
   }
 }

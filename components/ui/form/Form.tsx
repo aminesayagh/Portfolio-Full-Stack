@@ -75,11 +75,11 @@ const SelectUi = <T extends {}>({ label, name, children, ...props }: { label: st
     const { register, getFieldState, control, ...methods } = useFormContext();
     return (
         <>
-            <div className={twMerge('w-full col-span-12')}>
+            <div className={twMerge('w-full col-span-12', Style['text-field'])}>
                 <Controller name={name} control={control} render={({ field, fieldState }) => {
                     const { invalid, isDirty, isTouched, error } = fieldState;
                     return (
-                        <Select {...props} onSelectionChange={field.onChange} selectedKey={field.value} className={twMerge(Style['text-field'])}>
+                        <Select {...props} onSelectionChange={field.onChange} selectedKey={field.value} className={twMerge('flex flex-col gap-2')}>
                             <Label className={twJoin(Style['label'])} htmlFor={name}>{label}</Label>
                             <Button className={twMerge(Style['input'], invalid ? Style['invalid'] : null)}>
                                 <SelectValue />

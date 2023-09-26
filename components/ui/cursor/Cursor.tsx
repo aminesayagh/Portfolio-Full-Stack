@@ -248,7 +248,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                         if (isActive) {
                             otherProps = currentCursor?.props;
                         }
-                        console.log(isActive);
+                        
                         return <span key={item}>
                             {Cursors[item]({ ctx, isActive, ...otherProps })}
                         </span>

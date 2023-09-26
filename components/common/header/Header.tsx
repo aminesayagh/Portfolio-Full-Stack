@@ -144,6 +144,11 @@ const Header = () => {
             tl.current.reverse().then(() => {
                 setOpenMenu(false);
                 safePush(path);
+                setTimeout(() => {
+                    scrollbar && scrollbar.scrollTo(`#${id}`, {
+                        duration: 500,
+                    });
+                }, 100);
             });
         }
     }, [openMenu, scrollbar]);

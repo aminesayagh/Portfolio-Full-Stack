@@ -40,10 +40,11 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
                     ref.current?.removeEventListener('mousemove', mouseMove);
                     ref.current?.removeEventListener('mouseleave', mouseLeave);
                 }
-            }, ref);
+            });
             return () => ctx.revert();
         }
-    }, [scrollbar])
+    }, [scrollbar]);
+
     return <div ref={ref} >
         {children}
     </div>
@@ -104,13 +105,11 @@ const GsapCircleBlue = ({ children, ...props }: { children: React.ReactElement, 
 
 const ButtonNext = () => {
     return <GsapMagic>
-        <GsapCircleBlue className="rounded-full bg-white-100">
-            <div data-scroll className={twMerge('', 'rounded-full overflow-hidden next_button_gsap')}  >
-                <div className=' [&>*]:stroke-black-200 transition-colors duration-300 p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6'>
-                    <Icon name='IconCornerLeftDown' className='stroke-1 w-8 h-8 xxs:w-7 xxs:h-7 xs:w-8 xs:h-8 xl:w-10 xl:h-10' />
-                </div>
+        <div data-scroll className={twMerge('relative bg-white-100', 'rounded-full overflow-hidden next_button_gsap')}  >
+            <div className=' [&>*]:stroke-black-200 transition-colors duration-300 p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6'>
+                <Icon name='IconCornerLeftDown' className='stroke-1 w-8 h-8 xxs:w-7 xxs:h-7 xs:w-8 xs:h-8 xl:w-10 xl:h-10' />
             </div>
-        </GsapCircleBlue>
+        </div>
     </GsapMagic>
 }
 
@@ -184,8 +183,8 @@ const Title = () => {
             'row-start-2 row-span-1', // none
             'mdl:row-start-1 mdl:row-span-1', //mdl
             // children
-            i18n.language == 'en' ? 
-                "[&>*]:w-full [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-5/12 [&>*]:mdl:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-4/12" : 
+            i18n.language == 'en' ?
+                "[&>*]:w-full [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-5/12 [&>*]:mdl:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-4/12" :
                 "[&>*]:w-10/12 [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-5/12",
             i18n.language == 'en' ? '[&>*>span]:max-w-[14rem]' : '[&>*>span]:xxs:max-w-[12rem] [&>*>span]:sm:max-w-[17rem] [&>*>span]:mdl:max-w-[12rem] [&>*>span]:lg:max-w-[17rem]',
             "[&>*]:flex [&>*]:flex-row [&>*]:justify-start [&>*]:sm:justify-end",
@@ -207,7 +206,7 @@ const Title = () => {
             'mdl:w-2/12',
             'hidden xs:flex flex-col items-end mdl:items-start justify-end w-fit mdl:w-fit',
             'mt-1 lg:mt-4',
-            i18n.language == 'en' ?'mb-0 xxs:mb-3 mdl:mb-0 lg:mb-4' : 'mb-0 xxs:mb-3 mdl:mb-2 lg:mb-4',
+            i18n.language == 'en' ? 'mb-0 xxs:mb-3 mdl:mb-0 lg:mb-4' : 'mb-0 xxs:mb-3 mdl:mb-2 lg:mb-4',
             'col-start-11 col-span-2',
             'mdl:col-span-2 mdl:col-start-1',
             'row-start-1 row-span-1',
