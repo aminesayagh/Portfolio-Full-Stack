@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, createContext, useContext, useMemo, useCallback, RefObject } from 'react';
+import React, { useEffect, useRef, useState, createContext, useContext, useMemo, useCallback } from 'react';
 
 import { gsap } from '@/utils/gsap';
 import { useHover } from 'react-aria';

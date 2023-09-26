@@ -1,6 +1,7 @@
 
 import HeadNext from 'next/head';
 import { NextSeo } from 'next-seo';
+import Script from 'next/script'
 
 const Head = ({ title, description, keywords, author, logo }: { title: string, description: string, keywords: string, author: string, logo: string }) => {
     return <>
@@ -14,6 +15,16 @@ const Head = ({ title, description, keywords, author, logo }: { title: string, d
 
 =            <link rel="icon" href={logo} />
         </HeadNext>
+        <Script src="https://www.googletagmanager.com/gtag/js?id=GTM-5L7DRGL9" />
+        <Script id="google-analytics">
+            {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+        
+                gtag('config', 'GTM-5L7DRGL9');
+            `}
+        </Script>
     </>
 }
 
