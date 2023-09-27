@@ -21,5 +21,4 @@ export { default as Loading } from './loading';
 export { default as Preloader } from './preloader';
 export { Modal, Popover } from './overlay';
 
-export { default as Cursor } from './cursor';
-export { CursorContent } from './cursor';
+export { default as Cursor, CursorContent } from './cursor';

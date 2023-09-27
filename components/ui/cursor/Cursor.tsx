@@ -1,59 +1,15 @@
 import React, { useEffect, useRef, useState, createContext, useContext, useMemo, useCallback } from 'react';
 
 import { gsap } from '@/utils/gsap';
-import { useHover } from 'react-aria';
 import { twMerge } from 'tailwind-merge';
 import Cursors, { CursorsArray } from './Cursors';
+import { ItemCursor, CursorNames } from './CursorType';
+import { useIsomorphicLayoutEffect } from 'react-use';
 
-const cursorContext = createContext<{
-    addCursor?: (item: ItemCursor) => void,
+export const cursorContext = createContext<{
+    addCursor?: (item: ItemCursor<'CursorScroll'>) => void,
     setKey?: (key: string | null) => void,
 }>({});
-
-import { useIsomorphicLayoutEffect } from 'react-use';
-import { IconNames } from '../icon';
-
-export const CursorContent = ({ children, name, ...props }: {
-    children: React.ReactElement,
-} & Omit<ItemCursor, 'key'> & {
-    name: string
-}) => {
-    const { addCursor, setKey } = useContext(cursorContext);
-    const { isHovered, hoverProps } = useHover({});
-
-    useEffect(() => {
-        // @ts-ignore
-        addCursor && addCursor({
-            name,
-            ...props
-        })
-    }, [props, name, addCursor])
-
-    useEffect(() => {
-        if (isHovered) {
-            setKey && setKey(name);
-        } else {
-            setKey && setKey(null);
-        }
-    }, [isHovered, name, setKey])
-
-    return React.cloneElement(children, { ...hoverProps })
-}
-
-type ItemCursor = ({
-    name: string,
-} & ({
-    component: 'CursorScroll',
-    props: {
-        title: string
-    }
-} | {
-    component: 'CursorActionIcon',
-    props: {
-        iconName: IconNames,
-        degree: number,
-    }
-}));
 
 const DEFAULT_BALL_CLASS_NAME = ['fixed rounded-full pointer-events-none cursor-none', 'top-0 left-0']
 const Cursor = ({ children }: { children: React.ReactElement }) => {
@@ -72,7 +28,8 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
 
     const [key, setKey] = useState<string | null>(null);
     let ctx = useRef<gsap.Context>();
-    useEffect(() => {
+
+    useIsomorphicLayoutEffect(() => {
         ctx.current = gsap.context((context) => {
             let timeline = () => {
                 let tl = gsap.timeline({
@@ -151,19 +108,39 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                     cursorActionIconTimeline.reverse();
                 }
             });
+
+            let timelineBallEventPointer = gsap.timeline({
+                paused: true,
+            }).fromTo('.ball_secondary_gsap', {
+                scale: 1,
+            },{
+                duration: 0.4,
+                scale: 0,
+                ease: 'Power4.easeOut',
+            }).fromTo('.ball_main_gsap', {
+                scale: 1,
+            },{
+                duration: 0.4,
+                scale: 1.2,
+                ease: 'Power4.easeOut',
+            }, '<');
+            context.add('CursorEvent', (isActive: boolean, event: 'pointer' | 'disabled') => {
+                if (isActive) {
+                    timelineBallEventPointer.play();
+                } else {
+                    timelineBallEventPointer.reverse();
+                }
+            });
             return () => {
                 cursorScrollTimeline.kill();
                 cursorActionIconTimeline.kill();
             }
         });
         return () => ctx.current?.revert();
-    }, [ctx]);
-
-
-
+    }, []);
 
     // default ball animation
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(() => {
             // set initial position
             gsap.set(['.ball_main_gsap', '.ball_secondary_gsap', '.ball_inner_top'], {
@@ -183,10 +160,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 duration: 0.6,
                 ease: 'Elastic.easeOut',
             })
-            let scaleTo = gsap.quickTo('.ball_secondary_gsap', 'scale', {
-                duration: 0.6,
-                ease: 'Elastic.easeOut',
-            })
+            
             let xToSecondary = gsap.quickTo(['.ball_secondary_gsap', '.ball_inner_top'], 'x', {
                 duration: 0.3,
                 ease: 'Power4.easeOut',
@@ -208,19 +182,6 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
             ref.current?.addEventListener("mouseleave", e => {
                 opacityTo(0);
             });
-
-            // get all element with this class
-            let cursorPointer = ref.current?.querySelectorAll('.cursor-pointer');
-            cursorPointer?.forEach((el) => {
-                el.addEventListener("mouseenter", e => {
-                    scaleTo(0);
-                });
-                el.addEventListener("mouseleave", e => {
-                    scaleTo(0);
-                });
-            });
-            // cursorPointer.addEventListener("mouseenter", e => {
-            // });
 
             ref.current?.addEventListener("mousemove", e => {
                 xTo(e.clientX);
@@ -259,16 +220,29 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 <span className='cursor_container relative' >
                     {children}
                 </span>
-                <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_secondary_gsap pointer-events-none', 'h-4 sm:h-6 w-4 sm:w-6', 'bg-primary-600/80')} ref={secondaryCursor} ></div>
-                <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_main_gsap', 'w-10 sm:w-14 h-10 sm:h-14', 'border-2 border-primary-500 bg-white-300/5 backdrop-blur-xs')}></div>
-                <div className={twMerge(DEFAULT_BALL_CLASS_NAME, blend, 'ball_gsap ball_inner_top', 'w-full', 'flex justify-center items-center uppercase')}>
+                <div className={twMerge(
+                    DEFAULT_BALL_CLASS_NAME, 
+                    blend,
+                    'ball_gsap ball_secondary_gsap pointer-events-none',
+                    'h-4 sm:h-6 w-4 sm:w-6',
+                    'bg-primary-600/80')} ref={secondaryCursor} ></div>
+                <div className={twMerge(
+                    DEFAULT_BALL_CLASS_NAME, 
+                    blend,
+                    'ball_gsap ball_main_gsap',
+                    'w-10 sm:w-14 h-10 sm:h-14',
+                    'border-2 border-primary-500 bg-white-300/5 backdrop-blur-xs')}></div>
+                <div className={twMerge(
+                    DEFAULT_BALL_CLASS_NAME, 
+                    blend,
+                    'ball_gsap ball_inner_top',
+                    'w-full', 'flex justify-center items-center uppercase')}>
                     {CursorsArray.map((item, index) => {
                         const isActive = item == currentCursor?.component;
                         let otherProps = {};
                         if (isActive) {
                             otherProps = currentCursor?.props;
                         }
-                        
                         return <span key={item}>
                             {Cursors[item]({ ctx, isActive, ...otherProps })}
                         </span>
@@ -296,9 +270,6 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                     .ball_gsap {
                         display: none;
                     }
-                }
-                .ball_gsap {
-                    // transform: translate(-50%, -50%);
                 }
                 @media (hover: hover) {
                     .ball_gsap {

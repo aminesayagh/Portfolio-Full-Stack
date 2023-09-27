@@ -1,13 +1,12 @@
 import { twMerge } from "tailwind-merge";
 import React, { useRef, useContext, useCallback, useMemo } from "react";
-import { Text, Button, Display, Icon, Link, Fit } from '@/components/ui';
+import { Text, Button, Display, Icon, Link, Fit, CursorContent } from '@/components/ui';
 import { useTranslation } from "next-i18next";
-import { gsap, Elastic } from '@/utils/gsap';
+import { gsap } from '@/utils/gsap';
 import { MENU_ITEMS } from "@/conf/router";
 import { ScrollProvider } from '@/context/ScrollContext';
 import { useIsomorphicLayoutEffect } from "react-use";
 import { useHover } from "react-aria";
-import { useRouter } from 'next/router';
 import useGsap from "@/hook/useGsap";
 import useRouterChange from '@/hook/SafePush';
 
@@ -16,7 +15,6 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const xTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' }), []);
     const yTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' }), []);
     const { scrollbar } = useContext(ScrollProvider);
-
     useIsomorphicLayoutEffect(() => {
         if (!!ref.current) {
             const ctx = gsap.context(() => {
@@ -43,7 +41,7 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
             });
             return () => ctx.revert();
         }
-    }, [scrollbar]);
+    }, [ref.current, scrollbar]);
 
     return <div ref={ref} >
         {children}
@@ -273,7 +271,6 @@ const Item = ({ children }: {
 const Menu = () => {
     const { t } = useTranslation();
     const { scrollbar } = useContext(ScrollProvider);
-    const router = useRouter();
     const { safePush } = useRouterChange();
 
     const goToSection = useCallback((section: string) => {
@@ -282,7 +279,7 @@ const Menu = () => {
         } else {
             scrollbar && scrollbar.scrollTo(`#${section}`, { duration: 500 });
         }
-    }, [scrollbar, router])
+    }, [scrollbar, safePush])
     return (<>
         <div className={twMerge('flex flex-row flex-wrap justify-between items-start w-full gap-y-6')} >
             {Array.apply(null, Array(4)).map((_, i) => {
@@ -290,11 +287,15 @@ const Menu = () => {
                 return <div key={i} className={twMerge('flex flex-col justify-start items-start gap-1 w-1/2 sm:w-auto md:w-1/4')} >
                     <Text p weight='medium' size='sm' degree='3' className='number_menu_gsap' >{`0${i + 1}`}</Text>
                     <span className='overflow-hidden'>
-                        <Item>
-                            <Button degree='1' size='sm' weight='semibold' onPress={() => goToSection(menuItems[`${i + 1}` as MenuItems] as string)} className='uppercase item_menu_gsap' >
-                                {t(`header.menu.${menuKeys[i]}.attribute`)}
-                            </Button>
-                        </Item>
+                        <CursorContent name={`cursorPointer_intro_menu_${i + 1}`} component='CursorEvent' props={{
+                            event: 'pointer',
+                        }}>
+                            <Item>
+                                <Button degree='1' size='sm' weight='semibold' onPress={() => goToSection(menuItems[`${i + 1}` as MenuItems] as string)} className='uppercase item_menu_gsap' >
+                                    {t(`header.menu.${menuKeys[i]}.attribute`)}
+                                </Button>
+                            </Item>
+                        </CursorContent>
                     </span>
                 </div>
             })}
