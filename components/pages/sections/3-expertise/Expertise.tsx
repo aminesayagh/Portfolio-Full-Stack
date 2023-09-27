@@ -6,7 +6,7 @@ import { gsap } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 
 
-import { Title, Text } from '@/components/ui';
+import { Title, Text, Noise } from '@/components/ui';
 import { rounded } from "@/components/style";
 import { split } from "lodash";
 import { useHover } from "react-aria";
@@ -29,7 +29,7 @@ const ExpertiseHead = () => {
     return (
         <>
             <div className={twMerge('flex flex-col sm:flex-row gap-5 sm:gap-0 items-start sm:items-end justify-between', 'w-full')}>
-                <div  className='block sm:hidden'>
+                <div className='block sm:hidden'>
                     <IconMemo />
                 </div>
                 <div className={twMerge('w-full xs:w-9/12 sm:w-1/2 xl:w-5/12')}>
@@ -47,11 +47,13 @@ const ExpertiseHead = () => {
 }
 const ExpertiseHeadMemo = memo(ExpertiseHead);
 
-const BORDER_CARD_CLASS_NAME = 'rounded-xl border border-dashed border-black-500'
+const BORDER_CARD_CLASS_NAME = 'rounded-xl border border-dashed border-black-500';
+
 const Card = ({ title, description, number }: { title: string, description: string, number: string }) => {
 
     let { hoverProps, isHovered } = useHover({
         onHoverStart: (e) => {
+            console.log(e.target);
             gsap.to(e.target, {
                 scale: 1.05,
                 yPercent: -10,
@@ -112,7 +114,7 @@ const CardElement = ({ i }: { i: number }) => {
     const { scrollbar } = useContext(ScrollProvider);
 
     useIsomorphicLayoutEffect(() => {
-        if(scrollbar) {
+        if (scrollbar) {
             let ctx = gsap.context(() => {
                 let space = 40;
                 let y = (i % 2 === 0 ? 1 : -1);
@@ -173,9 +175,20 @@ const ExpertiseStagesMemo = memo(ExpertiseStages);
 const Expertise = () => {
     return (
         <>
-            <div data-scroll data-scroll-speed='0.5' className={twMerge('flex flex-col', 'gap-20 xs:gap-32 sm:gap-16 mdl:gap-32 lg:gap-28 2xl:gap-44', 'justify-center items-center h-full', rounded({ size: 'xl' }), 'overflow-hidden container-expertise-gsap')}>
+            <div
+                data-scroll data-scroll-speed='0.5'
+                className={twMerge(
+                    'flex flex-col',
+                    'gap-20 xs:gap-32 sm:gap-16 mdl:gap-32 lg:gap-28 2xl:gap-44',
+                    'justify-center items-center h-full', 
+                    rounded({ size: 'xl' }), 
+                    'overflow-hidden container-expertise-gsap',
+                    'relative z-[60]'
+                )}
+            >
                 <ExpertiseHeadMemo />
                 <ExpertiseStagesMemo />
+                <Noise position='absolute' />
                 <div className={twMerge('absolute w-full h-[26vh] bottom-0 left-0 z-999999999', 'bg-gradient-to-t from-black-100/25 via-black-100/10 to-black-100/0')}></div>
             </div>
         </>
