@@ -2,10 +2,10 @@ import { Container, Noise } from '@/components/ui';
 import { DynamicIntro, DynamicManifesto, DynamicCases, DynamicAction, DynamicVideo, DynamicExpertise, DynamicCallToAction } from '@/components/pages/sections';
 import { MENU_ITEMS } from '@/conf/router';
 import { twMerge } from 'tailwind-merge';
-import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 
-const DynamicFooter = dynamic(() => import('@/components/common/footer'), {});
+const DynamicFooter = dynamic(() => import('@/components/common/footer'));
+
 const LandingPage = () => {
     return (
         <>

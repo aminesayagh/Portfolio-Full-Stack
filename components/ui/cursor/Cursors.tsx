@@ -1,18 +1,18 @@
 
 import { Text, Icon, IconNames } from '@/components/ui';
-import { useEffect, useRef, useState, useMemo, MutableRefObject } from 'react';
+import { useEffect, useRef, MutableRefObject } from 'react';
 import { gsap } from '@/utils/gsap';
 import { twMerge } from 'tailwind-merge';
 import _ from 'lodash';
-
+import { useIsomorphicLayoutEffect } from 'react-use';
+import { ItemCursorPropsByComponent } from './CursorType'
 const CursorScroll = ({ isActive, ctx, title }: {
     ctx: MutableRefObject<gsap.Context | undefined>,
     isActive: boolean,
-    title?: string
-}) => {
+} & Partial<ItemCursorPropsByComponent['CursorScroll']>) => {
     const ref = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(() => {
             gsap.set(ref.current, {
                 scale: 0,
@@ -27,7 +27,7 @@ const CursorScroll = ({ isActive, ctx, title }: {
 
         return () => ctx.revert();
     }, [ctx, ref]);
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         ctx.current?.cursorScroll(isActive);
     }, [isActive, ctx]);
 
@@ -40,12 +40,10 @@ const CursorScroll = ({ isActive, ctx, title }: {
 
 const CursorActionIcon = ({ isActive, ctx, iconName, degree = 45 }: {
     isActive: boolean,
-    ctx: MutableRefObject<gsap.Context | undefined>,
-    iconName?: IconNames,
-    degree?: number,
-}) => {
+    ctx: MutableRefObject<gsap.Context | undefined>
+} & Partial<ItemCursorPropsByComponent['CursorActionIcon']>) => {
     const ref = useRef<HTMLDivElement>(null);
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context((self) => {
             gsap.set(ref.current, {
                 scale: 0,
@@ -58,9 +56,9 @@ const CursorActionIcon = ({ isActive, ctx, iconName, degree = 45 }: {
         });
         return () => ctx.revert();
     }, [ctx, ref]);
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         ctx.current?.cursorActionIcon(isActive, degree);
-    }, [isActive, ctx]);
+    }, [isActive, ctx, degree]);
     return <div ref={ref} className={twMerge('w-28 h-28', 'rounded-full', 'flex-col justify-center items-center cursor_action_icon_gsap')}>
         <span className='cursorIconGsap'>
             {iconName ? <Icon name={iconName} size='30' color='#111517' /> : null}
@@ -68,9 +66,18 @@ const CursorActionIcon = ({ isActive, ctx, iconName, degree = 45 }: {
     </div>
 }
 
-export type TCursor = keyof typeof Cursors;
+const CursorEvent = ({ isActive, ctx, event }: {
+    isActive: boolean,
+    ctx: MutableRefObject<gsap.Context | undefined>,
+} & Partial<ItemCursorPropsByComponent['CursorEvent']>) => {
+    useIsomorphicLayoutEffect(() => {
+        ctx.current?.CursorEvent(isActive, event);
+    }, [ctx, isActive, event]);
+    return <span></span>
+}
 
-const Cursors = { CursorScroll, CursorActionIcon };
+
+const Cursors = { CursorScroll, CursorActionIcon, CursorEvent } as const;
 export default Cursors;
 
-export const CursorsArray = Object.keys(Cursors) as TCursor[];
+export const CursorsArray = Object.keys(Cursors) as (keyof typeof Cursors)[];

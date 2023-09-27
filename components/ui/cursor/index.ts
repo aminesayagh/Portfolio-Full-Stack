@@ -1,4 +1,2 @@
 export { default } from './Cursor';
-export { CursorContent } from './Cursor';
-
-
+export { default as CursorContent } from './CursorContainer';

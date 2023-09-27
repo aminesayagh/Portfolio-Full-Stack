@@ -139,6 +139,7 @@ const Header = () => {
         }
     }, [openMenu])
 
+    let idTimeout = useRef<NodeJS.Timeout>();
     const onButtonClick = useCallback((path: string, id?: string) => {
         if (!openMenu) {
             safePush(path)
@@ -146,14 +147,21 @@ const Header = () => {
             tl.current.reverse().then(() => {
                 setOpenMenu(false);
                 safePush(path);
-                setTimeout(() => {
+                idTimeout.current = setTimeout(() => {
                     scrollbar && scrollbar.scrollTo(`#${id}`, {
                         duration: 500,
                     });
                 }, 100);
             });
         }
-    }, [openMenu, scrollbar]);
+
+    }, [openMenu, scrollbar, safePush]);
+
+    useEffect(() => {
+        return () => {
+            if(!!idTimeout.current) clearTimeout(idTimeout.current);
+        }
+    }, [])
 
     const pageName = useMemo(() => router.pathname.split('/')[1], [router]);
 

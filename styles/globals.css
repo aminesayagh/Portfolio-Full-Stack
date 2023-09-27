@@ -9,8 +9,7 @@
 
 @layer base {
   body{
-    @apply font-sans;
-    @apply bg-black ;
+    @apply font-sans bg-black;
   }
   
 }
