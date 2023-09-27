@@ -4,12 +4,14 @@ import { LinkPropsExtended } from './Typography.type';
 import { twMerge } from 'tailwind-merge';
 import LinkNext from 'next/link';
 import { textClassNames } from './Typography.style';
-
+import { CursorContent } from '@/components/ui';
 const Link: FC<LinkPropsExtended> = ({ weight, degree = '3', size, exchange, className, animation, children, href, ...props }) => {
     const classNameExtended = (size && weight) ? textClassNames({ weight, size, degree, exchange }) : className;
-    return <LinkNext href={href} className={twMerge(
+    return <CursorContent name={`cursorPointer_header_email`} component='CursorEvent' props={{
+        event: 'pointer',
+    }}><LinkNext href={href} className={twMerge(
         classNameExtended, 'remove_outline', className
-    )} {...props}>{children}</LinkNext>
+    )} {...props}>{children}</LinkNext></CursorContent>
 }
 
 export default Link;

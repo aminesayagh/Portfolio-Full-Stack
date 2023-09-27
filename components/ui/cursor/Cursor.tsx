@@ -94,11 +94,6 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 rotate: 0,
             });
 
-            let scaleTo = gsap.quickTo('.ball_secondary_gsap', 'scale', {
-                duration: 0.6,
-                ease: 'Elastic.easeOut',
-            })
-
             context.add('cursorScroll', (isActive: boolean) => {
                 if (isActive) {
                     cursorScrollTimeline.play();
@@ -119,14 +114,14 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
             }).fromTo('.ball_secondary_gsap', {
                 scale: 1,
             },{
-                duration: 0.6,
+                duration: 0.4,
                 scale: 0,
                 ease: 'Power4.easeOut',
             }).fromTo('.ball_main_gsap', {
                 scale: 1,
             },{
-                duration: 0.6,
-                scale: 1.3,
+                duration: 0.4,
+                scale: 1.2,
                 ease: 'Power4.easeOut',
             }, '<');
             context.add('CursorEvent', (isActive: boolean, event: 'pointer' | 'disabled') => {
@@ -143,9 +138,6 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
         });
         return () => ctx.current?.revert();
     }, []);
-
-
-
 
     // default ball animation
     useIsomorphicLayoutEffect(() => {

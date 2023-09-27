@@ -35,11 +35,11 @@ const Header = () => {
 
     const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
     const ctx = useRef<any>(null);
-    
+
     const { scrollbar } = useContext(ScrollProvider);
 
     useIsomorphicLayoutEffect(() => {
-        if(!!scrollbar) {
+        if (!!scrollbar) {
             ctx.current = gsap.context((self) => {
                 self.add('open', () => {
                     tl.current.fromTo(['.modal-overlay', '.modal-content'], {
@@ -94,7 +94,7 @@ const Header = () => {
                         duration: DURATION / 2,
                     }, '<25%')
                     tl.current.play();
-    
+
                 });
                 self.add('close', () => {
                     tl.current.reverse().then(() => {
@@ -109,7 +109,7 @@ const Header = () => {
         }
     }, [scrollbar])
     useIsomorphicLayoutEffect(() => {
-        if(!!scrollbar) {
+        if (!!scrollbar) {
             const ctx = gsap.context(() => {
                 gsap.timeline({
                     scrollTrigger: {
@@ -159,7 +159,7 @@ const Header = () => {
 
     useEffect(() => {
         return () => {
-            if(!!idTimeout.current) clearTimeout(idTimeout.current);
+            if (!!idTimeout.current) clearTimeout(idTimeout.current);
         }
     }, [])
 
@@ -171,6 +171,7 @@ const Header = () => {
                 <span className='w-full flex flex-row items-center justify-between navbar_gsap'>
                     <Navbar.Content className={twMerge('flex-1', GAP_SIZE_LG)}>
                         <Link href={`mailto:${t('header.email')}?subject=Contact from Portfolio&body=Hello Mohamed Amine,`} size='xs' weight='semibold' className='hidden mdl:flex'>{t('header.email')}</Link>
+
                         <span className="w-[1.2px] bg-gray-500 h-[14px] rotate-[25deg] hidden mdl:block" />
                         <SwitchLang />
                     </Navbar.Content>
@@ -180,6 +181,7 @@ const Header = () => {
                         </span>
                     </Navbar.Brand>
                     <Navbar.Content className={twMerge('flex-1 justify-end overflow-hidden', GAP_SIZE_LG)}>
+
                         <Button
                             onPress={() => onButtonClick(pageName !== 'contact' ? '/contact' : '/')}
                             size='sm'
@@ -197,10 +199,12 @@ const Header = () => {
                             {({ handler, isOpen }) => {
                                 return <>
                                     <div className={twMerge('flex flex-row items-center gap-6 justify-end')} >
+
                                         <span className='overflow-hidden hidden xxs:block cursor-pointer' onClick={() => handler()}>
                                             <Text p size='xs' degree='3' className={twMerge('mr-2 hidden', 'modal-close')}>{t('header.close')}</Text>
                                         </span>
                                         <HamburgerMenu isOpen={isOpen} setOpen={handler} />
+
                                     </div>
                                 </>
                             }}

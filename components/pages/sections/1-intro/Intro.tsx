@@ -287,7 +287,7 @@ const Menu = () => {
                 return <div key={i} className={twMerge('flex flex-col justify-start items-start gap-1 w-1/2 sm:w-auto md:w-1/4')} >
                     <Text p weight='medium' size='sm' degree='3' className='number_menu_gsap' >{`0${i + 1}`}</Text>
                     <span className='overflow-hidden'>
-                        <CursorContent name={`cursorPointer_${i + 1}`} component='CursorEvent' props={{
+                        <CursorContent name={`cursorPointer_intro_menu_${i + 1}`} component='CursorEvent' props={{
                             event: 'pointer',
                         }}>
                             <Item>
