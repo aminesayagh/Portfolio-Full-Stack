@@ -16,7 +16,7 @@ const ButtonUi = ({ children, icon, iconRight, size = 'auto', full, weight, degr
                     'gap-2 flex flex-row flex-nowrap self-center items-center justify-center',
                     'font-sans font-bold',
                     'text-clip whitespace-nowrap overflow-hidden',
-                    'align-middle cursor-pointer-gsap',
+                    'align-middle',
                     full && 'w-full',
                     textClassNames({ weight, size, degree, exchange }),
                     typeof className == 'string' && className,

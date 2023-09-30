@@ -49,15 +49,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                 }
             })
         }
-
-        gsap.fromTo(container.current?.children[0]?.children[0] as any, {
-            scale: 1,
-            backgroundPosition: 'center 80%',
-        }, {
-            scale: 1.3,
-            transformOrigin: 'center 10%',
-            backgroundPosition: 'center 20%',
-            ease: 'Power3.easeIn',
+        const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: container.current as any,
                 scrub: true,
@@ -67,6 +59,23 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                 invalidateOnRefresh: true,
             }
         })
+        tl.fromTo(container.current?.children[0]?.children[0] as any, {
+            scale: 1,
+        }, {
+            scale: 1.3,
+            transformOrigin: 'center 10%',
+            ease: 'Power3.easeIn'
+        }).fromTo(container.current?.children[0]?.children[0] as any, {
+            backgroundPosition: 'center 20%',
+        }, {
+            backgroundPosition: 'center 80%',
+            ease: 'Power3.easeOut',
+        }, 0).fromTo(container.current?.children[0]?.children[0] as any, {
+            filter: 'blur(0px)',
+        }, {
+            filter: 'blur(10px)',
+            ease: 'Power4.easeIn',
+        }, '<')
 
         gsap.fromTo('.case-text-gsap', {
             xPercent: -100,
@@ -91,7 +100,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
         zIndex: 10 + (index + 10),
     }} >
         <div className='absolute left-0 right-0 top-0 w-full h-screen'  >
-            <Image src={pic} alt={t(`projects.${id}.description`)} className='h-screen object-cover object-center mdl:object-[center_80%]' priority sizes='100vw' width='6000' height='4500' style={{
+            <Image src={pic} alt={t(`projects.${id}.description`)} className='h-screen object-cover' priority sizes='100vw' width='6000' height='4500' style={{
                 zIndex: 10 + (index + 11)
             }} />
         </div>

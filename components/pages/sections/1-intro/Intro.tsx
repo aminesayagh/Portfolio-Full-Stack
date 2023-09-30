@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import React, { useRef, useContext, useCallback, useMemo } from "react";
+import React, { useRef, useContext, useCallback, useMemo, useState, useEffect } from "react";
 import { Text, Button, Display, Icon, Link, Fit, CursorContent } from '@/components/ui';
 import { useTranslation } from "next-i18next";
 import { gsap } from '@/utils/gsap';
@@ -121,7 +121,7 @@ const FullStack = ({ className }: { className: string }) => {
             <div className={twMerge(
                 className,
                 'flex flex-col items-start xs:items-end justify-end',
-                i18n.language == 'en' ? 'pb-[1%] xxs:pb-[2%] xs:pb-[4.2%] lg:pb-[5.5%] xl:pb-[6.5%] 2xl:pb-2' : 'pb-[0%] xxs:pb-[1.4%] sm:pb-[2%] lg:pb-[5.5%] xl:pb-[6.5%] 2xl:pb-2',
+                i18n.language == 'en' ? 'pb-[1%] xxs:pb-[2%] xs:pb-[4.2%] xl:pb-[5%] 2xl:pb-[4%]' : 'pb-[0%] xxs:pb-[1.4%] sm:pb-[2%] lg:pb-[5.5%] xl:pb-[6.5%] 2xl:pb-2',
                 'space-y-0 xs:-space-y-1 md:space-y-0 mdl:-space-y-1 lg:-space-y-[3%] xl:-space-y-[3%] 2xl:-space-y-[4.62%] 3xl:-space-y-2 4xl:-space-y-1'
             )} >
                 <span data-scroll className='overflow-hidden'>
@@ -232,8 +232,12 @@ const Title = () => {
             'mdl:row-start-2 mdl:row-span-1',
             'col-start-1 col-span-12',
             'xs:col-start-4 xs:col-span-9',
-            i18n.language == 'en' ? 'mdl:col-start-7 mdl:col-span-6' : 'mdl:col-start-6 mdl:col-span-7', // xs
-            i18n.language == 'en' ? 'xl:col-start-7 xl:col-span-6' : 'xl:col-start-6 xl:col-span-7', // xl
+            i18n.language == 'en' ?
+                'mdl:col-start-7 mdl:col-span-6' :
+                'mdl:col-start-6 mdl:col-span-7', // xs
+            i18n.language == 'en' ?
+                'xl:col-start-7 xl:col-span-6' :
+                'xl:col-start-6 xl:col-span-7', // xl
             'gap-2 sm:gap-1 md:gap-5 mdl:gap-8', // gap
             'justify-end mdl:justify-center items-end mdl:items-center',
             'overflow-hidden'
@@ -252,21 +256,73 @@ const menuItems = {
 const menuKeys = ['manifesto', 'experience', 'cases', 'contact'];
 
 type MenuItems = keyof typeof menuItems;
-
 const Item = ({ children }: {
     children: React.ReactElement,
 }) => {
-    let { isHovered, hoverProps } = useHover({
-        onHoverStart: (e) => {
-            gsap.timeline().itemMenuHoverPlay(e.target.children[0])
-        },
-        onHoverEnd: (e) => {
-            gsap.timeline().itemMenuHoverReverse(e.target.children[0]);
+    const ref = useRef<HTMLDivElement>(null);
+    let [onHoverStart, setOnHoverStart] = useState(false);
+    let [onHoverEnd, setOnHoverEnd] = useState(false);
+    useIsomorphicLayoutEffect(() => {
+        let ctx = gsap.context(() => {
+
+            const timeline = gsap.timeline({
+                paused: true,
+                defaults: {
+                    duration: 0.3,
+                    ease: 'power2.inOut'
+                }
+            })
+            timeline.to('.item-child-grap', {
+                yPercent: -100,
+                skewY: 5,
+                color: '#FEFEFE',
+                ease: 'power4.easeIn'
+            }).fromTo('.item-child-grap', {
+                yPercent: 100,
+                skewY: 5,
+                color: '#6A5EEF',
+            }, {
+                yPercent: 0,
+                skewY: 0,
+                ease: 'power4.easeOut',
+                color: '#6A5EEF'
+            }).progress(0)
+            gsap.set('.item-child-grap', {
+                yPercent: 0,
+                skewY: 0,
+                color: '#FEFEFE'
+            });
+
+            ref.current?.addEventListener('pointerenter', () => {
+                if (onHoverStart) return;
+                setOnHoverStart(true);
+                timeline?.play().then(() => setOnHoverStart(false));
+            });
+            ref.current?.addEventListener('pointerleave', () => {
+                console.log('exit');
+                if (onHoverEnd) return;
+                setOnHoverEnd(true);
+                timeline?.reverse().then(() => setOnHoverEnd(false));
+            });
+            return () => {
+                ref.current?.removeEventListener('mouseenter', () => {
+                    timeline?.play();
+                });
+                ref.current?.removeEventListener('mouseleave', () => {
+                    timeline?.reverse();
+                });
+                timeline?.kill();
+            }
+        }, ref);
+        return () => {
+            ctx.revert();
         }
-    });
-    return <div {...hoverProps} className='cursor-pointer'>{
-        children
-    }</div>
+    }, [ref]);
+    return <div className='relative min-h-[12px]' ref={ref}>
+        <div className='item-child-grap'>
+            {children}
+        </div>
+    </div>
 }
 const Menu = () => {
     const { t } = useTranslation();
@@ -284,14 +340,21 @@ const Menu = () => {
         <div className={twMerge('flex flex-row flex-wrap justify-between items-start w-full gap-y-6')} >
             {Array.apply(null, Array(4)).map((_, i) => {
                 if (i > 3) return null;
-                return <div key={i} className={twMerge('flex flex-col justify-start items-start gap-1 w-1/2 sm:w-auto md:w-1/4')} >
+                return <div key={i} className={twMerge('flex flex-col justify-start items-start gap-0 w-1/2 sm:w-auto md:w-1/4')} >
                     <Text p weight='medium' size='sm' degree='3' className='number_menu_gsap' >{`0${i + 1}`}</Text>
                     <span className='overflow-hidden'>
                         <CursorContent name={`cursorPointer_intro_menu_${i + 1}`} component='CursorEvent' props={{
                             event: 'pointer',
                         }}>
                             <Item>
-                                <Button degree='1' size='sm' weight='semibold' onPress={() => goToSection(menuItems[`${i + 1}` as MenuItems] as string)} className='uppercase item_menu_gsap' >
+                                <Button
+                                    degree='1'
+                                    size='sm'
+                                    weight='semibold'
+                                    onPress={() => goToSection(menuItems[`${i + 1}` as MenuItems] as string)}
+                                    className='uppercase item_menu_gsap py-2' style={{
+                                        color: 'inherit'
+                                    }} >
                                     {t(`header.menu.${menuKeys[i]}.attribute`)}
                                 </Button>
                             </Item>

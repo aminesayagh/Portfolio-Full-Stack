@@ -42,7 +42,7 @@ const Manifesto = () => {
                     trigger: '.manifesto_quote_gsap',
                     scrub: true,
                     start: 'top bottom-=100px',
-                    end: 'center top',
+                    end: 'center top+=100px',
                     markers: false,
                     invalidateOnRefresh: true,
                     toggleActions: 'play pause reverse pause',

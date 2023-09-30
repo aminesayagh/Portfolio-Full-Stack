@@ -1,5 +1,5 @@
 import { Head } from '@/components/common';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Noise, Preloader } from '@/components/ui';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
