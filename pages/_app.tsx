@@ -10,9 +10,7 @@ import { Montserrat } from 'next/font/google';
 import { appWithTranslation } from 'next-i18next'
 import nextI18NextConfig from '../next-i18next.config.js';
 import '../utils/i18n';
-import { DefaultSeo } from 'next-seo';
 import { useState, useEffect } from 'react';
-
 
 
 import { Analytics } from '@vercel/analytics/react';
@@ -35,16 +33,6 @@ function App({ Component, pageProps }: AppProps) {
   }, [])
 
   return <>
-    <DefaultSeo
-      title={"Mohamed Amine SAYAGH - Full Stack Web Developer"}
-      description={"Mohamed Amine SAYAGH - Full Stack Web Developer"}
-      openGraph={{
-        type: 'website',
-        locale: 'en_IE',
-        url: 'https://ma-sayagh.vercel.app/',
-        site_name: 'Mohamed Amine SAYAGH - Full Stack Web Developer',
-      }}
-    />
     <Script async src="https://www.googletagmanager.com/gtag/js?id=G-LBW0TBMSD6"></Script>
     <Script id="google-analytics">{
       `

@@ -26,7 +26,7 @@ const CursorContainer = <C extends CursorNames>({ children, name, ...props }: {
         }
     }, [isHovered, name, setKey])
 
-    return <span { ...hoverProps }>
+    return <span className='contents' { ...hoverProps }>
         {children}
     </span>
 }

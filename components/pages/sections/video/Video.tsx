@@ -78,7 +78,7 @@ const Video = () => {
                     <canvas data-scroll ref={ref} className={twMerge(
                         'h-full w-full', 
                         'h-[70vh] xxs:h-screen sm:h-[96vh] lg:h-screen',
-                        'max-h-[720px] xxs:max-h-[900px] sm:max-h-[800px] lg:max-h-[900px]', 
+                        'max-h-[720px] xxs:max-h-[900px] sm:max-h-[800px] lg:max-h-[830px] xl:max-h-[900px]', 
                         rounded({ size: 'xl' })
                     )} style={{ width: "100%", objectFit: 'cover'  }} />
                 </CursorContent>

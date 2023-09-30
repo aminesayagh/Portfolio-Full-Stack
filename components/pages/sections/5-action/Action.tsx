@@ -49,7 +49,7 @@ const Action = () => {
                     {t('contactCall.title')}
                 </Display>
             </span>
-            <div className='flex flex-row justify-start xs:justify-center items-start relative'>
+            <div className='flex flex-row justify-start xs:justify-center items-start relative overflow-hidden'>
                 <CursorContent name='CursorActionIconContactAction' component='CursorActionIcon' props={{
                     degree: -45,
                     iconName: 'IconArrowUpRight',

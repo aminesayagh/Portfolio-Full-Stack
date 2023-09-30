@@ -44,10 +44,6 @@ html {
   white-space: inherit !important;
 }
 
-.cursor-pointer-gsap{
-  cursor: none;
-}
-
 /*! locomotive-scroll v4.1.3 | MIT License | https://github.com/locomotivemtl/locomotive-scroll */
 body {
   overflow: hidden;
