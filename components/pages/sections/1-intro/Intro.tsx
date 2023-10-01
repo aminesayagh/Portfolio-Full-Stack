@@ -68,9 +68,9 @@ const GsapCircleBlue = ({ children, ...props }: { children: React.ReactElement, 
                 // init the animation
                 tl.clear();
                 tl.fromTo(circle.current, {
-                    background: `radial-gradient(circle at ${x}px ${y}px, #948BF4 0%, #FEFEFE 0%)`,
+                    background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 0%, var(--color-white-100) 0%)`,
                 }, {
-                    background: `radial-gradient(circle at ${x}px ${y}px, #948BF4 100%, #FEFEFE 0%)`,
+                    background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 100%, var(--color-white-100) 0%)`,
                     duration: 0.4,
                     ease: 'power4.out',
                 });
@@ -82,9 +82,9 @@ const GsapCircleBlue = ({ children, ...props }: { children: React.ReactElement, 
 
                 tl.clear();
                 tl.fromTo(circle.current, {
-                    background: `radial-gradient(circle at ${x}px ${y}px, #948BF4 100%, #FEFEFE 0%)`,
+                    background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 100%, var(--color-white-100) 0%)`,
                 }, {
-                    background: `radial-gradient(circle at ${x}px ${y}px, #948BF4 0%, #FEFEFE 0%)`,
+                    background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 0%, var(--color-white-100) 0%)`,
                     duration: 0.4,
                     ease: 'power4.out',
                 });

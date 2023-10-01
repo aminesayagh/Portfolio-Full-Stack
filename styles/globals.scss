@@ -118,8 +118,26 @@ html.has-scroll-smooth {
     --red-700: 60.48% 0.173 var(--red-base);
     --red-800: 53.13% 0.168 var(--red-base);
     --red-900: 47.83% 0.153 var(--red-base);
+
+
+    @mixin color-generate($name) {
+      @each $degree in 100, 200, 300, 400, 500, 600, 700, 800, 900 {
+        --color-#{$name}-#{$degree}: oklch(var(--#{$name}-#{$degree}));
+      }
+    }
+  
+    @include color-generate("primary");
+    @include color-generate("secondary");
+    @include color-generate("white");
+    @include color-generate("gray");
+    @include color-generate("black");
+    @include color-generate("red");
   }
+  /* create function scss to generate variable of color based on color created, with oklch format */
+
+
 }
+
 
 /* Scroll Bar */
 html.has-scroll-dragging {
