@@ -6,6 +6,8 @@ import i18n from '@/utils/i18n';
 
 import { useRouter } from 'next/router';
 const langs = ['fr', 'en'];
+import { Item } from '@/components/ui';
+
 const SwitchLang = () => {
     // const { t, i18n } = useTranslation();
     const router = useRouter();
@@ -17,9 +19,11 @@ const SwitchLang = () => {
         <>
             <div className='flex flex-row items-center justify-start gap-6 xxs:gap-8 mdl:gap-6 lg:gap-8'>
                 {langs.map(l =>
-                    <Button key={l} degree="2" size='xs' className="uppercase" onPress={() => changeLanguage(l)} >
-                        {l}
-                    </Button>
+                    <Item key={l} >
+                        <Button degree="2" size='xs' className="uppercase" onPress={() => changeLanguage(l)} >
+                            {l}
+                        </Button>
+                    </Item>
                 )}
             </div>
         </>

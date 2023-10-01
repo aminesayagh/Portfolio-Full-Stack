@@ -44,6 +44,9 @@ $h6: 1rem;
 }
 .fit{
   @apply default-text;
+  &::selection {
+    @apply bg-primary-500 text-black-200;
+  }
 }
 .title {
   @apply default-text;

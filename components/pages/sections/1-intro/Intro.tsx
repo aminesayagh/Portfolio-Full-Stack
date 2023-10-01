@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
-import React, { useRef, useContext, useCallback, useMemo, useState, useEffect } from "react";
-import { Text, Button, Display, Icon, Link, Fit, CursorContent } from '@/components/ui';
+import React, { useRef, useContext, useCallback, useMemo } from "react";
+import { Text, Button, Display, Icon, Fit, CursorContent } from '@/components/ui';
 import { useTranslation } from "next-i18next";
 import { gsap } from '@/utils/gsap';
 import { MENU_ITEMS } from "@/conf/router";
@@ -9,6 +9,8 @@ import { useIsomorphicLayoutEffect } from "react-use";
 import { useHover } from "react-aria";
 import useGsap from "@/hook/useGsap";
 import useRouterChange from '@/hook/SafePush';
+import { Item } from '@/components/ui';
+
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<HTMLDivElement>(null);
@@ -66,9 +68,9 @@ const GsapCircleBlue = ({ children, ...props }: { children: React.ReactElement, 
                 // init the animation
                 tl.clear();
                 tl.fromTo(circle.current, {
-                    background: `radial-gradient(circle at ${x}px ${y}px, #948BF4 0%, #FEFEFE 0%)`,
+                    background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 0%, var(--color-white-100) 0%)`,
                 }, {
-                    background: `radial-gradient(circle at ${x}px ${y}px, #948BF4 100%, #FEFEFE 0%)`,
+                    background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 100%, var(--color-white-100) 0%)`,
                     duration: 0.4,
                     ease: 'power4.out',
                 });
@@ -80,9 +82,9 @@ const GsapCircleBlue = ({ children, ...props }: { children: React.ReactElement, 
 
                 tl.clear();
                 tl.fromTo(circle.current, {
-                    background: `radial-gradient(circle at ${x}px ${y}px, #948BF4 100%, #FEFEFE 0%)`,
+                    background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 100%, var(--color-white-100) 0%)`,
                 }, {
-                    background: `radial-gradient(circle at ${x}px ${y}px, #948BF4 0%, #FEFEFE 0%)`,
+                    background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 0%, var(--color-white-100) 0%)`,
                     duration: 0.4,
                     ease: 'power4.out',
                 });
@@ -256,74 +258,7 @@ const menuItems = {
 const menuKeys = ['manifesto', 'experience', 'cases', 'contact'];
 
 type MenuItems = keyof typeof menuItems;
-const Item = ({ children }: {
-    children: React.ReactElement,
-}) => {
-    const ref = useRef<HTMLDivElement>(null);
-    let [onHoverStart, setOnHoverStart] = useState(false);
-    let [onHoverEnd, setOnHoverEnd] = useState(false);
-    useIsomorphicLayoutEffect(() => {
-        let ctx = gsap.context(() => {
 
-            const timeline = gsap.timeline({
-                paused: true,
-                defaults: {
-                    duration: 0.3,
-                    ease: 'power2.inOut'
-                }
-            })
-            timeline.to('.item-child-grap', {
-                yPercent: -100,
-                skewY: 5,
-                color: '#FEFEFE',
-                ease: 'power4.easeIn'
-            }).fromTo('.item-child-grap', {
-                yPercent: 100,
-                skewY: 5,
-                color: '#6A5EEF',
-            }, {
-                yPercent: 0,
-                skewY: 0,
-                ease: 'power4.easeOut',
-                color: '#6A5EEF'
-            }).progress(0)
-            gsap.set('.item-child-grap', {
-                yPercent: 0,
-                skewY: 0,
-                color: '#FEFEFE'
-            });
-
-            ref.current?.addEventListener('pointerenter', () => {
-                if (onHoverStart) return;
-                setOnHoverStart(true);
-                timeline?.play().then(() => setOnHoverStart(false));
-            });
-            ref.current?.addEventListener('pointerleave', () => {
-                console.log('exit');
-                if (onHoverEnd) return;
-                setOnHoverEnd(true);
-                timeline?.reverse().then(() => setOnHoverEnd(false));
-            });
-            return () => {
-                ref.current?.removeEventListener('mouseenter', () => {
-                    timeline?.play();
-                });
-                ref.current?.removeEventListener('mouseleave', () => {
-                    timeline?.reverse();
-                });
-                timeline?.kill();
-            }
-        }, ref);
-        return () => {
-            ctx.revert();
-        }
-    }, [ref]);
-    return <div className='relative min-h-[12px]' ref={ref}>
-        <div className='item-child-grap'>
-            {children}
-        </div>
-    </div>
-}
 const Menu = () => {
     const { t } = useTranslation();
     const { scrollbar } = useContext(ScrollProvider);

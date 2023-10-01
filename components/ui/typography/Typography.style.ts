@@ -1,5 +1,6 @@
 
-import { cva, VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
+
 const textDefault = 'inline-block align-middle';
 const fontFamilyTitle = 'font-sans';
 const fontFamilyText = 'font-sans';
@@ -8,16 +9,16 @@ export const textColorDegree = {
     "normal": {
         "0": "",
         "1": "text-white-100",
-        "2": "text-gray-300",
-        "3": "text-gray-500",
-        "4": "text-gray-700",
+        "2": "text-white-600",
+        "3": "text-gray-200",
+        "4": "text-gray-400"
     },
     "exchanged": {
         "0": "",
         "1": "text-black-100",
-        "2": "text-black-500",
-        "3": "text-gray-900",
-        "4": "text-gray-400",
+        "2": "text-black-400",
+        "3": "text-black-700",
+        "4": "text-gray-900"
     }
 }
 

@@ -1,0 +1,217 @@
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+:root {
+  --font-montserrat: 'Montserrat', sans-serif;
+}
+
+@layer base {
+  body{
+    @apply font-sans bg-black;
+  }
+  
+}
+
+.remove_outline {
+  @apply outline-none focus:outline-none touch-none;
+}
+
+*{
+	box-sizing: border-box;
+}
+html {
+  box-sizing: border-box;
+  /* scroll-behavior: smooth; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-overflow-scrolling: touch;
+  -webkit-touch-callout: none;
+}
+
+.whitespace-nowrap-important {
+  white-space: nowrap !important;
+}
+
+.whitespace-inherit-important {
+  white-space: inherit !important;
+}
+
+/*! locomotive-scroll v4.1.3 | MIT License | https://github.com/locomotivemtl/locomotive-scroll */
+body {
+  overflow: hidden;
+}
+html.has-scroll-smooth {
+  overflow: hidden; 
+}
+
+/* Colors */
+@layer base {
+  html{
+    --primary-base: 281.25;
+    --primary-100: 69.06% 0.15 var(--primary-base);
+    --primary-200: 62.88% 0.165 var(--primary-base);
+    --primary-300: 60.61% 0.19 var(--primary-base);
+    --primary-400: 56.82% 0.21 var(--primary-base);
+    --primary-500: 53.26% 0.21 var(--primary-base);
+    --primary-600: 46.41% 0.207 var(--primary-base);
+    --primary-700: 42.29% 0.202 var(--primary-base);
+    --primary-800: 38.47% 0.209 var(--primary-base);
+    --primary-900: 35.24% 0.185 var(--primary-base);
+
+    --secondary-base: 234.51;
+    --secondary-100: 69.06% 0.15 var(--secondary-base);
+    --secondary-200: 62.88% 0.165 var(--secondary-base);
+    --secondary-300: 60.61% 0.19 var(--secondary-base);
+    --secondary-400: 56.82% 0.21 var(--secondary-base);
+    --secondary-500: 53.26% 0.21 var(--secondary-base);
+    --secondary-600: 46.41% 0.207 var(--secondary-base);
+    --secondary-700: 42.29% 0.202 var(--secondary-base);
+    --secondary-800: 38.47% 0.209 var(--secondary-base);
+    --secondary-900: 35.24% 0.185 var(--secondary-base);
+
+    --white-100: 98.18% 0.004 var(--primary-base);
+    --white-200: 96.47% 0.004 var(--primary-base);
+    --white-300: 94.12% 0.004 var(--primary-base);
+    --white-400: 90.59% 0.004 var(--primary-base);
+    --white-500: 87.06% 0.004 var(--primary-base);
+    --white-600: 80.78% 0.004 var(--primary-base);
+    --white-700: 74.12% 0.004 var(--primary-base);
+    --white-800: 67.06% 0.004 var(--primary-base);
+    --white-900: 60.39% 0.004 var(--primary-base);
+
+    --gray-100: 85.98% 0.0321 var(--primary-base);
+    --gray-200: 81.18% 0.0321 var(--primary-base);
+    --gray-300: 75.69% 0.0321 var(--primary-base);
+    --gray-400: 69.8% 0.0321 var(--primary-base);
+    --gray-500: 63.92% 0.0321 var(--primary-base);
+    --gray-600: 55.69% 0.0321 var(--primary-base);
+    --gray-700: 48.24% 0.0321 var(--primary-base);
+    --gray-800: 40.39% 0.0321 var(--primary-base);
+    --gray-900: 33.33% 0.0321 var(--primary-base);
+
+    --black-100: 16.71% 0.004 var(--primary-base);
+    --black-200: 18.6% 0.019 var(--primary-base);
+    --black-300: 20.39% 0.019 var(--primary-base);
+    --black-400: 22.35% 0.019 var(--primary-base);
+    --black-500: 24.31% 0.019 var(--primary-base);
+    --black-600: 26.27% 0.019 var(--primary-base);
+    --black-700: 28.24% 0.019 var(--primary-base);
+    --black-800: 30.2% 0.019 var(--primary-base);
+    --black-900: 32.16% 0.019 var(--primary-base);
+
+    --red-base: 37.127;
+
+    --red-100: 85.88% 0.102 var(--red-base);
+    --red-200: 76.95% 0.128 var(--red-base);
+    --red-300: 72.83% 0.141 var(--red-base);
+    --red-400: 70.48% 0.168 var(--red-base);
+    --red-500: 70.39% 0.191 var(--red-base);
+    --red-600: 66.36% 0.192 var(--red-base);
+    --red-700: 60.48% 0.173 var(--red-base);
+    --red-800: 53.13% 0.168 var(--red-base);
+    --red-900: 47.83% 0.153 var(--red-base);
+
+
+    @mixin color-generate($name) {
+      @each $degree in 100, 200, 300, 400, 500, 600, 700, 800, 900 {
+        --color-#{$name}-#{$degree}: oklch(var(--#{$name}-#{$degree}));
+      }
+    }
+  
+    @include color-generate("primary");
+    @include color-generate("secondary");
+    @include color-generate("white");
+    @include color-generate("gray");
+    @include color-generate("black");
+    @include color-generate("red");
+  }
+  /* create function scss to generate variable of color based on color created, with oklch format */
+
+
+}
+
+
+/* Scroll Bar */
+html.has-scroll-dragging {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; 
+}
+
+.has-scroll-smooth body {
+  overflow: hidden; 
+}
+
+.has-scroll-smooth [data-scroll-container] {
+  min-height: 100vh; 
+}
+
+[data-scroll-direction="horizontal"] [data-scroll-container] {
+  height: 100vh;
+  display: inline-block;
+  white-space: nowrap; 
+}
+
+[data-scroll-direction="horizontal"] [data-scroll-section] {
+  display: inline-block;
+  vertical-align: top;
+  white-space: nowrap;
+  height: 100%;
+}
+
+.c-scrollbar {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 11px;
+  height: 100%;
+  transform-origin: center right;
+  transition: transform 0.3s, opacity 0.3s;
+  opacity: 0;
+}
+.c-scrollbar:hover {
+  transform: scaleX(1.45); 
+}
+.c-scrollbar:hover, .has-scroll-scrolling .c-scrollbar, .has-scroll-dragging .c-scrollbar {
+  opacity: 1;
+}
+[data-scroll-direction="horizontal"] .c-scrollbar {
+  width: 100%;
+  height: 10px;
+  top: auto;
+  bottom: 0;
+  transform: scaleY(1); 
+}
+[data-scroll-direction="horizontal"] .c-scrollbar:hover {
+  transform: scaleY(1.3); 
+}
+
+.c-scrollbar_thumb {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: black;
+  opacity: 0.5;
+  width: 7px;
+  border-radius: 10px;
+  margin: 2px;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+.has-scroll-dragging .c-scrollbar_thumb {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+[data-scroll-direction="horizontal"] .c-scrollbar_thumb {
+    right: auto;
+    bottom: 0; 
+}

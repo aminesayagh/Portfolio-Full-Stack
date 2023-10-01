@@ -10,7 +10,7 @@ const Fit = ({ children, className, exchange, weight, ...props }: ReactFitProps)
     useEffect(() => {
         setIsClient(true);
     }, []);
-    if(isClient === false) {
+    if (isClient === false) {
         return <div className={twMerge(
             displayStyle({
                 weight
@@ -29,7 +29,8 @@ const Fit = ({ children, className, exchange, weight, ...props }: ReactFitProps)
         'leading-none',
         Style['fit'],
         textColorDegree[exchange ? 'exchanged' : 'normal']['1'],
-        className)} {...props}>
+        className
+    )} {...props}>
         {children}
     </ReactFitty>
 
