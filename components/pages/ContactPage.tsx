@@ -11,8 +11,7 @@ import { getMenuItems } from '@/conf/router';
 import { ToastRegion, addToast } from '@/components/common/toast';
 
 import { useTime } from '@/hook';
-import AnimationConf from '@/context/AnimationConf';
-import ScrollContextProvider, { ScrollProvider } from '@/context/ScrollContext';
+import AnimationConf, { ScrollProvider } from '@/context/AnimationConf';
 
 const CONTACT_SUBJECTS = {
     "1": "Project Inquiry",

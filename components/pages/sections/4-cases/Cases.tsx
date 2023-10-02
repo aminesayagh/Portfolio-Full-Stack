@@ -1,9 +1,8 @@
-import React, { useMemo, useRef, useContext } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Title, Text } from '@/components/ui';
 
 import { useTranslation } from 'next-i18next';
-import { ScrollProvider } from '@/context/ScrollContext';
 import { getProjectsByCategory } from '@/conf/projects';
 import { gsap, Power4 } from '@/utils/gsap';
 import { Image } from '@/components/ui';

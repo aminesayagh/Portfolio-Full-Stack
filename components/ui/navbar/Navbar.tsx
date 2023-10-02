@@ -12,7 +12,7 @@ import { twMerge } from 'tailwind-merge';
 import { containerStyle } from '@/components/ui';
 import { useHover } from 'react-aria';
 import { zIndex } from '../conf';
-import { ScrollProvider } from '@/context/ScrollContext';
+import { ScrollProvider } from '@/context/AnimationConf';
 
 const NavbarAnimation = createContext<{ scale: string } | null>(null);
 

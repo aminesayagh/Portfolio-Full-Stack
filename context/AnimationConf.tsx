@@ -1,15 +1,19 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
-import { useIsomorphicLayoutEffect } from 'react-use';
-import { ScrollProvider } from './ScrollContext';
+import React, { useEffect, useRef, useState, createContext } from 'react';
 import { gsap } from '@/utils/gsap';
 import LocomotiveScroll from 'locomotive-scroll';
 import { ScrollTrigger } from '@/utils/gsap';
 
+export const ScrollProvider = createContext<{
+    scrollbar: null | LocomotiveScroll,
+}>({
+    scrollbar: null,
+});
 
 
 const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     let app = useRef<HTMLDivElement | null>(null);
-    const { scrollbar, setScrollbar } = useContext(ScrollProvider)
+    const [scrollbar, setScrollbar] = useState<LocomotiveScroll | null>(null);
+
     useEffect(() => {
         let scroll: LocomotiveScroll | null = null;
         import('locomotive-scroll').then((locomotiveModule) => {
@@ -33,7 +37,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             setScrollbar(scroll);
 
             scroll.on('scroll', () => {
-                ScrollTrigger.update()
+                ScrollTrigger.update
             })
 
             ScrollTrigger.scrollerProxy('[data-scroll-container]', {
@@ -50,31 +54,26 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                         height: window.innerHeight,
                     }
                 },
-
                 pinType: el?.style?.transform
                     ? 'transform'
-                    : 'fixed',
-            })
-            ScrollTrigger.defaults({ scroller: el })
+                    : 'fixed'
+            });
+            ScrollTrigger.defaults({ scroller: el });
             ScrollTrigger.addEventListener('refresh', () => {
-                scroll?.update()
-            })
-            // ScrollTrigger.refresh()
+                if(scrollbar) {
+                    scroll?.update()
+                }
+            });
         }).catch((err) => {
             console.error('Error importing locomotive-scroll');
             console.error(err);
             setScrollbar(null);
         })
 
-        window.addEventListener('DOMContentLoaded', () => {
-            scroll?.update()
-            // ScrollTrigger.refresh() // typed error here
+        window.addEventListener('resize', () => {
+            scroll?.update();
         })
 
-        window.addEventListener('resize', () => {
-            scroll?.update();            
-            // ScrollTrigger.refresh() // typed error here
-        })
         return () => {
             scroll?.destroy();
             scrollbar?.destroy();
@@ -82,14 +81,15 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 trigger.kill(true);
             });
         }
-    }, [])
+    }, []);
+
     useEffect(() => {
         let ctx = gsap.context(() => {
             gsap.config({
                 nullTargetWarn: false
             });
             if(scrollbar) {
-                gsap.to(app, 0, { css: { visibility: 'visible' } });
+                gsap.to('.app-container', 0, { css: { visibility: 'visible' } });
             }
         });
         return () => {
@@ -97,11 +97,13 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             scrollbar?.destroy();
         }
     }, [scrollbar]);
-    return <><div ref={el => {
-        // @ts-ignore
-        app = el
-    }} className="app-container" id='main-container'>
-        {children}
+
+    return <><div ref={app} className="app-container" id='main-container'>
+        <ScrollProvider.Provider value={{
+            scrollbar
+        }} >
+            {children}
+        </ScrollProvider.Provider>
     </div>
         <style jsx>{`
             .app-container{

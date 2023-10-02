@@ -10,7 +10,7 @@ import { Title, Text, Noise } from '@/components/ui';
 import { rounded } from "@/components/style";
 import { useHover } from "react-aria";
 import { useMedia } from "react-use";
-import { ScrollProvider } from '@/context/ScrollContext';
+import { ScrollProvider } from '@/context/AnimationConf';
 
 const Icon = () => {
     return (

@@ -7,7 +7,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import '@/utils/gsap';
 import AnimationConf from '@/context/AnimationConf';
-import ScrollContextProvider from '@/context/ScrollContext';
+import {} from '@/context/AnimationConf';
 import { Header } from '@/components/common';
 import { ToastRegion } from '@/components/common/toast';
 
@@ -24,7 +24,6 @@ const Contact = () => {
                 author={t('head.contact.author')}
                 logo='/favicon.svg'
             />
-            <ScrollContextProvider >
                 <AnimationConf>
                     <Header />
                     <div data-scroll-container>
@@ -32,7 +31,6 @@ const Contact = () => {
                     </div>
                     <Noise />
                 </AnimationConf>
-            </ScrollContextProvider>
             <ToastRegion />
 
         </>

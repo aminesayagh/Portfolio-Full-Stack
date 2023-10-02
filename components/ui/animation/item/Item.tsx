@@ -15,10 +15,14 @@ const Item = ({ children }: {
             const timeline = gsap.timeline({
                 paused: true,
                 defaults: {
-                    duration: 0.3
+                    duration: 0.2
                 }
             })
-            timeline.to('.item-child-grap', {
+            timeline.fromTo('.item-child-grap', {
+                yPercent: 0,
+                skewY: 0,
+                color: 'var(--color-white-100)',
+            }, {
                 yPercent: -100,
                 skewY: 5,
                 color: 'var(--color-white-100)',
@@ -64,7 +68,7 @@ const Item = ({ children }: {
             ctx.revert();
         }
     }, [ref]);
-    return <div className='relative min-h-[12px]' ref={ref}>
+    return <div className='cursor-pointer h-6' ref={ref}>
         <div className='item-child-grap'>
             {children}
         </div>

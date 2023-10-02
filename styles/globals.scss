@@ -7,12 +7,6 @@
   --font-montserrat: 'Montserrat', sans-serif;
 }
 
-@layer base {
-  body{
-    @apply font-sans bg-black;
-  }
-  
-}
 
 .remove_outline {
   @apply outline-none focus:outline-none touch-none;
@@ -138,6 +132,27 @@ html.has-scroll-smooth {
 
 }
 
+
+@layer base {
+  body{
+    @apply font-sans bg-black;
+  }
+  @media (light-level: dim) {
+    body {
+      @apply bg-black-300;
+    }
+  }
+  @media (light-level: normal) {
+    body {
+      @apply bg-black-200;
+    }
+  }
+  @media (light-level: washed) {
+    body {
+      @apply bg-black-100;
+    }
+  }
+}
 
 /* Scroll Bar */
 html.has-scroll-dragging {

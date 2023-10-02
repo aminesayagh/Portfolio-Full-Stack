@@ -4,10 +4,18 @@ import { useHover } from 'react-aria';
 import { cursorContext } from './Cursor';
 import { ItemCursor, CursorNames } from './CursorType';
 
+const cursorParentContext = React.createContext<{
+    hasParent: boolean,
+}>({
+    hasParent: false,
+});
+
 const CursorContainer = <C extends CursorNames>({ children, name, ...props }: {
     children: React.ReactElement,
 } & ItemCursor<C>) => {
     const { addCursor, setKey } = useContext(cursorContext);
+    const { hasParent } = useContext(cursorParentContext);
+    
     const { isHovered, hoverProps } = useHover({});
 
     useEffect(() => {
@@ -26,9 +34,13 @@ const CursorContainer = <C extends CursorNames>({ children, name, ...props }: {
         }
     }, [isHovered, name, setKey])
 
-    return <span className='contents' { ...hoverProps }>
-        {children}
-    </span>
+    if (hasParent) return children;
+
+    return <cursorParentContext.Provider value={{ hasParent: true }}>
+        <span className='contents' { ...hoverProps }>
+            {children}
+        </span>
+    </cursorParentContext.Provider>
 }
 
 export default CursorContainer;

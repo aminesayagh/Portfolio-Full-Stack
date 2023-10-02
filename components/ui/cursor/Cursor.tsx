@@ -224,7 +224,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                     DEFAULT_BALL_CLASS_NAME, 
                     blend,
                     'ball_gsap ball_secondary_gsap pointer-events-none',
-                    'h-4 sm:h-6 w-4 sm:w-6',
+                    'h-4 sm:h-5 w-4 sm:w-5',
                     'bg-primary-600/80')} ref={secondaryCursor} ></div>
                 <div className={twMerge(
                     DEFAULT_BALL_CLASS_NAME, 

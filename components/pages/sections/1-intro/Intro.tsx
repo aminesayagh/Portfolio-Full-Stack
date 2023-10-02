@@ -4,7 +4,7 @@ import { Text, Button, Display, Icon, Fit, CursorContent } from '@/components/ui
 import { useTranslation } from "next-i18next";
 import { gsap } from '@/utils/gsap';
 import { MENU_ITEMS } from "@/conf/router";
-import { ScrollProvider } from '@/context/ScrollContext';
+import { ScrollProvider } from '@/context/AnimationConf';
 import { useIsomorphicLayoutEffect } from "react-use";
 import { useHover } from "react-aria";
 import useGsap from "@/hook/useGsap";

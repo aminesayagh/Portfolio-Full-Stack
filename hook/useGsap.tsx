@@ -1,6 +1,6 @@
 import { useContext, RefObject } from "react"
 import { useIsomorphicLayoutEffect } from "react-use"
-import { ScrollProvider } from "@/context/ScrollContext"
+import { ScrollProvider } from "@/context/AnimationConf"
 import { gsap } from "@/utils/gsap";
 
 const useGsap = (gsapCallback: gsap.ContextFunc, ref: RefObject<HTMLDivElement> | RefObject<HTMLCanvasElement>, rendered: any[] = []) => {

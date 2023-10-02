@@ -6,17 +6,19 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import '@/utils/gsap';
 
 import AnimationConf from '@/context/AnimationConf';
-import ScrollContextProvider from '@/context/ScrollContext';
 import { LandingPage } from '@/components/pages';
-import { Header, Footer } from '@/components/common';
 import { Cursor } from '@/components/ui';
 import dynamic from 'next/dynamic';
+
+import nextI18NextConfig from '../next-i18next.config.js'
+import { useTranslation } from 'react-i18next';
 
 const DynamicHeader = dynamic(() => import('@/components/common/header'), {});
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const { t } = useTranslation('common');
+
   return (
     <>
       <Head title={t('head.home.title')}
@@ -27,21 +29,17 @@ export default function Home() {
       />
       {isLoading && <Preloader />}
       <Cursor>
-        <ScrollContextProvider >
-          <AnimationConf >
-            <DynamicHeader />
-            <div data-scroll-container>
-              <LandingPage />
-            </div>
-            <Noise />
-          </AnimationConf>
-        </ScrollContextProvider>
+        <AnimationConf >
+          <DynamicHeader />
+          <div data-scroll-container>
+            <LandingPage />
+          </div>
+          <Noise />
+        </AnimationConf>
       </Cursor>
     </>
   )
 }
-import nextI18NextConfig from '../next-i18next.config.js'
-import { useTranslation } from 'react-i18next';
 
 export async function getStaticProps({ locale }: any) {
   return {
