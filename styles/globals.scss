@@ -117,7 +117,7 @@ html.has-scroll-smooth {
     --red-600: 66.36% 0.192 var(--red-base);
     --red-700: 60.48% 0.173 var(--red-base);
     --red-800: 53.13% 0.168 var(--red-base);
-    --red-900: 47.83% 0.153 var(--red-base);
+    --red-900: 47.83% 0.153 var(--red-base); 
 
 
     @mixin color-generate($name) {

@@ -21,22 +21,22 @@ const Item = ({ children }: {
             timeline.to('.item-child-grap', {
                 yPercent: -100,
                 skewY: 5,
-                color: '#FEFEFE',
+                color: 'var(--color-white-100)',
                 ease: 'power4.easeIn'
             }).fromTo('.item-child-grap', {
                 yPercent: 100,
                 skewY: 5,
-                color: '#6A5EEF',
+                color: 'var(--color-primary-500)',
             }, {
                 yPercent: 0,
                 skewY: 0,
-                ease: 'power4.easeOut',
-                color: '#6A5EEF'
+                ease: 'power4.easeOut',                
+                color: 'var(--color-primary-500)',
             }).progress(0)
             gsap.set('.item-child-grap', {
                 yPercent: 0,
                 skewY: 0,
-                color: '#FEFEFE'
+                color: 'var(--color-white-100)'
             });
 
             ref.current?.addEventListener('pointerenter', () => {

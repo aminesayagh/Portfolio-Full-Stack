@@ -61,7 +61,7 @@ const CursorActionIcon = ({ isActive, ctx, iconName, degree = 45 }: {
     }, [isActive, ctx, degree]);
     return <div ref={ref} className={twMerge('w-28 h-28', 'rounded-full', 'flex-col justify-center items-center cursor_action_icon_gsap')}>
         <span className='cursorIconGsap'>
-            {iconName ? <Icon name={iconName} size='30' color='#111517' /> : null}
+            {iconName ? <Icon name={iconName} size='30' color='var(--color-black-100)' /> : null}
         </span>
     </div>
 }

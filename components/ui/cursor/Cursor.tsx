@@ -61,7 +61,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
             }, {
                 duration: 0.3,
                 scale: 1,
-                backgroundColor: '#F1F1F1',
+                backgroundColor: 'var(--color-white-100)',
                 ease: 'Power4.easeOut',
             }, '>').fromTo('.cursor_scroll_gsap .cursor_text_gsap', {
                 rotate: -45,
@@ -82,7 +82,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
             }, {
                 duration: 0.3,
                 scale: 1,
-                backgroundColor: '#F1F1F1',
+                backgroundColor: 'var(--color-white-100)',
                 ease: 'Power4.easeOut',
             }, '>').fromTo('.cursor_action_icon_gsap .cursorIconGsap', {
                 rotate: 45,
