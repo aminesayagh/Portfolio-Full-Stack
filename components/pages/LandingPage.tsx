@@ -3,7 +3,6 @@ import { DynamicIntro, DynamicManifesto, DynamicCases, DynamicAction, DynamicVid
 import { MENU_ITEMS } from '@/conf/router';
 import { twMerge } from 'tailwind-merge';
 import dynamic from 'next/dynamic';
-
 const DynamicFooter = dynamic(() => import('@/components/common/footer'));
 
 const LandingPage = () => {

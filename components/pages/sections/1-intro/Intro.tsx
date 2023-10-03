@@ -268,7 +268,12 @@ const Menu = () => {
         if (section == 'contact') {
             safePush('/contact');
         } else {
-            scrollbar && scrollbar.scrollTo(`#${section}`, { duration: 500 });
+            if(scrollbar) {
+                scrollbar.scrollTo(`#${section}`, { duration: 500 });
+                // setTimeout(() => {
+                //     ScrollTrigger.refresh();
+                // }, 500);
+            }
         }
     }, [scrollbar, safePush])
     return (<>

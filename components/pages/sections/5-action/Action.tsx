@@ -50,13 +50,13 @@ const Action = () => {
                 </Display>
             </span>
             <div className='flex flex-row justify-start xs:justify-center items-start relative'>
-                <div className={twMerge(
+                {/* <div className={twMerge(
                     'absolute',
                     'right-[103%]',
                     'left-auto',
                 )}>
                     <Icon name='IconArrowBigRightFilled' className='w-20 [&>*]:fill-primary-500' style={{}} />
-                </div>
+                </div> */}
                 <CursorContent name='CursorActionIconContactAction' component='CursorActionIcon' props={{
                     degree: -45,
                     iconName: 'IconArrowUpRight',
