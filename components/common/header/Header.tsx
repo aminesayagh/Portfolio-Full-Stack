@@ -209,7 +209,7 @@ const Header = () => {
                         </Modal.Button>
                         <Modal.Overlay className={twMerge('opacity-0 fixed left-0 top-0 w-full min-h-full bg-primary-500 modal-overlay')}>
                             {/* <Cursor > */}
-                            <Modal.Content isDismissable className={twMerge('bg-black-200 modal-content')}>
+                            <Modal.Content isDismissable className={twMerge('body-background modal-content')}>
                                 {({ handler }) => (
                                     <div className={twMerge(
                                         'flex flex-col justify-between',

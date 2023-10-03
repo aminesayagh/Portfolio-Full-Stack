@@ -131,26 +131,14 @@ html.has-scroll-smooth {
 
 
 }
-
+.body-background {
+  @apply bg-black-100;
+}
 
 @layer base {
   body{
-    @apply font-sans bg-black-100;
-  }
-  @media (light-level: dim) {
-    body {
-      @apply bg-black-300;
-    }
-  }
-  @media (light-level: normal) {
-    body {
-      @apply bg-black-200;
-    }
-  }
-  @media (light-level: washed) {
-    body {
-      @apply bg-black-100;
-    }
+    @apply font-sans;
+    @apply body-background;
   }
 }
 
