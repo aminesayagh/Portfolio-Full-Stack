@@ -14,7 +14,6 @@ import { useState, useEffect } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import TagManager from 'react-gtm-module';
 
-
 const montserrat = Montserrat({
   subsets: ['cyrillic'],
   variable: '--font-sans',
@@ -29,7 +28,7 @@ function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     TagManager.initialize({ gtmId: 'GTM-5L7DRGL9' });
   }, [])
-
+  
   return <>
     <Script async src="https://www.googletagmanager.com/gtag/js?id=G-LBW0TBMSD6"></Script>
     <Script id="google-analytics">{

@@ -68,13 +68,13 @@ const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => vo
                             {...path01Variants.closed}
                             animate={path01Controls}
                             transition={{ duration: DURATION }}
-                            stroke='#FFFFFF'
+                            stroke='var(--color-white-100)'
                         />
                         <motion.path
                             {...path02Variants.closed}
                             animate={path02Controls}
                             transition={{ duration: DURATION }}
-                            stroke='#FFFFFF'
+                            stroke='var(--color-white-100)'
                         />
                     </svg>
                 </Button>

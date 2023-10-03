@@ -3,7 +3,6 @@ import { DynamicIntro, DynamicManifesto, DynamicCases, DynamicAction, DynamicVid
 import { MENU_ITEMS } from '@/conf/router';
 import { twMerge } from 'tailwind-merge';
 import dynamic from 'next/dynamic';
-
 const DynamicFooter = dynamic(() => import('@/components/common/footer'));
 
 const LandingPage = () => {
@@ -17,9 +16,7 @@ const LandingPage = () => {
                 <DynamicVideo />
             </Container>
             <span data-scroll-section className='block h-16 xxs:h-0 w-full'></span>
-            <Container data-scroll-section id={MENU_ITEMS.manifesto.id} as='section' size='lg' className={twMerge(
-                // 'h-[210%] mdl:h-[200%]'
-            )} >
+            <Container data-scroll-section id={MENU_ITEMS.manifesto.id} as='section' size='lg'  >
                 <DynamicManifesto />
             </Container>
             <span data-scroll-section className='block h-24 xxs:h-24 w-full'></span>

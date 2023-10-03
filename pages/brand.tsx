@@ -6,7 +6,6 @@ import React from "react";
 import { twMerge } from 'tailwind-merge';
 
 import AnimationConf from '@/context/AnimationConf';
-import ScrollContextProvider from '@/context/ScrollContext';
 
 const listText = 'flex flex-col gap-8';
 const TEXT_LOREM = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
@@ -47,7 +46,6 @@ export default function App() {
                 author="Mohamed Amine SAYAGH"
                 logo='/favicon.svg'
             />
-            <ScrollContextProvider>
                 <AnimationConf>
                     <div data-scroll-container className='flex flex-col gap-12 py-40'>
                         {/* fit text */}
@@ -287,7 +285,6 @@ export default function App() {
                         </Container>
                     </div>
                 </AnimationConf>
-            </ScrollContextProvider>
         </>
     )
 }

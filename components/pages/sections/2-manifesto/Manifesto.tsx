@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, ElementRef } from 'react';
 import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 
@@ -10,8 +10,8 @@ import useGsap from '@/hook/useGsap';
 
 const Manifesto = () => {
     const { t, i18n } = useTranslation();
-    const refs = useRef<HTMLSpanElement[]>([]);
-    const refDescription = useRef<HTMLDivElement>(null);
+    const refs = useRef<ElementRef<'span'>[]>([]);
+    const refDescription = useRef<ElementRef<'div'>>(null);
     const [body, setBody] = useState<React.JSX.Element[] | null>(null);
     const [phrase, setPhrase] = useState(t('manifesto.description'));
 

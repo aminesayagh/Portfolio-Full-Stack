@@ -7,12 +7,6 @@
   --font-montserrat: 'Montserrat', sans-serif;
 }
 
-@layer base {
-  body{
-    @apply font-sans bg-black;
-  }
-  
-}
 
 .remove_outline {
   @apply outline-none focus:outline-none touch-none;
@@ -97,7 +91,7 @@ html.has-scroll-smooth {
     --gray-800: 40.39% 0.0321 var(--primary-base);
     --gray-900: 33.33% 0.0321 var(--primary-base);
 
-    --black-100: 16.71% 0.004 var(--primary-base);
+    --black-100: 17.3% 0.01 var(--primary-base);
     --black-200: 18.6% 0.019 var(--primary-base);
     --black-300: 20.39% 0.019 var(--primary-base);
     --black-400: 22.35% 0.019 var(--primary-base);
@@ -117,7 +111,7 @@ html.has-scroll-smooth {
     --red-600: 66.36% 0.192 var(--red-base);
     --red-700: 60.48% 0.173 var(--red-base);
     --red-800: 53.13% 0.168 var(--red-base);
-    --red-900: 47.83% 0.153 var(--red-base);
+    --red-900: 47.83% 0.153 var(--red-base); 
 
 
     @mixin color-generate($name) {
@@ -137,7 +131,16 @@ html.has-scroll-smooth {
 
 
 }
+.body-background {
+  @apply bg-black-100;
+}
 
+@layer base {
+  body{
+    @apply font-sans;
+    @apply body-background;
+  }
+}
 
 /* Scroll Bar */
 html.has-scroll-dragging {

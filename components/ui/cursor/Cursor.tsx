@@ -61,7 +61,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
             }, {
                 duration: 0.3,
                 scale: 1,
-                backgroundColor: '#F1F1F1',
+                backgroundColor: 'var(--color-white-100)',
                 ease: 'Power4.easeOut',
             }, '>').fromTo('.cursor_scroll_gsap .cursor_text_gsap', {
                 rotate: -45,
@@ -82,7 +82,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
             }, {
                 duration: 0.3,
                 scale: 1,
-                backgroundColor: '#F1F1F1',
+                backgroundColor: 'var(--color-white-100)',
                 ease: 'Power4.easeOut',
             }, '>').fromTo('.cursor_action_icon_gsap .cursorIconGsap', {
                 rotate: 45,
@@ -224,7 +224,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                     DEFAULT_BALL_CLASS_NAME, 
                     blend,
                     'ball_gsap ball_secondary_gsap pointer-events-none',
-                    'h-4 sm:h-6 w-4 sm:w-6',
+                    'h-4 sm:h-5 w-4 sm:w-5',
                     'bg-primary-600/80')} ref={secondaryCursor} ></div>
                 <div className={twMerge(
                     DEFAULT_BALL_CLASS_NAME, 

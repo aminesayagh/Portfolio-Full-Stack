@@ -6,7 +6,7 @@ import { twMerge } from 'tailwind-merge';
 import { Text, Icon, Container, Button } from '@/components/ui';
 import { useRouter } from 'next/router';
 import { MENU_ITEMS } from '@/conf/router';
-import { ScrollProvider } from '@/context/ScrollContext';
+import { ScrollProvider } from '@/context/AnimationConf';
 
 const ICON_SIZE_CLASS_NAME = 'w-5 h-5 lg:w-6 lg:h-6';
 const FollowUs = () => {
@@ -23,10 +23,13 @@ const FollowUs = () => {
 
 const Footer = () => {
     const { t, i18n } = useTranslation();
-    const { scrollbar } = useContext(ScrollProvider)
+    const scrollContent = useContext(ScrollProvider);
+
     const goToSection = () => {
         scrollbar && scrollbar.scrollTo(0, { duration: 1000 });
     }
+    if(!scrollContent) return null;
+    const { scrollbar } = scrollContent;
     return (<>
             <div className={twMerge(
                 'max-w-[14rem] xxs:w-8/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[30vw] mdl:max-w-[26vw] xl:max-w-[20vw] 2xl:max-w-[28vw] 3xl:max-w-[22rem]'

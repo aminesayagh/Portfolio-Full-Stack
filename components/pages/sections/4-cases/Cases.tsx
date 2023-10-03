@@ -1,16 +1,15 @@
-import React, { useMemo, useRef, useContext } from 'react';
+import React, { ElementRef, useMemo, useRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Title, Text } from '@/components/ui';
 
 import { useTranslation } from 'next-i18next';
-import { ScrollProvider } from '@/context/ScrollContext';
 import { getProjectsByCategory } from '@/conf/projects';
 import { gsap, Power4 } from '@/utils/gsap';
 import { Image } from '@/components/ui';
 import useGsap from '@/hook/useGsap';
 
 const Case = ({ picture, index, id }: { picture?: string[], index: number, id: string }) => {
-    const container = useRef<HTMLDivElement>(null);
+    const container = useRef<ElementRef<'div'>>(null);
     const { t } = useTranslation();
     const pic = useMemo(() => picture ? picture[0] : '', [picture]);
 
