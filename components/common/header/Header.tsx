@@ -93,7 +93,6 @@ const Header = () => {
                         duration: DURATION / 2,
                     }, '<25%')
                     tl.current.play();
-
                 });
                 self.add('close', () => {
                     tl.current.reverse().then(() => {
@@ -104,9 +103,10 @@ const Header = () => {
             });
             return () => {
                 ctx.current.revert();
+                tl.current.kill();
             }
         }
-    }, [])
+    }, [scrollbar])
     useIsomorphicLayoutEffect(() => {
         if (!!scrollbar) {
             const ctx = gsap.context(() => {
@@ -153,7 +153,6 @@ const Header = () => {
                 }, 100);
             });
         }
-
     }, [openMenu, scrollbar, safePush]);
 
     useEffect(() => {

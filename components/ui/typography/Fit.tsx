@@ -15,7 +15,7 @@ const Fit = ({ children, className, exchange, weight, ...props }: ReactFitProps)
             displayStyle({
                 weight
             }),
-            'leading-none',
+            'leading-none hidden',
             Style['fit'],
             textColorDegree[exchange ? 'exchanged' : 'normal']['1'],
             className)} {...props}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, createContext } from 'react';
+import React, { useEffect, useRef, useState, createContext, ElementRef } from 'react';
 import { gsap } from '@/utils/gsap';
 import LocomotiveScroll from 'locomotive-scroll';
 import { ScrollTrigger } from '@/utils/gsap';
@@ -11,7 +11,6 @@ export const ScrollProvider = createContext<{
 
 
 const AnimationConf = ({ children }: { children: React.ReactNode }) => {
-    let app = useRef<HTMLDivElement | null>(null);
     const [scrollbar, setScrollbar] = useState<LocomotiveScroll | null>(null);
 
     useEffect(() => {
@@ -30,28 +29,28 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 },
                 // @ts-ignore
                 tablet: {
-                  smooth: true
+                    smooth: true
                 },
 
             })
             setScrollbar(scroll);
 
             scroll.on('scroll', () => {
-                ScrollTrigger.update
+                ScrollTrigger.update();
             })
 
             ScrollTrigger.scrollerProxy('[data-scroll-container]', {
                 scrollTop(value) {
                     return arguments.length
                         // @ts-ignore
-                        ? scroll.scrollTo(value, {duration: 0, disableLerp: true}) : scroll.scroll.instance.scroll.y
+                        ? scroll.scrollTo(value, { duration: 0, disableLerp: true }) : scroll.scroll.instance.scroll.y
                 },
                 getBoundingClientRect() {
                     return {
                         top: 0,
                         left: 0,
                         width: window.innerWidth,
-                        height: window.innerHeight,
+                        height: window.innerHeight
                     }
                 },
                 pinType: el?.style?.transform
@@ -60,7 +59,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             });
             ScrollTrigger.defaults({ scroller: el });
             ScrollTrigger.addEventListener('refresh', () => {
-                if(scrollbar) {
+                if (scrollbar) {
                     scroll?.update()
                 }
             });
@@ -75,11 +74,10 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
         })
 
         return () => {
-            scroll?.destroy();
-            scrollbar?.destroy();
-            ScrollTrigger.getAll().forEach((trigger) => {
-                trigger.kill(true);
-            });
+            if (scroll && scrollbar) {
+                scroll.destroy();
+                scrollbar.destroy();
+            }
         }
     }, []);
 
@@ -88,7 +86,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             gsap.config({
                 nullTargetWarn: false
             });
-            if(scrollbar) {
+            if (scrollbar) {
                 gsap.to('.app-container', 0, { css: { visibility: 'visible' } });
             }
         });
@@ -98,13 +96,14 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
         }
     }, [scrollbar]);
 
-    return <><div ref={app} className="app-container" id='main-container'>
-        <ScrollProvider.Provider value={{
-            scrollbar
-        }} >
-            {children}
-        </ScrollProvider.Provider>
-    </div>
+    return <>
+        <div className="app-container" id='main-container'>
+            <ScrollProvider.Provider value={{
+                scrollbar
+            }} >
+                {children}
+            </ScrollProvider.Provider>
+        </div>
         <style jsx>{`
             .app-container{
                 visibility: hidden;
