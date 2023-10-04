@@ -204,7 +204,7 @@ const Preloader = ({ isLoading }: {
                 </Container>
                 <Noise />
             </div>
-            <div className='fixed bg-primary-500 w-screen h-screen element-bg z-preloadBg'></div>
+            <div className='fixed bg-primary-500 w-screen h-screen element-bg z-preload_bg'></div>
         </div>
     )
 }
