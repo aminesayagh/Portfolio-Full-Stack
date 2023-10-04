@@ -18,7 +18,7 @@ export { default as Image } from './image';
 export { default as Noise } from './noise';
 
 export { default as Loading } from './loading';
-export { default as Preloader } from './preloader';
+export { LoadingProvider, LoadingContext } from './preloader'
 export { Modal, Popover } from './overlay';
 
 export { default as Cursor, CursorContent } from './cursor';

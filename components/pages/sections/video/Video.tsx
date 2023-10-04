@@ -1,10 +1,10 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useContext } from 'react'
 import { gsap } from '@/utils/gsap';
 
 import { twMerge } from 'tailwind-merge';
 
 import { rounded } from '@/components/style';
-import { CursorContent, Text } from '@/components/ui';
+import { CursorContent, LoadingContext } from '@/components/ui';
 import useGsap from '@/hook/useGsap';
 
 
@@ -12,8 +12,10 @@ const Video = () => {
     let ref = useRef<HTMLCanvasElement>(null);
     let refContainer = useRef<HTMLDivElement>(null);
     const [images, setImages] = useState<Array<HTMLImageElement>>([]);
+    const { addLoadingComponent, removeLoadingComponent } = useContext(LoadingContext);
     
     useGsap(() => {
+        addLoadingComponent('video');
         let canvas = ref.current;
         if (!canvas) return;
         let context = canvas.getContext('2d');
@@ -57,6 +59,7 @@ const Video = () => {
             context?.clearRect(0, 0, ref.current.width, ref.current.height);
             context?.drawImage(images[hands.frame], 0, 0);
         }
+        removeLoadingComponent('video');
     }, ref);
     useGsap(() => {
         gsap.fromTo('.video_gsap', {

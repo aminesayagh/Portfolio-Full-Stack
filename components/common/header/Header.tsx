@@ -259,20 +259,16 @@ const Header = () => {
                                                 </Text>
                                             </div>
                                             <ul className={twMerge('flex flex-row items-center justify-end order-1 xxs:order-2', GAP_SIZE_XL)}>
-                                                {menuSocialNetworks.map((item, index) => {
-                                                    return <li key={index} className='overflow-hidden'>
-                                                        <Button size='sm' onPress={() => onButtonClick(item.link)} degree='4' weight='semibold' className='modal-footer' >
-                                                            {t(`${BASE_LOCALE_SOCIAL}.${item.id}.key`)}
-                                                        </Button>
-                                                    </li>
-                                                })}
+                                                {menuSocialNetworks.map((item, index) => <li key={index} className='overflow-hidden'>
+                                                    <Button size='sm' onPress={() => onButtonClick(item.link)} degree='4' weight='semibold' className='modal-footer' >
+                                                        {t(`${BASE_LOCALE_SOCIAL}.${item.id}.key`)}
+                                                    </Button>
+                                                </li>)}
                                             </ul>
                                         </div>
                                     </div>
                                 )}
                             </Modal.Content>
-                            {/* </Cursor> */}
-
                         </Modal.Overlay>
                     </Navbar.Content>
                 </span>

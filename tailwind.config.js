@@ -144,7 +144,8 @@ module.exports = {
       "loading": "7000",
       "toast": "6500",
       "tooltip": "6300",
-      "above": "9999",
+      "preloadBg": "9998",
+      "preload": "9999",
       "cursor": "10000"
     },
     extend: {

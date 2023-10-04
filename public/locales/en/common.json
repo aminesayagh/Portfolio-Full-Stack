@@ -15,6 +15,15 @@
             "url": "https://ma-sayagh.vercel.app/contact"
         }
     },
+    "loading": {
+        "intro": "Web Portfolio",
+        "message_1": "i'm",
+        "message_2": "mohamed",
+        "message_3": "amine",
+        "message_4": "sayagh",
+        "message_5": "nice to meet you",
+        "percent": "%"
+    },
     "socialNetwork": {
         "instagram": {
             "key": "IN",
