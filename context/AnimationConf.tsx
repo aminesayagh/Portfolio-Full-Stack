@@ -85,9 +85,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             });
             scrollbar.update();
             return () => {
-                window.removeEventListener('resize', () => {
-                    scrollbar.update();
-                });
+                window.removeEventListener('resize', () => {});
             }
         }
     }, [scrollbar]);

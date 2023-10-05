@@ -8,10 +8,14 @@ import { useIsomorphicLayoutEffect } from 'react-use';
 
 export const LoadingContext = createContext<{
     addLoadingComponent: (key: Key) => void,
-    removeLoadingComponent: (key: Key) => void
+    removeLoadingComponent: (key: Key) => void,
+    isLoading: boolean,
+    endLoading: boolean
 }>({
-    addLoadingComponent: () => () => { },
-    removeLoadingComponent: () => { },
+    addLoadingComponent: () => {},
+    removeLoadingComponent: () => {},
+    isLoading: true,
+    endLoading: false
 });
 
 type LoadingElement = {
@@ -22,6 +26,7 @@ export function LoadingProvider({ children }: {
     children: React.ReactNode
 }) {
     const [isLoading, setIsLoading] = useState(true);
+    const [endLoading, setEndLoading] = useState(false);
     const [loadingComponentList, setLoadingComponentList] = useState<LoadingElement>({});
     const loadingState = () => {
         const inLoadingState = Object.values(loadingComponentList).filter((item) => item === true);
@@ -51,22 +56,24 @@ export function LoadingProvider({ children }: {
     return (
         <LoadingContext.Provider value={{
             addLoadingComponent,
-            removeLoadingComponent
+            removeLoadingComponent,
+            isLoading,
+            endLoading
         }}>
-            <Preloader isLoading={isLoading} />
+            <Preloader isLoading={isLoading} setEndLoading={setEndLoading} />
             {children}
         </LoadingContext.Provider>
     )
 }
 const LONG_LOADING_TIME = 400;
 const MEDIUM_LOADING_TIME = 20;
-const Preloader = ({ isLoading }: {
-    isLoading: boolean
+const Preloader = ({ isLoading, setEndLoading }: {
+    isLoading: boolean,
+    setEndLoading: (value: boolean) => void
 }) => {
     const { t } = useTranslation();
     const [percent, setPercent] = useState(2);
     useEffect(() => {
-        console.log(isLoading, percent)
         let intervalId: NodeJS.Timeout;
 
         if (isLoading && percent < 100) {
@@ -76,10 +83,13 @@ const Preloader = ({ isLoading }: {
         } else if (!isLoading) {
             // Speed up percent increase
             intervalId = setInterval(() => {
-                setPercent((prevPercent) => Math.min(prevPercent + 1, 100));
+                setPercent((prevPercent) => Math.min(prevPercent + 2, 100));
             }, MEDIUM_LOADING_TIME);
         }
 
+        if(percent === 100) {
+            setEndLoading(true)
+        }
         return () => clearInterval(intervalId);
     }, [isLoading, percent]);
 
@@ -87,30 +97,18 @@ const Preloader = ({ isLoading }: {
         let ctx = gsap.context(() => {
             const delay = 0.5;
             const ease = 'power2.out';
-            const duration = 0.34;
-            gsap.set('.element-content-gsap', {
-                yPercent: 24,
-                opacity: 0,
-            });
-            const tl2 = gsap.timeline().fromTo('.element-content-gsap', {
-                yPercent: 24,
-                opacity: 0,
-                delay: 0.2,
-            }, {
-                duration,
-                yPercent: 0,
-                stagger: 0.4,
-                opacity: 1,
-            })
+            const duration = 0.4;
             const tl = gsap.timeline({
                 paused: true,
             }).fromTo('.item-gsap', {
                 yPercent: 0,
+                autoAlpha: 0
             }, {
                 duration,
                 yPercent: -100,
                 delay: delay * 2,
                 ease,
+                autoAlpha: 1
             }).to('.item-gsap', {
                 duration,
                 delay,
@@ -130,7 +128,6 @@ const Preloader = ({ isLoading }: {
 
             return () => {
                 tl.kill();
-                tl2.kill();
             }
         });
         return () => ctx.revert();
@@ -138,25 +135,37 @@ const Preloader = ({ isLoading }: {
 
     useEffect(() => {
         let ctx = gsap.context((self) => {
-
+            const skew = 2;
             const tl = gsap.timeline({
                 paused: true,
-            }).to(['.element-content-gsap', '.element-counter-gsap'], {
+            }).fromTo(['.element-content-gsap', '.element-counter-gsap'], {
+                yPercent: 0,
+                opacity: 1,
+            }, {
                 yPercent: -10,
                 duration: 0.4,
-                opacity: 0,
+                opacity: 0
             })
-                .to('.element-container', {
+                .fromTo('.element-container', {
+                    yPercent: 0,
+                    skewY: 0
+                },{
                     duration: 0.5,
-                    yPercent: -100,
+                    yPercent: -120,
                     ease: 'power2.out',
-                }).to('.element-bg', {
+                    skewY: skew
+                }).fromTo('.element-bg', {
+                    yPercent: 0,
+                    skewY: 0,
+                },{
+                    skewY: skew,
                     duration: 0.5,
-                    yPercent: -100,
+                    yPercent: -120,
                     ease: 'power2.out',
                 });
             self.add('endPreload', (e: any) => {
                 tl.play();
+
             });
             return () => {
                 tl.kill();
@@ -172,7 +181,7 @@ const Preloader = ({ isLoading }: {
         <div>
             <div className={twMerge('w-screen h-screen overflow-hidden', 'bg-white-400', 'z-preload fixed', 'element-container')}>
                 <Container as='div' size='lg' className={twMerge('h-screen pt-8', 'flex flex-col justify-between')}>
-                    <div className=''>
+                    <div className='flex flex-col gap-1'>
                         <span className='py-1 element-content-gsap opacity-0'>
                             <Title h6 degree='4' exchange >
                                 {t('loading.intro')}
@@ -187,9 +196,6 @@ const Preloader = ({ isLoading }: {
                                 ))
                             }
                         </ul>
-                        <Text degree='3' li size='sm' exchange >
-                            { }
-                        </Text>
                     </div>
                     <div className={twMerge('w-full', 'flex flex-row justify-end', 'relative -bottom-4')} >
                         <AnimatePresence mode='sync' >
