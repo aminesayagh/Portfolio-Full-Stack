@@ -49,7 +49,6 @@ const Item = ({ children }: {
                 timeline?.play().then(() => setOnHoverStart(false));
             });
             ref.current?.addEventListener('pointerleave', () => {
-                console.log('exit');
                 if (onHoverEnd) return;
                 setOnHoverEnd(true);
                 timeline?.reverse().then(() => setOnHoverEnd(false));

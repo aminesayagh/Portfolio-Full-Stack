@@ -1,4 +1,4 @@
-import { useState, useCallback, memo, useEffect, useLayoutEffect, useRef, useContext, useMemo } from 'react';
+import { useState, useCallback, memo, useEffect, useLayoutEffect, useRef, useContext, useMemo, ElementRef } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
@@ -7,8 +7,9 @@ import { gsap, Power3 } from '@/utils/gsap';
 
 
 import StyleAnimation from '@/styles/animation.module.scss';
-import { Navbar, Logo, Link, Button, containerStyle, Modal, Text, Title } from "@/components/ui";
+import { LoadingContext,Navbar, Logo, Link, Button, containerStyle, Modal, Text, Title } from "@/components/ui";
 import { HamburgerMenu, SwitchLang } from '@/components/common';
+;
 
 import { getMenuItems } from '@/conf/router';
 const menuHamburgerItems = getMenuItems('hamburger');
@@ -32,6 +33,8 @@ const Header = () => {
     const router = useRouter();
     const { safePush } = useRouterChange();
     let [openMenu, setOpenMenu] = useState<boolean>(false);
+    const ref = useRef<ElementRef<'span'>>(null);
+    const { endLoading } = useContext(LoadingContext);
 
     const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
     const ctx = useRef<any>(null);
@@ -100,31 +103,36 @@ const Header = () => {
                         ctx.current.revert(); // revert timeline to the beginning
                     });
                 });
-            });
+            }, ref);
             return () => {
                 ctx.current.revert();
                 tl.current.kill();
             }
         }
-    }, [scrollbar])
+    }, [scrollbar]);
     useIsomorphicLayoutEffect(() => {
         if (!!scrollbar) {
             const ctx = gsap.context(() => {
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: '.navbar_gsap',
-                        markers: false,
-                        toggleActions: 'play pause restart pause'
-                    }
-                }).from('.navbar_gsap', {
-                    delay: 0.5,
-                    yPercent: 160,
-                    duration: 0.5,
-                })
-            });
+                if(endLoading) {
+                    let tl = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: '.navbar_gsap',
+                            markers: false,
+                            toggleActions: 'play pause reverse play'
+                        }
+                    }).from('.navbar_gsap', {
+                        delay: 1,
+                        yPercent: 160,
+                        duration: 0.5,
+                    })
+                    return () => {
+                        tl.kill();
+                    };
+                }
+            }, ref);
             return () => ctx.revert()
         }
-    }, [scrollbar])
+    }, [scrollbar, endLoading])
     const menuHandler = useCallback(() => {
         if (!openMenu) {
             setOpenMenu(true);
@@ -164,7 +172,8 @@ const Header = () => {
     const pageName = useMemo(() => router.pathname.split('/')[1], [router]);
 
     return (
-        <Modal isOpenExternal={openMenu} menuHandler={menuHandler}  >
+        <span ref={ref}>
+        <Modal isOpenExternal={openMenu} menuHandler={menuHandler}>
             <Navbar size='lg' inTopOfScroll={openMenu} className='overflow-hidden' >
                 <span className='w-full flex flex-row items-center justify-between navbar_gsap'>
                     <Navbar.Content className={twMerge('flex-1', GAP_SIZE_LG)}>
@@ -259,25 +268,22 @@ const Header = () => {
                                                 </Text>
                                             </div>
                                             <ul className={twMerge('flex flex-row items-center justify-end order-1 xxs:order-2', GAP_SIZE_XL)}>
-                                                {menuSocialNetworks.map((item, index) => {
-                                                    return <li key={index} className='overflow-hidden'>
-                                                        <Button size='sm' onPress={() => onButtonClick(item.link)} degree='4' weight='semibold' className='modal-footer' >
-                                                            {t(`${BASE_LOCALE_SOCIAL}.${item.id}.key`)}
-                                                        </Button>
-                                                    </li>
-                                                })}
+                                                {menuSocialNetworks.map((item, index) => <li key={index} className='overflow-hidden'>
+                                                    <Button size='sm' onPress={() => onButtonClick(item.link)} degree='4' weight='semibold' className='modal-footer' >
+                                                        {t(`${BASE_LOCALE_SOCIAL}.${item.id}.key`)}
+                                                    </Button>
+                                                </li>)}
                                             </ul>
                                         </div>
                                     </div>
                                 )}
                             </Modal.Content>
-                            {/* </Cursor> */}
-
                         </Modal.Overlay>
                     </Navbar.Content>
                 </span>
             </Navbar>
         </Modal>
+        </span>
     )
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, createContext, useContext, useMemo, useCallback } from 'react';
+import React, { useRef, useState, createContext, ElementRef, useMemo, useCallback } from 'react';
 
 import { gsap } from '@/utils/gsap';
 import { twMerge } from 'tailwind-merge';
@@ -11,11 +11,12 @@ export const cursorContext = createContext<{
     setKey?: (key: string | null) => void,
 }>({});
 
-const DEFAULT_BALL_CLASS_NAME = ['fixed rounded-full pointer-events-none cursor-none', 'top-0 left-0']
-const Cursor = ({ children }: { children: React.ReactElement }) => {
-    const ref = useRef<HTMLDivElement>(null);
-    const secondaryCursor = useRef<HTMLDivElement>(null);
+const DEFAULT_BALL_CLASS_NAME = ['fixed rounded-full pointer-events-none cursor-none', 'top-0 left-0'];
 
+const Cursor = ({ children }: { children: React.ReactElement }) => {
+    const ref = useRef<ElementRef<'div'>>(null);
+    const secondaryCursor = useRef<ElementRef<'div'>>(null);
+    
     const list = useRef<ItemCursor[]>([]);
 
     const addCursor = useCallback(({

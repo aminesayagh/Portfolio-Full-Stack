@@ -1,1 +1,2 @@
-export { default } from './Preloader';
+export { LoadingProvider } from './Preloader';
+export { LoadingContext } from './Preloader';

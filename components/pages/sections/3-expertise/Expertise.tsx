@@ -50,7 +50,6 @@ const Card = ({ title, description, number }: { title: string, description: stri
 
     let { hoverProps, isHovered } = useHover({
         onHoverStart: (e) => {
-            console.log(e.target);
             gsap.to(e.target, {
                 scale: 1.05,
                 yPercent: -10,

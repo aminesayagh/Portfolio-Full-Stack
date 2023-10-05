@@ -1,20 +1,24 @@
-import React, { useEffect, useRef, useState, createContext, ElementRef } from 'react';
+import React, { useEffect, useContext, useState, createContext, ElementRef } from 'react';
 import { gsap } from '@/utils/gsap';
 import LocomotiveScroll from 'locomotive-scroll';
 import { ScrollTrigger } from '@/utils/gsap';
-
+import { LoadingContext } from '@/components/ui';
 export const ScrollProvider = createContext<{
     scrollbar: null | LocomotiveScroll
 }>({
     scrollbar: null,
 });
 
+const LOADING_COMPONENT_KEY = 'AnimationScrollbarConf';
 
 const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     const [scrollbar, setScrollbar] = useState<LocomotiveScroll | null>(null);
+    const { addLoadingComponent, removeLoadingComponent } = useContext(LoadingContext);
+
     useEffect(() => {
         if (!scrollbar) {
-            ; (async () => {
+            addLoadingComponent(LOADING_COMPONENT_KEY);
+            ;(async () => {
                 try {
                     
                     const LocomotiveScroll = (await import('locomotive-scroll')).default;
@@ -65,6 +69,8 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                     })
                 } catch (err) {
                     throw new Error(`[SmoothScrollProvider] : ${err}`);
+                } finally {
+                    removeLoadingComponent(LOADING_COMPONENT_KEY);
                 }
             })()
         }
@@ -79,68 +85,10 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             });
             scrollbar.update();
             return () => {
-                window.removeEventListener('resize', () => {
-                    scrollbar.update();
-                });
+                window.removeEventListener('resize', () => {});
             }
         }
-    }, [scrollbar])
-    // useEffect(() => {
-    //     if (scrollbar) {
-    //         let el = document.querySelector('[data-scroll-container]') as HTMLElement;
-    //         const scroll = scrollbar;
-    //         scroll.on('scroll', () => {
-    //             ScrollTrigger.update();
-    //         })
-
-    //         ScrollTrigger.scrollerProxy('[data-scroll-container]', {
-    //             scrollTop(value) {
-    //                 return arguments.length
-    //                     // @ts-ignore
-    //                     ? scroll.scrollTo(value, { duration: 1 }) : scroll.scroll.instance.scroll.y
-    //             },
-    //             getBoundingClientRect() {
-    //                 return {
-    //                     top: 0,
-    //                     left: 0,
-    //                     width: window.innerWidth,
-    //                     height: window.innerHeight
-    //                 }
-    //             },
-    //             pinType: el?.style?.transform
-    //                 ? 'transform'
-    //                 : 'fixed'
-    //         });
-    //         setScrollbar(scroll);
-    //         ScrollTrigger.defaults({ scroller: el });
-
-    //         ScrollTrigger.addEventListener('refresh', () => scrollbar.update            );
-
-    //         window.addEventListener('resize', () => {
-    //             scrollbar.update();
-    //         })
-    //         console.log('end of is loading');
-    //         setIsLoading(false);
-    //         scrollbar.update();
-    //         return () => {
-    //             ScrollTrigger.removeEventListener('refresh', () => {
-    //                 scrollbar.update()
-    //             });
-    //             window.removeEventListener('resize', () => {
-    //                 scrollbar.update();
-    //             })
-    //             scrollbar.destroy();
-    //         }
-    //     }
-    // }, [scrollbar])
-    // useEffect(() => {
-    //     return () => {
-    //         if (scrollbar) {
-    //             scrollbar.destroy();
-    //         }
-
-    //     }
-    // })
+    }, [scrollbar]);
 
     useEffect(() => {
         let ctx = gsap.context(() => {
