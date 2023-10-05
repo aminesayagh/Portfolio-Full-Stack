@@ -6,6 +6,7 @@ import { gsap } from '@/utils/gsap';
 import { MENU_ITEMS } from "@/conf/router";
 import { ScrollProvider } from '@/context/AnimationConf';
 import { useIsomorphicLayoutEffect } from "react-use";
+import { ScrollTrigger } from "@/utils/gsap";
 import { useHover } from "react-aria";
 import useGsap from "@/hook/useGsap";
 import useRouterChange from '@/hook/SafePush';
@@ -322,72 +323,62 @@ const Intro = () => {
 
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context((self) => {
+
+            const tl = gsap.timeline({
+                paused: true,
+            }).from('.splitText_gsap', {
+                yPercent: 200,
+                skewY: 16,
+                duration: 1,
+                ease: 'power4.out',
+                delay: 0.1,
+                stagger: {
+                    amount: 0.4
+                }
+            }).from('.splitText_fullStack_gsap', {
+                yPercent: 120,
+                duration: 0.9,
+                ease: 'power4.out',
+            }, '<90%').from('.splitText_description_gsap', {
+                yPercent: 105,
+                duration: 0.9,
+                ease: 'power4.out',
+                stagger: {
+                    amount: 0.1
+                }
+            }, '<').from('.next_button_gsap', {
+                opacity: 0,
+                autoAlpha: 0,
+                duration: 0.4,
+                ease: 'power4.out',
+            }, '<').from('.number_menu_gsap', {
+                opacity: 0,
+                autoAlpha: 0,
+                duration: 0.3,
+            }, '<').fromTo('.item_menu_gsap', {
+                yPercent: 105,
+            }, {
+                yPercent: 0,
+                duration: 0.4,
+                ease: 'power4.out',
+            }, '<60%');
+            const scrollTrigger = ScrollTrigger.create({
+                trigger: introRef.current,
+                start: 'top top',
+                toggleActions: 'play play restart play',
+                animation: tl
+            });
+            scrollTrigger.disable();
             if (endLoading) {
-                const tl = gsap.timeline({
-                    scrollTrigger: {
-                        trigger: introRef.current,
-                        toggleActions: 'play play restart play',
-                        start: 'top 60%'
-                    }
-                }).from('.splitText_gsap', {
-                    yPercent: 200,
-                    skewY: 16,
-                    duration: 1,
-                    ease: 'power4.out',
-                    delay: 0.5,
-                    stagger: {
-                        amount: 0.4
-                    }
-                }).from('.splitText_fullStack_gsap', {
-                    yPercent: 120,
-                    duration: 0.9,
-                    ease: 'power4.out',
-                }, '<90%').from('.splitText_description_gsap', {
-                    yPercent: 105,
-                    duration: 0.9,
-                    ease: 'power4.out',
-                    stagger: {
-                        amount: 0.1
-                    }
-                }, '<').from('.next_button_gsap', {
-                    opacity: 0,
-                    autoAlpha: 0,
-                    duration: 0.4,
-                    ease: 'power4.out',
-                }, '<').from('.number_menu_gsap', {
-                    opacity: 0,
-                    autoAlpha: 0,
-                    duration: 0.3,
-                }, '<').fromTo('.item_menu_gsap', {
-                    yPercent: 105,
-                }, {
-                    yPercent: 0,
-                    duration: 0.4,
-                    ease: 'power4.out',
-                }, '<60%');
+                scrollTrigger.enable();
+                tl.play();
                 return () => {
                     tl?.kill();
                 }
             }
         }, introRef);
         return () => ctx.revert();
-    }, [introRef, scrollbar, endLoading]);
-
-    // useIsomorphicLayoutEffect(() => {
-    //     let timeout: NodeJS.Timeout;
-    //     console.log('isLoading', isLoading);
-    //     if(!isLoading) {
-    //         setTimeout(() => {
-    //             console.log('play');
-    //             tl.current?.play();
-    //         }, 100000);
-    //     } else {
-    //         tl.current?.pause().progress(0);
-    //     }
-    //     return () => {
-    //         clearTimeout(timeout);
-    //     }
-    // }, [isLoading]);
+    }, [scrollbar, endLoading]);
 
     return (<>
         <div className={twMerge('pt-28 sm:pt-36 mdl:pt-40', 'flex flex-col gap-20 xs:gap-32 xl:gap-40')} ref={introRef}>

@@ -12,8 +12,8 @@ export const LoadingContext = createContext<{
     isLoading: boolean,
     endLoading: boolean
 }>({
-    addLoadingComponent: () => {},
-    removeLoadingComponent: () => {},
+    addLoadingComponent: () => { },
+    removeLoadingComponent: () => { },
     isLoading: true,
     endLoading: false
 });
@@ -67,16 +67,18 @@ export function LoadingProvider({ children }: {
 }
 const LONG_LOADING_TIME = 400;
 const MEDIUM_LOADING_TIME = 20;
+const INITIAL_PERCENT = 2;
 const Preloader = ({ isLoading, setEndLoading }: {
     isLoading: boolean,
     setEndLoading: (value: boolean) => void
 }) => {
     const { t } = useTranslation();
-    const [percent, setPercent] = useState(2);
+    const [percent, setPercent] = useState(INITIAL_PERCENT);
     useEffect(() => {
         let intervalId: NodeJS.Timeout;
-
-        if (isLoading && percent < 100) {
+        if (percent == INITIAL_PERCENT) {
+            setPercent((prevPercent) => Math.min(prevPercent + 1, 100));
+        } else if (isLoading && percent < 100) {
             intervalId = setInterval(() => {
                 setPercent((prevPercent) => Math.min(prevPercent + 1, 100));
             }, LONG_LOADING_TIME);
@@ -85,10 +87,6 @@ const Preloader = ({ isLoading, setEndLoading }: {
             intervalId = setInterval(() => {
                 setPercent((prevPercent) => Math.min(prevPercent + 2, 100));
             }, MEDIUM_LOADING_TIME);
-        }
-
-        if(percent === 100) {
-            setEndLoading(true)
         }
         return () => clearInterval(intervalId);
     }, [isLoading, percent]);
@@ -149,7 +147,7 @@ const Preloader = ({ isLoading, setEndLoading }: {
                 .fromTo('.element-container', {
                     yPercent: 0,
                     skewY: 0
-                },{
+                }, {
                     duration: 0.5,
                     yPercent: -120,
                     ease: 'power2.out',
@@ -157,14 +155,16 @@ const Preloader = ({ isLoading, setEndLoading }: {
                 }).fromTo('.element-bg', {
                     yPercent: 0,
                     skewY: 0,
-                },{
+                }, {
                     skewY: skew,
                     duration: 0.5,
                     yPercent: -120,
                     ease: 'power2.out',
                 });
             self.add('endPreload', (e: any) => {
-                tl.play();
+                tl.play().then(() => {
+                    setEndLoading(true)
+                });
 
             });
             return () => {
