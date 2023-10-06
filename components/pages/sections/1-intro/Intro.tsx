@@ -271,9 +271,6 @@ const Menu = () => {
         } else {
             if (scrollbar) {
                 scrollbar.scrollTo(`#${section}`, { duration: 500 });
-                // setTimeout(() => {
-                //     ScrollTrigger.refresh();
-                // }, 500);
             }
         }
     }, [scrollbar, safePush])
@@ -283,7 +280,7 @@ const Menu = () => {
                 if (i > 3) return null;
                 return <div key={i} className={twMerge('flex flex-col justify-start items-start gap-0 w-1/2 sm:w-auto md:w-1/4')} >
                     <Text p weight='medium' size='sm' degree='3' className='number_menu_gsap' >{`0${i + 1}`}</Text>
-                    <span className='overflow-hidden'>
+                    {/* <span className='overflow-hidden'> */}
                         <CursorContent name={`cursorPointer_intro_menu_${i + 1}`} component='CursorEvent' props={{
                             event: 'pointer',
                         }}>
@@ -293,19 +290,19 @@ const Menu = () => {
                                     size='sm'
                                     weight='semibold'
                                     onPress={() => goToSection(menuItems[`${i + 1}` as MenuItems] as string)}
-                                    className='uppercase item_menu_gsap py-2' style={{
+                                    className='uppercase item_menu_gsap' style={{
                                         color: 'inherit'
                                     }} >
                                     {t(`header.menu.${menuKeys[i]}.attribute`)}
                                 </Button>
                             </Item>
                         </CursorContent>
-                    </span>
+                    {/* </span> */}
                 </div>
             })}
         </div>
         <span className='overflow-hidden'>
-            <Text p weight='medium' size='sm' degree='3' className={twMerge('w-max whitespace-nowrap-important', 'pr-1 hidden xxs:flex sm:hidden md:flex', 'item_menu_gsap')} >
+            <Text p weight='medium' size='sm' degree='3' className={twMerge('w-max whitespace-nowrap-important', 'pr-1 pb-1 hidden xxs:flex sm:hidden md:flex', 'item_menu_gsap')} >
                 {t('intro.copy')}
             </Text>
         </span>

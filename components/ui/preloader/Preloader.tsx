@@ -83,9 +83,8 @@ const Preloader = ({ isLoading, setEndLoading }: {
                 setPercent((prevPercent) => Math.min(prevPercent + 1, 100));
             }, LONG_LOADING_TIME);
         } else if (!isLoading) {
-            // Speed up percent increase
             intervalId = setInterval(() => {
-                setPercent((prevPercent) => Math.min(prevPercent + 2, 100));
+                setPercent((prevPercent) => Math.min(prevPercent + 3, 100));
             }, MEDIUM_LOADING_TIME);
         }
         return () => clearInterval(intervalId);
@@ -151,7 +150,10 @@ const Preloader = ({ isLoading, setEndLoading }: {
                     duration: 0.5,
                     yPercent: -120,
                     ease: 'power2.out',
-                    skewY: skew
+                    skewY: skew,
+                    onComplete: () => {
+                        setEndLoading(true);
+                    }
                 }).fromTo('.element-bg', {
                     yPercent: 0,
                     skewY: 0,
@@ -162,10 +164,7 @@ const Preloader = ({ isLoading, setEndLoading }: {
                     ease: 'power2.out',
                 });
             self.add('endPreload', (e: any) => {
-                tl.play().then(() => {
-                    setEndLoading(true)
-                });
-
+                tl.play();
             });
             return () => {
                 tl.kill();
