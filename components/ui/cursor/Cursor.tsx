@@ -120,9 +120,11 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 ease: 'Power4.easeOut',
             }).fromTo('.ball_main_gsap', {
                 scale: 1,
+                opacity: 1,
             },{
                 duration: 0.4,
                 scale: 1.2,
+                opacity: 0.8,
                 ease: 'Power4.easeOut',
             }, '<');
             context.add('CursorEvent', (isActive: boolean, event: 'pointer' | 'disabled') => {
@@ -231,7 +233,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                     DEFAULT_BALL_CLASS_NAME, 
                     blend,
                     'ball_gsap ball_main_gsap',
-                    'w-10 sm:w-14 h-10 sm:h-14',
+                    'w-10 sm:w-12 h-10 sm:h-12',
                     'border-2 border-primary-500 bg-white-300/5 backdrop-blur-xs')}></div>
                 <div className={twMerge(
                     DEFAULT_BALL_CLASS_NAME, 

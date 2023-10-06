@@ -1,31 +1,33 @@
-import { useRef, useState } from 'react';
+import { ElementRef, useRef, useState } from 'react';
 import { gsap } from '@/utils/gsap';
-import { twMerge } from 'tailwind-merge';
 import { useIsomorphicLayoutEffect } from 'react-use';
+import { CursorContent } from '@/components/ui';
 
-const Item = ({ children }: {
+const Item = ({ children, defaultColor = 'var(--color-white-100)' }: {
     children: React.ReactElement,
+    defaultColor?: `var(--color-${string})`
 }) => {
-    const ref = useRef<HTMLDivElement>(null);
+    const ref = useRef<ElementRef<'div'>>(null);
+
     let [onHoverStart, setOnHoverStart] = useState(false);
     let [onHoverEnd, setOnHoverEnd] = useState(false);
+
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
-
             const timeline = gsap.timeline({
                 paused: true,
                 defaults: {
-                    duration: 0.2
+                    duration: 0.15
                 }
             })
             timeline.fromTo('.item-child-grap', {
                 yPercent: 0,
                 skewY: 0,
-                color: 'var(--color-white-100)',
+                color: defaultColor,
             }, {
                 yPercent: -100,
                 skewY: 5,
-                color: 'var(--color-white-100)',
+                color: defaultColor,
                 ease: 'power4.easeIn'
             }).fromTo('.item-child-grap', {
                 yPercent: 100,
@@ -34,7 +36,7 @@ const Item = ({ children }: {
             }, {
                 yPercent: 0,
                 skewY: 0,
-                ease: 'power4.easeOut',                
+                ease: 'power4.easeOut',
                 color: 'var(--color-primary-500)',
             }).progress(0)
             gsap.set('.item-child-grap', {
@@ -42,14 +44,15 @@ const Item = ({ children }: {
                 skewY: 0,
                 color: 'var(--color-white-100)'
             });
-
             ref.current?.addEventListener('pointerenter', () => {
                 if (onHoverStart) return;
+                if (onHoverEnd) return;
                 setOnHoverStart(true);
                 timeline?.play().then(() => setOnHoverStart(false));
             });
             ref.current?.addEventListener('pointerleave', () => {
                 if (onHoverEnd) return;
+                if (onHoverStart) return;
                 setOnHoverEnd(true);
                 timeline?.reverse().then(() => setOnHoverEnd(false));
             });
@@ -66,12 +69,15 @@ const Item = ({ children }: {
         return () => {
             ctx.revert();
         }
-    }, [ref]);
-    return <div className='cursor-pointer h-6' ref={ref}>
-        <div className='item-child-grap'>
-            {children}
+    }, [ref, defaultColor]);
+    return <CursorContent name={`cursorPointer_header_email`} component='CursorEvent' props={{
+        event: 'pointer',
+    }}><div className='overflow-hidden relative' ref={ref}>
+            <div className='item-child-grap cursor-pointer flex'>
+                {children}
+            </div>
         </div>
-    </div>
+    </CursorContent>
 }
 
 export default Item;

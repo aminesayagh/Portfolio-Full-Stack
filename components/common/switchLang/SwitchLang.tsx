@@ -19,15 +19,15 @@ const SwitchLang = () => {
         <>
             <div className='flex flex-row items-center justify-start gap-6 xxs:gap-8 mdl:gap-6 lg:gap-8'>
                 {langs.map(l =>
-                <span key={l} className='overflow-hidden'>
-                    <Item  >
-                        <Button degree="2" size='xs' className="uppercase" onPress={() => changeLanguage(l)} style={{
-                            color: 'inherit'
-                        }}>
-                            {l}
-                        </Button>
-                    </Item>
-                </span>
+                    <span key={l} className='overflow-hidden'>
+                        <Item defaultColor='var(--color-white-600)'>
+                            <Button degree="2" size='xs' className="uppercase" onPress={() => changeLanguage(l)} style={{
+                                color: 'inherit'
+                            }}>
+                                {l}
+                            </Button>
+                        </Item>
+                    </span>
                 )}
             </div>
         </>

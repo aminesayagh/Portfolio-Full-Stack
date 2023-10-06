@@ -12,9 +12,6 @@ import { LoadingContext, Navbar, Logo, Link, Button, containerStyle, Modal, Text
 import { HamburgerMenu, SwitchLang } from '@/components/common';
 ;
 
-import { getMenuItems } from '@/conf/router';
-const menuHamburgerItems = getMenuItems('hamburger');
-const menuSocialNetworks = getMenuItems('socialNetworks');
 
 import { ScrollProvider } from '@/context/AnimationConf';
 
@@ -28,17 +25,28 @@ const TRANSLATE_Y = -110;
 
 import useRouterChange from '@/hook/SafePush';
 import { useIsomorphicLayoutEffect } from 'react-use';
+import { MenuItem } from '@/conf/router';
 
 const Header = () => {
     const { t } = useTranslation();
     const router = useRouter();
     const { safePush } = useRouterChange();
     let [openMenu, setOpenMenu] = useState<boolean>(false);
-    const ref = useRef<ElementRef<'span'>>(null);
     const { endLoading } = useContext(LoadingContext);
+    const [menuHamburgerItems, setMenuHamburgerItems] = useState<MenuItem[]>([]);
+    const [menuSocialNetworks, setMenuSocialNetworks] = useState<MenuItem[]>([]);
 
     const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
     const ctx = useRef<any>(null);
+
+    useEffect(() => {
+        Promise.all([fetch('/api/menu?name=hamburger'), fetch('/api/menu?name=socialNetwork')]).then(([res1, res2]) => {
+            // @ts-ignore
+            setMenuHamburgerItems(res1?.items);
+            // @ts-ignore
+            setMenuSocialNetworks(res2?.items);
+        })
+    }, [])
 
     const { scrollbar } = useContext(ScrollProvider);
     useIsomorphicLayoutEffect(() => {
@@ -104,7 +112,7 @@ const Header = () => {
                         ctx.current.revert(); // revert timeline to the beginning
                     });
                 });
-            }, ref);
+            });
             return () => {
                 ctx.current.revert();
                 tl.current.kill();
@@ -117,7 +125,7 @@ const Header = () => {
                 let tl = gsap.timeline({
                     paused: true,
                 }).from('.navbar_gsap', {
-                    delay: 0.,
+                    delay: 0.3,
                     yPercent: 160,
                     duration: 0.5,
                 })
@@ -135,7 +143,7 @@ const Header = () => {
                         tl.kill();
                     };
                 }
-            }, ref);
+            });
             return () => ctx.revert()
         }
     }, [scrollbar, endLoading])
@@ -150,7 +158,7 @@ const Header = () => {
         if (openMenu) {
             ctx.current.open();
         }
-    }, [openMenu])
+    }, [openMenu]);
 
     let idTimeout = useRef<NodeJS.Timeout>();
     const onButtonClick = useCallback((path: string, id?: string) => {
@@ -178,14 +186,12 @@ const Header = () => {
     const pageName = useMemo(() => router.pathname.split('/')[1], [router]);
 
     return (
-        <span ref={ref}>
             <Modal isOpenExternal={openMenu} menuHandler={menuHandler}>
                 <Navbar size='lg' inTopOfScroll={openMenu} className='overflow-hidden' >
                     <span className='w-full flex flex-row items-center justify-between navbar_gsap'>
                         <Navbar.Content className={twMerge('flex-1', GAP_SIZE_LG)}>
-                            <Link href={`mailto:${t('header.email')}?subject=Contact from Portfolio&body=Hello Mohamed Amine,`} size='xs' weight='semibold' className='hidden mdl:flex'>{t('header.email')}</Link>
-
-                            <span className="w-[1.2px] bg-gray-500 h-[14px] rotate-[25deg] hidden mdl:block" />
+                            <Link degree='2' href={`mailto:${t('header.email')}?subject=Contact from Portfolio&body=Hello Mohamed Amine,`} size='xs' weight='semibold' className='hidden mdl:flex'>{t('header.email')}</Link>
+                            <span className="w-[1.4px] bg-gray-500 h-[13px] rotate-[25deg] hidden mdl:block" />
                             <SwitchLang />
                         </Navbar.Content>
                         <Navbar.Brand >
@@ -194,7 +200,6 @@ const Header = () => {
                             </span>
                         </Navbar.Brand>
                         <Navbar.Content className={twMerge('flex-1 justify-end overflow-hidden', GAP_SIZE_LG)}>
-
                             <Button
                                 onPress={() => onButtonClick(pageName !== 'contact' ? '/contact' : '/')}
                                 size='sm'
@@ -242,7 +247,7 @@ const Header = () => {
                                                                     onButtonClick(item.link, item.id)
                                                                 }} degree='1' className={
                                                                     twMerge(
-                                                                        'capitalize relative text-white-600 bg-black-200 z-10 hover:text-primary-500',
+                                                                        'capitalize relative text-white-600 bg-black-100 z-10 hover:text-primary-500',
                                                                         'text-7xl sm:text-8xl mdl:text-9xl lg:text-15xl xl:text-[5rem] font-bold leading-tight tracking-wide transition-colors duration-150'
                                                                     )}>
                                                                     {t(`${BASE_LOCALE_MENU}.${item.id}.attribute`)}
@@ -289,7 +294,6 @@ const Header = () => {
                     </span>
                 </Navbar>
             </Modal>
-        </span>
     )
 }
 

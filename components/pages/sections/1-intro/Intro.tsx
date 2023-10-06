@@ -7,8 +7,6 @@ import { MENU_ITEMS } from "@/conf/router";
 import { ScrollProvider } from '@/context/AnimationConf';
 import { useIsomorphicLayoutEffect } from "react-use";
 import { ScrollTrigger } from "@/utils/gsap";
-import { useHover } from "react-aria";
-import useGsap from "@/hook/useGsap";
 import useRouterChange from '@/hook/SafePush';
 import { Item } from '@/components/ui';
 import { LoadingContext } from "@/components/ui";
@@ -18,6 +16,7 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const xTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref.current]);
     const yTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref.current]);
     const { scrollbar } = useContext(ScrollProvider);
+
     useIsomorphicLayoutEffect(() => {
         if (!!ref.current) {
             const ctx = gsap.context(() => {
@@ -116,6 +115,7 @@ const ButtonNext = () => {
 
 const DISPLAY_1_CLASS_NAME = 'capitalize';
 const DISPLAY_2_CLASS_NAME = 'uppercase italic text-primary-500';
+
 const FullStack = ({ className }: { className: string }) => {
     const { t, i18n } = useTranslation();
 
@@ -256,9 +256,9 @@ const menuItems = {
     "3": MENU_ITEMS.cases.id,
     "4": MENU_ITEMS.contact.id
 } as const;
+
 const menuKeys = ['manifesto', 'experience', 'cases', 'contact'];
 
-type MenuItems = keyof typeof menuItems;
 
 const Menu = () => {
     const { t } = useTranslation();
@@ -271,9 +271,6 @@ const Menu = () => {
         } else {
             if (scrollbar) {
                 scrollbar.scrollTo(`#${section}`, { duration: 500 });
-                // setTimeout(() => {
-                //     ScrollTrigger.refresh();
-                // }, 500);
             }
         }
     }, [scrollbar, safePush])
@@ -281,31 +278,29 @@ const Menu = () => {
         <div className={twMerge('flex flex-row flex-wrap justify-between items-start w-full gap-y-6')} >
             {Array.apply(null, Array(4)).map((_, i) => {
                 if (i > 3) return null;
-                return <div key={i} className={twMerge('flex flex-col justify-start items-start gap-0 w-1/2 sm:w-auto md:w-1/4')} >
+                return <div key={i} className={twMerge('flex flex-col justify-start items-start gap-1 w-1/2 sm:w-auto md:w-1/4')} >
                     <Text p weight='medium' size='sm' degree='3' className='number_menu_gsap' >{`0${i + 1}`}</Text>
-                    <span className='overflow-hidden'>
-                        <CursorContent name={`cursorPointer_intro_menu_${i + 1}`} component='CursorEvent' props={{
-                            event: 'pointer',
-                        }}>
-                            <Item>
-                                <Button
-                                    degree='1'
-                                    size='sm'
-                                    weight='semibold'
-                                    onPress={() => goToSection(menuItems[`${i + 1}` as MenuItems] as string)}
-                                    className='uppercase item_menu_gsap py-2' style={{
-                                        color: 'inherit'
-                                    }} >
-                                    {t(`header.menu.${menuKeys[i]}.attribute`)}
-                                </Button>
-                            </Item>
-                        </CursorContent>
-                    </span>
+                    <CursorContent name={`cursorPointer_intro_menu_${i + 1}`} component='CursorEvent' props={{
+                        event: 'pointer',
+                    }}>
+                        <Item>
+                            <Button
+                                degree='1'
+                                size='sm'
+                                weight='semibold'
+                                onPress={() => goToSection(menuItems[`${i + 1}` as keyof typeof menuItems] as string)}
+                                className='uppercase item_menu_gsap' style={{
+                                    color: 'inherit'
+                                }} >
+                                {t(`header.menu.${menuKeys[i]}.attribute`)}
+                            </Button>
+                        </Item>
+                    </CursorContent>
                 </div>
             })}
         </div>
         <span className='overflow-hidden'>
-            <Text p weight='medium' size='sm' degree='3' className={twMerge('w-max whitespace-nowrap-important', 'pr-1 hidden xxs:flex sm:hidden md:flex', 'item_menu_gsap')} >
+            <Text p weight='medium' size='sm' degree='3' className={twMerge('w-max whitespace-nowrap-important', 'pr-1 pb-1 hidden xxs:flex sm:hidden md:flex', 'item_menu_gsap')} >
                 {t('intro.copy')}
             </Text>
         </span>

@@ -1,6 +1,13 @@
 import _ from 'lodash';
 
-type MenuType = 'secondary' | 'hamburger' | 'socialNetworks';
+const menuType = {
+    secondary: 'secondary',
+    hamburger: 'hamburger',
+    socialNetworks: 'socialNetworks'
+} as const;
+
+export const menuValues = Object.values(menuType);
+type MenuType = typeof menuType[keyof typeof menuType];
 
 interface MenuItem {
     id: string;

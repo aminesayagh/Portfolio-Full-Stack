@@ -1,11 +1,13 @@
 
-import { Text, Icon, IconNames } from '@/components/ui';
 import { useEffect, useRef, MutableRefObject } from 'react';
-import { gsap } from '@/utils/gsap';
 import { twMerge } from 'tailwind-merge';
 import _ from 'lodash';
 import { useIsomorphicLayoutEffect } from 'react-use';
-import { ItemCursorPropsByComponent } from './CursorType'
+
+import { Text, Icon } from '@/components/ui';
+import { gsap } from '@/utils/gsap';
+import { ItemCursorPropsByComponent } from './CursorType';
+
 const CursorScroll = ({ isActive, ctx, title }: {
     ctx: MutableRefObject<gsap.Context | undefined>,
     isActive: boolean,
