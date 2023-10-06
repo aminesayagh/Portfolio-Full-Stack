@@ -1,5 +1,5 @@
 
-import { useState, Dispatch, SetStateAction, useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { Button } from '@/components/ui';
 import { useKeyboard } from 'react-aria';
