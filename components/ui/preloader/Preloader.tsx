@@ -85,7 +85,7 @@ const Preloader = ({ isLoading, setEndLoading }: {
             }, LONG_LOADING_TIME);
         } else if (!isLoading) {
             intervalId = setInterval(() => {
-                setPercent((prevPercent) => Math.min(prevPercent + 3, 100));
+                // setPercent((prevPercent) => Math.min(prevPercent + 3, 100));
             }, MEDIUM_LOADING_TIME);
         }
         return () => clearInterval(intervalId);
@@ -101,7 +101,7 @@ const Preloader = ({ isLoading, setEndLoading }: {
             }).fromTo('.item-gsap', {
                 yPercent: 0,
             }, {
-                delay: delay * 2,
+                delay: delay * 3,
                 duration,
                 yPercent: -100,
                 ease,
@@ -178,8 +178,8 @@ const Preloader = ({ isLoading, setEndLoading }: {
     return (
         <div ref={ref} >
             <div className={twMerge('w-screen h-screen overflow-hidden', 'bg-white-400', 'z-preload fixed', 'element-container')}>
-                <Container as='div' size='lg' className={twMerge('h-screen pt-8', 'flex flex-col justify-between')}>
-                    <div className='flex flex-col gap-1'>
+                <Container as='div' size='lg' className={twMerge('h-screen pt-4 sm:pt-8', 'flex flex-col justify-between')}>
+                    <div className='flex flex-col gap-0 sm:gap-1'>
                         <span className='py-1 element-content-gsap opacity-0'>
                             <Title h6 degree='4' exchange >
                                 {t('loading.intro')}
@@ -200,7 +200,7 @@ const Preloader = ({ isLoading, setEndLoading }: {
                             <motion.p className={twMerge(
                                 'uppercase element-counter-gsap',
                                 'font-sans font-black text-black-500',
-                                'text-[10rem] tracking-wider align-baseline leading-[70%]'
+                                'text-[4.1rem] xxs:text-[6rem] md:text-[7.4rem] lg:text-[8.4rem] xl:text-[10rem] tracking-wider align-baseline leading-[70%]'
                             )}>
                                 <motion.span key={percent} initial={{ opacity: 1, y: '0' }} animate={{ opacity: 1, y: '-100%' }} exit={{ opacity: 0, y: '100%' }}>
                                     {percent}
