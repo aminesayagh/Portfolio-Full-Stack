@@ -1,4 +1,4 @@
-import { Key, createContext, useState, useEffect } from 'react';
+import { Key, createContext, useState, useEffect, useRef, ElementRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { twMerge } from 'tailwind-merge';
 import { Container, Title, Display, Text, Noise } from '@/components/ui';
@@ -74,6 +74,7 @@ const Preloader = ({ isLoading, setEndLoading }: {
 }) => {
     const { t } = useTranslation();
     const [percent, setPercent] = useState(INITIAL_PERCENT);
+    const ref = useRef<ElementRef<'div'>>(null);
     useEffect(() => {
         let intervalId: NodeJS.Timeout;
         if (percent == INITIAL_PERCENT) {
@@ -99,13 +100,11 @@ const Preloader = ({ isLoading, setEndLoading }: {
                 paused: true,
             }).fromTo('.item-gsap', {
                 yPercent: 0,
-                autoAlpha: 0
             }, {
+                delay: delay * 2,
                 duration,
                 yPercent: -100,
-                delay: delay * 2,
                 ease,
-                autoAlpha: 1
             }).to('.item-gsap', {
                 duration,
                 delay,
@@ -126,11 +125,11 @@ const Preloader = ({ isLoading, setEndLoading }: {
             return () => {
                 tl.kill();
             }
-        });
+        }, ref);
         return () => ctx.revert();
     }, [])
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context((self) => {
             const skew = 2;
             const tl = gsap.timeline({
@@ -169,7 +168,7 @@ const Preloader = ({ isLoading, setEndLoading }: {
             return () => {
                 tl.kill();
             }
-        })
+        }, ref)
         if (!isLoading && percent == 100) {
             ctx.endPreload();
         }
@@ -177,7 +176,7 @@ const Preloader = ({ isLoading, setEndLoading }: {
     }, [percent]);
 
     return (
-        <div>
+        <div ref={ref} >
             <div className={twMerge('w-screen h-screen overflow-hidden', 'bg-white-400', 'z-preload fixed', 'element-container')}>
                 <Container as='div' size='lg' className={twMerge('h-screen pt-8', 'flex flex-col justify-between')}>
                     <div className='flex flex-col gap-1'>
@@ -196,14 +195,18 @@ const Preloader = ({ isLoading, setEndLoading }: {
                             }
                         </ul>
                     </div>
-                    <div className={twMerge('w-full', 'flex flex-row justify-end', 'relative -bottom-4')} >
+                    <div className={twMerge('w-full', 'flex flex-row justify-end', 'relative')} >
                         <AnimatePresence mode='sync' >
-                            <Display size='xl' exchange className='uppercase element-counter-gsap'>
+                            <motion.p className={twMerge(
+                                'uppercase element-counter-gsap',
+                                'font-sans font-black text-black-500',
+                                'text-[10rem] tracking-wider align-baseline leading-[70%]'
+                            )}>
                                 <motion.span key={percent} initial={{ opacity: 1, y: '0' }} animate={{ opacity: 1, y: '-100%' }} exit={{ opacity: 0, y: '100%' }}>
                                     {percent}
                                 </motion.span>
                                 {t('loading.percent')}
-                            </Display>
+                            </motion.p>
                         </AnimatePresence>
                     </div>
                 </Container>
