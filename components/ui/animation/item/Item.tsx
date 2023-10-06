@@ -1,14 +1,17 @@
-import { useRef, useState } from 'react';
+import { ElementRef, useRef, useState } from 'react';
 import { gsap } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { CursorContent } from '@/components/ui';
 
-const Item = ({ children }: {
+const Item = ({ children, defaultColor = 'var(--color-white-100)' }: {
     children: React.ReactElement,
+    defaultColor?: `var(--color-${string})`
 }) => {
-    const ref = useRef<HTMLDivElement>(null);
+    const ref = useRef<ElementRef<'div'>>(null);
+
     let [onHoverStart, setOnHoverStart] = useState(false);
     let [onHoverEnd, setOnHoverEnd] = useState(false);
+
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
             const timeline = gsap.timeline({
@@ -20,11 +23,11 @@ const Item = ({ children }: {
             timeline.fromTo('.item-child-grap', {
                 yPercent: 0,
                 skewY: 0,
-                color: 'var(--color-white-100)',
+                color: defaultColor,
             }, {
                 yPercent: -100,
                 skewY: 5,
-                color: 'var(--color-white-100)',
+                color: defaultColor,
                 ease: 'power4.easeIn'
             }).fromTo('.item-child-grap', {
                 yPercent: 100,
@@ -66,11 +69,11 @@ const Item = ({ children }: {
         return () => {
             ctx.revert();
         }
-    }, [ref]);
+    }, [ref, defaultColor]);
     return <CursorContent name={`cursorPointer_header_email`} component='CursorEvent' props={{
         event: 'pointer',
     }}><div className='overflow-hidden relative' ref={ref}>
-            <div className='item-child-grap cursor-pointer'>
+            <div className='item-child-grap cursor-pointer flex'>
                 {children}
             </div>
         </div>

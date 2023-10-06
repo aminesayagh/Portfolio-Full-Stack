@@ -12,9 +12,6 @@ import { LoadingContext, Navbar, Logo, Link, Button, containerStyle, Modal, Text
 import { HamburgerMenu, SwitchLang } from '@/components/common';
 ;
 
-import { getMenuItems } from '@/conf/router';
-const menuHamburgerItems = getMenuItems('hamburger');
-const menuSocialNetworks = getMenuItems('socialNetworks');
 
 import { ScrollProvider } from '@/context/AnimationConf';
 
@@ -28,6 +25,7 @@ const TRANSLATE_Y = -110;
 
 import useRouterChange from '@/hook/SafePush';
 import { useIsomorphicLayoutEffect } from 'react-use';
+import { MenuItem } from '@/conf/router';
 
 const Header = () => {
     const { t } = useTranslation();
@@ -35,9 +33,20 @@ const Header = () => {
     const { safePush } = useRouterChange();
     let [openMenu, setOpenMenu] = useState<boolean>(false);
     const { endLoading } = useContext(LoadingContext);
+    const [menuHamburgerItems, setMenuHamburgerItems] = useState<MenuItem[]>([]);
+    const [menuSocialNetworks, setMenuSocialNetworks] = useState<MenuItem[]>([]);
 
     const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
     const ctx = useRef<any>(null);
+
+    useEffect(() => {
+        Promise.all([fetch('/api/menu?name=hamburger'), fetch('/api/menu?name=socialNetwork')]).then(([res1, res2]) => {
+            // @ts-ignore
+            setMenuHamburgerItems(res1?.items);
+            // @ts-ignore
+            setMenuSocialNetworks(res2?.items);
+        })
+    }, [])
 
     const { scrollbar } = useContext(ScrollProvider);
     useIsomorphicLayoutEffect(() => {
@@ -149,7 +158,7 @@ const Header = () => {
         if (openMenu) {
             ctx.current.open();
         }
-    }, [openMenu])
+    }, [openMenu]);
 
     let idTimeout = useRef<NodeJS.Timeout>();
     const onButtonClick = useCallback((path: string, id?: string) => {
@@ -181,8 +190,8 @@ const Header = () => {
                 <Navbar size='lg' inTopOfScroll={openMenu} className='overflow-hidden' >
                     <span className='w-full flex flex-row items-center justify-between navbar_gsap'>
                         <Navbar.Content className={twMerge('flex-1', GAP_SIZE_LG)}>
-                            <Link href={`mailto:${t('header.email')}?subject=Contact from Portfolio&body=Hello Mohamed Amine,`} size='xs' weight='semibold' className='hidden mdl:flex'>{t('header.email')}</Link>
-                            <span className="w-[1.2px] bg-gray-500 h-[14px] rotate-[25deg] hidden mdl:block" />
+                            <Link degree='2' href={`mailto:${t('header.email')}?subject=Contact from Portfolio&body=Hello Mohamed Amine,`} size='xs' weight='semibold' className='hidden mdl:flex'>{t('header.email')}</Link>
+                            <span className="w-[1.4px] bg-gray-500 h-[13px] rotate-[25deg] hidden mdl:block" />
                             <SwitchLang />
                         </Navbar.Content>
                         <Navbar.Brand >
