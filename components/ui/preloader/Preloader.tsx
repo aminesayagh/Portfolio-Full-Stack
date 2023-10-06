@@ -85,7 +85,7 @@ const Preloader = ({ isLoading, setEndLoading }: {
             }, LONG_LOADING_TIME);
         } else if (!isLoading) {
             intervalId = setInterval(() => {
-                // setPercent((prevPercent) => Math.min(prevPercent + 3, 100));
+                setPercent((prevPercent) => Math.min(prevPercent + 3, 100));
             }, MEDIUM_LOADING_TIME);
         }
         return () => clearInterval(intervalId);

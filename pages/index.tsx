@@ -2,7 +2,7 @@ import { Head } from '@/components/common';
 import { useState } from 'react';
 import { Noise, LoadingProvider } from '@/components/ui';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-
+import { Suspense } from 'react';
 import '@/utils/gsap';
 
 import AnimationConf from '@/context/AnimationConf';
@@ -21,21 +21,23 @@ export default function Home() {
   return (
     <>
       <LoadingProvider>
-        <Head title={t('head.home.title')}
-          description={t('head.home.description')}
-          keywords={t('head.home.keywords')}
-          author={t('head.home.author')}
-          logo='/favicon.svg'
-        />
-        <Cursor>
-          <AnimationConf >
-            <DynamicHeader />
-            <div data-scroll-container>
-              <LandingPage />
-            </div>
-            <Noise />
-          </AnimationConf>
-        </Cursor>
+        <Suspense >
+          <Head title={t('head.home.title')}
+            description={t('head.home.description')}
+            keywords={t('head.home.keywords')}
+            author={t('head.home.author')}
+            logo='/favicon.svg'
+          />
+          <Cursor>
+            <AnimationConf >
+              <DynamicHeader />
+              <div data-scroll-container>
+                <LandingPage />
+              </div>
+              <Noise />
+            </AnimationConf>
+          </Cursor>
+        </Suspense>
       </LoadingProvider>
     </>
   )
