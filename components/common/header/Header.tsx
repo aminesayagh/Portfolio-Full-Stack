@@ -40,7 +40,7 @@ const Header = () => {
     const ctx = useRef<any>(null);
 
     useEffect(() => {
-        Promise.all([fetch('/api/menu?name=hamburger'), fetch('/api/menu?name=socialNetwork')]).then(([res1, res2]) => {
+        Promise.all([fetch('/api/menu?name=hamburger'), fetch('/api/menu?name=socialNetworks')]).then(([res1, res2]) => {
             // @ts-ignore
             setMenuHamburgerItems(res1?.items);
             // @ts-ignore
