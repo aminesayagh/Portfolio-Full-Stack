@@ -54,9 +54,8 @@ const Header = () => {
         })
     }, [])
 
-    const { scrollbar } = useContext(ScrollProvider);
+    
     useIsomorphicLayoutEffect(() => {
-        if (!!scrollbar) {
             ctx.current = gsap.context((self) => {
                 self.add('open', () => {
                     tl.current.fromTo(['.modal-overlay', '.modal-content'], {
@@ -123,10 +122,8 @@ const Header = () => {
                 ctx.current.revert();
                 tl.current.kill();
             }
-        }
-    }, [scrollbar]);
+    }, []);
     useIsomorphicLayoutEffect(() => {
-        if (!!scrollbar) {
             const ctx = gsap.context(() => {
                 let tl = gsap.timeline({
                     paused: true,
@@ -151,8 +148,7 @@ const Header = () => {
                 }
             });
             return () => ctx.revert()
-        }
-    }, [scrollbar, endLoading])
+    }, [endLoading])
     const menuHandler = useCallback(() => {
         if (!openMenu) {
             setOpenMenu(true);
@@ -165,6 +161,7 @@ const Header = () => {
             ctx.current.open();
         }
     }, [openMenu]);
+    const { scrollbar } = useContext(ScrollProvider);
 
     let idTimeout = useRef<NodeJS.Timeout>();
     const onButtonClick = useCallback((path: string, id?: string) => {
@@ -173,7 +170,7 @@ const Header = () => {
         } else {
             tl.current.reverse().then(() => {
                 setOpenMenu(false);
-                safePush(path);
+                // safePush(path);
                 idTimeout.current = setTimeout(() => {
                     scrollbar && scrollbar.scrollTo(`#${id}`, {
                         duration: 500,
