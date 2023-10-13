@@ -1,4 +1,4 @@
-import { Key, createContext, useState, useEffect, useRef, ElementRef } from 'react';
+import { Key, createContext, useState, useEffect, useRef, ElementRef, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import { twMerge } from 'tailwind-merge';
 import { Container, Title, Display, Text, Noise } from '@/components/ui';
@@ -61,7 +61,9 @@ export function LoadingProvider({ children }: {
             endLoading
         }}>
             <Preloader isLoading={isLoading} setEndLoading={setEndLoading} />
-            {children}
+            <Suspense  >
+                {children}
+            </Suspense>
         </LoadingContext.Provider>
     )
 }
@@ -200,7 +202,7 @@ const Preloader = ({ isLoading, setEndLoading }: {
                             <motion.p className={twMerge(
                                 'uppercase element-counter-gsap',
                                 'font-sans font-black text-black-500',
-                                'text-[4.1rem] xxs:text-[6rem] md:text-[7.4rem] lg:text-[8.4rem] xl:text-[10rem] tracking-wider align-baseline leading-[70%]'
+                                'text-[4.1rem] xxs:text-[6rem] md:text-[7.4rem] lg:text-[8.4rem] xl:text-[10rem] align-baseline leading-[70%]'
                             )}>
                                 <motion.span key={percent} initial={{ opacity: 1, y: '0' }} animate={{ opacity: 1, y: '-100%' }} exit={{ opacity: 0, y: '100%' }}>
                                     {percent}

@@ -27,6 +27,7 @@ import useRouterChange from '@/hook/SafePush';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { MenuItem } from '@/conf/router';
 
+
 const Header = () => {
     const { t } = useTranslation();
     const router = useRouter();
@@ -40,12 +41,16 @@ const Header = () => {
     const ctx = useRef<any>(null);
 
     useEffect(() => {
-        Promise.all([fetch('/api/menu?name=hamburger'), fetch('/api/menu?name=socialNetworks')]).then(async([res1, res2]) => {
-            const [response1, response2] = await Promise.all([res1.json(), res2.json()]);
-            // @ts-ignore
-            setMenuHamburgerItems(response1?.items);
-            // @ts-ignore
-            setMenuSocialNetworks(response2?.items);
+        const { signal } = new AbortController();
+        Promise.all([fetch('/api/menu?name=hamburger', {
+            signal
+        }), fetch('/api/menu?name=socialNetworks', {
+            signal
+        })]).then(async([res1, res2]) => {
+            Promise.all([res1.json(), res2.json()]).then(([response1, response2]) => {
+                setMenuHamburgerItems(response1.items);
+                setMenuSocialNetworks(response2.items);
+            })
         })
     }, [])
 

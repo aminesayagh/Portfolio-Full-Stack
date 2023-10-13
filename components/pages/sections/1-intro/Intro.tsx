@@ -1,11 +1,13 @@
 import { twMerge } from "tailwind-merge";
 import React, { useRef, useContext, useCallback, useMemo, ElementRef } from "react";
-import { Text, Button, Display, Icon, Fit, CursorContent } from '@/components/ui';
 import { useTranslation } from "next-i18next";
+import { useIsomorphicLayoutEffect } from "react-use";
+import { useRouter } from "next/router";
+
+import { Text, Button, Display, Icon, Fit, CursorContent } from '@/components/ui';
 import { gsap } from '@/utils/gsap';
 import { MENU_ITEMS } from "@/conf/router";
 import { ScrollProvider } from '@/context/AnimationConf';
-import { useIsomorphicLayoutEffect } from "react-use";
 import { ScrollTrigger } from "@/utils/gsap";
 import useRouterChange from '@/hook/SafePush';
 import { Item } from '@/components/ui';
@@ -268,12 +270,13 @@ const Menu = () => {
     const goToSection = useCallback((section: string) => {
         if (section == 'contact') {
             safePush('/contact');
-        } else {
-            if (scrollbar) {
-                scrollbar.scrollTo(`#${section}`, { duration: 500 });
-            }
+        } else if(scrollbar) {
+            scrollbar.scrollTo(`#${section}`, {
+                duration: 500,
+                disableLerp: true
+            });
         }
-    }, [scrollbar, safePush])
+    }, [safePush, scrollbar]);
     return (<>
         <div className={twMerge('flex flex-row flex-wrap justify-between items-start w-full gap-y-6')} >
             {Array.apply(null, Array(4)).map((_, i) => {

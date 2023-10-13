@@ -3,6 +3,7 @@ import { DynamicIntro, DynamicManifesto, DynamicCases, DynamicAction, DynamicVid
 import { MENU_ITEMS } from '@/conf/router';
 import { twMerge } from 'tailwind-merge';
 import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
 const DynamicFooter = dynamic(() => import('@/components/common/footer'));
 
 const LandingPage = () => {
@@ -12,9 +13,11 @@ const LandingPage = () => {
                 <DynamicIntro />
             </Container>
             <span data-scroll-section className='block h-24 w-full' ></span>
-            <Container data-scroll-section id='video' as='section' size='lg'  >
-                <DynamicVideo />
-            </Container>
+            <Suspense >
+                <Container data-scroll-section id='video' as='section' size='lg'  >
+                    <DynamicVideo />
+                </Container>
+            </Suspense>
             <span data-scroll-section className='block h-16 xxs:h-0 w-full'></span>
             <Container data-scroll-section id={MENU_ITEMS.manifesto.id} as='section' size='lg'  >
                 <DynamicManifesto />
