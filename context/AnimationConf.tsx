@@ -68,8 +68,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                     ScrollTrigger.addEventListener('refresh', () => {
                         scroll.update();
                     });
-
-                    ScrollTrigger.refresh();
+                    
                     !scrollbar && setScrollbar(scroll); 
                 } catch (err) {
                     throw new Error(`[SmoothScrollProvider] : ${err}`);

@@ -1,8 +1,9 @@
 import { Key, createContext, useState, useEffect, useRef, ElementRef, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import { twMerge } from 'tailwind-merge';
-import { Container, Title, Display, Text, Noise } from '@/components/ui';
 import { AnimatePresence, motion } from 'framer-motion';
+
+import { Container, Title, Text, Noise } from '@/components/ui';
 import { gsap } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 
