@@ -110,7 +110,7 @@ const CardElement = ({ i }: { i: number }) => {
     const { scrollbar } = useContext(ScrollProvider);
 
     useIsomorphicLayoutEffect(() => {
-        if (scrollbar) {
+        if(scrollbar) {
             let ctx = gsap.context(() => {
                 let space = 40;
                 let y = (i % 2 === 0 ? 1 : -1);

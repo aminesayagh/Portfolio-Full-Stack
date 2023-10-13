@@ -1,11 +1,13 @@
 import { twMerge } from "tailwind-merge";
 import React, { useRef, useContext, useCallback, useMemo, ElementRef } from "react";
-import { Text, Button, Display, Icon, Fit, CursorContent } from '@/components/ui';
 import { useTranslation } from "next-i18next";
+import { useIsomorphicLayoutEffect } from "react-use";
+import { useRouter } from "next/router";
+
+import { Text, Button, Display, Icon, Fit, CursorContent } from '@/components/ui';
 import { gsap } from '@/utils/gsap';
 import { MENU_ITEMS } from "@/conf/router";
 import { ScrollProvider } from '@/context/AnimationConf';
-import { useIsomorphicLayoutEffect } from "react-use";
 import { ScrollTrigger } from "@/utils/gsap";
 import useRouterChange from '@/hook/SafePush';
 import { Item } from '@/components/ui';
@@ -15,7 +17,6 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<ElementRef<'div'>>(null);
     const xTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref.current]);
     const yTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref.current]);
-    const { scrollbar } = useContext(ScrollProvider);
 
     useIsomorphicLayoutEffect(() => {
         if (!!ref.current) {
@@ -43,7 +44,7 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
             });
             return () => ctx.revert();
         }
-    }, [ref.current, scrollbar]);
+    }, [ref.current]);
 
     return <div ref={ref} >
         {children}
@@ -262,18 +263,19 @@ const menuKeys = ['manifesto', 'experience', 'cases', 'contact'];
 
 const Menu = () => {
     const { t } = useTranslation();
-    const { scrollbar } = useContext(ScrollProvider);
     const { safePush } = useRouterChange();
+    const { scrollbar } = useContext(ScrollProvider);
 
     const goToSection = useCallback((section: string) => {
         if (section == 'contact') {
             safePush('/contact');
-        } else {
-            if (scrollbar) {
-                scrollbar.scrollTo(`#${section}`, { duration: 500 });
-            }
+        } else if(scrollbar) {
+            scrollbar.scrollTo(`#${section}`, {
+                duration: 500,
+                disableLerp: true
+            });
         }
-    }, [scrollbar, safePush])
+    }, [safePush, scrollbar]);
     return (<>
         <div className={twMerge('flex flex-row flex-wrap justify-between items-start w-full gap-y-6')} >
             {Array.apply(null, Array(4)).map((_, i) => {
@@ -313,7 +315,6 @@ const MenuMemo = React.memo(Menu);
 
 const Intro = () => {
     const introRef = useRef<ElementRef<'div'>>(null);
-    const { scrollbar } = useContext(ScrollProvider);
     const { endLoading } = useContext(LoadingContext);
 
     useIsomorphicLayoutEffect(() => {
@@ -373,7 +374,7 @@ const Intro = () => {
             }
         }, introRef);
         return () => ctx.revert();
-    }, [scrollbar, endLoading]);
+    }, [endLoading]);
 
     return (<>
         <div className={twMerge('pt-28 sm:pt-36 mdl:pt-40', 'flex flex-col gap-20 xs:gap-32 xl:gap-40')} ref={introRef}>

@@ -27,6 +27,7 @@ import useRouterChange from '@/hook/SafePush';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { MenuItem } from '@/conf/router';
 
+
 const Header = () => {
     const { t } = useTranslation();
     const router = useRouter();
@@ -40,18 +41,21 @@ const Header = () => {
     const ctx = useRef<any>(null);
 
     useEffect(() => {
-        Promise.all([fetch('/api/menu?name=hamburger'), fetch('/api/menu?name=socialNetworks')]).then(async([res1, res2]) => {
-            const [response1, response2] = await Promise.all([res1.json(), res2.json()]);
-            // @ts-ignore
-            setMenuHamburgerItems(response1?.items);
-            // @ts-ignore
-            setMenuSocialNetworks(response2?.items);
+        const { signal } = new AbortController();
+        Promise.all([fetch('/api/menu?name=hamburger', {
+            signal
+        }), fetch('/api/menu?name=socialNetworks', {
+            signal
+        })]).then(async([res1, res2]) => {
+            Promise.all([res1.json(), res2.json()]).then(([response1, response2]) => {
+                setMenuHamburgerItems(response1.items);
+                setMenuSocialNetworks(response2.items);
+            })
         })
     }, [])
 
-    const { scrollbar } = useContext(ScrollProvider);
+    
     useIsomorphicLayoutEffect(() => {
-        if (!!scrollbar) {
             ctx.current = gsap.context((self) => {
                 self.add('open', () => {
                     tl.current.fromTo(['.modal-overlay', '.modal-content'], {
@@ -118,10 +122,8 @@ const Header = () => {
                 ctx.current.revert();
                 tl.current.kill();
             }
-        }
-    }, [scrollbar]);
+    }, []);
     useIsomorphicLayoutEffect(() => {
-        if (!!scrollbar) {
             const ctx = gsap.context(() => {
                 let tl = gsap.timeline({
                     paused: true,
@@ -146,8 +148,7 @@ const Header = () => {
                 }
             });
             return () => ctx.revert()
-        }
-    }, [scrollbar, endLoading])
+    }, [endLoading])
     const menuHandler = useCallback(() => {
         if (!openMenu) {
             setOpenMenu(true);
@@ -160,6 +161,7 @@ const Header = () => {
             ctx.current.open();
         }
     }, [openMenu]);
+    const { scrollbar } = useContext(ScrollProvider);
 
     let idTimeout = useRef<NodeJS.Timeout>();
     const onButtonClick = useCallback((path: string, id?: string) => {
@@ -168,7 +170,7 @@ const Header = () => {
         } else {
             tl.current.reverse().then(() => {
                 setOpenMenu(false);
-                safePush(path);
+                // safePush(path);
                 idTimeout.current = setTimeout(() => {
                     scrollbar && scrollbar.scrollTo(`#${id}`, {
                         duration: 500,

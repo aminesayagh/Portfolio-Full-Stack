@@ -1,5 +1,4 @@
 import { Head } from '@/components/common';
-import { useState } from 'react';
 import { Noise, LoadingProvider } from '@/components/ui';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Suspense } from 'react';
@@ -21,7 +20,6 @@ export default function Home() {
   return (
     <>
       <LoadingProvider>
-        <Suspense >
           <Head title={t('head.home.title')}
             description={t('head.home.description')}
             keywords={t('head.home.keywords')}
@@ -37,7 +35,6 @@ export default function Home() {
               <Noise />
             </AnimationConf>
           </Cursor>
-        </Suspense>
       </LoadingProvider>
     </>
   )

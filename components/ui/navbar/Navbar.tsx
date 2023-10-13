@@ -18,10 +18,10 @@ const NavbarAnimation = createContext<{ scale: string } | null>(null);
 
 const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props }: NavbarProps) => {
     const delta = useRef(0);
-    const { scrollbar } = useContext(ScrollProvider);
     const lastScrollY = useRef(0);
 
     const [active, setActive] = useState(false);
+    const { scrollbar } = useContext(ScrollProvider);
 
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
@@ -47,7 +47,7 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
             })
         });
         return () => ctx.revert();
-    }, [scrollbar, lastScrollY.current, delta.current]);
+    }, [lastScrollY.current, delta.current, scrollbar]);
 
     const padding = useMemo(() => active ? '0.8rem' : '1rem', [active]);
     const backdropFilter = useMemo(() => active ? 'blur(40px)' : 'blur(0px)', [active]);
