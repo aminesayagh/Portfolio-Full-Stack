@@ -1,14 +1,17 @@
-import { Container, Noise } from '@/components/ui';
+import { Container } from '@/components/ui';
+import React from 'react';
 import { DynamicIntro, DynamicManifesto, DynamicCases, DynamicAction, DynamicVideo, DynamicExpertise, DynamicCallToAction } from '@/components/pages/sections';
 import { MENU_ITEMS } from '@/conf/router';
+
 import { twMerge } from 'tailwind-merge';
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
+
 const DynamicFooter = dynamic(() => import('@/components/common/footer'));
 
 const LandingPage = () => {
     return (
-        <>
+        <React.Fragment>
             <Container data-scroll-section as='section' size='lg' id={MENU_ITEMS.intro.id} >
                 <DynamicIntro />
             </Container>
@@ -42,7 +45,7 @@ const LandingPage = () => {
             <Container data-scroll-section as='footer' size='lg' id='footer' className={twMerge('flex flex-col gap-8 md:gap-12')}>
                 <DynamicFooter />
             </Container>
-        </>
+        </React.Fragment>
     )
 }
 

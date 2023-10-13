@@ -4,8 +4,8 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Suspense } from 'react';
 import '@/utils/gsap';
 
-import AnimationConf from '@/context/AnimationConf';
-import { LandingPage } from '@/components/pages';
+import AnimationConf, { ScrollProvider } from '@/context/AnimationConf';
+// import { LandingPage } from '@/components/pages';
 import { Cursor } from '@/components/ui';
 import dynamic from 'next/dynamic';
 
@@ -13,6 +13,7 @@ import nextI18NextConfig from '../next-i18next.config.js'
 import { useTranslation } from 'react-i18next';
 
 const DynamicHeader = dynamic(() => import('@/components/common/header'), {});
+const DynamicLandingPage = dynamic(() => import('@/components/pages/LandingPage'), {});
 
 export default function Home() {
   const { t } = useTranslation('common');
@@ -20,21 +21,21 @@ export default function Home() {
   return (
     <>
       <LoadingProvider>
-          <Head title={t('head.home.title')}
-            description={t('head.home.description')}
-            keywords={t('head.home.keywords')}
-            author={t('head.home.author')}
-            logo='/favicon.svg'
-          />
-          <Cursor>
-            <AnimationConf >
-              <DynamicHeader />
-              <div data-scroll-container>
-                <LandingPage />
-              </div>
-              <Noise />
-            </AnimationConf>
-          </Cursor>
+        <Head title={t('head.home.title')}
+          description={t('head.home.description')}
+          keywords={t('head.home.keywords')}
+          author={t('head.home.author')}
+          logo='/favicon.svg'
+        />
+        <Cursor>
+          <AnimationConf >
+            <DynamicHeader />
+            <div data-scroll-container>
+              <DynamicLandingPage />
+            </div>
+            <Noise />
+          </AnimationConf>
+        </Cursor>
       </LoadingProvider>
     </>
   )
