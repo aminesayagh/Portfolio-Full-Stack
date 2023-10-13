@@ -264,22 +264,18 @@ const menuKeys = ['manifesto', 'experience', 'cases', 'contact'];
 const Menu = () => {
     const { t } = useTranslation();
     const { safePush } = useRouterChange();
+    const { scrollbar } = useContext(ScrollProvider);
 
     const goToSection = useCallback((section: string) => {
         if (section == 'contact') {
             safePush('/contact');
-<<<<<<< HEAD
         } else if(scrollbar) {
             scrollbar.scrollTo(`#${section}`, {
                 duration: 500,
                 disableLerp: true
             });
-=======
-        } else {
-            console.log(section);
->>>>>>> 49cd930 (correction scrolling)
         }
-    }, [safePush]);
+    }, [safePush, scrollbar]);
     return (<>
         <div className={twMerge('flex flex-row flex-wrap justify-between items-start w-full gap-y-6')} >
             {Array.apply(null, Array(4)).map((_, i) => {
