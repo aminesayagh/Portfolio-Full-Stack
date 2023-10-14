@@ -13,7 +13,7 @@ const Action = () => {
     const refContainer = useRef<HTMLDivElement>(null);
 
     useGsap(() => {
-        gsap.timeline({
+        const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: refContainer.current as any,
                 scrub: true,
@@ -37,6 +37,9 @@ const Action = () => {
             opacity: 1,
             left: "0%"
         }, '-=0.7')
+        return () => {
+            tl.kill();
+        }
     }, refContainer);
     return <>
         <div ref={refContainer} className={twMerge(

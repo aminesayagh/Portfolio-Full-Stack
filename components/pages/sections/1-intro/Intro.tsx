@@ -14,8 +14,10 @@ import { LoadingContext } from "@/components/ui";
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<ElementRef<'div'>>(null);
-    const xTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref.current]);
-    const yTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref.current]);
+    const xTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref]);
+    const yTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref]);
+
+    
 
     useIsomorphicLayoutEffect(() => {
         if (!!ref.current) {
@@ -43,7 +45,7 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
             });
             return () => ctx.revert();
         }
-    }, [ref.current]);
+    }, [ref]);
 
     return <div ref={ref} >
         {children}
@@ -96,6 +98,7 @@ const GsapCircleBlue = ({ children, ...props }: { children: React.ReactElement, 
             return () => {
                 circle.current?.removeEventListener('pointerenter', mouseEnter);
                 circle.current?.removeEventListener('mouseleave', mouseLeave);
+                tl.kill();
             }
         }
     }, []);

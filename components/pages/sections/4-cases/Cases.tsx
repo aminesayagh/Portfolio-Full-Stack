@@ -14,8 +14,9 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
     const pic = useMemo(() => picture ? picture[0] : '', [picture]);
 
     useGsap(() => {
+        let tl2: gsap.core.Timeline;
         if (index < 2) {
-            gsap.timeline({
+            tl2 = gsap.timeline({
                 scrollTrigger: {
                     trigger: container.current as any,
                     scrub: true,
@@ -93,6 +94,11 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                 toggleActions: 'play none play none',
             }
         })
+
+        return () => {
+            tl.kill();
+            tl2?.kill();
+        }
     }, container);
 
     return <div data-scroll className={twMerge('relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden')} ref={container} style={{

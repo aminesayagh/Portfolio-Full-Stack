@@ -1,4 +1,4 @@
-import { useState, useCallback, memo, useEffect, useLayoutEffect, useRef, useContext, useMemo, ElementRef } from 'react';
+import { useState, useCallback, memo, useEffect, useLayoutEffect, useRef, useContext, useMemo, ElementRef, startTransition } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
@@ -48,8 +48,10 @@ const Header = () => {
             signal
         })]).then(async([res1, res2]) => {
             Promise.all([res1.json(), res2.json()]).then(([response1, response2]) => {
-                setMenuHamburgerItems(response1.items);
-                setMenuSocialNetworks(response2.items);
+                startTransition(() => {
+                    setMenuHamburgerItems(response1.items);
+                    setMenuSocialNetworks(response2.items);
+                })
             })
         })
     }, [])

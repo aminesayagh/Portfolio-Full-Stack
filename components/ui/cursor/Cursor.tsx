@@ -137,6 +137,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
             return () => {
                 cursorScrollTimeline.kill();
                 cursorActionIconTimeline.kill();
+                timelineBallEventPointer.kill();
             }
         });
         return () => ctx.current?.revert();

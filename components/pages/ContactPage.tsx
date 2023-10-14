@@ -1,17 +1,20 @@
-import { Header, Footer } from '@/components/common';
-import { Container, Display, Title, Text, Form, Link, OptionOnSubmit } from '@/components/ui';
-import { useState, useMemo, useEffect, useContext } from 'react';
+import React, { useMemo, useEffect, useContext, useCallback, memo, ElementRef, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import { twMerge } from 'tailwind-merge';
 import { useTranslation } from 'next-i18next';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+
+
+const FooterDynamic = dynamic(() => import('@/components/common/footer'));
+import { Container, Display, Title, Text, Form, Link, OptionOnSubmit } from '@/components/ui';
 import { gsap } from '@/utils/gsap';
 import { getProjectsByCategory } from '@/conf/projects';
 import { getMenuItems } from '@/conf/router';
-import { ToastRegion, addToast } from '@/components/common/toast';
+import { addToast } from '@/components/common/toast';
 
 import { useTime } from '@/hook';
-import AnimationConf, { ScrollProvider } from '@/context/AnimationConf';
+import { ScrollProvider } from '@/context/AnimationConf';
 
 const CONTACT_SUBJECTS = {
     "1": "Project Inquiry",
@@ -26,7 +29,7 @@ const ERROR_TRANSLATION_PATH = 'form.error';
 
 type ContactSubject = typeof CONTACT_SUBJECTS[keyof typeof CONTACT_SUBJECTS];
 const contactSubjectValues = Object.values(CONTACT_SUBJECTS);
-const contactSubjectKeys = Object.keys(CONTACT_SUBJECTS);
+// const contactSubjectKeys = Object.keys(CONTACT_SUBJECTS);
 
 const contactSubjectItems = [
     {
@@ -63,16 +66,25 @@ type TypeFormContact = {
     message: string;
 }
 import { Input } from 'react-aria-components'
+import { useIsomorphicLayoutEffect } from 'react-use';
+
 const FormContact = () => {
     const { t, i18n } = useTranslation();
-    const [isSubmitted, setIsSubmitted] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const required = () => z.string(
+
+    const required = useCallback(() => z.string(
         { required_error: t(`${ERROR_TRANSLATION_PATH}.required`) }
-    ).nonempty(t(`${ERROR_TRANSLATION_PATH}.required`))
-    const contactFormDataSchema = z.object({
-        firstName: required().min(2, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 2 })).max(50, t(`${ERROR_TRANSLATION_PATH}.maxLength`)).regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
-        lastName: required().min(2, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 2 })).max(50, t(`${ERROR_TRANSLATION_PATH}.maxLength`)).regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
+    ).nonempty(t(`${ERROR_TRANSLATION_PATH}.required`)), [t]);
+
+    const createZodString = useCallback((min: number, max: number) =>
+        z.string({ required_error: t(`${ERROR_TRANSLATION_PATH}.required`) })
+            .nonempty(t(`${ERROR_TRANSLATION_PATH}.required`))
+            .min(min, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min }))
+            .max(max, t(`${ERROR_TRANSLATION_PATH}.maxLength`, { max }))
+            .regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)), [t]);
+
+    const contactFormDataSchema = useMemo(() => z.object({
+        firstName: createZodString(2, 50),
+        lastName: createZodString(2, 50),
         email: required().email(t(`${ERROR_TRANSLATION_PATH}.email`)),
         objective: z.string().nonempty(t(`${ERROR_TRANSLATION_PATH}.required`)),
         message: required().min(10, {
@@ -80,20 +92,20 @@ const FormContact = () => {
         }).max(500, {
             message: t(`${ERROR_TRANSLATION_PATH}.maxLength`, { max: 500 })
         }).nonempty()
-    });
+    }), [required, t, createZodString]);
     const successMessage = useMemo(() => t('form.notification.success'), [t]);
     const errorMessage = useMemo(() => t('form.notification.error'), [t]);
 
     const onSubmitForm = async (data: TypeFormContact, options: OptionOnSubmit<TypeFormContact>) => {
         try {
-            const response = await fetch('/api/contact', {
+            await fetch('/api/contact', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ ...data, locale: i18n.language })
             });
-            const responseData = await response.json();
+            // const responseData = await response.json();
             addToast({
                 variant: 'positive',
                 description: successMessage,
@@ -151,48 +163,44 @@ const AgencyList = () => {
 
     const projects = useMemo(() => getProjectsByCategory('ongoing'), []);
 
-    return (
-        <>
-            <ul className={twMerge('flex flex-col gap-0', 'border-b border-gray-800/60')}>
-                {projects.map((project, index) => {
-                    return (
-                        <li key={index} className={twMerge('flex flex-col md:flex-row gap-8 md:gap-4 py-10', 'items-start', 'border-t border-gray-800/60')}>
-                            <div className={twMerge('flex flex-row gap-12 items-start justify-between w-full md:w-5/12 2xl:w-1/2')}>
-                                <Title h6 weight='semibold' degree='1' className='uppercase tracking-wider opacity-80' >
-                                    {t(`projects.${project.id}.title`)}
-                                </Title>
-                                <Text p size='sm' weight='bold' degree='1' className='block md:hidden tracking-wider opacity-80'>
-                                    {t(`country.${project.country}`)}
+    return <ul className={twMerge('flex flex-col gap-0', 'border-b border-gray-800/60')}>
+        {projects.map((project, index) => (<li key={index} className={twMerge('flex flex-col md:flex-row gap-8 md:gap-4 py-10', 'items-start', 'border-t border-gray-800/60')}>
+                    <div className={twMerge('flex flex-row gap-12 items-start justify-between w-full md:w-5/12 2xl:w-1/2')}>
+                        <Title h6 weight='semibold' degree='1' className='uppercase tracking-wider opacity-80' >
+                            {t(`projects.${project.id}.title`)}
+                        </Title>
+                        <Text p size='sm' weight='bold' degree='1' className='block md:hidden tracking-wider opacity-80'>
+                            {t(`country.${project.country}`)}
+                        </Text>
+                    </div>
+                    <div className={twMerge('w-full xxs:w-10/12 md:w-7/12 2xl:w-1/2', 'flex flex-col gap-5')}>
+                        <Text p size='sm' weight='bold' degree='1' className='hidden md:block tracking-wider opacity-80'>
+                            {t(`country.${project.country}`)}
+                        </Text>
+                        <Text p size='sm' weight='medium' degree='2'>
+                            {t(`projects.${project.id}.description`)}
+                        </Text>
+                        <div className='inline' style={{
+                            display: '-webkit-box'
+                        }}>
+                            {project.jobTitle.map((jobTitle, index) => {
+                                return <Text key={index} p size='sm' weight='medium' degree='2' className={twMerge('pr-2')}>
+                                    {t(`jobTItle.${jobTitle}`)}{index < project.jobTitle.length - 1 ? ',' : ''}
                                 </Text>
-                            </div>
-                            <div className={twMerge('w-full xxs:w-10/12 md:w-7/12 2xl:w-1/2', 'flex flex-col gap-5')}>
-                                <Text p size='sm' weight='bold' degree='1' className='hidden md:block tracking-wider opacity-80'>
-                                    {t(`country.${project.country}`)}
-                                </Text>
-                                <Text p size='sm' weight='medium' degree='2'>
-                                    {t(`projects.${project.id}.description`)}
-                                </Text>
-                                <div className='inline' style={{
-                                    display: '-webkit-box'
-                                }}>
-                                    {project.jobTitle.map((jobTitle, index) => {
-                                        return <Text key={index} p size='sm' weight='medium' degree='2' className={twMerge('pr-2')}>
-                                            {t(`jobTItle.${jobTitle}`)}{index < project.jobTitle.length - 1 ? ',' : ''}
-                                        </Text>
-                                    })}
-                                </div>
-                            </div>
-                        </li>
-                    )
-                })}
-            </ul>
-        </>
-    )
+                            })}
+                        </div>
+                    </div>
+                </li>
+        ))}
+    </ul>
 }
 
-const ContactPage = () => {
+const AgencyListMemo = memo(AgencyList);
 
+const ContactPage = () => {
     const { t } = useTranslation();
+    const contactRef = useRef<ElementRef<'div'>>(null);
+
     const socialNetworkItems = useMemo(() => getMenuItems('socialNetworks'), []);
     const { scrollbar } = useContext(ScrollProvider);
     const timer = useTime({
@@ -200,9 +208,10 @@ const ContactPage = () => {
         country: 'Africa',
         format: 'HH:mm',
     })
-    useEffect(() => {
+    
+    useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            gsap.timeline({
+            const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: '#contact',
                     start: 'top 60%',
@@ -216,119 +225,117 @@ const ContactPage = () => {
                 ease: 'Power4.easeOut',
                 delay: 0.2,
             });
+            return () => tl.kill();
         });
         return () => ctx.revert();
     }, [scrollbar]);
-    // if (!timer) return null;
     return (
         <>
-            <Container as='section' size='lg' data-scroll-section id='contact' className={twMerge('flex flex-col gap-12', 'items-stretch')} >
-                <section className={twMerge('flex flex-col gap-14 xl:gap-20 py-40')}>
-                    {/* title */}
-                    <div className='grid grid-cols-12 gap-4 overflow-hidden'>
-                        <Display size='xl' weight='bold' className={twMerge('col-start-1 col-span-12', 'mdl:col-start-4 mdl:col-span-9', 'lg:col-start-3 lg:col-span-10', 'splitText_gsap')} >
-                            {t('contact.title')}
-                        </Display>
-                    </div>
-                    {/* form */}
-                    <div className={twMerge(
-                        'grid grid-cols-12 gap-y-10 gap-x-0 xxs:gap-8 sm:gap-3 md:gap-8 mdl:gap-4 xl:gap-8',
-                        'grid-rows-[repeat(3,_minmax(0,_auto))] xxs:grid-rows-[repeat(2,_minmax(0,_auto))] sm:grid-rows-2'
-                    )}>
-                        <div className={twMerge(
-                            'flex flex-col gap-3',
-                            'col-start-1 col-span-12',
-                            'xxs:col-start-1 xxs:col-span-4',
-                            'sm:col-start-10 sm:col-span-3',
-                            'mdl:col-start-1 mdl:col-span-2',
-                            'row-start-1 row-span-1'
-                        )}>
-                            <Text p weight='medium' size='sm' degree='2' className='text-start uppercase' >
-                                {t('contact.subtitle')}
-                            </Text>
-                            <hr className='relative h-[2px] w-4 bg-gray-200' />
+            <div ref={contactRef}>
+                <Container as='section' size='lg' data-scroll-section id='contact' className={twMerge('flex flex-col gap-12', 'items-stretch')} >
+                    <section className={twMerge('flex flex-col gap-14 xl:gap-20 py-40')}>
+                        {/* title */}
+                        <div className='grid grid-cols-12 gap-4 overflow-hidden'>
+                            <Display size='xl' weight='bold' className={twMerge('col-start-1 col-span-12', 'mdl:col-start-4 mdl:col-span-9', 'lg:col-start-3 lg:col-span-10', 'splitText_gsap')} >
+                                {t('contact.title')}
+                            </Display>
                         </div>
+                        {/* form */}
                         <div className={twMerge(
-                            'col-start-1 col-span-12',
-                            'xxs:col-start-1 xxs:col-span-12',
-                            'xs:col-start-1 xs:col-span-11',
-                            'sm:col-start-1 sm:col-span-9',
-                            'mdl:col-start-4 mdl:col-span-9',
-                            'lg:col-start-3 lg:col-span-9',
-                            'xl:col-start-3 xl:col-span-8',
-                            'row-start-3 row-span-1',
-                            'xxs:row-start-2 xxs:row-span-1',
-                            'sm:row-start-1 sm:row-span-2'
+                            'grid grid-cols-12 gap-y-10 gap-x-0 xxs:gap-8 sm:gap-3 md:gap-8 mdl:gap-4 xl:gap-8',
+                            'grid-rows-[repeat(3,_minmax(0,_auto))] xxs:grid-rows-[repeat(2,_minmax(0,_auto))] sm:grid-rows-2'
                         )}>
-                            <FormContact />
-                        </div>
-                        <div className={twMerge(
-                            'flex flex-col sm:justify-end items-start xl:items-end',
-                            'col-start-1 col-span-12',
-                            'xxs:col-start-8 xxs:col-span-4',
-                            'sm:col-start-10 sm:col-span-3',
-                            'mdl:col-start-1 mdl:col-span-3',
-                            'lg:col-start-1 lg:col-span-2',
-                            'xl:col-start-11 xl:col-span-2',
-                            'row-start-2 row-span-1',
-                            'xxs:row-start-1 xxs:row-span-1',
-                            'sm:row-start-2 sm:row-span-1'
-                        )} >
-                            <div className='flex flex-col gap-1'>
-                                <Text size='sm' degree='2' p weight='medium' suppressHydrationWarning className='whitespace-nowrap-important'>
-                                    {t('contact.localTime')} {timer?.formattedTime}
+                            <div className={twMerge(
+                                'flex flex-col gap-3',
+                                'col-start-1 col-span-12',
+                                'xxs:col-start-1 xxs:col-span-4',
+                                'sm:col-start-10 sm:col-span-3',
+                                'mdl:col-start-1 mdl:col-span-2',
+                                'row-start-1 row-span-1'
+                            )}>
+                                <Text p weight='medium' size='sm' degree='2' className='text-start uppercase' >
+                                    {t('contact.subtitle')}
                                 </Text>
-                                <Text size='sm' degree='2' p weight='medium' suppressHydrationWarning >
-                                    {t('contact.gmtTime')}({timer?.gmtOffset})
-                                </Text>
+                                <hr className='relative h-[2px] w-4 bg-gray-200' />
+                            </div>
+                            <div className={twMerge(
+                                'col-start-1 col-span-12',
+                                'xxs:col-start-1 xxs:col-span-12',
+                                'xs:col-start-1 xs:col-span-11',
+                                'sm:col-start-1 sm:col-span-9',
+                                'mdl:col-start-4 mdl:col-span-9',
+                                'lg:col-start-3 lg:col-span-9',
+                                'xl:col-start-3 xl:col-span-8',
+                                'row-start-3 row-span-1',
+                                'xxs:row-start-2 xxs:row-span-1',
+                                'sm:row-start-1 sm:row-span-2'
+                            )}>
+                                <FormContact />
+                            </div>
+                            <div className={twMerge(
+                                'flex flex-col sm:justify-end items-start xl:items-end',
+                                'col-start-1 col-span-12',
+                                'xxs:col-start-8 xxs:col-span-4',
+                                'sm:col-start-10 sm:col-span-3',
+                                'mdl:col-start-1 mdl:col-span-3',
+                                'lg:col-start-1 lg:col-span-2',
+                                'xl:col-start-11 xl:col-span-2',
+                                'row-start-2 row-span-1',
+                                'xxs:row-start-1 xxs:row-span-1',
+                                'sm:row-start-2 sm:row-span-1'
+                            )} >
+                                <div className='flex flex-col gap-1'>
+                                    <Text size='sm' degree='2' p weight='medium' suppressHydrationWarning className='whitespace-nowrap-important'>
+                                        {t('contact.localTime')} {timer?.formattedTime}
+                                    </Text>
+                                    <Text size='sm' degree='2' p weight='medium' suppressHydrationWarning >
+                                        {t('contact.gmtTime')}({timer?.gmtOffset})
+                                    </Text>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <span className='h-6 md:h-10'></span>
-                    {/* repped */}
-                    <div className={twMerge(
-                        'grid grid-cols-12 gap-x-0 gap-y-8 xs:gap-8'
-                    )}>
+                        <span className='h-6 md:h-10'></span>
+                        {/* repped */}
                         <div className={twMerge(
-                            'flex flex-col',
-                            'gap-3',
-                            'col-start-1 col-span-12',
-                            'sm:col-start-1 sm:col-span-2'
+                            'grid grid-cols-12 gap-x-0 gap-y-8 xs:gap-8'
                         )}>
-                            <Text p weight='medium' size='sm' degree='2' className='text-start uppercase' >
-                                {t('contact.reppedBy')}
-                            </Text>
-                            <hr className='relative h-[2px] w-4 bg-gray-200' />
+                            <div className={twMerge(
+                                'flex flex-col',
+                                'gap-3',
+                                'col-start-1 col-span-12',
+                                'sm:col-start-1 sm:col-span-2'
+                            )}>
+                                <Text p weight='medium' size='sm' degree='2' className='text-start uppercase' >
+                                    {t('contact.reppedBy')}
+                                </Text>
+                                <hr className='relative h-[2px] w-4 bg-gray-200' />
+                            </div>
+                            <div className={twMerge(
+                                'col-start-1 col-span-12',
+                                'xs:col-start-1 xs:col-span-11',
+                                'sn:col-start-1 sm:col-span-9',
+                                'mdl:col-start-3 mdl:col-span-8',
+                                'lg:col-start-3 lg:col-span-7',
+                                'xl:col-start-3 xl:col-span-6'
+                            )}>
+                                <AgencyListMemo />
+                            </div>
+                            <div className={twMerge(
+                                'flex flex-row flex-wrap sm:flex-col gap-x-10 xs:gap-x-12 gap-y-4 sm:gap-4 justify-start xs:justify-end items-end',
+                                'col-start-1 col-span-12',
+                                'xs:col-start-1 xs:col-span-11',
+                                'sm:col-start-11 sm:col-span-2'
+                            )} >
+                                {socialNetworkItems.map((item, index) => <Link key={index} weight='medium' href={item.link} size='sm' degree='2'>
+                                            {t(`socialNetwork.${item.id}.name`)}
+                                        </Link>)}
+                            </div>
                         </div>
-                        <div className={twMerge(
-                            'col-start-1 col-span-12',
-                            'xs:col-start-1 xs:col-span-11',
-                            'sn:col-start-1 sm:col-span-9',
-                            'mdl:col-start-3 mdl:col-span-8',
-                            'lg:col-start-3 lg:col-span-7',
-                            'xl:col-start-3 xl:col-span-6'
-                        )}>
-                            <AgencyList />
-                        </div>
-                        <div className={twMerge(
-                            'flex flex-row flex-wrap sm:flex-col gap-x-10 xs:gap-x-12 gap-y-4 sm:gap-4 justify-start xs:justify-end items-end',
-                            'col-start-1 col-span-12',
-                            'xs:col-start-1 xs:col-span-11',
-                            'sm:col-start-11 sm:col-span-2'
-                        )} >
-                            {socialNetworkItems.map((item, index) => {
-                                return (
-                                    <Link key={index} weight='medium' href={item.link} size='sm' degree='2'>
-                                        {t(`socialNetwork.${item.id}.name`)}
-                                    </Link>
-                                )
-                            })}
-                        </div>
-                    </div>
-                </section>
-            </Container>
-            <Container as='section' size='lg' className='py-0'  data-scroll-section id='footer' >
-                <Footer />
+                    </section>
+                </Container>
+            </div>
+            <Container as='section' size='lg' className='py-0' data-scroll-section id='footer' >
+                <FooterDynamic />
             </Container>
         </>
     )
