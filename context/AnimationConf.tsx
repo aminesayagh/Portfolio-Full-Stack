@@ -1,12 +1,10 @@
-import React, { useEffect, useContext, useState, createContext, ElementRef, useRef } from 'react';
-import { gsap } from '@/utils/gsap';
+import React, { useEffect, useContext, useState, createContext, useRef } from 'react';
 import LocomotiveScroll from 'locomotive-scroll';
-import { ScrollTrigger } from '@/utils/gsap';
+import { ScrollTrigger, gsap } from '@/utils/gsap';
 import { LoadingContext } from '@/components/ui';
-import { add } from 'lodash';
+
 export const ScrollProvider = createContext<{
     scrollbar: null | LocomotiveScroll,
-    // scrollTo: (target: string | number | HTMLElement, options?: gsap.TweenVars) => void,
 }>({
     scrollbar: null,
 });
@@ -16,7 +14,6 @@ const LOADING_COMPONENT_KEY = 'AnimationScrollbarConf';
 const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     const [scrollbar, setScrollbar] = useState<LocomotiveScroll | null>(null);
     const { addLoadingComponent, removeLoadingComponent } = useContext(LoadingContext);
-    // const [isStart, setIsStart] = useState(false);
     const isStart = useRef(false);
 
     useEffect(() => {
@@ -69,7 +66,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                         scroll.update();
                     });
                     
-                    !scrollbar && setScrollbar(scroll); 
+                    if(!scrollbar) setScrollbar(scroll);
                 } catch (err) {
                     throw new Error(`[SmoothScrollProvider] : ${err}`);
                 } finally {
@@ -77,23 +74,25 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 }
             })()
         }
-    }, [isStart]);
+    }, [isStart, scrollbar, removeLoadingComponent, addLoadingComponent]);
+
     useEffect(() => {
-        console.log('scroll bar change value')
         let ctx = gsap.context(() => {
             gsap.config({
                 nullTargetWarn: false
             });
-            if(scrollbar) {
-                gsap.to('.app-container', 0, { css: { visibility: 'visible' } });
-            }
-
+            gsap.to('.app-container', 0, { css: { visibility: 'visible' } });
         });
         return () => {
             ctx.revert();
         }
-    }, [scrollbar]);
-    return <>
+    }, []);
+
+    useEffect(() => {
+        console.log(scrollbar);
+    }, [scrollbar])
+
+    return <React.Fragment>
         <div className="app-container" id='main-container'>
             <ScrollProvider.Provider value={{
                 scrollbar
@@ -106,8 +105,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 visibility: hidden;
             }
         `}</style>
-    </>
-
+    </React.Fragment>
 }
 
-export default AnimationConf;
+export default React.memo(AnimationConf);

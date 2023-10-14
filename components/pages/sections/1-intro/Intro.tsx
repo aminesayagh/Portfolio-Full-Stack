@@ -2,7 +2,6 @@ import { twMerge } from "tailwind-merge";
 import React, { useRef, useContext, useCallback, useMemo, ElementRef } from "react";
 import { useTranslation } from "next-i18next";
 import { useIsomorphicLayoutEffect } from "react-use";
-import { useRouter } from "next/router";
 
 import { Text, Button, Display, Icon, Fit, CursorContent } from '@/components/ui';
 import { gsap } from '@/utils/gsap';
@@ -319,7 +318,6 @@ const Intro = () => {
 
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context((self) => {
-
             const tl = gsap.timeline({
                 paused: true,
             }).from('.splitText_gsap', {

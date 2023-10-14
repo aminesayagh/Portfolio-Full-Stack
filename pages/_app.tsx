@@ -13,6 +13,7 @@ import { useState, useEffect } from 'react';
 
 import { Analytics } from '@vercel/analytics/react';
 import TagManager from 'react-gtm-module';
+import { Suspense } from 'react';
 
 const montserrat = Montserrat({
   subsets: ['cyrillic'],
@@ -39,10 +40,13 @@ function App({ Component, pageProps }: AppProps) {
         gtag('config', 'G-LBW0TBMSD6');
       `}
     </Script>
-    <main className={`${val} font-sans`}>
-      <Component {...pageProps} />
-      <Analytics />
-    </main>
+    <Suspense>
+
+      <main className={`${val} font-sans`}>
+        <Component {...pageProps} />
+        <Analytics />
+      </main>
+    </Suspense>
   </>
 }
 
