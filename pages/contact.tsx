@@ -1,44 +1,46 @@
 import { Head } from '@/components/common';
-import { Suspense } from 'react';
-import { Loading, Noise } from 'components/ui';
-import { ContactPage } from '@/components/pages';
+import { Noise, LoadingProvider, Cursor } from 'components/ui';
+import React from 'react';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import '@/utils/gsap';
 import AnimationConf from '@/context/AnimationConf';
-import {} from '@/context/AnimationConf';
-import { Header } from '@/components/common';
 import { ToastRegion } from '@/components/common/toast';
+
+const ContactPageDynamic = dynamic(() => import('@/components/pages/ContactPage'), {});
+const HeaderDynamic = dynamic(() => import('@/components/common/header'), {});
 
 
 const Contact = () => {
     const { t } = useTranslation('common');
 
-    return (
-        <>
-            <Head 
-                title={t('head.contact.title')}
-                description={t('head.contact.description')}
-                keywords={t('head.contact.keywords')}
-                author={t('head.contact.author')}
-                logo='/favicon.svg'
-            />
-                <AnimationConf>
-                    <Header />
-                    <div data-scroll-container>
-                        <ContactPage />
-                    </div>
-                    <Noise />
-                </AnimationConf>
-            <ToastRegion />
-
-        </>
-    )
+    return <React.Fragment>
+            <LoadingProvider>
+                <Head 
+                    title={t('head.contact.title')}
+                    description={t('head.contact.description')}
+                    keywords={t('head.contact.keywords')}
+                    author={t('head.contact.author')}
+                    logo='/favicon.svg'
+                />
+                <Cursor>
+                    <AnimationConf>
+                        <HeaderDynamic />
+                        <div >
+                            <ContactPageDynamic />
+                        </div>
+                        <Noise />
+                    </AnimationConf>
+                </Cursor>
+                <ToastRegion />
+            </LoadingProvider>
+        </React.Fragment>
 }
 
 import nextI18NextConfig from '../next-i18next.config.js'
 import { useTranslation } from 'react-i18next';
+import dynamic from 'next/dynamic.js';
 
 export async function getStaticProps({ locale }: any) {
     return {

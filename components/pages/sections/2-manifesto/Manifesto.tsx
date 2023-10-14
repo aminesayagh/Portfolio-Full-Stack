@@ -37,7 +37,7 @@ const Manifesto = () => {
         if (refs.current.length > 0) {
             const descriptions = gsap.utils.toArray('.manifesto_description_gsap');
             const letters = gsap.utils.toArray('.letter_gsap');
-            gsap.timeline({
+            const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: '.manifesto_quote_gsap',
                     scrub: true,
@@ -73,7 +73,10 @@ const Manifesto = () => {
                 opacity: 0,
             }, {
                 opacity: 1,
-            })
+            });
+            return () => {
+                tl.kill();
+            }
         }
     }, refDescription);
 

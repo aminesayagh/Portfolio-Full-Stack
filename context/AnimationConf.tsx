@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState, createContext, useRef } from 'react';
+import React, { useEffect, useContext, useState, createContext, useRef, startTransition } from 'react';
 import LocomotiveScroll from 'locomotive-scroll';
 import { ScrollTrigger, gsap } from '@/utils/gsap';
 import { LoadingContext } from '@/components/ui';
@@ -20,77 +20,97 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
         if (!isStart.current) {
             isStart.current = true;
             addLoadingComponent(LOADING_COMPONENT_KEY);
-            ; (async () => {
-                try {
-                    const LocomotiveScroll = (await import('locomotive-scroll')).default;
-                    console.log('load locomotive scroll');
-                    const el = document.querySelector('[data-scroll-container]') as HTMLElement;
-                    const scroll = new LocomotiveScroll({
-                        el,
+            let scroll: LocomotiveScroll;
+            import('locomotive-scroll').then((locomotiveModule) => {
+                const el = document.querySelector('[data-scroll-container]') as HTMLElement;
+                if (!el) throw new Error('Scroll container not found');
+                console.log('init locomotive scroll', el);
+                scroll = new locomotiveModule.default({
+                    el,
+                    smooth: true,
+                    smartphone: {
                         smooth: true,
-                        getDirection: true,
-                        getSpeed: true,
+                    },
+                    // @ts-ignore
+                    tablet: {
+                        smooth: true,
+                    },
+                    getDirection: true,
+                    getSpeed: true,
+                });
+                console.log('init locomotive scroll', scroll);
+                scroll.on('scroll', () => {
+                    ScrollTrigger.update();
+                });
+                ScrollTrigger.scrollerProxy('[data-scroll-container]', {
+                    scrollTop(value) {
+                        return !!arguments.length
+                            // @ts-ignore
+                            ? scroll.scrollTo(value, { duration: 0, disableLerp: true })
+                            // @ts-ignore
+                            : scroll?.scroll.instance.scroll.y;
+                    },
+                    getBoundingClientRect() {
+                        return {
+                            top: 0,
+                            left: 0,
+                            width: window.innerWidth,
+                            height: window.innerHeight,
+                        };
+                    },
+                    pinType: el?.style?.transform
+                        ? 'transform'
+                        : 'fixed'
+                });
 
-                        smartphone: {
-                            smooth: true,
-                        },
-                        // @ts-ignore
-                        tablet: {
-                            smooth: true,
-                        },
-                    });
-                    scroll.on('scroll', () => {
-                        ScrollTrigger.update()
-                    });
-                    ScrollTrigger.scrollerProxy('[data-scroll-container]', {
-                        scrollTop(value) {
-                            return !!value
-                                // @ts-ignore
-                                ? scroll.scrollTo(value, { duration: 500, disableLerp: true }) : scroll.scroll.instance.scroll.y
-                        },
-                        getBoundingClientRect() {
-                            return {
-                                top: 0,
-                                left: 0,
-                                width: window.innerWidth,
-                                height: window.innerHeight
-                            }
-                        },
-                        pinType: el?.style?.transform
-                            ? 'transform'
-                            : 'fixed'
-                    });
+                ScrollTrigger.addEventListener('refresh', () => {
+                    scroll.update();
+                });
+                ScrollTrigger.defaults({ scroller: el });
 
-                    ScrollTrigger.defaults({ scroller: el });
-                    ScrollTrigger.addEventListener('refresh', () => {
-                        scroll.update();
-                    });
-                    
-                    if(!scrollbar) setScrollbar(scroll);
-                } catch (err) {
-                    throw new Error(`[SmoothScrollProvider] : ${err}`);
-                } finally {
-                    removeLoadingComponent(LOADING_COMPONENT_KEY);
-                }
-            })()
+                if (!scrollbar) setScrollbar(scroll);
+            }).catch((err) => {
+                console.error('error: ', err);
+                // throw new Error(err);
+            }).finally(() => {
+                removeLoadingComponent(LOADING_COMPONENT_KEY);
+            });
         }
     }, [isStart, scrollbar, removeLoadingComponent, addLoadingComponent]);
+    useEffect(() => {
+        if (scrollbar) {
+            const updateScroll = () => {
+                scrollbar.update();
+            }
 
+            window.addEventListener('DOMContentLoaded', updateScroll);
+            window.addEventListener('resize', updateScroll);
+            window.addEventListener('load', updateScroll);
+
+            return () => {
+                console.log('destroy locomotive scroll');
+                ScrollTrigger.removeEventListener('refresh', updateScroll);
+                // scrollbar.destroy();
+                window.removeEventListener('DOMContentLoaded', updateScroll);
+                window.removeEventListener('resize', updateScroll);
+                window.removeEventListener('load', updateScroll);
+            }
+        }
+
+    }, [scrollbar])
     useEffect(() => {
         let ctx = gsap.context(() => {
             gsap.config({
                 nullTargetWarn: false
             });
-            gsap.to('.app-container', 0, { css: { visibility: 'visible' } });
+            if (scrollbar) {
+                gsap.to('.app-container', 0, { css: { visibility: 'visible' } });
+            }
         });
         return () => {
             ctx.revert();
         }
-    }, []);
-
-    useEffect(() => {
-        console.log(scrollbar);
-    }, [scrollbar])
+    }, [scrollbar]);
 
     return <React.Fragment>
         <div className="app-container" id='main-container'>

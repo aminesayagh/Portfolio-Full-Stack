@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+
 gsap.defaults({ 
     ease: "none",
     duration: 1,
