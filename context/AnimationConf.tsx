@@ -24,7 +24,6 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             import('locomotive-scroll').then((locomotiveModule) => {
                 const el = document.querySelector('[data-scroll-container]') as HTMLElement;
                 if (!el) throw new Error('Scroll container not found');
-                console.log('init locomotive scroll', el);
                 scroll = new locomotiveModule.default({
                     el,
                     smooth: true,
@@ -38,7 +37,6 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                     getDirection: true,
                     getSpeed: true,
                 });
-                console.log('init locomotive scroll', scroll);
                 scroll.on('scroll', () => {
                     ScrollTrigger.update();
                 });
@@ -71,7 +69,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 if (!scrollbar) setScrollbar(scroll);
             }).catch((err) => {
                 console.error('error: ', err);
-                // throw new Error(err);
+                throw new Error(err);
             }).finally(() => {
                 removeLoadingComponent(LOADING_COMPONENT_KEY);
             });
@@ -88,7 +86,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             window.addEventListener('load', updateScroll);
 
             return () => {
-                console.log('destroy locomotive scroll');
+                console.log('destroy scroll');
                 ScrollTrigger.removeEventListener('refresh', updateScroll);
                 // scrollbar.destroy();
                 window.removeEventListener('DOMContentLoaded', updateScroll);

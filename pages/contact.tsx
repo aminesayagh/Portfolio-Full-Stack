@@ -11,31 +11,30 @@ import { ToastRegion } from '@/components/common/toast';
 const ContactPageDynamic = dynamic(() => import('@/components/pages/ContactPage'), {});
 const HeaderDynamic = dynamic(() => import('@/components/common/header'), {});
 
+const DynamicAnimationConf = dynamic(() => import('@/context/AnimationConf'), {});
 
 const Contact = () => {
     const { t } = useTranslation('common');
 
-    return <React.Fragment>
-            <LoadingProvider>
-                <Head 
-                    title={t('head.contact.title')}
-                    description={t('head.contact.description')}
-                    keywords={t('head.contact.keywords')}
-                    author={t('head.contact.author')}
-                    logo='/favicon.svg'
-                />
-                <Cursor>
-                    <AnimationConf>
-                        <HeaderDynamic />
-                        <div >
-                            <ContactPageDynamic />
-                        </div>
-                        <Noise />
-                    </AnimationConf>
-                </Cursor>
-                <ToastRegion />
-            </LoadingProvider>
-        </React.Fragment>
+    return <LoadingProvider>
+        <Head
+            title={t('head.contact.title')}
+            description={t('head.contact.description')}
+            keywords={t('head.contact.keywords')}
+            author={t('head.contact.author')}
+            logo='/favicon.svg'
+        />
+        <Cursor>
+            <DynamicAnimationConf>
+                <HeaderDynamic />
+                <div data-scroll-container>
+                    <ContactPageDynamic />
+                </div>
+                <Noise />
+            </DynamicAnimationConf>
+        </Cursor>
+        <ToastRegion />
+    </LoadingProvider>
 }
 
 import nextI18NextConfig from '../next-i18next.config.js'
