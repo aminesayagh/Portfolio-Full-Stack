@@ -48,7 +48,7 @@ const Action = () => {
             'justify-center items-start xs:items-center place-content-start')} 
         >
             <span className='overflow-hidden'>
-                <Display size='lg' className={twMerge('uppercase text-start xs:text-center', 'contact-title-gsap')} >
+                <Display size='lg' className={twMerge('uppercase text-start xs:text-center', 'contact-title-gsap will-change-transform-animation')} >
                     {t('contactCall.title')}
                 </Display>
             </span>
@@ -65,7 +65,7 @@ const Action = () => {
                     iconName: 'IconArrowUpRight',
                 }} >
                     <Link href='/contact' className='overflow-hidden'>
-                        <Display size='lg' weight='bold' className={twMerge('whitespace-nowrap-important uppercase text-primary-500', 'contact-title-gsap')} >
+                        <Display size='lg' weight='bold' className={twMerge('whitespace-nowrap-important uppercase text-primary-500', 'contact-title-gsap will-change-transform-animation')} >
                             {t('contactCall.action')}
                         </Display>
                     </Link>
@@ -80,7 +80,7 @@ const Action = () => {
                     i18n.language == 'en' ? 'w-32 xl:w-40 4xl:w-52' : 'w-36 xl:w-46 4xl:w-52', // width
                     'text-start xs:text-end sm:text-start'
                 )} >
-                    <span className='contact_quota_gsap'>
+                    <span className='contact_quota_gsap will-change-transform-animation'>
                         {t('contactCall.description')}
                     </span>
                 </Text>

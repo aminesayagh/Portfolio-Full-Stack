@@ -15,6 +15,11 @@
 *{
 	box-sizing: border-box;
 }
+
+.will-change-transform-animation{
+  @apply will-change-transform;
+}
+
 html {
   box-sizing: border-box;
   /* scroll-behavior: smooth; */

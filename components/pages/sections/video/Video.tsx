@@ -76,10 +76,10 @@ const Video = () => {
 
     return (
         <>
-            <div data-scroll ref={refContainer} className={twMerge('block relative w-full h-fit rounded-3xl video_gsap overflow-hidden', rounded({ size: 'xl' }))}>
+            <div data-scroll ref={refContainer} className={twMerge('block relative w-full h-fit rounded-3xl video_gsap overflow-hidden will-change-transform-animation', rounded({ size: 'xl' }))}>
                 <CursorContent name='CursorScrollVideo' component='CursorScroll' props={{ title: 'scroll' }}> 
                     <canvas data-scroll ref={ref} className={twMerge(
-                        'h-full w-full', 
+                        'h-full w-full will-change-transform-animation', 
                         'h-[70vh] xxs:h-screen sm:h-[96vh] lg:h-screen',
                         'max-h-[720px] xxs:max-h-[900px] sm:max-h-[800px] lg:max-h-[830px] xl:max-h-[900px]', 
                         rounded({ size: 'xl' })

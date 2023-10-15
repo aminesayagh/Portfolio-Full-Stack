@@ -101,7 +101,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
         }
     }, container);
 
-    return <div data-scroll className={twMerge('relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden')} ref={container} style={{
+    return <div data-scroll className={twMerge('relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden will-change-transform-animation')} ref={container} style={{
         zIndex: 10 + (index + 10),
     }} >
         <div className='absolute left-0 right-0 top-0 w-full h-screen'  >
@@ -113,19 +113,19 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
             <div data-scroll data-scroll-speed='3' className={twMerge(
                 'relative w-fit flex flex-col justify-end h-full',
                 'px-5 xs:px-10 lg:px-24 py-24 xs:py-20 mdl:py-28 lg:py-40',
-                'gap-2 xs:gap-4 content-gsap'
+                'gap-2 xs:gap-4 content-gsap will-change-transform-animation'
             )}
                 style={{
                     zIndex: 10 + (index + 14),
                 }}
             >
                 <div className='w-full overflow-hidden' >
-                    <Title h1 degree='1' className='case-text-gsap' >
+                    <Title h1 degree='1' className='case-text-gsap will-change-transform-animation' >
                         {t(`projects.${id}.title`)}
                     </Title>
                 </div>
                 <div className='w-full xs:w-8/12 md:w-1/2 overflow-hidden'>
-                    <Text p size='md' degree='3' className='case-text-gsap'>
+                    <Text p size='md' degree='3' className='case-text-gsap will-change-transform-animation'>
                         {t(`projects.${id}.description`)}
                     </Text>
                 </div>
