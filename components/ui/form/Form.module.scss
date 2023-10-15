@@ -15,12 +15,12 @@
     @apply text-xs font-medium text-gray-800;
 }
 .input {
-    @apply font-sans tracking-wider text-start;
+    @apply hidden font-sans tracking-wider text-start;
     @apply flex flex-row justify-between;
     @apply text-xs font-medium text-active;
     @apply border-b border-gray-700/60 rounded-none;
     @apply px-3 py-[1.15rem];
-    @apply bg-black-200/60 backdrop-blur-xl;
+    @apply bg-black-400/60 backdrop-blur-xl;
     @apply transition-all duration-200 outline-none;
     @apply focus:ring-0 focus:ring-offset-0 focus:ring-transparent;
     &.invalid {
