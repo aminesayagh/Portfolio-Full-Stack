@@ -73,7 +73,7 @@ const Card = ({ title, description, number }: { title: string, description: stri
     return <>
         <div className={twMerge(
             'flex flex-col gap-8 sm:gap-12 lg:gap-6 xl:gap-16 justify-between items-baseline',
-            'p-5 sm:p-7 lg:p-5 xl:p-6',
+            'p-5 sm:p-7 lg:p-5 xl:p-6 will-change-transform-animation',
             'transition-colors duration-300 ease-in-out relative',
             isHovered ? 'bg-black-200' : 'bg-transparent',
             BORDER_CARD_CLASS_NAME,
@@ -138,10 +138,10 @@ const CardElement = ({ i }: { i: number }) => {
         }
     }, [scrollbar, isLg, isXs])
 
-    if (i >= 4) return <div key={i} className={`expertise-card-gsap`} ref={ref}>
+    if (i >= 4) return <div key={i} className={`expertise-card-gsap will-change-transform-animation`} ref={ref}>
         <EmptyCardMemo />
     </div>
-    return <div className={`expertise-card-gsap relative`} key={i} ref={ref}>
+    return <div className={`expertise-card-gsap relative will-change-transform-animation`} key={i} ref={ref}>
         <CardMemo title={t(`experience.stages.${i + 1}.title`)} description={t(`experience.stages.${i + 1}.description`)} number={t(`experience.stages.${i + 1}.count`)} />
     </div>
 }
@@ -178,7 +178,7 @@ const Expertise = () => {
                     'gap-20 xs:gap-32 sm:gap-16 mdl:gap-32 lg:gap-28 2xl:gap-44',
                     'justify-center items-center h-full', 
                     rounded({ size: 'xl' }), 
-                    'overflow-hidden container-expertise-gsap',
+                    'overflow-hidden container-expertise-gsap will-change-transform-animation',
                     'relative z-[60]'
                 )}
             >
