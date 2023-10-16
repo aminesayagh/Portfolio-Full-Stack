@@ -202,7 +202,7 @@ const Preloader = ({ isLoading, setEndLoading }: {
                         <AnimatePresence mode='sync' >
                             <motion.p className={twMerge(
                                 'uppercase element-counter-gsap',
-                                'font-sans font-black text-black-500',
+                                'font-sans font-black text-black-500 will-change-transform-animation',
                                 'text-[4.1rem] xxs:text-[6rem] md:text-[7.4rem] lg:text-[8.4rem] xl:text-[10rem] align-baseline leading-[70%]'
                             )}>
                                 <motion.span key={percent} initial={{ opacity: 1, y: '0' }} animate={{ opacity: 1, y: '-100%' }} exit={{ opacity: 0, y: '100%' }}>
