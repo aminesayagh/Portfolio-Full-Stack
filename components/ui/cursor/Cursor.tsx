@@ -235,7 +235,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                     blend,
                     'ball_gsap ball_main_gsap',
                     'w-10 sm:w-12 h-10 sm:h-12',
-                    'border-2 border-primary-500 bg-white-300/5 backdrop-blur-xs')}></div>
+                    'border border-primary-500 bg-white-300/5 backdrop-blur-xs')}></div>
                 <div className={twMerge(
                     DEFAULT_BALL_CLASS_NAME, 
                     blend,
