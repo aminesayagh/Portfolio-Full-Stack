@@ -3,13 +3,11 @@ import React, { useRef, useContext, useCallback, useMemo, ElementRef } from "rea
 import { useTranslation } from "next-i18next";
 import { useIsomorphicLayoutEffect } from "react-use";
 
-import { Text, Button, Display, Icon, Fit, CursorContent } from '@/components/ui';
+import { Text, Button, Display, Icon, Fit, CursorContent, Item, LoadingContext } from '@/components/ui';
 import { MENU_ITEMS } from "@/conf/router";
 import { ScrollProvider } from '@/context/AnimationConf';
 import { ScrollTrigger, gsap } from "@/utils/gsap";
 import useRouterChange from '@/hook/SafePush';
-import { Item } from '@/components/ui';
-import { LoadingContext } from "@/components/ui";
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<ElementRef<'div'>>(null);

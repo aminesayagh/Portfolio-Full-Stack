@@ -191,7 +191,7 @@ const Preloader = ({ isLoading, setEndLoading }: {
                         <ul className='flex flex-col h-[15%] overflow-hidden element-content-gsap opacity-0'>
                             {
                                 Array.from({ length: 5 }).map((_, index) => (
-                                    <Text key={index} degree='0' li size='md' weight='bold' className={twMerge('item-gsap capitalize', index == 4 ? 'text-primary-500' : 'text-black-300/80')}  >
+                                    <Text key={index} degree='0' li size='md' weight='bold' className={twMerge('item-gsap capitalize will-change-transform-animation', index == 4 ? 'text-primary-500' : 'text-black-300/80')}  >
                                         {t(`loading.message_${index + 1}`)}
                                     </Text>
                                 ))

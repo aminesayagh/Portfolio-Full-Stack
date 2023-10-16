@@ -11,7 +11,7 @@ export const cursorContext = createContext<{
     setKey?: (key: string | null) => void,
 }>({});
 
-const DEFAULT_BALL_CLASS_NAME = ['fixed rounded-full pointer-events-none cursor-none', 'top-0 left-0'];
+const DEFAULT_BALL_CLASS_NAME = ['fixed rounded-full pointer-events-none cursor-none', 'top-0 left-0', 'visible-hidden'];
 
 const Cursor = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<ElementRef<'div'>>(null);
