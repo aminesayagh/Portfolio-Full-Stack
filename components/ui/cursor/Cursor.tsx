@@ -11,12 +11,11 @@ export const cursorContext = createContext<{
     setKey?: (key: string | null) => void,
 }>({});
 
-const DEFAULT_BALL_CLASS_NAME = ['fixed rounded-full pointer-events-none cursor-none', 'top-0 left-0', 'visible-hidden'];
+const DEFAULT_BALL_CLASS_NAME = ['fixed rounded-full pointer-events-none cursor-none', 'top-0 left-0', 'visible-hidden hidden'];
 
 const Cursor = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<ElementRef<'div'>>(null);
-    const secondaryCursor = useRef<ElementRef<'div'>>(null);
-    
+
     const list = useRef<ItemCursor[]>([]);
 
     const addCursor = useCallback(({
@@ -87,10 +86,10 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 ease: 'Power4.easeOut',
             }, '>').fromTo('.cursor_action_icon_gsap .cursorIconGsap', {
                 rotate: 45,
-                opacity: 0,
+                opacity: 0
             }, {
+                duration: 0.5,
                 opacity: 1,
-                duration: 0.6,
                 ease: 'Expo.easeOut',
                 rotate: 0,
             });
@@ -103,6 +102,8 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 }
             });
             context.add('cursorActionIcon', (isActive: boolean, degree: number) => {
+                console.log(isActive);
+
                 if (isActive) {
                     cursorActionIconTimeline.play();
                 } else {
@@ -114,14 +115,14 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 paused: true,
             }).fromTo('.ball_secondary_gsap', {
                 scale: 1,
-            },{
+            }, {
                 duration: 0.4,
                 scale: 0,
                 ease: 'Power4.easeOut',
             }).fromTo('.ball_main_gsap', {
                 scale: 1,
                 opacity: 1,
-            },{
+            }, {
                 duration: 0.4,
                 scale: 1.2,
                 opacity: 0.8,
@@ -164,7 +165,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 duration: 0.6,
                 ease: 'Elastic.easeOut',
             })
-            
+
             let xToSecondary = gsap.quickTo(['.ball_secondary_gsap', '.ball_inner_top'], 'x', {
                 duration: 0.3,
                 ease: 'Power4.easeOut',
@@ -215,7 +216,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
 
     const blend = useMemo(() => typeof key == 'string' ? '' : 'mix-blend-difference', [key])
     const currentCursor = useMemo(() => list.current.find(item => item.name == key), [key]);
-    
+
     return <>
         <span ref={ref}>
             <cursorContext.Provider value={{
@@ -225,22 +226,27 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                     {children}
                 </span>
                 <div className={twMerge(
-                    DEFAULT_BALL_CLASS_NAME, 
+                    DEFAULT_BALL_CLASS_NAME,
                     blend,
                     'ball_gsap ball_secondary_gsap pointer-events-none',
                     'h-4 sm:h-5 w-4 sm:w-5',
-                    'bg-primary-600/80')} ref={secondaryCursor} ></div>
+                    'bg-primary-600/80'
+                )} ></div>
                 <div className={twMerge(
-                    DEFAULT_BALL_CLASS_NAME, 
+                    DEFAULT_BALL_CLASS_NAME,
                     blend,
                     'ball_gsap ball_main_gsap',
                     'w-10 sm:w-12 h-10 sm:h-12',
-                    'border border-primary-500 bg-white-300/5 backdrop-blur-xs')}></div>
-                <div className={twMerge(
-                    DEFAULT_BALL_CLASS_NAME, 
-                    blend,
-                    'ball_gsap ball_inner_top',
-                    'w-full', 'flex justify-center items-center uppercase')}>
+                    'border border-primary-500 bg-white-300/5 backdrop-blur-xs')}
+                ></div>
+                <div className={
+                    twMerge(
+                        DEFAULT_BALL_CLASS_NAME,
+                        blend,
+                        'ball_gsap ball_inner_top',
+                        'w-full', 'flex justify-center items-center uppercase')
+                    }
+                >
                     {CursorsArray.map((item, index) => {
                         const isActive = item == currentCursor?.component;
                         let otherProps = {};

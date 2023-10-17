@@ -1,10 +1,10 @@
 
-import { useEffect, useRef, MutableRefObject } from 'react';
+import { useEffect, useRef, MutableRefObject, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import _ from 'lodash';
 import { useIsomorphicLayoutEffect } from 'react-use';
 
-import { Text, Icon } from '@/components/ui';
+import { Text, Icon, IconNames } from '@/components/ui';
 import { gsap } from '@/utils/gsap';
 import { ItemCursorPropsByComponent } from './CursorType';
 
@@ -45,6 +45,13 @@ const CursorActionIcon = ({ isActive, ctx, iconName, degree = 45 }: {
     ctx: MutableRefObject<gsap.Context | undefined>
 } & Partial<ItemCursorPropsByComponent['CursorActionIcon']>) => {
     const ref = useRef<HTMLDivElement>(null);
+    const [icon,setIcon] = useState<string | undefined>(undefined);
+    useEffect(() => {
+        if(!!iconName) {
+            setIcon(iconName);
+        }
+    }, [iconName]);
+    
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context((self) => {
             gsap.set(ref.current, {
@@ -55,15 +62,24 @@ const CursorActionIcon = ({ isActive, ctx, iconName, degree = 45 }: {
                 rotate: 45,
                 opacity: 0,
             });
-        });
+        }, ref);
         return () => ctx.revert();
     }, [ctx, ref]);
+
     useIsomorphicLayoutEffect(() => {
-        ctx.current?.cursorActionIcon(isActive, degree);
+        ctx.current?.cursorActionIcon(isActive, degree)
+        console.log(icon);
+        if(!isActive) {
+            const idTimeout = setTimeout(() => {
+                setIcon(undefined);
+            }, 1000);
+            return () => clearTimeout(idTimeout);
+        }
     }, [isActive, ctx, degree]);
+    
     return <div ref={ref} className={twMerge('w-28 h-28', 'rounded-full', 'flex-col justify-center items-center cursor_action_icon_gsap')}>
         <span className='cursorIconGsap'>
-            {iconName ? <Icon name={iconName} size='30' color='var(--color-black-100)' /> : null}
+            {icon ? <Icon name={icon as IconNames} size='30' color='var(--color-black-100)' /> : null}
         </span>
     </div>
 }

@@ -78,7 +78,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     useEffect(() => {
         if (scrollbar) {
             const updateScroll = () => {
-                scrollbar.update();
+                scrollbar && scrollbar.update();
             }
 
             window.addEventListener('DOMContentLoaded', updateScroll);
@@ -87,14 +87,13 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
 
             return () => {
                 console.log('destroy scroll');
-                ScrollTrigger.removeEventListener('refresh', updateScroll);
+                // ScrollTrigger.removeEventListener('refresh', updateScroll);
                 // scrollbar.destroy();
                 window.removeEventListener('DOMContentLoaded', updateScroll);
                 window.removeEventListener('resize', updateScroll);
                 window.removeEventListener('load', updateScroll);
             }
         }
-
     }, [scrollbar])
     useEffect(() => {
         let ctx = gsap.context(() => {
