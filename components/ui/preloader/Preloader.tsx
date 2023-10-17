@@ -191,7 +191,7 @@ const Preloader = ({ isLoading, setEndLoading }: {
                         <ul className='flex flex-col h-[15%] overflow-hidden element-content-gsap opacity-0'>
                             {
                                 Array.from({ length: 5 }).map((_, index) => (
-                                    <Text key={index} degree='0' li size='md' weight='bold' className={twMerge('item-gsap capitalize', index == 4 ? 'text-primary-500' : 'text-black-300/80')}  >
+                                    <Text key={index} degree='0' li size='md' weight='bold' className={twMerge('item-gsap capitalize will-change-transform-animation', index == 4 ? 'text-primary-500' : 'text-black-300/80')}  >
                                         {t(`loading.message_${index + 1}`)}
                                     </Text>
                                 ))
@@ -202,7 +202,7 @@ const Preloader = ({ isLoading, setEndLoading }: {
                         <AnimatePresence mode='sync' >
                             <motion.p className={twMerge(
                                 'uppercase element-counter-gsap',
-                                'font-sans font-black text-black-500',
+                                'font-sans font-black text-black-500 will-change-transform-animation',
                                 'text-[4.1rem] xxs:text-[6rem] md:text-[7.4rem] lg:text-[8.4rem] xl:text-[10rem] align-baseline leading-[70%]'
                             )}>
                                 <motion.span key={percent} initial={{ opacity: 1, y: '0' }} animate={{ opacity: 1, y: '-100%' }} exit={{ opacity: 0, y: '100%' }}>
