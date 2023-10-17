@@ -85,14 +85,14 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 backgroundColor: 'var(--color-white-100)',
                 ease: 'Power4.easeOut',
             }, '>').fromTo('.cursorIconGsap', {
-                opacity: 0
             }, {
-                opacity: 1,
                 duration: 0.1,
             }).fromTo('.cursor_action_icon_gsap .cursorIconGsap', {
                 rotate: 45,
+                opacity: 0
             }, {
-                duration: 0.6,
+                duration: 0.5,
+                opacity: 1,
                 ease: 'Expo.easeOut',
                 rotate: 0,
             });
