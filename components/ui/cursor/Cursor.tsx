@@ -84,10 +84,7 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 scale: 1,
                 backgroundColor: 'var(--color-white-100)',
                 ease: 'Power4.easeOut',
-            }, '>').fromTo('.cursorIconGsap', {
-            }, {
-                duration: 0.1,
-            }).fromTo('.cursor_action_icon_gsap .cursorIconGsap', {
+            }, '>').fromTo('.cursor_action_icon_gsap .cursorIconGsap', {
                 rotate: 45,
                 opacity: 0
             }, {
