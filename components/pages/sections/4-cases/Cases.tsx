@@ -112,7 +112,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
         <div className='absolute top-0 left-0 right-0 w-full min-h-screen h-screen bg-no-repeat bg-cover' >
             <div data-scroll data-scroll-speed='3' className={twMerge(
                 'relative w-fit flex flex-col justify-end h-full',
-                'px-5 xs:px-10 lg:px-24 py-24 xs:py-20 mdl:py-28 lg:py-40',
+                'px-5 xs:px-10 lg:px-24 py-24 xs:py-20 mdl:py-32 lg:py-48',
                 'gap-2 xs:gap-4 content-gsap will-change-transform-animation'
             )}
                 style={{
@@ -125,7 +125,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                     </Title>
                 </div>
                 <div className='w-full xs:w-8/12 md:w-1/2 overflow-hidden'>
-                    <Text p size='md' degree='3' className='case-text-gsap will-change-transform-animation'>
+                    <Text p size='md' degree='2' className='case-text-gsap will-change-transform-animation'>
                         {t(`projects.${id}.description`)}
                     </Text>
                 </div>
@@ -137,14 +137,12 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
     </div>
 }
 
-const CaseMemo = React.memo(Case);
-const Cases = () => {
-    const { t } = useTranslation();
-    const projects = useMemo(() => getProjectsByCategory('best'), []);
 
-    return <div className={twMerge('flex flex-col gap-14 sm:gap-12 w-full h-fit')} >
-        <div data-scroll className={twMerge('flex flex-col sm:flex-row justify-between items-start sm:items-end', 'gap-2 sm:gap-12', 'w-full')}>
-            <Title h2 weight='bold' degree='2' className={'sm:w-min'}>
+const CaseHead = () => {
+    const { t } = useTranslation();
+
+    return <>
+        <Title h2 weight='bold' degree='2' className={'sm:w-min'}>
                 {t('cases.title')}
             </Title>
             <div className='w-full xs:w-9/12 sm:w-7/12 md:w-6/12 lg:w-5/12 xl:w-4/12'>
@@ -152,9 +150,18 @@ const Cases = () => {
                     {t('cases.description')}
                 </Text>
             </div>
+    </>
+}
+
+const CaseHeadMemo = React.memo(CaseHead);
+
+const Cases = () => {
+    return <div className={twMerge('flex flex-col gap-14 sm:gap-12 w-full h-fit')} >
+        <div data-scroll className={twMerge('flex flex-col sm:flex-row justify-between items-start sm:items-end', 'gap-2 sm:gap-12', 'w-full')}>
+            <CaseHeadMemo />
         </div>
         <div className={twMerge(`w-full flex flex-col gap-0 h-fit`, 'rounded-2xl overflow-hidden')}>
-            {projects.map((project, index) => <CaseMemo key={project.id} picture={project?.picture} index={index} id={project.id} />)}
+            {getProjectsByCategory('best').map((project, index) => <Case key={project.id} picture={project?.picture} index={index} id={project.id} />)}
         </div>
     </div>
 }

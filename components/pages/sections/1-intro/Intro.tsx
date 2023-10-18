@@ -11,8 +11,8 @@ import useRouterChange from '@/hook/SafePush';
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<ElementRef<'div'>>(null);
-    const xTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref]);
-    const yTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref]);
+    const xTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref.current]);
+    const yTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref.current]);
 
     
 
@@ -325,7 +325,7 @@ const Intro = () => {
                 skewY: 16,
                 duration: 1,
                 ease: 'power4.out',
-                delay: 0.1,
+                delay: 0.4,
                 stagger: {
                     amount: 0.4
                 },
