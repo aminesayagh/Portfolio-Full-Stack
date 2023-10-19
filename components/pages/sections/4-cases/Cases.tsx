@@ -11,8 +11,7 @@ import useGsap from '@/hook/useGsap';
 const Case = ({ picture, index, id }: { picture?: string[], index: number, id: string }) => {
     const container = useRef<ElementRef<'div'>>(null);
     const { t } = useTranslation();
-    const pic = useMemo(() => picture ? picture[0] : '', [picture]);
-
+    
     useGsap(() => {
         let tl2: gsap.core.Timeline;
         if (index < 2) {
@@ -100,13 +99,21 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
             tl2?.kill();
         }
     }, container);
+    
+    const zIndexContainer = useMemo(() => 10 + (index + 10), [index]);
+    const zIndexImage = useMemo(() => 10 + (index + 11), [index]);
+    const zIndexContent = useMemo(() => 10 + (index + 14), [index]);
+    const zIndexGradient = useMemo(() => 10 + (index + 13), [index]);
+    const title = useMemo(() => t(`projects.${id}.title`), [t, id]);
+    const description = useMemo(() => t(`projects.${id}.description`), [t, id]);
+    const pic = useMemo(() => picture ? picture[0] : '', [picture]);
 
-    return <div data-scroll className={twMerge('relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden will-change-transform-animation')} ref={container} style={{
-        zIndex: 10 + (index + 10),
+    return <div data-scroll className='relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden will-change-transform-animation' ref={container} style={{
+        zIndex: zIndexContainer,
     }} >
         <div className='absolute left-0 right-0 top-0 w-full h-screen'  >
-            <Image src={pic} alt={t(`projects.${id}.description`)} className='h-screen object-cover' priority sizes='100vw' width='6000' height='4500' style={{
-                zIndex: 10 + (index + 11)
+            <Image src={pic} alt={description} className='h-screen object-cover' priority sizes='100vw' width='6000' height='4500' style={{
+                zIndex: zIndexImage,
             }} />
         </div>
         <div className='absolute top-0 left-0 right-0 w-full min-h-screen h-screen bg-no-repeat bg-cover' >
@@ -116,22 +123,22 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                 'gap-2 xs:gap-4 content-gsap will-change-transform-animation'
             )}
                 style={{
-                    zIndex: 10 + (index + 14),
+                    zIndex: zIndexContent,
                 }}
             >
                 <div className='w-full overflow-hidden' >
                     <Title h1 degree='1' className='case-text-gsap will-change-transform-animation' >
-                        {t(`projects.${id}.title`)}
+                        {title}
                     </Title>
                 </div>
                 <div className='w-full xs:w-8/12 md:w-1/2 overflow-hidden'>
                     <Text p size='md' degree='2' className='case-text-gsap will-change-transform-animation'>
-                        {t(`projects.${id}.description`)}
+                        {description}
                     </Text>
                 </div>
             </div>
             <div className={twMerge('absolute left-0 right-0 bottom-0 w-full h-80 xs:h-72', 'bg-gradient-to-t from-black-100/80 to-black-100/0')} style={{
-                zIndex: 10 + (index + 12),
+                zIndex: zIndexGradient,
             }}></div>
         </div>
     </div>
@@ -142,25 +149,25 @@ const CaseHead = () => {
     const { t } = useTranslation();
 
     return <>
-        <Title h2 weight='bold' degree='2' className={'sm:w-min'}>
-                {t('cases.title')}
-            </Title>
-            <div className='w-full xs:w-9/12 sm:w-7/12 md:w-6/12 lg:w-5/12 xl:w-4/12'>
-                <Text p size='md' degree='3' weight='semibold' className='w-auto max-w-[38rem] sm:max-w-[36rem] my-2 md:my-4' >
-                    {t('cases.description')}
-                </Text>
-            </div>
+        <Title h2 weight='bold' degree='2' className='sm:w-min'>
+            {t('cases.title')}
+        </Title>
+        <div className='w-full xs:w-9/12 sm:w-7/12 md:w-6/12 lg:w-5/12 xl:w-4/12'>
+            <Text p size='md' degree='3' weight='semibold' className='w-auto max-w-[38rem] sm:max-w-[36rem] my-2 md:my-4' >
+                {t('cases.description')}
+            </Text>
+        </div>
     </>
 }
 
 const CaseHeadMemo = React.memo(CaseHead);
 
 const Cases = () => {
-    return <div className={twMerge('flex flex-col gap-14 sm:gap-12 w-full h-fit')} >
-        <div data-scroll className={twMerge('flex flex-col sm:flex-row justify-between items-start sm:items-end', 'gap-2 sm:gap-12', 'w-full')}>
+    return <div className='flex flex-col gap-14 sm:gap-12 w-full h-fit'>
+        <div data-scroll className='flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2 sm:gap-12 w-full'>
             <CaseHeadMemo />
         </div>
-        <div className={twMerge(`w-full flex flex-col gap-0 h-fit`, 'rounded-2xl overflow-hidden')}>
+        <div className='w-full flex flex-col gap-0 h-fit rounded-2xl overflow-hidden'>
             {getProjectsByCategory('best').map((project, index) => <Case key={project.id} picture={project?.picture} index={index} id={project.id} />)}
         </div>
     </div>

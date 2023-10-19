@@ -80,16 +80,16 @@ const Manifesto = () => {
         }
     }, refDescription);
 
-    return <div data-scroll data-scroll-sticky data-scroll-target="#manifesto" data-scroll-speed="4" className={twMerge('h-fit py-20 xxs:py-28 md:py-32 2xl:py-40', ' relative')} ref={refDescription} >
+    return <div data-scroll data-scroll-sticky data-scroll-target="#manifesto" data-scroll-speed="4" className='h-fit py-20 xxs:py-28 md:py-32 2xl:py-40 relative' ref={refDescription} >
         <div className={twMerge(`grid grid-cols-12 gap-y-8 xxs:gap-y-12 xs:gap-y-8 mdl:gap-y-12`, 'h-fit strick')}>
-            <div className={twMerge('flex flex-col gap-6 xs:gap-7', 'items-start justify-start manifesto_quote_gsap will-change-transform-animation',
+            <div className={twMerge('flex flex-col gap-6 xs:gap-7 items-start justify-start manifesto_quote_gsap will-change-transform-animation',
                 'col-start-1 col-span-12 xs:col-start-2 xs:col-span-11 md:col-start-2 md:col-span-10 mdl:col-start-2 mdl:col-span-10 xl:col-start-2 xl:col-span-9',
             )}>
                 <div className='flex flex-row gap-5 justify-center items-center'>
                     <Title h6 degree='4' weight='medium' >
                         {t(`manifesto.subtitle_1`)}
                     </Title>
-                    <div className={twMerge('w-[0.3rem] h-[0.3rem] rounded-full bg-gray-500 items-center justify-start')} ></div>
+                    <div className='w-[0.3rem] h-[0.3rem] rounded-full bg-gray-500 items-center justify-start' ></div>
                     <Title h6 degree='4' weight='medium' >
                         {t(`manifesto.subtitle_2`)}
                     </Title>
