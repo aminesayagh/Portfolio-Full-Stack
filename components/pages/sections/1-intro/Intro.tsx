@@ -11,10 +11,10 @@ import useRouterChange from '@/hook/SafePush';
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<ElementRef<'div'>>(null);
-    const xTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref]);
-    const yTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref]);
+    const xTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref.current]);
+    const yTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref.current]);
 
-    
+
 
     useIsomorphicLayoutEffect(() => {
         if (!!ref.current) {
@@ -51,53 +51,59 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
 
 const GsapCircleBlue = ({ children, ...props }: { children: React.ReactElement, className: string }) => {
     const circle = useRef<HTMLDivElement>(null);
-    const tl = useMemo(() => gsap.timeline({ paused: true }), []);
-    const getPosition = (e: any) => {
+
+    const getPosition = useCallback((e: any) => {
         const { clientX, clientY } = e; // get the mouse position relative to the circle element
         const { left, top, width, height } = circle.current?.getBoundingClientRect() as DOMRect;
         const x = clientX - left;
         const y = clientY - top;
         return { x, y };
-    }
+    }, [circle]);
+
     useIsomorphicLayoutEffect(() => {
-        if (!!circle.current) {
-            const mouseEnter = (e: any) => {
-                const { x, y } = getPosition(e);
 
-                // init the animation
-                tl.clear();
-                tl.fromTo(circle.current, {
-                    background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 0%, var(--color-white-100) 0%)`,
-                }, {
-                    background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 100%, var(--color-white-100) 0%)`,
-                    duration: 0.4,
-                    ease: 'power4.out',
-                });
-                tl.play();
+        const ctx = gsap.context(() => {
+            if (!!circle.current) {
+                const tl = gsap.timeline({ paused: true });
+                const mouseEnter = (e: any) => {
+                    const { x, y } = getPosition(e);
 
+                    // init the animation
+                    tl.clear();
+                    tl.fromTo(circle.current, {
+                        background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 0%, var(--color-white-100) 0%)`,
+                    }, {
+                        background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 100%, var(--color-white-100) 0%)`,
+                        duration: 0.4,
+                        ease: 'power4.out',
+                    });
+                    tl.play();
+
+                }
+                const mouseLeave = (e: any) => {
+                    const { x, y } = getPosition(e);
+
+                    tl.clear();
+                    tl.fromTo(circle.current, {
+                        background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 100%, var(--color-white-100) 0%)`,
+                    }, {
+                        background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 0%, var(--color-white-100) 0%)`,
+                        duration: 0.4,
+                        ease: 'power4.out',
+                    });
+                    tl.play();
+                }
+
+                circle.current.addEventListener('pointerenter', mouseEnter);
+                circle.current.addEventListener('mouseleave', mouseLeave);
+                return () => {
+                    circle.current?.removeEventListener('pointerenter', mouseEnter);
+                    circle.current?.removeEventListener('mouseleave', mouseLeave);
+                    tl.kill();
+                }
             }
-            const mouseLeave = (e: any) => {
-                const { x, y } = getPosition(e);
-
-                tl.clear();
-                tl.fromTo(circle.current, {
-                    background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 100%, var(--color-white-100) 0%)`,
-                }, {
-                    background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 0%, var(--color-white-100) 0%)`,
-                    duration: 0.4,
-                    ease: 'power4.out',
-                });
-                tl.play();
-            }
-
-            circle.current.addEventListener('pointerenter', mouseEnter);
-            circle.current.addEventListener('mouseleave', mouseLeave);
-            return () => {
-                circle.current?.removeEventListener('pointerenter', mouseEnter);
-                circle.current?.removeEventListener('mouseleave', mouseLeave);
-                tl.kill();
-            }
-        }
+        })
+        return () => ctx.revert();
     }, []);
 
     return React.cloneElement(children, { ref: circle, className: twMerge(children.props.className, 'relative rounded-full bg-white-100') })
@@ -268,20 +274,28 @@ const Menu = () => {
     const goToSection = useCallback((section: string) => {
         if (section == 'contact') {
             safePush('/contact');
-        } else if(scrollbar) {
+        } else if (scrollbar) {
             scrollbar.scrollTo(`#${section}`, {
                 duration: 500,
                 disableLerp: true
             });
         }
     }, [safePush, scrollbar]);
+
+    const menuItemsData = useMemo(() => Array.apply(null, Array(4)).map((_, i) => {
+        return {
+            key: i,
+            number: `0${i + 1}`,
+            title: t(`header.menu.${menuKeys[i]}.attribute`)
+        }
+    }), [t]);
     return (<>
         <div className={twMerge('flex flex-row flex-wrap justify-between items-start w-full gap-y-6')} >
-            {Array.apply(null, Array(4)).map((_, i) => {
-                if (i > 3) return null;
-                return <div key={i} className={twMerge('flex flex-col justify-start items-start gap-1 w-1/2 sm:w-auto md:w-1/4')} >
-                    <Text p weight='medium' size='sm' degree='3' className='number_menu_gsap will-change-transform-animation' >{`0${i + 1}`}</Text>
-                    <CursorContent name={`cursorPointer_intro_menu_${i + 1}`} component='CursorEvent' props={{
+            {menuItemsData.map(({ key, number, title }) => {
+                // if (i > 3) return null;
+                return <div key={key} className={twMerge('flex flex-col justify-start items-start gap-1 w-1/2 sm:w-auto md:w-1/4')} >
+                    <Text p weight='medium' size='sm' degree='3' className='number_menu_gsap will-change-transform-animation' >{number}</Text>
+                    <CursorContent name={`cursorPointer_intro_menu_${number}`} component='CursorEvent' props={{
                         event: 'pointer',
                     }}>
                         <Item>
@@ -289,11 +303,11 @@ const Menu = () => {
                                 degree='1'
                                 size='sm'
                                 weight='semibold'
-                                onPress={() => goToSection(menuItems[`${i + 1}` as keyof typeof menuItems] as string)}
+                                onPress={() => goToSection(menuItems[`${key + 1}` as keyof typeof menuItems] as string)}
                                 className='uppercase item_menu_gsap will-change-transform-animation' style={{
                                     color: 'inherit'
                                 }} >
-                                {t(`header.menu.${menuKeys[i]}.attribute`)}
+                                {title}
                             </Button>
                         </Item>
                     </CursorContent>
@@ -325,11 +339,11 @@ const Intro = () => {
                 skewY: 16,
                 duration: 1,
                 ease: 'power4.out',
-                delay: 0.1,
+                delay: 0.4,
                 stagger: {
                     amount: 0.4
                 },
-                onComplete: function() {
+                onComplete: function () {
                     this.targets().forEach((el: any) => {
                         el.style.willChange = '';
                     });

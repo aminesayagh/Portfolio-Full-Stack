@@ -142,8 +142,7 @@ html.has-scroll-smooth {
 
 @layer base {
   body{
-    @apply font-sans;
-    @apply body-background;
+    @apply font-sans body-background;
   }
 }
 
