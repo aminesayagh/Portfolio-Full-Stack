@@ -39,7 +39,7 @@ const COUNTRY_NAMES = {
     'MOROCCO': 'Morocco',
     'UNITED_STATES': 'United States',
     'SINGAPORE': 'Singapore',
-    'LITHUANIA': 'Lithuania',
+    'LONDON': 'London',
 } as const;
 
 export type CountryNames = typeof COUNTRY_NAMES[keyof typeof COUNTRY_NAMES];
@@ -106,7 +106,7 @@ const PROJECTS: Project[] = [
         category: ['ongoing'],
         tasks: [FULLSTACK_DEVELOPER],
         jobTitle: [TECHNICAL_ADVISOR],
-        country: 'Lithuania'
+        country: 'London'
     },
     {
         id: '8',
