@@ -179,8 +179,8 @@ const Preloader = ({ isLoading, setEndLoading }: {
     }, [percent]);
 
     return (
-        <div ref={ref} >
-            <div className={twMerge('w-screen cursor-none h-screen overflow-hidden', 'bg-white-400', 'z-preload fixed', 'element-container')}>
+        <div ref={ref} className='z-preload'>
+            <div className={twMerge('w-screen cursor-none  h-screen overflow-hidden', 'bg-white-400', ' fixed', 'element-container')}>
                 <Container as='div' size='lg' className={twMerge('h-screen pt-4 sm:pt-8', 'flex flex-col justify-between')}>
                     <div className='flex flex-col gap-0 sm:gap-1'>
                         <span className='py-1 element-content-gsap opacity-0'>

@@ -144,9 +144,9 @@ module.exports = {
       "loading": "7000",
       "toast": "6500",
       "tooltip": "6300",
+      "cursor": "9000",
       "preload_bg": "9998",
-      "preload": "9999",
-      "cursor": "10000"
+      "preload": "9999"
     },
     extend: {
       fontFamily: {
