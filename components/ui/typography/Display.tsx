@@ -13,7 +13,7 @@ const Display: FC<DisplayPropsExtended> = ({ size, weight, exchange, children, c
                     weight
                 }),
                 textColorDegree[exchange ? 'exchanged' : 'normal']['1'],
-                Style[`display_${size}`],
+                size && Style[`display_${size}`],
                 Style['display'],
                 className,
             ),

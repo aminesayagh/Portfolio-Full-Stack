@@ -17,7 +17,8 @@ export type DisplayPropsExtended = VariantProps<typeof displayStyle> & {
     children: React.ReactNode | string;
     className?: string;
     exchange?: boolean;
-    size: 'xl' | 'lg' | 'md';
+    size?: 'xl' | 'lg' | 'md';
+    style?: React.CSSProperties;
 }
 
 export type TitleElement = {

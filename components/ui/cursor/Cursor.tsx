@@ -102,8 +102,6 @@ const Cursor = ({ children }: { children: React.ReactElement }) => {
                 }
             });
             context.add('cursorActionIcon', (isActive: boolean, degree: number) => {
-                console.log(isActive);
-
                 if (isActive) {
                     cursorActionIconTimeline.play();
                 } else {

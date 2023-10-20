@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
-const transpiledModules = require('next-transpile-modules')(['react-fitty','fitty', 'locomotive-scroll']);
-const { i18n } = require('./next-i18next.config')
+const transpiledModules = require('next-transpile-modules')(['locomotive-scroll']);
+const { i18n } = require('./next-i18next.config');
 
 const nextConfig = {
   reactStrictMode: true,
