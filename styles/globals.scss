@@ -20,6 +20,14 @@
   @apply will-change-transform;
 }
 
+.overflow-y-animate {
+  overflow-y: clip;
+  overflow-x: visible;
+}
+.overflow-y-animate > *{
+  will-change: transform;
+}
+
 html {
   box-sizing: border-box;
   /* scroll-behavior: smooth; */

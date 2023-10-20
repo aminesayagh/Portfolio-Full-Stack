@@ -1,7 +1,7 @@
 import { Container } from "@/components/ui";
 import { Head } from '@/components/common';
 
-import { Title, Text, Display, Link, Fit } from '@/components/ui';
+import { Title, Text, Display } from '@/components/ui';
 import React from "react";
 import { twMerge } from 'tailwind-merge';
 
@@ -48,25 +48,6 @@ export default function App() {
             />
                 <AnimationConf>
                     <div data-scroll-container className='flex flex-col gap-12 py-40'>
-                        {/* fit text */}
-                        <Container as='section' size='lg' className='flex flex-col gap-40'>
-                            <div className='flex flex-col gap-12'>
-                                <TitleOfSection >
-                                    TYPOGRAPHY FIT TEXT
-                                </TitleOfSection>
-                                <div className='flex flex-col gap-24'>
-                                    <Section title={`${listText}`}>
-                                        <div className='w-72 border border-white-500'>
-                                            <Fit degree='1' weight='semibold' className='text-white-300'>
-                                                Text Fit
-                                            </Fit>
-                                        </div>
-                                    </Section>
-
-                                </div>
-
-                            </div>
-                        </Container>
                         {/* typography */}
                         <Container as='section' size='lg' className='flex flex-col gap-40 py-40'>
                             <div className='flex flex-col gap-12'>

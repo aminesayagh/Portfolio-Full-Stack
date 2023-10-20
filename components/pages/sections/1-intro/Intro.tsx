@@ -1,9 +1,9 @@
 import { twMerge } from "tailwind-merge";
-import React, { useRef, useContext, useCallback, useMemo, ElementRef } from "react";
+import React, { useRef, useContext, useCallback, useMemo, ElementRef, useState, useEffect } from "react";
 import { useTranslation } from "next-i18next";
 import { useIsomorphicLayoutEffect } from "react-use";
 
-import { Text, Button, Display, Icon, Fit, CursorContent, Item, LoadingContext } from '@/components/ui';
+import { Text, Button, Display, Icon, CursorContent, Item, LoadingContext } from '@/components/ui';
 import { MENU_ITEMS } from "@/conf/router";
 import { ScrollProvider } from '@/context/AnimationConf';
 import { ScrollTrigger, gsap } from "@/utils/gsap";
@@ -113,7 +113,7 @@ const ButtonNext = () => {
     return <GsapMagic>
         <div data-scroll className={twMerge('relative bg-white-100', 'rounded-full overflow-hidden will-change-transform-animation next_button_gsap')}  >
             <div className=' [&>*]:stroke-black-200 transition-colors duration-300 p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6'>
-                <Icon name='IconCornerLeftDown' className='stroke-1 w-8 h-8 xxs:w-7 xxs:h-7 xs:w-8 xs:h-8 xl:w-10 xl:h-10' />
+                <Icon name='IconCornerLeftDown' className='stroke-1 w-8 h-8 xxs:w-7 xxs:h-7 sm:w-8 sm:h-8 xl:w-10 xl:h-10' />
             </div>
         </div>
     </GsapMagic>
@@ -129,41 +129,76 @@ const FullStack = ({ className }: { className: string }) => {
         <>
             <div className={twMerge(
                 className,
-                'flex flex-col items-start xs:items-end justify-end',
-                i18n.language == 'en' ? 'pb-[1%] xxs:pb-[2%] xs:pb-[4.2%] xl:pb-[5%] 2xl:pb-[4%]' : 'pb-[0%] xxs:pb-[1.4%] sm:pb-[2%] lg:pb-[5.5%] xl:pb-[6.5%] 2xl:pb-2',
-                'space-y-0 xs:-space-y-1 md:space-y-0 mdl:-space-y-1 lg:-space-y-[3%] xl:-space-y-[3%] 2xl:-space-y-[4.62%] 3xl:-space-y-2 4xl:-space-y-1'
+                'flex flex-col items-start xs:items-end justify-center',
+                'space-y-0 xs:-space-y-1 md:space-y-0 mdl:-space-y-1 lg:-space-y-[3%] xl:-space-y-[3%] 2xl:-space-y-[4%] 3xl:-space-y-1 4xl:space-y-0'
             )} >
-                <span data-scroll className='overflow-hidden'>
+                <span className='overflow-y-animate'>
                     <Display size='md' weight='semibold' className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider', 'will-change-transform-animation splitText_fullStack_gsap')}>{t('intro.title.2_1')}</Display>
                 </span>
-                <span data-scroll className='overflow-hidden'>
+                <span className='overflow-y-animate'>
                     <Display size='md' weight='semibold' className={twMerge(DISPLAY_2_CLASS_NAME, 'tracking-[-0.05rem] sm:tracking-wider', 'will-change-transform-animation splitText_fullStack_gsap')}>{t('intro.title.2_2')}</Display>
                 </span>
             </div>
         </>
     )
 }
+
+function useFitText(options?: { factor?: number, maxFontSize?: number }) {
+    const [fontSize, setFontSize] = useState('initial');
+    const ref = useRef<ElementRef<'div'>>(null);
+    useEffect(() => {
+        function adjustFontSize() {
+          if (ref.current) {
+            const containerWidth = ref.current.getBoundingClientRect().width;
+            const factor = options?.factor || 1;
+            const maxFontSize = options?.maxFontSize || 400;
+            const newSize = Math.min(containerWidth / factor, maxFontSize);
+    
+            setFontSize(`${newSize}px`);
+          }
+        }
+    
+        adjustFontSize();
+    
+        window.addEventListener('resize', adjustFontSize);
+        return () => window.removeEventListener('resize', adjustFontSize);
+    }, [ref, options?.factor, options?.maxFontSize]);
+
+    return {fontSize, ref};
+}
+
 const Title = () => {
     const { t, i18n } = useTranslation();
+    const {fontSize: fontSizeInterface, ref: widthInterfaceRef} = useFitText({
+        factor: 4.94,
+    });
+    const {fontSize: fontSizeDev, ref: widthDevRef} = useFitText({
+        factor: 5.55,
+    });
 
     return (<>
         {/* title 1  */}
-        <div className={twMerge(
+        <div ref={widthInterfaceRef} className={twMerge(
             // col
             i18n.language == 'en' ? 'col-start-1 col-span-12' : 'col-start-1 col-span-11',
             'xs:col-start-1 xs:col-span-9',
             'mdl:col-start-1 mdl:col-span-6',
             'xl:col-start-1 xl:col-span-6',
             '4xl:col-start-1 4xl:col-span-6',
-            // row
             'row-start-1 row-span-1',
-            'overflow-hidden',
+            'overflow-y-animate'
         )} >
-            <Fit weight='bold' degree='1' className={twMerge(DISPLAY_1_CLASS_NAME, 'splitText_gsap will-change-transform-animation intro_scroll_gsap')}>{t('intro.title.1')}</Fit>
+            <Display weight='bold' style={{
+                fontSize: fontSizeInterface, lineHeight: '96%',
+            }} className={twMerge(
+                DISPLAY_1_CLASS_NAME,
+                'splitText_gsap will-change-transform-animation intro_scroll_gsap',
+            )}>{t('intro.title.1')}</Display>
         </div>
         {/* description */}
         <div className={twMerge('flex flex-row xxs:flex-col justify-between items-start xs:hidden',
-            'col-start-1 col-span-12 xxs:col-span-4 row-start-3 row-span-1 xxs:row-start-2 xxs:row-span-1')}>
+            'col-start-1 col-span-12 xxs:col-span-4 row-start-3 row-span-1 xxs:row-start-2 xxs:row-span-1'
+        )}>
             <div className='justify-items-start order-2 xxs:order-1 flex'>
                 <ButtonNext />
             </div>
@@ -234,7 +269,7 @@ const Title = () => {
             <FullStack className='hidden xxs:flex w-min' />
         </div>
         {/* DEVELOPER */}
-        <div className={twMerge(
+        <div ref={widthDevRef} className={twMerge(
             'flex flex-col xxs:flex-row justify-start xs:justify-end',
             'row-start-4 row-span-1',
             'xxs:row-start-3 xxs:row-span-1',
@@ -249,9 +284,20 @@ const Title = () => {
                 'xl:col-start-6 xl:col-span-7', // xl
             'gap-2 sm:gap-1 md:gap-5 mdl:gap-8', // gap
             'justify-end mdl:justify-center items-end mdl:items-center',
-            'overflow-hidden'
+            'overflow-y-animate'
         )}>
-            <Fit weight='bold' degree='1' className={twMerge(DISPLAY_1_CLASS_NAME, 'splitText_gsap will-change-transform-animation')}>{t('intro.title.3')}</Fit>
+            <Display 
+                weight='bold'
+                style={{
+                    fontSize: fontSizeDev,
+                    lineHeight: '100%',
+                }}
+                className={twMerge(
+                    DISPLAY_1_CLASS_NAME, 
+                    'splitText_gsap will-change-transform-animation',
+                )}>
+                {t('intro.title.3')}
+            </Display>
         </div>
     </>)
 }

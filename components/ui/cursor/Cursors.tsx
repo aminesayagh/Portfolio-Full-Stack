@@ -67,8 +67,7 @@ const CursorActionIcon = ({ isActive, ctx, iconName, degree = 45 }: {
     }, [ctx, ref]);
 
     useIsomorphicLayoutEffect(() => {
-        ctx.current?.cursorActionIcon(isActive, degree)
-        console.log(icon);
+        ctx.current?.cursorActionIcon(isActive, degree);
         if(!isActive) {
             const idTimeout = setTimeout(() => {
                 setIcon(undefined);
