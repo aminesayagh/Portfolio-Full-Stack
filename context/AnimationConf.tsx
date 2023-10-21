@@ -16,6 +16,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     const { addLoadingComponent, removeLoadingComponent } = useContext(LoadingContext);
     const isStart = useRef(false);
     const { i18n } = useTranslation();
+
     useEffect(() => {
         if (!isStart.current && !scrollbar) {
             isStart.current = true;
@@ -27,6 +28,8 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 scroll = new locomotiveModule.default({
                     el,
                     smooth: true,
+                    lerp: 0.09,
+
                     smartphone: {
                         smooth: true,
                     },
@@ -34,11 +37,16 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                     tablet: {
                         smooth: true,
                     },
-                    // getDirection: true,
+                    getDirection: true,
                     // getSpeed: true,
                 });
-                
-                scroll.on('scroll', ScrollTrigger.update);
+                const scrollUpdate = (instance: any) => {
+                    // document.documentElement.setAttribute('data-direction', instance?.direction);
+                    ScrollTrigger.update();
+                }
+                scroll.on('scroll', (instance) => {
+                    scrollUpdate(instance);
+                });
                 ScrollTrigger.scrollerProxy('[data-scroll-container]', {
                     scrollTop(value) {
                         return !!arguments.length
@@ -63,23 +71,21 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 ScrollTrigger.addEventListener('refresh', () => {
                     scroll.update();
                 });
+                // ScrollTrigger.refresh;
                 ScrollTrigger.defaults({ scroller: el });
 
                 if (!scrollbar) setScrollbar(scroll);
 
                 // Handle window events
                 const updateScroll = () => scroll.update();
-                // window.addEventListener('DOMContentLoaded', updateScroll);
+                
                 window.addEventListener('resize', updateScroll);
                 el.addEventListener('resize', updateScroll);
-                // window.addEventListener('load', updateScroll);
 
                 // Cleanup on unmount
                 return () => {
-                    // window.removeEventListener('DOMContentLoaded', updateScroll);
                     window.removeEventListener('resize', updateScroll);
                     el.removeEventListener('resize', updateScroll);
-                    // window.removeEventListener('load', updateScroll);
                 };
             }).catch((err) => {
                 console.error('error: ', err);
@@ -89,7 +95,6 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             });
         }
     }, [scrollbar, removeLoadingComponent, addLoadingComponent]);
-
     useEffect(() => {
         if (scrollbar) {
             console.log('update scroll bar in lang change');
