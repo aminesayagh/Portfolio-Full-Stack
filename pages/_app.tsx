@@ -37,14 +37,7 @@ function App({ Component, pageProps }: AppProps) {
       `}
     </Script>
     <main className={`${val} font-sans`}>
-      <LoadingProvider>
-        <Cursor>
-          <DynamicAnimationConf >
-
-            <Component {...pageProps} />
-          </DynamicAnimationConf>
-        </Cursor>
-      </LoadingProvider>
+      <Component {...pageProps} />
     </main>
   </>
 }

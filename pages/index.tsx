@@ -24,11 +24,17 @@ export default function Home() {
       author={t('head.home.author')}
       logo='/favicon.svg'
     />
-    <DynamicHeader />
-    <div data-scroll-container>
-      <DynamicLandingPage />
-    </div>
-    <Noise />
+    <LoadingProvider>
+      <Cursor>
+        <DynamicAnimationConf >
+          <DynamicHeader />
+          <div data-scroll-container>
+            <DynamicLandingPage />
+          </div>
+          <Noise />
+        </DynamicAnimationConf>
+      </Cursor>
+    </LoadingProvider>
   </>
 }
 
