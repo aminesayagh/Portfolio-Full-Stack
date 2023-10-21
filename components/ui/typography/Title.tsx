@@ -1,10 +1,10 @@
-
 import React, { FC } from 'react';
-import Style from './Typography.module.scss';
 import { twMerge } from 'tailwind-merge';
+
+import Style from './Typography.module.scss';
 import { textColorDegree, titleStyle } from './Typography.style';
 
-import type { TitleElement, TitleNames, TitlePropsExtended, } from './Typography.type';
+import type { TitleNames, TitlePropsExtended, } from './Typography.type';
 import { validTitleElements } from './Typography.type'
 
 const Title: FC<TitlePropsExtended> = ({ weight, degree = '1', exchange, className, children, ...props }) => {

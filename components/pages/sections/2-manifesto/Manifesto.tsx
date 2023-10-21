@@ -32,7 +32,7 @@ const Manifesto = () => {
             return <p key={`word_${index}`} className='flex flex-row gap-[0.09rem] letter_gsap will-change-transform-animation'>{letters}</p>;
         });
         setBody(() => elements);
-    }, [phrase])
+    }, [phrase, i18n.language, t]);
     useGsap(() => {
         if (refs.current.length > 0) {
             const descriptions = gsap.utils.toArray('.manifesto_description_gsap');

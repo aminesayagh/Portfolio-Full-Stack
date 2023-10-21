@@ -1,22 +1,19 @@
 import { Head } from '@/components/common';
-import { Noise, LoadingProvider, Cursor } from 'components/ui';
+import { Noise } from 'components/ui';
 import React from 'react';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import '@/utils/gsap';
-import AnimationConf from '@/context/AnimationConf';
 import { ToastRegion } from '@/components/common/toast';
 
 const ContactPageDynamic = dynamic(() => import('@/components/pages/ContactPage'), {});
 const HeaderDynamic = dynamic(() => import('@/components/common/header'), {});
 
-const DynamicAnimationConf = dynamic(() => import('@/context/AnimationConf'), {});
-
 const Contact = () => {
     const { t } = useTranslation('common');
 
-    return <LoadingProvider>
+    return <>
         <Head
             title={t('head.contact.title')}
             description={t('head.contact.description')}
@@ -24,17 +21,13 @@ const Contact = () => {
             author={t('head.contact.author')}
             logo='/favicon.svg'
         />
-        <Cursor>
-            <DynamicAnimationConf>
-                <HeaderDynamic />
-                <div data-scroll-container>
-                    <ContactPageDynamic />
-                </div>
-                <Noise />
-            </DynamicAnimationConf>
-        </Cursor>
+        <HeaderDynamic />
+        <div data-scroll-container>
+            <ContactPageDynamic />
+        </div>
+        <Noise />
         <ToastRegion />
-    </LoadingProvider>
+    </>
 }
 
 import nextI18NextConfig from '../next-i18next.config.js'

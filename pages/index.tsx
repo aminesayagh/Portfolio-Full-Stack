@@ -17,23 +17,19 @@ const DynamicAnimationConf = dynamic(() => import('@/context/AnimationConf'), {}
 export default function Home() {
   const { t } = useTranslation('common');
 
-  return <LoadingProvider>
+  return <>
     <Head title={t('head.home.title')}
       description={t('head.home.description')}
       keywords={t('head.home.keywords')}
       author={t('head.home.author')}
       logo='/favicon.svg'
     />
-    <Cursor>
-      <DynamicAnimationConf >
-        <DynamicHeader />
-        <div data-scroll-container>
-          <DynamicLandingPage />
-        </div>
-        <Noise />
-      </DynamicAnimationConf>
-    </Cursor>
-  </LoadingProvider>
+    <DynamicHeader />
+    <div data-scroll-container>
+      <DynamicLandingPage />
+    </div>
+    <Noise />
+  </>
 }
 
 export async function getStaticProps({ locale }: any) {

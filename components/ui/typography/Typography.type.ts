@@ -44,6 +44,7 @@ export type TitlePropsExtended = TitleElement & VariantProps<typeof titleStyle> 
     degree: TypeDegree;
     exchange?: boolean;
     style?: React.CSSProperties;
+    suppressHydrationWarning?: boolean;
 }
 
 export const validTextElements = ['p', 'span', 'small', 'strong', 'em', 'li'] as const;

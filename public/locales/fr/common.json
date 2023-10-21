@@ -16,12 +16,12 @@
         }
     },
     "loading": {
-        "intro": "Web Portfolio",
-        "message_1": "Hi, I'm",
+        "intro": "Portfolio Web",
+        "message_1": "Salut, je suis",
         "message_2": "mohamed",
         "message_3": "amine",
         "message_4": "sayagh",
-        "message_5": "nice to meet you...",
+        "message_5": "ravi de vous revoir...",
         "percent": "%"
     },
     "socialNetwork": {

@@ -10,28 +10,24 @@ import nextI18NextConfig from '../next-i18next.config.js';
 import '../utils/i18n';
 import { useState, useEffect } from 'react';
 
-
-import { Analytics } from '@vercel/analytics/react';
-import TagManager from 'react-gtm-module';
-import { Suspense } from 'react';
+import dynamic from 'next/dynamic';
 
 const montserrat = Montserrat({
   subsets: ['cyrillic'],
   variable: '--font-sans',
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
+import { Cursor, LoadingProvider } from '@/components/ui';
+
+const DynamicAnimationConf = dynamic(() => import('@/context/AnimationConf'), {});
 function App({ Component, pageProps }: AppProps) {
 
   const [val, setVal] = useState<string>();
   useEffect(() => {
     setVal(montserrat.variable)
   }, [])
-  useEffect(() => {
-    TagManager.initialize({ gtmId: 'GTM-5L7DRGL9' });
-  }, [])
 
   return <>
-    <Script async src="https://www.googletagmanager.com/gtag/js?id=G-LBW0TBMSD6"></Script>
     <Script id="google-analytics">{
       `
         window.dataLayer = window.dataLayer || [];
@@ -41,8 +37,14 @@ function App({ Component, pageProps }: AppProps) {
       `}
     </Script>
     <main className={`${val} font-sans`}>
-      <Component {...pageProps} />
-      <Analytics />
+      <LoadingProvider>
+        <Cursor>
+          <DynamicAnimationConf >
+
+            <Component {...pageProps} />
+          </DynamicAnimationConf>
+        </Cursor>
+      </LoadingProvider>
     </main>
   </>
 }

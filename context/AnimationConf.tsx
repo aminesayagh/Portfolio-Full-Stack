@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState, createContext, useRef } from 'react';
 import { ScrollTrigger, gsap } from '@/utils/gsap';
 import { LoadingContext } from '@/components/ui';
+import { useTranslation } from 'react-i18next';
 
 export const ScrollProvider = createContext<{
     scrollbar: null | LocomotiveScroll,
@@ -14,7 +15,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     const [scrollbar, setScrollbar] = useState<LocomotiveScroll | null>(null);
     const { addLoadingComponent, removeLoadingComponent } = useContext(LoadingContext);
     const isStart = useRef(false);
-
+    const { i18n } = useTranslation();
     useEffect(() => {
         if (!isStart.current && !scrollbar) {
             isStart.current = true;
@@ -86,6 +87,12 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
         }
     }, [scrollbar, removeLoadingComponent, addLoadingComponent]);
     useEffect(() => {
+        if (scrollbar) {
+            console.log('update scroll bar in lang change');
+            scrollbar.update();
+        }
+    }, [scrollbar, i18n.language]);
+    useEffect(() => {
         let ctx = gsap.context(() => {
             gsap.config({
                 nullTargetWarn: false
@@ -115,4 +122,4 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     </React.Fragment>
 }
 
-export default React.memo(AnimationConf);
+export default AnimationConf;
