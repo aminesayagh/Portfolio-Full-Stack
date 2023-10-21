@@ -10,11 +10,7 @@ import nextI18NextConfig from '../next-i18next.config.js';
 import '../utils/i18n';
 import { useState, useEffect } from 'react';
 
-
-import { Analytics } from '@vercel/analytics/react';
 import dynamic from 'next/dynamic';
-import TagManager from 'react-gtm-module';
-import { Suspense } from 'react';
 
 const montserrat = Montserrat({
   subsets: ['cyrillic'],
@@ -30,12 +26,8 @@ function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     setVal(montserrat.variable)
   }, [])
-  useEffect(() => {
-    TagManager.initialize({ gtmId: 'GTM-5L7DRGL9' });
-  }, [])
 
   return <>
-    <Script async src="https://www.googletagmanager.com/gtag/js?id=G-LBW0TBMSD6"></Script>
     <Script id="google-analytics">{
       `
         window.dataLayer = window.dataLayer || [];
@@ -53,7 +45,6 @@ function App({ Component, pageProps }: AppProps) {
           </DynamicAnimationConf>
         </Cursor>
       </LoadingProvider>
-      <Analytics />
     </main>
   </>
 }
