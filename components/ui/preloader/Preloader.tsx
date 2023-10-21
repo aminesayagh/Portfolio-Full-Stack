@@ -77,7 +77,7 @@ const Preloader = ({ isLoading, setEndLoading }: {
 }) => {
     const { t } = useTranslation();
     const [percent, setPercent] = useState(INITIAL_PERCENT);
-    const ref = useRef<ElementRef<'div'>>(null);
+    const ref = useRef<ElementRef<'span'>>(null);
     useEffect(() => {
         let intervalId: NodeJS.Timeout;
         if (percent == INITIAL_PERCENT) {
@@ -179,19 +179,19 @@ const Preloader = ({ isLoading, setEndLoading }: {
     }, [percent]);
 
     return (
-        <div ref={ref} className='z-preload'>
-            <div className={twMerge('w-screen cursor-none  h-screen overflow-hidden', 'bg-white-400', ' fixed', 'element-container')}>
+        <span ref={ref} className='contents'>
+            <div className={twMerge('w-screen cursor-none  h-screen overflow-hidden', 'z-preload bg-white-400', ' fixed', 'element-container')}>
                 <Container as='div' size='lg' className={twMerge('h-screen pt-4 sm:pt-8', 'flex flex-col justify-between')}>
                     <div className='flex flex-col gap-0 sm:gap-1'>
                         <span className='py-1 element-content-gsap opacity-0'>
-                            <Title h6 degree='4' exchange >
+                            <Title h6 degree='4' exchange suppressHydrationWarning>
                                 {t('loading.intro')}
                             </Title>
                         </span>
                         <ul className='flex flex-col h-[15%] overflow-hidden element-content-gsap opacity-0'>
                             {
                                 Array.from({ length: 5 }).map((_, index) => (
-                                    <Text key={index} degree='0' li size='md' weight='bold' className={twMerge('item-gsap capitalize will-change-transform-animation', index == 4 ? 'text-primary-500' : 'text-black-300/80')}  >
+                                    <Text suppressHydrationWarning key={index} degree='0' li size='md' weight='bold' className={twMerge('item-gsap capitalize will-change-transform-animation', index == 4 ? 'text-primary-500' : 'text-black-300/80')}  >
                                         {t(`loading.message_${index + 1}`)}
                                     </Text>
                                 ))
@@ -216,6 +216,6 @@ const Preloader = ({ isLoading, setEndLoading }: {
                 <Noise />
             </div>
             <div className='fixed bg-primary-500 w-screen h-screen element-bg z-preload_bg'></div>
-        </div>
+        </span>
     )
 }

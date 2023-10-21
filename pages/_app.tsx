@@ -12,6 +12,7 @@ import { useState, useEffect } from 'react';
 
 
 import { Analytics } from '@vercel/analytics/react';
+import dynamic from 'next/dynamic';
 import TagManager from 'react-gtm-module';
 import { Suspense } from 'react';
 
@@ -20,6 +21,9 @@ const montserrat = Montserrat({
   variable: '--font-sans',
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
+import { Cursor, LoadingProvider } from '@/components/ui';
+
+const DynamicAnimationConf = dynamic(() => import('@/context/AnimationConf'), {});
 function App({ Component, pageProps }: AppProps) {
 
   const [val, setVal] = useState<string>();
@@ -41,7 +45,14 @@ function App({ Component, pageProps }: AppProps) {
       `}
     </Script>
     <main className={`${val} font-sans`}>
-      <Component {...pageProps} />
+      <LoadingProvider>
+        <Cursor>
+          <DynamicAnimationConf >
+
+            <Component {...pageProps} />
+          </DynamicAnimationConf>
+        </Cursor>
+      </LoadingProvider>
       <Analytics />
     </main>
   </>

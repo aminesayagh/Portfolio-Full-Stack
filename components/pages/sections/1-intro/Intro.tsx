@@ -11,14 +11,12 @@ import useRouterChange from '@/hook/SafePush';
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<ElementRef<'div'>>(null);
-    const xTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref.current]);
-    const yTo = useMemo(() => ref.current && gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' }), [ref.current]);
-
-
 
     useIsomorphicLayoutEffect(() => {
         if (!!ref.current) {
             const ctx = gsap.context(() => {
+                const xTo = ref.current && gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' });
+                const yTo = ref.current && gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' });
                 const mouseMove = (e: any) => {
                     const { clientX, clientY } = e;
                     // @ts-ignore
@@ -123,7 +121,7 @@ const DISPLAY_1_CLASS_NAME = 'capitalize';
 const DISPLAY_2_CLASS_NAME = 'uppercase italic text-primary-500';
 
 const FullStack = ({ className }: { className: string }) => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     return (
         <>
@@ -173,7 +171,7 @@ const Title = () => {
         factor: 4.94,
     });
     const {fontSize: fontSizeDev, ref: widthDevRef} = useFitText({
-        factor: 5.55,
+        factor: i18n.language == 'en' ? 5.55 : 7,
     });
 
     return (<>

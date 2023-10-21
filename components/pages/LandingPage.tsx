@@ -1,7 +1,7 @@
 import { Container } from '@/components/ui';
-import React, { startTransition, useEffect, useState } from 'react';
+import React from 'react';
 import { DynamicIntro, DynamicManifesto, DynamicCases, DynamicAction, DynamicVideo, DynamicExpertise, DynamicCallToAction } from '@/components/pages/sections';
-import { MenuItems } from '@/conf/router';
+
 
 import { twMerge } from 'tailwind-merge';
 import dynamic from 'next/dynamic';
