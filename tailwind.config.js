@@ -14,7 +14,7 @@ module.exports = {
     '.c-scrollbar',
     '.c-scrollbar_thumb',
     '.c-scrollbar_thumb:hover',
-    'data-scroll-container'
+    '[data-scroll-container]'
   ],
   darkMode: "class",
   theme: {

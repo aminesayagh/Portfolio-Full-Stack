@@ -69,15 +69,17 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
 
                 // Handle window events
                 const updateScroll = () => scroll.update();
-                window.addEventListener('DOMContentLoaded', updateScroll);
+                // window.addEventListener('DOMContentLoaded', updateScroll);
                 window.addEventListener('resize', updateScroll);
-                window.addEventListener('load', updateScroll);
+                el.addEventListener('resize', updateScroll);
+                // window.addEventListener('load', updateScroll);
 
                 // Cleanup on unmount
                 return () => {
-                    window.removeEventListener('DOMContentLoaded', updateScroll);
+                    // window.removeEventListener('DOMContentLoaded', updateScroll);
                     window.removeEventListener('resize', updateScroll);
-                    window.removeEventListener('load', updateScroll);
+                    el.removeEventListener('resize', updateScroll);
+                    // window.removeEventListener('load', updateScroll);
                 };
             }).catch((err) => {
                 console.error('error: ', err);
@@ -87,12 +89,14 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             });
         }
     }, [scrollbar, removeLoadingComponent, addLoadingComponent]);
+
     useEffect(() => {
         if (scrollbar) {
             console.log('update scroll bar in lang change');
             scrollbar.update();
         }
-    }, [scrollbar, i18n.language]);
+    }, [i18n.language]);
+    
     useEffect(() => {
         let ctx = gsap.context(() => {
             gsap.config({
