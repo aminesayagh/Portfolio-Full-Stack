@@ -9,9 +9,7 @@ import { ToastRegion } from '@/components/common/toast';
 import { Cursor, LoadingProvider } from '@/components/ui';
 
 const ContactPageDynamic = dynamic(() => import('@/components/pages/ContactPage'), {});
-const HeaderDynamic = dynamic(() => import('@/components/common/header'), {});
-const DynamicHeader = dynamic(() => import('@/components/common/header'), {});
-const DynamicLandingPage = dynamic(() => import('@/components/pages/LandingPage'), {});
+const HeaderDynamic = dynamic(() => import('@/components/common/header'), {})
 const DynamicAnimationConf = dynamic(() => import('@/context/AnimationConf'), {});
 const Contact = () => {
     const { t } = useTranslation('common');

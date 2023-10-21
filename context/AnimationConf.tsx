@@ -37,6 +37,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                     // getDirection: true,
                     // getSpeed: true,
                 });
+                
                 scroll.on('scroll', ScrollTrigger.update);
                 ScrollTrigger.scrollerProxy('[data-scroll-container]', {
                     scrollTop(value) {
