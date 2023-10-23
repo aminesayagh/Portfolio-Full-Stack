@@ -41,11 +41,14 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 });
                 ScrollTrigger.scrollerProxy('[data-scroll-container]', {
                     scrollTop(value) {
-                        return !!arguments.length
-                            // @ts-ignore
-                            ? scroll.scrollTo(value, { duration: 0, disableLerp: true })
-                            // @ts-ignore
-                            : scroll?.scroll.instance.scroll.y;
+                        if(scroll) {
+                            return !!arguments.length
+                                // @ts-ignore
+                                ? scroll.scrollTo(value, { duration: 0, disableLerp: true })
+                                // @ts-ignore
+                                : scroll?.scroll.instance.scroll.y;
+                        }
+                        return null;
                     },
                     getBoundingClientRect() {
                         return {
@@ -67,11 +70,14 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 // Handle window events
                 const updateScroll = () => {
                     console.log('update scroll trigger');
-                    scroll.update();
+                    scroll?.update();
                 }
                 ScrollTrigger.addEventListener('refresh', updateScroll);
                 ScrollTrigger.defaults({ scroller: el });
                 ScrollTrigger.refresh();
+                el.addEventListener('resize', () => {
+                    ScrollTrigger.refresh();    
+                })
             }).catch((err) => {
                 console.error('error: ', err);
                 throw new Error(err);

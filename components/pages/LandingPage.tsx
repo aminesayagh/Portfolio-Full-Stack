@@ -8,12 +8,13 @@ import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 
 const DynamicFooter = dynamic(() => import('@/components/common/footer'));
-const bigLoaded = 0
+// let bigLoaded = 0
 const callback: ProfilerOnRenderCallback = (id, phase, actualDuration, baseDuration, startTime, commitTime) => {
-    // if (phase === 'mount' && actualDuration > bigLoaded) {
-    //     console.log(`${id} is big and loaded`);
-    // }
-    // console.log(`${id} took ${actualDuration} ms to render`);
+//     if (phase === 'mount' && actualDuration > bigLoaded) {
+//         console.log(`${id} is big and loaded`);
+//         bigLoaded = actualDuration;
+//     }
+//     console.log(`${id} took ${actualDuration} ms to render`);
 }
 const LandingPage = () => {
     return (
