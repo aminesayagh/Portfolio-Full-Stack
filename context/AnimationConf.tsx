@@ -33,15 +33,11 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                     smartphone: {
                         smooth: true,
                     },
-                    // @ts-ignore
-                    tablet: {
-                        smooth: true,
-                    },
                     getDirection: true,
-                    // getSpeed: true,
+                    getSpeed: true,
                 });
                 const scrollUpdate = (instance: any) => {
-                    // document.documentElement.setAttribute('data-direction', instance?.direction);
+                    document.documentElement.setAttribute('data-direction', instance?.direction);
                     ScrollTrigger.update();
                 }
                 scroll.on('scroll', (instance) => {
@@ -121,7 +117,9 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             <ScrollProvider.Provider value={{
                 scrollbar
             }} >
-                {children}
+                <div data-scroll-container>
+                    {children}
+                </div>
             </ScrollProvider.Provider>
         </div>
         <style jsx>{`

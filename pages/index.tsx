@@ -26,13 +26,11 @@ export default function Home() {
     />
     <LoadingProvider>
       <Cursor>
+        <DynamicHeader />
         <DynamicAnimationConf >
-          <DynamicHeader />
-          <div data-scroll-container>
-            <DynamicLandingPage />
-          </div>
-          <Noise />
+          <DynamicLandingPage />
         </DynamicAnimationConf>
+        <Noise />
       </Cursor>
     </LoadingProvider>
   </>

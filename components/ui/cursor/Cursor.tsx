@@ -13,7 +13,7 @@ export const cursorContext = createContext<{
 
 const DEFAULT_BALL_CLASS_NAME = ['fixed rounded-full pointer-events-none cursor-none', 'top-0 left-0 z-cursor', 'visible-hidden hidden'];
 
-const Cursor = ({ children }: { children: React.ReactElement }) => {
+const Cursor = ({ children }: { children: React.ReactElement | React.ReactElement[] }) => {
     const ref = useRef<ElementRef<'div'>>(null);
 
     const list = useRef<ItemCursor[]>([]);

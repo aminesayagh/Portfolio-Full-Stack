@@ -25,15 +25,12 @@ const Contact = () => {
 
         <LoadingProvider>
             <Cursor>
+                <HeaderDynamic />
                 <DynamicAnimationConf >
-                    <HeaderDynamic />
-                    <div data-scroll-container>
-                        <ContactPageDynamic />
-                    </div>
-                    <Noise />
-                    <ToastRegion />
-
+                    <ContactPageDynamic />
                 </DynamicAnimationConf>
+                <Noise />
+                <ToastRegion />
             </Cursor>
         </LoadingProvider>
     </>
