@@ -146,31 +146,31 @@ function useFitText(options?: { factor?: number, maxFontSize?: number }) {
     const ref = useRef<ElementRef<'div'>>(null);
     useEffect(() => {
         function adjustFontSize() {
-          if (ref.current) {
-            const containerWidth = ref.current.getBoundingClientRect().width;
-            const factor = options?.factor || 1;
-            const maxFontSize = options?.maxFontSize || 400;
-            const newSize = Math.min(containerWidth / factor, maxFontSize);
-    
-            setFontSize(`${newSize}px`);
-          }
+            if (ref.current) {
+                const containerWidth = ref.current.getBoundingClientRect().width;
+                const factor = options?.factor || 1;
+                const maxFontSize = options?.maxFontSize || 400;
+                const newSize = Math.min(containerWidth / factor, maxFontSize);
+
+                setFontSize(`${newSize}px`);
+            }
         }
-    
+
         adjustFontSize();
-    
+
         window.addEventListener('resize', adjustFontSize);
         return () => window.removeEventListener('resize', adjustFontSize);
     }, [ref, options?.factor, options?.maxFontSize]);
 
-    return {fontSize, ref};
+    return [fontSize, ref] as const;
 }
 
 const Title = () => {
     const { t, i18n } = useTranslation();
-    const {fontSize: fontSizeInterface, ref: widthInterfaceRef} = useFitText({
+    const [fontSizeInterface, widthInterfaceRef] = useFitText({
         factor: 4.94,
     });
-    const {fontSize: fontSizeDev, ref: widthDevRef} = useFitText({
+    const [fontSizeDev, widthDevRef] = useFitText({
         factor: i18n.language == 'en' ? 5.55 : 7,
     });
 
@@ -284,14 +284,14 @@ const Title = () => {
             'justify-end mdl:justify-center items-end mdl:items-center',
             'overflow-y-animate'
         )}>
-            <Display 
+            <Display
                 weight='bold'
                 style={{
                     fontSize: fontSizeDev,
                     lineHeight: '100%',
                 }}
                 className={twMerge(
-                    DISPLAY_1_CLASS_NAME, 
+                    DISPLAY_1_CLASS_NAME,
                     'splitText_gsap will-change-transform-animation',
                 )}>
                 {t('intro.title.3')}
