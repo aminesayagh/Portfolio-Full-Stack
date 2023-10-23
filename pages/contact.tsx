@@ -40,7 +40,7 @@ const Contact = () => {
 }
 
 import nextI18NextConfig from '../next-i18next.config.js'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import dynamic from 'next/dynamic.js';
 
 export async function getStaticProps({ locale }: any) {
