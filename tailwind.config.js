@@ -7,6 +7,15 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [
+    'html.has-scroll-smooth',
+    'html.has-scroll-dragging',
+    '[data-scroll-direction="horizontal"]',
+    '.c-scrollbar',
+    '.c-scrollbar_thumb',
+    '.c-scrollbar_thumb:hover',
+    '[data-scroll-container]'
+  ],
   darkMode: "class",
   theme: {
     container: {

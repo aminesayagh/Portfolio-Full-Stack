@@ -1,5 +1,5 @@
 import { Key, createContext, useState, useEffect, useRef, ElementRef, Suspense } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 import { AnimatePresence, motion } from 'framer-motion';
 
