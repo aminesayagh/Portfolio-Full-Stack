@@ -47,22 +47,22 @@ const MENU_ITEMS: MenuItems = {
         menu: ['secondary', 'hamburger']
     },
     instagram: {
-        link: 'https://www.instagram.com/',
+        link: 'https://www.instagram.com/mohammedsayagh/',
         menu: ['socialNetworks'],
         id: 'instagram'
     },
     linkedin: {
-        link: 'https://www.linkedin.com/',
+        link: 'https://www.linkedin.com/mohamed-amine-sayagh',
         menu: ['socialNetworks'],
         id: 'linkedin'
     },
     github: {
-        link: 'https://www.github.com/',
+        link: 'https://github.com/aminesayagh',
         menu: ['socialNetworks'],
         id: 'github'
     },
     dribbble: {
-        link: 'https://www.dribbble.com/',
+        link: 'https://dribbble.com/mohammed-sayagh',
         menu: ['socialNetworks'],
         id: 'dribbble'
     },
