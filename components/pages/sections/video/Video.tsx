@@ -5,7 +5,6 @@ import { twMerge } from 'tailwind-merge';
 
 import { rounded } from '@/components/style';
 import { CursorContent, LoadingContext } from '@/components/ui';
-import useGsap from '@/hook/useGsap';
 import { ScrollProvider } from '@/context/AnimationConf';
 
 const FRAME_COUNT = 164;
@@ -35,7 +34,7 @@ const Video = () => {
             })
         })).then((images) => {
             if (isInLoad) return;
-            console.log(images);
+            
             imagesRef.current = images;
             removeLoadingComponent('video');
         })
@@ -78,7 +77,6 @@ const Video = () => {
 
             function render() {
                 if(!imagesRef.current.length) return;
-                console.log('render', imagesRef.current)
                 if (!context) return;
                 if (!ref.current) return;
                 context?.clearRect(0, 0, ref.current.width, ref.current.height);
