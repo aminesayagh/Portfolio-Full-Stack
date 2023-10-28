@@ -341,19 +341,19 @@ const Menu = () => {
                     <Text p weight='medium' size='sm' degree='3' className='number_menu_gsap will-change-transform-animation' >{number}</Text>
                     <CursorContent name={`cursorPointer_intro_menu_${number}`} component='CursorEvent' props={{
                         event: 'pointer',
-                    }}>
-                        <Item>
-                            <Button
-                                degree='1'
-                                size='sm'
-                                weight='semibold'
-                                onPress={() => goToSection(menuItems[`${key + 1}` as keyof typeof menuItems] as string)}
-                                className='uppercase item_menu_gsap will-change-transform-animation' style={{
-                                    color: 'inherit'
-                                }} >
+                    }} className="overflow-y-animate">
+                        <Button
+                            degree='1'
+                            size='sm'
+                            weight='semibold'
+                            onPress={() => goToSection(menuItems[`${key + 1}` as keyof typeof menuItems] as string)}
+                            className='uppercase item_menu_gsap will-change-transform-animation' style={{
+                                color: 'inherit'
+                            }} >
+                            <Item>
                                 {title}
-                            </Button>
-                        </Item>
+                            </Item>
+                        </Button>
                     </CursorContent>
                 </div>
             })}

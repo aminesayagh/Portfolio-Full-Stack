@@ -20,24 +20,20 @@ const IconMemo = memo(Icon);
 
 const ExpertiseHead = () => {
     const { t } = useTranslation();
-    return (
-        <>
-            <div className={twMerge('flex flex-col sm:flex-row gap-5 sm:gap-0 items-start sm:items-end justify-between', 'w-full')}>
-                <div className='block sm:hidden'>
-                    <IconMemo />
-                </div>
-                <div className={twMerge('w-full xs:w-9/12 sm:w-1/2 xl:w-5/12')}>
-                    <Title h2 weight='bold' degree='1' exchange className="capitalize">{t('experience.title')}</Title>
-                </div>
-                <div className={twMerge('w-11/12 xs:w-10/12 sm:w-1/2 xl:w-5/12', 'flex flex-col gap-4 mdl:gap-5', 'sm:items-end')}>
-                    <div className='hidden sm:block'>
-                        <IconMemo />
-                    </div>
-                    <Text p weight='medium' degree='3' size='md' className='text-start sm:text-end' exchange>{t('experience.description')}</Text>
-                </div>
+    return <div className={twMerge('flex flex-col sm:flex-row gap-5 sm:gap-0 items-start sm:items-end justify-between', 'w-full')}>
+        <div className='block sm:hidden'>
+            <IconMemo />
+        </div>
+        <div className={twMerge('w-full xs:w-9/12 sm:w-1/2 xl:w-5/12')}>
+            <Title h2 weight='bold' degree='1' exchange className="capitalize">{t('experience.title')}</Title>
+        </div>
+        <div className={twMerge('w-11/12 xs:w-10/12 sm:w-1/2 xl:w-5/12', 'flex flex-col gap-4 mdl:gap-5', 'sm:items-end')}>
+            <div className='hidden sm:block'>
+                <IconMemo />
             </div>
-        </>
-    )
+            <Text p weight='medium' degree='3' size='md' className='text-start sm:text-end' exchange>{t('experience.description')}</Text>
+        </div>
+    </div>
 }
 const ExpertiseHeadMemo = memo(ExpertiseHead);
 
@@ -175,7 +171,7 @@ const Expertise = () => {
     >
         <ExpertiseHeadMemo />
         <ExpertiseStagesMemo />
-        <Noise position='absolute' />
+        <Noise position='absolute' className='opacity-60 md:opacity-90' />
         <div className={twMerge('absolute w-full h-[26vh] bottom-0 left-0', 'bg-gradient-to-t from-black-100/25 via-black-100/10 to-black-100/0')}></div>
     </div>
 }

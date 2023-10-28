@@ -63,8 +63,8 @@ const Action = () => {
                 <CursorContent name='CursorActionIconContactAction' component='CursorActionIcon' props={{
                     degree: -45,
                     iconName: 'IconArrowUpRight',
-                }} >
-                    <Link href='/contact' className='overflow-hidden'>
+                }} className='overflow-hidden' >
+                    <Link href='/contact'>
                         <Display size='lg' weight='bold' className={twMerge('whitespace-nowrap-important uppercase text-primary-500', 'contact-title-gsap will-change-transform-animation')} >
                             {t('contactCall.action')}
                         </Display>

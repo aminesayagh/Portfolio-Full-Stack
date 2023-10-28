@@ -1,4 +1,4 @@
-import { Key, createContext, useState, useEffect, useRef, ElementRef, Suspense } from 'react';
+import { Key, createContext, useState, useEffect, useRef, ElementRef, Suspense, useCallback } from 'react';
 import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -7,6 +7,7 @@ import { Container, Title, Text, Noise } from '@/components/ui';
 import { gsap } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 
+const END_LOADING_IN = 99;
 export const LoadingContext = createContext<{
     addLoadingComponent: (key: Key) => void,
     removeLoadingComponent: (key: Key) => void,
@@ -29,31 +30,31 @@ export function LoadingProvider({ children }: {
     const [isLoading, setIsLoading] = useState(true);
     const [endLoading, setEndLoading] = useState(false);
     const [loadingComponentList, setLoadingComponentList] = useState<LoadingElement>({});
-    const loadingState = () => {
+    const loadingState = useCallback(() => {
         const inLoadingState = Object.values(loadingComponentList).filter((item) => item === true);
         if (inLoadingState.length > 0) {
             setIsLoading(true);
         } else {
             setIsLoading(false);
         }
-    }
-    const loadingExist = (key: Key) => {
+    }, [setIsLoading, loadingComponentList])
+    const loadingExist = useCallback((key: Key) => {
         return !!loadingComponentList[key];
-    }
-    const addLoadingComponent = (key: Key) => {
+    }, [loadingComponentList])
+    const addLoadingComponent = useCallback((key: Key) => {
         if (loadingExist(key)) return;
         loadingComponentList[key] = true;
 
         setLoadingComponentList(() => loadingComponentList);
         loadingState();
-    }
-    const removeLoadingComponent = (key: Key) => {
+    }, [loadingComponentList, loadingState, loadingExist])
+    const removeLoadingComponent = useCallback((key: Key) => {
         if (!loadingExist(key)) return;
         loadingComponentList[key] = false;
 
         setLoadingComponentList((prev) => loadingComponentList);
         loadingState();
-    }
+    }, [loadingComponentList, loadingState, loadingExist])
     return (
         <LoadingContext.Provider value={{
             addLoadingComponent,
@@ -71,28 +72,47 @@ export function LoadingProvider({ children }: {
 const LONG_LOADING_TIME = 400;
 const MEDIUM_LOADING_TIME = 20;
 const INITIAL_PERCENT = 2;
+
+const Percent = ({ isLoading, setEndLoadingProgress }: { isLoading: boolean, setEndLoadingProgress: (b: boolean) => void }) => {
+    const [percent, setPercent] = useState(INITIAL_PERCENT);
+    
+    useEffect(() => {
+        let intervalId: NodeJS.Timeout;
+        let interval = 1;
+        if (percent == INITIAL_PERCENT) {
+            setPercent((prevPercent) => Math.min(prevPercent + interval, 100));
+        } else if (isLoading && percent < 100) {
+            intervalId = setInterval(() => {
+                setPercent((prevPercent) => Math.min(prevPercent + interval, 100));
+            }, LONG_LOADING_TIME);
+        } else if (!isLoading) {
+            interval = interval + 0.2;
+            intervalId = setInterval(() => {
+                setPercent((prevPercent) => Math.min(prevPercent + interval, 100));
+                if(percent >= 100) {
+                    setEndLoadingProgress(true);
+                }
+            }, MEDIUM_LOADING_TIME);
+        }
+        return () => {
+            clearInterval(intervalId);
+        }
+    }, [isLoading, percent]);
+
+    return <motion.span key={percent} initial={{ opacity: 1, y: '0' }} animate={{ opacity: 1, y: '-100%' }} exit={{ opacity: 0, y: '100%' }}>
+        {
+            percent < 100 ? percent.toFixed(0) : 100
+        }
+    </motion.span>
+}
+
 const Preloader = ({ isLoading, setEndLoading }: {
     isLoading: boolean,
     setEndLoading: (value: boolean) => void
 }) => {
     const { t } = useTranslation();
-    const [percent, setPercent] = useState(INITIAL_PERCENT);
     const ref = useRef<ElementRef<'span'>>(null);
-    useEffect(() => {
-        let intervalId: NodeJS.Timeout;
-        if (percent == INITIAL_PERCENT) {
-            setPercent((prevPercent) => Math.min(prevPercent + 1, 100));
-        } else if (isLoading && percent < 100) {
-            intervalId = setInterval(() => {
-                setPercent((prevPercent) => Math.min(prevPercent + 1, 100));
-            }, LONG_LOADING_TIME);
-        } else if (!isLoading) {
-            intervalId = setInterval(() => {
-                setPercent((prevPercent) => Math.min(prevPercent + 3, 100));
-            }, MEDIUM_LOADING_TIME);
-        }
-        return () => clearInterval(intervalId);
-    }, [isLoading, percent]);
+    const [endLoadingProgress, setEndLoadingProgress] = useState(false);
 
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
@@ -130,7 +150,8 @@ const Preloader = ({ isLoading, setEndLoading }: {
             }
         }, ref);
         return () => ctx.revert();
-    }, [])
+    }, [ref]);
+
 
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context((self) => {
@@ -172,12 +193,11 @@ const Preloader = ({ isLoading, setEndLoading }: {
                 tl.kill();
             }
         }, ref)
-        if (!isLoading && percent == 100) {
+        if (endLoadingProgress) {
             ctx.endPreload();
         }
         return () => ctx.revert();
-    }, [percent]);
-
+    }, [ref, isLoading, setEndLoading, endLoadingProgress]);
     return (
         <span ref={ref} className='contents'>
             <div className={twMerge('w-screen cursor-none  h-screen overflow-hidden', 'z-preload bg-white-400', ' fixed', 'element-container')}>
@@ -205,9 +225,7 @@ const Preloader = ({ isLoading, setEndLoading }: {
                                 'font-sans font-black text-black-500 will-change-transform-animation',
                                 'text-[4.1rem] xxs:text-[6rem] md:text-[7.4rem] lg:text-[8.4rem] xl:text-[10rem] align-baseline leading-[70%]'
                             )}>
-                                <motion.span key={percent} initial={{ opacity: 1, y: '0' }} animate={{ opacity: 1, y: '-100%' }} exit={{ opacity: 0, y: '100%' }}>
-                                    {percent}
-                                </motion.span>
+                                <Percent isLoading={isLoading} setEndLoadingProgress={setEndLoadingProgress} />
                                 {t('loading.percent')}
                             </motion.p>
                         </AnimatePresence>

@@ -1,10 +1,11 @@
 import { useContext, RefObject } from "react"
-import { useIsomorphicLayoutEffect } from "react-use"
+import { useIsomorphicLayoutEffect, useWindowSize } from "react-use"
 import { ScrollProvider } from "@/context/AnimationConf"
 import { gsap } from "@/utils/gsap";
 
 const useGsap = (gsapCallback: gsap.ContextFunc, ref: RefObject<HTMLDivElement> | RefObject<HTMLCanvasElement>, rendered: any[] = []) => {
     const { scrollbar } = useContext(ScrollProvider);
+    const { width } = useWindowSize();
     useIsomorphicLayoutEffect(() => {
         if (!scrollbar) return;
         let ctx: gsap.Context = gsap.context(gsapCallback, ref);
@@ -12,7 +13,7 @@ const useGsap = (gsapCallback: gsap.ContextFunc, ref: RefObject<HTMLDivElement> 
         return () => {
             ctx && ctx.revert();
         }
-    }, [ref,...rendered, scrollbar]);
+    }, [ref,...rendered, scrollbar, width]);
 }
 
 export default useGsap;

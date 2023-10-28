@@ -10,8 +10,9 @@ const cursorParentContext = React.createContext<{
     hasParent: false,
 });
 
-const CursorContainer = <C extends CursorNames>({ children, name, ...props }: {
+const CursorContainer = <C extends CursorNames>({ children, className = '', name, ...props }: {
     children: React.ReactElement,
+    className?: string,
 } & ItemCursor<C>) => {
     const { addCursor, setKey } = useContext(cursorContext);
     const { hasParent } = useContext(cursorParentContext);
@@ -37,7 +38,7 @@ const CursorContainer = <C extends CursorNames>({ children, name, ...props }: {
     if (hasParent) return children;
 
     return <cursorParentContext.Provider value={{ hasParent: true }}>
-        <span className='contents' { ...hoverProps }>
+        <span className={className} { ...hoverProps }>
             {children}
         </span>
     </cursorParentContext.Provider>

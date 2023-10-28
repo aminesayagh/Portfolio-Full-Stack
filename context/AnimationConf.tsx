@@ -29,7 +29,11 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                     el,
                     smooth: true,
                     lerp: 0.09,
-
+                    multiplier: 0.9,
+                    // @ts-ignore
+                    tablet: {
+                        smooth: true,
+                    },
                     smartphone: {
                         smooth: true,
                     },
@@ -73,30 +77,31 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 if (!scrollbar) setScrollbar(scroll);
 
                 // Handle window events
-                const updateScroll = () => scroll.update();
+                const updateScroll = () => scroll?.update();
                 
-                window.addEventListener('resize', updateScroll);
-                el.addEventListener('resize', updateScroll);
-
-                // Cleanup on unmount
-                return () => {
-                    window.removeEventListener('resize', updateScroll);
-                    el.removeEventListener('resize', updateScroll);
-                };
             }).catch((err) => {
                 console.error('error: ', err);
                 throw new Error(err);
             }).finally(() => {
                 removeLoadingComponent(LOADING_COMPONENT_KEY);
             });
+            
+        } else {
+            const updateScroll = () => scrollbar?.update();
+
+            window.addEventListener('resize', updateScroll);
+            window.addEventListener('orientationchange', updateScroll);
+            window.addEventListener('load', updateScroll);
+
+            // Cleanup on unmount
+            return () => {
+                window.removeEventListener('resize', updateScroll);
+                window.removeEventListener('orientationchange', updateScroll);
+                window.removeEventListener('load', updateScroll);
+            };
         }
     }, [scrollbar, removeLoadingComponent, addLoadingComponent]);
-    useEffect(() => {
-        if (scrollbar) {
-            console.log('update scroll bar in lang change');
-            scrollbar.update();
-        }
-    }, [i18n.language]);
+    
     
     useEffect(() => {
         let ctx = gsap.context(() => {
