@@ -119,7 +119,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
         <div className='absolute top-0 left-0 right-0 w-full min-h-screen h-screen bg-no-repeat bg-cover' >
             <div data-scroll data-scroll-speed='3' className={twMerge(
                 'relative w-fit flex flex-col justify-end h-full',
-                'px-5 xs:px-10 lg:px-24 py-24 xs:py-20 mdl:py-32 lg:py-48',
+                'px-5 xs:px-10 lg:px-24 py-32 xs:py-24 mdl:py-32',
                 'gap-2 xs:gap-4 content-gsap will-change-transform-animation'
             )}
                 style={{
@@ -131,7 +131,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                         {title}
                     </Title>
                 </div>
-                <div className='w-full xs:w-8/12 md:w-1/2 overflow-hidden'>
+                <div className='w-full xs:w-8/12 md:w-1/2 hidden sm:block overflow-hidden'>
                     <Text p size='md' degree='2' className='case-text-gsap will-change-transform-animation'>
                         {description}
                     </Text>

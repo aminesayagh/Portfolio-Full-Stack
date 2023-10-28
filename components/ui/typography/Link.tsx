@@ -9,7 +9,7 @@ const Link: FC<LinkPropsExtended> = ({ weight, degree = '3', size, exchange, cla
     const classNameExtended = (size && weight) ? textClassNames({ weight, size, degree, exchange }) : className;
     return <CursorContent name={`cursorPointer_header_email`} component='CursorEvent' props={{
         event: 'pointer',
-    }}><LinkNext href={href} className={twMerge(
+    }} className={className} ><LinkNext href={href} className={twMerge(
         classNameExtended, 'remove_outline', className
     )} {...props}>{children}</LinkNext></CursorContent>
 }

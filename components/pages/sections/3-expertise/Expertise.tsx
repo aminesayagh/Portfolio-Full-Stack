@@ -171,7 +171,7 @@ const Expertise = () => {
     >
         <ExpertiseHeadMemo />
         <ExpertiseStagesMemo />
-        <Noise position='absolute' className='opacity-40 md:opacity-90' />
+        <Noise position='absolute' className='opacity-60 md:opacity-90' />
         <div className={twMerge('absolute w-full h-[26vh] bottom-0 left-0', 'bg-gradient-to-t from-black-100/25 via-black-100/10 to-black-100/0')}></div>
     </div>
 }

@@ -4,7 +4,7 @@ import { useIsomorphicLayoutEffect } from 'react-use';
 import { CursorContent } from '@/components/ui';
 
 const Item = ({ children, defaultColor = 'var(--color-white-100)' }: {
-    children: React.ReactElement,
+    children: string,
     defaultColor?: `var(--color-${string})`
 }) => {
     const ref = useRef<ElementRef<'div'>>(null);
@@ -73,7 +73,7 @@ const Item = ({ children, defaultColor = 'var(--color-white-100)' }: {
     return <CursorContent name={`cursorPointer_header_email`} component='CursorEvent' props={{
         event: 'pointer',
     }}><div className='overflow-hidden relative' ref={ref}>
-            <div className='item-child-grap cursor-pointer flex'>
+            <div className='item-child-grap cursor-pointer flex w-auto'>
                 {children}
             </div>
         </div>
