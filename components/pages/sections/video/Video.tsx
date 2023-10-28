@@ -1,4 +1,4 @@
-import { useRef, useContext, useEffect } from 'react'
+import { useRef, useContext, useEffect, useState } from 'react'
 import { gsap } from '@/utils/gsap';
 
 import { twMerge } from 'tailwind-merge';
@@ -8,17 +8,22 @@ import { CursorContent, LoadingContext } from '@/components/ui';
 import { ScrollProvider } from '@/context/AnimationConf';
 
 const FRAME_COUNT = 164;
+const ID_LOAD_COMPONENT = 'video';
 const Video = () => {
     let ref = useRef<HTMLCanvasElement>(null);
     let refContainer = useRef<HTMLDivElement>(null);
     const imagesRef = useRef([] as Array<HTMLImageElement>);
     const { addLoadingComponent, removeLoadingComponent } = useContext(LoadingContext);
+
     useEffect(() => {
         let isInLoad = false;
-        addLoadingComponent('video');
+        if(isInLoad) return;
+        addLoadingComponent(ID_LOAD_COMPONENT);
 
 
         const currentFrame = (index: number) => `/framer-image/ezgif-frame-${index.toString().padStart(3, '0')}.webp`;
+        console.log('load video generation', imagesRef.current.length);
+        
         Promise.all<HTMLImageElement>(Array(FRAME_COUNT).fill(0).map((_, index) => {
             const img = new Image();
             img.src = currentFrame(index + 1);
@@ -27,6 +32,7 @@ const Video = () => {
             img.alt = 'video' + '_' + index.toString().padStart(3, '0');
             img.style.objectFit = 'cover';
             img.style.objectPosition = 'center';
+
             return new Promise((resolve, reject) => {
                 img.onload = () => {
                     resolve(img);
@@ -36,7 +42,7 @@ const Video = () => {
             if (isInLoad) return;
             
             imagesRef.current = images;
-            removeLoadingComponent('video');
+            removeLoadingComponent(ID_LOAD_COMPONENT);
         })
         return () => {
             isInLoad = true;
@@ -46,7 +52,7 @@ const Video = () => {
                 })
             }
         }
-    }, [removeLoadingComponent, addLoadingComponent])
+    }, [removeLoadingComponent, addLoadingComponent]);
     const { scrollbar } = useContext(ScrollProvider);
 
     useEffect(() => {

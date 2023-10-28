@@ -26,25 +26,26 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
             scrollbar && scrollbar.on('scroll', (e) => {
-                if(e?.delta?.y < 140) {
+                console.log(e.delta.y, lastScrollY.current);
+                if (e?.delta?.y < 140) {
                     setActive(false);
                 } else {
                     setActive(true);
                 }
 
-                const diff = Math.abs(e.delta.y - lastScrollY.current); 
+                const diff = Math.abs(e.delta.y - lastScrollY.current);
                 if (e.delta.y >= lastScrollY.current) {
                     delta.current = delta.current >= 10 ? 10 : delta.current + diff;
                 } else {
                     delta.current = delta.current <= -10 ? -10 : delta.current - diff;
                 }
                 if (delta.current >= 10 && e.delta.y > 200) {
-                    gsap.to(".header-gsap", { duration: 0.3, y: -100, opacity: 0, ease: "power2.inOut"});
+                    gsap.to(".header-gsap", { duration: 0.3, y: -100, opacity: 0, ease: "power2.inOut" });
                 } else if (delta.current <= -10 || e.delta.y < 200) {
                     gsap.to(".header-gsap", { duration: 0.3, y: 0, opacity: 1, ease: "power2.inOut" });
                 }
                 lastScrollY.current = e.delta.y;
-            })
+            });
         });
         return () => ctx.revert();
     }, [lastScrollY.current, delta.current, scrollbar]);
@@ -54,30 +55,28 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
     const backgroundColor = useMemo(() => active ? '#1f1f1f90' : 'transparent', [active]);
 
 
-    return <>
-        <NavbarAnimation.Provider value={{ scale: active ? 'scale(80%)' : 'scale(100%)' }}>
-            <header className={twMerge(
-                'fixed top-0 left-0 w-full max-w-[100vw] py-4 z-header', className, zIndex.navbar, 'header-gsap'
-            )}
-            style={{ 
+    return <NavbarAnimation.Provider value={{ scale: active ? 'scale(80%)' : 'scale(100%)' }}>
+        <header className={twMerge(
+            'fixed top-0 left-0 w-full max-w-[100vw] py-4 z-header', className, zIndex.navbar, 'header-gsap'
+        )}
+            style={{
                 paddingTop: padding,
                 paddingBottom: padding,
                 backdropFilter: backdropFilter,
                 backgroundColor: backgroundColor,
             }}
             {...props}
-            >
-                <div className={twMerge('flex flex-row items-center justify-between w-full', containerStyle({ size }))}>
-                    {children}
-                </div>
-            </header>
-        </NavbarAnimation.Provider>
-    </>
+        >
+            <div className={twMerge('flex flex-row items-center justify-between w-full', containerStyle({ size }))}>
+                {children}
+            </div>
+        </header>
+    </NavbarAnimation.Provider>
 };
 
-const Brand = ({ children, className, ...props}: BrandProps) => {
+const Brand = ({ children, className, ...props }: BrandProps) => {
     const styled = useContext(NavbarAnimation);
-    if(!styled) return null;
+    if (!styled) return null;
 
     return <>
         <div className={twMerge(className)} >
@@ -140,7 +139,7 @@ const Item = ({ children, href }: ItemProps) => {
 
 const Link = ({ children, href, className, ...props }: LinkProps) => {
     const { isActive, handlerActiveItem } = useActiveItem(href.toString());
-    const [ data, setData] = useState<object>();
+    const [data, setData] = useState<object>();
 
     const { hoverProps, isHovered } = useHover({
         onHoverStart: (e) => {
@@ -151,7 +150,7 @@ const Link = ({ children, href, className, ...props }: LinkProps) => {
         }
     });
 
-    if(!handlerActiveItem) return null;
+    if (!handlerActiveItem) return null;
 
     return <LinkUi href={href} {...hoverProps} {...data} className={twMerge(className, 'whitespace-nowrap')} {...props} >
         {typeof children === 'function' ? children(isActive, handlerActiveItem) : children}

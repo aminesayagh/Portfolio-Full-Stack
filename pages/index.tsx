@@ -12,7 +12,8 @@ import { useTranslation } from 'next-i18next';
 
 const DynamicHeader = dynamic(() => import('@/components/common/header'), {});
 const DynamicLandingPage = dynamic(() => import('@/components/pages/LandingPage'), {});
-const DynamicAnimationConf = dynamic(() => import('@/context/AnimationConf'), {});
+// const DynamicAnimationConf = dynamic(() => import('@/context/AnimationConf'), {});
+import AnimationConf from '@/context/AnimationConf';
 
 export default function Home() {
   const { t } = useTranslation('common');
@@ -27,9 +28,9 @@ export default function Home() {
     <LoadingProvider>
       <Cursor>
         <DynamicHeader />
-        <DynamicAnimationConf >
+        <AnimationConf >
           <DynamicLandingPage />
-        </DynamicAnimationConf>
+        </AnimationConf>
         <Noise />
       </Cursor>
     </LoadingProvider>
