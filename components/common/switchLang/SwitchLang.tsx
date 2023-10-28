@@ -16,23 +16,19 @@ const SwitchLang = () => {
         i18n.changeLanguage(lng as string);
     }
 
-    return (
-        <>
-            <div className='flex flex-row items-center justify-start gap-6 xxs:gap-8 mdl:gap-6 lg:gap-8'>
-                {langs.map(l =>
-                    <span key={l} className='overflow-hidden'>
-                        <Button degree="2" size='xs' className="uppercase" onPress={() => changeLanguage(l)} style={{
-                            color: 'inherit'
-                        }}>
-                            <Item defaultColor='var(--color-white-600)'>
-                                {l}
-                            </Item>
-                        </Button>
-                    </span>
-                )}
-            </div>
-        </>
-    )
+    return <div className='flex flex-row items-center justify-start gap-6 xxs:gap-8 mdl:gap-6 lg:gap-8'>
+        {langs.map(l =>
+            <span key={l} className='overflow-hidden'>
+                <Button degree="2" size='xs' className="uppercase" onPress={() => changeLanguage(l)} style={{
+                    color: 'inherit'
+                }}>
+                    <Item defaultColor='var(--color-white-600)'>
+                        {l}
+                    </Item>
+                </Button>
+            </span>
+        )}
+    </div>
 }
 
 export default SwitchLang;
