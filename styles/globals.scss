@@ -20,6 +20,19 @@
   @apply will-change-transform;
 }
 
+[data-scroll-header-inside="true"] .header-fixed{
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  backdrop-filter: blur(40px);
+  background-color: #1f1f1f90;
+}
+[data-scroll-header-inside="false"] .header-fixed{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  backdrop-filter: blur(0px);
+  background-color: transparent;
+}
+
 .overflow-y-animate {
   overflow-y: clip;
   overflow-x: visible;

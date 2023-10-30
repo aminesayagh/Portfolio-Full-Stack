@@ -16,6 +16,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     const { addLoadingComponent, removeLoadingComponent } = useContext(LoadingContext);
     const isStart = useRef(false);
     const { i18n } = useTranslation();
+    const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (!isStart.current && !scrollbar) {
@@ -101,8 +102,33 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             };
         }
     }, [scrollbar, removeLoadingComponent, addLoadingComponent]);
-    
-    
+    const delta = useRef(0);
+    const lastScrollY = useRef(0);
+    useEffect(() => {
+        scrollbar && scrollbar.on('scroll', (e) => {
+            if(e.delta.y < 140) {
+                document?.documentElement.setAttribute('data-scroll-header-inside', 'false');
+                return;
+            } else {
+                document?.documentElement.setAttribute('data-scroll-header-inside', 'true');
+            }
+
+            const diff = Math.abs(e.delta.y - lastScrollY.current);
+            if(e.delta.y >= lastScrollY.current) {
+                delta.current = delta.current >= 10 ? 10 : delta.current + diff;
+            } else {
+                delta.current = delta.current <= -10 ? -10 : delta.current - diff;
+            }
+            
+            if (delta.current >= 10 && e.delta.y > 200) {
+                gsap.to(".header-gsap", { duration: 0.3, y: -100, opacity: 0, ease: "power1.inOut" });
+            } else if (delta.current <= -10 || e.delta.y < 200) {
+                gsap.to(".header-gsap", { duration: 0.3, y: 0, opacity: 1, ease: "power1.inOut" });
+            }
+            lastScrollY.current = e.delta.y;
+        });
+    }, [scrollbar, lastScrollY, delta]);
+
     useEffect(() => {
         let ctx = gsap.context(() => {
             gsap.config({
@@ -122,7 +148,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             <ScrollProvider.Provider value={{
                 scrollbar
             }} >
-                <div data-scroll-container>
+                <div data-scroll-container ref={ref}>
                     {children}
                 </div>
             </ScrollProvider.Provider>
