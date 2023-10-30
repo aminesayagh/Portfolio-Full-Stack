@@ -3,7 +3,6 @@ import { Noise, LoadingProvider } from '@/components/ui';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import '@/utils/gsap';
 
-// import AnimationConf from '@/context/AnimationConf';
 import { Cursor } from '@/components/ui';
 import dynamic from 'next/dynamic';
 
@@ -12,7 +11,7 @@ import { useTranslation } from 'next-i18next';
 
 const DynamicHeader = dynamic(() => import('@/components/common/header'), {});
 const DynamicLandingPage = dynamic(() => import('@/components/pages/LandingPage'), {});
-// const DynamicAnimationConf = dynamic(() => import('@/context/AnimationConf'), {});
+const DynamicAnimationConf = dynamic(() => import('@/context/AnimationConf'), {});
 import AnimationConf from '@/context/AnimationConf';
 
 export default function Home() {

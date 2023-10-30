@@ -22,33 +22,30 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
 
     const [active, setActive] = useState(false);
     const { scrollbar } = useContext(ScrollProvider);
+    console.log('navbar')
+    // useEffect(() => {
+    //     scrollbar && scrollbar.on('scroll', (e) => {
+    //         // console.log(e.delta.y, lastScrollY.current);
+    //         if (e?.delta?.y < 140) {
+    //             setActive(false);
+    //         } else {
+    //             setActive(true);
+    //         }
 
-    useIsomorphicLayoutEffect(() => {
-        let ctx = gsap.context(() => {
-            scrollbar && scrollbar.on('scroll', (e) => {
-                console.log(e.delta.y, lastScrollY.current);
-                if (e?.delta?.y < 140) {
-                    setActive(false);
-                } else {
-                    setActive(true);
-                }
-
-                const diff = Math.abs(e.delta.y - lastScrollY.current);
-                if (e.delta.y >= lastScrollY.current) {
-                    delta.current = delta.current >= 10 ? 10 : delta.current + diff;
-                } else {
-                    delta.current = delta.current <= -10 ? -10 : delta.current - diff;
-                }
-                if (delta.current >= 10 && e.delta.y > 200) {
-                    gsap.to(".header-gsap", { duration: 0.3, y: -100, opacity: 0, ease: "power2.inOut" });
-                } else if (delta.current <= -10 || e.delta.y < 200) {
-                    gsap.to(".header-gsap", { duration: 0.3, y: 0, opacity: 1, ease: "power2.inOut" });
-                }
-                lastScrollY.current = e.delta.y;
-            });
-        });
-        return () => ctx.revert();
-    }, [lastScrollY.current, delta.current, scrollbar]);
+    //         const diff = Math.abs(e.delta.y - lastScrollY.current);
+    //         if (e.delta.y >= lastScrollY.current) {
+    //             delta.current = delta.current >= 10 ? 10 : delta.current + diff;
+    //         } else {
+    //             delta.current = delta.current <= -10 ? -10 : delta.current - diff;
+    //         }
+    //         if (delta.current >= 10 && e.delta.y > 200) {
+    //             gsap.to(".header-gsap", { duration: 0.3, y: -100, opacity: 0, ease: "power2.inOut" });
+    //         } else if (delta.current <= -10 || e.delta.y < 200) {
+    //             gsap.to(".header-gsap", { duration: 0.3, y: 0, opacity: 1, ease: "power2.inOut" });
+    //         }
+    //         lastScrollY.current = e.delta.y;
+    //     });
+    // }, [lastScrollY.current, delta.current, scrollbar]);
 
     const padding = useMemo(() => active ? '0.8rem' : '1rem', [active]);
     const backdropFilter = useMemo(() => active ? 'blur(40px)' : 'blur(0px)', [active]);
@@ -57,14 +54,8 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
 
     return <NavbarAnimation.Provider value={{ scale: active ? 'scale(80%)' : 'scale(100%)' }}>
         <header className={twMerge(
-            'fixed top-0 left-0 w-full max-w-[100vw] py-4 z-header', className, zIndex.navbar, 'header-gsap'
+            'header-fixed fixed top-0 left-0 w-full max-w-[100vw] py-4 z-header', className, zIndex.navbar, 'header-gsap will-change-transform-animation'
         )}
-            style={{
-                paddingTop: padding,
-                paddingBottom: padding,
-                backdropFilter: backdropFilter,
-                backgroundColor: backgroundColor,
-            }}
             {...props}
         >
             <div className={twMerge('flex flex-row items-center justify-between w-full', containerStyle({ size }))}>

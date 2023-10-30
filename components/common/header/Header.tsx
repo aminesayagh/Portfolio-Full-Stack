@@ -34,6 +34,8 @@ const Header = () => {
     const { safePush } = useRouterChange();
     let [openMenu, setOpenMenu] = useState<boolean>(false);
     const { endLoading } = useContext(LoadingContext);
+    const { scrollbar } = useContext(ScrollProvider);
+
 
     const menuHamburgerItemsRef = useRef<MenuItem[]>([]);
     const menuSocialNetworksRef = useRef<MenuItem[]>([]);
@@ -162,7 +164,6 @@ const Header = () => {
             ctx.current.open();
         }
     }, [openMenu]);
-    const { scrollbar } = useContext(ScrollProvider);
 
     let idTimeout = useRef<NodeJS.Timeout>();
     const onButtonClick = useCallback((path: string, id?: string) => {
@@ -171,7 +172,6 @@ const Header = () => {
         } else {
             tl.current.reverse().then(() => {
                 setOpenMenu(false);
-                // safePush(path);
                 idTimeout.current = setTimeout(() => {
                     scrollbar && scrollbar.scrollTo(`#${id}`, {
                         duration: 500,
@@ -188,7 +188,6 @@ const Header = () => {
     }, [])
 
     const pageName = useMemo(() => router.pathname.split('/')[1], [router]);
-
     return <Modal isOpenExternal={openMenu} menuHandler={menuHandler}>
         <Navbar size='lg' inTopOfScroll={openMenu} className='overflow-hidden' >
             <span className='w-full flex flex-row items-center justify-between navbar_gsap'>

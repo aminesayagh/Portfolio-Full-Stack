@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button, Dialog, DialogTrigger, Modal, ModalOverlay} from 'react-aria-components';
 import { ModalOverlayProps } from 'react-aria-components';
 import { mergeClassName } from '@/helpers/className'
-import { twMerge} from 'tailwind-merge';
 
 const ModalContext = React.createContext<{ isOpen: boolean, handler: () => void }>({ isOpen: false, handler: () => console.log('error') });
 
