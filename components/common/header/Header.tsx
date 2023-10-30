@@ -10,7 +10,6 @@ import { ScrollTrigger } from "@/utils/gsap";
 import StyleAnimation from '@/styles/animation.module.scss';
 import { LoadingContext, Navbar, Logo, Link, Button, containerStyle, Modal, Text, Title } from "@/components/ui";
 import { HamburgerMenu, SwitchLang } from '@/components/common';
-;
 
 
 import { ScrollProvider } from '@/context/AnimationConf';
@@ -158,7 +157,7 @@ const Header = () => {
         } else {
             ctx.current.close();
         }
-    }, [openMenu]);
+    }, [openMenu, ctx]);
     useEffect(() => {
         if (openMenu) {
             ctx.current.open();
@@ -180,7 +179,7 @@ const Header = () => {
                 }, 100);
             });
         }
-    }, [openMenu, scrollbar, safePush]);
+    }, [openMenu, safePush]);
 
     useEffect(() => {
         return () => {

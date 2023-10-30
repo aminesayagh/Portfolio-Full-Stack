@@ -30,12 +30,12 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
                     xTo && xTo(0);
                     yTo && yTo(0);
                 }
-
-                ref.current?.addEventListener('mousemove', mouseMove);
-                ref.current?.addEventListener('mouseleave', mouseLeave);
+                const element = ref.current;
+                element?.addEventListener('mousemove', mouseMove);
+                element?.addEventListener('mouseleave', mouseLeave);
                 return () => {
-                    ref.current?.removeEventListener('mousemove', mouseMove);
-                    ref.current?.removeEventListener('mouseleave', mouseLeave);
+                    element?.removeEventListener('mousemove', mouseMove);
+                    element?.removeEventListener('mouseleave', mouseLeave);
                 }
             });
             return () => ctx.revert();
@@ -91,18 +91,18 @@ const GsapCircleBlue = ({ children, ...props }: { children: React.ReactElement, 
                     });
                     tl.play();
                 }
-
-                circle.current.addEventListener('pointerenter', mouseEnter);
-                circle.current.addEventListener('mouseleave', mouseLeave);
+                const element = circle.current;
+                element.addEventListener('pointerenter', mouseEnter);
+                element.addEventListener('mouseleave', mouseLeave);
                 return () => {
-                    circle.current?.removeEventListener('pointerenter', mouseEnter);
-                    circle.current?.removeEventListener('mouseleave', mouseLeave);
+                    element?.removeEventListener('pointerenter', mouseEnter);
+                    element?.removeEventListener('mouseleave', mouseLeave);
                     tl.kill();
                 }
             }
         })
         return () => ctx.revert();
-    }, []);
+    }, [circle]);
 
     return React.cloneElement(children, { ref: circle, className: twMerge(children.props.className, 'relative rounded-full bg-white-100') })
 }

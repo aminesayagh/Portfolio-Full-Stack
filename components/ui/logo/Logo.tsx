@@ -1,6 +1,6 @@
 import { Title, Link, Image, Button, ButtonProps } from '@/components/ui';
 import { twMerge } from 'tailwind-merge';
-interface LogoProps extends Omit<ButtonProps, 'size' | 'degree' > {
+interface LogoProps extends Omit<ButtonProps, 'size' | 'degree' | 'children'> {
     alt: string;
     size: number;
     mode: 'dark' | 'white';

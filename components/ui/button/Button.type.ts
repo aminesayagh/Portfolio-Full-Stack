@@ -10,5 +10,4 @@ interface PropsIcon {
 export interface ButtonProps extends PropsIcon, AriaButtonProps, Partial<TextPropsType> {
     title?: string;
     full?: boolean;
-    children: React.ReactNode | React.ReactNode[] | string;
 }

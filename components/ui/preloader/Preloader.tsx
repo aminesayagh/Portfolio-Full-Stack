@@ -97,7 +97,7 @@ const Percent = ({ isLoading, setEndLoadingProgress }: { isLoading: boolean, set
         return () => {
             clearInterval(intervalId);
         }
-    }, [isLoading, percent]);
+    }, [isLoading, percent, setEndLoadingProgress]);
 
     return <motion.span key={percent} initial={{ opacity: 1, y: '0' }} animate={{ opacity: 1, y: '-100%' }} exit={{ opacity: 0, y: '100%' }}>
         {
