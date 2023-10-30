@@ -1,7 +1,7 @@
 
-import { Button, ButtonProps as AriaButtonProps } from 'react-aria-components';
-import { VariantProps } from 'class-variance-authority';
-import { TextPropsType, TextSizes } from '@/components/ui/typography';
+import { ButtonProps as AriaButtonProps } from 'react-aria-components';
+import { TextPropsType } from '@/components/ui/typography';
+import React from 'react';
 interface PropsIcon {
     icon?: React.ReactNode;
     iconRight?: React.ReactNode,
@@ -10,4 +10,5 @@ interface PropsIcon {
 export interface ButtonProps extends PropsIcon, AriaButtonProps, Partial<TextPropsType> {
     title?: string;
     full?: boolean;
+    children: React.ReactNode | React.ReactNode[] | string;
 }

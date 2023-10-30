@@ -173,9 +173,10 @@ const Header = () => {
             tl.current.reverse().then(() => {
                 setOpenMenu(false);
                 idTimeout.current = setTimeout(() => {
-                    scrollbar && scrollbar.scrollTo(`#${id}`, {
-                        duration: 500,
-                    });
+                    safePush(`${path}#${id}`);
+                    // scrollbar && scrollbar.scrollTo(`#${id}`, {
+                    //     duration: 500,
+                    // });
                 }, 100);
             });
         }

@@ -47,7 +47,7 @@ export type TitlePropsExtended = TitleElement & VariantProps<typeof titleStyle> 
     suppressHydrationWarning?: boolean;
 }
 
-export const validTextElements = ['p', 'span', 'small', 'strong', 'em', 'li'] as const;
+export const validTextElements = ['p', 'span', 'small', 'strong', 'em', 'li', 'div'] as const;
 export type TextNames = typeof validTextElements[number];
 
 export type TextElement = { 
@@ -62,6 +62,8 @@ export type TextElement = {
     em: true
 } | {
     li: true
+} | {
+    div: true
 };
 
 export type TextSizes = 'xl' | 'lg' | 'md' | 'sm' | 'xs' | 'xxs' | 'auto';
