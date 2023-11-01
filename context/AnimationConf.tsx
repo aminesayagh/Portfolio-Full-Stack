@@ -1,7 +1,8 @@
-import React, { useEffect, useContext, useState, createContext, useRef } from 'react';
+import React, { useEffect, useContext, useState, createContext, useRef, useCallback } from 'react';
 import { ScrollTrigger, gsap } from '@/utils/gsap';
 import { LoadingContext } from '@/components/ui';
 import { useTranslation } from 'react-i18next';
+import { useEventListener } from '@/hook/useEventListener';
 
 export const ScrollProvider = createContext<{
     scrollbar: null | LocomotiveScroll,
@@ -15,8 +16,15 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     const [scrollbar, setScrollbar] = useState<LocomotiveScroll | null>(null);
     const { addLoadingComponent, removeLoadingComponent } = useContext(LoadingContext);
     const isStart = useRef(false);
-    const { i18n } = useTranslation();
     const ref = useRef<HTMLDivElement>(null);
+
+    const handler = useCallback(() => {
+        scrollbar && scrollbar.update();
+    }, [scrollbar])
+
+    useEventListener('resize', handler, ref);
+    useEventListener('orientationchange', handler);
+    useEventListener('load', handler, ref);
 
     useEffect(() => {
         if (!isStart.current && !scrollbar) {
@@ -87,21 +95,9 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 removeLoadingComponent(LOADING_COMPONENT_KEY);
             });
             
-        } else {
-            const updateScroll = () => scrollbar?.update();
-
-            window.addEventListener('resize', updateScroll);
-            window.addEventListener('orientationchange', updateScroll);
-            window.addEventListener('load', updateScroll);
-
-            // Cleanup on unmount
-            return () => {
-                window.removeEventListener('resize', updateScroll);
-                window.removeEventListener('orientationchange', updateScroll);
-                window.removeEventListener('load', updateScroll);
-            };
         }
     }, [scrollbar, removeLoadingComponent, addLoadingComponent]);
+
     const delta = useRef(0);
     const lastScrollY = useRef(0);
     useEffect(() => {
@@ -144,11 +140,11 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     }, [scrollbar]);
 
     return <React.Fragment>
-        <div className="app-container" id='main-container'>
+        <div className="app-container" id='main-container' ref={ref}>
             <ScrollProvider.Provider value={{
                 scrollbar
             }} >
-                <div data-scroll-container ref={ref}>
+                <div data-scroll-container>
                     {children}
                 </div>
             </ScrollProvider.Provider>
