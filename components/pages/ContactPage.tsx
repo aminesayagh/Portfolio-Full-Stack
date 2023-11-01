@@ -7,7 +7,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 
 const FooterDynamic = dynamic(() => import('@/components/common/footer'));
-import { Container, Display, Title, Text, Form, Link, OptionOnSubmit } from '@/components/ui';
+
+import Container from '@/components/ui/container';
+import Display from '@/components/ui/typography/Display';
+import Title from '@/components/ui/typography/Title';
+import Text from '@/components/ui/typography/Text';
+import Form from '@/components/ui/form';
+import Link from '@/components/ui/typography/Link';
+import type { OptionOnSubmit } from '@/components/ui/form';
+
 import { gsap } from '@/utils/gsap';
 import { getProjectsByCategory } from '@/conf/projects';
 import { getMenuItems } from '@/conf/router';

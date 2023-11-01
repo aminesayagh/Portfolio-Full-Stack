@@ -1,7 +1,7 @@
 import { ElementRef, useRef, useState } from 'react';
 import { gsap } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
-import { CursorContent } from '@/components/ui';
+import { CursorContent } from '@/components/ui/cursor';
 
 const Item = ({ children, defaultColor = 'var(--color-white-100)' }: {
     children: string,

@@ -3,7 +3,10 @@ import { memo } from 'react';
 import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 
-import { Text, Icon, Button, Link } from '@/components/ui';
+import  Link from '@/components/ui/typography/Link';
+import Button from '@/components/ui/button';
+import { Icon } from '@/components/ui/icon';
+import Text from '@/components/ui/typography/Text';
 import { ScrollProvider } from '@/context/AnimationConf';
 import { gsap } from 'utils/gsap';
 import useGsap from '@/hook/useGsap';
@@ -66,10 +69,10 @@ const FollowUs = () => {
         }
     }, [ref])
     const handler = useCallback(() => {
-        ctx.current?.play('followButtonShow');
+        ctx.current?.followButtonShow();
     }, [ctx])
     const handlerLeave = useCallback(() => {
-        ctx.current?.play('followButtonHide');
+        ctx.current?.followButtonHide();
     }, [ctx])
     useEventListener('mouseenter', handler, ref);
     useEventListener('mouseleave', handlerLeave, ref);
@@ -192,10 +195,10 @@ const GoToTop = ({ handler, text }: { handler: () => void, text: string }) => {
 
 
     const handlerMouse = useCallback(() => {
-        ctx.current?.play('handlerGoToTop');
+        ctx.current?.handlerGoToTop();
     }, [ctx]);
     const handlerMouseLeave = useCallback(() => {
-        ctx.current?.play('handlerGoToTopLeave');
+        ctx.current?.handlerGoToTopLeave();
     }, [ctx]);
 
 

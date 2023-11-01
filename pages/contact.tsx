@@ -1,12 +1,14 @@
 import { Head } from '@/components/common';
-import { Noise } from 'components/ui';
+import Noise  from 'components/ui/noise';
 import React from 'react';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import '@/utils/gsap';
 import { ToastRegion } from '@/components/common/toast';
-import { Cursor, LoadingProvider } from '@/components/ui';
+
+import Cursor from '@/components/ui/cursor';
+import { LoadingProvider } from '@/components/ui/preloader';
 
 const ContactPageDynamic = dynamic(() => import('@/components/pages/ContactPage'), {});
 const HeaderDynamic = dynamic(() => import('@/components/common/header'), {})

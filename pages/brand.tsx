@@ -1,7 +1,9 @@
-import { Container } from "@/components/ui";
+import Container from "@/components/ui/container";
+import Title from '@/components/ui/typography/Title';
+import Text from '@/components/ui/typography/Text';
+import Display from '@/components/ui/typography/Display';
 import { Head } from '@/components/common';
 
-import { Title, Text, Display } from '@/components/ui';
 import React from "react";
 import { twMerge } from 'tailwind-merge';
 

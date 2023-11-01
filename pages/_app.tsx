@@ -17,7 +17,8 @@ const montserrat = Montserrat({
   variable: '--font-sans',
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
-import { Cursor, LoadingProvider } from '@/components/ui';
+import Cursor from '@/components/ui/cursor';
+import { LoadingProvider } from '@/components/ui/preloader';
 
 const DynamicAnimationConf = dynamic(() => import('@/context/AnimationConf'), {});
 function App({ Component, pageProps }: AppProps) {

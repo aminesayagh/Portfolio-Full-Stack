@@ -3,7 +3,11 @@ import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { Container, Title, Text, Noise } from '@/components/ui';
+import Container from '@/components/ui/container';
+import Title from '@/components/ui/typography/Title';
+import Text from '@/components/ui/typography/Text';
+import Noise from '@/components/ui/noise';
+
 import { gsap } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 

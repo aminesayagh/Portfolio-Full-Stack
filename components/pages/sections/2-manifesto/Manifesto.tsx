@@ -2,7 +2,10 @@ import { useRef, useEffect, useState, ElementRef } from 'react';
 import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 
-import { Title, Text, Link } from '@/components/ui';
+import Title from '@/components/ui/typography/Title';
+import Text from '@/components/ui/typography/Text';
+import Link from '@/components/ui/typography/Link';
+
 import { gsap } from '@/utils/gsap';
 
 import _ from 'lodash';

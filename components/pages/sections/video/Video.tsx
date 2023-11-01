@@ -1,14 +1,15 @@
-import { useRef, useContext, useEffect, useState } from 'react'
+import { useRef, useContext, useEffect } from 'react'
 import { gsap } from '@/utils/gsap';
 
 import { twMerge } from 'tailwind-merge';
 
 import { rounded } from '@/components/style';
-import { CursorContent, LoadingContext } from '@/components/ui';
+import { CursorContent } from '@/components/ui/cursor';
+import { LoadingContext } from '@/components/ui/preloader';
 import { ScrollProvider } from '@/context/AnimationConf';
 
 const FRAME_COUNT = 164;
-const ID_LOAD_COMPONENT = 'video';
+
 const Video = () => {
     let ref = useRef<HTMLCanvasElement>(null);
     let refContainer = useRef<HTMLDivElement>(null);
@@ -18,11 +19,8 @@ const Video = () => {
     useEffect(() => {
         let isInLoad = false;
         if(isInLoad) return;
-        addLoadingComponent(ID_LOAD_COMPONENT);
-
 
         const currentFrame = (index: number) => `/framer-image/ezgif-frame-${index.toString().padStart(3, '0')}.webp`;
-        console.log('load video generation', imagesRef.current.length);
         
         Promise.all<HTMLImageElement>(Array(FRAME_COUNT).fill(0).map((_, index) => {
             const img = new Image();
@@ -42,7 +40,6 @@ const Video = () => {
             if (isInLoad) return;
             
             imagesRef.current = images;
-            removeLoadingComponent(ID_LOAD_COMPONENT);
         })
         return () => {
             isInLoad = true;

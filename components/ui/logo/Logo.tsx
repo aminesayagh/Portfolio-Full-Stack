@@ -1,4 +1,5 @@
-import { Title, Link, Image, Button, ButtonProps } from '@/components/ui';
+import Button ,{ ButtonProps } from '@/components/ui/button';
+import Image from '@/components/ui/image';
 import { twMerge } from 'tailwind-merge';
 interface LogoProps extends Omit<ButtonProps, 'size' | 'degree' | 'children'> {
     alt: string;

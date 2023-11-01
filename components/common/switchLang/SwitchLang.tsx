@@ -1,12 +1,12 @@
 import React from "react";
 
 import { useTranslation } from "next-i18next";
-import { Link, Button } from "@/components/ui";
+import Button from "@/components/ui/button";
+import Item from "@/components/ui/animation/item";
 import i18n from '@/utils/i18n';
 
 import { useRouter } from 'next/router';
 const langs = ['fr', 'en'];
-import { Item } from '@/components/ui';
 
 const SwitchLang = () => {
     const router = useRouter();

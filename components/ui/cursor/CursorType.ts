@@ -1,4 +1,4 @@
-import { IconNames } from '@/components/ui';
+import { IconNames } from '@/components/ui/icon';
 export type CursorNames = 'CursorScroll' | 'CursorActionIcon' | 'CursorEvent';
 
 export interface ItemCursorPropsByComponent {

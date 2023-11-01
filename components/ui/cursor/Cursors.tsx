@@ -4,7 +4,9 @@ import { twMerge } from 'tailwind-merge';
 import _ from 'lodash';
 import { useIsomorphicLayoutEffect } from 'react-use';
 
-import { Text, Icon, IconNames } from '@/components/ui';
+import Text from '@/components/ui/typography/Text';
+import {Icon, IconNames } from '@/components/ui/icon';
+
 import { gsap } from '@/utils/gsap';
 import { ItemCursorPropsByComponent } from './CursorType';
 

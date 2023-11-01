@@ -3,7 +3,7 @@ import { Button } from 'react-aria-components'
 import { ButtonProps } from './Button.type';
 import { twMerge } from 'tailwind-merge';
 import { textClassNames } from '@/components/ui/typography';
-import { CursorContent } from '@/components/ui';
+import { CursorContent } from '@/components/ui/cursor';
 import { forwardRef, memo } from 'react';
 
 const ButtonUi = forwardRef<HTMLButtonElement | null, ButtonProps>(function MyButton({ children, icon, iconRight, size = 'auto', full, weight, degree = "0", exchange, className, ...props }: ButtonProps, ref) {

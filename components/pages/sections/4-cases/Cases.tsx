@@ -1,11 +1,13 @@
 import React, { ElementRef, useMemo, useRef } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { Title, Text } from '@/components/ui';
+
+import Title from '@/components/ui/typography/Title';
+import Text from '@/components/ui/typography/Text';
+import Image from '@/components/ui/image';
 
 import { useTranslation } from 'next-i18next';
 import { getProjectsByCategory } from '@/conf/projects';
 import { gsap, Power4 } from '@/utils/gsap';
-import { Image } from '@/components/ui';
 import useGsap from '@/hook/useGsap';
 
 const Case = ({ picture, index, id }: { picture?: string[], index: number, id: string }) => {

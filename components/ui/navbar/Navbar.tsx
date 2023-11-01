@@ -1,12 +1,11 @@
-import { useState, useEffect, useContext, createContext, useMemo } from 'react';
+import { useState, useEffect, useContext, createContext } from 'react';
 import { useRouter } from 'next/router';
 
-import { Link as LinkUi } from '@/components/ui';
-
+import LinkUi from '@/components/ui/typography/Link';
+import { containerStyle } from '@/components/ui/container';
 
 import { NavbarProps, NavbarType, BrandProps, ContentProps, ItemProps, LinkProps } from './Navbar.type';
 import { twMerge } from 'tailwind-merge';
-import { containerStyle } from '@/components/ui';
 import { useHover } from 'react-aria';
 import { zIndex } from '../conf';
 

@@ -3,7 +3,14 @@ import React, { useRef, useContext, useCallback, useMemo, ElementRef, useState, 
 import { useTranslation } from "next-i18next";
 import { useIsomorphicLayoutEffect } from "react-use";
 
-import { Text, Button, Display, Icon, CursorContent, Item, LoadingContext } from '@/components/ui';
+import Text from "@/components/ui/typography/Text";
+import Button from "@/components/ui/button";
+import Display from "@/components/ui/typography/Display";
+import { Icon } from "@/components/ui/icon";
+import { CursorContent } from "@/components/ui/cursor";
+import Item from "@/components/ui/animation/item";
+import { LoadingContext } from "@/components/ui/preloader";
+
 import { MENU_ITEMS } from "@/conf/router";
 import { ScrollProvider } from '@/context/AnimationConf';
 import { ScrollTrigger, gsap } from "@/utils/gsap";
@@ -36,11 +43,11 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
             return () => ctx.current?.revert();
         }
     }, [ref]);
-    const handleMouseEnter = useCallback(() => {
-        ctx.current && ctx.current?.play('mouseMove');
+    const handleMouseEnter = useCallback((e: MouseEvent) => {
+        ctx.current && ctx.current?.mouseMove(e);
     }, [ctx]);
-    const handleMouseLeave = useCallback(() => {
-        ctx.current && ctx.current?.play('mouseLeave');
+    const handleMouseLeave = useCallback((e: MouseEvent) => {
+        ctx.current && ctx.current?.mouseLeave(e);
     }, [ctx]);
     useEventListener('mousemove', handleMouseEnter, ref)
     useEventListener('mouseleave', handleMouseLeave, ref)
@@ -87,29 +94,21 @@ const FullStack = ({ className }: { className: string }) => {
 function useFitText(options?: { factor?: number, maxFontSize?: number }) {
     const [fontSize, setFontSize] = useState('initial');
     const ref = useRef<ElementRef<'div'>>(null);
-    useEffect(() => {
-        function adjustFontSize() {
-            if (ref.current) {
-                const containerWidth = ref.current.getBoundingClientRect().width;
-                const factor = options?.factor || 1;
-                const maxFontSize = options?.maxFontSize || 400;
-                const newSize = Math.min(containerWidth / factor, maxFontSize);
+    const adjustFontSize = useCallback(() => {
+        if (ref.current) {
+            const containerWidth = ref.current.getBoundingClientRect().width;
+            const factor = options?.factor || 1;
+            const maxFontSize = options?.maxFontSize || 400;
+            const newSize = containerWidth / factor;
 
-                setFontSize(`${newSize}px`);
-            }
+            setFontSize(() => `${newSize}px`);
         }
+    }, [ref, options?.factor, options?.maxFontSize])
 
-        adjustFontSize();
-        
-        const element = ref.current;
-        window.addEventListener('resize', adjustFontSize);
-        element?.addEventListener('resize', adjustFontSize);
+    useEventListener('resize', adjustFontSize);
+    useEventListener('resize', adjustFontSize, ref);
+    useIsomorphicLayoutEffect(adjustFontSize, [ref]);
 
-        return () => {
-            window.removeEventListener('resize', adjustFontSize);
-            element?.removeEventListener('resize', adjustFontSize);
-        }
-    }, [ref, options?.factor, options?.maxFontSize]);
 
     return [fontSize, ref] as const;
 }
