@@ -8,6 +8,8 @@ import { ScrollProvider } from '@/context/AnimationConf';
 import { gsap } from 'utils/gsap';
 import useGsap from '@/hook/useGsap';
 import { MenuItem } from '@/conf/router';
+import { useEventListener } from '@/hook/useEventListener';
+import { useIsomorphicLayoutEffect } from 'react-use';
 
 const BASE_LOCALE_SOCIAL = 'socialNetwork';
 
@@ -26,8 +28,9 @@ const FollowUs = () => {
             })
         })
     }, [menuSocialNetworksRef])
+    const ctx = useRef<gsap.Context | null>(null);
     useEffect(() => {
-        const ctx = gsap.context(() => {
+        ctx.current = gsap.context((self) => {
             const tl = gsap.timeline({
                 paused: true
             }).fromTo('.fallow-button-gsap', {
@@ -48,25 +51,29 @@ const FollowUs = () => {
                 stagger: -0.07,
                 duration: 0.3,
             });
-            const handler = () => {
+            self.add('followButtonShow', () => {
                 tl.play();
-            }
-            const handlerLeave = () => {
+            });
+            self.add('followButtonHide', () => {
                 tl.reverse();
-            }
-            const element = ref.current;
-            element?.addEventListener('mouseenter', handler);
-            element?.addEventListener('mouseleave', handlerLeave);
+            });
             return () => {
-                element?.removeEventListener('mouseenter', handler);
-                element?.removeEventListener('mouseleave', handlerLeave);
                 tl.kill();
             }
         }, ref)
         return () => {
-            ctx.revert();
+            ctx.current?.revert();
         }
     }, [ref])
+    const handler = useCallback(() => {
+        ctx.current?.play('followButtonShow');
+    }, [ctx])
+    const handlerLeave = useCallback(() => {
+        ctx.current?.play('followButtonHide');
+    }, [ctx])
+    useEventListener('mouseenter', handler, ref);
+    useEventListener('mouseleave', handlerLeave, ref);
+
     const { t } = useTranslation();
     return (
         <div ref={ref} className='flex flex-row justify-end items-center gap-4'>
@@ -119,9 +126,9 @@ const TextAnimated = ({ phrase, className, ...props }: { phrase: string } & Omit
 
 const GoToTop = ({ handler, text }: { handler: () => void, text: string }) => {
     const ref = useRef<HTMLButtonElement | null>(null);
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
+    const ctx = useRef<gsap.Context | null>(null);
+    useIsomorphicLayoutEffect(() => {
+        ctx.current = gsap.context((self) => {
             const tlIcon = gsap.timeline({
                 paused: true
             }).fromTo('.icon_gsap', {
@@ -162,31 +169,38 @@ const GoToTop = ({ handler, text }: { handler: () => void, text: string }) => {
             })
             tlIcon.play();
             tlText.play();
-            const handler = () => {
+            self.add('handlerGoToTop', () => {
                 tlIcon.progress(0);
                 tlText.progress(0);
                 tlIcon.play();
                 tlText.play();
-            }
-            const handlerLeave = () => {
+            });
+            self.add('handlerGoToTopLeave', () => {
                 tlIcon.reverse();
                 tlText.reverse();
-            }
-            const element = ref.current;
-            element?.addEventListener('mouseenter', handler);
-            element?.addEventListener('mouseleave', handlerLeave);
+            });
             return () => {
-                element?.removeEventListener('mousemove', handler);
-                element?.removeEventListener('mouseleave', handlerLeave);
                 tlIcon.kill();
                 tlText.kill();
             }
         }, ref);
-
+        
         return () => {
-            ctx.revert();
+            ctx.current?.revert();
         }
     }, [ref]);
+
+
+    const handlerMouse = useCallback(() => {
+        ctx.current?.play('handlerGoToTop');
+    }, [ctx]);
+    const handlerMouseLeave = useCallback(() => {
+        ctx.current?.play('handlerGoToTopLeave');
+    }, [ctx]);
+
+
+    useEventListener('mouseenter', handlerMouse, ref);
+    useEventListener('mouseleave', handlerMouseLeave, ref);
 
     return <Button ref={ref} onPress={() => handler()} className={twMerge('flex flex-row justify-start items-center', 'gap-6 md:gap-8', 'uppercase')}>
         <Icon name='IconArrowUpRight' size='24' className={twMerge('stroke-gray-400 icon_gsap', ICON_SIZE_CLASS_NAME)} />

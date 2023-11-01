@@ -12,7 +12,7 @@ export const cursorContext = createContext<{
     setKey?: (key: string | null) => void,
 }>({});
 
-const DEFAULT_BALL_CLASS_NAME = ['fixed rounded-full pointer-events-none cursor-none', 'top-0 left-0 z-cursor'];
+const DEFAULT_BALL_CLASS_NAME = ['fixed rounded-full pointer-events-none cursor-none will-change-transform-animation', 'top-0 left-0 z-cursor'];
 
 const Cursor = ({ children }: { children: React.ReactElement | React.ReactElement[] }) => {
     const ref = useRef<ElementRef<'div'>>(null);

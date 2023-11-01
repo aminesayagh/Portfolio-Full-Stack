@@ -8,16 +8,18 @@ import { MENU_ITEMS } from "@/conf/router";
 import { ScrollProvider } from '@/context/AnimationConf';
 import { ScrollTrigger, gsap } from "@/utils/gsap";
 import useRouterChange from '@/hook/SafePush';
+import { useEventListener } from "@/hook/useEventListener";
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<ElementRef<'div'>>(null);
+    const ctx = useRef<gsap.Context | null>(null);
 
     useIsomorphicLayoutEffect(() => {
         if (!!ref.current) {
-            const ctx = gsap.context(() => {
+            ctx.current = gsap.context((self) => {
                 const xTo = ref.current && gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' });
                 const yTo = ref.current && gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' });
-                const mouseMove = (e: any) => {
+                self.add('mouseMove', (e: any) => {
                     const { clientX, clientY } = e;
                     // @ts-ignore
                     const { left, top, width, height } = ref.current?.getBoundingClientRect();
@@ -25,86 +27,27 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
                     const y = clientY - (top + height / 2);
                     xTo && xTo(x);
                     yTo && yTo(y);
-                }
-                const mouseLeave = (e: any) => {
+                })
+                self.add('mouseLeave', () => {
                     xTo && xTo(0);
                     yTo && yTo(0);
-                }
-                const element = ref.current;
-                element?.addEventListener('mousemove', mouseMove);
-                element?.addEventListener('mouseleave', mouseLeave);
-                return () => {
-                    element?.removeEventListener('mousemove', mouseMove);
-                    element?.removeEventListener('mouseleave', mouseLeave);
-                }
+                })
             });
-            return () => ctx.revert();
+            return () => ctx.current?.revert();
         }
     }, [ref]);
+    const handleMouseEnter = useCallback(() => {
+        ctx.current && ctx.current?.play('mouseMove');
+    }, [ctx]);
+    const handleMouseLeave = useCallback(() => {
+        ctx.current && ctx.current?.play('mouseLeave');
+    }, [ctx]);
+    useEventListener('mousemove', handleMouseEnter, ref)
+    useEventListener('mouseleave', handleMouseLeave, ref)
 
     return <div ref={ref} >
         {children}
     </div>
-}
-
-const GsapCircleBlue = ({ children, ...props }: { children: React.ReactElement, className: string }) => {
-    const circle = useRef<HTMLDivElement>(null);
-
-    const getPosition = useCallback((e: any) => {
-        const { clientX, clientY } = e; // get the mouse position relative to the circle element
-        const { left, top, width, height } = circle.current?.getBoundingClientRect() as DOMRect;
-        const x = clientX - left;
-        const y = clientY - top;
-        return { x, y };
-    }, [circle]);
-
-    useIsomorphicLayoutEffect(() => {
-
-        const ctx = gsap.context(() => {
-            if (!!circle.current) {
-                const tl = gsap.timeline({ paused: true });
-                const mouseEnter = (e: any) => {
-                    const { x, y } = getPosition(e);
-
-                    // init the animation
-                    tl.clear();
-                    tl.fromTo(circle.current, {
-                        background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 0%, var(--color-white-100) 0%)`,
-                    }, {
-                        background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 100%, var(--color-white-100) 0%)`,
-                        duration: 0.4,
-                        ease: 'power4.out',
-                    });
-                    tl.play();
-
-                }
-                const mouseLeave = (e: any) => {
-                    const { x, y } = getPosition(e);
-
-                    tl.clear();
-                    tl.fromTo(circle.current, {
-                        background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 100%, var(--color-white-100) 0%)`,
-                    }, {
-                        background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 0%, var(--color-white-100) 0%)`,
-                        duration: 0.4,
-                        ease: 'power4.out',
-                    });
-                    tl.play();
-                }
-                const element = circle.current;
-                element.addEventListener('pointerenter', mouseEnter);
-                element.addEventListener('mouseleave', mouseLeave);
-                return () => {
-                    element?.removeEventListener('pointerenter', mouseEnter);
-                    element?.removeEventListener('mouseleave', mouseLeave);
-                    tl.kill();
-                }
-            }
-        })
-        return () => ctx.revert();
-    }, [circle]);
-
-    return React.cloneElement(children, { ref: circle, className: twMerge(children.props.className, 'relative rounded-full bg-white-100') })
 }
 
 const ButtonNext = () => {
@@ -157,9 +100,15 @@ function useFitText(options?: { factor?: number, maxFontSize?: number }) {
         }
 
         adjustFontSize();
-
+        
+        const element = ref.current;
         window.addEventListener('resize', adjustFontSize);
-        return () => window.removeEventListener('resize', adjustFontSize);
+        element?.addEventListener('resize', adjustFontSize);
+
+        return () => {
+            window.removeEventListener('resize', adjustFontSize);
+            element?.removeEventListener('resize', adjustFontSize);
+        }
     }, [ref, options?.factor, options?.maxFontSize]);
 
     return [fontSize, ref] as const;
