@@ -5,7 +5,7 @@ import Link, { LinkProps } from 'next/link';
 import { titleStyle, textStyle, displayStyle } from './Typography.style';
 
 type TypeDegree = '0' | '1' | '2' | '3' | '4';
-export type ReactFitProps = VariantProps<typeof displayStyle> & {
+type ReactFitProps = VariantProps<typeof displayStyle> & {
     children: React.ReactNode | string;
     className?: string;
     exchange?: boolean;
@@ -21,7 +21,7 @@ export type DisplayPropsExtended = VariantProps<typeof displayStyle> & {
     style?: React.CSSProperties;
 }
 
-export type TitleElement = {
+type TitleElement = {
     h1: true
 } | {
     h2: true
@@ -50,7 +50,7 @@ export type TitlePropsExtended = TitleElement & VariantProps<typeof titleStyle> 
 export const validTextElements = ['p', 'span', 'small', 'strong', 'em', 'li', 'div'] as const;
 export type TextNames = typeof validTextElements[number];
 
-export type TextElement = { 
+type TextElement = { 
     p: true
 } | {
     span: true
@@ -66,7 +66,7 @@ export type TextElement = {
     div: true
 };
 
-export type TextSizes = 'xl' | 'lg' | 'md' | 'sm' | 'xs' | 'xxs' | 'auto';
+type TextSizes = 'xl' | 'lg' | 'md' | 'sm' | 'xs' | 'xxs' | 'auto';
 export type TextPropsType = Pick<TextPropsExtended, 'exchange' | 'size' | 'weight' | 'degree'>;
 
 export type TextPropsExtended = TextElement & VariantProps<typeof textStyle> & {

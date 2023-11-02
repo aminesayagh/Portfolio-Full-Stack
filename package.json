@@ -12,7 +12,6 @@
   "dependencies": {
     "@hookform/resolvers": "^3.3.0",
     "@notionhq/client": "^2.2.12",
-    "@react-aria/ssr": "^3.7.0",
     "@react-aria/toast": "^3.0.0-beta.3",
     "@react-stately/toast": "^3.0.0-beta.1",
     "@tabler/icons-react": "^2.26.0",
@@ -62,6 +61,6 @@
   "devDependencies": {
     "@csstools/postcss-oklab-function": "^3.0.5",
     "@types/locomotive-scroll": "^4.1.1",
-    "@types/react-gtm-module": "^2.0.1"
+    "knip": "^2.38.6"
   }
 }

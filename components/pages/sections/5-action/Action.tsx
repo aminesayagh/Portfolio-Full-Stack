@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 import { useTranslation } from "next-i18next";
-import { twMerge } from 'tailwind-merge';'@/components/ui'
+import { twMerge } from 'tailwind-merge';
 import Text from '@/components/ui/typography/Text';
 import Display from '@/components/ui/typography/Display';
 import Link from '@/components/ui/typography/Link';
