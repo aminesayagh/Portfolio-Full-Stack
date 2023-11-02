@@ -1,7 +1,8 @@
-import React, { useEffect, useContext, useState, createContext, useRef } from 'react';
+import React, { useEffect, useContext, useState, createContext, useRef, useCallback } from 'react';
 import { ScrollTrigger, gsap } from '@/utils/gsap';
-import { LoadingContext } from '@/components/ui';
-import { useTranslation } from 'react-i18next';
+import { LoadingContext } from '@/components/ui/preloader';
+import { useEventListener } from '@/hook/useEventListener';
+import { useEvent } from 'react-use';
 
 export const ScrollProvider = createContext<{
     scrollbar: null | LocomotiveScroll,
@@ -15,93 +16,78 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     const [scrollbar, setScrollbar] = useState<LocomotiveScroll | null>(null);
     const { addLoadingComponent, removeLoadingComponent } = useContext(LoadingContext);
     const isStart = useRef(false);
-    const { i18n } = useTranslation();
     const ref = useRef<HTMLDivElement>(null);
+
+    const handlerRefresh = useCallback(() => {
+        if (!scrollbar) return;
+        ScrollTrigger.refresh();
+    }, [scrollbar]);
+
+    useEventListener('resize', handlerRefresh);
+    useEventListener('load', handlerRefresh);
+    useEventListener('resize', handlerRefresh, ref);
+
 
     useEffect(() => {
         if (!isStart.current && !scrollbar) {
             isStart.current = true;
+            console.log('start');
             addLoadingComponent(LOADING_COMPONENT_KEY);
             let scroll: LocomotiveScroll;
-            import('locomotive-scroll').then((locomotiveModule) => {
-                const el = document.querySelector('[data-scroll-container]') as HTMLElement;
-                if (!el) throw new Error('Scroll container not found');
-                scroll = new locomotiveModule.default({
-                    el,
-                    smooth: true,
-                    lerp: 0.09,
-                    multiplier: 0.9,
-                    // @ts-ignore
-                    tablet: {
+            ;(async () => {
+                try{
+                    const { default: LocomotiveScroll } = await import('locomotive-scroll');
+                    const el = document.querySelector('[data-scroll-container]') as HTMLElement;
+                    if (!el) throw new Error('Scroll container not found');
+                    scroll = new LocomotiveScroll({
+                        el,
                         smooth: true,
-                    },
-                    smartphone: {
-                        smooth: true,
-                    },
-                    getDirection: true,
-                    getSpeed: true,
-                });
-                const scrollUpdate = (instance: any) => {
-                    document.documentElement.setAttribute('data-direction', instance?.direction);
-                    ScrollTrigger.update();
+                        lerp: 0.09,
+                        multiplier: 0.9,
+                        // @ts-ignore
+                        tablet: {
+                            smooth: true,
+                        },
+                        smartphone: {
+                            smooth: true,
+                        },
+                        getDirection: true,
+                        getSpeed: true,
+                    });
+                    const scrollUpdate = (instance: any) => {
+                        document.documentElement.setAttribute('data-direction', instance?.direction);
+                        ScrollTrigger.update();
+                    }
+                    scroll.on('scroll', (instance) => {
+                        scrollUpdate(instance);
+                    });
+                    ScrollTrigger.scrollerProxy('[data-scroll-container]', {
+                        scrollTop(value) {
+                            return !!scroll && arguments.length ?
+                                // @ts-expect-error
+                                scroll.scrollTo(value, { duration: 0, disableLerp: true }) :
+                                // @ts-expect-error
+                                !!scroll && scroll.scroll.instance.scroll.y;
+                        },
+                        getBoundingClientRect() {
+                            return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+                        },
+                        pinType: el?.style?.transform
+                            ? 'transform'
+                            : 'fixed'
+                    });
+                    ScrollTrigger.defaults({ scroller: el });
+                    if(!scrollbar) setScrollbar(scroll);
+                    
+                }catch(err) {
+                    console.error(err);
+                } finally {
+                    removeLoadingComponent(LOADING_COMPONENT_KEY);
                 }
-                scroll.on('scroll', (instance) => {
-                    scrollUpdate(instance);
-                });
-                ScrollTrigger.scrollerProxy('[data-scroll-container]', {
-                    scrollTop(value) {
-                        return !!arguments.length
-                            // @ts-ignore
-                            ? scroll.scrollTo(value, { duration: 0, disableLerp: true })
-                            // @ts-ignore
-                            : scroll?.scroll.instance.scroll.y;
-                    },
-                    getBoundingClientRect() {
-                        return {
-                            top: 0,
-                            left: 0,
-                            width: window.innerWidth,
-                            height: window.innerHeight,
-                        };
-                    },
-                    pinType: el?.style?.transform
-                        ? 'transform'
-                        : 'fixed'
-                });
-
-                ScrollTrigger.addEventListener('refresh', () => {
-                    scroll.update();
-                });
-                // ScrollTrigger.refresh;
-                ScrollTrigger.defaults({ scroller: el });
-
-                if (!scrollbar) setScrollbar(scroll);
-
-                // Handle window events
-                const updateScroll = () => scroll?.update();
-                
-            }).catch((err) => {
-                console.error('error: ', err);
-                throw new Error(err);
-            }).finally(() => {
-                removeLoadingComponent(LOADING_COMPONENT_KEY);
-            });
-            
-        } else {
-            const updateScroll = () => scrollbar?.update();
-
-            window.addEventListener('resize', updateScroll);
-            window.addEventListener('orientationchange', updateScroll);
-            window.addEventListener('load', updateScroll);
-
-            // Cleanup on unmount
-            return () => {
-                window.removeEventListener('resize', updateScroll);
-                window.removeEventListener('orientationchange', updateScroll);
-                window.removeEventListener('load', updateScroll);
-            };
+            })();
         }
     }, [scrollbar, removeLoadingComponent, addLoadingComponent]);
+
     const delta = useRef(0);
     const lastScrollY = useRef(0);
     useEffect(() => {
@@ -135,7 +121,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 nullTargetWarn: false
             });
             if (scrollbar) {
-                gsap.to('.app-container', 0, { css: { visibility: 'visible' } });
+                // gsap.to('.app-container', 0, { css: { visibility: 'visible' } });
             }
         });
         return () => {
@@ -144,21 +130,21 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     }, [scrollbar]);
 
     return <React.Fragment>
-        <div className="app-container" id='main-container'>
+        <div className="app-container" id='main-container' ref={ref}>
             <ScrollProvider.Provider value={{
                 scrollbar
             }} >
-                <div data-scroll-container ref={ref}>
+                <div data-scroll-container>
                     {children}
                 </div>
             </ScrollProvider.Provider>
         </div>
         <style jsx>{`
             .app-container{
-                visibility: hidden;
+                // visibility: hidden;
             }
         `}</style>
     </React.Fragment>
 }
 
-export default AnimationConf;
+export default React.memo(AnimationConf);

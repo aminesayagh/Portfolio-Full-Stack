@@ -1,22 +1,24 @@
-import React, { useRef, useState, createContext, ElementRef, useMemo, useCallback } from 'react';
+import React, { useRef, useState, createContext, ElementRef, useMemo, useCallback, useEffect } from 'react';
 
 import { gsap } from '@/utils/gsap';
 import { twMerge } from 'tailwind-merge';
 import Cursors, { CursorsArray } from './Cursors';
 import { ItemCursor, CursorNames } from './CursorType';
 import { useIsomorphicLayoutEffect } from 'react-use';
+import { useEventListener } from '@/hook/useEventListener';
 
 export const cursorContext = createContext<{
     addCursor?: (item: ItemCursor<'CursorScroll'>) => void,
     setKey?: (key: string | null) => void,
 }>({});
 
-const DEFAULT_BALL_CLASS_NAME = ['fixed rounded-full pointer-events-none cursor-none', 'top-0 left-0 z-cursor', 'visible-hidden hidden'];
+const DEFAULT_BALL_CLASS_NAME = ['fixed rounded-full pointer-events-none cursor-none will-change-transform-animation', 'top-0 left-0 z-cursor'];
 
 const Cursor = ({ children }: { children: React.ReactElement | React.ReactElement[] }) => {
     const ref = useRef<ElementRef<'div'>>(null);
 
     const list = useRef<ItemCursor[]>([]);
+    const [fistRender, setFirstRender] = useState(true);
 
     const addCursor = useCallback(({
         ...props
@@ -51,17 +53,14 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
                     ease: 'Power4.easeOut',
                 }, 0.2);
             }
-            let cursorScrollTimeline = timeline().to('.cursor_scroll_gsap', {
-                duration: 0.1,
+            let cursorScrollTimeline = timeline().fromTo('.cursor_scroll_gsap', {
                 display: 'flex',
-            }).fromTo('.cursor_scroll_gsap', {
                 scale: 0,
-                ease: 'Power4.easeOut',
-                backgroundColor: 'transparent',
+                opacity: 0,
             }, {
-                duration: 0.3,
+                duration: 0.5,
                 scale: 1,
-                backgroundColor: 'var(--color-white-100)',
+                opacity: 1,
                 ease: 'Power4.easeOut',
             }, '>').fromTo('.cursor_scroll_gsap .cursor_text_gsap', {
                 rotate: -45,
@@ -71,7 +70,7 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
                 duration: 0.3,
                 ease: 'Expo.easeOut',
                 rotate: 0,
-            }, '-=0.2');
+            });
 
             let cursorActionIconTimeline = timeline().to('.cursor_action_icon_gsap', {
                 duration: 0.1,
@@ -109,7 +108,7 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
                 }
             });
 
-            let timelineBallEventPointer = gsap.timeline({
+            let timelineBallEventPointer =gsap.timeline({
                 paused: true,
             }).fromTo('.ball_secondary_gsap', {
                 scale: 1,
@@ -143,74 +142,76 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
     }, []);
 
     // default ball animation
+    const ctxMouseMove = useRef<gsap.Context>();
+
     useIsomorphicLayoutEffect(() => {
-        const ctx = gsap.context(() => {
+        ctxMouseMove.current = gsap.context((context) => {
             // set initial position
             gsap.set(['.ball_main_gsap', '.ball_secondary_gsap', '.ball_inner_top'], {
                 xPercent: -50,
                 yPercent: -50,
             });
-            gsap.set(['.ball_main_gsap', '.ball_secondary_gsap', '.ball_secondary_gsap'], {
-                opacity: 0,
-                scale: 0
-            });
-            // mouse move quick to
-            let xTo = gsap.quickTo('.ball_main_gsap', 'x', {
-                duration: 0.6,
-                ease: 'Elastic.easeOut',
-            })
-            let yTo = gsap.quickTo('.ball_main_gsap', 'y', {
-                duration: 0.6,
-                ease: 'Elastic.easeOut',
-            })
+            
 
-            let xToSecondary = gsap.quickTo(['.ball_secondary_gsap', '.ball_inner_top'], 'x', {
-                duration: 0.3,
-                ease: 'Power4.easeOut',
-            })
-            let yToSecondary = gsap.quickTo(['.ball_secondary_gsap', '.ball_inner_top'], 'y', {
-                duration: 0.3,
-                ease: 'Power4.easeOut',
-            })
-            let opacityTo = gsap.quickTo(['.ball_secondary_gsap', '.ball_main_gsap'], 'opacity', {
-                duration: 0.3,
-                scale: 1,
-                ease: 'Power4.easeOut',
-            })
-
-
-            ref.current?.addEventListener("mouseenter", e => {
-                opacityTo(1);
-            });
-            ref.current?.addEventListener("mouseleave", e => {
-                opacityTo(0);
-            });
-
-            ref.current?.addEventListener("mousemove", e => {
-                xTo(e.clientX);
-                yTo(e.clientY);
-
-                xToSecondary(e.clientX);
-                yToSecondary(e.clientY);
-            });
-            return () => {
-                ref.current?.removeEventListener("mouseenter", e => {
-                    opacityTo(0);
+            context.add('xTo', (x: number) => {
+                gsap.to('.ball_main_gsap', {
+                    duration: 0.6,
+                    ease: 'Elastic.easeOut',
+                    x
                 });
-                ref.current?.removeEventListener("mouseleave", e => {
-                    opacityTo(0);
+            })
+            context.add('yTo', (y: number) => {
+                gsap.to('.ball_main_gsap', {
+                    duration: 0.6,
+                    ease: 'Elastic.easeOut',
+                    y
                 });
-                ref.current?.removeEventListener("mousemove", e => {
-                    xTo(0);
-                    yTo(0);
-                    xToSecondary(0);
-                    yToSecondary(0);
+            })
+            context.add('xToSecondary', (x: number) => {
+                gsap.to(['.ball_secondary_gsap', '.ball_inner_top'], {
+                    duration: 0.3,
+                    ease: 'Power4.easeOut',
+                    x
                 });
-            }
+            })
+            context.add('yToSecondary', (y: number) => {
+                gsap.to(['.ball_secondary_gsap', '.ball_inner_top'], {
+                    duration: 0.3,
+                    ease: 'Power4.easeOut',
+                    y
+                });
+            })
+            context.add('opacityTo', (opacity: number) => {
+                gsap.to(['.ball_main_gsap', '.ball_secondary_gsap'], {
+                    duration: 0.3,
+                    ease: 'Power4.easeOut',
+                    opacity,
+                    scale: 1,
+                });
+            })
         }, ref);
 
-        return () => ctx.revert();
-    }, [ref]);
+        return () => ctxMouseMove.current?.revert();
+    }, [ref])
+
+    const mouseEnterHandler = useCallback(() => {
+
+        ctxMouseMove.current?.opacityTo(1);
+    }, [ctxMouseMove]);
+    const mouseLeaveHandler = useCallback(() => {
+        ctxMouseMove.current?.opacityTo(0);
+    }, [ctxMouseMove]);
+    const mouseMoveHandler = useCallback((e: MouseEvent) => {
+        ctxMouseMove.current?.xTo(e.clientX);
+        ctxMouseMove.current?.yTo(e.clientY);
+
+        ctxMouseMove.current?.xToSecondary(e.clientX);
+        ctxMouseMove.current?.yToSecondary(e.clientY);
+    }, [ctxMouseMove]);
+    useEventListener('mouseenter', mouseEnterHandler, ref);
+    useEventListener('mouseleave', mouseLeaveHandler, ref);
+    useEventListener('mousemove', mouseMoveHandler, ref);
+    
 
     const blend = useMemo(() => typeof key == 'string' ? '' : 'mix-blend-difference', [key])
     const currentCursor = useMemo(() => list.current.find(item => item.name == key), [key]);

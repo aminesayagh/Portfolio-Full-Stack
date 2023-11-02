@@ -18,7 +18,6 @@ const ListIconComponents = {
 } as const;
 
 export type IconNames = keyof typeof ListIconComponents;
-
-export const IconNamesValues = Object.keys(ListIconComponents) as IconNames[];
+const IconNamesValues = Object.keys(ListIconComponents) as IconNames[];
 
 export default ListIconComponents as { [key in IconNames]: (props: IconProps) => JSX.Element };

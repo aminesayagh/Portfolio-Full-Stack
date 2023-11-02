@@ -6,7 +6,9 @@ import { gsap } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 
 
-import { Title, Text, Noise } from '@/components/ui';
+import Title from '@/components/ui/typography/Title';
+import Text from '@/components/ui/typography/Text';
+import Noise from '@/components/ui/noise/Noise';
 import { rounded } from "@/components/style";
 import { useHover } from "react-aria";
 import { useMedia } from "react-use";

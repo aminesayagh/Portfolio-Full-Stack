@@ -3,7 +3,7 @@
 import Icons, { IconNames, IconProps as DefaultIconProps } from './IconsList';
 import { SVGAttributes } from 'react';
 
-export interface IconProps extends SVGAttributes<SVGElement>, DefaultIconProps {
+interface IconProps extends SVGAttributes<SVGElement>, DefaultIconProps {
     name: IconNames;
     className?: string;
 }

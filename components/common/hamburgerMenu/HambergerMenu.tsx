@@ -1,7 +1,7 @@
 
 import { useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import { Button } from '@/components/ui';
+import Button from '@/components/ui/button';
 import { useKeyboard } from 'react-aria';
 import { useMedia } from 'react-use'
 
@@ -28,10 +28,10 @@ const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => vo
     const isXxs = useMedia('(min-width: 390px)', false);
 
     useEffect(() => {
-        if(typeof isOpen !== 'boolean') return;
+        if (typeof isOpen !== 'boolean') return;
         async function handlerHamburgerClick() {
-            if(!path02Controls || !path01Controls) return;
-            if(isOpen) {
+            if (!path02Controls || !path01Controls) return;
+            if (isOpen) {
                 await path02Controls.start(path02Variants.moving);
                 path01Controls.start(path01Variants.open);
                 path02Controls.start(path02Variants.open);
@@ -41,23 +41,23 @@ const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => vo
                 path02Controls.start(path02Variants.closed);
             }
         };
-        if(typeof isOpen === 'boolean'){
+        if (typeof isOpen === 'boolean') {
             handlerHamburgerClick().then().catch(err => console.error(err));
         }
     }, [isOpen, path02Controls, path01Controls])
     let { keyboardProps } = useKeyboard({
         onKeyDown: (e) => {
-            if(['Escape', 'Esc'].includes(e.key)) {
+            if (['Escape', 'Esc'].includes(e.key)) {
             }
         },
         onKeyUp: (e) => {
-            if(['Escape', 'Esc'].includes(e.key)) {
+            if (['Escape', 'Esc'].includes(e.key)) {
                 isOpen && setOpen();
             }
         }
     })
 
-    if(typeof setOpen !== 'function' || typeof isOpen !== 'boolean') throw new Error('HamburgerMenu: setOpen is undefined');
+    if (typeof setOpen !== 'function' || typeof isOpen !== 'boolean') throw new Error('HamburgerMenu: setOpen is undefined');
 
     return (
         <>

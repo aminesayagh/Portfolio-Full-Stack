@@ -3,21 +3,30 @@ import React, { useRef, useContext, useCallback, useMemo, ElementRef, useState, 
 import { useTranslation } from "next-i18next";
 import { useIsomorphicLayoutEffect } from "react-use";
 
-import { Text, Button, Display, Icon, CursorContent, Item, LoadingContext } from '@/components/ui';
+import Text from "@/components/ui/typography/Text";
+import Button from "@/components/ui/button";
+import Display from "@/components/ui/typography/Display";
+import { Icon } from "@/components/ui/icon";
+import { CursorContent } from "@/components/ui/cursor";
+import Item from "@/components/ui/animation/item";
+import { LoadingContext } from "@/components/ui/preloader";
+
 import { MENU_ITEMS } from "@/conf/router";
 import { ScrollProvider } from '@/context/AnimationConf';
 import { ScrollTrigger, gsap } from "@/utils/gsap";
 import useRouterChange from '@/hook/SafePush';
+import { useEventListener } from "@/hook/useEventListener";
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<ElementRef<'div'>>(null);
+    const ctx = useRef<gsap.Context | null>(null);
 
     useIsomorphicLayoutEffect(() => {
         if (!!ref.current) {
-            const ctx = gsap.context(() => {
+            ctx.current = gsap.context((self) => {
                 const xTo = ref.current && gsap.quickTo(ref.current, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' });
                 const yTo = ref.current && gsap.quickTo(ref.current, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' });
-                const mouseMove = (e: any) => {
+                self.add('mouseMove', (e: any) => {
                     const { clientX, clientY } = e;
                     // @ts-ignore
                     const { left, top, width, height } = ref.current?.getBoundingClientRect();
@@ -25,86 +34,27 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
                     const y = clientY - (top + height / 2);
                     xTo && xTo(x);
                     yTo && yTo(y);
-                }
-                const mouseLeave = (e: any) => {
+                })
+                self.add('mouseLeave', () => {
                     xTo && xTo(0);
                     yTo && yTo(0);
-                }
-
-                ref.current?.addEventListener('mousemove', mouseMove);
-                ref.current?.addEventListener('mouseleave', mouseLeave);
-                return () => {
-                    ref.current?.removeEventListener('mousemove', mouseMove);
-                    ref.current?.removeEventListener('mouseleave', mouseLeave);
-                }
+                })
             });
-            return () => ctx.revert();
+            return () => ctx.current?.revert();
         }
     }, [ref]);
+    const handleMouseEnter = useCallback((e: MouseEvent) => {
+        ctx.current && ctx.current?.mouseMove(e);
+    }, [ctx]);
+    const handleMouseLeave = useCallback((e: MouseEvent) => {
+        ctx.current && ctx.current?.mouseLeave(e);
+    }, [ctx]);
+    useEventListener('mousemove', handleMouseEnter, ref)
+    useEventListener('mouseleave', handleMouseLeave, ref)
 
     return <div ref={ref} >
         {children}
     </div>
-}
-
-const GsapCircleBlue = ({ children, ...props }: { children: React.ReactElement, className: string }) => {
-    const circle = useRef<HTMLDivElement>(null);
-
-    const getPosition = useCallback((e: any) => {
-        const { clientX, clientY } = e; // get the mouse position relative to the circle element
-        const { left, top, width, height } = circle.current?.getBoundingClientRect() as DOMRect;
-        const x = clientX - left;
-        const y = clientY - top;
-        return { x, y };
-    }, [circle]);
-
-    useIsomorphicLayoutEffect(() => {
-
-        const ctx = gsap.context(() => {
-            if (!!circle.current) {
-                const tl = gsap.timeline({ paused: true });
-                const mouseEnter = (e: any) => {
-                    const { x, y } = getPosition(e);
-
-                    // init the animation
-                    tl.clear();
-                    tl.fromTo(circle.current, {
-                        background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 0%, var(--color-white-100) 0%)`,
-                    }, {
-                        background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 100%, var(--color-white-100) 0%)`,
-                        duration: 0.4,
-                        ease: 'power4.out',
-                    });
-                    tl.play();
-
-                }
-                const mouseLeave = (e: any) => {
-                    const { x, y } = getPosition(e);
-
-                    tl.clear();
-                    tl.fromTo(circle.current, {
-                        background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 100%, var(--color-white-100) 0%)`,
-                    }, {
-                        background: `radial-gradient(circle at ${x}px ${y}px, var(--color-primary-500) 0%, var(--color-white-100) 0%)`,
-                        duration: 0.4,
-                        ease: 'power4.out',
-                    });
-                    tl.play();
-                }
-
-                circle.current.addEventListener('pointerenter', mouseEnter);
-                circle.current.addEventListener('mouseleave', mouseLeave);
-                return () => {
-                    circle.current?.removeEventListener('pointerenter', mouseEnter);
-                    circle.current?.removeEventListener('mouseleave', mouseLeave);
-                    tl.kill();
-                }
-            }
-        })
-        return () => ctx.revert();
-    }, []);
-
-    return React.cloneElement(children, { ref: circle, className: twMerge(children.props.className, 'relative rounded-full bg-white-100') })
 }
 
 const ButtonNext = () => {
@@ -144,23 +94,21 @@ const FullStack = ({ className }: { className: string }) => {
 function useFitText(options?: { factor?: number, maxFontSize?: number }) {
     const [fontSize, setFontSize] = useState('initial');
     const ref = useRef<ElementRef<'div'>>(null);
-    useEffect(() => {
-        function adjustFontSize() {
-            if (ref.current) {
-                const containerWidth = ref.current.getBoundingClientRect().width;
-                const factor = options?.factor || 1;
-                const maxFontSize = options?.maxFontSize || 400;
-                const newSize = Math.min(containerWidth / factor, maxFontSize);
+    const adjustFontSize = useCallback(() => {
+        if (ref.current) {
+            const containerWidth = ref.current.getBoundingClientRect().width;
+            const factor = options?.factor || 1;
+            const maxFontSize = options?.maxFontSize || 400;
+            const newSize = containerWidth / factor;
 
-                setFontSize(`${newSize}px`);
-            }
+            setFontSize(() => `${newSize}px`);
         }
+    }, [ref, options?.factor, options?.maxFontSize])
 
-        adjustFontSize();
+    useEventListener('resize', adjustFontSize);
+    useEventListener('resize', adjustFontSize, ref);
+    useIsomorphicLayoutEffect(adjustFontSize, [ref]);
 
-        window.addEventListener('resize', adjustFontSize);
-        return () => window.removeEventListener('resize', adjustFontSize);
-    }, [ref, options?.factor, options?.maxFontSize]);
 
     return [fontSize, ref] as const;
 }

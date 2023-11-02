@@ -8,7 +8,7 @@ const images = {
     }
 } as const;
 
-export type ImageName = keyof typeof images;
+type ImageName = keyof typeof images;
 
 interface Props extends Omit<ImageProps, 'src'> {
     src: ImageName | ImageProps['src'];

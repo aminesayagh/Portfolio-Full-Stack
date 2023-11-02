@@ -1,11 +1,10 @@
 import { useTranslation } from "next-i18next";
-import { Text, Button, Icon } from '@/components/ui';
+
+import Text from '@/components/ui/typography/Text';
+import Button from '@/components/ui/button';
+import {Icon} from '@/components/ui/icon';
 
 import { twMerge } from 'tailwind-merge';
-import { useIsomorphicLayoutEffect } from 'react-use';
-import { gsap } from '@/utils/gsap';
-
-import { useHover } from "react-aria";
 
 const Action = () => {
     const { t } = useTranslation();

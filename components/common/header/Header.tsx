@@ -8,9 +8,16 @@ import { ScrollTrigger } from "@/utils/gsap";
 
 
 import StyleAnimation from '@/styles/animation.module.scss';
-import { LoadingContext, Navbar, Logo, Link, Button, containerStyle, Modal, Text, Title } from "@/components/ui";
+import { LoadingContext} from '@/components/ui/preloader';
+import Navbar from '@/components/ui/navbar';
+import Logo from '@/components/ui/logo';
+import Link from '@/components/ui/typography/Link';
+import Button from '@/components/ui/button'; 
+import { containerStyle } from '@/components/ui/container';
+import Modal from '@/components/ui/overlay/modal';
+import Text from '@/components/ui/typography/Text';
+import Title from '@/components/ui/typography/Title';
 import { HamburgerMenu, SwitchLang } from '@/components/common';
-;
 
 
 import { ScrollProvider } from '@/context/AnimationConf';
@@ -158,7 +165,7 @@ const Header = () => {
         } else {
             ctx.current.close();
         }
-    }, [openMenu]);
+    }, [openMenu, ctx]);
     useEffect(() => {
         if (openMenu) {
             ctx.current.open();
@@ -173,13 +180,14 @@ const Header = () => {
             tl.current.reverse().then(() => {
                 setOpenMenu(false);
                 idTimeout.current = setTimeout(() => {
-                    scrollbar && scrollbar.scrollTo(`#${id}`, {
-                        duration: 500,
-                    });
+                    safePush(`${path}#${id}`);
+                    // scrollbar && scrollbar.scrollTo(`#${id}`, {
+                    //     duration: 500,
+                    // });
                 }, 100);
             });
         }
-    }, [openMenu, scrollbar, safePush]);
+    }, [openMenu, safePush]);
 
     useEffect(() => {
         return () => {

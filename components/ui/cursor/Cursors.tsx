@@ -4,7 +4,9 @@ import { twMerge } from 'tailwind-merge';
 import _ from 'lodash';
 import { useIsomorphicLayoutEffect } from 'react-use';
 
-import { Text, Icon, IconNames } from '@/components/ui';
+import Text from '@/components/ui/typography/Text';
+import {Icon, IconNames } from '@/components/ui/icon';
+
 import { gsap } from '@/utils/gsap';
 import { ItemCursorPropsByComponent } from './CursorType';
 
@@ -16,7 +18,7 @@ const CursorScroll = ({ isActive, ctx, title }: {
 
     useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.set(ref.current, {
+            gsap.set('.cursor_scroll_gsap', {
                 scale: 0,
                 display: 'none',
             });
@@ -31,12 +33,14 @@ const CursorScroll = ({ isActive, ctx, title }: {
     }, [ctx, ref]);
     useIsomorphicLayoutEffect(() => {
         ctx.current?.cursorScroll(isActive);
-    }, [isActive, ctx]);
+    }, [isActive]);
 
     return (
-        <div ref={ref} className={twMerge('w-32 h-32 cursor_scroll_gsap', 'rounded-full', 'flex-col justify-center items-center')}>
-            <Text p size='sm' exchange degree='1' className='cursor_text_gsap'>{title ? title : 'scroll'}</Text>
-        </div>
+        <span ref={ref} >
+            <div className={twMerge('w-32 h-32 bg-white-100 cursor_scroll_gsap', 'rounded-full', 'flex-col justify-center items-center will-change-transform-animation')}>
+                <Text p size='sm' exchange degree='1' className='cursor_text_gsap'>{title ? title : 'scroll'}</Text>
+            </div>
+        </span>
     )
 }
 
@@ -45,16 +49,16 @@ const CursorActionIcon = ({ isActive, ctx, iconName, degree = 45 }: {
     ctx: MutableRefObject<gsap.Context | undefined>
 } & Partial<ItemCursorPropsByComponent['CursorActionIcon']>) => {
     const ref = useRef<HTMLDivElement>(null);
-    const [icon,setIcon] = useState<string | undefined>(undefined);
+    const [icon, setIcon] = useState<string | undefined>(undefined);
     useEffect(() => {
-        if(!!iconName) {
+        if (!!iconName) {
             setIcon(iconName);
         }
     }, [iconName]);
-    
+
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context((self) => {
-            gsap.set(ref.current, {
+            gsap.set('.cursor_action_icon_gsap', {
                 scale: 0,
                 display: 'none',
             });
@@ -68,19 +72,21 @@ const CursorActionIcon = ({ isActive, ctx, iconName, degree = 45 }: {
 
     useIsomorphicLayoutEffect(() => {
         ctx.current?.cursorActionIcon(isActive, degree);
-        if(!isActive) {
+        if (!isActive) {
             const idTimeout = setTimeout(() => {
                 setIcon(undefined);
             }, 1000);
             return () => clearTimeout(idTimeout);
         }
     }, [isActive, ctx, degree]);
-    
-    return <div ref={ref} className={twMerge('w-28 h-28', 'rounded-full', 'flex-col justify-center items-center cursor_action_icon_gsap')}>
-        <span className='cursorIconGsap'>
-            {icon ? <Icon name={icon as IconNames} size='30' color='var(--color-black-100)' /> : null}
-        </span>
-    </div>
+
+    return <span ref={ref} >
+        <div className={twMerge('w-28 h-28', 'rounded-full', 'flex-col justify-center items-center cursor_action_icon_gsap will-change-transform-animation')}>
+            <span className='cursorIconGsap'>
+                {icon ? <Icon name={icon as IconNames} size='30' color='var(--color-black-100)' /> : null}
+            </span>
+        </div>
+    </span>
 }
 
 const CursorEvent = ({ isActive, ctx, event }: {

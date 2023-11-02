@@ -1,9 +1,10 @@
 import { Head } from '@/components/common';
-import { Noise, LoadingProvider } from '@/components/ui';
+import Noise from '@/components/ui/noise';
+import { LoadingProvider } from '@/components/ui/preloader';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import '@/utils/gsap';
 
-import { Cursor } from '@/components/ui';
+import Cursor from '@/components/ui/cursor';
 import dynamic from 'next/dynamic';
 
 import nextI18NextConfig from '../next-i18next.config.js'

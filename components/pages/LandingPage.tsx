@@ -1,4 +1,4 @@
-import { Container } from '@/components/ui';
+import Container from '@/components/ui/container';
 import React, { Profiler, ProfilerOnRenderCallback } from 'react';
 import { DynamicIntro, DynamicManifesto, DynamicCases, DynamicAction, DynamicVideo, DynamicExpertise, DynamicCallToAction } from '@/components/pages/sections';
 
@@ -19,13 +19,13 @@ const callback: ProfilerOnRenderCallback = (id, phase, actualDuration, baseDurat
 const LandingPage = () => {
     return (
         <>
-            <Profiler id='LandingPage' onRender={callback}>
+            <Profiler id='LandingPage-profiler' onRender={callback}>
                 <Container data-scroll-section as='section' size='lg' id='intro' >
                     <DynamicIntro />
                 </Container>
             </Profiler>
             <section data-scroll-section className='block h-24 w-full' ></section>
-            <Profiler id='video' onRender={callback}>
+            <Profiler id='video-profiler' onRender={callback}>
                 <Suspense >
                     <Container data-scroll-section id='video' as='section' size='lg'  >
                         <DynamicVideo />
@@ -33,37 +33,37 @@ const LandingPage = () => {
                 </Suspense>
             </Profiler>
             <section data-scroll-section className='block h-16 xxs:h-0 w-full'></section>
-            <Profiler id='manifesto' onRender={callback}>
+            <Profiler id='manifesto-profiler' onRender={callback}>
                 <Container data-scroll-section id='manifesto' as='section' size='lg'  >
                     <DynamicManifesto />
                 </Container>
             </Profiler>
             <section data-scroll-section className='block h-24 xxs:h-24 w-full'></section>
-            <Profiler id='experience' onRender={callback}>
+            <Profiler id='experience-profiler' onRender={callback}>
                 <section data-scroll-section id='experience' >
                     <Container size='full' as='div' className='relative overflow-hidden [&>*]:py-20 [&>*]:bg-white-200' data-scroll data-scroll-position='end' data-scroll-speed='0.3'  >
                         <DynamicExpertise />
                     </Container>
                 </section>
             </Profiler>
-            <Profiler id='action-1' onRender={callback}>
+            <Profiler id='action-1-profiler' onRender={callback}>
                 <Container data-scroll-section as='section' size='lg' id='action-1' >
                     <DynamicCallToAction />
                 </Container>
             </Profiler>
             <section data-scroll-section className='block h-24 w-full'></section>
-            <Profiler id='cases' onRender={callback}>
+            <Profiler id='cases-profiler' onRender={callback}>
                 <Container data-scroll-section as='section' size='lg' id='cases' className='py-10 h-fit' >
                     <DynamicCases />
                 </Container>
             </Profiler>
-            <Profiler id='action-contact' onRender={callback}>
+            <Profiler id='action-contact-profiler' onRender={callback}>
                 <Container data-scroll-section as='section' size='lg' id='action-contact' >
                     <DynamicAction />
                 </Container>
             </Profiler>
             <section data-scroll-section className='block h-6 xs:h-12 w-full'></section>
-            <Profiler id='footer' onRender={callback}>
+            <Profiler id='footer-profiler' onRender={callback}>
                 <Container data-scroll-section as='footer' size='lg' id='footer' className={twMerge('flex flex-col gap-8 md:gap-12')}>
                     <DynamicFooter />
                 </Container>

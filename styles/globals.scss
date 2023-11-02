@@ -25,12 +25,14 @@
   padding-bottom: 0.8rem;
   backdrop-filter: blur(40px);
   background-color: #1f1f1f90;
+  animation: fade-in 0.3s ease-in-out;
 }
 [data-scroll-header-inside="false"] .header-fixed{
   padding-top: 1rem;
   padding-bottom: 1rem;
   backdrop-filter: blur(0px);
   background-color: transparent;
+  animation: fade-out 0.3s ease-in-out;
 }
 
 .overflow-y-animate {
