@@ -3,6 +3,8 @@ import React, { ElementRef, useContext, useRef, useEffect, useCallback } from 'r
 import { memo } from 'react';
 import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
+import { useIsomorphicLayoutEffect } from 'react-use';
+
 
 import  Link from '@/components/ui/typography/Link';
 import Button from '@/components/ui/button';
@@ -13,28 +15,33 @@ import { gsap } from 'utils/gsap';
 import useGsap from '@/hook/useGsap';
 import { MenuItem } from '@/conf/router';
 import { useEventListener } from '@/hook/useEventListener';
-import { useIsomorphicLayoutEffect } from 'react-use/';
 
 const BASE_LOCALE_SOCIAL = 'socialNetwork';
 
 const ICON_SIZE_CLASS_NAME = 'w-5 h-5 lg:w-6 lg:h-6';
+
 const FollowUs = () => {
     const ref = useRef<ElementRef<'div'>>(null);
     const menuSocialNetworksRef = useRef<MenuItem[]>([]);
 
     useEffect(() => {
         const { signal } = new AbortController();
+        let active = false;
         fetch('/api/menu?name=socialNetworks', {
             signal
         }).then(async (res1) => {
             res1.json().then((response1) => {
+                if(active) return;
                 menuSocialNetworksRef.current = response1.items;
             })
-        })
-    }, [menuSocialNetworksRef])
+        });
+        return () => {
+            active = true;
+        }
+    }, [menuSocialNetworksRef]);
     const ctx = useRef<gsap.Context | null>(null);
     useEffect(() => {
-        ctx.current = gsap.context((self) => {
+        ctx.current = gsap.context((self) => {      
             const tl = gsap.timeline({
                 paused: true
             }).fromTo('.fallow-button-gsap', {
@@ -42,7 +49,7 @@ const FollowUs = () => {
             }, {
                 xPercent: 100,
                 duration: 0.5,
-                ease: 'power4.out',
+                ease: 'Power4.out',
             }).to('.fallow-button-gsap', {
                 width: 0,
                 duration: 0.01
@@ -54,12 +61,23 @@ const FollowUs = () => {
                 xPercent: 0,
                 stagger: -0.07,
                 duration: 0.3,
-            });
+            }, '-=0.2');
+            
+            
+
             self.add('followButtonShow', () => {
                 tl.play();
             });
             self.add('followButtonHide', () => {
                 tl.reverse();
+            });
+
+            gsap.set('.social-button-gsap', {
+                xPercent: -100,
+                opacity: 0,
+            });
+            gsap.set('.fallow-button-gsap', {
+                xPercent: 0,
             });
             return () => {
                 tl.kill();
@@ -68,27 +86,28 @@ const FollowUs = () => {
         return () => {
             ctx.current?.revert();
         }
-    }, [ref])
+    }, [ref]);
     const handler = useCallback(() => {
+        console.log('start');
         ctx.current?.followButtonShow();
-    }, [ctx])
+    }, [ctx]);
     const handlerLeave = useCallback(() => {
+        console.log('end');
         ctx.current?.followButtonHide();
-    }, [ctx])
+    }, [ctx]);
     useEventListener('mouseenter', handler, ref);
     useEventListener('mouseleave', handlerLeave, ref);
 
     const { t } = useTranslation();
     return (
         <div ref={ref} className='flex flex-row justify-end items-center gap-4'>
-            
-            
             <div className='flex flex-row gap-8 items-center'>
                 {menuSocialNetworksRef.current.map((item, index) => <li key={index} className='overflow-hidden list-none'>
-                    <Link size='sm' href={item.link} degree='4' weight='semibold' className='relative social-button-gsap' >
+                    <Link size='sm' href={item.link} degree='4' weight='semibold' className='social-button-gsap' >
                         {t(`${BASE_LOCALE_SOCIAL}.${item.id}.key`)}
                     </Link>
-                </li>)}
+                </li>
+                )}
             </div>
             <span className='overflow-hidden'>
                 <Text p className='fallow-button-gsap whitespace-nowrap-important' degree='3' weight='semibold' size='sm' >
@@ -99,6 +118,8 @@ const FollowUs = () => {
         </div>
     )
 }
+
+// const FollowUs = memo(FollowUs);
 
 const TextAnimated = ({ phrase, className, ...props }: { phrase: string } & Omit<React.ComponentProps<typeof Text>, 'div' | 'children'>) => {
     const container = useRef<ElementRef<'div'>>(null);
@@ -214,6 +235,8 @@ const GoToTop = ({ handler, text }: { handler: () => void, text: string }) => {
     </Button>
 }
 
+const GoToTopMemo = memo(GoToTop);
+
 const Footer = () => {
     const { t } = useTranslation();
     const { scrollbar } = useContext(ScrollProvider);
@@ -230,7 +253,7 @@ const Footer = () => {
         </div>
         <div className={twMerge('flex flex-row flex-wrap sm:flex-nowrap justify-between', 'gap-y-4', 'pb-10 pt-6')}>
             <div className={twMerge('flex flex-row flex-1', 'order-2 sm:order-1')} >
-                <GoToTop handler={goToSection} text={t('footer.action')} />
+                <GoToTopMemo handler={goToSection} text={t('footer.action')} />
             </div>
             <div className='flex flex-row flex-none grow-0 justify-start sm:justify-center items-center  order-1 sm:order-2'>
                 <Text p degree='3' weight='semibold' size='sm' className='uppercase'>

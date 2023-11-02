@@ -58,11 +58,8 @@ const CursorActionIcon = ({ isActive, ctx, iconName, degree = 45 }: {
 
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context((self) => {
-            
             gsap.set('.cursor_action_icon_gsap', {
                 scale: 0,
-                top: '50%',
-                left: '50%',
                 display: 'none',
             });
             gsap.set('.cursorIconGsap', {
@@ -84,7 +81,7 @@ const CursorActionIcon = ({ isActive, ctx, iconName, degree = 45 }: {
     }, [isActive, ctx, degree]);
 
     return <span ref={ref} >
-        <div className={twMerge('w-28 h-28', 'rounded-full', 'flex-col justify-center items-center cursor_action_icon_gsap will-change-transform-animation')}>
+        <div className={twMerge('w-28 h-28', 'rounded-full', 'flex-col justify-center items-center cursor_action_icon_gsap will-change-transform-animation bg-white-100')}>
             <span className='cursorIconGsap'>
                 {icon ? <Icon name={icon as IconNames} size='30' color='var(--color-black-100)' /> : null}
             </span>
