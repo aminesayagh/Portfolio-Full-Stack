@@ -27,6 +27,8 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     useEventListener('load', handlerRefresh);
     useEventListener('resize', handlerRefresh, ref);
 
+    
+
 
     useEffect(() => {
         if (!isStart.current && !scrollbar) {
@@ -121,9 +123,9 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                 nullTargetWarn: false
             });
             if (scrollbar) {
-                // gsap.to('.app-container', 0, { css: { visibility: 'visible' } });
+                gsap.to('.app-container', 0, { css: { visibility: 'visible' } });
             }
-        });
+        }, ref);
         return () => {
             ctx.revert();
         }

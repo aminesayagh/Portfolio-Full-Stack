@@ -77,11 +77,13 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
                 display: 'flex',
             }).fromTo('.cursor_action_icon_gsap', {
                 scale: 0,
-                backgroundColor: 'transparent',
+                opacity: 0,
+                // backgroundColor: 'transparent',
             }, {
-                duration: 0.3,
+                duration: 0.4,
                 scale: 1,
-                backgroundColor: 'var(--color-white-100)',
+                opacity: 1,
+                // backgroundColor: 'var(--color-white-100)',
                 ease: 'Power4.easeOut',
             }, '>').fromTo('.cursor_action_icon_gsap .cursorIconGsap', {
                 rotate: 45,

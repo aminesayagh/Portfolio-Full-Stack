@@ -2,8 +2,7 @@ import { useState, useCallback, memo, useEffect, useRef, useContext, useMemo } f
 import { useRouter } from 'next/router';
 import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
-import { gsap, Power3 } from '@/utils/gsap';
-import { ScrollTrigger } from "@/utils/gsap";
+import { gsap, Power3, ScrollTrigger } from '@/utils/gsap';
 
 
 
@@ -17,7 +16,8 @@ import { containerStyle } from '@/components/ui/container';
 import Modal from '@/components/ui/overlay/modal';
 import Text from '@/components/ui/typography/Text';
 import Title from '@/components/ui/typography/Title';
-import { HamburgerMenu, SwitchLang } from '@/components/common';
+import HamburgerMenu from '@/components/common/hamburgerMenu';
+import SwitchLang from '@/components/common/switchLang';
 
 
 import { ScrollProvider } from '@/context/AnimationConf';
@@ -41,7 +41,6 @@ const Header = () => {
     const { safePush } = useRouterChange();
     let [openMenu, setOpenMenu] = useState<boolean>(false);
     const { endLoading } = useContext(LoadingContext);
-    const { scrollbar } = useContext(ScrollProvider);
 
 
     const menuHamburgerItemsRef = useRef<MenuItem[]>([]);
