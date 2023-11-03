@@ -125,7 +125,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             if (scrollbar) {
                 gsap.to('.app-container', 0, { css: { visibility: 'visible' } });
             }
-        });
+        }, ref);
         return () => {
             ctx.revert();
         }

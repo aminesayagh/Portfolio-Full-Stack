@@ -16,7 +16,8 @@ import { containerStyle } from '@/components/ui/container';
 import Modal from '@/components/ui/overlay/modal';
 import Text from '@/components/ui/typography/Text';
 import Title from '@/components/ui/typography/Title';
-import { HamburgerMenu, SwitchLang } from '@/components/common';
+import HamburgerMenu from '@/components/common/hamburgerMenu';
+import SwitchLang from '@/components/common/switchLang';
 
 
 import { ScrollProvider } from '@/context/AnimationConf';

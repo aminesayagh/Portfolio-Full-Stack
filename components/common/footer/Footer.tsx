@@ -40,7 +40,9 @@ const FollowUs = () => {
         }
     }, [menuSocialNetworksRef]);
     const ctx = useRef<gsap.Context | null>(null);
-    useEffect(() => {
+
+    useIsomorphicLayoutEffect(() => {
+        if(!menuSocialNetworksRef.current.length) return;
         ctx.current = gsap.context((self) => {      
             const tl = gsap.timeline({
                 paused: true
@@ -48,7 +50,7 @@ const FollowUs = () => {
                 xPercent: 0,
             }, {
                 xPercent: 100,
-                duration: 0.5,
+                duration: 0.3,
                 ease: 'Power4.out',
             }).to('.fallow-button-gsap', {
                 width: 0,
@@ -61,7 +63,7 @@ const FollowUs = () => {
                 xPercent: 0,
                 stagger: -0.07,
                 duration: 0.3,
-            }, '-=0.2');
+            });
             
             
 
@@ -86,7 +88,7 @@ const FollowUs = () => {
         return () => {
             ctx.current?.revert();
         }
-    }, [ref]);
+    }, [ref, menuSocialNetworksRef.current.length]);
     const handler = useCallback(() => {
         console.log('start');
         ctx.current?.followButtonShow();

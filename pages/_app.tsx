@@ -1,6 +1,7 @@
 
 import type { AppProps } from 'next/app'
 import '../styles/globals.scss';
+import { useEffect } from 'react';
 
 import Script from 'next/script';
 
@@ -18,6 +19,7 @@ const montserrat = Montserrat({
 
 function App({ Component, pageProps }: AppProps) {
 
+
   return <>
     <Script id="google-analytics">{
       `
@@ -27,7 +29,7 @@ function App({ Component, pageProps }: AppProps) {
         gtag('config', 'G-LBW0TBMSD6');
       `}
     </Script>
-    <main className={montserrat.variable}>
+    <main className={`${montserrat.variable} app-container`}>
       <Component {...pageProps} />
     </main>
   </>

@@ -1,4 +1,4 @@
-import { Head } from '@/components/common';
+import Head from '@/components/common/head';
 import Noise  from 'components/ui/noise';
 import React from 'react';
 
