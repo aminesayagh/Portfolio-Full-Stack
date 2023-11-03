@@ -33,7 +33,6 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     useEffect(() => {
         if (!isStart.current && !scrollbar) {
             isStart.current = true;
-            console.log('start');
             addLoadingComponent(LOADING_COMPONENT_KEY);
             let scroll: LocomotiveScroll;
             ;(async () => {
@@ -58,6 +57,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                     });
                     const scrollUpdate = (instance: any) => {
                         document.documentElement.setAttribute('data-direction', instance?.direction);
+                        document.documentElement.setAttribute('data-speed', instance?.speed);
                         ScrollTrigger.update();
                     }
                     scroll.on('scroll', (instance) => {
@@ -92,6 +92,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
 
     const delta = useRef(0);
     const lastScrollY = useRef(0);
+    
     useEffect(() => {
         scrollbar && scrollbar.on('scroll', (e) => {
             if(e.delta.y < 140) {
@@ -125,7 +126,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             if (scrollbar) {
                 gsap.to('.app-container', 0, { css: { visibility: 'visible' } });
             }
-        }, ref);
+        });
         return () => {
             ctx.revert();
         }
@@ -143,7 +144,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
         </div>
         <style jsx>{`
             .app-container{
-                // visibility: hidden;
+                visibility: hidden;
             }
         `}</style>
     </React.Fragment>
