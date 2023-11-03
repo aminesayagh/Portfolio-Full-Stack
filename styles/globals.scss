@@ -4,7 +4,7 @@
 @import 'tailwindcss/utilities';
 
 :root {
-  // --font-montserrat: 'Montserrat', sans-serif;
+  --font-monsterrat: 'Montserrat';
 }
 
 
@@ -12,8 +12,8 @@
   @apply outline-none focus:outline-none touch-none;
 }
 
-main {
-  font-family: var(--font-sans), 'Montserrat', 'Inter', sans-serif;
+main, html, body {
+  font-family: var(--font-sans) !important;
 }
 *{
 	box-sizing: border-box;

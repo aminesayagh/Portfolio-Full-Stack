@@ -159,7 +159,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        'sans': ['var(--font-sans)','montserrat', ...defaultTheme.fontFamily.sans], 
+        'sans': ['Montserrat', 'var(--font-monsterrat)', 'Inter', ...defaultTheme.fontFamily.sans], 
       }
     },
   },
