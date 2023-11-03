@@ -90,7 +90,7 @@ const Percent = ({ isLoading, setEndLoadingProgress }: { isLoading: boolean, set
                 setPercent((prevPercent) => Math.min(prevPercent + interval, 100));
             }, LONG_LOADING_TIME);
         } else if (!isLoading) {
-            interval = interval + 0.2;
+            interval = interval + 0.3;
             intervalId = setInterval(() => {
                 setPercent((prevPercent) => Math.min(prevPercent + interval, 100));
                 if(percent >= 100) {
