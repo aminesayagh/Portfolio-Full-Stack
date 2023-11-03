@@ -14,6 +14,8 @@ const useGsap = (gsapCallback: gsap.ContextFunc, ref: RefObject<HTMLDivElement> 
             ctx && ctx.revert();
         }
     }, [ref,...rendered, scrollbar, width]);
+
+    
 }
 
 export default useGsap;

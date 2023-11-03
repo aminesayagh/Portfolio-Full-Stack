@@ -90,11 +90,9 @@ const FollowUs = () => {
         }
     }, [ref, menuSocialNetworksRef.current.length]);
     const handler = useCallback(() => {
-        console.log('start');
         ctx.current?.followButtonShow();
     }, [ctx]);
     const handlerLeave = useCallback(() => {
-        console.log('end');
         ctx.current?.followButtonHide();
     }, [ctx]);
     useEventListener('mouseenter', handler, ref);

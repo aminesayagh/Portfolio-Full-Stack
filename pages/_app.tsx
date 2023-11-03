@@ -13,7 +13,7 @@ import '../utils/i18n';
 
 const montserrat = Montserrat({
   subsets: ['cyrillic'],
-  variable: '--font-sans',
+  variable: '--font-monsterrat',
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
 
