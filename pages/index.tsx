@@ -1,4 +1,4 @@
-import { Head } from '@/components/common';
+import Head from '@/components/common/head';
 import Noise from '@/components/ui/noise';
 import { LoadingProvider } from '@/components/ui/preloader';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -12,7 +12,7 @@ import { useTranslation } from 'next-i18next';
 
 const DynamicHeader = dynamic(() => import('@/components/common/header'), {});
 const DynamicLandingPage = dynamic(() => import('@/components/pages/LandingPage'), {});
-const DynamicAnimationConf = dynamic(() => import('@/context/AnimationConf'), {});
+
 import AnimationConf from '@/context/AnimationConf';
 
 export default function Home() {

@@ -60,18 +60,18 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                 invalidateOnRefresh: true,
             }
         })
-        tl.fromTo(container.current?.children[0]?.children[0] as any, {
+        tl.fromTo('.image-gsap' as any, {
             scale: 1,
         }, {
             scale: 1.3,
             transformOrigin: 'center 10%',
             ease: 'Power3.easeIn'
-        }).fromTo(container.current?.children[0]?.children[0] as any, {
+        }).fromTo('.image-gsap' as any, {
             backgroundPosition: 'center 20%',
         }, {
             backgroundPosition: 'center 80%',
             ease: 'Power3.easeOut',
-        }, 0).fromTo(container.current?.children[0]?.children[0] as any, {
+        }, 0).fromTo('.image-gsap' as any, {
             filter: 'blur(0px)',
         }, {
             filter: 'blur(10px)',
@@ -100,7 +100,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
             tl.kill();
             tl2?.kill();
         }
-    }, container);
+    }, container, [picture, index, id]);
     
     const zIndexContainer = useMemo(() => 10 + (index + 10), [index]);
     const zIndexImage = useMemo(() => 10 + (index + 11), [index]);
@@ -114,7 +114,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
         zIndex: zIndexContainer,
     }} >
         <div className='absolute left-0 right-0 top-0 w-full h-screen'  >
-            <Image src={pic} alt={description} className='h-screen object-cover' priority sizes='100vw' width='6000' height='4500' style={{
+            <Image src={pic} alt={description} className='h-screen object-cover image-gsap' priority sizes='100vw' width='6000' height='4500' style={{
                 zIndex: zIndexImage,
             }} />
         </div>

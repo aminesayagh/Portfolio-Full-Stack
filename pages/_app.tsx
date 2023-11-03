@@ -8,25 +8,15 @@ import { Montserrat } from 'next/font/google';
 import { appWithTranslation } from 'next-i18next'
 import nextI18NextConfig from '../next-i18next.config.js';
 import '../utils/i18n';
-import { useState, useEffect } from 'react';
 
-import dynamic from 'next/dynamic';
 
 const montserrat = Montserrat({
   subsets: ['cyrillic'],
   variable: '--font-sans',
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
-import Cursor from '@/components/ui/cursor';
-import { LoadingProvider } from '@/components/ui/preloader';
 
-const DynamicAnimationConf = dynamic(() => import('@/context/AnimationConf'), {});
 function App({ Component, pageProps }: AppProps) {
-
-  const [val, setVal] = useState<string>();
-  useEffect(() => {
-    setVal(montserrat.variable)
-  }, [])
 
   return <>
     <Script id="google-analytics">{
@@ -37,7 +27,7 @@ function App({ Component, pageProps }: AppProps) {
         gtag('config', 'G-LBW0TBMSD6');
       `}
     </Script>
-    <main className={`${val} font-sans`}>
+    <main className={montserrat.variable}>
       <Component {...pageProps} />
     </main>
   </>

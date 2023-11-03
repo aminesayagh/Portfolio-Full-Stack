@@ -4,7 +4,7 @@
 @import 'tailwindcss/utilities';
 
 :root {
-  --font-montserrat: 'Montserrat', sans-serif;
+  // --font-montserrat: 'Montserrat', sans-serif;
 }
 
 
@@ -12,6 +12,9 @@
   @apply outline-none focus:outline-none touch-none;
 }
 
+main {
+  font-family: var(--font-sans), 'Montserrat', 'Inter', sans-serif;
+}
 *{
 	box-sizing: border-box;
 }
@@ -57,6 +60,7 @@ html {
   -webkit-overflow-scrolling: touch;
   -webkit-touch-callout: none;
 }
+
 
 .whitespace-nowrap-important {
   white-space: nowrap !important;
