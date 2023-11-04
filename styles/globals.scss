@@ -4,16 +4,23 @@
 @import 'tailwindcss/utilities';
 
 :root {
-  --font-monsterrat: 'Montserrat';
+  --font-montserrat: 'Montserrat','Inter', sans-serif;
 }
 
+@font-face {
+  font-family: 'Montserrat', 'Inter', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Montserrat/Montserrat-Medium.ttf') format('truetype');
+}
 
 .remove_outline {
   @apply outline-none focus:outline-none touch-none;
 }
 
 main, html, body {
-  font-family: var(--font-sans) !important;
+  @apply font-sans;
 }
 *{
 	box-sizing: border-box;

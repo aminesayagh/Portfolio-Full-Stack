@@ -18,14 +18,17 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     const isStart = useRef(false);
     const ref = useRef<HTMLDivElement>(null);
 
-    const handlerRefresh = useCallback(() => {
+    const handlerRefresh =() => {
         if (!scrollbar) return;
         ScrollTrigger.refresh();
-    }, [scrollbar]);
+        scrollbar.update();
+
+    }
 
     useEventListener('resize', handlerRefresh);
     useEventListener('load', handlerRefresh);
     useEventListener('resize', handlerRefresh, ref);
+
 
     
 
@@ -92,7 +95,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
 
     const delta = useRef(0);
     const lastScrollY = useRef(0);
-    
+
     useEffect(() => {
         scrollbar && scrollbar.on('scroll', (e) => {
             if(e.delta.y < 140) {

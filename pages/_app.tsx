@@ -13,13 +13,12 @@ import '../utils/i18n';
 
 const montserrat = Montserrat({
   subsets: ['cyrillic'],
-  variable: '--font-monsterrat',
+  variable: '--font-montserrat',
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
 
 function App({ Component, pageProps }: AppProps) {
-
-
+  
   return <>
     <Script id="google-analytics">{
       `
@@ -29,6 +28,12 @@ function App({ Component, pageProps }: AppProps) {
         gtag('config', 'G-LBW0TBMSD6');
       `}
     </Script>
+    <style>{`
+      html, body, #__next {
+        --font-montserrat: var(${montserrat.variable});
+        font-family: var(${montserrat.variable});
+      }
+    `}</style>
     <main className={`${montserrat.variable} app-container`}>
       <Component {...pageProps} />
     </main>

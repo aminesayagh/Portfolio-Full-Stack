@@ -101,14 +101,14 @@ const FollowUs = () => {
     const { t } = useTranslation();
     return (
         <div ref={ref} className='flex flex-row justify-end items-center gap-4'>
-            <div className='flex flex-row gap-8 items-center'>
+            <ul className='flex flex-row gap-8 items-center'>
                 {menuSocialNetworksRef.current.map((item, index) => <li key={index} className='overflow-hidden list-none'>
                     <Link size='sm' href={item.link} degree='4' weight='semibold' className='social-button-gsap' >
                         {t(`${BASE_LOCALE_SOCIAL}.${item.id}.key`)}
                     </Link>
                 </li>
                 )}
-            </div>
+            </ul>
             <span className='overflow-hidden'>
                 <Text p className='fallow-button-gsap whitespace-nowrap-important' degree='3' weight='semibold' size='sm' >
                     {t('footer.socialNetwork')}
