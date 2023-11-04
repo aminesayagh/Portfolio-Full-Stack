@@ -6,6 +6,14 @@
 :root {
   --font-montserrat: 'Montserrat','Inter', sans-serif;
 }
+
+@font-face {
+  font-family: 'Montserrat', 'Inter', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 .remove_outline {
   @apply outline-none focus:outline-none touch-none;
 }

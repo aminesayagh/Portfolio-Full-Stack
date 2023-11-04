@@ -62,7 +62,7 @@ const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => vo
     return (
         <>
             <span  {...keyboardProps}>
-                <Button onPress={() => setOpen()}>
+                <Button onPress={() => setOpen()} name='humberger menu button'>
                     <svg width={`${isXxs ? SIZE : 22}`} height={`${isXxs ? SIZE : 22}`} viewBox='0 0 24 24' strokeWidth={STROKE_WIDTH} >
                         <motion.path
                             {...path01Variants.closed}

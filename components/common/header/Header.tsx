@@ -4,8 +4,6 @@ import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
 import { gsap, Power3, ScrollTrigger } from '@/utils/gsap';
 
-
-
 import StyleAnimation from '@/styles/animation.module.scss';
 import { LoadingContext} from '@/components/ui/preloader';
 import Navbar from '@/components/ui/navbar';
