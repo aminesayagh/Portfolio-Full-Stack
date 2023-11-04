@@ -3,6 +3,7 @@ import { ScrollTrigger, gsap } from '@/utils/gsap';
 import { LoadingContext } from '@/components/ui/preloader';
 import { useEventListener } from '@/hook/useEventListener';
 import { useEvent } from 'react-use';
+import { useTranslation } from 'react-i18next';
 
 export const ScrollProvider = createContext<{
     scrollbar: null | LocomotiveScroll,
@@ -15,10 +16,12 @@ const LOADING_COMPONENT_KEY = 'AnimationScrollbarConf';
 const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     const [scrollbar, setScrollbar] = useState<LocomotiveScroll | null>(null);
     const { addLoadingComponent, removeLoadingComponent } = useContext(LoadingContext);
-    const isStart = useRef(false);
+    
+    const [isStart, setStart] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
+    const { i18n } = useTranslation();
 
-    const handlerRefresh =() => {
+    const handlerRefresh = () => {
         if (!scrollbar) return;
         ScrollTrigger.refresh();
         scrollbar.update();
@@ -29,14 +32,14 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     useEventListener('resize', handlerRefresh, ref);
     useEventListener('load', handlerRefresh, ref);
 
-
-
+    useEventListener('hashchange', handlerRefresh);
     
 
 
+
     useEffect(() => {
-        if (!isStart.current && !scrollbar) {
-            isStart.current = true;
+        if (!isStart && !scrollbar) {
+            setStart(true)
             addLoadingComponent(LOADING_COMPONENT_KEY);
             let scroll: LocomotiveScroll;
             ;(async () => {
@@ -96,10 +99,10 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
             if (scrollbar) {
                 scrollbar.destroy();
                 setScrollbar(null);
-                isStart.current = false;
+                setStart(false);
             }
         }
-    }, [scrollbar, removeLoadingComponent, addLoadingComponent]);
+    }, [scrollbar, removeLoadingComponent, addLoadingComponent, isStart, i18n.language]);
 
     const delta = useRef(0);
     const lastScrollY = useRef(0);
@@ -161,4 +164,4 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
     </React.Fragment>
 }
 
-export default React.memo(AnimationConf);
+export default AnimationConf;

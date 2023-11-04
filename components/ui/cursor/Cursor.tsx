@@ -222,9 +222,9 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
             <cursorContext.Provider value={{
                 addCursor, setKey
             }}>
-                <span className='cursor_container relative' >
+                <div className='cursor_container relative' >
                     {children}
-                </span>
+                </div>
                 <div className={twMerge(
                     DEFAULT_BALL_CLASS_NAME,
                     blend,
