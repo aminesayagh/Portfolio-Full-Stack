@@ -197,7 +197,6 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
     }, [ref])
 
     const mouseEnterHandler = useCallback(() => {
-
         ctxMouseMove.current?.opacityTo(1);
     }, [ctxMouseMove]);
     const mouseLeaveHandler = useCallback(() => {

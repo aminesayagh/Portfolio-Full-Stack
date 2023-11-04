@@ -22,12 +22,13 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
         if (!scrollbar) return;
         ScrollTrigger.refresh();
         scrollbar.update();
-
     }
 
     useEventListener('resize', handlerRefresh);
     useEventListener('load', handlerRefresh);
     useEventListener('resize', handlerRefresh, ref);
+    useEventListener('load', handlerRefresh, ref);
+
 
 
     
@@ -70,7 +71,7 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                         scrollTop(value) {
                             return !!scroll && arguments.length ?
                                 // @ts-expect-error
-                                scroll.scrollTo(value, { duration: 0, disableLerp: true }) :
+                                scroll.scrollTo(value, { duration: 0.1, disableLerp: true }) :
                                 // @ts-expect-error
                                 !!scroll && scroll.scroll.instance.scroll.y;
                         },
@@ -90,6 +91,13 @@ const AnimationConf = ({ children }: { children: React.ReactNode }) => {
                     removeLoadingComponent(LOADING_COMPONENT_KEY);
                 }
             })();
+        }
+        return () => {
+            if (scrollbar) {
+                scrollbar.destroy();
+                setScrollbar(null);
+                isStart.current = false;
+            }
         }
     }, [scrollbar, removeLoadingComponent, addLoadingComponent]);
 
