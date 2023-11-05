@@ -1,5 +1,5 @@
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Script from 'next/script';
 import { Montserrat } from 'next/font/google';
 import { appWithTranslation } from 'next-i18next';
@@ -29,6 +29,11 @@ const HeaderDynamic = dynamic(() => import('@/components/common/header'), {});
 function App({ Component, pageProps }: AppProps) {
   const ref = useRef(null);
   const { asPath } = useRouter();
+  const [font,setFont] = useState<string | null>(null);
+
+  useEffect(() => {
+    setFont(montserrat.variable)
+  }, [])
 
   return <>
     <Script id="google-analytics">{
@@ -46,7 +51,7 @@ function App({ Component, pageProps }: AppProps) {
       }
     `}</style>
 
-    <main className={`${montserrat.variable} app-container`}>
+    <main className={`${font || ''} app-container`}>
       <LoadingProvider>
         <LocomotiveScrollProvider options={{
           smooth: true,
