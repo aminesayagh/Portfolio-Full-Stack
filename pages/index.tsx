@@ -1,10 +1,8 @@
 import Head from '@/components/common/head';
 import Noise from '@/components/ui/noise';
-import { LoadingProvider } from '@/components/ui/preloader';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import '@/utils/gsap';
 
-import Cursor from '@/components/ui/cursor';
 import dynamic from 'next/dynamic';
 
 import nextI18NextConfig from '../next-i18next.config.js'
@@ -25,6 +23,8 @@ export default function Home() {
       logo='/favicon.svg'
     />
     <DynamicLandingPage />
+    <Noise />
+
   </>
 }
 

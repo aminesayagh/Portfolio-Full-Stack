@@ -10,7 +10,7 @@ import Noise from '@/components/ui/noise';
 
 import { gsap } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
-
+import { useRouter } from 'next/router';
 const END_LOADING_IN = 99;
 export const LoadingContext = createContext<{
     addLoadingComponent: (key: Key) => void,
@@ -34,17 +34,21 @@ export function LoadingProvider({ children }: {
     const [isLoading, setIsLoading] = useState(true);
     const [endLoading, setEndLoading] = useState(false);
     const [loadingComponentList, setLoadingComponentList] = useState<LoadingElement>({});
+    const { asPath } = useRouter();
     const loadingState = useCallback(() => {
-        const inLoadingState = Object.values(loadingComponentList).filter((item) => item === true);
+        const loadingValues = Object.values(loadingComponentList);
+        const inLoadingState = loadingValues.filter((item) => item === true);
         if (inLoadingState.length > 0) {
             setIsLoading(true);
         } else {
             setIsLoading(false);
         }
     }, [setIsLoading, loadingComponentList])
+
     const loadingExist = useCallback((key: Key) => {
         return !!loadingComponentList[key];
     }, [loadingComponentList])
+
     const addLoadingComponent = useCallback((key: Key) => {
         if (loadingExist(key)) return;
         loadingComponentList[key] = true;
@@ -52,6 +56,7 @@ export function LoadingProvider({ children }: {
         setLoadingComponentList(() => loadingComponentList);
         loadingState();
     }, [loadingComponentList, loadingState, loadingExist])
+
     const removeLoadingComponent = useCallback((key: Key) => {
         if (!loadingExist(key)) return;
         loadingComponentList[key] = false;
@@ -59,6 +64,26 @@ export function LoadingProvider({ children }: {
         setLoadingComponentList((prev) => loadingComponentList);
         loadingState();
     }, [loadingComponentList, loadingState, loadingExist])
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            const values = Object.values(loadingComponentList);
+            if(values.length == 1 && loadingComponentList['loadingProvider']) {
+                setIsLoading(false); // default timeout
+            }
+        }, 1000);
+        return () => {
+            clearTimeout(timer);
+        }
+    }, [])
+
+    useEffect(() => {
+        addLoadingComponent('loadingProvider');
+        
+        return () => {
+            removeLoadingComponent('loadingProvider');
+        }
+    }, [asPath])
     return (
         <LoadingContext.Provider value={{
             addLoadingComponent,
@@ -84,16 +109,16 @@ const Percent = ({ isLoading, setEndLoadingProgress }: { isLoading: boolean, set
         let intervalId: NodeJS.Timeout;
         let interval = 1;
         if (percent == INITIAL_PERCENT) {
-            setPercent((prevPercent) => Math.min(prevPercent + interval, 100));
-        } else if (isLoading && percent < 100) {
+            setPercent((prevPercent) => Math.min(prevPercent + interval, END_LOADING_IN));
+        } else if (isLoading && percent < END_LOADING_IN) {
             intervalId = setInterval(() => {
-                setPercent((prevPercent) => Math.min(prevPercent + interval, 100));
+                setPercent((prevPercent) => Math.min(prevPercent + interval, END_LOADING_IN));
             }, LONG_LOADING_TIME);
         } else if (!isLoading) {
             interval = interval + 0.3;
             intervalId = setInterval(() => {
-                setPercent((prevPercent) => Math.min(prevPercent + interval, 100));
-                if(percent >= 100) {
+                setPercent((prevPercent) => Math.min(prevPercent + interval, END_LOADING_IN));
+                if(percent >= END_LOADING_IN) {
                     setEndLoadingProgress(true);
                 }
             }, MEDIUM_LOADING_TIME);

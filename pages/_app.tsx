@@ -30,7 +30,7 @@ const HeaderDynamic = dynamic(() => import('@/components/common/header'), {});
 function App({ Component, pageProps }: AppProps) {
   const ref = useRef(null);
   const { asPath } = useRouter();
-  
+
   return <>
     <Script id="google-analytics">{
       `
@@ -72,7 +72,6 @@ function App({ Component, pageProps }: AppProps) {
             <Cursor>
               <HeaderDynamic />
               <Component {...pageProps} />
-              <Noise />
               <ToastRegion />
             </Cursor>
           </div>

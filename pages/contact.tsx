@@ -7,15 +7,12 @@ import nextI18NextConfig from '../next-i18next.config.js'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import Head from '@/components/common/head';
-import { ToastRegion } from '@/components/common/toast';
 import Noise from 'components/ui/noise';
-import Cursor from '@/components/ui/cursor';
 
 import '@/utils/gsap';
 
 
 const ContactPageDynamic = dynamic(() => import('@/components/pages/ContactPage'), {});
-const HeaderDynamic = dynamic(() => import('@/components/common/header'), {});
 
 const Contact = () => {
     const { t } = useTranslation('common');
@@ -28,9 +25,8 @@ const Contact = () => {
             author={t('head.contact.author')}
             logo='/favicon.svg'
         />
-        {/* <LoadingProvider> */}
         <ContactPageDynamic />
-        {/* </LoadingProvider> */}
+        <Noise />
     </>
 }
 
