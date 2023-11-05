@@ -29,6 +29,7 @@ const TRANSLATE_Y = -110;
 import useRouterChange from '@/hook/SafePush';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { MenuItem } from '@/conf/router';
+import { useLocomotiveScroll } from '@/lib/LocomotiveScroll';
 
 
 const Header = () => {
@@ -37,7 +38,7 @@ const Header = () => {
     const { safePush } = useRouterChange();
     let [openMenu, setOpenMenu] = useState<boolean>(false);
     const { endLoading } = usePreloader();
-
+    const { scrollTo } = useLocomotiveScroll();
 
     const menuHamburgerItemsRef = useRef<MenuItem[]>([]);
     const menuSocialNetworksRef = useRef<MenuItem[]>([]);
@@ -169,6 +170,7 @@ const Header = () => {
 
 
     let idTimeout = useRef<NodeJS.Timeout>();
+
     const onButtonClick = useCallback((path: string, id?: string) => {
         if (!openMenu) {
             safePush(path)
@@ -176,10 +178,8 @@ const Header = () => {
             tl.current.reverse().then(() => {
                 setOpenMenu(false);
                 idTimeout.current = setTimeout(() => {
-                    safePush(`${path}#${id}`);
-                    // scrollbar && scrollbar.scrollTo(`#${id}`, {
-                    //     duration: 500,
-                    // });
+                    // safePush(`${path}#${id}`);
+                    scrollTo(`#${id}`);
                 }, 100);
             });
         }

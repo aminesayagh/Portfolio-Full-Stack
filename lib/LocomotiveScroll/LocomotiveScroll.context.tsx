@@ -4,14 +4,19 @@ import { useDebounce } from '@/hook/useDebounce';
 import useResizeObserver from 'use-resize-observer';
 import { ScrollTrigger } from '@/utils/gsap';
 
+type ScrollTo = (target: string, options?: { offset?: number, duration?: number, easing?: number[] }) => void;
 export interface LocomotiveScrollContextValue {
     scroll: Scroll | null;
     isReady: boolean;
+    scrollTo: ScrollTo;
+    hasToReload: number;
 }
 
 export const LocomotiveScrollContext = createContext<LocomotiveScrollContextValue>({
     scroll: null,
     isReady: false,
+    scrollTo: () => { },
+    hasToReload: 0,
 });
 
 export interface LocomotiveScrollProviderProps {
@@ -24,23 +29,24 @@ export interface LocomotiveScrollProviderProps {
 }
 
 export function LocomotiveScrollProvider({
-    children, options, containerRef, watch, location, onUpdate, onLocationChange
+    children, options, containerRef, watch = [], location, onUpdate, onLocationChange
 }: WithChildren<LocomotiveScrollProviderProps>) {
     const LocomotiveScrollRef = useRef<Scroll | null>(null);
-
+    const hasScrollbar = useRef(false);
     const [isReady, setIsReady] = useState(false);
-    const [hasScrollbar, setHasScrollbar] = useState(false);
 
     const { width: widthContainer, height: heightContainer } = useResizeObserver<HTMLDivElement>({ ref: containerRef });
 
     const width = useDebounce(widthContainer, 50);
     const height = useDebounce(heightContainer, 50);
 
+    const [hasToReload, setHasToReload] = useState(0);
+
     useEffect(() => {
         ; (async () => {
             try {
-                if (!hasScrollbar) {
-                    setHasScrollbar(true);
+                if (!hasScrollbar.current && typeof window !== 'undefined' && !LocomotiveScrollRef.current) {
+                    hasScrollbar.current = true;
                     console.log('LocomotiveScrollProvider: hasScrollbar');
                     const LocomotiveScroll = (await import('locomotive-scroll')).default
 
@@ -50,7 +56,6 @@ export function LocomotiveScrollProvider({
                         console.warn(
                             `react-locomotive-scroll: [data-scroll-container] dataset was not found. You likely forgot to add it which will prevent Locomotive Scroll to work.`
                         )
-                        return;
                     }
 
                     LocomotiveScrollRef.current = new LocomotiveScroll({
@@ -61,9 +66,10 @@ export function LocomotiveScrollProvider({
                     ScrollTrigger.scrollerProxy('[data-scroll-container]', {
                         scrollTop(value) {
                             if (arguments.length && typeof value === 'string') {
-                                LocomotiveScrollRef.current?.scrollTo(value, { duration: 0.1, disableLerp: true })
+                                LocomotiveScrollRef.current?.scrollTo(value, { duration: 0.1, disableLerp: false })
+                            } else {
+                                return LocomotiveScrollRef.current?.scroll.instance.scroll.y
                             }
-                            return LocomotiveScrollRef.current?.scroll.instance.scroll.y
                         },
                         getBoundingClientRect() {
                             return {
@@ -100,21 +106,34 @@ export function LocomotiveScrollProvider({
             document.documentElement.removeAttribute('data-direction');
             document.documentElement.removeAttribute('data-speed');
 
-            
-
             setIsReady(false);
-            setHasScrollbar(false);
+            hasScrollbar.current = false;
             console.log('LocomotiveScrollProvider: destroy');
         }
-    }, [])
+    }, []);
 
     const refreshLocomotiveScroll = () => {
         if (!LocomotiveScrollRef.current) {
             return
         }
+
         LocomotiveScrollRef.current.update();
-        ScrollTrigger.refresh();
+
+        setHasToReload(hasToReload + 1);
         console.log('refreshLocomotiveScroll');
+    }
+
+    const scrollTo: ScrollTo = (target, options) => {
+        if (!LocomotiveScrollRef.current) {
+            return;
+        }
+        LocomotiveScrollRef.current.scrollTo(target, {
+            duration: 0.8,
+            disableLerp: false,
+            callback: () => {
+                refreshLocomotiveScroll();
+            }
+        });
     }
 
     useEffect(
@@ -129,26 +148,14 @@ export function LocomotiveScrollProvider({
                 onUpdate(LocomotiveScrollRef.current)
             }
         },
-        watch ? [...watch, height, width, onUpdate] : [height, width, onUpdate]
+        [...watch, height, width, onUpdate]
     )
-
-    useEffect(() => {
-        if (!LocomotiveScrollRef.current || !location) {
-            return
-        }
-
-        refreshLocomotiveScroll()
-
-        if (onLocationChange) {
-            onLocationChange(LocomotiveScrollRef.current, location)
-        }
-    }, [location, onLocationChange]);
 
     return (
         <LocomotiveScrollContext.Provider
             value={{
                 scroll: LocomotiveScrollRef.current,
-                isReady,
+                isReady, scrollTo, hasToReload
             }}
         >
             {children}

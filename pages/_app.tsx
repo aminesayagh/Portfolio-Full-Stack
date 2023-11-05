@@ -1,5 +1,5 @@
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Script from 'next/script';
 import { Montserrat } from 'next/font/google';
 import { appWithTranslation } from 'next-i18next';
@@ -10,7 +10,6 @@ import type { AppProps } from 'next/app'
 import '../styles/globals.scss';
 
 import Cursor from '@/components/ui/cursor';
-import Noise from '@/components/ui/noise';
 
 import nextI18NextConfig from '../next-i18next.config.js';
 import '../utils/i18n';
@@ -30,6 +29,11 @@ const HeaderDynamic = dynamic(() => import('@/components/common/header'), {});
 function App({ Component, pageProps }: AppProps) {
   const ref = useRef(null);
   const { asPath } = useRouter();
+  const [font,setFont] = useState<string | null>(null);
+
+  useEffect(() => {
+    setFont(montserrat.variable)
+  }, [])
 
   return <>
     <Script id="google-analytics">{
@@ -46,27 +50,24 @@ function App({ Component, pageProps }: AppProps) {
         font-family: var(${montserrat.variable});
       }
     `}</style>
-    <main className={`${montserrat.variable} app-container`}>
+
+    <main className={`${font || ''} app-container`}>
       <LoadingProvider>
         <LocomotiveScrollProvider options={{
           smooth: true,
+          smoothMobile: true,
+          getDirection: true,
+          getSpeed: true,
           // @ts-ignore
-          multiplier: 0.9,
-          tablet: {
-            smooth: true,
-          },
           smartphone: {
             smooth: true,
           },
-          getDirection: true,
-          getSpeed: true,
+          tablet: {
+            smooth: true,
+          },
         }}
-          location={asPath}
+          watch={[asPath]}
           containerRef={ref}
-          onLocationChange={(scroll) => scroll.scrollTo(0, {
-            duration: 0,
-            disableLerp: true,
-          })}
         >
           <div data-scroll-container ref={ref} >
             <Cursor>
