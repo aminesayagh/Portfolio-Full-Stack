@@ -29,7 +29,7 @@ export interface LocomotiveScrollProviderProps {
 }
 
 export function LocomotiveScrollProvider({
-    children, options, containerRef, watch, location, onUpdate, onLocationChange
+    children, options, containerRef, watch = [], location, onUpdate, onLocationChange
 }: WithChildren<LocomotiveScrollProviderProps>) {
     const LocomotiveScrollRef = useRef<Scroll | null>(null);
     const hasScrollbar = useRef(false);
@@ -118,7 +118,6 @@ export function LocomotiveScrollProvider({
         }
 
         LocomotiveScrollRef.current.update();
-        ScrollTrigger.refresh();
 
         setHasToReload(hasToReload + 1);
         console.log('refreshLocomotiveScroll');
@@ -149,7 +148,7 @@ export function LocomotiveScrollProvider({
                 onUpdate(LocomotiveScrollRef.current)
             }
         },
-        watch ? [...watch, height, width, onUpdate] : [height, width, onUpdate]
+        [...watch, height, width, onUpdate]
     )
 
     return (
