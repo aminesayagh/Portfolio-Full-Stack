@@ -218,7 +218,7 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
     const currentCursor = useMemo(() => list.current.find(item => item.name == key), [key]);
 
     return <>
-        <div ref={ref}>
+        <div className='relative z-cursor' ref={ref}>
             <cursorContext.Provider value={{
                 addCursor, setKey
             }}>
