@@ -41,6 +41,7 @@ export function LocomotiveScrollProvider({
             try {
                 if (!hasScrollbar) {
                     setHasScrollbar(true);
+                    console.log('LocomotiveScrollProvider: hasScrollbar');
                     const LocomotiveScroll = (await import('locomotive-scroll')).default
 
                     const dataScrollContainer = document.querySelector('[data-scroll-container]')
@@ -96,9 +97,14 @@ export function LocomotiveScrollProvider({
         return () => {
             LocomotiveScrollRef.current?.destroy();
             LocomotiveScrollRef.current = null;
+            document.documentElement.removeAttribute('data-direction');
+            document.documentElement.removeAttribute('data-speed');
+
+            
 
             setIsReady(false);
             setHasScrollbar(false);
+            console.log('LocomotiveScrollProvider: destroy');
         }
     }, [])
 
@@ -107,7 +113,8 @@ export function LocomotiveScrollProvider({
             return
         }
         LocomotiveScrollRef.current.update();
-        // ScrollTrigger.refresh();
+        ScrollTrigger.refresh();
+        console.log('refreshLocomotiveScroll');
     }
 
     useEffect(
@@ -115,7 +122,7 @@ export function LocomotiveScrollProvider({
             if (!LocomotiveScrollRef.current) {
                 return
             }
-
+            
             refreshLocomotiveScroll()
 
             if (onUpdate) {

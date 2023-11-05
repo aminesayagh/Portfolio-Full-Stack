@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, ElementRef } from 'react';
+import { useRef, useEffect, useState, ElementRef, RefObject } from 'react';
 import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 
@@ -11,31 +11,27 @@ import { gsap } from '@/utils/gsap';
 import _ from 'lodash';
 import useGsap from '@/hook/useGsap';
 
-const Manifesto = () => {
-    const { t, i18n } = useTranslation();
+const Phrase = ({ text, lang, refDescription }: { text: string, lang: string, refDescription: RefObject<HTMLDivElement> }) => {
     const refs = useRef<ElementRef<'span'>[]>([]);
-    const refDescription = useRef<ElementRef<'div'>>(null);
-    const [body, setBody] = useState<React.JSX.Element[] | null>(null);
-    const [phrase, setPhrase] = useState(t('manifesto.description'));
 
-    useEffect(() => {
-        setPhrase(t('manifesto.description'));
-    }, [i18n.language, phrase, t]);
+    const [body, setBody] = useState<React.JSX.Element[] | null>(null);
+
     useEffect(() => {
         setBody(null);
 
         const splitLetters = (word: string) => {
             return _.map(word.split(''), (letter, index) => (
-                <span ref={el => { refs.current.push(el as HTMLSpanElement) }} key={`letter_${index}`} >{letter}</span>
+                <span ref={el => {refs.current.push(el as HTMLSpanElement) }} key={`letter_${index}`} >{letter}</span>
             ));
         };
 
-        const elements = _.map(phrase.split(' '), (word, index) => {
+        const elements = _.map(text.split(' '), (word, index) => {
             const letters = splitLetters(word);
             return <p key={`word_${index}`} className='flex flex-row gap-[0.09rem] letter_gsap will-change-transform-animation'>{letters}</p>;
         });
         setBody(() => elements);
-    }, [phrase, i18n.language, t]);
+    }, [text, lang]);
+    
     useGsap(() => {
         if (refs.current.length > 0) {
             const descriptions = gsap.utils.toArray('.manifesto_description_gsap');
@@ -81,7 +77,21 @@ const Manifesto = () => {
                 tl.kill();
             }
         }
-    }, refDescription);
+    }, refDescription, [body?.length, text, lang]);
+
+    return body ? body.map((word, index) => <span key={index} className='mr-[0.3rem]' >{word}</span>) : null
+
+}
+
+const Manifesto = () => {
+    const { t, i18n } = useTranslation();
+    const refDescription = useRef<ElementRef<'div'>>(null);
+    const [phrase, setPhrase] = useState(t('manifesto.description'));
+
+    useEffect(() => {
+        setPhrase(t('manifesto.description'));
+    }, [i18n.language, phrase, t]);
+    
 
     return <div data-scroll data-scroll-sticky data-scroll-target="#manifesto" data-scroll-speed="4" className='h-fit py-20 xxs:py-28 md:py-32 2xl:py-40 relative' ref={refDescription} >
         <div className={twMerge(`grid grid-cols-12 gap-y-8 xxs:gap-y-12 xs:gap-y-8 mdl:gap-y-12`, 'h-fit strick')}>
@@ -106,7 +116,7 @@ const Manifesto = () => {
                     <strong className='text-white-200 pr-2'>
                         {t(`manifesto.slogan`)}
                     </strong>
-                    {body ? body.map((word, index) => <span key={index} className='mr-[0.3rem]' >{word}</span>) : null}
+                    <Phrase text={phrase} lang={i18n.language} refDescription={refDescription} />
                 </Title>
             </div>
             <div className={twMerge(

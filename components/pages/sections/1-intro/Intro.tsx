@@ -94,6 +94,7 @@ const FullStack = ({ className }: { className: string }) => {
 function useFitText(options?: { factor?: number, maxFontSize?: number }) {
     const [fontSize, setFontSize] = useState('initial');
     const ref = useRef<ElementRef<'div'>>(null);
+
     const adjustFontSize = useCallback(() => {
         if (ref.current) {
             const containerWidth = ref.current.getBoundingClientRect().width;
@@ -104,21 +105,23 @@ function useFitText(options?: { factor?: number, maxFontSize?: number }) {
             setFontSize(() => `${newSize}px`);
         }
     }, [ref, options?.factor, options?.maxFontSize])
-
+    useEffect(() => {
+        adjustFontSize();
+    }, [options?.factor, options?.maxFontSize])
     useEventListener('resize', adjustFontSize);
     useEventListener('resize', adjustFontSize, ref);
     useIsomorphicLayoutEffect(adjustFontSize, [ref]);
 
 
-    return [fontSize, ref] as const;
+    return { fontSize, ref };
 }
 
 const Title = () => {
     const { t, i18n } = useTranslation();
-    const [fontSizeInterface, widthInterfaceRef] = useFitText({
+    const { fontSize: fontSizeInterface, ref: widthInterfaceRef } = useFitText({
         factor: 4.94,
     });
-    const [fontSizeDev, widthDevRef] = useFitText({
+    const { fontSize: fontSizeDev, ref: widthDevRef } = useFitText({
         factor: i18n.language == 'en' ? 5.55 : 7,
     });
 

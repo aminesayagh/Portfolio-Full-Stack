@@ -38,7 +38,7 @@ export function LoadingProvider({ children }: {
     const loadingState = useCallback(() => {
         const loadingValues = Object.values(loadingComponentList);
         const inLoadingState = loadingValues.filter((item) => item === true);
-        if (inLoadingState.length > 0) {
+        if (inLoadingState.length > 1 && !loadingComponentList['loadingProvider']) {
             setIsLoading(true);
         } else {
             setIsLoading(false);
