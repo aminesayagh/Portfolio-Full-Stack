@@ -45,6 +45,13 @@ export function LoadingProvider({ children }: {
         }
     }, [setIsLoading, loadingComponentList])
 
+    useEffect(() => {
+        // add data set of loading to document html
+        const html = document.querySelector('html');
+        if (html) {
+            html.dataset.is_loading = (!endLoading).toString();
+        }
+    }, [endLoading])
     const loadingExist = useCallback((key: Key) => {
         return !!loadingComponentList[key];
     }, [loadingComponentList])
