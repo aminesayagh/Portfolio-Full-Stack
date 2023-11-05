@@ -19,6 +19,14 @@
   @apply outline-none focus:outline-none touch-none;
 }
 
+// use to correct apparing of cursor on preloader component
+html[data-is_loading="false"] .cursor-container{
+  @apply relative z-auto;
+}
+html:not([data-is_loading="false"]) .cursor-container {
+  @apply relative z-cursor;
+}
+
 main, html, body {
   @apply font-sans;
 }

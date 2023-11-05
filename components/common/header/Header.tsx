@@ -193,7 +193,7 @@ const Header = () => {
 
     const pageName = useMemo(() => router.pathname.split('/')[1], [router]);
     return <Modal isOpenExternal={openMenu} menuHandler={menuHandler}>
-        <Navbar size='lg' inTopOfScroll={openMenu} className='overflow-hidden' >
+        <Navbar size='lg' inTopOfScroll={openMenu} className='overflow-hidden ' >
             <span className='w-full flex flex-row items-center justify-between navbar_gsap'>
                 <Navbar.Content className={twMerge('flex-1', GAP_SIZE_LG)}>
                     <Link degree='2' href={`mailto:${t('header.email')}?subject=Contact from Portfolio&body=Hello Mohamed Amine,`} size='xs' weight='semibold' className='hidden mdl:flex'>{t('header.email')}</Link>

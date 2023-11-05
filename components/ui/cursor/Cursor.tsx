@@ -18,7 +18,6 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
     const ref = useRef<ElementRef<'div'>>(null);
 
     const list = useRef<ItemCursor[]>([]);
-    const [fistRender, setFirstRender] = useState(true);
 
     const addCursor = useCallback(({
         ...props
@@ -218,7 +217,7 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
     const currentCursor = useMemo(() => list.current.find(item => item.name == key), [key]);
 
     return <>
-        <div className='relative z-cursor' ref={ref}>
+        <div className='cursor-container' ref={ref}>
             <cursorContext.Provider value={{
                 addCursor, setKey
             }}>
