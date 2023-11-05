@@ -5,7 +5,7 @@ import { twMerge } from 'tailwind-merge';
 import { gsap, Power3, ScrollTrigger } from '@/utils/gsap';
 
 import StyleAnimation from '@/styles/animation.module.scss';
-import { LoadingContext} from '@/components/ui/preloader';
+import { usePreloader } from '@/components/ui/preloader';
 import Navbar from '@/components/ui/navbar';
 import Logo from '@/components/ui/logo';
 import Link from '@/components/ui/typography/Link';
@@ -35,7 +35,7 @@ const Header = () => {
     const router = useRouter();
     const { safePush } = useRouterChange();
     let [openMenu, setOpenMenu] = useState<boolean>(false);
-    const { endLoading } = useContext(LoadingContext);
+    const { endLoading } = usePreloader();
 
 
     const menuHamburgerItemsRef = useRef<MenuItem[]>([]);

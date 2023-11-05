@@ -16,6 +16,7 @@ import '../utils/i18n';
 import { LocomotiveScrollProvider } from '@/lib/LocomotiveScroll'
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
+import { LoadingProvider } from '@/components/ui/preloader';
 
 const montserrat = Montserrat({
   subsets: ['cyrillic'],
@@ -46,35 +47,37 @@ function App({ Component, pageProps }: AppProps) {
       }
     `}</style>
     <main className={`${montserrat.variable} app-container`}>
-      <LocomotiveScrollProvider options={{
-        smooth: true,
-        // @ts-ignore
-        multiplier: 0.9,
-        tablet: {
+      <LoadingProvider>
+        <LocomotiveScrollProvider options={{
           smooth: true,
-        },
-        smartphone: {
-          smooth: true,
-        },
-        getDirection: true,
-        getSpeed: true,
-      }}
-        location={asPath}
-        containerRef={ref}
-        onLocationChange={(scroll) => scroll.scrollTo(0, {
-          duration: 0,
-          disableLerp: true,
-        })}
-      >
-        <div data-scroll-container ref={ref} >
-          <Cursor>
-            <HeaderDynamic />
-            <Component {...pageProps} />
-            <Noise />
-            <ToastRegion />
-          </Cursor>
-        </div>
-      </LocomotiveScrollProvider>
+          // @ts-ignore
+          multiplier: 0.9,
+          tablet: {
+            smooth: true,
+          },
+          smartphone: {
+            smooth: true,
+          },
+          getDirection: true,
+          getSpeed: true,
+        }}
+          location={asPath}
+          containerRef={ref}
+          onLocationChange={(scroll) => scroll.scrollTo(0, {
+            duration: 0,
+            disableLerp: true,
+          })}
+        >
+          <div data-scroll-container ref={ref} >
+            <Cursor>
+              <HeaderDynamic />
+              <Component {...pageProps} />
+              <Noise />
+              <ToastRegion />
+            </Cursor>
+          </div>
+        </LocomotiveScrollProvider>
+      </LoadingProvider>
     </main>
   </>
 }

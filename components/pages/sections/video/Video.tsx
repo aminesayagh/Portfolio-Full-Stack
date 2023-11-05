@@ -5,20 +5,24 @@ import { twMerge } from 'tailwind-merge';
 
 import { rounded } from '@/components/style';
 import { CursorContent } from '@/components/ui/cursor';
-import { LoadingContext } from '@/components/ui/preloader';
+import { usePreloader } from '@/components/ui/preloader';
 import { useLocomotiveScroll } from '@/lib/LocomotiveScroll';
 
 const FRAME_COUNT = 164;
-
+const LOADING_KEY = 'Video';
 const Video = () => {
     let ref = useRef<HTMLCanvasElement>(null);
     let refContainer = useRef<HTMLDivElement>(null);
     const imagesRef = useRef([] as Array<HTMLImageElement>);
-    const { addLoadingComponent, removeLoadingComponent } = useContext(LoadingContext);
+    const { isReady } = useLocomotiveScroll();
+
+    const { addLoadingComponent, removeLoadingComponent } = usePreloader();
 
     useEffect(() => {
         let isInLoad = false;
         if(isInLoad) return;
+        addLoadingComponent(LOADING_KEY);
+        
 
         const currentFrame = (index: number) => `/framer-image/ezgif-frame-${index.toString().padStart(3, '0')}.webp`;
         
@@ -40,6 +44,7 @@ const Video = () => {
             if (isInLoad) return;
             
             imagesRef.current = images;
+            removeLoadingComponent(LOADING_KEY);
         })
         return () => {
             isInLoad = true;
@@ -50,7 +55,6 @@ const Video = () => {
             }
         }
     }, [removeLoadingComponent, addLoadingComponent]);
-    const { isReady } = useLocomotiveScroll();
 
     useEffect(() => {
         if(isReady) {
@@ -91,7 +95,7 @@ const Video = () => {
             }
         }
     }, [imagesRef.current.length, refContainer, isReady]);
-    
+
     return (
         <>
             <div data-scroll ref={refContainer} className={twMerge('block relative w-full h-fit rounded-3xl video_gsap overflow-hidden will-change-transform-animation', rounded({ size: 'xl' }))}>

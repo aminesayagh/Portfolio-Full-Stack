@@ -9,7 +9,7 @@ import Display from "@/components/ui/typography/Display";
 import { Icon } from "@/components/ui/icon";
 import { CursorContent } from "@/components/ui/cursor";
 import Item from "@/components/ui/animation/item";
-import { LoadingContext } from "@/components/ui/preloader";
+import { usePreloader } from "@/components/ui/preloader";
 
 import { MENU_ITEMS } from "@/conf/router";
 import { ScrollTrigger, gsap } from "@/utils/gsap";
@@ -320,7 +320,7 @@ const MenuMemo = React.memo(Menu);
 
 const Intro = () => {
     const introRef = useRef<ElementRef<'div'>>(null);
-    const { endLoading } = useContext(LoadingContext);
+    const { endLoading } = usePreloader();
 
     useGsap(() => {
         const tl = gsap.timeline({
