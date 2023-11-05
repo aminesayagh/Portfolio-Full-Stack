@@ -1,11 +1,12 @@
-import { useState, useCallback, memo, useEffect, useRef, useContext, useMemo } from 'react';
+import { useState, useCallback, memo, useEffect, useRef, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
+
 import { gsap, Power3, ScrollTrigger } from '@/utils/gsap';
 
 import StyleAnimation from '@/styles/animation.module.scss';
-import { LoadingContext} from '@/components/ui/preloader';
+import { usePreloader } from '@/components/ui/preloader';
 import Navbar from '@/components/ui/navbar';
 import Logo from '@/components/ui/logo';
 import Link from '@/components/ui/typography/Link';
@@ -16,9 +17,6 @@ import Text from '@/components/ui/typography/Text';
 import Title from '@/components/ui/typography/Title';
 import HamburgerMenu from '@/components/common/hamburgerMenu';
 import SwitchLang from '@/components/common/switchLang';
-
-
-import { ScrollProvider } from '@/context/AnimationConf';
 
 const GAP_SIZE_LG = 'gap-4 sm:gap-6 lg:gap-7 xl:gap-8';
 const GAP_SIZE_XL = 'gap-8 mdl:gap-12';
@@ -38,7 +36,7 @@ const Header = () => {
     const router = useRouter();
     const { safePush } = useRouterChange();
     let [openMenu, setOpenMenu] = useState<boolean>(false);
-    const { endLoading } = useContext(LoadingContext);
+    const { endLoading } = usePreloader();
 
 
     const menuHamburgerItemsRef = useRef<MenuItem[]>([]);
@@ -59,8 +57,7 @@ const Header = () => {
                 menuSocialNetworksRef.current = response2.items;
             })
         })
-    }, [])
-
+    }, []);
 
     useIsomorphicLayoutEffect(() => {
         ctx.current = gsap.context((self) => {
@@ -168,6 +165,8 @@ const Header = () => {
             ctx.current.open();
         }
     }, [openMenu]);
+
+
 
     let idTimeout = useRef<NodeJS.Timeout>();
     const onButtonClick = useCallback((path: string, id?: string) => {

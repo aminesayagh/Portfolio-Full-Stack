@@ -6,17 +6,13 @@ import { DynamicIntro, DynamicManifesto, DynamicCases, DynamicAction, DynamicVid
 import { twMerge } from 'tailwind-merge';
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
+import { useLocomotiveScroll } from '@/lib/LocomotiveScroll';
 
 const DynamicFooter = dynamic(() => import('@/components/common/footer'));
-// let bigLoaded = 0
-const callback: ProfilerOnRenderCallback = (id, phase, actualDuration, baseDuration, startTime, commitTime) => {
-    //     if (phase === 'mount' && actualDuration > bigLoaded) {
-    //         console.log(`${id} is big and loaded`);
-    //         bigLoaded = actualDuration;
-    //     }
-    //     console.log(`${id} took ${actualDuration} ms to render`);
-}
 const LandingPage = () => {
+
+    const { scroll } = useLocomotiveScroll();
+
     return (
         <>
             <Container data-scroll-section as='section' size='lg' id='intro' >

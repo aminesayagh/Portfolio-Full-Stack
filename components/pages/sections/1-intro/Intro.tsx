@@ -9,13 +9,13 @@ import Display from "@/components/ui/typography/Display";
 import { Icon } from "@/components/ui/icon";
 import { CursorContent } from "@/components/ui/cursor";
 import Item from "@/components/ui/animation/item";
-import { LoadingContext } from "@/components/ui/preloader";
+import { usePreloader } from "@/components/ui/preloader";
 
 import { MENU_ITEMS } from "@/conf/router";
-import { ScrollProvider } from '@/context/AnimationConf';
 import { ScrollTrigger, gsap } from "@/utils/gsap";
 import useRouterChange from '@/hook/SafePush';
 import { useEventListener } from "@/hook/useEventListener";
+import useGsap from "@/hook/useGsap";
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<ElementRef<'div'>>(null);
@@ -94,6 +94,7 @@ const FullStack = ({ className }: { className: string }) => {
 function useFitText(options?: { factor?: number, maxFontSize?: number }) {
     const [fontSize, setFontSize] = useState('initial');
     const ref = useRef<ElementRef<'div'>>(null);
+
     const adjustFontSize = useCallback(() => {
         if (ref.current) {
             const containerWidth = ref.current.getBoundingClientRect().width;
@@ -104,21 +105,23 @@ function useFitText(options?: { factor?: number, maxFontSize?: number }) {
             setFontSize(() => `${newSize}px`);
         }
     }, [ref, options?.factor, options?.maxFontSize])
-
+    useEffect(() => {
+        adjustFontSize();
+    }, [options?.factor, options?.maxFontSize])
     useEventListener('resize', adjustFontSize);
     useEventListener('resize', adjustFontSize, ref);
     useIsomorphicLayoutEffect(adjustFontSize, [ref]);
 
 
-    return [fontSize, ref] as const;
+    return { fontSize, ref };
 }
 
 const Title = () => {
     const { t, i18n } = useTranslation();
-    const [fontSizeInterface, widthInterfaceRef] = useFitText({
+    const { fontSize: fontSizeInterface, ref: widthInterfaceRef } = useFitText({
         factor: 4.94,
     });
-    const [fontSizeDev, widthDevRef] = useFitText({
+    const { fontSize: fontSizeDev, ref: widthDevRef } = useFitText({
         factor: i18n.language == 'en' ? 5.55 : 7,
     });
 
@@ -261,18 +264,19 @@ const menuKeys = ['manifesto', 'experience', 'cases', 'contact'];
 const Menu = () => {
     const { t } = useTranslation();
     const { safePush } = useRouterChange();
-    const { scrollbar } = useContext(ScrollProvider);
+    // const { scrollbar } = useContext(ScrollProvider);
 
     const goToSection = useCallback((section: string) => {
         if (section == 'contact') {
             safePush('/contact');
-        } else if (scrollbar) {
-            scrollbar.scrollTo(`#${section}`, {
-                duration: 500,
-                disableLerp: true
-            });
+        } else {
+            safePush(`/#${section}`);
+            // scrollbar.scrollTo(`#${section}`, {
+            //     duration: 500,
+            //     disableLerp: true
+            // });
         }
-    }, [safePush, scrollbar]);
+    }, [safePush]);
 
     const menuItemsData = useMemo(() => Array.apply(null, Array(4)).map((_, i) => {
         return {
@@ -284,7 +288,6 @@ const Menu = () => {
     return (<>
         <div className={twMerge('flex flex-row flex-wrap justify-between items-start w-full gap-y-6')} >
             {menuItemsData.map(({ key, number, title }) => {
-                // if (i > 3) return null;
                 return <div key={key} className={twMerge('flex flex-col justify-start items-start gap-1 w-1/2 sm:w-auto md:w-1/4')} >
                     <Text p weight='medium' size='sm' degree='3' className='number_menu_gsap will-change-transform-animation' >{number}</Text>
                     <CursorContent name={`cursorPointer_intro_menu_${number}`} component='CursorEvent' props={{
@@ -320,70 +323,67 @@ const MenuMemo = React.memo(Menu);
 
 const Intro = () => {
     const introRef = useRef<ElementRef<'div'>>(null);
-    const { endLoading } = useContext(LoadingContext);
+    const { endLoading } = usePreloader();
 
-    useIsomorphicLayoutEffect(() => {
-        let ctx = gsap.context((self) => {
-            const tl = gsap.timeline({
-                paused: true,
-            }).from('.splitText_gsap', {
-                yPercent: 200,
-                skewY: 16,
-                duration: 1,
-                ease: 'power4.out',
-                delay: 0.4,
-                stagger: {
-                    amount: 0.4
-                },
-                onComplete: function () {
-                    this.targets().forEach((el: any) => {
-                        el.style.willChange = '';
-                    });
-                }
-            }).from('.splitText_fullStack_gsap', {
-                yPercent: 120,
-                duration: 0.9,
-                ease: 'power4.out',
-            }, '<90%').from('.splitText_description_gsap', {
-                yPercent: 105,
-                duration: 0.9,
-                ease: 'power4.out',
-                stagger: {
-                    amount: 0.1
-                }
-            }, '<').from('.next_button_gsap', {
-                opacity: 0,
-                autoAlpha: 0,
-                duration: 0.4,
-                ease: 'power4.out',
-            }, '<').from('.number_menu_gsap', {
-                opacity: 0,
-                autoAlpha: 0,
-                duration: 0.3,
-            }, '<').fromTo('.item_menu_gsap', {
-                yPercent: 105,
-            }, {
-                yPercent: 0,
-                duration: 0.4,
-                ease: 'power4.out',
-            }, '<60%');
-            const scrollTrigger = ScrollTrigger.create({
-                trigger: introRef.current,
-                start: 'top top',
-                toggleActions: 'play play restart play',
-                animation: tl
-            });
-            scrollTrigger.disable();
-            if (endLoading) {
-                scrollTrigger.enable();
-                tl.play();
-                return () => {
-                    tl?.kill();
-                }
+    useGsap(() => {
+        const tl = gsap.timeline({
+            paused: true,
+        }).from('.splitText_gsap', {
+            yPercent: 200,
+            skewY: 16,
+            duration: 1,
+            ease: 'power4.out',
+            delay: 0.4,
+            stagger: {
+                amount: 0.4
+            },
+            onComplete: function () {
+                this.targets().forEach((el: any) => {
+                    el.style.willChange = '';
+                });
             }
-        }, introRef);
-        return () => ctx.revert();
-    }, [endLoading]);
+        }).from('.splitText_fullStack_gsap', {
+            yPercent: 120,
+            duration: 0.9,
+            ease: 'power4.out',
+        }, '<90%').from('.splitText_description_gsap', {
+            yPercent: 105,
+            duration: 0.9,
+            ease: 'power4.out',
+            stagger: {
+                amount: 0.1
+            }
+        }, '<').from('.next_button_gsap', {
+            opacity: 0,
+            autoAlpha: 0,
+            duration: 0.4,
+            ease: 'power4.out',
+        }, '<').from('.number_menu_gsap', {
+            opacity: 0,
+            autoAlpha: 0,
+            duration: 0.3,
+        }, '<').fromTo('.item_menu_gsap', {
+            yPercent: 105,
+        }, {
+            yPercent: 0,
+            duration: 0.4,
+            ease: 'power4.out',
+        }, '<60%').play();
+        const scrollTrigger = ScrollTrigger.create({
+            trigger: introRef.current,
+            start: 'top top',
+            toggleActions: 'play play restart play',
+            animation: tl
+        });
+        scrollTrigger.disable();
+        if (endLoading) {
+            scrollTrigger.enable();
+            tl.play();
+            return () => {
+                tl?.kill();
+            }
+        }
+    }, introRef, [endLoading]);
 
     return (<>
         <div className={twMerge('pt-28 sm:pt-36 mdl:pt-40', 'flex flex-col gap-20 xs:gap-32 xl:gap-40')} ref={introRef}>
