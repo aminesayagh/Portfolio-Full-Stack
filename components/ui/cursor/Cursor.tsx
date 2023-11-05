@@ -218,7 +218,7 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
     const currentCursor = useMemo(() => list.current.find(item => item.name == key), [key]);
 
     return <>
-        <span ref={ref}>
+        <div ref={ref}>
             <cursorContext.Provider value={{
                 addCursor, setKey
             }}>
@@ -259,7 +259,7 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
                     })}
                 </div>
             </cursorContext.Provider>
-        </span>
+        </div>
         <style >
             {`
                 .cursor_container {

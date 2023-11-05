@@ -22,7 +22,7 @@ import { getMenuItems } from '@/conf/router';
 import { addToast } from '@/components/common/toast';
 
 import { useTime } from '@/hook';
-import { ScrollProvider } from '@/context/AnimationConf';
+// import { ScrollProvider } from '@/context/AnimationConf';
 
 const CONTACT_SUBJECTS = {
     "1": "Project Inquiry",
@@ -75,6 +75,7 @@ type TypeFormContact = {
 }
 import { Input } from 'react-aria-components'
 import { useIsomorphicLayoutEffect } from 'react-use';
+import { useLocomotiveScroll } from '@/lib/LocomotiveScroll';
 
 const FormContact = () => {
     const { t, i18n } = useTranslation();
@@ -210,7 +211,8 @@ const ContactPage = () => {
     const contactRef = useRef<ElementRef<'div'>>(null);
 
     const socialNetworkItems = useMemo(() => getMenuItems('socialNetworks'), []);
-    const { scrollbar } = useContext(ScrollProvider);
+    const { isReady } = useLocomotiveScroll();
+
     const timer = useTime({
         city: 'Casablanca',
         country: 'Africa',
@@ -218,25 +220,27 @@ const ContactPage = () => {
     })
     
     useIsomorphicLayoutEffect(() => {
-        let ctx = gsap.context(() => {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: '#contact',
-                    start: 'top 60%',
-                    toggleActions: 'play play restart play',
-                    markers: false,
-                }
-            }).from('.splitText_gsap', {
-                yPercent: 220,
-                skewY: 7,
-                duration: 1.2,
-                ease: 'Power4.easeOut',
-                delay: 0.2,
+        if(isReady) {
+            let ctx = gsap.context(() => {
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: '#contact',
+                        start: 'top 60%',
+                        toggleActions: 'play play restart play',
+                        markers: false,
+                    }
+                }).from('.splitText_gsap', {
+                    yPercent: 220,
+                    skewY: 7,
+                    duration: 1.2,
+                    ease: 'Power4.easeOut',
+                    delay: 0.2,
+                });
+                return () => tl.kill();
             });
-            return () => tl.kill();
-        });
-        return () => ctx.revert();
-    }, [scrollbar]);
+            return () => ctx.revert();
+        }
+    }, [isReady]);
     return (
         <>
             <div ref={contactRef}>

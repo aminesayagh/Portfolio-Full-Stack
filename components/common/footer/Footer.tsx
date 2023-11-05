@@ -5,16 +5,16 @@ import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 import { useIsomorphicLayoutEffect } from 'react-use';
 
-
+import { useLocomotiveScroll } from '@/lib/LocomotiveScroll';
 import  Link from '@/components/ui/typography/Link';
 import Button from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import Text from '@/components/ui/typography/Text';
-import { ScrollProvider } from '@/context/AnimationConf';
 import { gsap } from 'utils/gsap';
 import useGsap from '@/hook/useGsap';
 import { MenuItem } from '@/conf/router';
 import { useEventListener } from '@/hook/useEventListener';
+import useSafePush from '@/hook/SafePush';
 
 const BASE_LOCALE_SOCIAL = 'socialNetwork';
 
@@ -239,11 +239,11 @@ const GoToTopMemo = memo(GoToTop);
 
 const Footer = () => {
     const { t } = useTranslation();
-    const { scrollbar } = useContext(ScrollProvider);
+    const { scroll } = useLocomotiveScroll();
 
     const goToSection = useCallback(() => {
-        scrollbar && scrollbar.scrollTo(0, { duration: 1000 });
-    }, [scrollbar]);
+        scroll && scroll.scrollTo(0, { duration: 1000 });
+    }, [scroll]);
 
     return (<>
         <div className={twMerge(

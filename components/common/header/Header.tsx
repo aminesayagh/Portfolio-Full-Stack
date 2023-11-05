@@ -17,9 +17,6 @@ import Title from '@/components/ui/typography/Title';
 import HamburgerMenu from '@/components/common/hamburgerMenu';
 import SwitchLang from '@/components/common/switchLang';
 
-
-import { ScrollProvider } from '@/context/AnimationConf';
-
 const GAP_SIZE_LG = 'gap-4 sm:gap-6 lg:gap-7 xl:gap-8';
 const GAP_SIZE_XL = 'gap-8 mdl:gap-12';
 const BASE_LOCALE_MENU = 'header.menu';
