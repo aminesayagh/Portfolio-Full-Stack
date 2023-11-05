@@ -181,7 +181,6 @@ const Preloader = ({ isLoading, setEndLoading }: {
         return () => ctx.revert();
     }, [ref]);
 
-
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context((self) => {
             const skew = 2;
