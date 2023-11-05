@@ -3,7 +3,7 @@ import { useIsomorphicLayoutEffect, useWindowSize } from "react-use"
 import { gsap } from "@/utils/gsap";
 import { useLocomotiveScroll } from "@/lib/LocomotiveScroll";
 
-const useGsap = (gsapCallback: gsap.ContextFunc, ref: RefObject<HTMLDivElement> | RefObject<HTMLCanvasElement>, rendered: any[] = []) => {
+const useGsap = (gsapCallback: gsap.ContextFunc, ref: RefObject<HTMLDivElement> | RefObject<HTMLCanvasElement> | undefined, rendered: any[] = []) => {
     const { isReady, scroll } = useLocomotiveScroll()
     useIsomorphicLayoutEffect(() => {
         if (!isReady) return;

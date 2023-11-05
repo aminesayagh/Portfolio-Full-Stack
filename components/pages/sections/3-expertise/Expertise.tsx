@@ -102,34 +102,31 @@ const CardElement = ({ i }: { i: number }) => {
     const isXs = useMedia('(min-width: 475px)', true);
 
     useGsap(() => {
-            let space = 40;
-            let y = (i % 2 === 0 ? 1 : -1);
-            if (isLg) {
-            } else if (isXs) {
-                space = 35;
-            } else {
-                space = 30;
-                y = 1;
+        let space = 40;
+        let y = (i % 2 === 0 ? 1 : -1);
+        if (isLg) {
+        } else if (isXs) {
+            space = 35;
+        } else {
+            space = 30;
+            y = 1;
+        }
+        gsap.fromTo(ref.current, {
+            y: space * y,
+        }, {
+            y: -1 * space * y,
+            ease: 'Power4.easeOut',
+            scrollTrigger: {
+                trigger: '.container-expertise-gsap',
+                start: 'top bottom-=20%',
+                end: 'bottom top-=20%',
+                scrub: true
             }
-            gsap.fromTo(ref.current, {
-                y: space * y,
-            }, {
-                y: -1 * space * y,
-                ease: 'Power4.easeOut',
-                scrollTrigger: {
-                    trigger: '.container-expertise-gsap',
-                    start: 'top bottom-=20%',
-                    end: 'bottom top-=20%',
-                    scrub: true
-                }
-            });
-    }, ref,[isLg, isXs])
+        });
+    }, undefined, [isLg, isXs]);
 
-    if (i >= 4) return <div key={i} className={`expertise-card-gsap will-change-transform-animation`} ref={ref}>
-        <EmptyCardMemo />
-    </div>
     return <div className={`expertise-card-gsap relative will-change-transform-animation`} key={i} ref={ref}>
-        <CardMemo title={t(`experience.stages.${i + 1}.title`)} description={t(`experience.stages.${i + 1}.description`)} number={t(`experience.stages.${i + 1}.count`)} />
+        {i >= 4 ? <EmptyCardMemo /> : <CardMemo title={t(`experience.stages.${i + 1}.title`)} description={t(`experience.stages.${i + 1}.description`)} number={t(`experience.stages.${i + 1}.count`)} />}
     </div>
 }
 const CardElementMemo = memo(CardElement);
