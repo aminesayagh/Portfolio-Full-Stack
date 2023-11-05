@@ -8,7 +8,7 @@ const useGsap = (gsapCallback: gsap.ContextFunc, ref: RefObject<HTMLDivElement> 
 
     useIsomorphicLayoutEffect(() => {
         if (!isReady) return;
-        let ctx: gsap.Context = gsap.context(gsapCallback, ref);
+        let ctx: gsap.Context = gsap.context((self) => gsapCallback(self), ref);
         return () => {
             ctx && ctx.revert();
         }
