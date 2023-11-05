@@ -1,7 +1,8 @@
-import { useState, useCallback, memo, useEffect, useRef, useContext, useMemo } from 'react';
+import { useState, useCallback, memo, useEffect, useRef, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
+
 import { gsap, Power3, ScrollTrigger } from '@/utils/gsap';
 
 import StyleAnimation from '@/styles/animation.module.scss';
@@ -56,8 +57,7 @@ const Header = () => {
                 menuSocialNetworksRef.current = response2.items;
             })
         })
-    }, [])
-
+    }, []);
 
     useIsomorphicLayoutEffect(() => {
         ctx.current = gsap.context((self) => {
@@ -165,6 +165,8 @@ const Header = () => {
             ctx.current.open();
         }
     }, [openMenu]);
+
+
 
     let idTimeout = useRef<NodeJS.Timeout>();
     const onButtonClick = useCallback((path: string, id?: string) => {

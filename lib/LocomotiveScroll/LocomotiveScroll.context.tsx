@@ -107,7 +107,7 @@ export function LocomotiveScrollProvider({
             return
         }
         LocomotiveScrollRef.current.update();
-        ScrollTrigger.refresh();
+        // ScrollTrigger.refresh();
     }
 
     useEffect(
