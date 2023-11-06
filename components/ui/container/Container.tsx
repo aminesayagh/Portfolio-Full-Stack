@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { containerStyle } from './Container.style';
 
 import { ContainerProps } from './Container.type';
 
-
-
-const Container = ({ as, children, className, ...props }: ContainerProps) => {
+const Container = ({ as = 'div', children, className, ...props }: ContainerProps) => {
     return (
         <>
-            {React.createElement(as || 'span', {
+            {React.createElement(as, {
                 className: twMerge(containerStyle(
                     { size: props.size }
                 ), className),

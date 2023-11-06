@@ -45,7 +45,7 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
     const padding = useMemo(() => active && !inTopOfScroll ? '0.8rem' : '1rem', [active, inTopOfScroll]);
     const backdropFilter = useMemo(() => active && !inTopOfScroll ? 'blur(40px)' : 'blur(0px)', [active, inTopOfScroll]);
     const backgroundColor = useMemo(() => active && !inTopOfScroll ? '#1f1f1f90' : 'transparent', [active, inTopOfScroll]);
-    return <header className={twMerge(
+    return (<header className={twMerge(
         'fixed top-0 left-0 w-full max-w-[100vw] py-4 z-header', className, zIndex.navbar, 'header-gsap will-change-transform-animation'
     )}
         style={{
@@ -59,7 +59,7 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
         <div className={twMerge('flex flex-row items-center justify-between w-full', containerStyle({ size }))}>
             {children}
         </div>
-    </header>
+    </header>)
 };
 
 const Brand = ({ children, className, ...props }: BrandProps) => {

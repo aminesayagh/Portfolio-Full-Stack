@@ -1,18 +1,17 @@
-
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 :root {
-  --font-montserrat: 'Montserrat','Inter', sans-serif;
+  --font-montserrat: "Montserrat", "Inter", sans-serif;
 }
 
 @font-face {
-  font-family: 'Montserrat', 'Inter', sans-serif;
+  font-family: "Montserrat", "Inter", sans-serif;
   font-weight: 500;
   font-style: normal;
   font-display: swap;
-  src: url('/fonts/Montserrat/Montserrat-Medium.ttf') format('truetype');
+  src: url("/fonts/Montserrat/Montserrat-Medium.ttf") format("truetype");
 }
 
 .remove_outline {
@@ -20,44 +19,56 @@
 }
 
 // use to correct apparing of cursor on preloader component
-html[data-is_loading="false"] .cursor-container{
+html[data-is_loading="false"] .cursor-container {
   @apply relative z-auto;
 }
 html:not([data-is_loading="false"]) .cursor-container {
   @apply relative z-cursor;
 }
 
-main, html, body {
+main,
+html,
+body {
   @apply font-sans;
 }
-*{
-	box-sizing: border-box;
+* {
+  box-sizing: border-box;
 }
 
-.will-change-transform-animation{
+.will-change-transform-animation {
   @apply will-change-transform;
 }
 
-[data-scroll-header-inside="true"] .header-fixed{
-  padding-top: 0.8rem;
-  padding-bottom: 0.8rem;
-  backdrop-filter: blur(40px);
-  background-color: #1f1f1f90;
-  animation: fade-in 0.3s ease-in-out;
-}
-[data-scroll-header-inside="false"] .header-fixed{
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  backdrop-filter: blur(0px);
-  background-color: transparent;
-  animation: fade-out 0.3s ease-in-out;
+.is-loaded {
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  button, li, em {
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Plus spécifique pour éviter les transitions non désirées */
+    &:lang(fr), &:lang(en) {
+      animation: textFadeInOut 2s ease forwards;
+    }
+  }
+  
+  @keyframes textFadeInOut {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 }
 
 .overflow-y-animate {
   overflow-y: clip;
   overflow-x: visible;
 }
-.overflow-y-animate > *{
+.overflow-y-animate > * {
   will-change: transform;
 }
 
@@ -76,7 +87,6 @@ html {
   -webkit-touch-callout: none;
 }
 
-
 .whitespace-nowrap-important {
   white-space: nowrap !important;
 }
@@ -90,12 +100,12 @@ body {
   overflow: hidden;
 }
 html.has-scroll-smooth {
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 /* Colors */
 @layer base {
-  html{
+  html {
     --primary-base: 281.25;
     --primary-100: 69.06% 0.15 var(--primary-base);
     --primary-200: 62.88% 0.165 var(--primary-base);
@@ -158,15 +168,14 @@ html.has-scroll-smooth {
     --red-600: 66.36% 0.192 var(--red-base);
     --red-700: 60.48% 0.173 var(--red-base);
     --red-800: 53.13% 0.168 var(--red-base);
-    --red-900: 47.83% 0.153 var(--red-base); 
-
+    --red-900: 47.83% 0.153 var(--red-base);
 
     @mixin color-generate($name) {
       @each $degree in 100, 200, 300, 400, 500, 600, 700, 800, 900 {
         --color-#{$name}-#{$degree}: oklch(var(--#{$name}-#{$degree}));
       }
     }
-  
+
     @include color-generate("primary");
     @include color-generate("secondary");
     @include color-generate("white");
@@ -175,15 +184,13 @@ html.has-scroll-smooth {
     @include color-generate("red");
   }
   /* create function scss to generate variable of color based on color created, with oklch format */
-
-
 }
 .body-background {
   @apply bg-black-100;
 }
 
 @layer base {
-  body{
+  body {
     @apply font-sans body-background;
   }
 }
@@ -193,21 +200,21 @@ html.has-scroll-dragging {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none; 
+  user-select: none;
 }
 
 .has-scroll-smooth body {
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .has-scroll-smooth [data-scroll-container] {
-  min-height: 100vh; 
+  min-height: 100vh;
 }
 
 [data-scroll-direction="horizontal"] [data-scroll-container] {
   height: 100vh;
   display: inline-block;
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 
 [data-scroll-direction="horizontal"] [data-scroll-section] {
@@ -228,9 +235,11 @@ html.has-scroll-dragging {
   opacity: 0;
 }
 .c-scrollbar:hover {
-  transform: scaleX(1.45); 
+  transform: scaleX(1.45);
 }
-.c-scrollbar:hover, .has-scroll-scrolling .c-scrollbar, .has-scroll-dragging .c-scrollbar {
+.c-scrollbar:hover,
+.has-scroll-scrolling .c-scrollbar,
+.has-scroll-dragging .c-scrollbar {
   opacity: 1;
 }
 [data-scroll-direction="horizontal"] .c-scrollbar {
@@ -238,10 +247,10 @@ html.has-scroll-dragging {
   height: 10px;
   top: auto;
   bottom: 0;
-  transform: scaleY(1); 
+  transform: scaleY(1);
 }
 [data-scroll-direction="horizontal"] .c-scrollbar:hover {
-  transform: scaleY(1.3); 
+  transform: scaleY(1.3);
 }
 
 .c-scrollbar_thumb {
@@ -261,6 +270,6 @@ html.has-scroll-dragging {
   cursor: grabbing;
 }
 [data-scroll-direction="horizontal"] .c-scrollbar_thumb {
-    right: auto;
-    bottom: 0; 
+  right: auto;
+  bottom: 0;
 }

@@ -2,14 +2,11 @@
 import { useRef, useState, useEffect } from 'react';
 import Script from 'next/script';
 import { Montserrat } from 'next/font/google';
-import { appWithTranslation } from 'next-i18next';
+import { appWithTranslation, useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
 
 import type { AppProps } from 'next/app'
 import '../styles/globals.scss';
-
-import Cursor from '@/components/ui/cursor';
 
 import nextI18NextConfig from '../next-i18next.config.js';
 import '../utils/i18n';
@@ -22,18 +19,15 @@ const montserrat = Montserrat({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
 
-
-import { ToastRegion } from '@/components/common/toast';
-const HeaderDynamic = dynamic(() => import('@/components/common/header'), {});
-
 function App({ Component, pageProps }: AppProps) {
   const ref = useRef(null);
   const { asPath } = useRouter();
   const [font,setFont] = useState<string | null>(null);
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     setFont(montserrat.variable)
-  }, [])
+  }, []);
 
   return <>
     <Script id="google-analytics">{
@@ -70,11 +64,7 @@ function App({ Component, pageProps }: AppProps) {
           containerRef={ref}
         >
           <div data-scroll-container ref={ref} >
-            <Cursor>
-              <HeaderDynamic />
               <Component {...pageProps} />
-              <ToastRegion />
-            </Cursor>
           </div>
         </LocomotiveScrollProvider>
       </LoadingProvider>

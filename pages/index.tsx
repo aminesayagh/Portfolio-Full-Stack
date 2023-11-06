@@ -10,7 +10,7 @@ import { useTranslation } from 'next-i18next';
 
 const DynamicHeader = dynamic(() => import('@/components/common/header'), {});
 const DynamicLandingPage = dynamic(() => import('@/components/pages/LandingPage'), {});
-
+import Layer from '@/components/common/layer';
 
 export default function Home() {
   const { t } = useTranslation('common');
@@ -22,8 +22,10 @@ export default function Home() {
       author={t('head.home.author')}
       logo='/favicon.svg'
     />
-    <DynamicLandingPage />
-    <Noise />
+    <Layer>
+      <DynamicLandingPage />
+      <Noise />
+    </Layer>
 
   </>
 }

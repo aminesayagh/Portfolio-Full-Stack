@@ -47,7 +47,7 @@ export function LocomotiveScrollProvider({
             try {
                 if (!hasScrollbar.current && typeof window !== 'undefined' && !LocomotiveScrollRef.current) {
                     hasScrollbar.current = true;
-                    console.log('LocomotiveScrollProvider: hasScrollbar');
+                    // console.log('LocomotiveScrollProvider: hasScrollbar');
                     const LocomotiveScroll = (await import('locomotive-scroll')).default
 
                     const dataScrollContainer = document.querySelector('[data-scroll-container]')
@@ -108,7 +108,7 @@ export function LocomotiveScrollProvider({
 
             setIsReady(false);
             hasScrollbar.current = false;
-            console.log('LocomotiveScrollProvider: destroy');
+            // console.log('LocomotiveScrollProvider: destroy');
         }
     }, []);
 
@@ -120,7 +120,7 @@ export function LocomotiveScrollProvider({
         LocomotiveScrollRef.current.update();
 
         setHasToReload(hasToReload + 1);
-        console.log('refreshLocomotiveScroll');
+        // console.log('refreshLocomotiveScroll');
     }
 
     const scrollTo: ScrollTo = (target, options) => {
