@@ -118,9 +118,9 @@ export function LocomotiveScrollProvider({
         }
 
         LocomotiveScrollRef.current.update();
+        ScrollTrigger.refresh();
 
         setHasToReload(hasToReload + 1);
-        // console.log('refreshLocomotiveScroll');
     }
 
     const scrollTo: ScrollTo = (target, options) => {
