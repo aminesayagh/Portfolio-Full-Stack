@@ -40,8 +40,8 @@ function App({ Component, pageProps }: AppProps) {
     </Script>
     <style>{`
       html, body, #__next {
-        --font-montserrat: var(${montserrat.variable});
-        font-family: var(${montserrat.variable});
+        --font-montserrat: var(${font});
+        font-family: var(${font});
       }
     `}</style>
 
