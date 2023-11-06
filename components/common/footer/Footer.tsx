@@ -137,7 +137,7 @@ const TextAnimated = ({ phrase, className, ...props }: { phrase: string } & Omit
                 toggleActions: 'play none reverse reverse'
             }
         })
-    }, container);
+    }, container, [phrase]);
     return <span ref={container} ><Text div className={twMerge('flex flex-row flex-wrap', className)} {...props}>
         {phrase.split(' ').map((word, index) => {
             return <div key={index} className='overflow-y-animate py-px' >
@@ -238,7 +238,7 @@ const GoToTop = ({ handler, text }: { handler: () => void, text: string }) => {
 const GoToTopMemo = memo(GoToTop);
 
 const Footer = () => {
-    const { t } = useTranslation();
+    const { t, i18n: { language } } = useTranslation();
     const { scroll } = useLocomotiveScroll();
 
     const goToSection = useCallback(() => {
@@ -247,7 +247,9 @@ const Footer = () => {
 
     return (<>
         <div className={twMerge(
-            'max-w-[14rem] xxs:w-8/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[30vw] mdl:max-w-[26vw] xl:max-w-[20vw] 2xl:max-w-[28vw] 3xl:max-w-[22rem]'
+            language == 'en' ? 
+                'max-w-[16rem] xxs:w-8/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[32vw] mdl:max-w-[30vw] xl:max-w-[20vw] 2xl:max-w-[28vw] 3xl:max-w-[22rem]' : 
+                'max-w-[16rem] xxs:w-9/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[32vw] mdl:max-w-[30vw] xl:max-w-[20vw] 2xl:max-w-[28vw] 3xl:max-w-[22rem]'
         )} >
             <TextAnimated degree='3' weight='medium' size='md' className='uppercase max-w-xs justify-start gap-x-2' phrase={t('footer.state')} />
         </div>

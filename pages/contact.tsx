@@ -11,8 +11,6 @@ import Noise from 'components/ui/noise';
 import Layer from '@/components/common/layer';
 
 import '@/utils/gsap';
-
-
 const ContactPageDynamic = dynamic(() => import('@/components/pages/ContactPage'), {});
 import { ToastRegion } from '@/components/common/toast';
 
