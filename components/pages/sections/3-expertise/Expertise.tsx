@@ -149,7 +149,7 @@ const ExpertiseStages = () => {
 const ExpertiseStagesMemo = memo(ExpertiseStages);
 
 const Expertise = () => {
-    return <div
+    return (<div
         data-scroll data-scroll-speed='0.5'
         className={twMerge(
             'flex flex-col',
@@ -164,7 +164,7 @@ const Expertise = () => {
         <ExpertiseStagesMemo />
         <Noise position='absolute' className='opacity-60 md:opacity-90' />
         <div className={twMerge('absolute w-full h-[26vh] bottom-0 left-0', 'bg-gradient-to-t from-black-100/25 via-black-100/10 to-black-100/0')}></div>
-    </div>
+    </div>);
 }
 
 export default Expertise;

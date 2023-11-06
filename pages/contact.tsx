@@ -8,11 +8,13 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import Head from '@/components/common/head';
 import Noise from 'components/ui/noise';
+import Layer from '@/components/common/layer';
 
 import '@/utils/gsap';
 
 
 const ContactPageDynamic = dynamic(() => import('@/components/pages/ContactPage'), {});
+import { ToastRegion } from '@/components/common/toast';
 
 const Contact = () => {
     const { t } = useTranslation('common');
@@ -25,8 +27,11 @@ const Contact = () => {
             author={t('head.contact.author')}
             logo='/favicon.svg'
         />
-        <ContactPageDynamic />
-        <Noise />
+        <Layer>
+            <ContactPageDynamic />
+            <Noise />
+            <ToastRegion />
+        </Layer>
     </>
 }
 

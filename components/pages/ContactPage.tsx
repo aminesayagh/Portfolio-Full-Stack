@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useContext, useCallback, memo, ElementRef, useRef } from 'react';
+import React, { useMemo, useCallback, memo, ElementRef, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { twMerge } from 'tailwind-merge';
 import { useTranslation } from 'next-i18next';
