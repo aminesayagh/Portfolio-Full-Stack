@@ -66,18 +66,18 @@ const Action = () => {
         </span>
         <div className='flex flex-row justify-start xs:justify-center items-start relative'>
             <div className={twMerge(
-                'absolute',
-                'right-[103%]',
-                'left-auto top-1 will-change-transform-animation contact-arrow-gsap',
+                'absolute hidden xxs:block',
+                'left-[103%] xs:right-[103%] rotate-180	xs:rotate-0',
+                'right-auto xs:left-auto xs:top-1 will-change-transform-animation contact-arrow-gsap',
             )}>
-                <Icon name='IconArrowBigRightFilled' className='w-20 [&>*]:fill-primary-500' style={{}} />
+                <Icon name='IconArrowBigRightFilled' className='w-[2.8rem] xs:w-12 md:w-14 lg:w-16 xl:w-20 [&>*]:fill-primary-400' style={{}} />
             </div>
             <CursorContent name='CursorActionIconContactAction' component='CursorActionIcon' props={{
                 degree: -45,
                 iconName: 'IconArrowUpRight',
             }} className='overflow-hidden' >
                 <Link href='/contact'>
-                    <Display size='lg' weight='bold' className={twMerge('whitespace-nowrap-important uppercase text-primary-500', 'contact-title-gsap will-change-transform-animation')} >
+                    <Display size='lg' weight='bold' className={twMerge('whitespace-nowrap-important uppercase text-primary-400', 'contact-title-gsap will-change-transform-animation')} >
                         {t('contactCall.action')}
                     </Display>
                 </Link>

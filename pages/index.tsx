@@ -8,7 +8,6 @@ import dynamic from 'next/dynamic';
 import nextI18NextConfig from '../next-i18next.config.js'
 import { useTranslation } from 'next-i18next';
 
-const DynamicHeader = dynamic(() => import('@/components/common/header'), {});
 const DynamicLandingPage = dynamic(() => import('@/components/pages/LandingPage'), {});
 import Layer from '@/components/common/layer';
 

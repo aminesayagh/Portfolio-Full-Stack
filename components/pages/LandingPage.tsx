@@ -49,9 +49,6 @@ const LandingPage = () => {
                 <DynamicAction />
             </Container>
             <div data-scroll-section className='block h-6 xs:h-12 w-full'></div>
-            <Container data-scroll-section as='footer' size='lg' id='footer' className={twMerge('flex flex-col gap-8 md:gap-12')}>
-                <DynamicFooter />
-            </Container>
         </>
     )
 }
