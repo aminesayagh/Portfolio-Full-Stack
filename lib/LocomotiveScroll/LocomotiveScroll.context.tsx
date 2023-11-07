@@ -118,7 +118,6 @@ export function LocomotiveScrollProvider({
         }
 
         LocomotiveScrollRef.current.update();
-        ScrollTrigger.refresh();
 
         setHasToReload(hasToReload + 1);
     }

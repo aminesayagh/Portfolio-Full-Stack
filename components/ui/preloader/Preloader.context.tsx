@@ -105,7 +105,7 @@ export function LoadingProvider({ children }: {
         </LoadingContext.Provider>
     )
 }
-const LONG_LOADING_TIME = 400;
+const LONG_LOADING_TIME = 200;
 const MEDIUM_LOADING_TIME = 20;
 const INITIAL_PERCENT = 2;
 
