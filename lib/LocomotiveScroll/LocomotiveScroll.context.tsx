@@ -4,7 +4,7 @@ import { useDebounce } from '@/hook/useDebounce';
 import useResizeObserver from 'use-resize-observer';
 import { ScrollTrigger } from '@/utils/gsap';
 
-type ScrollTo = (target: string, options?: { offset?: number, duration?: number, easing?: number[] }) => void;
+type ScrollTo = (target: string | number, options?: { offset?: number, duration?: number, easing?: number[] }) => void;
 export interface LocomotiveScrollContextValue {
     scroll: Scroll | null;
     isReady: boolean;
@@ -118,6 +118,7 @@ export function LocomotiveScrollProvider({
         }
 
         LocomotiveScrollRef.current.update();
+        
 
         setHasToReload(hasToReload + 1);
     }
