@@ -274,7 +274,7 @@ const Menu = () => {
             // safePush(`/#${section}`);
             scrollTo(`#${section}`);
         }
-    }, [safePush, scrollTo]);
+    }, [safePush, scrollTo, scroll]);
 
     const menuItemsData = useMemo(() => Array.apply(null, Array(4)).map((_, i) => {
         return {
@@ -308,7 +308,7 @@ const Menu = () => {
             })}
         </div>
         <span className='overflow-hidden'>
-            <Text p weight='medium' size='sm' degree='3' className={twMerge('w-max whitespace-nowrap-important', 'pr-1 pb-1 hidden xxs:flex sm:hidden md:flex', 'item_menu_gsap will-change-transform-animation')} >
+            <Text p weight='medium' size='sm' degree='3' className={twMerge('w-max whitespace-nowrap-important', 'pr-1 hidden xxs:flex sm:hidden md:flex', 'item_menu_gsap will-change-transform-animation')} >
                 {t('intro.copy')}
             </Text>
         </span>

@@ -1,6 +1,8 @@
 
 import React, { useContext, useEffect } from 'react';
 import { useHover } from 'react-aria';
+import { twMerge } from 'tailwind-merge';
+
 import { cursorContext } from './Cursor';
 import { ItemCursor, CursorNames } from './CursorType';
 
@@ -45,7 +47,7 @@ const CursorContainer = <C extends CursorNames>({ children, className = '', name
     if (hasParent) return children;
 
     return <cursorParentContext.Provider value={{ hasParent: true }}>
-        <span className={className} { ...hoverProps }>
+        <span className={twMerge(className, 'flex')} { ...hoverProps }>
             {children}
         </span>
     </cursorParentContext.Provider>

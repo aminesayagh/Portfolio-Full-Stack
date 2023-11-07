@@ -50,7 +50,7 @@ const FollowUs = () => {
                 xPercent: 0,
             }, {
                 xPercent: 100,
-                duration: 0.3,
+                duration: 0.2,
                 ease: 'Power4.out',
             }).to('.fallow-button-gsap', {
                 width: 0,
@@ -109,7 +109,7 @@ const FollowUs = () => {
                 </li>
                 )}
             </ul>
-            <span className='overflow-hidden'>
+            <span className='overflow-hidden flex'>
                 <Text p className='fallow-button-gsap whitespace-nowrap-important' degree='3' weight='semibold' size='sm' >
                     {t('footer.socialNetwork')}
                 </Text>
@@ -239,11 +239,7 @@ const GoToTopMemo = memo(GoToTop);
 
 const Footer = () => {
     const { t, i18n: { language } } = useTranslation();
-    const { scroll } = useLocomotiveScroll();
-
-    const goToSection = useCallback(() => {
-        scroll && scroll.scrollTo(0, { duration: 1000 });
-    }, [scroll]);
+    const { scrollTo } = useLocomotiveScroll();
 
     return (<>
         <div className={twMerge(
@@ -255,7 +251,7 @@ const Footer = () => {
         </div>
         <div className={twMerge('flex flex-row flex-wrap sm:flex-nowrap justify-between', 'gap-y-4', 'pb-10 pt-6')}>
             <div className={twMerge('flex flex-row flex-1', 'order-2 sm:order-1')} >
-                <GoToTopMemo handler={goToSection} text={t('footer.action')} />
+                <GoToTopMemo handler={() => scrollTo(0)} text={t('footer.action')} />
             </div>
             <div className='flex flex-row flex-none grow-0 justify-start sm:justify-center items-center  order-1 sm:order-2'>
                 <Text p degree='3' weight='semibold' size='sm' className='uppercase'>
