@@ -148,7 +148,7 @@ export function LocomotiveScrollProvider({
                 onUpdate(LocomotiveScrollRef.current)
             }
         },
-        [...watch, height, width, onUpdate]
+        [...watch, height, width, location, onUpdate]
     )
 
     return (
@@ -164,4 +164,4 @@ export function LocomotiveScrollProvider({
 }
 
 LocomotiveScrollContext.displayName = 'LocomotiveScrollContext'
-LocomotiveScrollProvider.displayName = 'LocomotiveScrollProvider'
+LocomotiveScrollProvider.displayName = 'LocomotiveScrollProvider';
