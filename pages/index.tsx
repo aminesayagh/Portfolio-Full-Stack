@@ -10,6 +10,8 @@ import { useTranslation } from 'next-i18next';
 
 const DynamicLandingPage = dynamic(() => import('@/components/pages/LandingPage'), {});
 import Layer from '@/components/common/layer';
+import { useEffect } from 'react';
+import { ScrollTrigger } from '@/utils/gsap';
 
 export default function Home() {
   const { t } = useTranslation('common');

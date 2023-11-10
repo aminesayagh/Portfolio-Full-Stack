@@ -44,7 +44,7 @@ const COUNTRY_NAMES = {
 
 export type CountryNames = typeof COUNTRY_NAMES[keyof typeof COUNTRY_NAMES];
 
-interface Project {
+export interface Project {
     id: `${number}`;
     title: ProjectTitle;
     tasks: TaskProject[];

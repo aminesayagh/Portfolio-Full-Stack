@@ -152,6 +152,7 @@ const TextAnimated = ({ phrase, className, ...props }: { phrase: string } & Omit
 const GoToTop = ({ handler, text }: { handler: () => void, text: string }) => {
     const ref = useRef<HTMLButtonElement | null>(null);
     const ctx = useRef<gsap.Context | null>(null);
+    
     useIsomorphicLayoutEffect(() => {
         ctx.current = gsap.context((self) => {
             const tlIcon = gsap.timeline({
@@ -239,7 +240,7 @@ const GoToTopMemo = memo(GoToTop);
 
 const Footer = () => {
     const { t, i18n: { language } } = useTranslation();
-    const { scrollTo } = useLocomotiveScroll();
+    // const { scrollTo } = useLocomotiveScroll();
 
     return (<>
         <div className={twMerge(

@@ -11,49 +11,55 @@ import { Icon } from '@/components/ui/icon'
 
 import { gsap } from "@/utils/gsap";
 import useGsap from "@/hook/useGsap";
-
+import { ScrollTrigger } from "@/utils/gsap";
+import { useIsomorphicLayoutEffect } from 'react-use';
 
 const Action = () => {
     const { t, i18n } = useTranslation();
     const refContainer = useRef<HTMLDivElement>(null);
 
-    useGsap(() => {
-        const tl = gsap.timeline({
-            scrollTrigger: {
+    useIsomorphicLayoutEffect(() => {
+        const ctx = gsap.context(() => {
+            const tl = gsap.timeline().fromTo('.contact-title-gsap', {
+                yPercent: -100,
+            }, {
+                yPercent: 0,
+                duration: 1,
+                stagger: 0.4,
+                ease: 'Power3.easeOut',
+            }).fromTo('.contact_quota_gsap', {
+                opacity: 0,
+                left: "-100%",
+            }, {
+                opacity: 1,
+                left: "0%"
+            }, '-=0.7').fromTo('.contact-arrow-gsap', {
+                opacity: 0,
+                xPercent: -50,
+            }, {
+                xPercent: 0,
+                duration: 0.5,
+                opacity: 1,
+                ease: 'elastic.out(1, 0.6)',
+            }, '-=0.2');
+            ScrollTrigger.create({
+                animation: tl,
                 trigger: refContainer.current as any,
                 scrub: true,
                 start: 'top center',
                 end: 'top top',
-                toggleActions: 'play pause reverse pause',
+                toggleActions: 'play none reverse none',
                 markers: false,
                 invalidateOnRefresh: true,
+            });
+            return () => {
+                tl.kill();
             }
-        }).fromTo('.contact-title-gsap', {
-            yPercent: -100,
-        }, {
-            yPercent: 0,
-            duration: 1,
-            stagger: 0.4,
-            ease: 'Power3.easeOut',
-        }).fromTo('.contact_quota_gsap', {
-            opacity: 0,
-            left: "-100%",
-        }, {
-            opacity: 1,
-            left: "0%"
-        }, '-=0.7').fromTo('.contact-arrow-gsap', {
-            opacity: 0,
-            xPercent: -50,
-        }, {
-            xPercent: 0,
-            duration: 0.5,    
-            opacity: 1,
-            ease: 'elastic.out(1, 0.6)',
-        }, '-=0.2');
+        }, refContainer);
         return () => {
-            tl.kill();
+            ctx.revert();
         }
-    }, refContainer);
+    }, [refContainer.current]);
     return <div ref={refContainer} className={twMerge(
         'h-[64vh]',
         'flex flex-col gap-1 xs:gap-2 sm:gap-6',

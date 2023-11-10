@@ -7,6 +7,7 @@ import { Montserrat } from 'next/font/google';
 import type { AppProps } from 'next/app';
 import nextI18NextConfig from '../next-i18next.config.js';
 import { LocomotiveScrollProvider } from '@/lib/LocomotiveScroll';
+import { LenisProvider } from '@/lib/Lenis/Lenis.context';
 import { LoadingProvider } from '@/components/ui/preloader';
 import Scripts from '@/components/common/script';
 import '../styles/globals.scss';
@@ -21,6 +22,7 @@ const montserrat = Montserrat({
 
 function App({ Component, pageProps }: AppProps) {
   const ref = useRef(null);
+  const contentRef = useRef(null);
   const { asPath } = useRouter();
   const font = montserrat.variable;
   const className = montserrat.className;
@@ -30,30 +32,17 @@ function App({ Component, pageProps }: AppProps) {
     document.body.classList.add('font-sans');
   }, [font]);
 
+
+
   return <>
     <Scripts />
     <main className={`app-container`}>
       <LoadingProvider>
-        <LocomotiveScrollProvider options={{
-          smooth: true,
-          smoothMobile: true,
-          getDirection: true,
-          getSpeed: true,
-          // @ts-ignore
-          smartphone: {
-            smooth: true,
-          },
-          tablet: {
-            smooth: true,
-          },
-        }}
-          watch={[asPath]}
-          containerRef={ref}
-        >
+        <LenisProvider containerRef={ref}>
           <div data-scroll-container ref={ref} >
-              <Component {...pageProps} />
+            <Component {...pageProps} />
           </div>
-        </LocomotiveScrollProvider>
+        </LenisProvider>
       </LoadingProvider>
     </main>
   </>

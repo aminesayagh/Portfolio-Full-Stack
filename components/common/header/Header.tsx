@@ -38,7 +38,7 @@ const Header = () => {
     const { safePush } = useRouterChange();
     let [openMenu, setOpenMenu] = useState<boolean>(false);
     const { endLoading } = usePreloader();
-    const { scrollTo } = useLocomotiveScroll();
+    // const { scrollTo } = useLocomotiveScroll();
 
     const menuHamburgerItemsRef = useRef<MenuItem[]>([]);
     const menuSocialNetworksRef = useRef<MenuItem[]>([]);

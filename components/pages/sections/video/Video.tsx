@@ -6,7 +6,7 @@ import { twMerge } from 'tailwind-merge';
 import { rounded } from '@/components/style';
 import { CursorContent } from '@/components/ui/cursor';
 import { usePreloader } from '@/components/ui/preloader';
-import { useLocomotiveScroll } from '@/lib/LocomotiveScroll';
+// import { useLocomotiveScroll } from '@/lib/LocomotiveScroll';
 
 const FRAME_COUNT = 164;
 const LOADING_KEY = 'Video';
@@ -14,7 +14,6 @@ const Video = () => {
     let ref = useRef<HTMLCanvasElement>(null);
     let refContainer = useRef<HTMLDivElement>(null);
     const imagesRef = useRef([] as Array<HTMLImageElement>);
-    const { isReady } = useLocomotiveScroll();
 
     const { addLoadingComponent, removeLoadingComponent } = usePreloader();
 
@@ -57,7 +56,6 @@ const Video = () => {
     }, [removeLoadingComponent, addLoadingComponent]);
 
     useEffect(() => {
-        if(isReady) {
             const ctx = gsap.context(() => {
                 if(!imagesRef.current.length) return;
                 const hands = { frame: 0 };
@@ -93,8 +91,7 @@ const Video = () => {
             return () => {
                 ctx.revert();
             }
-        }
-    }, [imagesRef.current.length, refContainer, isReady]);
+    }, [imagesRef.current.length, refContainer]);
 
     return (
         <>

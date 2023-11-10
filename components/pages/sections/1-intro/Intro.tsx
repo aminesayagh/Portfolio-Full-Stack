@@ -16,7 +16,7 @@ import { ScrollTrigger, gsap } from "@/utils/gsap";
 import useRouterChange from '@/hook/SafePush';
 import { useEventListener } from "@/hook/useEventListener";
 import useGsap from "@/hook/useGsap";
-import { useLocomotiveScroll } from "@/lib/LocomotiveScroll";
+// import { useLocomotiveScroll } from "@/lib/LocomotiveScroll";
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<ElementRef<'div'>>(null);
@@ -265,16 +265,16 @@ const menuKeys = ['manifesto', 'experience', 'cases', 'contact'];
 const Menu = () => {
     const { t } = useTranslation();
     const { safePush } = useRouterChange();
-    const { scroll, scrollTo } = useLocomotiveScroll();
+    // const { scroll, scrollTo } = useLocomotiveScroll();
 
     const goToSection = useCallback((section: string) => {
         if (section == 'contact') {
             safePush('/contact');
         } else {
             // safePush(`/#${section}`);
-            scrollTo(`#${section}`);
+            // scrollTo(`#${section}`);
         }
-    }, [safePush, scrollTo, scroll]);
+    }, [safePush]);
 
     const menuItemsData = useMemo(() => Array.apply(null, Array(4)).map((_, i) => {
         return {

@@ -10,37 +10,38 @@ import { NavbarProps, NavbarType, BrandProps, ContentProps, ItemProps, LinkProps
 import { twMerge } from 'tailwind-merge';
 import { useHover } from 'react-aria';
 import { zIndex } from '../conf';
-import { gsap, Power3, ScrollTrigger } from '@/utils/gsap';
+import { gsap } from '@/utils/gsap';
 
 
 const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props }: NavbarProps) => {
-    const { scroll } = useLocomotiveScroll();
     
     const delta = useRef<number>(0);
     const lastScrollY = useRef<number>(0);
     const [active, setActive] = useState<boolean>(false);
-    useIsomorphicLayoutEffect(() => {
-        scroll && scroll.on('scroll', (e: any) => {
-            if (e?.delta?.y < 140) {
-                setActive(false);
-            } else {
-                setActive(true);
-            }
+    // const { scroll } = useLocomotiveScroll();
 
-            const diff = Math.abs(e.delta.y - lastScrollY.current);
-            if (e.delta.y >= lastScrollY.current) {
-                delta.current = delta.current >= 10 ? 10 : delta.current + diff;
-            } else {
-                delta.current = delta.current <= -10 ? -10 : delta.current - diff;
-            }
-            if (delta.current >= 10 && e.delta.y > 200) {
-                gsap.to(".header-gsap", { duration: 0.3, y: -100, opacity: 0, ease: "power2.inOut" });
-            } else if (delta.current <= -10 || e.delta.y < 200) {
-                gsap.to(".header-gsap", { duration: 0.3, y: 0, opacity: 1, ease: "power2.inOut" });
-            }
-            lastScrollY.current = e.delta.y;
-        })
-    }, [scroll])
+    // useIsomorphicLayoutEffect(() => {
+    //     scroll && scroll.on('scroll', (e: any) => {
+    //         if (e?.delta?.y < 140) {
+    //             setActive(false);
+    //         } else {
+    //             setActive(true);
+    //         }
+
+    //         const diff = Math.abs(e.delta.y - lastScrollY.current);
+    //         if (e.delta.y >= lastScrollY.current) {
+    //             delta.current = delta.current >= 10 ? 10 : delta.current + diff;
+    //         } else {
+    //             delta.current = delta.current <= -10 ? -10 : delta.current - diff;
+    //         }
+    //         if (delta.current >= 10 && e.delta.y > 200) {
+    //             gsap.to(".header-gsap", { duration: 0.3, y: -100, opacity: 0, ease: "power2.inOut" });
+    //         } else if (delta.current <= -10 || e.delta.y < 200) {
+    //             gsap.to(".header-gsap", { duration: 0.3, y: 0, opacity: 1, ease: "power2.inOut" });
+    //         }
+    //         lastScrollY.current = e.delta.y;
+    //     })
+    // }, [])
     
     const padding = useMemo(() => active && !inTopOfScroll ? '0.8rem' : '1rem', [active, inTopOfScroll]);
     const backdropFilter = useMemo(() => active && !inTopOfScroll ? 'blur(40px)' : 'blur(0px)', [active, inTopOfScroll]);

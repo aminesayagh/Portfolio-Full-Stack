@@ -9,19 +9,18 @@ export interface LocomotiveScrollContextValue {
     scroll: Scroll | null;
     isReady: boolean;
     scrollTo: ScrollTo;
-    hasToReload: number;
 }
 
 export const LocomotiveScrollContext = createContext<LocomotiveScrollContextValue>({
     scroll: null,
     isReady: false,
-    scrollTo: () => { },
-    hasToReload: 0,
+    scrollTo: () => {},
 });
 
 export interface LocomotiveScrollProviderProps {
     options: LocomotiveScrollOptions;
     containerRef?: React.RefObject<HTMLDivElement>;
+    contentRef?: React.RefObject<HTMLDivElement>;
     watch?: DependencyList | undefined;
     onUpdate?: (scroll: Scroll) => void
     location?: string;
@@ -29,7 +28,7 @@ export interface LocomotiveScrollProviderProps {
 }
 
 export function LocomotiveScrollProvider({
-    children, options, containerRef, watch = [], location, onUpdate, onLocationChange
+    children, options, containerRef, contentRef, watch = [], location, onUpdate, onLocationChange
 }: WithChildren<LocomotiveScrollProviderProps>) {
     const LocomotiveScrollRef = useRef<Scroll | null>(null);
     const hasScrollbar = useRef(false);
@@ -37,10 +36,8 @@ export function LocomotiveScrollProvider({
 
     const { width: widthContainer, height: heightContainer } = useResizeObserver<HTMLDivElement>({ ref: containerRef });
 
-    const width = useDebounce(widthContainer, 50);
-    const height = useDebounce(heightContainer, 50);
-
-    const [hasToReload, setHasToReload] = useState(0);
+    const width = useDebounce(widthContainer, 30);
+    const height = useDebounce(heightContainer, 30);
 
     useEffect(() => {
         ; (async () => {
@@ -65,11 +62,10 @@ export function LocomotiveScrollProvider({
 
                     ScrollTrigger.scrollerProxy('[data-scroll-container]', {
                         scrollTop(value) {
-                            if (arguments.length && typeof value === 'string') {
-                                LocomotiveScrollRef.current?.scrollTo(value, { duration: 0.1, disableLerp: false })
-                            } else {
-                                return LocomotiveScrollRef.current?.scroll.instance.scroll.y
+                            if (arguments.length) {
+                                LocomotiveScrollRef.current?.scrollTo(value as number, { duration: 0.1, disableLerp: false })
                             }
+                            return LocomotiveScrollRef.current?.scroll.instance.scroll.y
                         },
                         getBoundingClientRect() {
                             return {
@@ -113,14 +109,12 @@ export function LocomotiveScrollProvider({
     }, []);
 
     const refreshLocomotiveScroll = () => {
-        if (!LocomotiveScrollRef.current) {
+        if (!LocomotiveScrollRef.current || !isReady) {
             return
         }
 
-        LocomotiveScrollRef.current.update();
-        
-
-        setHasToReload(hasToReload + 1);
+        // LocomotiveScrollRef.current.update();
+        ScrollTrigger.refresh();
     }
 
     const scrollTo: ScrollTo = (target, options) => {
@@ -155,7 +149,7 @@ export function LocomotiveScrollProvider({
         <LocomotiveScrollContext.Provider
             value={{
                 scroll: LocomotiveScrollRef.current,
-                isReady, scrollTo, hasToReload
+                isReady, scrollTo
             }}
         >
             {children}

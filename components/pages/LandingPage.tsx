@@ -1,52 +1,58 @@
 import Container from '@/components/ui/container';
-import React, { Profiler, ProfilerOnRenderCallback } from 'react';
+import React, { Profiler, ProfilerOnRenderCallback, useEffect } from 'react';
 
 
-import DynamicIntro from './sections/1-intro';
-import DynamicManifesto from './sections/2-manifesto';
-import DynamicVideo from './sections/video';
-import DynamicExpertise from './sections/3-expertise';
-import DynamicCallToAction from './sections/3_1-action';
-import DynamicCases from './sections/4-cases';
-import DynamicAction from './sections/5-action';
+import Intro from './sections/1-intro';
+import Manifesto from './sections/2-manifesto';
+import Video from './sections/video';
+import Expertise from './sections/3-expertise';
+import CallToAction from './sections/3_1-action';
+import Cases from './sections/4-cases';
+import Action from './sections/5-action';
 
 import { twMerge } from 'tailwind-merge';
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
+import useResizeObserver from 'use-resize-observer';
+import { useDebounce } from '@/hook/useDebounce';
 
-const DynamicFooter = dynamic(() => import('@/components/common/footer'));
+import { ScrollTrigger } from '@/utils/gsap';
 
 const LandingPage = () => {
+    const ref = React.useRef(null);
+    // const { width: widthContainer, height: heightContainer } = useResizeObserver<HTMLSpanElement>({ ref: ref });
+    // const width = useDebounce(widthContainer, 50);
+    // const height = useDebounce(heightContainer, 50);
+
+    // useEffect(() => {
+    //     ScrollTrigger.refresh();
+    // }, [width, height])
     return (
         <>
             <Container data-scroll-section as='section' size='lg' id='intro' >
-                <DynamicIntro />
+                <Intro />
             </Container>
-            <div data-scroll-section className='block h-24 w-full' ></div>
             <Suspense >
-                <Container data-scroll-section id='video' as='section' size='lg'  >
-                    <DynamicVideo />
+                <Container data-scroll-section id='video' as='section' className='py-24' size='lg'  >
+                    <Video />
                 </Container>
             </Suspense>
-            <div data-scroll-section className='block h-16 xxs:h-0 w-full'></div>
             <Container data-scroll-section id='manifesto' as='section' size='lg'  >
-                <DynamicManifesto />
+                <Manifesto />
             </Container>
-            <div data-scroll-section className='block h-24 xxs:h-24 w-full'></div>
             <section data-scroll-section id='experience'>
                 <Container size='full' as='div' className='relative overflow-hidden [&>*]:py-20 [&>*]:bg-white-200'  >
-                    <DynamicExpertise />
+                    <Expertise />
                 </Container>
             </section>
             <Container data-scroll-section as='section' size='lg' id='action-1' >
-                <DynamicCallToAction />
+                <CallToAction />
             </Container>
-            <div data-scroll-section className='block h-24 w-full'></div>
             <Container data-scroll-section as='section' size='lg' id='cases' className='py-10 h-fit' >
-                <DynamicCases />
+                <Cases />
             </Container>
             <Container data-scroll-section as='section' size='lg' id='action-contact' >
-                <DynamicAction />
+                <Action />
             </Container>
             <div data-scroll-section className='block h-6 xs:h-12 w-full'></div>
         </>
