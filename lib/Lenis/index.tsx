@@ -1,1 +1,2 @@
-export { Lenis } from './Lenis.context';
+export { useLenis } from './Lenis.hook';
+export { LenisProvider } from './Lenis.context';
