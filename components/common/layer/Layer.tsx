@@ -19,7 +19,6 @@ const Layer = ({ children }: {
         i18n.on('languageChanged', (lang) => {
         })
         if (endLoading) {
-            console.log('lang', document.body.classList);
             if (!document.body.classList.contains('is-loaded')) {
                 document.body.classList.add('is-loaded');
             }

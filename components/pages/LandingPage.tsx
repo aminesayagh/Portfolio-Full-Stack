@@ -37,7 +37,7 @@ const LandingPage = () => {
                     <Video />
                 </Container>
             </Suspense>
-            <Container data-scroll-section id='manifesto' as='section' size='lg'  >
+            <Container data-scroll-section id='manifesto' as='section' size='lg' className='pb-24'  >
                 <Manifesto />
             </Container>
             <section data-scroll-section id='experience'>

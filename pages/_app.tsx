@@ -45,6 +45,8 @@ function App({ Component, pageProps }: AppProps) {
     console.log('lenis', lenis);
   })
 
+  
+
   return <>
     <Scripts />
     <main className={`app-container`}>
@@ -52,10 +54,12 @@ function App({ Component, pageProps }: AppProps) {
         <LenisProvider autoRaf={true} ref={lenisRef} options={{
           smoothTouch: true,
           isSmooth: true,
+          duration: 1.2,
+          touchMultiplier: 2,
+          infinite: false,
+
         }}  >
-          {/* <div data-scroll-container ref={ref} > */}
             <Component {...pageProps} />
-          {/* </div> */}
         </LenisProvider>
       </LoadingProvider>
     </main>

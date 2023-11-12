@@ -1,6 +1,6 @@
 import { LocomotiveScrollOptions, Scroll } from 'locomotive-scroll';
 import { DependencyList, createContext, useContext, useEffect, useRef, useState } from 'react';
-import { useDebounce } from '@/hook/useDebounce';
+
 import useResizeObserver from 'use-resize-observer';
 import { ScrollTrigger } from '@/utils/gsap';
 

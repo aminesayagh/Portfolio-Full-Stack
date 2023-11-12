@@ -97,8 +97,14 @@ body {
 }
 
 .lenis {
+  -ms-overflow-style: none;
   height: 100vh;
   overflow-y: auto;
+  scrollbar-width: none !important;
+  &::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+  }
 }
 
 .lenis.lenis-smooth {
@@ -115,6 +121,31 @@ body {
 
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
+}
+
+.scrollbar{
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 10;
+  padding: 6px 0;
+  .inner {
+    height: 100%;
+    position: relative;
+    background-color: oklch(var(--gray-900));
+    backdrop-filter: blur(8px);
+  }
+  .thumb {
+    min-height: 120px;
+    width: 8.6px;
+    background-color: var(--color-black-900);
+    position: absolute;
+    right: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--color-black-200);
+    cursor: grab;
+  }
 }
 
 

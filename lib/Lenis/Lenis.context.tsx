@@ -2,13 +2,13 @@ import { ReactElement, createContext, useEffect, useRef, forwardRef, useImperati
 
 import { gsap, ScrollTrigger } from '@/utils/gsap';
 import Lenis from '@studio-freight/lenis';
-import useResizeObserver from 'use-resize-observer';
-import { useDebounce } from '@/hook/useDebounce';
-import { useLenis } from './Lenis.hook';
 import { create } from 'zustand';
+
 import { twMerge } from 'tailwind-merge';
 
 import { useFrame } from '@studio-freight/hamo'
+import { useLenis } from './Lenis.hook';
+import { set } from 'react-hook-form';
 
 interface LenisContextValue {
     lenis: LenisInstance | undefined;
@@ -104,8 +104,6 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
             }),
         });
 
-        console.log('init lenis', wrapper.current, content.current);
-
         setLenis(lenis);
 
         lenis.on(event, ScrollTrigger.update);
@@ -114,11 +112,12 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
             lenis.raf(time * 1000);
         });
 
-        gsap.ticker.lagSmoothing(0)
+        gsap.ticker.lagSmoothing(0);
 
         ScrollTrigger.defaults({
             scroller: wrapper.current,
-        })
+        });
+
         return () => {
             lenis.destroy();
             setLenis(undefined);
@@ -136,7 +135,7 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
         if (root && lenis) {
             useRoot.setState({
                 lenis, addCallback, removeCallback
-            })
+            });
         }
     }, [root, lenis, addCallback, removeCallback]);
 
@@ -175,11 +174,40 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
             <div ref={wrapper} className={twMerge(lenis?.className, className)} {...props}>
                 <div ref={content}>
                     {children}
+                    <Scrollbar container={content} />
                 </div>
             </div>
         )}
     </LenisContext.Provider>)
 });
+
+const Scrollbar = ({ container }: { container: any }) => {
+    const thumbRef = useRef<ElementRef<'div'>>(null);
+    const [thumbTransform, setThumbTransform] = useState(0);
+
+    useLenis((lenis) => {
+        const heightOfContent = container.current?.offsetHeight;
+        const heightOfWindow = window.innerHeight;
+        const position = lenis.targetScroll;
+
+        const thumbTransform = position * heightOfWindow / heightOfContent;
+        gsap.to(thumbRef.current, {
+            duration: 0.3,
+            y: thumbTransform,
+            ease: 'power3.out'
+        })
+        setThumbTransform(thumbTransform);
+    })
+
+    useEffect(() => {
+        console.log('thumbTransform', thumbTransform)
+    }, [thumbTransform]);
+    return <div className='scrollbar'>
+        <div className='inner'>
+            <div className='thumb' ref={thumbRef} ></div>
+        </div>
+    </div>
+}
 
 LenisProvider.displayName = 'LenisProvider';
 
