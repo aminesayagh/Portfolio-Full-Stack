@@ -185,19 +185,46 @@ const Scrollbar = ({ container }: { container: any }) => {
     const thumbRef = useRef<ElementRef<'div'>>(null);
     const [thumbTransform, setThumbTransform] = useState(0);
 
+    let scrollTimeoutRef = useRef<NodeJS.Timeout>(); // Timeout ref
+    const [close, setClose] = useState(false);
+
+    const tl = useRef(gsap.timeline({ paused: true }).to('.scrollbar', {
+        duration: 0.3,
+        xPercent: 100,
+        ease: 'power3.out'
+    }));
+
+    const translateThumbRight = () => {
+        tl.current.play();
+        setClose(true);
+    }
     useLenis((lenis) => {
+        if (close) {
+            tl.current.reverse();
+            setClose(false);
+        }
         const heightOfContent = container.current?.offsetHeight;
         const heightOfWindow = window.innerHeight;
         const position = lenis.targetScroll;
 
-        const thumbTransform = position * heightOfWindow / heightOfContent;
+        const tt = position * heightOfWindow / heightOfContent;
         gsap.to(thumbRef.current, {
             duration: 0.3,
-            y: thumbTransform,
+            y: tt,
             ease: 'power3.out'
         })
-        setThumbTransform(thumbTransform);
+        thumbTransform != tt && setThumbTransform(tt);
+
+        clearTimeout(scrollTimeoutRef.current);
+        scrollTimeoutRef.current = setTimeout(() => translateThumbRight, 3000); // 3000ms = 3 seconds
     })
+
+    useEffect(() => {
+        translateThumbRight();
+
+        // Clear the timeout when the component unmounts
+        return () => clearTimeout(scrollTimeoutRef.current);
+    }, []);
 
     useEffect(() => {
         console.log('thumbTransform', thumbTransform)
@@ -212,42 +239,3 @@ const Scrollbar = ({ container }: { container: any }) => {
 LenisProvider.displayName = 'LenisProvider';
 
 export { LenisProvider };
-
-// export function LenisProviderOld({
-//     children, containerRef
-// }: { children: ReactElement, containerRef: React.RefObject<HTMLDivElement> }) {
-//     const LenisRef = useRef<Lenis>();
-
-//     const { width: widthContainer, height: heightContainer } = useResizeObserver<HTMLDivElement>({ ref: containerRef });
-
-//     const width = useDebounce(widthContainer, 30);
-//     const height = useDebounce(heightContainer, 30);
-
-//     useEffect(() => {
-//         LenisRef.current = new Lenis({
-//             duration: 1.2,
-//             easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-//         });
-
-//         LenisRef.current.on('scroll', (e: any) => {
-//             // console.log('scroll updated', e);
-//         })
-//         function raf(time: number) {
-//             LenisRef.current?.raf(time);
-//             ScrollTrigger.update();
-//             requestAnimationFrame(raf);
-//         }
-
-//         requestAnimationFrame(raf);
-
-//         return () => {
-//             LenisRef.current?.destroy();
-//         }
-//     }, []);
-
-//     useEffect(() => {
-//         console.log('LenisProvider: refresh');
-//         ScrollTrigger.refresh();
-//     }, [width, height]);
-//     return children;
-// }

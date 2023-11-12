@@ -55,7 +55,7 @@ function App({ Component, pageProps }: AppProps) {
           smoothTouch: true,
           isSmooth: true,
           duration: 1.2,
-          touchMultiplier: 2,
+          touchMultiplier: 1.2,
           infinite: false,
 
         }}  >

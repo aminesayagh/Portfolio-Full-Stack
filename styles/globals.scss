@@ -128,25 +128,34 @@ body {
   right: 0;
   bottom: 0;
   top: 0;
-  z-index: 10;
+  width: 16px;
+  z-index: 1000;
   padding: 6px 0;
   .inner {
     height: 100%;
     position: relative;
-    background-color: oklch(var(--gray-900));
+    background-color: oklch(var(--black-400)/0.05);
     backdrop-filter: blur(8px);
   }
   .thumb {
     min-height: 120px;
-    width: 8.6px;
+    width: 8px;
     background-color: var(--color-black-900);
     position: absolute;
-    right: 8px;
-    border-radius: 8px;
+    right: 4px;
+    border-radius: 2.8px;
     border: 1px solid var(--color-black-200);
     cursor: grab;
   }
 }
+
+// in tactile mode and on mobile, we hide the scrollbar
+@media (max-width: 1024px) {
+  .scrollbar {
+    display: none;
+  }
+}
+
 
 
 /* Colors */

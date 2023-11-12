@@ -24,15 +24,17 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                 let tl2: gsap.core.Timeline;
                 if (index < 2) {
                     tl2 = gsap.timeline({}).fromTo('.fixed-gsap' as any, {
-                        top: 0,
+                        // top: 0,
                     }, {
-                        top: '100%',
+                        // top: '100%',
                         ease: 'none',
                     })
                     ScrollTrigger.create({
                         animation: tl2,
+                        pin: true,
                         trigger: container.current as any,
                         scrub: true,
+                        pinType: 'fixed',
                         start: 'top top',
                         end: 'bottom top',
                         toggleActions: 'play pause reverse pause',
@@ -42,15 +44,18 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
     
                 } else {
                     const t = gsap.timeline().fromTo('.fixed-gsap' as any, {
-                        top: 0,
+                        // top: 0,
                     }, {
-                        top: '100%',
+                        // top: '100%',
                         ease: 'none',
                     });
                     ScrollTrigger.create({
                         animation: t,
                         trigger: container.current as any,
                         scrub: true,
+                        pin: true,
+                        pinType: 'fixed',
+
                         start: 'top top',
                         end: 'bottom top',
                         toggleActions: 'play pause reverse pause',
