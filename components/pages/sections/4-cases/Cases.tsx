@@ -11,117 +11,102 @@ import { gsap, Power4 } from '@/utils/gsap';
 import useGsap from '@/hook/useGsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { ScrollTrigger } from '@/utils/gsap';
-import { useLocomotiveScroll } from '@/lib/LocomotiveScroll';
 
 const Case = ({ picture, index, id }: { picture?: string[], index: number, id: string }) => {
     const container = useRef<ElementRef<'div'>>(null);
     const { t } = useTranslation();
-    // const { isReady } = useLocomotiveScroll();
 
     useIsomorphicLayoutEffect(() => {
-        // if(isReady) {
-            const ctx = gsap.context(() => {
-                let tl2: gsap.core.Timeline;
-                if (index < 2) {
-                    tl2 = gsap.timeline({}).fromTo('.fixed-gsap' as any, {
-                        // top: 0,
-                    }, {
-                        // top: '100%',
-                        ease: 'none',
-                    })
-                    ScrollTrigger.create({
-                        animation: tl2,
-                        pin: true,
-                        trigger: container.current as any,
-                        scrub: true,
-                        pinType: 'fixed',
-                        start: 'top top',
-                        end: 'bottom top',
+        const ctx = gsap.context(() => {
+            let tl2: gsap.core.Timeline = gsap.timeline({}).to('.fixed-gsap' as any, {
+                ease: 'none',
+            });
+            ScrollTrigger.create({
+                animation: tl2,
+                pin: true,
+                trigger: container.current as any,
+                scrub: true,
+                pinType: 'fixed',
+                start: 'top top',
+                end: 'bottom top',
+                toggleActions: 'play pause reverse pause',
+                markers: false,
+                invalidateOnRefresh: true,
+            });
+            if (index < 2) {
+                tl2.fromTo('.fixed-gsap', {
+                    top: 0
+                }, {
+                    top: '100%',
+                    scrollTrigger: {
                         toggleActions: 'play pause reverse pause',
-                        markers: false,
-                        invalidateOnRefresh: true,
-                    });
-    
-                } else {
-                    const t = gsap.timeline().fromTo('.fixed-gsap' as any, {
-                        // top: 0,
-                    }, {
-                        // top: '100%',
-                        ease: 'none',
-                    });
-                    ScrollTrigger.create({
-                        animation: t,
+                        start: 'bottom bottom',
+                        end: 'start start',
                         trigger: container.current as any,
-                        scrub: true,
-                        pin: true,
-                        pinType: 'fixed',
-
-                        start: 'top top',
-                        end: 'bottom top',
-                        toggleActions: 'play pause reverse pause',
-                        markers: false,
                         invalidateOnRefresh: true,
-                    });
-                }
-                const tl = gsap.timeline({});
-                tl.fromTo('.image-gsap' as any, {
-                    scale: 1,
-                }, {
-                    scale: 1.3,
-                    transformOrigin: 'center 10%',
-                    ease: 'Power3.easeIn'
-                }).fromTo('.image-gsap' as any, {
-                    backgroundPosition: 'center 20%',
-                }, {
-                    backgroundPosition: 'center 80%',
-                    ease: 'Power3.easeOut',
-                }, 0).fromTo('.image-gsap' as any, {
-                    filter: 'blur(0px)',
-                }, {
-                    filter: 'blur(10px)',
-                    ease: 'Power4.easeIn'
-                }, '<');
-    
-                ScrollTrigger.create({
-                    animation: tl,
-                    trigger: container.current as any,
-                    scrub: true,
-                    start: 'top top',
-                    end: 'bottom top',
-                    invalidateOnRefresh: true,
-                });
-    
-    
-                const tlCase = gsap.timeline().fromTo('.case-text-gsap', {
-                    xPercent: -100,
-                    opacity: 0,
-                }, {
-                    xPercent: 0,
-                    opacity: 1,
-                    duration: 1,
-                    stagger: 0.2,
-                    ease: Power4.easeInOut,
+                    }
                 })
-                ScrollTrigger.create({
-                    animation: tlCase,
-                    trigger: container.current as any,
-                    start: 'top bottom-=35%',
-                    end: 'bottom center',
-                    markers: false,
-                    toggleActions: 'play none play none',
-                    invalidateOnRefresh: true,
-                });
-    
-                return () => {
-                    tl.kill();
-                    tl2?.kill();
-                    tlCase.kill();
-                }
-            }, container);
-            return () => {
-                ctx.revert();
             }
-        // }
+
+            const tl = gsap.timeline({});
+            tl.fromTo('.image-gsap' as any, {
+                scale: 1,
+            }, {
+                scale: 1.3,
+                transformOrigin: 'center 10%',
+                ease: 'Power3.easeIn'
+            }).fromTo('.image-gsap' as any, {
+                backgroundPosition: 'center 20%',
+            }, {
+                backgroundPosition: 'center 80%',
+                ease: 'Power3.easeOut',
+            }, 0).fromTo('.image-gsap' as any, {
+                filter: 'blur(0px)',
+            }, {
+                filter: 'blur(10px)',
+                ease: 'Power4.easeIn'
+            }, '<');
+
+            ScrollTrigger.create({
+                animation: tl,
+                trigger: container.current as any,
+                scrub: true,
+                start: 'top top',
+                end: 'bottom top',
+                invalidateOnRefresh: true,
+            });
+
+
+            const tlCase = gsap.timeline().fromTo('.case-text-gsap', {
+                xPercent: -100,
+                opacity: 0,
+            }, {
+                xPercent: 0,
+                opacity: 1,
+                duration: 1,
+                stagger: 0.2,
+                ease: Power4.easeInOut,
+            });
+
+            ScrollTrigger.create({
+                animation: tlCase,
+                trigger: container.current as any,
+                start: 'top bottom-=35%',
+                end: 'bottom center',
+                markers: false,
+                toggleActions: 'play none play none',
+                invalidateOnRefresh: true,
+            });
+
+            return () => {
+                tl.kill();
+                tl2?.kill();
+                tlCase.kill();
+            }
+        }, container);
+        return () => {
+            ctx.revert();
+        }
     }, [container.current, picture, index, id]);
 
     const zIndexContainer = useMemo(() => 10 + (index + 10), [index]);
@@ -191,13 +176,13 @@ const Cases = () => {
     const { i18n } = useTranslation();
     const projectsImported = useMemo(() => getProjectsByCategory('best'), []);
     const [projects, setProjects] = useState<Project[]>([]);
-    
+
     return <div className='flex flex-col gap-14 sm:gap-12 w-full h-fit'>
         <div data-scroll className='flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2 sm:gap-12 w-full'>
             <CaseHeadMemo />
         </div>
         <div className='w-full flex flex-col gap-0 h-fit rounded-2xl overflow-hidden'>
-            {projectsImported.map((project, index) => <span key={project.id}><Case  picture={project?.picture} index={index} id={project.id} /></span>)}
+            {projectsImported.map((project, index) => <span key={project.id}><Case picture={project?.picture} index={index} id={project.id} /></span>)}
         </div>
     </div>
 }

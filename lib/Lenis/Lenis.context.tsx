@@ -208,7 +208,7 @@ const Scrollbar = ({ container }: { container: any }) => {
         const position = lenis.targetScroll;
 
         const tt = position * heightOfWindow / heightOfContent;
-        gsap.to(thumbRef.current, {
+        gsap.to(thumbRef.current, 
             duration: 0.3,
             y: tt,
             ease: 'power3.out'

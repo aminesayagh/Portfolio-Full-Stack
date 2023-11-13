@@ -28,6 +28,7 @@ const TRANSLATE_Y = -110;
 
 import useRouterChange from '@/hook/SafePush';
 import { useIsomorphicLayoutEffect } from 'react-use';
+import { useLenis } from '@/lib/lenis';
 import { MenuItem } from '@/conf/router';
 import { useLocomotiveScroll } from '@/lib/LocomotiveScroll';
 
@@ -39,6 +40,7 @@ const Header = () => {
     let [openMenu, setOpenMenu] = useState<boolean>(false);
     const { endLoading } = usePreloader();
     // const { scrollTo } = useLocomotiveScroll();
+    const { scrollTo } = useLenis();
 
     const menuHamburgerItemsRef = useRef<MenuItem[]>([]);
     const menuSocialNetworksRef = useRef<MenuItem[]>([]);
@@ -200,8 +202,8 @@ const Header = () => {
                     <SwitchLang />
                 </Navbar.Content>
                 <Navbar.Brand >
-                    <span onClick={() => onButtonClick('/')}>
-                        <Logo onPress={() => onButtonClick('/')} size={64} alt={t('header.logo')} mode='dark' />
+                    <span>
+                        <Logo href='/' size={64} alt={t('header.logo')} mode='dark' />
                     </span>
                 </Navbar.Brand>
                 <Navbar.Content className={twMerge('flex-1 justify-end overflow-hidden', GAP_SIZE_LG)}>
@@ -222,12 +224,10 @@ const Header = () => {
                         {({ handler, isOpen }) => {
                             return <>
                                 <div className={twMerge('flex flex-row items-center gap-6 justify-end')} >
-
                                     <span className='overflow-hidden hidden xxs:block cursor-pointer' onClick={() => handler()}>
                                         <Text p size='xs' degree='3' className={twMerge('mr-2 hidden', 'modal-close')}>{t('header.close')}</Text>
                                     </span>
                                     <HamburgerMenu isOpen={isOpen} setOpen={handler} />
-
                                 </div>
                             </>
                         }}
