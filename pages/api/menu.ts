@@ -1,4 +1,4 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import { getMenuItems, menuValues, MenuType, MenuItem } from "@/conf/router";
 
 type Data = {

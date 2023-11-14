@@ -1,7 +1,5 @@
 
-import HeadNext from 'next/head';
 import { NextSeo } from 'next-seo';
-import Script from 'next/script'
 
 const Head = ({ title, description, keywords, author, logo }: { title: string, description: string, keywords: string, author: string, logo: string }) => {
 

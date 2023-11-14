@@ -18,7 +18,7 @@ const CursorContainer = <C extends CursorNames>({ children, className = '', name
     const { addCursor, setKey } = useContext(cursorContext);
     const { hasParent } = useContext(cursorParentContext);
     
-    const { isHovered, hoverProps } = useHover({
+    const { hoverProps } = useHover({
         onHoverStart: () => {
             setKey && setKey(name);
         },
@@ -34,14 +34,7 @@ const CursorContainer = <C extends CursorNames>({ children, className = '', name
             ...props
         })
     }, [props, name, addCursor])
-
-    // useEffect(() => {
-    //     if (isHovered) {
-    //         setKey && setKey(name);
-    //     } else {
-    //         setKey && setKey(null);
-    //     }
-    // }, [isHovered, name, setKey])
+    
 
     if (hasParent) return children;
 

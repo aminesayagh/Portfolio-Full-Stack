@@ -1,7 +1,7 @@
 
 import { useTranslation } from "next-i18next";
 import { twMerge } from "tailwind-merge";
-import React, { memo, useRef, useContext } from 'react';
+import React, { memo, useRef } from 'react';
 import { gsap } from '@/utils/gsap';
 import useGsap from '@/hook/useGsap';
 

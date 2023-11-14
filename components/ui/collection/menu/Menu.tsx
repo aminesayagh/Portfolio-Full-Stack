@@ -22,7 +22,7 @@ const MenuUi = ({ children, ...props }: { children: React.ReactNode | React.Reac
 }
 
 const ButtonUi = ({ children, className = '', ...props }: { children: (({ open }: { open: () => void }) => React.ReactElement) } & { className?: string } | { children: React.ReactNode } & Omit<ButtonProps, 'children'>): React.ReactElement => {
-    const { isOpen, setOpen } = React.useContext(MenuContext);
+    const { setOpen } = React.useContext(MenuContext);
     return typeof children == 'function' ? children({ open: () => setOpen(true) }) : <Button className={mergeClassName('outline-none', className)} onPress={() => setOpen(true)} {...props}>{children}</Button>
 }
 

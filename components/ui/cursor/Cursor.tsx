@@ -1,9 +1,9 @@
-import React, { useRef, useState, createContext, ElementRef, useMemo, useCallback, useEffect } from 'react';
+import React, { useRef, useState, createContext, ElementRef, useMemo, useCallback } from 'react';
 
 import { gsap } from '@/utils/gsap';
 import { twMerge } from 'tailwind-merge';
 import Cursors, { CursorsArray } from './Cursors';
-import { ItemCursor, CursorNames } from './CursorType';
+import { ItemCursor } from './CursorType';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { useEventListener } from '@/hook/useEventListener';
 
@@ -101,7 +101,7 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
                     cursorScrollTimeline.reverse();
                 }
             });
-            context.add('cursorActionIcon', (isActive: boolean, degree: number) => {
+            context.add('cursorActionIcon', (isActive: boolean) => {
                 if (isActive) {
                     cursorActionIconTimeline.play();
                 } else {
@@ -126,7 +126,7 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
                 opacity: 0.8,
                 ease: 'Power4.easeOut',
             }, '<');
-            context.add('CursorEvent', (isActive: boolean, event: 'pointer' | 'disabled') => {
+            context.add('CursorEvent', (isActive: boolean) => {
                 if (isActive) {
                     timelineBallEventPointer.play();
                 } else {
@@ -246,7 +246,7 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
                         'w-full', 'flex justify-center items-center uppercase')
                     }
                 >
-                    {CursorsArray.map((item, index) => {
+                    {CursorsArray.map((item) => {
                         const isActive = item == currentCursor?.component;
                         let otherProps = {};
                         if (isActive) {

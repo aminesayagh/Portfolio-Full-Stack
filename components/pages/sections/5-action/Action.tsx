@@ -10,7 +10,6 @@ import { CursorContent } from '@/components/ui/cursor';
 import { Icon } from '@/components/ui/icon'
 
 import { gsap } from "@/utils/gsap";
-import useGsap from "@/hook/useGsap";
 import { ScrollTrigger } from "@/utils/gsap";
 import { useIsomorphicLayoutEffect } from 'react-use';
 

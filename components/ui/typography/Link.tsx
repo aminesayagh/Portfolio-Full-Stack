@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { textColorDegree, displayStyle, textStyle, titleStyle } from './Typography.style'
 import { LinkPropsExtended } from './Typography.type';
 import { twMerge } from 'tailwind-merge';
 import LinkNext from 'next/link';

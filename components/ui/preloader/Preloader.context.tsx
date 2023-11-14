@@ -68,7 +68,7 @@ export function LoadingProvider({ children }: {
         if (!loadingExist(key)) return;
         loadingComponentList[key] = false;
 
-        setLoadingComponentList((prev) => loadingComponentList);
+        setLoadingComponentList(() => loadingComponentList);
         loadingState();
     }, [loadingComponentList, loadingState, loadingExist])
 
@@ -221,7 +221,7 @@ const Preloader = ({ isLoading, setEndLoading }: {
                     yPercent: -120,
                     ease: 'power2.out',
                 });
-            self.add('endPreload', (e: any) => {
+            self.add('endPreload', () => {
                 tl.play();
             });
             return () => {

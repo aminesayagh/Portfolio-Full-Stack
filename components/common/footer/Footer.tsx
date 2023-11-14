@@ -1,12 +1,11 @@
-import React, { ElementRef, useContext, useRef, useEffect, useCallback } from 'react';
- 
+import React, { ElementRef, useRef, useEffect, useCallback } from 'react';
+
 import { memo } from 'react';
 import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 import { useIsomorphicLayoutEffect } from 'react-use';
 
-import { useLocomotiveScroll } from '@/lib/LocomotiveScroll';
-import  Link from '@/components/ui/typography/Link';
+import Link from '@/components/ui/typography/Link';
 import Button from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import Text from '@/components/ui/typography/Text';
@@ -14,7 +13,7 @@ import { gsap } from 'utils/gsap';
 import useGsap from '@/hook/useGsap';
 import { MenuItem } from '@/conf/router';
 import { useEventListener } from '@/hook/useEventListener';
-import useSafePush from '@/hook/SafePush';
+import { useLenis } from '@/lib/Lenis';
 
 const BASE_LOCALE_SOCIAL = 'socialNetwork';
 
@@ -31,7 +30,7 @@ const FollowUs = () => {
             signal
         }).then(async (res1) => {
             res1.json().then((response1) => {
-                if(active) return;
+                if (active) return;
                 menuSocialNetworksRef.current = response1.items;
             })
         });
@@ -42,8 +41,8 @@ const FollowUs = () => {
     const ctx = useRef<gsap.Context | null>(null);
 
     useIsomorphicLayoutEffect(() => {
-        if(!menuSocialNetworksRef.current.length) return;
-        ctx.current = gsap.context((self) => {      
+        if (!menuSocialNetworksRef.current.length) return;
+        ctx.current = gsap.context((self) => {
             const tl = gsap.timeline({
                 paused: true
             }).fromTo('.fallow-button-gsap', {
@@ -64,8 +63,8 @@ const FollowUs = () => {
                 stagger: -0.07,
                 duration: 0.3,
             });
-            
-            
+
+
 
             self.add('followButtonShow', () => {
                 tl.play();
@@ -152,7 +151,7 @@ const TextAnimated = ({ phrase, className, ...props }: { phrase: string } & Omit
 const GoToTop = ({ handler, text }: { handler: () => void, text: string }) => {
     const ref = useRef<HTMLButtonElement | null>(null);
     const ctx = useRef<gsap.Context | null>(null);
-    
+
     useIsomorphicLayoutEffect(() => {
         ctx.current = gsap.context((self) => {
             const tlIcon = gsap.timeline({
@@ -210,7 +209,7 @@ const GoToTop = ({ handler, text }: { handler: () => void, text: string }) => {
                 tlText.kill();
             }
         }, ref);
-        
+
         return () => {
             ctx.current?.revert();
         }
@@ -241,18 +240,23 @@ const GoToTopMemo = memo(GoToTop);
 const Footer = () => {
     const { t, i18n: { language } } = useTranslation();
     // const { scrollTo } = useLocomotiveScroll();
+    const lenis = useLenis();
+
+    const goToTop = useCallback(() => {
+        lenis && lenis.scrollTo(0);
+    }, [lenis]);
 
     return (<>
         <div className={twMerge(
-            language == 'en' ? 
-                'max-w-[16rem] xxs:w-8/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[32vw] mdl:max-w-[30vw] xl:max-w-[20vw] 2xl:max-w-[28vw] 3xl:max-w-[22rem]' : 
+            language == 'en' ?
+                'max-w-[16rem] xxs:w-8/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[32vw] mdl:max-w-[30vw] xl:max-w-[20vw] 2xl:max-w-[28vw] 3xl:max-w-[22rem]' :
                 'max-w-[16rem] xxs:w-9/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[32vw] mdl:max-w-[30vw] xl:max-w-[20vw] 2xl:max-w-[28vw] 3xl:max-w-[22rem]'
         )} >
             <TextAnimated degree='3' weight='medium' size='md' className='uppercase max-w-xs justify-start gap-x-2' phrase={t('footer.state')} />
         </div>
         <div className={twMerge('flex flex-row flex-wrap sm:flex-nowrap justify-between', 'gap-y-4', 'pb-10 pt-6')}>
             <div className={twMerge('flex flex-row flex-1', 'order-2 sm:order-1')} >
-                <GoToTopMemo handler={() => scrollTo(0)} text={t('footer.action')} />
+                <GoToTopMemo handler={goToTop} text={t('footer.action')} />
             </div>
             <div className='flex flex-row flex-none grow-0 justify-start sm:justify-center items-center  order-1 sm:order-2'>
                 <Text p degree='3' weight='semibold' size='sm' className='uppercase'>

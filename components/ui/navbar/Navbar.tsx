@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext, createContext, useRef, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { useIsomorphicLayoutEffect } from 'react-use';
-import { useLocomotiveScroll } from '@/lib/LocomotiveScroll';
 
 import LinkUi from '@/components/ui/typography/Link';
 import { containerStyle } from '@/components/ui/container';
@@ -12,7 +11,6 @@ import { useHover } from 'react-aria';
 import { zIndex } from '../conf';
 import { gsap } from '@/utils/gsap';
 import { useLenis } from '@/lib/Lenis';
-import { useDebounce } from '@/hook/useDebounce';
 
 
 const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props }: NavbarProps) => {
@@ -20,7 +18,6 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
     const delta = useRef<number>(0);
     const lastScrollY = useRef<number>(0);
     const [active, setActive] = useState<boolean>(false);
-    // const { scroll } = useLocomotiveScroll();
     const [positionScroll, setPositionScroll] = useState<number>(0);
 
     useLenis((scroll) => {
@@ -69,7 +66,7 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
     </header>)
 };
 
-const Brand = ({ children, className, ...props }: BrandProps) => {
+const Brand = ({ children, className }: BrandProps) => {
     return <>
         <div className={twMerge(className)} >
             {children}
@@ -124,11 +121,11 @@ const Link = ({ children, href, className, ...props }: LinkProps) => {
     const { isActive, handlerActiveItem } = useActiveItem(href.toString());
     const [data, setData] = useState<object>();
 
-    const { hoverProps, isHovered } = useHover({
-        onHoverStart: (e) => {
+    const { hoverProps } = useHover({
+        onHoverStart: () => {
             setData({ 'data-entering': true, 'data-exiting': false });
         },
-        onHoverEnd: (e) => {
+        onHoverEnd: () => {
             setData({ 'data-entering': false, 'data-exiting': true });
         }
     });

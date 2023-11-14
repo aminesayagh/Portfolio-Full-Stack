@@ -146,6 +146,10 @@ body {
     border-radius: 2.8px;
     border: 1px solid var(--color-black-200);
     cursor: grab;
+    &:active {
+      cursor: grabbing;
+      background-color: var(--color-gray-800);
+    }
   }
 }
 

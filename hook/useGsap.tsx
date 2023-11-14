@@ -1,10 +1,7 @@
-import { useContext, RefObject } from "react"
-import { useIsomorphicLayoutEffect, useWindowSize } from "react-use";
-import useResizeObserver from 'use-resize-observer';
-import { useDebounce } from '@/hook/useDebounce';
+import { RefObject } from "react"
+import { useIsomorphicLayoutEffect } from "react-use";
 
 import { gsap } from "@/utils/gsap";
-import { useLocomotiveScroll } from "@/lib/LocomotiveScroll";
 import { useTranslation } from "react-i18next";
 const useGsap = (gsapCallback: gsap.ContextFunc, ref: RefObject<HTMLDivElement> | RefObject<HTMLCanvasElement> | undefined, rendered: any[] = []) => {
     const { i18n } = useTranslation();

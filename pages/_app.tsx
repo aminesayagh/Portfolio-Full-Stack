@@ -1,12 +1,10 @@
 
 import { useRef, useEffect } from 'react';
 import { appWithTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
 import { Montserrat } from 'next/font/google';
 
 import type { AppProps } from 'next/app';
 import nextI18NextConfig from '../next-i18next.config.js';
-import { LocomotiveScrollProvider } from '@/lib/LocomotiveScroll';
 import { LenisProvider, useLenis } from '@/lib/Lenis';
 import { LoadingProvider } from '@/components/ui/preloader';
 import Scripts from '@/components/common/script';
@@ -23,11 +21,8 @@ const montserrat = Montserrat({
 });
 
 function App({ Component, pageProps }: AppProps) {
-  const ref = useRef(null);
-  const contentRef = useRef(null);
-  const { asPath } = useRouter();
   const font = montserrat.variable;
-  const className = montserrat.className;
+
   useEffect(() => {
     document.documentElement.style.setProperty('--font-montserrat', font);
     document.body.classList.add(font);

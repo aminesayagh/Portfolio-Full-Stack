@@ -8,7 +8,7 @@ import { twMerge } from 'tailwind-merge';
 
 import { useFrame } from '@studio-freight/hamo'
 import { useLenis } from './Lenis.hook';
-import { set } from 'react-hook-form';
+import useResizeObserver from 'use-resize-observer';
 
 interface LenisContextValue {
     lenis: LenisInstance | undefined;
@@ -16,21 +16,19 @@ interface LenisContextValue {
     removeCallback: (callback: CallbackFunction) => void;
 }
 
-type EasingFunction = (rawValue: number) => number;
+// type EasingFunction = (rawValue: number) => number;
 
-interface ScrollToParams {
-    offset?: number;
-    lerp?: number;
-    duration?: number;
-    easing?: EasingFunction;
-    immediate?: boolean;
-    lock?: boolean;
-    force?: boolean;
-    onComplete?: CallbackFunction;
-}
+// interface ScrollToParams {
+//     offset?: number;
+//     lerp?: number;
+//     duration?: number;
+//     easing?: EasingFunction;
+//     immediate?: boolean;
+//     lock?: boolean;
+//     force?: boolean;
+//     onComplete?: CallbackFunction;
+// }
 
-interface Emitter { }
-interface Dimensions { }
 interface ReactLenisOptions {
     wrapper?: Window | HTMLElement;
     content?: HTMLElement;
@@ -53,9 +51,9 @@ interface ReactLenisOptions {
     normalizeWheel?: boolean;
     autoResize?: boolean;
     isSmooth?: boolean;
-    
+
 }
-type ScrollTo = (target: string | number | HTMLElement, options: ScrollToParams) => void;
+// type ScrollTo = (target: string | number | HTMLElement, options: ScrollToParams) => void;
 export type LenisInstance = Lenis;
 
 type CallbackFunction = (instance: LenisInstance) => void;
@@ -95,6 +93,8 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
 
     useImperativeHandle(ref, () => lenis, [lenis]);
 
+    useResizeObserver<HTMLDivElement>({ ref: content });
+
     useEffect(() => {
         const lenis = new Lenis({
             ...options,
@@ -116,6 +116,7 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
 
         ScrollTrigger.defaults({
             scroller: wrapper.current,
+
         });
 
         return () => {
@@ -124,6 +125,7 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
         }
     }, [root, JSON.stringify(options)]);
 
+    
 
     useFrame((time: number) => {
         if (autoRaf) {
@@ -170,14 +172,12 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
     }, [lenis, onClassNameChange])
 
     return (<LenisContext.Provider value={{ lenis, addCallback, removeCallback }}>
-        {root ? (children) : (
-            <div ref={wrapper} className={twMerge(lenis?.className, className)} {...props}>
-                <div ref={content}>
-                    {children}
-                    <Scrollbar container={content} />
-                </div>
+        {root ? (children) : <div ref={wrapper} className={twMerge(lenis?.className, className)} {...props}>
+            <div ref={content}>
+                {children}
+                <Scrollbar container={content} />
             </div>
-        )}
+        </div>}
     </LenisContext.Provider>)
 });
 
@@ -185,50 +185,20 @@ const Scrollbar = ({ container }: { container: any }) => {
     const thumbRef = useRef<ElementRef<'div'>>(null);
     const [thumbTransform, setThumbTransform] = useState(0);
 
-    let scrollTimeoutRef = useRef<NodeJS.Timeout>(); // Timeout ref
-    const [close, setClose] = useState(false);
-
-    const tl = useRef(gsap.timeline({ paused: true }).to('.scrollbar', {
-        duration: 0.3,
-        xPercent: 100,
-        ease: 'power3.out'
-    }));
-
-    const translateThumbRight = () => {
-        tl.current.play();
-        setClose(true);
-    }
     useLenis((lenis) => {
-        if (close) {
-            tl.current.reverse();
-            setClose(false);
-        }
         const heightOfContent = container.current?.offsetHeight;
         const heightOfWindow = window.innerHeight;
         const position = lenis.targetScroll;
 
         const tt = position * heightOfWindow / heightOfContent;
-        gsap.to(thumbRef.current, 
+        gsap.to(thumbRef.current, {
             duration: 0.3,
             y: tt,
             ease: 'power3.out'
         })
-        thumbTransform != tt && setThumbTransform(tt);
+        thumbTransform != tt && setThumbTransform(tt)
+    });
 
-        clearTimeout(scrollTimeoutRef.current);
-        scrollTimeoutRef.current = setTimeout(() => translateThumbRight, 3000); // 3000ms = 3 seconds
-    })
-
-    useEffect(() => {
-        translateThumbRight();
-
-        // Clear the timeout when the component unmounts
-        return () => clearTimeout(scrollTimeoutRef.current);
-    }, []);
-
-    useEffect(() => {
-        console.log('thumbTransform', thumbTransform)
-    }, [thumbTransform]);
     return <div className='scrollbar'>
         <div className='inner'>
             <div className='thumb' ref={thumbRef} ></div>

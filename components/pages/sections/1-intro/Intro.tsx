@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import React, { useRef, useContext, useCallback, useMemo, ElementRef, useState, useEffect } from "react";
+import React, { useRef,  useCallback, useMemo, ElementRef, useState, useEffect } from "react";
 import { useTranslation } from "next-i18next";
 import { useIsomorphicLayoutEffect } from "react-use";
 
@@ -16,7 +16,8 @@ import { ScrollTrigger, gsap } from "@/utils/gsap";
 import useRouterChange from '@/hook/SafePush';
 import { useEventListener } from "@/hook/useEventListener";
 import useGsap from "@/hook/useGsap";
-// import { useLocomotiveScroll } from "@/lib/LocomotiveScroll";
+
+import { useLenis } from '@/lib/Lenis';
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<ElementRef<'div'>>(null);
@@ -100,15 +101,16 @@ function useFitText(options?: { factor?: number, maxFontSize?: number }) {
         if (ref.current) {
             const containerWidth = ref.current.getBoundingClientRect().width;
             const factor = options?.factor || 1;
-            const maxFontSize = options?.maxFontSize || 400;
             const newSize = containerWidth / factor;
 
             setFontSize(() => `${newSize}px`);
         }
-    }, [ref, options?.factor, options?.maxFontSize])
+
+    }, [ref, JSON.stringify(options), setFontSize]);
+
     useEffect(() => {
         adjustFontSize();
-    }, [options?.factor, options?.maxFontSize])
+    }, [JSON.stringify(options), adjustFontSize]);
     useEventListener('resize', adjustFontSize);
     useEventListener('resize', adjustFontSize, ref);
     useIsomorphicLayoutEffect(adjustFontSize, [ref]);
@@ -265,16 +267,16 @@ const menuKeys = ['manifesto', 'experience', 'cases', 'contact'];
 const Menu = () => {
     const { t } = useTranslation();
     const { safePush } = useRouterChange();
-    // const { scroll, scrollTo } = useLocomotiveScroll();
 
+    const lenis = useLenis();
+    
     const goToSection = useCallback((section: string) => {
         if (section == 'contact') {
             safePush('/contact');
         } else {
-            // safePush(`/#${section}`);
-            // scrollTo(`#${section}`);
+            lenis?.scrollTo(`#${section}`);
         }
-    }, [safePush]);
+    }, [safePush, lenis]);
 
     const menuItemsData = useMemo(() => Array.apply(null, Array(4)).map((_, i) => {
         return {

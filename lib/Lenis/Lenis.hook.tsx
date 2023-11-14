@@ -10,7 +10,7 @@ function useCurrentLenis() {
     return local ?? root;
 }
 
-export function useLenis(callback: (lenis: LenisInstance) => void, deps = [], priority = 0) {
+export function useLenis(callback?: (lenis: LenisInstance) => void, deps = [], priority = 0) {
     const { lenis, addCallback, removeCallback } = useCurrentLenis();
     
     useEffect(() => {

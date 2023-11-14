@@ -28,9 +28,8 @@ const TRANSLATE_Y = -110;
 
 import useRouterChange from '@/hook/SafePush';
 import { useIsomorphicLayoutEffect } from 'react-use';
-import { useLenis } from '@/lib/lenis';
+import { useLenis } from '@/lib/Lenis';
 import { MenuItem } from '@/conf/router';
-import { useLocomotiveScroll } from '@/lib/LocomotiveScroll';
 
 
 const Header = () => {
@@ -40,7 +39,7 @@ const Header = () => {
     let [openMenu, setOpenMenu] = useState<boolean>(false);
     const { endLoading } = usePreloader();
     // const { scrollTo } = useLocomotiveScroll();
-    const { scrollTo } = useLenis();
+    const lenis = useLenis();
 
     const menuHamburgerItemsRef = useRef<MenuItem[]>([]);
     const menuSocialNetworksRef = useRef<MenuItem[]>([]);
@@ -180,7 +179,7 @@ const Header = () => {
             tl.current.reverse().then(() => {
                 setOpenMenu(false);
                 idTimeout.current = setTimeout(() => {
-                    scrollTo(`#${id}`);
+                    lenis?.scrollTo && lenis?.scrollTo(`#${id}`);
                 }, 200);
             });
         }
@@ -235,7 +234,7 @@ const Header = () => {
                     <Modal.Overlay className={twMerge('opacity-0 fixed left-0 top-0 w-full min-h-full bg-primary-500 modal-overlay')}>
                         {/* <Cursor > */}
                         <Modal.Content isDismissable className={twMerge('body-background modal-content')}>
-                            {({ handler }) => (
+                            {({ }) => (
                                 <div className={twMerge(
                                     'flex flex-col justify-between',
                                     'min-h-screen w-screen',

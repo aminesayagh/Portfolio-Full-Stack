@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dialog, DialogTrigger, Popover, ModalOverlay, OverlayArrow, Button } from 'react-aria-components';
+import { Dialog, DialogTrigger, Popover, OverlayArrow, Button } from 'react-aria-components';
 import { DialogTriggerProps, PopoverProps } from 'react-aria-components';
 
 const PopoverContext = React.createContext<{ isOpen: boolean, setOpen: React.Dispatch<React.SetStateAction<boolean>> }>({ isOpen: false, setOpen: () => { } });
@@ -17,7 +17,7 @@ const PopoverUi = ({ children, ...props }: { children: React.ReactNode[] | React
 }
 
 const ButtonUi = ({ children, className = '', ...props }: { children: ({ open }: { open: () => void }) => React.ReactNode } & { className?: string } & DialogTriggerProps) => {
-    const { isOpen, setOpen } = React.useContext(PopoverContext);
+    const { setOpen } = React.useContext(PopoverContext);
     return typeof children == 'function' ? children({ open: () => setOpen(true) }) : <Button className={className} onPress={() => setOpen(true)} {...props}>{children}</Button>
 }
 

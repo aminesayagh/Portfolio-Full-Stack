@@ -1,4 +1,4 @@
-import { useRef, useContext, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import { gsap } from '@/utils/gsap';
 
 import { twMerge } from 'tailwind-merge';
@@ -6,7 +6,6 @@ import { twMerge } from 'tailwind-merge';
 import { rounded } from '@/components/style';
 import { CursorContent } from '@/components/ui/cursor';
 import { usePreloader } from '@/components/ui/preloader';
-// import { useLocomotiveScroll } from '@/lib/LocomotiveScroll';
 
 const FRAME_COUNT = 164;
 const LOADING_KEY = 'Video';
@@ -34,7 +33,7 @@ const Video = () => {
             img.style.objectFit = 'cover';
             img.style.objectPosition = 'center';
 
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve) => {
                 img.onload = () => {
                     resolve(img);
                 }

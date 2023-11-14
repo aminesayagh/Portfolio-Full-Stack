@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 
-const transpiledModules = require('next-transpile-modules')(['locomotive-scroll']);
 const { i18n } = require('./next-i18next.config');
 
 const nextConfig = {
@@ -10,4 +9,4 @@ const nextConfig = {
   i18n
 }
 
-module.exports = transpiledModules(nextConfig);
+module.exports = nextConfig;

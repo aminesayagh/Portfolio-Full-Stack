@@ -1,4 +1,4 @@
-import React, { ElementRef, useMemo, useRef, useEffect, useState } from 'react';
+import React, { ElementRef, useMemo, useRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import Title from '@/components/ui/typography/Title';
@@ -6,9 +6,8 @@ import Text from '@/components/ui/typography/Text';
 import Image from '@/components/ui/image';
 
 import { useTranslation } from 'next-i18next';
-import { getProjectsByCategory, Project } from '@/conf/projects';
+import { getProjectsByCategory } from '@/conf/projects';
 import { gsap, Power4 } from '@/utils/gsap';
-import useGsap from '@/hook/useGsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { ScrollTrigger } from '@/utils/gsap';
 
@@ -33,20 +32,6 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                 markers: false,
                 invalidateOnRefresh: true,
             });
-            if (index < 2) {
-                tl2.fromTo('.fixed-gsap', {
-                    top: 0
-                }, {
-                    top: '100%',
-                    scrollTrigger: {
-                        toggleActions: 'play pause reverse pause',
-                        start: 'bottom bottom',
-                        end: 'start start',
-                        trigger: container.current as any,
-                        invalidateOnRefresh: true,
-                    }
-                })
-            }
 
             const tl = gsap.timeline({});
             tl.fromTo('.image-gsap' as any, {
@@ -117,8 +102,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
     const description = useMemo(() => t(`projects.${id}.description`), [t, id]);
     const pic = useMemo(() => picture ? picture[0] : '', [picture]);
 
-    // if(!isReady) return null;
-    return <div data-scroll className='relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden will-change-transform-animation' ref={container} style={{
+    return <div data-scroll className={twMerge('relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden will-change-transform-animation')} ref={container} style={{
         zIndex: zIndexContainer,
     }} >
         <div className='absolute fixed-gsap left-0 right-0 top-0 w-full h-screen'  >
@@ -173,16 +157,14 @@ const CaseHead = () => {
 const CaseHeadMemo = React.memo(CaseHead);
 
 const Cases = () => {
-    const { i18n } = useTranslation();
     const projectsImported = useMemo(() => getProjectsByCategory('best'), []);
-    const [projects, setProjects] = useState<Project[]>([]);
 
     return <div className='flex flex-col gap-14 sm:gap-12 w-full h-fit'>
         <div data-scroll className='flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2 sm:gap-12 w-full'>
             <CaseHeadMemo />
         </div>
         <div className='w-full flex flex-col gap-0 h-fit rounded-2xl overflow-hidden'>
-            {projectsImported.map((project, index) => <span key={project.id}><Case picture={project?.picture} index={index} id={project.id} /></span>)}
+            {projectsImported.map((project, index) => <Case key={project.id} picture={project?.picture} index={index} id={project.id} />)}
         </div>
     </div>
 }
