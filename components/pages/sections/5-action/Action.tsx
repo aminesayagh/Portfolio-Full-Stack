@@ -19,7 +19,9 @@ const Action = () => {
 
     useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            const tl = gsap.timeline().fromTo('.contact-title-gsap', {
+            const tl = gsap.timeline({
+                paused: true
+            }).fromTo('.contact-title-gsap', {
                 yPercent: -100,
             }, {
                 yPercent: 0,
@@ -40,16 +42,18 @@ const Action = () => {
                 duration: 0.5,
                 opacity: 1,
                 ease: 'elastic.out(1, 0.6)',
-            }, '-=0.2');
+            }, '-=0.2')
+            
             ScrollTrigger.create({
                 animation: tl,
                 trigger: refContainer.current as any,
                 scrub: true,
                 start: 'top center',
                 end: 'top top',
-                toggleActions: 'play none reverse none',
-                markers: false,
+                toggleActions: 'play pause reverse restart',
+                // markers: true,
                 invalidateOnRefresh: true,
+
             });
             return () => {
                 tl.kill();

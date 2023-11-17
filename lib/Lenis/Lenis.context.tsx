@@ -51,7 +51,9 @@ interface ReactLenisOptions {
     normalizeWheel?: boolean;
     autoResize?: boolean;
     isSmooth?: boolean;
-
+    smoothResize?: boolean;
+    direction?: "vertical" | "horizontal";
+    gestureDirection?: "vertical" | "horizontal" | "both";
 }
 // type ScrollTo = (target: string | number | HTMLElement, options: ScrollToParams) => void;
 export type LenisInstance = Lenis;

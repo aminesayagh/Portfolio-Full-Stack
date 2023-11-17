@@ -17,7 +17,9 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
 
     useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            let tl2: gsap.core.Timeline = gsap.timeline({}).to('.fixed-gsap' as any, {
+            let tl2: gsap.core.Timeline = gsap.timeline({
+                paused: true,
+            }).to('.fixed-gsap' as any, {
                 ease: 'none',
             });
             ScrollTrigger.create({
@@ -33,7 +35,9 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                 invalidateOnRefresh: true,
             });
 
-            const tl = gsap.timeline({});
+            const tl = gsap.timeline({
+                paused: true,
+            });
             tl.fromTo('.image-gsap' as any, {
                 scale: 1,
             }, {
