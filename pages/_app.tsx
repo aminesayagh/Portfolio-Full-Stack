@@ -41,9 +41,8 @@ function App({ Component, pageProps }: AppProps) {
     lenisRef.current?.raf(time);
   })
 
-  useLenis((lenis) => {
+  useLenis(() => {
     ScrollTrigger.refresh();
-
   });
 
   return <>
