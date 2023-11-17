@@ -127,7 +127,13 @@ const Title = () => {
     const { fontSize: fontSizeDev, ref: widthDevRef } = useFitText({
         factor: i18n.language == 'en' ? 5.55 : 7,
     });
-
+    
+    const interfaceText = useMemo(() => {
+        const title = t('intro.title.1');
+        let [inter, face] = title.split('r');
+        inter += 'r';
+        return { inter, face };
+    }, [t]);
     return (<>
         {/* title 1  */}
         <div ref={widthInterfaceRef} className={twMerge(
@@ -144,8 +150,8 @@ const Title = () => {
                 fontSize: fontSizeInterface, lineHeight: '96%',
             }} className={twMerge(
                 DISPLAY_1_CLASS_NAME,
-                'splitText_gsap will-change-transform-animation intro_scroll_gsap',
-            )}>{t('intro.title.1')}</Display>
+                'splitText_gsap will-change-transform-animation flex flex-row gap-2 intro_scroll_gsap',
+            )}><span>{interfaceText.inter as string}</span><span className="lowercase">{interfaceText.face as string}</span></Display>
         </div>
         {/* description */}
         <div className={twMerge('flex flex-row xxs:flex-col justify-between items-start xs:hidden',

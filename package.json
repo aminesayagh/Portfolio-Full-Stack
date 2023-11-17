@@ -14,7 +14,6 @@
     "@notionhq/client": "^2.2.12",
     "@react-aria/toast": "^3.0.0-beta.3",
     "@react-stately/toast": "^3.0.0-beta.1",
-    "@studio-freight/hamo": "^0.6.22",
     "@studio-freight/lenis": "^1.0.27",
     "@tabler/icons-react": "^2.26.0",
     "@types/lodash": "^4.14.196",
@@ -63,6 +62,7 @@
   },
   "devDependencies": {
     "@csstools/postcss-oklab-function": "^3.0.5",
+    "@studio-freight/hamo": "^0.6.22",
     "@types/locomotive-scroll": "^4.1.1",
     "knip": "^2.38.6"
   }

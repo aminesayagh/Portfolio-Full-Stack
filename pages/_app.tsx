@@ -10,6 +10,7 @@ import { LoadingProvider } from '@/components/ui/preloader';
 import Scripts from '@/components/common/script';
 import '../styles/globals.scss';
 import '../utils/i18n';
+// @ts-ignore
 import { useFrame } from '@studio-freight/hamo';
 import { LenisInstance } from '@/lib/Lenis/Lenis.context.jsx';
 
@@ -52,7 +53,7 @@ function App({ Component, pageProps }: AppProps) {
           duration: 1.2,
           touchMultiplier: 1.2,
           infinite: false,
-
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
         }}  >
             <Component {...pageProps} />
         </LenisProvider>

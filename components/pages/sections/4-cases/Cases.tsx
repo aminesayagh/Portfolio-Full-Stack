@@ -23,13 +23,13 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
             ScrollTrigger.create({
                 animation: tl2,
                 pin: true,
+                pinnedContainer: container.current as any,
                 trigger: container.current as any,
                 scrub: true,
                 pinType: 'fixed',
                 start: 'top top',
-                end: 'bottom top',
+                end: index < 2 ? 'bottom top' : 'bottom bottom',
                 toggleActions: 'play pause reverse pause',
-                markers: false,
                 invalidateOnRefresh: true,
             });
 
@@ -131,7 +131,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                     </Text>
                 </div>
             </div>
-            <div className={twMerge('absolute left-0 right-0 bottom-0 w-full h-80 xs:h-72', 'bg-gradient-to-t from-black-100/80 to-black-100/0')} style={{
+            <div className={twMerge('absolute left-0 right-0 w-full h-80 -bottom-2 xs:h-72', 'bg-gradient-to-t from-black-100/80 to-black-100/0')} style={{
                 zIndex: zIndexGradient,
             }}></div>
         </div>
