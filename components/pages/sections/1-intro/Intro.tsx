@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import React, { useRef, useContext, useCallback, useMemo, ElementRef, useState, useEffect } from "react";
+import React, { useRef,  useCallback, useMemo, ElementRef, useState, useEffect } from "react";
 import { useTranslation } from "next-i18next";
 import { useIsomorphicLayoutEffect } from "react-use";
 
@@ -16,7 +16,8 @@ import { ScrollTrigger, gsap } from "@/utils/gsap";
 import useRouterChange from '@/hook/SafePush';
 import { useEventListener } from "@/hook/useEventListener";
 import useGsap from "@/hook/useGsap";
-import { useLocomotiveScroll } from "@/lib/LocomotiveScroll";
+
+import { useLenis } from '@/lib/Lenis';
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
     const ref = useRef<ElementRef<'div'>>(null);
@@ -100,15 +101,16 @@ function useFitText(options?: { factor?: number, maxFontSize?: number }) {
         if (ref.current) {
             const containerWidth = ref.current.getBoundingClientRect().width;
             const factor = options?.factor || 1;
-            const maxFontSize = options?.maxFontSize || 400;
             const newSize = containerWidth / factor;
 
             setFontSize(() => `${newSize}px`);
         }
-    }, [ref, options?.factor, options?.maxFontSize])
+
+    }, [ref, JSON.stringify(options), setFontSize]);
+
     useEffect(() => {
         adjustFontSize();
-    }, [options?.factor, options?.maxFontSize])
+    }, [JSON.stringify(options), adjustFontSize]);
     useEventListener('resize', adjustFontSize);
     useEventListener('resize', adjustFontSize, ref);
     useIsomorphicLayoutEffect(adjustFontSize, [ref]);
@@ -125,7 +127,13 @@ const Title = () => {
     const { fontSize: fontSizeDev, ref: widthDevRef } = useFitText({
         factor: i18n.language == 'en' ? 5.55 : 7,
     });
-
+    
+    const interfaceText = useMemo(() => {
+        const title = t('intro.title.1');
+        let [inter, face] = title.split('r');
+        inter += 'r';
+        return { inter, face };
+    }, [t]);
     return (<>
         {/* title 1  */}
         <div ref={widthInterfaceRef} className={twMerge(
@@ -142,8 +150,8 @@ const Title = () => {
                 fontSize: fontSizeInterface, lineHeight: '96%',
             }} className={twMerge(
                 DISPLAY_1_CLASS_NAME,
-                'splitText_gsap will-change-transform-animation intro_scroll_gsap',
-            )}>{t('intro.title.1')}</Display>
+                'splitText_gsap will-change-transform-animation flex flex-row gap-2 intro_scroll_gsap',
+            )}><span>{interfaceText.inter as string}</span><span className="lowercase">{interfaceText.face as string}</span></Display>
         </div>
         {/* description */}
         <div className={twMerge('flex flex-row xxs:flex-col justify-between items-start xs:hidden',
@@ -265,16 +273,16 @@ const menuKeys = ['manifesto', 'experience', 'cases', 'contact'];
 const Menu = () => {
     const { t } = useTranslation();
     const { safePush } = useRouterChange();
-    const { scroll, scrollTo } = useLocomotiveScroll();
 
+    const lenis = useLenis();
+    
     const goToSection = useCallback((section: string) => {
         if (section == 'contact') {
             safePush('/contact');
         } else {
-            // safePush(`/#${section}`);
-            scrollTo(`#${section}`);
+            lenis?.scrollTo(`#${section}`);
         }
-    }, [safePush, scrollTo, scroll]);
+    }, [safePush, lenis]);
 
     const menuItemsData = useMemo(() => Array.apply(null, Array(4)).map((_, i) => {
         return {

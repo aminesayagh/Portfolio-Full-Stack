@@ -1,12 +1,9 @@
 import React, { useMemo, useCallback, memo, ElementRef, useRef } from 'react';
-import dynamic from 'next/dynamic';
 import { twMerge } from 'tailwind-merge';
 import { useTranslation } from 'next-i18next';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-
-const FooterDynamic = dynamic(() => import('@/components/common/footer'));
 
 import Container from '@/components/ui/container';
 import Display from '@/components/ui/typography/Display';
@@ -75,7 +72,6 @@ type TypeFormContact = {
 }
 import { Input } from 'react-aria-components'
 import { useIsomorphicLayoutEffect } from 'react-use';
-import { useLocomotiveScroll } from '@/lib/LocomotiveScroll';
 
 const FormContact = () => {
     const { t, i18n } = useTranslation();
@@ -211,7 +207,7 @@ const ContactPage = () => {
     const contactRef = useRef<ElementRef<'div'>>(null);
 
     const socialNetworkItems = useMemo(() => getMenuItems('socialNetworks'), []);
-    const { isReady } = useLocomotiveScroll();
+    // const { isReady } = useLocomotiveScroll();
 
     const timer = useTime({
         city: 'Casablanca',
@@ -220,7 +216,7 @@ const ContactPage = () => {
     })
 
     useIsomorphicLayoutEffect(() => {
-        if (isReady) {
+        
             let ctx = gsap.context(() => {
                 const tl = gsap.timeline({
                     scrollTrigger: {
@@ -239,8 +235,7 @@ const ContactPage = () => {
                 return () => tl.kill();
             });
             return () => ctx.revert();
-        }
-    }, [isReady]);
+    }, []);
     return <div ref={contactRef}>
         <Container as='section' size='lg' data-scroll-section id='contact' className={twMerge('flex flex-col gap-12', 'items-stretch')} >
             <section className={twMerge('flex flex-col gap-14 xl:gap-20 py-40')}>

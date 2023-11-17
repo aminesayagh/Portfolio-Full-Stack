@@ -145,6 +145,7 @@ module.exports = {
       "50": "50",
       "container": "100",
       "auto": "auto",
+      "scrollbar": "1000",
       "dropdown": "2000",
       "sticky": "3000",
       "overlay": "4000",

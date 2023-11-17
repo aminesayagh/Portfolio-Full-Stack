@@ -28,8 +28,8 @@ const TRANSLATE_Y = -110;
 
 import useRouterChange from '@/hook/SafePush';
 import { useIsomorphicLayoutEffect } from 'react-use';
+import { useLenis } from '@/lib/Lenis';
 import { MenuItem } from '@/conf/router';
-import { useLocomotiveScroll } from '@/lib/LocomotiveScroll';
 
 
 const Header = () => {
@@ -38,7 +38,8 @@ const Header = () => {
     const { safePush } = useRouterChange();
     let [openMenu, setOpenMenu] = useState<boolean>(false);
     const { endLoading } = usePreloader();
-    const { scrollTo } = useLocomotiveScroll();
+    // const { scrollTo } = useLocomotiveScroll();
+    const lenis = useLenis();
 
     const menuHamburgerItemsRef = useRef<MenuItem[]>([]);
     const menuSocialNetworksRef = useRef<MenuItem[]>([]);
@@ -178,7 +179,7 @@ const Header = () => {
             tl.current.reverse().then(() => {
                 setOpenMenu(false);
                 idTimeout.current = setTimeout(() => {
-                    scrollTo(`#${id}`);
+                    lenis?.scrollTo && lenis?.scrollTo(`#${id}`);
                 }, 200);
             });
         }
@@ -200,8 +201,8 @@ const Header = () => {
                     <SwitchLang />
                 </Navbar.Content>
                 <Navbar.Brand >
-                    <span onClick={() => onButtonClick('/')}>
-                        <Logo onPress={() => onButtonClick('/')} size={64} alt={t('header.logo')} mode='dark' />
+                    <span>
+                        <Logo href='/' size={64} alt={t('header.logo')} mode='dark' />
                     </span>
                 </Navbar.Brand>
                 <Navbar.Content className={twMerge('flex-1 justify-end overflow-hidden', GAP_SIZE_LG)}>
@@ -222,12 +223,10 @@ const Header = () => {
                         {({ handler, isOpen }) => {
                             return <>
                                 <div className={twMerge('flex flex-row items-center gap-6 justify-end')} >
-
                                     <span className='overflow-hidden hidden xxs:block cursor-pointer' onClick={() => handler()}>
                                         <Text p size='xs' degree='3' className={twMerge('mr-2 hidden', 'modal-close')}>{t('header.close')}</Text>
                                     </span>
                                     <HamburgerMenu isOpen={isOpen} setOpen={handler} />
-
                                 </div>
                             </>
                         }}
@@ -235,7 +234,7 @@ const Header = () => {
                     <Modal.Overlay className={twMerge('opacity-0 fixed left-0 top-0 w-full min-h-full bg-primary-500 modal-overlay')}>
                         {/* <Cursor > */}
                         <Modal.Content isDismissable className={twMerge('body-background modal-content')}>
-                            {({ handler }) => (
+                            {({ }) => (
                                 <div className={twMerge(
                                     'flex flex-col justify-between',
                                     'min-h-screen w-screen',

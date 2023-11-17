@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "pretty": true,
+    "sourceMap": true /* Create source map files for emitted JavaScript files. */,
     "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -15,6 +17,10 @@
     "jsx": "preserve",
     "incremental": true,
     "baseUrl": ".",
+    "alwaysStrict": true,
+    "noUnusedLocals": true /* Enable error reporting when local variables aren't read. */,
+    "noUnusedParameters": true /* Raise an error when a function parameter isn't read. */,
+    "noFallthroughCasesInSwitch": true /* Enable error reporting for fallthrough cases in switch statements. */,
     "paths": {
       "@/*": ["./*"]
     }

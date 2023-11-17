@@ -57,7 +57,7 @@ const CursorActionIcon = ({ isActive, ctx, iconName, degree = 45 }: {
     }, [iconName]);
 
     useIsomorphicLayoutEffect(() => {
-        let ctx = gsap.context((self) => {
+        let ctx = gsap.context(() => {
             gsap.set('.cursor_action_icon_gsap', {
                 scale: 0,
                 display: 'none',

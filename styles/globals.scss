@@ -7,7 +7,7 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-  src: url("/fonts/Montserrat/Montserrat-Medium.ttf") format("truetype");
+  src: url("/fonts/Montserrat/Montserrat-Bold.ttf") format("truetype");
 }
 
 .remove_outline {
@@ -70,7 +70,7 @@ body {
 
 html {
   box-sizing: border-box;
-  /* scroll-behavior: smooth; */
+  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   // font-family: var(--font-sans);
@@ -95,9 +95,72 @@ html {
 body {
   overflow: hidden;
 }
-html.has-scroll-smooth {
+
+.lenis {
+  -ms-overflow-style: none;
+  height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: none !important;
+  &::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+  }
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
   overflow: hidden;
 }
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+.scrollbar{
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 16px;
+  z-index: 1000;
+  padding: 6px 0;
+  .inner {
+    height: 100%;
+    position: relative;
+    background-color: oklch(var(--black-400)/0.05);
+    backdrop-filter: blur(8px);
+  }
+  .thumb {
+    min-height: 120px;
+    width: 8px;
+    background-color: var(--color-black-900);
+    position: absolute;
+    right: 4px;
+    border-radius: 2.8px;
+    border: 1px solid var(--color-black-200);
+    cursor: grab;
+    &:active {
+      cursor: grabbing;
+      background-color: var(--color-gray-800);
+    }
+  }
+}
+
+// in tactile mode and on mobile, we hide the scrollbar
+@media (max-width: 1024px) {
+  .scrollbar {
+    display: none;
+  }
+}
+
+
 
 /* Colors */
 @layer base {
@@ -189,83 +252,4 @@ html.has-scroll-smooth {
   body {
     @apply font-sans body-background;
   }
-}
-
-/* Scroll Bar */
-html.has-scroll-dragging {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.has-scroll-smooth body {
-  overflow: hidden;
-}
-
-.has-scroll-smooth [data-scroll-container] {
-  min-height: 100vh;
-}
-
-[data-scroll-direction="horizontal"] [data-scroll-container] {
-  height: 100vh;
-  display: inline-block;
-  white-space: nowrap;
-}
-
-[data-scroll-direction="horizontal"] [data-scroll-section] {
-  display: inline-block;
-  vertical-align: top;
-  white-space: nowrap;
-  height: 100%;
-}
-
-.c-scrollbar {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 11px;
-  height: 100%;
-  transform-origin: center right;
-  transition: transform 0.3s, opacity 0.3s;
-  opacity: 0;
-}
-.c-scrollbar:hover {
-  transform: scaleX(1.45);
-}
-.c-scrollbar:hover,
-.has-scroll-scrolling .c-scrollbar,
-.has-scroll-dragging .c-scrollbar {
-  opacity: 1;
-}
-[data-scroll-direction="horizontal"] .c-scrollbar {
-  width: 100%;
-  height: 10px;
-  top: auto;
-  bottom: 0;
-  transform: scaleY(1);
-}
-[data-scroll-direction="horizontal"] .c-scrollbar:hover {
-  transform: scaleY(1.3);
-}
-
-.c-scrollbar_thumb {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: black;
-  opacity: 0.5;
-  width: 7px;
-  border-radius: 10px;
-  margin: 2px;
-  cursor: -webkit-grab;
-  cursor: grab;
-}
-.has-scroll-dragging .c-scrollbar_thumb {
-  cursor: -webkit-grabbing;
-  cursor: grabbing;
-}
-[data-scroll-direction="horizontal"] .c-scrollbar_thumb {
-  right: auto;
-  bottom: 0;
 }

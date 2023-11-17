@@ -1,7 +1,6 @@
-import React, { InputHTMLAttributes } from 'react';
-import { UseFormProps, SubmitHandler, SubmitErrorHandler, UseFormSetError, UseFormReturn, UseFormReset } from 'react-hook-form';
-import { IconNames } from '../icon';
-import { InputProps as AriaInputProps, TextFieldProps } from 'react-aria-components';
+import React from 'react';
+import { UseFormProps, SubmitErrorHandler, UseFormSetError, UseFormReturn, UseFormReset } from 'react-hook-form';
+import { InputProps as AriaInputProps } from 'react-aria-components';
 
 
 export type OptionOnSubmit<T extends { [x: string]: any }> = {

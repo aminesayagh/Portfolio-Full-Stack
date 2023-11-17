@@ -2,7 +2,6 @@ import React from "react";
 import { useMeasure } from "react-use";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { variationResizablePanel } from "../animation";
 import { twMerge } from 'tailwind-merge'
 
 const ignoreCircularReferences = () => {

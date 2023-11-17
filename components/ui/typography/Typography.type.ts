@@ -1,17 +1,10 @@
 import { VariantProps } from 'class-variance-authority';
 import React from 'react';
-import Link, { LinkProps } from 'next/link';
+import { LinkProps } from 'next/link';
 
 import { titleStyle, textStyle, displayStyle } from './Typography.style';
 
 type TypeDegree = '0' | '1' | '2' | '3' | '4';
-type ReactFitProps = VariantProps<typeof displayStyle> & {
-    children: React.ReactNode | string;
-    className?: string;
-    exchange?: boolean;
-    degree: TypeDegree;
-}
-
 // DISPLAY
 export type DisplayPropsExtended = VariantProps<typeof displayStyle> & {
     children: React.ReactNode | string;

@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
-import { useHover } from 'react-aria';
+import React from 'react';
 import { useForm, FormProvider, Controller, useFormContext } from 'react-hook-form';
-import type { SubmitHandler } from 'react-hook-form';
 import { FormProps, InputProps } from './Form.types';
-import { Label, TextField, Input, Select, Button, SelectValue, Popover, ListBox, Item, RadioProps, Radio, CheckboxGroup, CheckboxProps, Checkbox } from 'react-aria-components';
+import { Label, TextField, Select, Button, SelectValue, Popover, ListBox, Item, RadioProps, Radio, CheckboxGroup, CheckboxProps, Checkbox } from 'react-aria-components';
 import { TextFieldProps, SelectProps, ListBoxProps, CheckboxGroupProps, ItemProps, RadioGroup, RadioGroupProps, ButtonProps } from 'react-aria-components';
 import { twJoin } from 'tailwind-merge';
 import ResizablePanel from '@/components/ui/resizablePanel';
@@ -35,20 +33,14 @@ const NotificationError = ({ message }: { message?: string }) => {
     ) : <></>
 }
 
-const WIDTH = {
-    '1/2': 'col-span-6',
-    'full': 'col-span-12',
-} as const;
-
-type TypeWidth = keyof typeof WIDTH;
-
 const LayoutField = ({ label, className, icon, name, children, width, ...props }: { width?: string, label: string, className?: string, icon?: IconNames, name: string, children: React.ReactElement<InputProps> } & TextFieldProps) => {
     const {
         register,
         getFieldState,
+        // @ts-ignore
         ...methods
     } = useFormContext();
-    const { invalid, isDirty, isTouched, error } = getFieldState(name);
+    const { invalid, error } = getFieldState(name);
 
     const childrenWithProps = React.isValidElement(children) ? React.cloneElement(children, {
         label,
@@ -74,12 +66,13 @@ const LayoutField = ({ label, className, icon, name, children, width, ...props }
 
 
 const SelectUi = <T extends {}>({ label, name, children, ...props }: { label: string, name: string, children: ListBoxProps<T>['children'] } & Omit<SelectProps<T>, 'children'>) => {
+    // @ts-ignore
     const { register, getFieldState, control, ...methods } = useFormContext();
     return (
         <>
             <div className={twMerge('w-full col-span-12', Style['text-field'])}>
                 <Controller name={name} control={control} render={({ field, fieldState }) => {
-                    const { invalid, isDirty, isTouched, error } = fieldState;
+                    const { invalid, error } = fieldState;
                     return (
                         <Select {...props} onSelectionChange={field.onChange} selectedKey={field.value} className={twMerge('flex flex-col gap-2')}>
                             <Label className={twJoin(Style['label'])} htmlFor={name}>{label}</Label>
@@ -117,6 +110,7 @@ interface RadioGroupUiProps extends RadioGroupProps {
 }
 
 const RadioGroupUi = ({ label, name, ...props }: RadioGroupUiProps) => {
+    // @ts-ignore
     const { register, control, ...methods } = useFormContext();
     return (
         <>
@@ -149,6 +143,7 @@ interface CheckboxGroupUiProps extends CheckboxGroupProps {
 }
 
 const CheckboxGroupUi = ({ label, name, ...props }: CheckboxGroupUiProps) => {
+    // @ts-ignore
     const { register, getFieldState, control, ...methods } = useFormContext();
     return (
         <>
@@ -174,7 +169,7 @@ const CheckboxUi = (props: CheckboxProps) => {
 }
 
 const ButtonUi = (props: ButtonProps) => {
-    const { formState: { isSubmitting, isValid } } = useFormContext();
+    const { formState: { isSubmitting } } = useFormContext();
     return (
         <Button {...props} type='submit' isDisabled={isSubmitting ? true : false} />
     )

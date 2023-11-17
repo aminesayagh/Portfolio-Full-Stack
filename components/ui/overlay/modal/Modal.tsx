@@ -55,7 +55,7 @@ const ModalUiContent = ({ children, className, ...props }: { children: React.Rea
 
     return <Modal isOpen={isOpen} onOpenChange={handler} className={mergeClassName('remove_outline z-modal ', className)}  {...props}>
         <Dialog className='remove_outline'>
-            {typeof children == 'function' ? (value) => children({ handler }) : children}
+            {typeof children == 'function' ? () => children({ handler }) : children}
         </Dialog>
     </Modal>
 }

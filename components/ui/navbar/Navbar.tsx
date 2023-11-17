@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext, createContext, useRef, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { useIsomorphicLayoutEffect } from 'react-use';
-import { useLocomotiveScroll } from '@/lib/LocomotiveScroll';
 
 import LinkUi from '@/components/ui/typography/Link';
 import { containerStyle } from '@/components/ui/container';
@@ -10,38 +9,43 @@ import { NavbarProps, NavbarType, BrandProps, ContentProps, ItemProps, LinkProps
 import { twMerge } from 'tailwind-merge';
 import { useHover } from 'react-aria';
 import { zIndex } from '../conf';
-import { gsap, Power3, ScrollTrigger } from '@/utils/gsap';
+import { gsap } from '@/utils/gsap';
+import { useLenis } from '@/lib/Lenis';
 
 
 const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props }: NavbarProps) => {
-    const { scroll } = useLocomotiveScroll();
-    
+
     const delta = useRef<number>(0);
     const lastScrollY = useRef<number>(0);
     const [active, setActive] = useState<boolean>(false);
-    useIsomorphicLayoutEffect(() => {
-        scroll && scroll.on('scroll', (e: any) => {
-            if (e?.delta?.y < 140) {
-                setActive(false);
-            } else {
-                setActive(true);
-            }
+    const [positionScroll, setPositionScroll] = useState<number>(0);
 
-            const diff = Math.abs(e.delta.y - lastScrollY.current);
-            if (e.delta.y >= lastScrollY.current) {
-                delta.current = delta.current >= 10 ? 10 : delta.current + diff;
-            } else {
-                delta.current = delta.current <= -10 ? -10 : delta.current - diff;
-            }
-            if (delta.current >= 10 && e.delta.y > 200) {
-                gsap.to(".header-gsap", { duration: 0.3, y: -100, opacity: 0, ease: "power2.inOut" });
-            } else if (delta.current <= -10 || e.delta.y < 200) {
-                gsap.to(".header-gsap", { duration: 0.3, y: 0, opacity: 1, ease: "power2.inOut" });
-            }
-            lastScrollY.current = e.delta.y;
-        })
-    }, [scroll])
-    
+    useLenis((scroll) => {
+        const progress = scroll.targetScroll;
+        setPositionScroll(progress);
+    });
+
+    useIsomorphicLayoutEffect(() => {
+        if (positionScroll < 140) {
+            setActive(false);
+        } else {
+            setActive(true);
+        }
+
+        const diff = Math.abs(positionScroll - lastScrollY.current);
+        if (positionScroll >= lastScrollY.current) {
+            delta.current = delta.current >= 10 ? 10 : delta.current + diff;
+        } else {
+            delta.current = delta.current <= -10 ? -10 : delta.current - diff;
+        }
+        if (delta.current >= 10 && positionScroll > 200) {
+            gsap.to(".header-gsap", { duration: 0.3, y: -100, opacity: 0, ease: "power2.inOut" });
+        } else if (delta.current <= -10 || positionScroll < 200) {
+            gsap.to(".header-gsap", { duration: 0.3, y: 0, opacity: 1, ease: "power2.inOut" });
+        }
+        lastScrollY.current = positionScroll;
+    }, [positionScroll])
+
     const padding = useMemo(() => active && !inTopOfScroll ? '0.8rem' : '1rem', [active, inTopOfScroll]);
     const backdropFilter = useMemo(() => active && !inTopOfScroll ? 'blur(40px)' : 'blur(0px)', [active, inTopOfScroll]);
     const backgroundColor = useMemo(() => active && !inTopOfScroll ? '#1f1f1f90' : 'transparent', [active, inTopOfScroll]);
@@ -62,7 +66,7 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
     </header>)
 };
 
-const Brand = ({ children, className, ...props }: BrandProps) => {
+const Brand = ({ children, className }: BrandProps) => {
     return <>
         <div className={twMerge(className)} >
             {children}
@@ -117,11 +121,11 @@ const Link = ({ children, href, className, ...props }: LinkProps) => {
     const { isActive, handlerActiveItem } = useActiveItem(href.toString());
     const [data, setData] = useState<object>();
 
-    const { hoverProps, isHovered } = useHover({
-        onHoverStart: (e) => {
+    const { hoverProps } = useHover({
+        onHoverStart: () => {
             setData({ 'data-entering': true, 'data-exiting': false });
         },
-        onHoverEnd: (e) => {
+        onHoverEnd: () => {
             setData({ 'data-entering': false, 'data-exiting': true });
         }
     });
