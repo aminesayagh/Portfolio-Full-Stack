@@ -180,7 +180,7 @@ const Header = () => {
                 setOpenMenu(false);
                 idTimeout.current = setTimeout(() => {
                     lenis?.scrollTo && lenis?.scrollTo(`#${id}`);
-                }, 200);
+                }, 40);
             });
         }
     }, [openMenu, safePush]);

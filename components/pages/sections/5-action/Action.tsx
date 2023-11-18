@@ -1,5 +1,3 @@
-
-
 import React, { useRef } from "react";
 import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
@@ -10,16 +8,28 @@ import { CursorContent } from '@/components/ui/cursor';
 import { Icon } from '@/components/ui/icon'
 
 import { gsap } from "@/utils/gsap";
-import { ScrollTrigger } from "@/utils/gsap";
+
 import { useIsomorphicLayoutEffect } from 'react-use';
+import { useLenis } from "@/lib/Lenis";
 
 const Action = () => {
     const { t, i18n } = useTranslation();
     const refContainer = useRef<HTMLDivElement>(null);
+    const lenis  = useLenis();
 
     useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            const tl = gsap.timeline().fromTo('.contact-title-gsap', {
+            const tl = gsap.timeline({
+                paused: true,
+                scrollTrigger: {
+                    trigger: refContainer.current as any,
+                    scrub: true,
+                    start: 'top center',
+                    end: 'top top',
+                    toggleActions: 'play pause reverse reverse',
+                    invalidateOnRefresh: true,
+                }
+            }).fromTo('.contact-title-gsap', {
                 yPercent: -100,
             }, {
                 yPercent: 0,
@@ -41,16 +51,7 @@ const Action = () => {
                 opacity: 1,
                 ease: 'elastic.out(1, 0.6)',
             }, '-=0.2');
-            ScrollTrigger.create({
-                animation: tl,
-                trigger: refContainer.current as any,
-                scrub: true,
-                start: 'top center',
-                end: 'top top',
-                toggleActions: 'play none reverse none',
-                markers: false,
-                invalidateOnRefresh: true,
-            });
+
             return () => {
                 tl.kill();
             }
@@ -58,10 +59,10 @@ const Action = () => {
         return () => {
             ctx.revert();
         }
-    }, [refContainer.current]);
+    }, [refContainer.current, lenis]);
+
     return <div ref={refContainer} className={twMerge(
-        'h-[64vh]',
-        'flex flex-col gap-1 xs:gap-2 sm:gap-6',
+        'h-[64vh] flex flex-col gap-1 xs:gap-2 sm:gap-6',
         'justify-center items-start xs:items-center place-content-start')}
     >
         <span className='overflow-hidden'>
@@ -88,8 +89,7 @@ const Action = () => {
                 </Link>
             </CursorContent>
             <Text p degree='3' size={i18n.language == 'en' ? 'xxs' : 'xs'} weight='medium' className={twMerge(
-                'absolute',
-                'left-[-1.5%] xs:left-auto sm:left-[103%]',
+                'absolute left-[-1.5%] xs:left-auto sm:left-[103%]',
                 'top-[100%] sm:top-[-6px]',
                 'xs:right-[-1%] md:right-auto', // right
                 'mt-3 xl:mt-4', // margin top

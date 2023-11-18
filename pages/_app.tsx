@@ -23,11 +23,16 @@ const montserrat = Montserrat({
 
 function App({ Component, pageProps }: AppProps) {
   const font = montserrat.variable;
+  const className = montserrat.className;
 
   useEffect(() => {
     document.documentElement.style.setProperty('--font-montserrat', font);
     document.body.classList.add(font);
     document.body.classList.add('font-sans');
+    return () => {
+      document.body.classList.remove(className);
+      document.body.classList.remove('font-sans');
+    }
   }, [font]);
 
   const lenisRef = useRef<LenisInstance>();
@@ -36,12 +41,9 @@ function App({ Component, pageProps }: AppProps) {
     lenisRef.current?.raf(time);
   })
 
-  useLenis((lenis) => {
+  useLenis(() => {
     ScrollTrigger.refresh();
-    console.log('lenis', lenis);
-  })
-
-  
+  });
 
   return <>
     <Scripts />
@@ -51,9 +53,11 @@ function App({ Component, pageProps }: AppProps) {
           smoothTouch: true,
           isSmooth: true,
           duration: 1.2,
-          touchMultiplier: 1.2,
+          touchMultiplier: 0.95,
           infinite: false,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+          direction: 'vertical',
+          gestureDirection: 'vertical',
+          easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
         }}  >
             <Component {...pageProps} />
         </LenisProvider>
