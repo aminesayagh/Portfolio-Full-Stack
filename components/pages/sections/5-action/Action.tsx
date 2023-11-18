@@ -1,5 +1,3 @@
-
-
 import React, { useRef } from "react";
 import { useTranslation } from "next-i18next";
 import { twMerge } from 'tailwind-merge';
@@ -10,7 +8,7 @@ import { CursorContent } from '@/components/ui/cursor';
 import { Icon } from '@/components/ui/icon'
 
 import { gsap } from "@/utils/gsap";
-import { ScrollTrigger } from "@/utils/gsap";
+
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { useLenis } from "@/lib/Lenis";
 
@@ -53,7 +51,7 @@ const Action = () => {
                 opacity: 1,
                 ease: 'elastic.out(1, 0.6)',
             }, '-=0.2');
-            
+
             return () => {
                 tl.kill();
             }
