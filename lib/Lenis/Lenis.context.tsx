@@ -81,6 +81,7 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
     const content = useRef<ElementRef<'div'>>(null);
 
     const [lenis, setLenis] = useState<Lenis>();
+    const [isReady, setIsReady] = useState(false);
 
     const callbacks = useRef<{ callback: CallbackFunction, priority: number }[]>([]);
 
@@ -118,9 +119,9 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
 
         ScrollTrigger.defaults({
             scroller: wrapper.current,
-
         });
-
+        ScrollTrigger.refresh();
+        setIsReady(true);
         return () => {
             lenis.destroy();
             setLenis(undefined);

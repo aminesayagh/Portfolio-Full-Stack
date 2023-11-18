@@ -10,10 +10,12 @@ import { getProjectsByCategory } from '@/conf/projects';
 import { gsap, Power4 } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { ScrollTrigger } from '@/utils/gsap';
+import { useLenis } from '@/lib/Lenis';
 
 const Case = ({ picture, index, id }: { picture?: string[], index: number, id: string }) => {
     const container = useRef<ElementRef<'div'>>(null);
     const { t } = useTranslation();
+    const lenis  = useLenis();
 
     useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -66,7 +68,17 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
             });
 
 
-            const tlCase = gsap.timeline().fromTo('.case-text-gsap', {
+            const tlCase = gsap.timeline({
+                paused: true,
+                scrollTrigger: {
+                    trigger: container.current as any,
+                    start: 'top bottom-=35%',
+                    end: 'bottom center',
+                    markers: false,
+                    toggleActions: 'play none play none',
+                    invalidateOnRefresh: true,
+                }
+            }).fromTo('.case-text-gsap', {
                 xPercent: -100,
                 opacity: 0,
             }, {
@@ -76,16 +88,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                 stagger: 0.2,
                 ease: Power4.easeInOut,
             });
-
-            ScrollTrigger.create({
-                animation: tlCase,
-                trigger: container.current as any,
-                start: 'top bottom-=35%',
-                end: 'bottom center',
-                markers: false,
-                toggleActions: 'play none play none',
-                invalidateOnRefresh: true,
-            });
+            
 
             return () => {
                 tl.kill();
@@ -96,7 +99,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
         return () => {
             ctx.revert();
         }
-    }, [container.current, picture, index, id]);
+    }, [container.current, lenis, picture, index, id]);
 
     const zIndexContainer = useMemo(() => 10 + (index + 10), [index]);
     const zIndexImage = useMemo(() => 10 + (index + 11), [index]);

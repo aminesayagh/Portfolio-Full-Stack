@@ -27,7 +27,7 @@ function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     document.documentElement.style.setProperty('--font-montserrat', font);
-    document.body.classList.add(className);
+    document.body.classList.add(font);
     document.body.classList.add('font-sans');
     return () => {
       document.body.classList.remove(className);
