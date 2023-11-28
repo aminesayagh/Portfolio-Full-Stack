@@ -55,6 +55,7 @@ function App({ Component, pageProps }: AppProps) {
           duration: 1.2,
           touchMultiplier: 0.95,
           infinite: false,
+          autoResize: false,
           direction: 'vertical',
           gestureDirection: 'vertical',
           easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),

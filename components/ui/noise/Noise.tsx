@@ -7,7 +7,7 @@ const Noise = ({ position = 'fixed', className = 'opacity-90' }: { position?: 'f
         <span className={twMerge(
             Style['bg'],
             className || 'opacity-90',
-            '-top-1/2 -left-1/2 -bottom-1/2 -right-1/2',
+            '-top-1/2 -left-1/2 -bottom-1/2 -right-1/2 bg-repeat',
             position == 'fixed'
                 ? 'fixed w-[300vw] h-[300vh] visible z-bg'
                 : 'absolute w-[200%] h-[200%] overflow-none z-50'
