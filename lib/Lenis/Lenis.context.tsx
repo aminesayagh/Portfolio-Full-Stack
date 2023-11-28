@@ -4,6 +4,8 @@ import { gsap, ScrollTrigger } from '@/utils/gsap';
 import Lenis from '@studio-freight/lenis';
 import { create } from 'zustand';
 
+import { useDebounce } from '@/hook/useDebounce';
+
 import { twMerge } from 'tailwind-merge';
 
 import { useFrame } from '@studio-freight/hamo'
@@ -81,6 +83,21 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
     const content = useRef<ElementRef<'div'>>(null);
 
     const [lenis, setLenis] = useState<Lenis>();
+
+    const { width: widthContainer, height: heightContainer } = useResizeObserver<HTMLDivElement>({ ref: content });
+
+    
+    const width = useDebounce(widthContainer, 30);
+    const height = useDebounce(heightContainer, 30);
+
+    useEffect(() => {
+        if (lenis) {
+            lenis.resize();
+            ScrollTrigger.refresh();
+        }
+    }, [lenis, width, height]);
+
+
 
     const callbacks = useRef<{ callback: CallbackFunction, priority: number }[]>([]);
 
