@@ -3,7 +3,13 @@
 .bg {
     background: transparent url('/images/noise-transparent.png') repeat 0 0;
     background-repeat: repeat;
+    background-position: center;
+
     animation: bg-animation .2s infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+
+
 }
 
 @keyframes bg-animation {
