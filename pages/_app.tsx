@@ -52,8 +52,10 @@ function App({ Component, pageProps }: AppProps) {
         <LenisProvider autoRaf={true} ref={lenisRef} options={{
           smoothTouch: true,
           isSmooth: true,
+          
           duration: 1.2,
-          touchMultiplier: 0.95,
+          wheelMultiplier: 1.15,
+          touchMultiplier: 1.9,
           infinite: false,
           autoResize: false,
           direction: 'vertical',
