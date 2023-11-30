@@ -5,6 +5,7 @@ import Lenis from '@studio-freight/lenis';
 import { create } from 'zustand';
 
 import { useDebounce } from '@/hook/useDebounce';
+import { useTranslation } from 'next-i18next';
 
 import { twMerge } from 'tailwind-merge';
 
@@ -81,6 +82,7 @@ export const useRoot = create<LenisContextValue>(() => ({
 const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(({ children, root = false, options = {}, autoRaf = true, rafPriority = 0, className, ...props }, ref) => {
     const wrapper = useRef<ElementRef<'div'>>(null);
     const content = useRef<ElementRef<'div'>>(null);
+    const { i18n } = useTranslation();
 
     const [lenis, setLenis] = useState<Lenis>();
 
@@ -90,12 +92,16 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
     const width = useDebounce(widthContainer, 30);
     const height = useDebounce(heightContainer, 30);
 
+    const referesh = () => {
+        lenis?.resize();
+        ScrollTrigger.refresh();
+    }
+
     useEffect(() => {
         if (lenis) {
-            lenis.resize();
-            ScrollTrigger.refresh();
+            referesh();
         }
-    }, [lenis, width, height]);
+    }, [lenis, width, height, i18n.language]);
 
 
 
@@ -136,7 +142,7 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
         ScrollTrigger.defaults({
             scroller: wrapper.current,
         });
-        ScrollTrigger.refresh();
+        referesh();
         return () => {
             lenis.destroy();
             setLenis(undefined);
