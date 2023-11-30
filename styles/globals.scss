@@ -2,13 +2,11 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-@font-face {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-  src: url("/fonts/Montserrat/Montserrat-Bold.ttf") format("truetype");
+body  {
+  @apply font-sans;
+  visibility: hidden;
 }
+
 
 .remove_outline {
   @apply outline-none focus:outline-none touch-none;
