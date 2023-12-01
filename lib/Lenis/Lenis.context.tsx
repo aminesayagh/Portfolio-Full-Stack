@@ -92,14 +92,16 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
     const width = useDebounce(widthContainer, 30);
     const height = useDebounce(heightContainer, 30);
 
-    const referesh = () => {
+    const refresh = () => {
         lenis?.resize();
+        ScrollTrigger.clearScrollMemory();
+        window.history.scrollRestoration = 'manual';
         ScrollTrigger.refresh();
     }
 
     useEffect(() => {
         if (lenis) {
-            referesh();
+            refresh();
         }
     }, [lenis, width, height, i18n.language]);
 
@@ -142,7 +144,7 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
         ScrollTrigger.defaults({
             scroller: wrapper.current,
         });
-        referesh();
+        refresh();
         return () => {
             lenis.destroy();
             setLenis(undefined);

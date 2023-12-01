@@ -8,7 +8,7 @@ import Title from '@/components/ui/typography/Title';
 import Text from '@/components/ui/typography/Text';
 import Noise from '@/components/ui/noise';
 
-import { gsap } from '@/utils/gsap';
+import { gsap, TimelineMax } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { useRouter } from 'next/router';
 const END_LOADING_IN = 99;
@@ -28,8 +28,9 @@ type LoadingElement = {
     [key: Key]: boolean
 }
 
-export function LoadingProvider({ children }: {
-    children: React.ReactNode
+export function LoadingProvider({ fontReady, children }: {
+    children: React.ReactNode,
+    fontReady: boolean
 }) {
     const [isLoading, setIsLoading] = useState(true);
     const [endLoading, setEndLoading] = useState(false);
@@ -75,18 +76,18 @@ export function LoadingProvider({ children }: {
     useEffect(() => {
         const timer = setTimeout(() => {
             const values = Object.values(loadingComponentList);
-            if(values.length == 1 && loadingComponentList['loadingProvider']) {
-                setIsLoading(false); // default timeout
+            if (values.length == 1 && loadingComponentList['loadingProvider']) {
+                setIsLoading(false);
             }
         }, 1000);
         return () => {
             clearTimeout(timer);
         }
-    }, [])
+    }, []);
 
     useEffect(() => {
         addLoadingComponent('loadingProvider');
-        
+
         return () => {
             removeLoadingComponent('loadingProvider');
         }
@@ -98,7 +99,7 @@ export function LoadingProvider({ children }: {
             isLoading,
             endLoading
         }}>
-            <Preloader isLoading={isLoading} setEndLoading={setEndLoading} />
+            <Preloader isLoading={isLoading} setEndLoading={setEndLoading} fontReady={fontReady} />
             <Suspense >
                 {children}
             </Suspense>
@@ -111,7 +112,7 @@ const INITIAL_PERCENT = 2;
 
 const Percent = ({ isLoading, setEndLoadingProgress }: { isLoading: boolean, setEndLoadingProgress: (b: boolean) => void }) => {
     const [percent, setPercent] = useState(INITIAL_PERCENT);
-    
+
     useEffect(() => {
         let intervalId: NodeJS.Timeout;
         let interval = 1;
@@ -125,7 +126,7 @@ const Percent = ({ isLoading, setEndLoadingProgress }: { isLoading: boolean, set
             interval = interval + 0.3;
             intervalId = setInterval(() => {
                 setPercent((prevPercent) => Math.min(prevPercent + interval, END_LOADING_IN));
-                if(percent >= END_LOADING_IN) {
+                if (percent >= END_LOADING_IN) {
                     setEndLoadingProgress(true);
                 }
             }, MEDIUM_LOADING_TIME);
@@ -142,8 +143,9 @@ const Percent = ({ isLoading, setEndLoadingProgress }: { isLoading: boolean, set
     </motion.span>
 }
 
-const Preloader = ({ isLoading, setEndLoading }: {
+const Preloader = ({ isLoading, setEndLoading, fontReady }: {
     isLoading: boolean,
+    fontReady: boolean,
     setEndLoading: (value: boolean) => void
 }) => {
     const { t } = useTranslation();
@@ -152,44 +154,38 @@ const Preloader = ({ isLoading, setEndLoading }: {
 
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            const delay = 0.5;
-            const ease = 'power2.out';
-            const duration = 0.4;
             const tl = gsap.timeline({
+                repeat: -1,
                 paused: true,
-            }).fromTo('.item-gsap', {
-                yPercent: 0,
-            }, {
-                delay: delay * 3,
-                duration,
-                yPercent: -100,
-                ease,
-            }).to('.item-gsap', {
-                duration,
-                delay,
-                yPercent: -200,
-                ease,
-            }, '>').to('.item-gsap', {
-                duration,
-                delay,
-                yPercent: -300,
-                ease,
-            }, '>').to('.item-gsap', {
-                duration,
-                delay,
-                yPercent: -400,
-                ease,
-            }, '>').play();
+                repeatDelay: 0.5,
+            })
+            const DELAY = 1.4;
+            const OFFSET = 0.3;
+            const FRAME_DURATION = 0.2;
+            tl.to('.item-gsap', {
+                keyframes: [
+                    { top: '100%', duration: FRAME_DURATION },
+                    { top: '0%' },
+                    { top: '-100%', delay: DELAY, duration: FRAME_DURATION },
+                ],
+                ease: 'power2.out',
+                stagger: DELAY + OFFSET,
+            });
+
+            if (fontReady) {
+                tl.play();
+            }
 
             return () => {
                 tl.kill();
             }
         }, ref);
         return () => ctx.revert();
-    }, [ref]);
+    }, [ref, fontReady]);
 
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context((self) => {
+
             const skew = 2;
             const tl = gsap.timeline({
                 paused: true,
@@ -237,23 +233,30 @@ const Preloader = ({ isLoading, setEndLoading }: {
         <span ref={ref} className='contents'>
             <div className={twMerge('w-screen cursor-none  h-screen overflow-hidden', 'z-preload bg-white-400', ' fixed', 'element-container')}>
                 <Container as='div' size='lg' className={twMerge('h-screen pt-4 sm:pt-8', 'flex flex-col justify-between')}>
-                    <div className='flex flex-col gap-0 sm:gap-1'>
-                        <span className='py-1 element-content-gsap opacity-0'>
-                            <Title h6 degree='4' exchange suppressHydrationWarning>
+                    <div className='flex flex-col gap-0 sm:gap-1 text-loader-gsap'>
+                        <span className='py-1 element-content-gsap'>
+                            {<Title h6 degree='4' exchange suppressHydrationWarning>
                                 {t('loading.intro')}
-                            </Title>
+                            </Title>}
                         </span>
-                        <ul className='flex flex-col h-[15%] overflow-hidden element-content-gsap opacity-0'>
+                        <ul className='h-[1.5rem] overflow-hidden element-content-gsap relative'>
                             {
                                 Array.from({ length: 5 }).map((_, index) => (
-                                    <Text suppressHydrationWarning key={index} degree='0' li size='md' weight='bold' className={twMerge('item-gsap capitalize will-change-transform-animation', index == 4 ? 'text-primary-500' : 'text-black-300/80')}  >
+                                    <Text
+                                        suppressHydrationWarning
+                                        key={index}
+                                        degree='0' li size='md' weight='bold'
+                                        className={twMerge(
+                                            'item-gsap capitalize will-change-transform-animation absolute left-0 right-0 top-[100%]',
+                                            index == 4 ? 'text-primary-500' : 'text-black-300/80'
+                                        )}  >
                                         {t(`loading.message_${index + 1}`)}
                                     </Text>
                                 ))
                             }
                         </ul>
                     </div>
-                    <div className={twMerge('w-full', 'flex flex-row justify-end', 'relative')} >
+                    <div className={twMerge('w-full', 'text-loader-gsap', 'flex flex-row justify-end', 'relative')} >
                         <AnimatePresence mode='sync' >
                             <motion.p className={twMerge(
                                 'uppercase element-counter-gsap',

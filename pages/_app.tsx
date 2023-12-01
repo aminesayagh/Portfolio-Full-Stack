@@ -23,45 +23,22 @@ const montserrat = Montserrat({
 });
 
 function App({ Component, pageProps }: AppProps) {
-  const font = useRef(montserrat.variable);
+  const font = montserrat.variable;
   const className = montserrat.className;
   const [isReadyFont, setIsReadyFont] = useState(false);
 
   useEffect(() => {
-    setIsReadyFont(true);
-    document.body.classList.add(font.current);
-    document.body.classList.add('font-sans');
-    document.documentElement.style.setProperty('--font-montserrat', font.current);
+    document.documentElement.style.setProperty('--font-montserrat', font);
+    document.body.classList.add(font);
+    const time = setTimeout(() => {
+      setIsReadyFont(true);
+    }, 1000);
     return () => {
-      document.body.classList.remove(className);
-      document.body.classList.remove('font-sans');
+      setIsReadyFont(false);
+      clearTimeout(time);
     }
   }, [font]);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      
-      const tl = gsap.timeline({
-        paused: true
-      }).set('body', {
-        delay: 0.04,
-        visibility: 'visible'
-      }).fromTo('.app-container', {
-        opacity: 0,
-      }, {
-        opacity: 1,
-        duration: 0.5,
-        ease: 'Power4.out',
-      });
-      if(isReadyFont) {
-        tl.play();
-      }
-      return tl;
-    });
-    return () => {
-      ctx.revert();
-    }
-  }, [isReadyFont])
 
   const lenisRef = useRef<LenisInstance>();
 
@@ -72,11 +49,11 @@ function App({ Component, pageProps }: AppProps) {
   useLenis(() => {
     ScrollTrigger.refresh();
   });
-
+  if(!font) return null;
   return <>
     <Scripts />
-    <main className={`app-container opacity-0`}>
-      <LoadingProvider>
+    <main className={`app-container`}>
+      <LoadingProvider fontReady={isReadyFont}>
         <LenisProvider autoRaf={true} ref={lenisRef} options={{
           smoothTouch: true,
           isSmooth: true,

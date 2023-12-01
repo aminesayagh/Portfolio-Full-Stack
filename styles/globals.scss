@@ -2,10 +2,6 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-body  {
-  @apply font-sans;
-  visibility: hidden;
-}
 
 
 .remove_outline {
@@ -25,6 +21,16 @@ html,
 body {
   @apply font-sans;
 }
+
+@font-face  {
+  font-family: "Montserrat";
+  src: url("/fonts/Montserrat/Montserrat-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  
+}
+
 * {
   box-sizing: border-box;
 }
