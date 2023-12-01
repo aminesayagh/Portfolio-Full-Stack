@@ -8,7 +8,7 @@ import Title from '@/components/ui/typography/Title';
 import Text from '@/components/ui/typography/Text';
 import Noise from '@/components/ui/noise';
 
-import { gsap, TimelineMax } from '@/utils/gsap';
+import { gsap } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { useRouter } from 'next/router';
 const END_LOADING_IN = 99;
@@ -159,7 +159,7 @@ const Preloader = ({ isLoading, setEndLoading, fontReady }: {
                 paused: true,
                 repeatDelay: 0.5,
             })
-            const DELAY = 1.4;
+            const DELAY = 1;
             const OFFSET = 0.3;
             const FRAME_DURATION = 0.2;
             tl.to('.item-gsap', {

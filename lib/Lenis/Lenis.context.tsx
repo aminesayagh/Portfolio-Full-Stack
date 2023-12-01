@@ -201,7 +201,7 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
         {root ? (children) : <div ref={wrapper} className={twMerge(lenis?.className, className)} {...props}>
             <div ref={content}>
                 {children}
-                <Scrollbar container={content} />
+                {/* <Scrollbar container={content} /> */}
             </div>
         </div>}
     </LenisContext.Provider>)

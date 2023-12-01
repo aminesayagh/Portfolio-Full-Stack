@@ -1,27 +1,38 @@
 
-import Style from './Noise.module.scss';
+
 import { twMerge } from 'tailwind-merge';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { gsap } from '@/utils/gsap';
+import { useState } from 'react';
+
 const Noise = ({ position = 'fixed', className = 'opacity-90' }: { position?: 'fixed' | 'absolute', className?: string }) => {
+    const [img, setImg] = useState<string>('url("/images/noise-transparent.png")');
+
     useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            const bgAnimation = gsap.timeline({ defaults: { duration: 0.2, ease: "sine.inOut" }, repeat: -1 });
-            bgAnimation
-                .to('.bg-noise', { x: '-5%', y: '-5%' })
-                .to('.bg-noise', { x: '-10%', y: '5%' }, '+=0.2')
-                .to('.bg-noise', { x: '5%', y: '-10%' }, '+=0.2')
-                .to('.bg-noise', { x: '-5%', y: '15%' }, '+=0.2')
-                .to('.bg-noise', { x: '-10%', y: '5%' }, '+=0.2')
-                .to('.bg-noise', { x: '15%', y: '0' }, '+=0.2')
-                .to('.bg-noise', { x: '0', y: '10%' }, '+=0.2')
-                .to('.bg-noise', { x: '-15%', y: '0' }, '+=0.2')
-                .to('.bg-noise', { x: '10%', y: '5%' }, '+=0.2')
-                .to('.bg-noise', { x: '5%', y: '0' }, '+=0.2');
+            const DURATION = 2.4;
+            gsap.to('.bg-noise', {
+                keyframes: [
+                    { x: '0', y: '0' },
+                    { x: '-5%', y: '-5%' },
+                    { x: '-10%', y: '5%' },
+                    { x: '5%', y: '-10%' },
+                    { x: '-5%', y: '15%' },
+                    { x: '-10%', y: '5%' },
+                    { x: '15%', y: '0' },
+                    { x: '0', y: '10%' },
+                    { x: '-15%', y: '0' },
+                    { x: '10%', y: '5%' },
+                    { x: '5%', y: '0' },
+                ],
+                duration: DURATION,
+                ease: 'none',
+                repeat: -1,
+                yoyo: true,
+                repeatRefresh: true,
+                repeatDelay: 0,
+             })
 
-            return () => {
-                // bgAnimation.kill();
-            }
         })
         return () => {
             ctx.revert();
@@ -32,17 +43,22 @@ const Noise = ({ position = 'fixed', className = 'opacity-90' }: { position?: 'f
             'bg-noise',
             className || 'opacity-90',
             '-top-1/2 -left-1/2 -bottom-1/2 -right-1/2 bg-repeat',
+            'will-change-transform-animation',
             position == 'fixed'
                 ? 'fixed w-[300vw] h-[300vh] visible z-bg'
                 : 'absolute w-[200%] h-[200%] overflow-none z-50'
         )}
-            style={{
-                backgroundImage: 'url(/images/noise-transparent.png)',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'repeat',
-            }}
+        style={{
+            backgroundImage: img
+        }}
         >
         </span>
+        <style jsx>{`
+            .bg-noise {
+                background-position: center;
+                background-repeat: repeat;
+            }
+        `}</style>
     </>
 }
 
