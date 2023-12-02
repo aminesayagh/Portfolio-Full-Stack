@@ -110,38 +110,6 @@ const LONG_LOADING_TIME = 200;
 const MEDIUM_LOADING_TIME = 20;
 const INITIAL_PERCENT = 2;
 
-const Percent = ({ isLoading, setEndLoadingProgress }: { isLoading: boolean, setEndLoadingProgress: (b: boolean) => void }) => {
-    const [percent, setPercent] = useState(INITIAL_PERCENT);
-
-    useEffect(() => {
-        let intervalId: NodeJS.Timeout;
-        let interval = 1;
-        if (percent == INITIAL_PERCENT) {
-            setPercent((prevPercent) => Math.min(prevPercent + interval, END_LOADING_IN));
-        } else if (isLoading && percent < END_LOADING_IN) {
-            intervalId = setInterval(() => {
-                setPercent((prevPercent) => Math.min(prevPercent + interval, END_LOADING_IN));
-            }, LONG_LOADING_TIME);
-        } else if (!isLoading) {
-            interval = interval + 0.3;
-            intervalId = setInterval(() => {
-                setPercent((prevPercent) => Math.min(prevPercent + interval, END_LOADING_IN));
-                if (percent >= END_LOADING_IN) {
-                    setEndLoadingProgress(true);
-                }
-            }, MEDIUM_LOADING_TIME);
-        }
-        return () => {
-            clearInterval(intervalId);
-        }
-    }, [isLoading, percent, setEndLoadingProgress]);
-
-    return <motion.span key={percent} initial={{ opacity: 1, y: '0' }} animate={{ opacity: 1, y: '-100%' }} exit={{ opacity: 0, y: '100%' }}>
-        {
-            percent < 100 ? percent.toFixed(0) : 100
-        }
-    </motion.span>
-}
 
 const Preloader = ({ isLoading, setEndLoading, fontReady }: {
     isLoading: boolean,
@@ -229,12 +197,34 @@ const Preloader = ({ isLoading, setEndLoading, fontReady }: {
         }
         return () => ctx.revert();
     }, [ref, isLoading, setEndLoading, endLoadingProgress]);
+
+    useIsomorphicLayoutEffect(() => {
+        let ctx = gsap.context(() => {
+            const tl = gsap.timeline({
+                paused: true,
+            }).fromTo('.text-loader-gsap', {
+                autoAlpha: 0,
+            }, {
+                autoAlpha: 1,
+                duration: 0.5,
+                ease: 'power2.out',
+            })
+            if(fontReady) {
+                tl.play();
+            }
+            return () => {
+                tl.kill();
+            }
+        });
+        return () => ctx.revert();
+    }, [fontReady])
+
     return (
         <span ref={ref} className='contents'>
             <div className={twMerge('w-screen cursor-none  h-screen overflow-hidden', 'z-preload bg-white-400', ' fixed', 'element-container')}>
                 <Container as='div' size='lg' className={twMerge('h-screen pt-4 sm:pt-8', 'flex flex-col justify-between')}>
-                    <div className='flex flex-col gap-0 sm:gap-1 text-loader-gsap'>
-                        <span className='py-1 element-content-gsap'>
+                    <div className='flex flex-col gap-0 sm:gap-1'>
+                        <span className='py-1 element-content-gsap text-loader-gsap invisible'>
                             {<Title h6 degree='4' exchange suppressHydrationWarning>
                                 {t('loading.intro')}
                             </Title>}
@@ -256,7 +246,7 @@ const Preloader = ({ isLoading, setEndLoading, fontReady }: {
                             }
                         </ul>
                     </div>
-                    <div className={twMerge('w-full', 'text-loader-gsap', 'flex flex-row justify-end', 'relative')} >
+                    <div className={twMerge('w-full', 'text-loader-gsap invisible', 'flex flex-row justify-end', 'relative')} >
                         <AnimatePresence mode='sync' >
                             <motion.p className={twMerge(
                                 'uppercase element-counter-gsap',
@@ -274,4 +264,38 @@ const Preloader = ({ isLoading, setEndLoading, fontReady }: {
             <div className='fixed bg-primary-500 w-screen h-screen element-bg z-preload_bg'></div>
         </span>
     )
+}
+
+
+const Percent = ({ isLoading, setEndLoadingProgress }: { isLoading: boolean, setEndLoadingProgress: (b: boolean) => void }) => {
+    const [percent, setPercent] = useState(INITIAL_PERCENT);
+
+    useEffect(() => {
+        let intervalId: NodeJS.Timeout;
+        let interval = 1;
+        if (percent == INITIAL_PERCENT) {
+            setPercent((prevPercent) => Math.min(prevPercent + interval, END_LOADING_IN));
+        } else if (isLoading && percent < END_LOADING_IN) {
+            intervalId = setInterval(() => {
+                setPercent((prevPercent) => Math.min(prevPercent + interval, END_LOADING_IN));
+            }, LONG_LOADING_TIME);
+        } else if (!isLoading) {
+            interval = interval + 0.3;
+            intervalId = setInterval(() => {
+                setPercent((prevPercent) => Math.min(prevPercent + interval, END_LOADING_IN));
+                if (percent >= END_LOADING_IN) {
+                    setEndLoadingProgress(true);
+                }
+            }, MEDIUM_LOADING_TIME);
+        }
+        return () => {
+            clearInterval(intervalId);
+        }
+    }, [isLoading, percent, setEndLoadingProgress]);
+
+    return <motion.span key={percent} initial={{ opacity: 1, y: '0' }} animate={{ opacity: 1, y: '-100%' }} exit={{ opacity: 0, y: '100%' }}>
+        {
+            percent < 100 ? percent.toFixed(0) : 100
+        }
+    </motion.span>
 }

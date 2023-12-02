@@ -10,7 +10,6 @@ import { LoadingProvider } from '@/components/ui/preloader';
 import Scripts from '@/components/common/script';
 import '../styles/globals.scss';
 import '../utils/i18n';
-import { gsap } from '@/utils/gsap';
 // @ts-ignore
 import { useFrame } from '@studio-freight/hamo';
 import { LenisInstance } from '@/lib/Lenis/Lenis.context.jsx';
@@ -24,7 +23,7 @@ const montserrat = Montserrat({
 
 function App({ Component, pageProps }: AppProps) {
   const font = montserrat.variable;
-  const className = montserrat.className;
+  // const className = montserrat.className;
   const [isReadyFont, setIsReadyFont] = useState(false);
 
   useEffect(() => {

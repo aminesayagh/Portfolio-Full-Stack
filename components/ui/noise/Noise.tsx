@@ -3,11 +3,9 @@
 import { twMerge } from 'tailwind-merge';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { gsap } from '@/utils/gsap';
-import { useState } from 'react';
+import { useRef } from 'react';
 
 const Noise = ({ position = 'fixed', className = 'opacity-90' }: { position?: 'fixed' | 'absolute', className?: string }) => {
-    const [img, setImg] = useState<string>('url("/images/noise-transparent.png")');
-
     useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(() => {
             const DURATION = 2.4;
@@ -30,7 +28,7 @@ const Noise = ({ position = 'fixed', className = 'opacity-90' }: { position?: 'f
                 repeat: -1,
                 yoyo: true,
                 repeatRefresh: true,
-                repeatDelay: 0,
+                repeatDelay: 0
              })
 
         })
@@ -38,28 +36,19 @@ const Noise = ({ position = 'fixed', className = 'opacity-90' }: { position?: 'f
             ctx.revert();
         }
     })
-    return <>
-        <span className={twMerge(
+
+    return <div className={twMerge(
             'bg-noise',
             className || 'opacity-90',
             '-top-1/2 -left-1/2 -bottom-1/2 -right-1/2 bg-repeat',
             'will-change-transform-animation',
+            'bg-[url("/images/noise-transparent.png")] bg-center bg-repeat',
             position == 'fixed'
                 ? 'fixed w-[300vw] h-[300vh] visible z-bg'
                 : 'absolute w-[200%] h-[200%] overflow-none z-50'
         )}
-        style={{
-            backgroundImage: img
-        }}
         >
-        </span>
-        <style jsx>{`
-            .bg-noise {
-                background-position: center;
-                background-repeat: repeat;
-            }
-        `}</style>
-    </>
+        </div>
 }
 
 export default Noise;
