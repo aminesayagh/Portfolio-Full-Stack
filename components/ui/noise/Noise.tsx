@@ -3,7 +3,6 @@
 import { twMerge } from 'tailwind-merge';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { gsap } from '@/utils/gsap';
-import { useRef } from 'react';
 
 const Noise = ({ position = 'fixed', className = 'opacity-90' }: { position?: 'fixed' | 'absolute', className?: string }) => {
     useIsomorphicLayoutEffect(() => {
