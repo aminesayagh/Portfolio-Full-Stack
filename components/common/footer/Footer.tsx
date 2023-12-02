@@ -1,6 +1,6 @@
 import React, { ElementRef, useRef, useEffect, useCallback } from 'react';
 
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 import { useIsomorphicLayoutEffect } from 'react-use';
@@ -8,6 +8,8 @@ import { useIsomorphicLayoutEffect } from 'react-use';
 import Link from '@/components/ui/typography/Link';
 import Button from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
+import _ from 'lodash';
+
 import Text from '@/components/ui/typography/Text';
 import { gsap } from 'utils/gsap';
 import useGsap from '@/hook/useGsap';
@@ -120,8 +122,26 @@ const FollowUs = () => {
 
 // const FollowUs = memo(FollowUs);
 
-const TextAnimated = ({ phrase, className, ...props }: { phrase: string } & Omit<React.ComponentProps<typeof Text>, 'div' | 'children'>) => {
+const TextAnimated = ({ lang, phrase, className, ...props }: { lang: string,phrase: string } & Omit<React.ComponentProps<typeof Text>, 'div' | 'children'>) => {
     const container = useRef<ElementRef<'div'>>(null);
+    const refs = useRef<ElementRef<'div'>[]>([]);
+    const [body, setBody] = useState<React.JSX.Element[] | null>(null);
+
+    useEffect(() => {
+        setBody(null);
+        const splitWords = _.map(phrase.split(' '), (word, index) => {
+            return <div key={index} className='overflow-y-animate py-px' >
+                <div ref={(ref) => {
+                    if (!ref) return;
+                    refs.current[index] = ref;
+                }} className='word-gsap will-change-transform-animation'>
+                    {word}
+                </div>
+            </div>
+        });
+        setBody(splitWords);
+    }, [phrase, lang]);
+
     useGsap(() => {
         gsap.fromTo('.word-gsap', {
             y: '100%',
@@ -136,15 +156,11 @@ const TextAnimated = ({ phrase, className, ...props }: { phrase: string } & Omit
                 toggleActions: 'play none reverse reverse'
             }
         })
-    }, container, [phrase]);
+    }, container, [phrase, body, lang]);
     return <span ref={container} ><Text div className={twMerge('flex flex-row flex-wrap', className)} {...props}>
-        {phrase.split(' ').map((word, index) => {
-            return <div key={index} className='overflow-y-animate py-px' >
-                <div className='word-gsap will-change-transform-animation'>
-                    {word}
-                </div>
-            </div>
-        })}
+        {
+            body ? body.map((word, index) => <React.Fragment key={index}>{word} </React.Fragment>) : null
+        }
     </Text></span>
 }
 
@@ -252,7 +268,7 @@ const Footer = () => {
                 'max-w-[16rem] xxs:w-8/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[32vw] mdl:max-w-[30vw] xl:max-w-[20vw] 2xl:max-w-[28vw] 3xl:max-w-[22rem]' :
                 'max-w-[16rem] xxs:w-9/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[32vw] mdl:max-w-[30vw] xl:max-w-[20vw] 2xl:max-w-[28vw] 3xl:max-w-[22rem]'
         )} >
-            <TextAnimated degree='3' weight='medium' size='md' className='uppercase max-w-xs justify-start gap-x-2' phrase={t('footer.state')} />
+            <TextAnimated lang={language} degree='3' weight='medium' size='md' className='uppercase max-w-xs justify-start gap-x-2' phrase={t('footer.state')} />
         </div>
         <div className={twMerge('flex flex-row flex-wrap sm:flex-nowrap justify-between', 'gap-y-4', 'pb-10 pt-6')}>
             <div className={twMerge('flex flex-row flex-1', 'order-2 sm:order-1')} >
