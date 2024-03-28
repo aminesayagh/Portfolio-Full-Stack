@@ -8,8 +8,6 @@ import { LoadingProvider } from "@/components/ui/preloader";
 import Scripts from "@/components/common/script";
 import "../styles/globals.scss";
 import "../utils/i18n";
-// @ts-ignore
-import { useFrame } from "@studio-freight/hamo";
 
 
 const montserrat = Montserrat({
