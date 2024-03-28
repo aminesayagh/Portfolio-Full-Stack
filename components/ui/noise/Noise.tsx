@@ -12,28 +12,34 @@ const Noise = ({
 }) => {
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const DURATION = 4;
-      const tl = gsap.timeline({ repeat: -1, yoyo: true });
+      const DURATION = 3;
+      const tl = gsap.timeline({
+        repeat: -1,
+        // yoyo: true,
+        ease: "none",
+      });
       tl.to(".bg-noise", {
         keyframes: [
-          { x: "0", y: "0" },
-          { x: "-5%", y: "-5%" },
-          { x: "-10%", y: "5%" },
-          { x: "5%", y: "-10%" },
-          { x: "-5%", y: "15%" },
-          { x: "-10%", y: "5%" },
-          { x: "15%", y: "0" },
-          { x: "0", y: "10%" },
-          { x: "-15%", y: "0" },
-          { x: "10%", y: "5%" },
-          { x: "5%", y: "0" },
+          { x: "0%", y: "0%" }, // Starting point (center)
+          { x: "5%", y: "-5%" }, // Move to top right
+          { x: "10%", y: "0%" }, // Move to right
+          { x: "5%", y: "5%" }, // Move to bottom right
+          { x: "0%", y: "10%" }, // Move to bottom
+          { x: "-5%", y: "5%" }, // Move to bottom left
+          { x: "-10%", y: "0%" }, // Move to left
+          { x: "-5%", y: "-5%" }, // Move to top left
+          { x: "0%", y: "-10%" }, // Move to top
+          { x: "5%", y: "-5%" }, // Move to top right again
         ],
         duration: DURATION,
         ease: "none",
+        // repeat on one direction
+        repeat: -1,
+
       });
       return () => {
         tl.kill();
-      }
+      };
     });
     return () => {
       ctx.revert();
@@ -44,7 +50,7 @@ const Noise = ({
     <div
       className={twMerge(
         "bg-noise",
-        className || "opacity-90",
+        className || "opacity-70",
         "-top-1/2 -left-1/2 -bottom-1/2 -right-1/2 bg-repeat",
         "will-change-transform-animation",
         'bg-[url("/images/noise-transparent.png")] bg-center bg-repeat',
