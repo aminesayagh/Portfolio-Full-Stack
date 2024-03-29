@@ -16,13 +16,21 @@ const Video = () => {
 
     const { addLoadingComponent, removeLoadingComponent } = usePreloader();
 
+    const getScreenSize = () => {
+        const width = window.innerWidth;
+        if (width < 480) return '320';
+        if (width < 768) return '480';
+        if (width < 1024) return '768';
+        if (width < 1280) return '1024';
+        if (width < 1600) return '1280';
+        return '1600'; // for larger screens
+    }
+
     useEffect(() => {
-        let isInLoad = false;
-        if(isInLoad) return;
         addLoadingComponent(LOADING_KEY);
         
-
-        const currentFrame = (index: number) => `/framer-image/ezgif-frame-${index.toString().padStart(3, '0')}.webp`;
+        const screenSize = getScreenSize();
+        const currentFrame = (index: number) => `/framer-image/dim/ezgif-frame-${index.toString().padStart(3, '0')}_${screenSize}.webp`;
         
         Promise.all<HTMLImageElement>(Array(FRAME_COUNT).fill(0).map((_, index) => {
             const img = new Image();
@@ -34,18 +42,14 @@ const Video = () => {
             img.style.objectPosition = 'center';
 
             return new Promise((resolve) => {
-                img.onload = () => {
-                    resolve(img);
-                }
-            })
+                img.onload = () => resolve(img)
+            });
         })).then((images) => {
-            if (isInLoad) return;
             
             imagesRef.current = images;
             removeLoadingComponent(LOADING_KEY);
         })
         return () => {
-            isInLoad = true;
             if (imagesRef.current) {
                 imagesRef.current.forEach((image) => {
                     image.src = '';
@@ -94,7 +98,7 @@ const Video = () => {
 
     return (
         <>
-            <div data-scroll ref={refContainer} className={twMerge('block relative w-full h-fit rounded-3xl video_gsap overflow-hidden will-change-transform-animation', rounded({ size: 'xl' }))}>
+            <div data-scroll ref={refContainer} className={twMerge('block relative w-full h-fit rounded-3xl video_gsap overflow-hidden', rounded({ size: 'xl' }))}>
                 <CursorContent name='CursorScrollVideo' component='CursorScroll' props={{ title: 'scroll' }}>
                     <canvas data-scroll ref={ref} className={twMerge(
                         'h-full w-full will-change-transform-animation',

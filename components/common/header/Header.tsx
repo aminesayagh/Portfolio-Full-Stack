@@ -200,9 +200,9 @@ const Header = () => {
                         <Logo href='/' size={64} alt={t('header.logo')} mode='dark' />
                     </span>
                 </Navbar.Brand>
-                <Navbar.Content className={twMerge('flex-1', GAP_SIZE_LG)}>
+                {/* <Navbar.Content className={twMerge('flex-1', GAP_SIZE_LG)}> */}
                     {/* <Link degree='2' href={`mailto:${t('header.email')}?subject=Contact from Portfolio&body=Hello Mohamed Amine,`} size='xs' weight='semibold' className='hidden mdl:flex'>{t('header.email')}</Link> */}
-                </Navbar.Content>
+                {/* </Navbar.Content> */}
                 <Navbar.Content className={twMerge('flex-1 justify-end overflow-hidden', GAP_SIZE_LG)}>
                     {!openMenu && <SwitchLang />}
                     <span className={twMerge("w-[1.4px] bg-gray-500 h-[13px] rotate-[25deg] hidden mdl:block",  openMenu ? 'hidden w-0' : '' )} />

@@ -1,24 +1,21 @@
 import { twMerge } from "tailwind-merge";
-import { useEffect } from "react";
+import { useRef } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { gsap } from "@/utils/gsap";
 
 const Noise = ({
   position = "fixed",
-  className = "opacity-90",
+  className = "opacity-70",
 }: {
   position?: "fixed" | "absolute";
   className?: string;
 }) => {
-  useEffect(() => {
+    const noiseRef = useRef(null);
+
+    useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const DURATION = 3;
-      const tl = gsap.timeline({
-        repeat: -1,
-        // yoyo: true,
-        ease: "none",
-      });
-      tl.to(".bg-noise", {
+      gsap.to(noiseRef.current, {
         keyframes: [
           { x: "0%", y: "0%" }, // Starting point (center)
           { x: "5%", y: "-5%" }, // Move to top right
@@ -37,9 +34,6 @@ const Noise = ({
         repeat: -1,
 
       });
-      return () => {
-        tl.kill();
-      };
     });
     return () => {
       ctx.revert();
@@ -48,6 +42,7 @@ const Noise = ({
 
   return (
     <div
+    ref={noiseRef}
       className={twMerge(
         "bg-noise",
         className || "opacity-70",

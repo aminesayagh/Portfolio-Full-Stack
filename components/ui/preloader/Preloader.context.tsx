@@ -2,6 +2,7 @@ import { Key, createContext, useState, useEffect, useRef, ElementRef, Suspense, 
 import { useTranslation } from 'next-i18next';
 import { twMerge } from 'tailwind-merge';
 import { AnimatePresence, motion } from 'framer-motion';
+import Image from 'next/image';
 
 import Container from '@/components/ui/container';
 import Title from '@/components/ui/typography/Title';
@@ -13,8 +14,8 @@ import { useIsomorphicLayoutEffect } from 'react-use';
 import { useRouter } from 'next/router';
 const END_LOADING_IN = 99;
 export const LoadingContext = createContext<{
-    addLoadingComponent: (key: Key) => void,
-    removeLoadingComponent: (key: Key) => void,
+    addLoadingComponent: (key: string) => void,
+    removeLoadingComponent: (key: string) => void,
     isLoading: boolean,
     endLoading: boolean
 }>({
@@ -25,7 +26,7 @@ export const LoadingContext = createContext<{
 });
 
 type LoadingElement = {
-    [key: Key]: boolean
+    [key: string]: boolean
 }
 
 export function LoadingProvider({ fontReady, children }: {
@@ -53,11 +54,11 @@ export function LoadingProvider({ fontReady, children }: {
             html.dataset.is_loading = (!endLoading).toString();
         }
     }, [endLoading])
-    const loadingExist = useCallback((key: Key) => {
+    const loadingExist = useCallback((key: string) => {
         return !!loadingComponentList[key];
     }, [loadingComponentList])
 
-    const addLoadingComponent = useCallback((key: Key) => {
+    const addLoadingComponent = useCallback((key: string) => {
         if (loadingExist(key)) return;
         loadingComponentList[key] = true;
 
@@ -65,7 +66,7 @@ export function LoadingProvider({ fontReady, children }: {
         loadingState();
     }, [loadingComponentList, loadingState, loadingExist])
 
-    const removeLoadingComponent = useCallback((key: Key) => {
+    const removeLoadingComponent = useCallback((key: string) => {
         if (!loadingExist(key)) return;
         loadingComponentList[key] = false;
 
@@ -248,14 +249,14 @@ const Preloader = ({ isLoading, setEndLoading, fontReady }: {
                     </div>
                     <div className={twMerge('w-full', 'text-loader-gsap invisible', 'flex flex-row justify-end', 'relative')} >
                         <AnimatePresence mode='sync' >
-                            <motion.p className={twMerge(
+                            <motion.div className={twMerge(
                                 'uppercase element-counter-gsap',
                                 'font-sans font-black text-black-500 will-change-transform-animation',
                                 'text-[4.1rem] xxs:text-[6rem] md:text-[7.4rem] lg:text-[8.4rem] xl:text-[10rem] align-baseline leading-[70%]'
                             )}>
                                 <Percent isLoading={isLoading} setEndLoadingProgress={setEndLoadingProgress} />
                                 {t('loading.percent')}
-                            </motion.p>
+                            </motion.div>
                         </AnimatePresence>
                     </div>
                 </Container>
@@ -272,7 +273,7 @@ const Percent = ({ isLoading, setEndLoadingProgress }: { isLoading: boolean, set
 
     useEffect(() => {
         let intervalId: NodeJS.Timeout;
-        let interval = 1;
+        let interval = 6;
         if (percent == INITIAL_PERCENT) {
             setPercent((prevPercent) => Math.min(prevPercent + interval, END_LOADING_IN));
         } else if (isLoading && percent < END_LOADING_IN) {
@@ -292,10 +293,52 @@ const Percent = ({ isLoading, setEndLoadingProgress }: { isLoading: boolean, set
             clearInterval(intervalId);
         }
     }, [isLoading, percent, setEndLoadingProgress]);
+    const [img1, setImg1] = useState<string | null>(null);
+    const [img2, setImg2] = useState<string | null>(null);
+    const [img3, setImg3] = useState<string | null>(null);
 
-    return <motion.span key={percent} initial={{ opacity: 1, y: '0' }} animate={{ opacity: 1, y: '-100%' }} exit={{ opacity: 0, y: '100%' }}>
-        {
-            percent < 100 ? percent.toFixed(0) : 100
+    // preload images of number svg form 0 to 9 on public/images/number
+    // useEffect(() => {
+    //     const images = Array.from({ length: 10 }).map((_, index) => {
+    //         return import(`@/public/images/number/${index}.svg`);
+    //     });
+    //     Promise.all(images).then((images) => {
+    //         setImg1(images[0].src);
+    //         setImg2(images[0].src);
+    //         setImg3(images[0].src);
+    //     });
+    // }, []);
+
+
+    useEffect(() => {
+        const percentString = percent.toFixed(0).padStart(3, '0');
+        const [first, second, third] = percentString.split('');
+        console.log(first, second, third);
+        if (first !== '0') {
+            setImg1(`images/number/${first}.svg`);
+        } else {
+            setImg1(null);
         }
-    </motion.span>
+        if (first !== '0' && second !== '0') {
+            setImg2(`images/number/${second}.svg`);
+        } else {
+            setImg2(null);
+        }
+        setImg3(`images/number/${third}.svg`);
+    }, [percent]);
+
+    return <div className='flex flex-row gap-2'>
+        <Number num={img1} />
+        <Number num={img2} />
+        <Number num={img3} />
+    </div>
+}
+
+function Number({ num }: { num: string | null }) {
+    if (!num) return null;
+    return (
+        <motion.span>
+            <Image src={num} alt='number' className='w-40' width={50} height={50} />
+        </motion.span>
+    )
 }

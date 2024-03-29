@@ -6,7 +6,20 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   experimental: { esmExternals: true },
-  i18n
+  i18n,
+  async headers() {
+    return [
+      {
+        source: "/framer-image/dim/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable"
+          },
+        ],
+      },
+    ]
+  }
 }
 
 module.exports = nextConfig;
