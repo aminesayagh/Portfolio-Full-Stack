@@ -1,7 +1,4 @@
 import { twMerge } from "tailwind-merge";
-import { useRef } from "react";
-import { useIsomorphicLayoutEffect } from "react-use";
-import { gsap } from "@/utils/gsap";
 import { motion } from "framer-motion";
 
 const Noise = ({

@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { gsap } from "@/utils/gsap";
 
 import { twMerge } from "tailwind-merge";

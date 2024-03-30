@@ -132,7 +132,7 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
 
         setLenis(lenis);
 
-        lenis.on(event, ScrollTrigger.update);
+        // lenis.on(event, ScrollTrigger.update);
 
         gsap.ticker.add((time) => {
             lenis.raf(time * 1000);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { MenuTrigger, Button, Popover, Menu, Item} from 'react-aria-components';
-import type { MenuTriggerProps, ButtonProps, PopoverProps, MenuProps, ItemProps } from 'react-aria-components';
+import { MenuTrigger, Button, Popover, Menu, ListBoxItem as Item} from 'react-aria-components';
+import type { MenuTriggerProps, ButtonProps, PopoverProps, MenuProps, ListBoxItemProps as ItemProps } from 'react-aria-components';
 
 import { twMerge } from 'tailwind-merge';
 import { mergeClassName } from '@/helpers/className'

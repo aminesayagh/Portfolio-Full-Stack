@@ -20,7 +20,7 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
     const [active, setActive] = useState<boolean>(false);
     const [positionScroll, setPositionScroll] = useState<number>(0);
 
-    useLenis((scroll) => {
+    useLenis(({ scroll }) => {
         const progress = scroll.targetScroll;
         setPositionScroll(progress);
     });

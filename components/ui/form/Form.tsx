@@ -1,8 +1,8 @@
 import React from 'react';
 import { useForm, FormProvider, Controller, useFormContext } from 'react-hook-form';
 import { FormProps, InputProps } from './Form.types';
-import { Label, TextField, Select, Button, SelectValue, Popover, ListBox, Item, RadioProps, Radio, CheckboxGroup, CheckboxProps, Checkbox } from 'react-aria-components';
-import { TextFieldProps, SelectProps, ListBoxProps, CheckboxGroupProps, ItemProps, RadioGroup, RadioGroupProps, ButtonProps } from 'react-aria-components';
+import { Label, TextField, Select, Button, SelectValue, Popover, ListBox, ListBoxItem as Item, RadioProps, Radio, CheckboxGroup, CheckboxProps, Checkbox } from 'react-aria-components';
+import { TextFieldProps, SelectProps, ListBoxProps, CheckboxGroupProps, ListBoxItemProps as ItemProps, RadioGroup, RadioGroupProps, ButtonProps } from 'react-aria-components';
 import { twJoin } from 'tailwind-merge';
 import ResizablePanel from '@/components/ui/resizablePanel';
 import { Icon } from '@/components/ui/icon';
@@ -65,7 +65,7 @@ const LayoutField = ({ label, className, icon, name, children, width, ...props }
 }
 
 
-const SelectUi = <T extends {}>({ label, name, children, ...props }: { label: string, name: string, children: ListBoxProps<T>['children'] } & Omit<SelectProps<T>, 'children'>) => {
+const SelectUi = <T extends {}>({ label, name, children, items, ...props }: { items: Iterable<T>, label: string, name: string, children: ListBoxProps<T>['children'] } & Omit<SelectProps<T>, 'children'>) => {
     // @ts-ignore
     const { register, getFieldState, control, ...methods } = useFormContext();
     return (
@@ -86,7 +86,7 @@ const SelectUi = <T extends {}>({ label, name, children, ...props }: { label: st
                                 </ResizablePanel>
                             </span>
                             <Popover className={twMerge('flex flex-col gap-2 p-2 w-72 rounded-sm', 'bg-black-200/70 backdrop-blur-md z-dropdown remove_outline')}>
-                                <ListBox className='remove_outline'>
+                                <ListBox items={items} className='remove_outline'>
                                     {children}
                                 </ListBox>
                             </Popover>
