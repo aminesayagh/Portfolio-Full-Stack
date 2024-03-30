@@ -10,7 +10,6 @@ import {
 import { useTranslation } from "next-i18next";
 import { twMerge } from "tailwind-merge";
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
 
 import Container from "@/components/ui/container";
 import Title from "@/components/ui/typography/Title";
@@ -23,7 +22,7 @@ import { useRouter } from "next/router";
 
 // config:
 const END_LOADING_IN = 99;
-const LONG_LOADING_TIME = 300;
+const LONG_LOADING_TIME = 240;
 const MEDIUM_LOADING_TIME = 40;
 const INITIAL_PERCENT = 1;
 const BASE_INTERVAL = 1;
@@ -57,15 +56,13 @@ export function LoadingProvider({
   const [loadingComponentList, setLoadingComponentList] =
     useState<LoadingElement>({});
   const { asPath } = useRouter();
+
   const loadingState = useCallback(() => {
-    const loadingValues = Object.values(loadingComponentList);
-    const inLoadingState = loadingValues.filter((item) => item === true);
-    if (inLoadingState.length > 1 && !loadingComponentList["loadingProvider"]) {
-      setIsLoading(true);
-    } else {
-      setIsLoading(false);
-    }
-  }, [setIsLoading, loadingComponentList]);
+  const loadingValues = Object.values(loadingComponentList);
+  const inLoadingState = loadingValues.filter((item) => item === true);
+
+  setIsLoading(inLoadingState.length > 0);
+}, [loadingComponentList]);
 
   useEffect(() => {
     // add data set of loading to document html
@@ -74,33 +71,35 @@ export function LoadingProvider({
       html.dataset.is_loading = (!endLoading).toString();
     }
   }, [endLoading]);
-  const loadingExist = useCallback(
-    (key: string) => {
-      return !!loadingComponentList[key];
-    },
-    [loadingComponentList]
-  );
+  // const loadingExist = useCallback(
+  //   (key: string) => {
+  //     return !!loadingComponentList[key];
+  //   },
+  //   [loadingComponentList]
+  // );
 
   const addLoadingComponent = useCallback(
     (key: string) => {
-      if (loadingExist(key)) return;
-      loadingComponentList[key] = true;
-
-      setLoadingComponentList(() => loadingComponentList);
-      loadingState();
+      setLoadingComponentList((prev) => {
+        if (prev[key]) return prev;
+        const updated = { ...prev, [key]: true };
+        loadingState();
+        return updated;
+      });
     },
-    [loadingComponentList, loadingState, loadingExist]
+    [loadingState]
   );
 
   const removeLoadingComponent = useCallback(
     (key: string) => {
-      if (!loadingExist(key)) return;
-      loadingComponentList[key] = false;
-
-      setLoadingComponentList(() => loadingComponentList);
-      loadingState();
+      setLoadingComponentList((prev) => {
+        if (!prev[key]) return prev;
+        const updated = { ...prev, [key]: false };
+        loadingState();
+        return updated;
+      });
     },
-    [loadingComponentList, loadingState, loadingExist]
+    [loadingState]
   );
 
   useEffect(() => {
@@ -365,38 +364,33 @@ const Percent = ({
   const [imgThird, setImgThird] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log("percent", percent, isLoading, END_LOADING_IN);
     if (percent < END_LOADING_IN) {
-      let loadingTime = 0;
-      if (isLoading) {
-        loadingTime = LONG_LOADING_TIME;
-      } else {
-        loadingTime = MEDIUM_LOADING_TIME;
-      }
-      function updatePercent() {
+      const updatePercent = () => {
         const newPercent = Math.min(percent + 1, END_LOADING_IN);
         setPercent(newPercent);
-        const percentString = newPercent.toFixed(0).toString().padStart(3, "0");
-        const [first, second, third] = percentString.split("");
-        if (!(first === "0" && second === "0" && third === "0")) {
-          setImgThird(third);
-        } 
-        if (!(second === "0" && third === "0")) {
-          setImgSecond(second);
-        } 
-        if (!(third === "0")) {
-          setImgFirst(first);
-        }
+      };
+      const intervalTimeAtlease = (percent / END_LOADING_IN) * (MEDIUM_LOADING_TIME - 10);
+      const intervalTime = isLoading ? LONG_LOADING_TIME : MEDIUM_LOADING_TIME - intervalTimeAtlease;
+      
+      const percentString = percent.toFixed(0).toString().padStart(3, "0");
+      const [first, second, third] = percentString.split("");
+      if (!(first === "0" && second === "0" && third === "0") && imgThird !== third) {
+        setImgThird(third);
+      } 
+      if (!(second === "0" && first === "0") && imgSecond !== second) {
+        setImgSecond(second);
+      } 
+      if (!(first === "0") && imgFirst !== first) {
+        setImgFirst(first);
       }
-      const intervalId = setInterval(updatePercent, loadingTime);
+      const intervalId = setInterval(updatePercent, intervalTime);
       return () => {
         clearInterval(intervalId);
       };
     } else if (percent >= END_LOADING_IN) {
-      console.log("end loading", percent);
       setEndLoadingProgress(true);
     }
-  }, [percent, setEndLoadingProgress, isLoading]);
+  }, [percent]);
 
   return (
     <div className="flex flex-row gap-0 py-2 overflow-hidden">
@@ -424,14 +418,9 @@ function Number({ num, order }: { num: string | null; order: string }) {
       layoutId={`number-${order}-${num}`}
       className="flex relative items-center gap-1 will-change-transform-animation"
     >
-      <Image
-        src={`/images/number/${num}.svg`}
-        alt="number w-auto h-[190px]"
-        width={82 * 1.4}
-        height={90 * 1.4}
-        priority
-        
-      />
+      <p className='w-auto md:w-20 lg:w-24 xl:w-28 flex flex-col align-middle text-end leading-3 will-change-transform-animation'>
+        {num}
+      </p>
     </motion.span>
   ) : null;
 }
