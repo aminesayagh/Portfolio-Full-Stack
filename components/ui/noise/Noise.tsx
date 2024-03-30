@@ -2,6 +2,7 @@ import { twMerge } from "tailwind-merge";
 import { useRef } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { gsap } from "@/utils/gsap";
+import { motion } from "framer-motion";
 
 const Noise = ({
   position = "fixed",
@@ -10,39 +11,18 @@ const Noise = ({
   position?: "fixed" | "absolute";
   className?: string;
 }) => {
-    const noiseRef = useRef(null);
-
-    useIsomorphicLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const DURATION = 3;
-      gsap.to(noiseRef.current, {
-        keyframes: [
-          { x: "0%", y: "0%" }, // Starting point (center)
-          { x: "5%", y: "-5%" }, // Move to top right
-          { x: "10%", y: "0%" }, // Move to right
-          { x: "5%", y: "5%" }, // Move to bottom right
-          { x: "0%", y: "10%" }, // Move to bottom
-          { x: "-5%", y: "5%" }, // Move to bottom left
-          { x: "-10%", y: "0%" }, // Move to left
-          { x: "-5%", y: "-5%" }, // Move to top left
-          { x: "0%", y: "-10%" }, // Move to top
-          { x: "5%", y: "-5%" }, // Move to top right again
-        ],
-        duration: DURATION,
-        ease: "none",
-        // repeat on one direction
-        repeat: -1,
-
-      });
-    });
-    return () => {
-      ctx.revert();
-    };
-  }, []);
-
+  const noiseAnimation = {
+    x: ["0%", "5%", "10%", "5%", "0%", "-5%", "-10%", "-5%", "0%", "5%", "0%"],
+    y: ["0%", "-5%", "0%", "5%", "10%", "5%", "0%", "-5%", "-10%", "-5%", "0%"],
+    transition: {
+      duration: 1,
+      ease: "linear",
+      repeat: Infinity,
+    },
+  };
   return (
-    <div
-    ref={noiseRef}
+    <motion.div
+      animate={noiseAnimation}
       className={twMerge(
         "bg-noise",
         className || "opacity-70",
@@ -53,7 +33,7 @@ const Noise = ({
           ? "fixed w-[300vw] h-[300vh] visible z-bg"
           : "absolute w-[200%] h-[200%] overflow-none z-50"
       )}
-    ></div>
+    ></motion.div>
   );
 };
 
