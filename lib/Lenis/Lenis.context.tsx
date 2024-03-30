@@ -206,31 +206,6 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
     </LenisContext.Provider>)
 });
 
-// const Scrollbar = ({ container }: { container: any }) => {
-//     const thumbRef = useRef<ElementRef<'div'>>(null);
-//     const [thumbTransform, setThumbTransform] = useState(0);
-
-//     useLenis((lenis) => {
-//         const heightOfContent = container.current?.offsetHeight;
-//         const heightOfWindow = window.innerHeight;
-//         const position = lenis.targetScroll;
-
-//         const tt = position * heightOfWindow / heightOfContent;
-//         gsap.to(thumbRef.current, {
-//             duration: 0.3,
-//             y: tt,
-//             ease: 'power3.out'
-//         })
-//         thumbTransform != tt && setThumbTransform(tt)
-//     });
-
-//     return <div className='scrollbar'>
-//         <div className='inner'>
-//             <div className='thumb' ref={thumbRef} ></div>
-//         </div>
-//     </div>
-// }
-
 LenisProvider.displayName = 'LenisProvider';
 
 export { LenisProvider };

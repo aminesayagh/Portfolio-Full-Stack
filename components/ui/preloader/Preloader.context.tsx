@@ -23,7 +23,7 @@ import { useRouter } from "next/router";
 // config:
 const END_LOADING_IN = 99;
 const LONG_LOADING_TIME = 200;
-const MEDIUM_LOADING_TIME = 50;
+const MEDIUM_LOADING_TIME = 70;
 const INITIAL_PERCENT = 1;
 const LOADING_KEY = "loadingProvider";
 
@@ -74,7 +74,6 @@ export function LoadingProvider({
   const addLoadingComponent = useCallback(
     (key: string) => {
       setLoadingComponentList((prev) => {
-        console.log("addLoadingComponent", prev, key);
         if (prev.hasOwnProperty(key)) return prev;
         const updated = { ...prev, [key]: true };
         loadingState();
@@ -319,8 +318,7 @@ const Preloader = ({
               "relative"
             )}
           >
-            <AnimatePresence mode="sync">
-              <motion.div
+              <div
                 className={twMerge(
                   "flex flex-row gap-2 flex-nowrap",
                   "uppercase element-counter-gsap",
@@ -333,8 +331,7 @@ const Preloader = ({
                   setEndLoadingProgress={setEndLoadingProgress}
                 />
                 {t("loading.percent")}
-              </motion.div>
-            </AnimatePresence>
+              </div>
           </div>
         </Container>
         <Noise />
@@ -359,8 +356,9 @@ const Percent = ({
 
   useEffect(() => {
     if (percent < END_LOADING_IN) {
+      const addSize = isLoading ? 1 : 2.5;
       const updatePercent = () => {
-        const newPercent = Math.min(percent + 1, END_LOADING_IN);
+        const newPercent = Math.min(percent + addSize, END_LOADING_IN);
         setPercent(newPercent);
       };
       const intervalTimeAtlease = (percent / END_LOADING_IN) * (MEDIUM_LOADING_TIME - 10);
