@@ -113,7 +113,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
         zIndex: zIndexContainer,
     }} >
         <div className='absolute fixed-gsap left-0 right-0 top-0 w-full h-screen'  >
-            <Image src={pic} alt={description} className='h-screen object-cover image-gsap' priority sizes='100vw' width='6000' height='4500' style={{
+            <Image src={pic} alt={description} className='h-screen object-cover image-gsap' priority={false} loading="lazy" sizes='100vw' width='6000' height='4500' style={{
                 zIndex: zIndexImage,
             }} />
         </div>
