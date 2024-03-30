@@ -22,11 +22,10 @@ import { useRouter } from "next/router";
 
 // config:
 const END_LOADING_IN = 99;
-const LONG_LOADING_TIME = 240;
-const MEDIUM_LOADING_TIME = 40;
+const LONG_LOADING_TIME = 200;
+const MEDIUM_LOADING_TIME = 50;
 const INITIAL_PERCENT = 1;
-const BASE_INTERVAL = 1;
-const SUPLIMENTARY_INTERVAL_AFTER_LOADING = 0.3;
+const LOADING_KEY = "loadingProvider";
 
 export const LoadingContext = createContext<{
   addLoadingComponent: (key: string) => void;
@@ -71,17 +70,12 @@ export function LoadingProvider({
       html.dataset.is_loading = (!endLoading).toString();
     }
   }, [endLoading]);
-  // const loadingExist = useCallback(
-  //   (key: string) => {
-  //     return !!loadingComponentList[key];
-  //   },
-  //   [loadingComponentList]
-  // );
 
   const addLoadingComponent = useCallback(
     (key: string) => {
       setLoadingComponentList((prev) => {
-        if (prev[key]) return prev;
+        console.log("addLoadingComponent", prev, key);
+        if (prev.hasOwnProperty(key)) return prev;
         const updated = { ...prev, [key]: true };
         loadingState();
         return updated;
@@ -105,7 +99,7 @@ export function LoadingProvider({
   useEffect(() => {
     const timer = setTimeout(() => {
       const values = Object.values(loadingComponentList);
-      if (values.length == 1 && loadingComponentList["loadingProvider"]) {
+      if (values.length == 1 && loadingComponentList[LOADING_KEY]) {
         setIsLoading(false);
       }
     }, 1000);
@@ -115,10 +109,10 @@ export function LoadingProvider({
   }, []);
 
   useEffect(() => {
-    addLoadingComponent("loadingProvider");
+    addLoadingComponent(LOADING_KEY);
 
     return () => {
-      removeLoadingComponent("loadingProvider");
+      removeLoadingComponent(LOADING_KEY);
     };
   }, [asPath]);
   return (
@@ -395,6 +389,7 @@ const Percent = ({
   return (
     <div className="flex flex-row gap-0 py-2 overflow-hidden">
       <AnimatePresence mode="popLayout">
+        
         <Number num={imgFirst} order="1" key='1' />
         <Number num={imgSecond} order="2" key='2' />
         <Number num={imgThird} order="3" key='3' />

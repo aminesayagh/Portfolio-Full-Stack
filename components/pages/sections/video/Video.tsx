@@ -8,17 +8,17 @@ import { CursorContent } from "@/components/ui/cursor";
 import { usePreloader } from "@/components/ui/preloader";
 
 const ORIGINAL_WIDTH = 1488; // Original image width
-const ORIGINAL_HEIGHT = 882; // Original image height
+const ORIGINAL_HEIGHT = 835; // Original image height
 
 const FRAME_COUNT = 164;
 const LOADING_KEY = "Video";
+
 const Video = () => {
   let ref = useRef<HTMLCanvasElement>(null);
   let refContainer = useRef<HTMLDivElement>(null);
   const imagesRef = useRef([] as Array<HTMLImageElement>);
 
   const { addLoadingComponent, removeLoadingComponent } = usePreloader();
-  const [imgHeight, setImageHeight] = useState(0);
 
   const getScreenSize = (): number => {
     const width = window.innerWidth;
@@ -30,9 +30,6 @@ const Video = () => {
     return 1600; // for larger screens
   };
 
-  useEffect(() => {
-    setImageHeight(getScreenSize() / (ORIGINAL_WIDTH / ORIGINAL_HEIGHT));
-  }, [])
   useEffect(() => {
     addLoadingComponent(LOADING_KEY);
 
@@ -50,7 +47,7 @@ const Video = () => {
           img.src = currentFrame(index + 1);
 
           img.width = screenSize;
-          img.height = imgHeight;
+          img.height = (screenSize * ORIGINAL_HEIGHT) / ORIGINAL_WIDTH;
           img.alt = "video" + "_" + index.toString().padStart(3, "0");
           img.style.objectFit = "cover";
           img.style.objectPosition = "center";
@@ -84,7 +81,7 @@ const Video = () => {
       const screenSize = getScreenSize();
 
       canvas.width = screenSize;
-      canvas.height = imgHeight;
+      canvas.height = (screenSize * ORIGINAL_HEIGHT) / ORIGINAL_WIDTH;
 
       gsap.to(hands, {
         frame: FRAME_COUNT - 1,
@@ -122,7 +119,7 @@ const Video = () => {
           rounded({ size: "xl" })
         )}
         style={{
-            height: imgHeight + "px",
+          height: "100%",
         }}
       >
         <CursorContent

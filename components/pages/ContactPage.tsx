@@ -142,7 +142,10 @@ const FormContact = () => {
                 <Input placeholder={t('form.field.email.placeholder')} />
             </Form.LayoutField>
             <Form.Select name='objective' label={t('form.field.objective.label')} placeholder={t('form.field.objective.placeholder')} items={contactSubjectItems} defaultSelectedKey={'1'}>
-                {(item) => {
+                {(item: {
+                    key: string;
+                    text: string;
+                }) => {
                     return <Form.Item key={item.key} id={item.text} >
                         {t(`form.field.objective.options.${item.key}`)}
                     </Form.Item>
