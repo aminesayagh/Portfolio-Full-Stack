@@ -52,7 +52,7 @@ const MENU_ITEMS: MenuItems = {
         id: 'instagram'
     },
     linkedin: {
-        link: 'https://www.linkedin.com/mohamed-amine-sayagh',
+        link: 'https://www.linkedin.com/in/mohamedamine-sayagh/',
         menu: ['socialNetworks'],
         id: 'linkedin'
     },

@@ -17,33 +17,21 @@ import { MenuItem } from '@/conf/router';
 import { useEventListener } from '@/hook/useEventListener';
 import { useLenis } from '@/lib/Lenis';
 
+
+import { getMenuItems } from '@/conf/router';
+
+const menuSocialNetworks = getMenuItems('socialNetworks');
 const BASE_LOCALE_SOCIAL = 'socialNetwork';
 
 const ICON_SIZE_CLASS_NAME = 'w-5 h-5 lg:w-6 lg:h-6';
 
 const FollowUs = () => {
     const ref = useRef<ElementRef<'div'>>(null);
-    const menuSocialNetworksRef = useRef<MenuItem[]>([]);
-
-    useEffect(() => {
-        const { signal } = new AbortController();
-        let active = false;
-        fetch('/api/menu?name=socialNetworks', {
-            signal
-        }).then(async (res1) => {
-            res1.json().then((response1) => {
-                if (active) return;
-                menuSocialNetworksRef.current = response1.items;
-            })
-        });
-        return () => {
-            active = true;
-        }
-    }, [menuSocialNetworksRef]);
+    
     const ctx = useRef<gsap.Context | null>(null);
 
     useIsomorphicLayoutEffect(() => {
-        if (!menuSocialNetworksRef.current.length) return;
+        if (!menuSocialNetworks.length) return;
         ctx.current = gsap.context((self) => {
             const tl = gsap.timeline({
                 paused: true
@@ -89,7 +77,7 @@ const FollowUs = () => {
         return () => {
             ctx.current?.revert();
         }
-    }, [ref, menuSocialNetworksRef.current.length]);
+    }, [ref, menuSocialNetworks.length]);
     const handler = useCallback(() => {
         ctx.current?.followButtonShow();
     }, [ctx]);
@@ -103,7 +91,7 @@ const FollowUs = () => {
     return (
         <div ref={ref} className='flex flex-row justify-end items-center gap-4'>
             <ul className='flex flex-row gap-8 items-center'>
-                {menuSocialNetworksRef.current.map((item, index) => <li key={index} className='overflow-hidden list-none'>
+                {menuSocialNetworks.map((item, index) => <li key={index} className='overflow-hidden list-none'>
                     <Link size='sm' href={item.link} degree='4' weight='semibold' className='social-button-gsap' >
                         {t(`${BASE_LOCALE_SOCIAL}.${item.id}.key`)}
                     </Link>
