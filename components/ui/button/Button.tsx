@@ -40,5 +40,7 @@ const ButtonUi = forwardRef<HTMLButtonElement, ButtonProps>(({
     );
 });
 
+ButtonUi.displayName = 'ButtonUi'; // Add display name
+
 export default memo(ButtonUi);
  

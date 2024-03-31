@@ -22,8 +22,6 @@ import { useRouter } from "next/router";
 
 // config:
 const END_LOADING_IN = 99;
-const LONG_LOADING_TIME = 150;
-const MEDIUM_LOADING_TIME = 70;
 const INITIAL_PERCENT = 1;
 const LOADING_KEY = "loadingProvider";
 
