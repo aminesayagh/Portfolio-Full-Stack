@@ -235,7 +235,7 @@ const Header = () => {
                                                     <div className={twMerge('flex flex-row justify-start items-start relative cursor-pointer', 'modal-item')} >
                                                         <Button size='auto' onPress={() => {
                                                             onButtonClick(item.link, item.id)
-                                                        }} degree='1' className={
+                                                        }} degree='1' name='menuItem' className={
                                                             twMerge(
                                                                 'capitalize relative text-white-600 bg-black-100 z-10 hover:text-primary-500',
                                                                 'text-7xl sm:text-8xl mdl:text-9xl lg:text-15xl xl:text-[5rem] font-bold leading-tight tracking-wide transition-colors duration-150'

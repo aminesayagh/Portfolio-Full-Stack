@@ -13,6 +13,7 @@ const ButtonUi = forwardRef<HTMLButtonElement, ButtonProps>(({
   size = 'auto',
   full,
   weight,
+  name,
   degree = "0",
   exchange,
   className,
@@ -32,7 +33,7 @@ const ButtonUi = forwardRef<HTMLButtonElement, ButtonProps>(({
     return (
         <FocusRing>
             <CursorContent name="cursorPointer_header_email" component='CursorEvent' props={{ event: 'pointer' }}>
-                <Button ref={ref} className={buttonClasses} {...props}>
+                <Button name={name} ref={ref} className={buttonClasses} {...props}>
                     {children}
                 </Button>
             </CursorContent>
