@@ -1,15 +1,27 @@
-
-
+import React from 'react';
 import Icons, { IconNames, IconProps as DefaultIconProps } from './IconsList';
-import { SVGAttributes } from 'react';
 
-interface IconProps extends SVGAttributes<SVGElement>, DefaultIconProps {
+interface IconProps extends React.SVGAttributes<SVGElement>, DefaultIconProps {
     name: IconNames;
     className?: string;
 }
 
-const Icon = ({ size, name, ...props }: IconProps) => {
-    return !!Icons[name] && Icons[name]({ width: size, height: size, ...props })
+const Icon: React.FC<IconProps> = ({ size, name, className, ...props }) => {
+    const IconComponent = Icons[name];
+
+    if (!IconComponent) {
+        console.warn(`Icon with name ${name} does not exist.`);
+        return null;
+    }
+
+    const iconProps = {
+        width: size,
+        height: size,
+        className,
+        ...props
+    };
+
+    return <IconComponent {...iconProps} />;
 }
 
-export default Icon
+export default React.memo(Icon);

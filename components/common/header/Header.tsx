@@ -17,6 +17,7 @@ import Text from '@/components/ui/typography/Text';
 import Title from '@/components/ui/typography/Title';
 import HamburgerMenu from '@/components/common/hamburgerMenu';
 import SwitchLang from '@/components/common/switchLang';
+import { getMenuItems } from '@/conf/router';
 
 const GAP_SIZE_LG = 'gap-4 sm:gap-6 lg:gap-7 xl:gap-8';
 const GAP_SIZE_XL = 'gap-8 mdl:gap-12';
@@ -29,7 +30,9 @@ const TRANSLATE_Y = -110;
 import useRouterChange from '@/hook/SafePush';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { useLenis } from '@/lib/Lenis';
-import { MenuItem } from '@/conf/router';
+
+const menuHamburgerItems = getMenuItems('hamburger');
+const menuSocialNetworks = getMenuItems('socialNetworks');
 
 
 const Header = () => {
@@ -41,25 +44,8 @@ const Header = () => {
     // const { scrollTo } = useLocomotiveScroll();
     const lenis = useLenis();
 
-    const menuHamburgerItemsRef = useRef<MenuItem[]>([]);
-    const menuSocialNetworksRef = useRef<MenuItem[]>([]);
-
     const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
     const ctx = useRef<any>(null);
-
-    useEffect(() => {
-        const { signal } = new AbortController();
-        Promise.all([fetch('/api/menu?name=hamburger', {
-            signal
-        }), fetch('/api/menu?name=socialNetworks', {
-            signal
-        })]).then(async ([res1, res2]) => {
-            Promise.all([res1.json(), res2.json()]).then(([response1, response2]) => {
-                menuHamburgerItemsRef.current = response1.items;
-                menuSocialNetworksRef.current = response2.items;
-            })
-        })
-    }, []);
 
     useIsomorphicLayoutEffect(() => {
         ctx.current = gsap.context((self) => {
@@ -244,7 +230,7 @@ const Header = () => {
                                     <div className='h-5 xxs:h-0'></div>
                                     <div className={twMerge('flex flex-col sm:flex-row sm:justify-between', 'gap-10 sm:gap-0', 'items-start sm:items-end md:items-center')} >
                                         <ul className={twMerge('flex flex-col gap-6 lg:gap-4', 'w-full sm:w-8/12')}>
-                                            {menuHamburgerItemsRef.current.map((item, index) => {
+                                            {menuHamburgerItems.map((item, index) => {
                                                 return <li key={index} className={twMerge('flex flex-col items-start', 'overflow-hidden')}>
                                                     <div className={twMerge('flex flex-row justify-start items-start relative cursor-pointer', 'modal-item')} >
                                                         <Button size='auto' onPress={() => {
@@ -283,7 +269,7 @@ const Header = () => {
                                             </Text>
                                         </div>
                                         <ul className={twMerge('flex flex-row items-center justify-end order-1 xxs:order-2', GAP_SIZE_XL)}>
-                                            {menuSocialNetworksRef.current.map((item, index) => <li key={index} className='overflow-hidden'>
+                                            {menuSocialNetworks.map((item, index) => <li key={index} className='overflow-hidden'>
                                                 <Link size='sm' href={item.link} degree='4' weight='semibold' className='modal-footer' >
                                                     {t(`${BASE_LOCALE_SOCIAL}.${item.id}.key`)}
                                                 </Link>

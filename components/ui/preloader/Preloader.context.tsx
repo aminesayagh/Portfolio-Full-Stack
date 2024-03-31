@@ -9,7 +9,7 @@ import {
 } from "react";
 import { useTranslation } from "next-i18next";
 import { twMerge } from "tailwind-merge";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useAnimation  } from "framer-motion";
 
 import Container from "@/components/ui/container";
 import Title from "@/components/ui/typography/Title";
@@ -22,7 +22,7 @@ import { useRouter } from "next/router";
 
 // config:
 const END_LOADING_IN = 99;
-const LONG_LOADING_TIME = 200;
+const LONG_LOADING_TIME = 150;
 const MEDIUM_LOADING_TIME = 70;
 const INITIAL_PERCENT = 1;
 const LOADING_KEY = "loadingProvider";
@@ -57,11 +57,11 @@ export function LoadingProvider({
   const { asPath } = useRouter();
 
   const loadingState = useCallback(() => {
-  const loadingValues = Object.values(loadingComponentList);
-  const inLoadingState = loadingValues.filter((item) => item === true);
+    const loadingValues = Object.values(loadingComponentList);
+    const inLoadingState = loadingValues.filter((item) => item === true);
 
-  setIsLoading(inLoadingState.length > 0);
-}, [loadingComponentList]);
+    setIsLoading(inLoadingState.length > 0);
+  }, [loadingComponentList]);
 
   useEffect(() => {
     // add data set of loading to document html
@@ -318,20 +318,21 @@ const Preloader = ({
               "relative"
             )}
           >
-              <div
-                className={twMerge(
-                  "flex flex-row gap-2 flex-nowrap",
-                  "uppercase element-counter-gsap",
-                  "font-sans font-black text-black-500 will-change-transform-animation",
-                  "text-[4.1rem] xxs:text-[6rem] md:text-[7.4rem] lg:text-[8.4rem] xl:text-[10rem] align-baseline leading-[70%]"
-                )}
-              >
-                <Percent
-                  isLoading={isLoading}
-                  setEndLoadingProgress={setEndLoadingProgress}
-                />
-                {t("loading.percent")}
-              </div>
+            <div
+              // largest contentful paint element - 10,950ms
+              className={twMerge(
+                "flex flex-row gap-2 flex-nowrap",
+                "uppercase element-counter-gsap",
+                "font-sans font-black text-black-500 will-change-transform-animation",
+                "text-[4.1rem] xxs:text-[6rem] md:text-[7.4rem] lg:text-[8.4rem] xl:text-[10rem] align-baseline leading-[70%]"
+              )}
+            >
+              <Percent
+                isLoading={isLoading}
+                setEndLoadingProgress={setEndLoadingProgress}
+              />
+              {t("loading.percent")}
+            </div>
           </div>
         </Container>
         <Noise />
@@ -348,72 +349,55 @@ const Percent = ({
   isLoading: boolean;
   setEndLoadingProgress: (b: boolean) => void;
 }) => {
+  const controls = useAnimation();
   const [percent, setPercent] = useState(INITIAL_PERCENT);
-
-  const [imgFirst, setImgFirst] = useState<string | null>(null);
-  const [imgSecond, setImgSecond] = useState<string | null>(null);
-  const [imgThird, setImgThird] = useState<string | null>(null);
 
   useEffect(() => {
     if (percent < END_LOADING_IN) {
-      const addSize = isLoading ? 1 : 2.5;
-      const updatePercent = () => {
-        const newPercent = Math.min(percent + addSize, END_LOADING_IN);
-        setPercent(newPercent);
-      };
-      const intervalTimeAtlease = (percent / END_LOADING_IN) * (MEDIUM_LOADING_TIME - 10);
-      const intervalTime = isLoading ? LONG_LOADING_TIME : MEDIUM_LOADING_TIME - intervalTimeAtlease;
-      
-      const percentString = percent.toFixed(0).toString().padStart(3, "0");
-      const [first, second, third] = percentString.split("");
-      if (!(first === "0" && second === "0" && third === "0") && imgThird !== third) {
-        setImgThird(third);
-      } 
-      if (!(second === "0" && first === "0") && imgSecond !== second) {
-        setImgSecond(second);
-      } 
-      if (!(first === "0") && imgFirst !== first) {
-        setImgFirst(first);
+      const increment = isLoading ? 1 : 2.5;
+      const newPercent = Math.floor(Math.min(percent + increment, END_LOADING_IN));
+      setPercent(newPercent);
+
+      controls.start({ opacity: 1, y: 0, transition: { duration: 0.5 } });
+
+      if (newPercent >= END_LOADING_IN) {
+        setEndLoadingProgress(true);
       }
-      const intervalId = setInterval(updatePercent, intervalTime);
-      return () => {
-        clearInterval(intervalId);
-      };
-    } else if (percent >= END_LOADING_IN) {
-      setEndLoadingProgress(true);
     }
-  }, [percent]);
+  }, [percent, isLoading, controls, setEndLoadingProgress]);
 
   return (
     <div className="flex flex-row gap-0 py-2 overflow-hidden">
       <AnimatePresence mode="popLayout">
-        
-        <Number num={imgFirst} order="1" key='1' />
-        <Number num={imgSecond} order="2" key='2' />
-        <Number num={imgThird} order="3" key='3' />
+        <Number num={percent.toString()}  />
       </AnimatePresence>
     </div>
   );
 };
 
-function Number({ num, order }: { num: string | null; order: string }) {
-  return num ? (
+function Number({ num }: {
+  num: string
+}) {
+  const controls = useAnimation();
+
+  useEffect(() => {
+    controls.start({
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.04 },
+    });
+  }, [num, controls]);
+
+  return (
     <motion.span
-      initial={{ y: 40 }}
-      animate={{ y: 0}}
-      exit={{ y: -100 }}
-      transition={{
-        delay: 0,
-        duration: 0.04
-      }}
-      key={`number-${order}-${num}`}
-      layout
-      layoutId={`number-${order}-${num}`}
+      initial={{ y: 40, opacity: 0 }}
+      animate={controls}
+      exit={{ y: -100, opacity: 0 }}
       className="flex relative items-center gap-1 will-change-transform-animation"
     >
-      <p className='w-auto md:w-20 lg:w-24 xl:w-28 flex flex-col align-middle text-end leading-3 will-change-transform-animation'>
+      <p className="w-auto flex flex-col align-middle text-end leading-3">
         {num}
       </p>
     </motion.span>
-  ) : null;
+  );
 }
