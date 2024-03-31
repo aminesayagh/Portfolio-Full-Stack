@@ -145,6 +145,7 @@ const Preloader = ({
   const [endLoadingProgress, setEndLoadingProgress] = useState(false);
 
   useIsomorphicLayoutEffect(() => {
+    
     let ctx = gsap.context(() => {
       const tl = gsap.timeline({
         repeat: -1,
