@@ -9,7 +9,7 @@ import {
 } from "react";
 import { useTranslation } from "next-i18next";
 import { twMerge } from "tailwind-merge";
-import { AnimatePresence, motion, useAnimation  } from "framer-motion";
+import { AnimatePresence, motion, useAnimation } from "framer-motion";
 
 import Container from "@/components/ui/container";
 import Title from "@/components/ui/typography/Title";
@@ -145,7 +145,6 @@ const Preloader = ({
   const [endLoadingProgress, setEndLoadingProgress] = useState(false);
 
   useIsomorphicLayoutEffect(() => {
-    
     let ctx = gsap.context(() => {
       const tl = gsap.timeline({
         repeat: -1,
@@ -318,7 +317,6 @@ const Preloader = ({
             )}
           >
             <div
-              // largest contentful paint element - 10,950ms
               className={twMerge(
                 "flex flex-row gap-2 flex-nowrap",
                 "uppercase element-counter-gsap",
@@ -330,7 +328,7 @@ const Preloader = ({
                 isLoading={isLoading}
                 setEndLoadingProgress={setEndLoadingProgress}
               />
-              {t("loading.percent")}
+              %
             </div>
           </div>
         </Container>
@@ -354,7 +352,9 @@ const Percent = ({
   useEffect(() => {
     if (percent < END_LOADING_IN) {
       const increment = isLoading ? 1 : 2.5;
-      const newPercent = Math.floor(Math.min(percent + increment, END_LOADING_IN));
+      const newPercent = Math.floor(
+        Math.min(percent + increment, END_LOADING_IN)
+      );
       setPercent(newPercent);
 
       controls.start({ opacity: 1, y: 0, transition: { duration: 0.5 } });
@@ -365,19 +365,6 @@ const Percent = ({
     }
   }, [percent, isLoading, controls, setEndLoadingProgress]);
 
-  return (
-    <div className="flex flex-row gap-0 py-2 overflow-hidden">
-      <AnimatePresence mode="popLayout">
-        <Number num={percent.toString()}  />
-      </AnimatePresence>
-    </div>
-  );
-};
-
-function Number({ num }: {
-  num: string
-}) {
-  const controls = useAnimation();
 
   useEffect(() => {
     controls.start({
@@ -385,18 +372,22 @@ function Number({ num }: {
       opacity: 1,
       transition: { duration: 0.04 },
     });
-  }, [num, controls]);
+  }, [percent, controls]);
 
   return (
-    <motion.span
-      initial={{ y: 40, opacity: 0 }}
-      animate={controls}
-      exit={{ y: -100, opacity: 0 }}
-      className="flex relative items-center gap-1 will-change-transform-animation"
-    >
-      <p className="w-auto flex flex-col align-middle text-end leading-3">
-        {num}
-      </p>
-    </motion.span>
+    <div className="flex flex-row gap-0 py-2 overflow-hidden">
+      <AnimatePresence mode="popLayout">
+        <motion.span
+          initial={{ y: 40, opacity: 0 }}
+          animate={controls}
+          exit={{ y: -100, opacity: 0 }}
+          className="flex relative items-center gap-1 will-change-transform-animation"
+        >
+          <p className="w-auto flex flex-col align-middle text-end leading-3">
+            {percent}
+          </p>
+        </motion.span>
+      </AnimatePresence>
+    </div>
   );
-}
+};

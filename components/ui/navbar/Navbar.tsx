@@ -21,8 +21,8 @@ const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props
     const [positionScroll, setPositionScroll] = useState<number>(0);
 
     useLenis(({ scroll }) => {
-        const progress = scroll.targetScroll;
-        setPositionScroll(progress);
+        if(typeof scroll == 'undefined' || scroll < 0) return;
+        setPositionScroll(scroll);
     });
 
     useIsomorphicLayoutEffect(() => {
