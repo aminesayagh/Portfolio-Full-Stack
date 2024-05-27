@@ -10,10 +10,12 @@ import { getProjectsByCategory } from '@/conf/projects';
 import { gsap, Power4 } from '@/utils/gsap';
 import { useIsomorphicLayoutEffect } from 'react-use';
 import { ScrollTrigger } from '@/utils/gsap';
+import { useLenis } from '@/lib/Lenis';
 
 const Case = ({ picture, index, id }: { picture?: string[], index: number, id: string }) => {
     const container = useRef<ElementRef<'div'>>(null);
     const { t } = useTranslation();
+    const lenis  = useLenis();
 
     useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -101,7 +103,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
         return () => {
             ctx.revert();
         }
-    }, [container, picture, index, id]);
+    }, [container, lenis, picture, index, id]);
 
     const zIndexContainer = useMemo(() => 10 + (index + 10), [index]);
     const zIndexImage = useMemo(() => 10 + (index + 11), [index]);
