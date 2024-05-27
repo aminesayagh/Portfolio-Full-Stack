@@ -6,12 +6,12 @@ function References() {
     useEffect(() => {
         // start a donwload file on the client side when the page is loaded
         const downloadFile = async () => {
-            const response = await fetch('/resume.pdf');
+            const response = await fetch('/Mohamed Amine SAYAGH - Full Stack Developer - RESUME.pdf');
             const blob = await response.blob();
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'resume.pdf';
+            a.download = 'Mohamed Amine SAYAGH - Full Stack Developer - RESUME.pdf';
             a.click();
             a.remove();
         }

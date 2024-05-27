@@ -24,13 +24,17 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
             }).to('.fixed-gsap' as any, {
                 ease: 'none',
             });
+
+            
+            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
             ScrollTrigger.create({
                 animation: tl2,
                 pin: true,
                 pinnedContainer: container.current as any,
                 trigger: container.current as any,
                 scrub: true,
-                pinType: 'fixed',
+                pinType: isTouchDevice ? undefined : 'fixed',
+                
                 start: 'top top',
                 end: index < 2 ? 'bottom top' : 'bottom bottom',
                 toggleActions: 'play pause reverse pause',
@@ -99,7 +103,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
         return () => {
             ctx.revert();
         }
-    }, [container.current, lenis, picture, index, id]);
+    }, [container, picture, index, id]);
 
     const zIndexContainer = useMemo(() => 10 + (index + 10), [index]);
     const zIndexImage = useMemo(() => 10 + (index + 11), [index]);
@@ -112,12 +116,12 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
     return <div data-scroll className={twMerge('relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden will-change-transform-animation')} ref={container} style={{
         zIndex: zIndexContainer,
     }} >
-        <div className='absolute fixed-gsap left-0 right-0 top-0 w-full h-screen'  >
-            <Image src={pic} alt={description} className='h-screen object-cover image-gsap' priority={false} loading="lazy" sizes='100vw' width='6000' height='4500' style={{
+        <div className='absolute top-0 left-0 right-0 w-full h-screen fixed-gsap'  >
+            <Image src={pic} alt={description} className='object-cover h-screen image-gsap' priority={false} loading="lazy" sizes='100vw' width='6000' height='4500' style={{
                 zIndex: zIndexImage,
             }} />
         </div>
-        <div className='absolute fixed-gsap top-0 left-0 right-0 w-full min-h-screen h-screen bg-no-repeat bg-cover' >
+        <div className='absolute top-0 left-0 right-0 w-full h-screen min-h-screen bg-no-repeat bg-cover fixed-gsap' >
             <div data-scroll data-scroll-speed='3' className={twMerge(
                 'relative w-fit flex flex-col justify-end h-full',
                 'px-5 xs:px-10 lg:px-24 py-32 xs:py-24 mdl:py-32',
@@ -132,7 +136,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
                         {title}
                     </Title>
                 </div>
-                <div className='w-full xs:w-8/12 md:w-1/2 hidden sm:block overflow-hidden'>
+                <div className='hidden w-full overflow-hidden xs:w-8/12 md:w-1/2 sm:block'>
                     <Text p size='md' degree='2' className='case-text-gsap will-change-transform-animation'>
                         {description}
                     </Text>
@@ -166,11 +170,11 @@ const CaseHeadMemo = React.memo(CaseHead);
 const Cases = () => {
     const projectsImported = useMemo(() => getProjectsByCategory('best'), []);
 
-    return <div className='flex flex-col gap-14 sm:gap-12 w-full h-fit'>
-        <div data-scroll className='flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2 sm:gap-12 w-full'>
+    return <div className='flex flex-col w-full gap-14 sm:gap-12 h-fit'>
+        <div data-scroll className='flex flex-col items-start justify-between w-full gap-2 sm:flex-row sm:items-end sm:gap-12'>
             <CaseHeadMemo />
         </div>
-        <div className='w-full flex flex-col gap-0 h-fit rounded-2xl overflow-hidden'>
+        <div className='flex flex-col w-full gap-0 overflow-hidden h-fit rounded-2xl'>
             {projectsImported.map((project, index) => <Case key={project.id} picture={project?.picture} index={index} id={project.id} />)}
         </div>
     </div>

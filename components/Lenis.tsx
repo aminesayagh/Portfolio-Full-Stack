@@ -20,7 +20,6 @@ function Lenis({ children }: { children: React.ReactElement }) {
       options={{
         smoothTouch: true,
         isSmooth: true,
-
         duration: 1.2,
         wheelMultiplier: 1.15,
         touchMultiplier: 1.9,
