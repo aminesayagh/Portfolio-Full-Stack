@@ -4,7 +4,7 @@ import useSafePush from '@/hook/SafePush';
 function References() {
     const push = useSafePush()
     useEffect(() => {
-        // start a donwload file on the client side when the page is loaded
+        // start a download file on the client side when the page is loaded
         const downloadFile = async () => {
             const response = await fetch('/Mohamed Amine SAYAGH - Full Stack Developer - RESUME.pdf');
             const blob = await response.blob();
