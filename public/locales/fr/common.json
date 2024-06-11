@@ -41,9 +41,9 @@
             "key": "DR",
             "name": "Dribbble"
         },
-        "behance": {
-            "key": "BH",
-            "name": "Behance"
+        "medium": {
+            "key": "MD",
+            "name": "Medium"
         }
     },
     "header": {
@@ -68,7 +68,10 @@
         "socialNetwork": {
             "instagram": "IN",
             "linkedin": "LI",
-            "github": "GH"
+            "github": "GH",
+            "dribbble": "DR",
+            "medium": "MD"
+            
         },
         "description": {
             "title": "Qui est derrière l'écran?",
@@ -76,7 +79,8 @@
         },
         "copyright": "© 2023 MOHAMED AMINE SAYAGH.",
         "action": "PARLONS-EN",
-        "home": "PAGE D'ACCUEIL"
+        "home": "PAGE D'ACCUEIL",
+        "project": "MY PROJECTS"
     },
     "intro": {
         "title": {
@@ -105,7 +109,7 @@
         "who_i_am": "Je m'appelle Mohamed Amine SAYAGH, développeur web indépendant et passionné, avec une profonde inclination pour la science et le design d'interfaces web. Doté d'un sens aigu du détail et d'une solide compréhension des principes centrés sur l'utilisateur, je repousse sans cesse les frontières du possible dans l'univers numérique.",
         "what_i_do": "Ma passion est de métamorphoser les idées en designs distinctifs, fonctionnels et résolvant des problèmes, qu'il s'agisse de produits numériques, de marques ou de sites web. Mon objectif est que chaque interaction numérique soit non seulement fonctionnelle, mais également agréable et marquante.",
         "goal": "Vous voulez en savoir plus sur moi?,",
-        "action": "dites simplement bonjour"
+        "action": "Découvrez mon Résumé"
     },
     "experience": {
         "title": "Évolution à travers l'expertise",

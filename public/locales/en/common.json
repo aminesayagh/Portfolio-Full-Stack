@@ -41,9 +41,9 @@
             "key": "DR",
             "name": "Dribbble"
         },
-        "behance": {
-            "key": "BH",
-            "name": "Behance"
+        "medium": {
+            "key": "MD",
+            "name": "Medium"
         }
     },
     "header": {
@@ -72,11 +72,12 @@
         },
         "description": {
             "title": "Who's Behind the Screen?",
-            "content": "Mohamed Amine Sayagh, an independent full-stack developer with expertise in UI/UX design. Crafting seamless web experiences for the next generation of customer-facing companies."
+            "content": "Mohamed Amine Sayagh, Drived by a passion for full stack web development, I dedicate my work to creating web solutions, specifically designed for branding identities. I thrive in kick starting and steering projects from concept to completion."
         },
         "copyright": "© 2023 MOHAMED AMINE SAYAGH.",
         "action": "LET'S TALK",
-        "home": "GO HOME"
+        "home": "GO HOME",
+        "project": "MY PROJECTS"
     },
     "intro": {
         "title": {
@@ -105,7 +106,7 @@
         "who_i_am": "My name is Mohamed Amine SAYAGH, A Passionate and independent web developer, deeply versed in science and of Web Design Interface, With a keen eye for detail and a growth understanding of user-centric design principles, I constantly push the boundaries of what's possible in the digital realm.",
         "what_i_do": "I love transforming everything by unique, problem solving and usable designs, whether it's about digital products, brands, website. I ensure that every digital interaction is not just functional, but also delightful and memorable.",
         "goal": "Want to know more about me?,",
-        "action": "just say hello"
+        "action": "Download Resume"
     },
     "manifesto_old": {
         "title_1": "Perspective",

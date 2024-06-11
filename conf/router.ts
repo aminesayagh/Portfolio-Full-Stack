@@ -15,7 +15,7 @@ interface MenuItem {
     menu: MenuType[];
 }
 
-type MenuItemNames = 'intro' | 'manifesto' | 'experience' | 'cases' | 'contact' | 'instagram' | 'linkedin' | 'github' | 'dribbble' | 'behance';
+type MenuItemNames = 'intro' | 'manifesto' | 'experience' | 'cases' | 'contact' | 'instagram' | 'linkedin' | 'github' | 'dribbble' | 'medium';
 
 type MenuItems = {
     [key in MenuItemNames]: MenuItem;
@@ -66,10 +66,10 @@ const MENU_ITEMS: MenuItems = {
         menu: ['socialNetworks'],
         id: 'dribbble'
     },
-    behance: {
-        link: 'https://www.behance.com/',
+    medium: {
+        link: 'https://medium.com/@masayagh',
         menu: ['socialNetworks'],
-        id: 'behance'
+        id: 'medium'
     }
 };
 

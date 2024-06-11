@@ -93,12 +93,12 @@ const Manifesto = () => {
     }, [i18n.language, phrase, t]);
     
 
-    return <div data-scroll data-scroll-sticky data-scroll-target="#manifesto" data-scroll-speed="4" className='h-fit py-20 xxs:py-28 md:py-32 2xl:py-40 relative' ref={refDescription} >
+    return <div data-scroll data-scroll-sticky data-scroll-target="#manifesto" data-scroll-speed="4" className='relative py-20 h-fit xxs:py-28 md:py-32 2xl:py-40' ref={refDescription} >
         <div className={twMerge(`grid grid-cols-12 gap-y-8 xxs:gap-y-12 xs:gap-y-8 mdl:gap-y-12`, 'h-fit strick')}>
             <div className={twMerge('flex flex-col gap-6 xs:gap-7 items-start justify-start manifesto_quote_gsap will-change-transform-animation',
                 'col-start-1 col-span-12 xs:col-start-2 xs:col-span-11 md:col-start-2 md:col-span-10 mdl:col-start-2 mdl:col-span-10 xl:col-start-2 xl:col-span-9',
             )}>
-                <div className='flex flex-row gap-5 justify-center items-center'>
+                <div className='flex flex-row items-center justify-center gap-5'>
                     <Title h6 degree='4' weight='medium' >
                         {t(`manifesto.subtitle_1`)}
                     </Title>
@@ -113,7 +113,7 @@ const Manifesto = () => {
                         'gap-y-[0.01rem] xxs:gap-y-[0.04rem] gap-x-[0.06rem] sm:gap-y-[0.07rem] sm:gap-x-[0.1rem] mdl:gap-y-[0.08rem] mdl:gap-x-[0.16rem] lg:gap-y-[0.15rem] lg:gap-x-[0.23rem]' :
                         'gap-y-[0rem] xxs:gap-y-[0.03rem] gap-x-[0.06rem] sm:gap-y-[0.06rem] sm:gap-x-[0.1rem] mdl:gap-y-[0.07rem] mdl:gap-x-[0.16rem] lg:gap-y-[0.13rem] lg:gap-x-[0.23rem]'
                 )}>
-                    <strong className='text-white-200 pr-2'>
+                    <strong className='pr-2 text-white-200'>
                         {t(`manifesto.slogan`)}
                     </strong>
                     <Phrase text={phrase} lang={i18n.language} refDescription={refDescription} />
@@ -138,13 +138,13 @@ const Manifesto = () => {
                         className='mt-[1.6%] 3xl:mt-[3%]'
                     >
                         <Text p degree='3' size='xl' weight='semibold'
-                            className='textLink inline w-full whitespace-inherit-important manifesto_description_action_gsap will-change-transform-animation' style={{
+                            className='inline w-full textLink whitespace-inherit-important manifesto_description_action_gsap will-change-transform-animation' style={{
                                 WebkitLineClamp: 2,
                                 WebkitBoxOrient: 'vertical',
                                 overflow: 'hidden',
                             }} >
                             {t(`manifesto.goal`)}
-                            <Link degree='2' href='/contact' className='ml-2 text-primary-500 hover:text-primary-400/70 hover:underline transition-all duration-300' weight='bold' >
+                            <Link degree='2' href='/resume' className='ml-1 transition-all duration-300 text-primary-500 hover:text-primary-400/70 hover:underline' weight='bold' >
                                 {t(`manifesto.action`)}
                             </Link>
                             .
