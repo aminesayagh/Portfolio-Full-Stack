@@ -67,7 +67,7 @@ export function LoadingProvider({
     if (html) {
       html.dataset.is_loading = (!endLoading).toString();
     }
-  }, [endLoading]);
+  }, [endLoading, loadingComponentList]);
 
   const addLoadingComponent = useCallback(
     (key: string) => {
@@ -103,7 +103,7 @@ export function LoadingProvider({
     return () => {
       clearTimeout(timer);
     };
-  }, []);
+  }, [loadingComponentList]);
 
   useEffect(() => {
     addLoadingComponent(LOADING_KEY);

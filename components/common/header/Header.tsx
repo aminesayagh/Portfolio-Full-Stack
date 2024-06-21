@@ -195,7 +195,7 @@ const Header = () => {
         lenis?.scrollTo && lenis?.scrollTo(`#${id}`);
       }
     },
-    [lenis]
+    [lenis, safePush]
   );
 
   const onButtonClick = useCallback(

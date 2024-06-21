@@ -18,7 +18,7 @@ function References() {
         downloadFile().then(() => {
             push.safePush('/');
         });
-    }, []);
+    }, [push]);
     return <div className='h-screen'></div>
 }
 

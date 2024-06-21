@@ -27,7 +27,7 @@ const Layer = ({ children }: {
                 clearTimeout(timer);
             }
         }
-    }, [i18n.language]);
+    }, [i18n.language, endLoading]);
 
     return <Cursor >
         <HeaderDynamic />
