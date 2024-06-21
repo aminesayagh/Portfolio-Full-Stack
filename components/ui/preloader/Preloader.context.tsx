@@ -107,11 +107,11 @@ export function LoadingProvider({
 
   useEffect(() => {
     addLoadingComponent(LOADING_KEY);
-
+  
     return () => {
       removeLoadingComponent(LOADING_KEY);
     };
-  }, [asPath]);
+  }, [asPath, addLoadingComponent, removeLoadingComponent]);
   return (
     <LoadingContext.Provider
       value={{
@@ -282,7 +282,7 @@ const Preloader = ({
           )}
         >
           <div className="flex flex-col gap-0 sm:gap-1">
-            <span className="py-1 element-content-gsap text-loader-gsap invisible">
+            <span className="invisible py-1 element-content-gsap text-loader-gsap">
               {
                 <Title h6 degree="4" exchange suppressHydrationWarning>
                   {t("loading.intro")}
@@ -334,7 +334,7 @@ const Preloader = ({
         </Container>
         <Noise />
       </div>
-      <div className="fixed bg-primary-500 w-screen h-screen element-bg z-preload_bg"></div>
+      <div className="fixed w-screen h-screen bg-primary-500 element-bg z-preload_bg"></div>
     </span>
   );
 };
@@ -381,9 +381,9 @@ const Percent = ({
           initial={{ y: 40, opacity: 0 }}
           animate={controls}
           exit={{ y: -100, opacity: 0 }}
-          className="flex relative items-center gap-1 will-change-transform-animation"
+          className="relative flex items-center gap-1 will-change-transform-animation"
         >
-          <p className="w-auto flex flex-col align-middle text-end leading-3">
+          <p className="flex flex-col w-auto leading-3 align-middle text-end">
             {percent}
           </p>
         </motion.span>

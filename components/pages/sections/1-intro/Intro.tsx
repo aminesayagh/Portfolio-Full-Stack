@@ -153,19 +153,19 @@ function useFitText(options?: { factor?: number; maxFontSize?: number }) {
   const [fontSize, setFontSize] = useState("initial");
   const ref = useRef<ElementRef<"div">>(null);
 
+  const optionsString = JSON.stringify(options);
   const adjustFontSize = useCallback(() => {
-    if (ref.current) {
-      const containerWidth = ref.current.getBoundingClientRect().width;
-      const factor = options?.factor || 1;
-      const newSize = containerWidth / factor;
-
-      setFontSize(() => `${newSize}px`);
-    }
-  }, [ref, JSON.stringify(options), setFontSize]);
+    if (!ref.current) return;
+    const containerWidth = ref.current.getBoundingClientRect().width;
+    const factor = options?.factor || 1;
+    const newSize = containerWidth / factor;
+  
+    setFontSize(() => `${newSize}px`);
+  }, [ref, setFontSize, options?.factor]);
 
   useEffect(() => {
     adjustFontSize();
-  }, [JSON.stringify(options), adjustFontSize]);
+  }, [optionsString, adjustFontSize]);
   useEventListener("resize", adjustFontSize);
   useEventListener("resize", adjustFontSize, ref);
   useIsomorphicLayoutEffect(adjustFontSize, [ref]);
@@ -173,11 +173,7 @@ function useFitText(options?: { factor?: number; maxFontSize?: number }) {
   return { fontSize, ref };
 }
 
-const Title = ({
-    goToCases
-}: {
-    goToCases: any;
-}) => {
+const Title = ({ goToCases }: { goToCases: any }) => {
   const { t, i18n } = useTranslation();
   const { fontSize: fontSizeInterface, ref: widthInterfaceRef } = useFitText({
     factor: 4.94,
@@ -499,7 +495,7 @@ const Intro = () => {
   const introRef = useRef<ElementRef<"div">>(null);
   const { endLoading } = usePreloader();
   const lenis = useLenis();
-  
+
   const goToCases = useCallback(() => {
     lenis?.scrollTo && lenis?.scrollTo("#cases");
   }, [lenis]);

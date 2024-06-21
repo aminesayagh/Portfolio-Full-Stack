@@ -18,7 +18,7 @@ const montserrat = Montserrat({
 function App({ Component, pageProps }: AppProps) {
 
   // Use useMemo to memorize the font variable
-  const font = useMemo(() => montserrat.variable, [montserrat]);
+  const font = useMemo(() => montserrat.variable, []);
   // const className = montserrat.className;
   const [isReadyFont, setIsReadyFont] = useState(false);
 

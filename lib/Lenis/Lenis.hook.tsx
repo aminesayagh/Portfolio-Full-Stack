@@ -15,14 +15,14 @@ export function useLenis(callback?: (lenis: LenisInstance) => void, deps = [], p
     
     useEffect(() => {
         if(!callback || !addCallback || !removeCallback || !lenis) return;
-
+    
         addCallback(callback, priority);
         callback(lenis);
-
+    
         return () => {
             removeCallback(callback);
         }
-    }, [lenis, addCallback, removeCallback, priority, callback, ...deps]);
+    }, [lenis, addCallback, removeCallback, priority, callback, deps]);
 
     return lenis;
 }
