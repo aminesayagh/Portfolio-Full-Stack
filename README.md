@@ -8,16 +8,6 @@ Welcome to my portfolio repository. This project showcases my skills and project
 - [Overview](#overview)
 - [Project Structure](#project-structure)
   - [Components](#components)
-  - [Configuration](#configuration)
-  - [Helpers](#helpers)
-  - [Hooks](#hooks)
-  - [Library](#library)
-  - [Pages](#pages)
-  - [Styles](#styles)
-  - [Utilities](#utilities)
-- [Setup and Installation](#setup-and-installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Overview
@@ -111,4 +101,8 @@ components/
         ├── Typography.style.ts
         └── Typography.type.ts
 ```
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for more information.
 
