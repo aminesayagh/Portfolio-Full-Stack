@@ -12,12 +12,14 @@ import { twMerge } from 'tailwind-merge';
 import { useFrame } from '@studio-freight/hamo'
 import useResizeObserver from 'use-resize-observer';
 
+// LenisContextValue is a type that represents the value of the Lenis context.
 interface LenisContextValue {
     lenis: LenisInstance | undefined;
     addCallback: (callback: CallbackFunction, priority: number) => void;
     removeCallback: (callback: CallbackFunction) => void;
 }
 
+// ReactLenisOptions is a type that represents the options that can be passed to the Lenis instance.
 interface ReactLenisOptions {
     wrapper?: Window | HTMLElement;
     content?: HTMLElement;
@@ -44,9 +46,8 @@ interface ReactLenisOptions {
     direction?: "vertical" | "horizontal";
     gestureDirection?: "vertical" | "horizontal" | "both";
 }
-// type ScrollTo = (target: string | number | HTMLElement, options: ScrollToParams) => void;
-export type LenisInstance = Lenis;
 
+export type LenisInstance = Lenis; // This is a placeholder for the actual Lenis instance type.
 type CallbackFunction = (instance: LenisInstance) => void;
 
 interface LenisProviderProps {
@@ -58,53 +59,75 @@ interface LenisProviderProps {
     children?: ReactElement;
 }
 
+// Create the context for Lenis
 export const LenisContext = createContext<LenisContextValue | undefined>(undefined);
+
+// Zustand store for managing the Lenis instance and callbacks.
 export const useRoot = create<LenisContextValue>(() => ({
     lenis: undefined,
     addCallback: () => { },
     removeCallback: () => { },
 }));
 
+/**
+ * Provides the Lenis context for managing Lenis instances and callbacks.
+ * 
+ * @remarks
+ * This component is responsible for creating and managing the Lenis instance, as well as handling callbacks and resizing.
+ * 
+ * @param children - The child components to be rendered within the Lenis context.
+ * @param root - Specifies whether this is the root Lenis provider.
+ * @param options - Additional options for configuring the Lenis instance.
+ * @param autoRaf - Specifies whether to automatically call the `raf` method on each frame.
+ * @param rafPriority - The priority of the RAF callback.
+ * @param className - The CSS class name to be applied to the wrapper element.
+ * @param props - Additional props to be spread onto the wrapper element.
+ * @param ref - A ref to the Lenis instance.
+ * @returns The Lenis context provider component.
+ */
 const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(({ children, root = false, options = {}, autoRaf = true, rafPriority = 0, className, ...props }, ref) => {
+    // Create refs for the wrapper and content elements.
     const wrapper = useRef<ElementRef<'div'>>(null);
     const content = useRef<ElementRef<'div'>>(null);
     const { i18n } = useTranslation();
 
+    // Create state for the Lenis instance.
     const [lenis, setLenis] = useState<Lenis>();
 
+    // Create a debounced value for the container width and height.
     const { width: widthContainer, height: heightContainer } = useResizeObserver<HTMLDivElement>({ ref: content });
 
-    
+    // Create a debounced value for the container width and height.
     const width = useDebounce(widthContainer, 30);
     const height = useDebounce(heightContainer, 30);
 
+    // Create a function to refresh the Lenis instance.
     const refresh = useCallback(() => {
         lenis?.resize();
         ScrollTrigger.clearScrollMemory();
-        window.history.scrollRestoration = 'manual';
-        ScrollTrigger.refresh();
-    }, [lenis]);
+        window.history.scrollRestoration = 'manual'; // Disable scroll restoration to prevent scroll jumps.
+        ScrollTrigger.refresh(); // Refresh the ScrollTrigger plugin.
+    }, [lenis]); // Refresh the Lenis instance.
 
     useEffect(() => {
         if (lenis) {
             refresh();
         }
-    }, [lenis, width, height, i18n.language, refresh]);
+    }, [lenis, width, height, i18n.language, refresh]); // Refresh the Lenis instance when the width, height, or language changes.
 
-
-
-    const callbacks = useRef<{ callback: CallbackFunction, priority: number }[]>([]);
+    // Create a ref for the callbacks used for scroll events.
+    const callbacks = useRef<{ callback: CallbackFunction, priority: number }[]>([]); // Create a ref for the callbacks.
 
     const addCallback = useCallback((callback: CallbackFunction, priority: number) => {
-        callbacks.current.push({ callback, priority });
-        callbacks.current.sort((a, b) => a.priority - b.priority);
+        callbacks.current.push({ callback, priority }); // Add the callback to the list of callbacks.
+        callbacks.current.sort((a, b) => a.priority - b.priority); // Sort the callbacks by priority.
     }, []);
 
     const removeCallback = useCallback((callback: CallbackFunction) => {
-        callbacks.current = callbacks.current.filter((cb) => cb.callback !== callback);
+        callbacks.current = callbacks.current.filter((cb) => cb.callback !== callback); // Remove the callback from the list of callbacks.
     }, []);
 
-    useImperativeHandle(ref, () => lenis, [lenis]);
+    useImperativeHandle(ref, () => lenis, [lenis]); // Expose the Lenis instance via the ref.
 
     useResizeObserver<HTMLDivElement>({ ref: content });
 

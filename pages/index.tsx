@@ -4,15 +4,11 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import "@/utils/gsap";
 import Lenis from "@/components/Lenis";
 
-import dynamic from "next/dynamic";
 
 import nextI18NextConfig from "../next-i18next.config.js";
 import { useTranslation } from "next-i18next";
+import LandingPage from "@/components/pages/LandingPage";
 
-const DynamicLandingPage = dynamic(
-  () => import("@/components/pages/LandingPage"),
-  {}
-);
 import Layer from "@/components/common/layer";
 
 export default function Home() {
@@ -29,7 +25,7 @@ export default function Home() {
       />
       <Lenis>
         <Layer>
-          <DynamicLandingPage />
+          <LandingPage />
           <Noise />
         </Layer>
       </Lenis>

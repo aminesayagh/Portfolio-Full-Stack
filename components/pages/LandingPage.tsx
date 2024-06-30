@@ -2,13 +2,15 @@ import Container from '@/components/ui/container';
 import React from 'react';
 
 
-import Intro from './sections/1-intro';
-import Manifesto from './sections/2-manifesto';
-import Video from './sections/video';
-import Expertise from './sections/3-expertise';
-import CallToAction from './sections/3_1-action';
-import Cases from './sections/4-cases';
-import Action from './sections/5-action';
+import dynamic from 'next/dynamic';
+
+const Intro = dynamic(() => import('./sections/1-intro'));
+const Manifesto = dynamic(() => import('./sections/2-manifesto'));
+const Video = dynamic(() => import('./sections/video'));
+const Expertise = dynamic(() => import('./sections/3-expertise'));
+const CallToAction = dynamic(() => import('./sections/3_1-action'));
+const Cases = dynamic(() => import('./sections/4-cases'));
+const Action = dynamic(() => import('./sections/5-action'));
 
 import { Suspense } from 'react';
 
@@ -38,7 +40,7 @@ const LandingPage = () => (<>
     <Container data-scroll-section as='section' size='lg' id='action-contact' >
         <Action />
     </Container>
-    <div data-scroll-section className='block h-6 xs:h-12 w-full'></div>
+    <div data-scroll-section className='block w-full h-6 xs:h-12'></div>
 </>);
 
 export default LandingPage;
