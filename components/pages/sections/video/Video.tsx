@@ -94,14 +94,19 @@ const Video = () => {
         onUpdate: render,
       });
 
-      imagesRef.current[0].onload = render;
+      const current =  imagesRef.current;
+      if (!current) return;
+      current[0] && (current[0]['onload'] = render);
 
       function render() {
         if (!imagesRef.current.length) return;
         if (!context) return;
         if (!ref.current) return;
         context?.clearRect(0, 0, ref.current.width, ref.current.height);
-        context?.drawImage(imagesRef.current[hands.frame], 0, 0);
+        const frame = hands.frame;
+        const image = imagesRef.current[frame];
+        if (!image) return;
+        context?.drawImage(image, 0, 0);
       }
     }, refContainer);
     return () => {

@@ -36,32 +36,35 @@ type ContactSubject = typeof CONTACT_SUBJECTS[keyof typeof CONTACT_SUBJECTS];
 const contactSubjectValues = Object.values(CONTACT_SUBJECTS);
 // const contactSubjectKeys = Object.keys(CONTACT_SUBJECTS);
 
-const contactSubjectItems = [
+const contactSubjectItems: {
+    key: string;
+    text: ContactSubject
+}[] = [
     {
         key: "1",
-        text: contactSubjectValues[0]
+        text: contactSubjectValues[0] as ContactSubject
     },
     {
         key: '2',
-        text: contactSubjectValues[1]
+        text: contactSubjectValues[1] as ContactSubject
     },
     {
         key: '3',
-        text: contactSubjectValues[2]
+        text: contactSubjectValues[2] as ContactSubject
     },
     {
         key: '4',
-        text: contactSubjectValues[3]
+        text: contactSubjectValues[3] as ContactSubject
     },
     {
         key: '5',
-        text: contactSubjectValues[4]
+        text: contactSubjectValues[4] as ContactSubject
     },
     {
         key: '6',
-        text: contactSubjectValues[5]
+        text: contactSubjectValues[5] as ContactSubject
     },
-]
+];
 
 type TypeFormContact = {
     firstName: string;
@@ -174,15 +177,15 @@ const AgencyList = () => {
     return <ul className={twMerge('flex flex-col gap-0', 'border-b border-gray-800/60')}>
         {projects.map((project, index) => (<li key={index} className={twMerge('flex flex-col md:flex-row gap-8 md:gap-4 py-10', 'items-start', 'border-t border-gray-800/60')}>
             <div className={twMerge('flex flex-row gap-12 items-start justify-between w-full md:w-5/12 2xl:w-1/2')}>
-                <Title h6 weight='semibold' degree='1' className='uppercase tracking-wider opacity-80' >
+                <Title h6 weight='semibold' degree='1' className='tracking-wider uppercase opacity-80' >
                     {t(`projects.${project.id}.title`)}
                 </Title>
-                <Text p size='sm' weight='bold' degree='1' className='block md:hidden tracking-wider opacity-80'>
+                <Text p size='sm' weight='bold' degree='1' className='block tracking-wider md:hidden opacity-80'>
                     {t(`country.${project.country}`)}
                 </Text>
             </div>
             <div className={twMerge('w-full xxs:w-10/12 md:w-7/12 2xl:w-1/2', 'flex flex-col gap-5')}>
-                <Text p size='sm' weight='bold' degree='1' className='hidden md:block tracking-wider opacity-80'>
+                <Text p size='sm' weight='bold' degree='1' className='hidden tracking-wider md:block opacity-80'>
                     {t(`country.${project.country}`)}
                 </Text>
                 <Text p size='sm' weight='medium' degree='2'>
@@ -261,7 +264,7 @@ const ContactPage = () => {
                         'mdl:col-start-1 mdl:col-span-2',
                         'row-start-1 row-span-1'
                     )}>
-                        <Text p weight='medium' size='sm' degree='2' className='text-start uppercase' >
+                        <Text p weight='medium' size='sm' degree='2' className='uppercase text-start' >
                             {t('contact.subtitle')}
                         </Text>
                         <hr className='relative h-[2px] w-4 bg-gray-200' />
@@ -313,7 +316,7 @@ const ContactPage = () => {
                         'col-start-1 col-span-12',
                         'sm:col-start-1 sm:col-span-2'
                     )}>
-                        <Text p weight='medium' size='sm' degree='2' className='text-start uppercase' >
+                        <Text p weight='medium' size='sm' degree='2' className='uppercase text-start' >
                             {t('contact.reppedBy')}
                         </Text>
                         <hr className='relative h-[2px] w-4 bg-gray-200' />

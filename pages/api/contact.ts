@@ -1,7 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Client } from '@notionhq/client';
-const notion = new Client({ auth: process.env.NOTION_API_KEY });
+import { NOTION_API_KEY, NOTION_DATABASE_ID } from 'utils/env';
+const notion = new Client({ auth: NOTION_API_KEY });
 type Data = {
   status: 'success',
 } | {
@@ -9,7 +10,7 @@ type Data = {
   message: string
 }
 
-const databaseId = process.env.NOTION_DATABASE_ID || '';
+const databaseId = NOTION_DATABASE_ID || '';
 
 
 export default async function handler(

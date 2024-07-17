@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import {
   createContext,
   useState,
@@ -18,7 +19,6 @@ import Noise from "@/components/ui/noise";
 
 import { gsap } from "@/utils/gsap";
 import { useIsomorphicLayoutEffect } from "react-use";
-import { useRouter } from "next/router";
 
 // config:
 const END_LOADING_IN = 99;
@@ -65,7 +65,7 @@ export function LoadingProvider({
     // add data set of loading to document html
     const html = document.querySelector("html");
     if (html) {
-      html.dataset.is_loading = (!endLoading).toString();
+      html.dataset['is_loading'] = (!endLoading).toString();
     }
   }, [endLoading, loadingComponentList]);
 
@@ -145,7 +145,7 @@ const Preloader = ({
   const [endLoadingProgress, setEndLoadingProgress] = useState(false);
 
   useIsomorphicLayoutEffect(() => {
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         repeat: -1,
         paused: true,
@@ -176,7 +176,7 @@ const Preloader = ({
   }, [ref, fontReady]);
 
   useIsomorphicLayoutEffect(() => {
-    let ctx = gsap.context((self) => {
+    const ctx = gsap.context((self) => {
       const skew = 2;
       const tl = gsap
         .timeline({
@@ -231,13 +231,13 @@ const Preloader = ({
       };
     }, ref);
     if (endLoadingProgress) {
-      ctx.endPreload();
+      ctx["endPreload"]();
     }
     return () => ctx.revert();
   }, [ref, isLoading, setEndLoading, endLoadingProgress]);
 
   useIsomorphicLayoutEffect(() => {
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
       const tl = gsap
         .timeline({
           paused: true,

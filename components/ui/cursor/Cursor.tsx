@@ -196,17 +196,23 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
     }, [ref])
 
     const mouseEnterHandler = useCallback(() => {
-        ctxMouseMove.current?.opacityTo(1);
+        const current = ctxMouseMove.current;
+        if (!current) return;
+        current['opacityTo'](1);
     }, [ctxMouseMove]);
     const mouseLeaveHandler = useCallback(() => {
-        ctxMouseMove.current?.opacityTo(0);
+        const current = ctxMouseMove.current;
+        if (!current) return;
+        current['opacityTo'](0);
     }, [ctxMouseMove]);
     const mouseMoveHandler = useCallback((e: MouseEvent) => {
-        ctxMouseMove.current?.xTo(e.clientX);
-        ctxMouseMove.current?.yTo(e.clientY);
+        const current = ctxMouseMove.current;
+        if (!current) return;
+        current['xTo'](e.clientX);
+        current['yTo'](e.clientY);
 
-        ctxMouseMove.current?.xToSecondary(e.clientX);
-        ctxMouseMove.current?.yToSecondary(e.clientY);
+        current['xToSecondary'](e.clientX);
+        current['yToSecondary'](e.clientY);
     }, [ctxMouseMove]);
     useEventListener('mouseenter', mouseEnterHandler, ref);
     useEventListener('mouseleave', mouseLeaveHandler, ref);
@@ -221,7 +227,7 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
             <cursorContext.Provider value={{
                 addCursor, setKey
             }}>
-                <div className='cursor_container relative' >
+                <div className='relative cursor_container' >
                     {children}
                 </div>
                 <div className={twMerge(

@@ -1,6 +1,6 @@
 import { VariantProps } from 'class-variance-authority';
-import React from 'react';
 import { LinkProps } from 'next/link';
+import React from 'react';
 
 import { titleStyle, textStyle, displayStyle } from './Typography.style';
 

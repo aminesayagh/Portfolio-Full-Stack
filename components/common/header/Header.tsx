@@ -44,7 +44,7 @@ const Header = () => {
   const lenis = useLenis();
 
   const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
-  const ctx = useRef<any>(null);
+  const ctx = useRef<gsap.Context>();
 
   useIsomorphicLayoutEffect(() => {
     ctx.current = gsap.context((self) => {
@@ -135,14 +135,18 @@ const Header = () => {
       });
       self.add("close", () => {
         tl.current.reverse().then(() => {
+          const current = ctx.current;
+          if (!current) return;
           setOpenMenu(false);
-          ctx.current.revert(); // revert timeline to the beginning
+          current.revert(); // revert timeline to the beginning
         });
       });
     });
     return () => {
-      ctx.current.revert();
-      tl.current.kill();
+      const currentCtx = ctx.current;
+      const currentTl = tl.current;
+      if (currentCtx) currentCtx.revert();
+      if (currentTl) currentTl.kill
     };
   }, []);
   useIsomorphicLayoutEffect(() => {
@@ -170,6 +174,7 @@ const Header = () => {
           tl.kill();
         };
       }
+      return null;
     });
     return () => ctx.revert();
   }, [endLoading]);
@@ -177,12 +182,16 @@ const Header = () => {
     if (!openMenu) {
       setOpenMenu(true);
     } else {
-      ctx.current.close();
+      const current = ctx.current;
+      if (current) {
+        current['close']();
+      }
     }
   }, [openMenu, ctx]);
   useEffect(() => {
     if (openMenu) {
-      ctx.current.open();
+      const current = ctx.current;
+      if (current) current['open']();  
     }
   }, [openMenu]);
 

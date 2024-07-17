@@ -1,7 +1,7 @@
 
 import { useContext, useEffect } from 'react';
-import { LenisContext, LenisInstance } from './Lenis.context';
-import { useRoot } from './Lenis.context';
+
+import { LenisContext, LenisInstance, useRoot } from './Lenis.context';
 
 function useCurrentLenis() {
     const local = useContext(LenisContext);

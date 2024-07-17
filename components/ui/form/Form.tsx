@@ -51,7 +51,7 @@ const LayoutField = ({ label, className, icon, name, children, width, ...props }
 
     return <>
         <TextField className={twJoin(Style['text-field'], 'flex flex-col', width ? width : 'col-span-12', className ? className : 'w-full')} {...props}>
-            <div className='w-full flex flex-col gap-2'>
+            <div className='flex flex-col w-full gap-2'>
                 <Label className={twJoin(Style['label'])} htmlFor={name} suppressHydrationWarning>{label}</Label>
                 {childrenWithProps}
             </div>
@@ -100,7 +100,7 @@ const SelectUi = <T extends {}>({ label, name, children, items, ...props }: { it
 
 const ItemUi = ({ className, ...props }: ItemProps) => {
     return (
-        <Item className={mergeClassName(Style['item'], className)} {...props} />
+        <Item className={mergeClassName(Style['item'] as string, className)} {...props} />
     )
 }
 

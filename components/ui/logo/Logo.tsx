@@ -1,7 +1,7 @@
 import Link, { LinkProps } from 'next/link';
 
-import Image from '@/components/ui/image';
 import { twMerge } from 'tailwind-merge';
+import Image from '@/components/ui/image';
 
 interface LogoProps extends Omit<LinkProps, 'size' | 'degree' | 'children'> {
     alt: string;

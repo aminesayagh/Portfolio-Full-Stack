@@ -1,6 +1,12 @@
 
 import { cva } from 'class-variance-authority';
 
+
+import Style from './Typography.module.scss';
+
+import { TextPropsType } from './Typography.type';
+import { twMerge } from 'tailwind-merge';
+
 const textDefault = 'inline-block align-middle';
 const fontFamilyTitle = 'font-sans';
 const fontFamilyText = 'font-sans';
@@ -60,9 +66,6 @@ export const textStyle = cva([textDefault, fontFamilyText], {
         weight: 'medium',
     }
 })
-import { TextPropsType } from './Typography.type';
-import { twMerge } from 'tailwind-merge';
-import Style from './Typography.module.scss';
 
 export const textClassNames = ({ weight, size, degree, exchange }: TextPropsType) => {
     return twMerge(

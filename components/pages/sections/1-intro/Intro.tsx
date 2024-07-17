@@ -62,16 +62,17 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
       });
       return () => ctx.current?.revert();
     }
+    return () => {};
   }, [ref]);
   const handleMouseEnter = useCallback(
     (e: MouseEvent) => {
-      ctx.current && ctx.current?.mouseMove(e);
+      ctx.current && ctx.current['mouseMove'](e);
     },
     [ctx]
   );
   const handleMouseLeave = useCallback(
     (e: MouseEvent) => {
-      ctx.current && ctx.current?.mouseLeave(e);
+      ctx.current && ctx.current['mouseLeave'](e);
     },
     [ctx]
   );
@@ -516,7 +517,7 @@ const Intro = () => {
             amount: 0.4,
           },
           onComplete: function () {
-            this.targets().forEach((el: any) => {
+            this['targets']().forEach((el: any) => {
               el.style.willChange = "";
             });
           },
@@ -588,6 +589,10 @@ const Intro = () => {
           tl?.kill();
         };
       }
+      return () => {
+        tl?.pause();
+        tl?.progress(0);
+      };
     },
     introRef,
     [endLoading]

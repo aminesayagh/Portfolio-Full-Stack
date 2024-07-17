@@ -86,18 +86,20 @@ const FollowUs = () => {
     };
   }, [ref, menuSocialNetworks.length]);
   const handler = useCallback(() => {
-    ctx.current?.followButtonShow();
+    if (!ctx.current) return;
+    ctx.current['followButtonShow']();
   }, [ctx]);
   const handlerLeave = useCallback(() => {
-    ctx.current?.followButtonHide();
+    if (!ctx.current) return;
+    ctx.current['followButtonHide']();
   }, [ctx]);
   useEventListener("mouseenter", handler, ref);
   useEventListener("mouseleave", handlerLeave, ref);
 
   const { t } = useTranslation();
   return (
-    <div ref={ref} className="flex flex-row justify-end items-center gap-4">
-      <ul className="flex flex-row gap-8 items-center">
+    <div ref={ref} className="flex flex-row items-center justify-end gap-4">
+      <ul className="flex flex-row items-center gap-8">
         {menuSocialNetworks.map((item, index) => (
           <li key={index} className="overflow-hidden list-none">
             <Link
@@ -112,7 +114,7 @@ const FollowUs = () => {
           </li>
         ))}
       </ul>
-      <span className="overflow-hidden flex">
+      <span className="flex overflow-hidden">
         <Text
           p
           className="fallow-button-gsap whitespace-nowrap-important"
@@ -176,7 +178,7 @@ const TextAnimated = ({
     setBody(null);
     const splitWords = _.map(phrase.split(" "), (word, index) => {
       return (
-        <div key={index} className="overflow-y-animate py-px">
+        <div key={index} className="py-px overflow-y-animate">
           <div
             ref={(ref) => {
               if (!ref) return;
@@ -299,10 +301,12 @@ const GoToTop = ({ handler, text }: { handler: () => void; text: string }) => {
   }, [ref]);
 
   const handlerMouse = useCallback(() => {
-    ctx.current?.handlerGoToTop();
+    if (!ctx.current) return;
+    ctx.current["handlerGoToTop"]();
   }, [ctx]);
   const handlerMouseLeave = useCallback(() => {
-    ctx.current?.handlerGoToTopLeave();
+    if (!ctx.current) return;
+    ctx.current["handlerGoToTopLeave"]();
   }, [ctx]);
 
   useEventListener("mouseenter", handlerMouse, ref);
@@ -358,7 +362,7 @@ const Footer = () => {
           degree="3"
           weight="medium"
           size="md"
-          className="uppercase max-w-xs justify-start gap-x-2"
+          className="justify-start max-w-xs uppercase gap-x-2"
           phrase={t("footer.state")}
         />
       </div>
@@ -372,7 +376,7 @@ const Footer = () => {
         <div className={twMerge("flex flex-row flex-1", "order-2 sm:order-1")}>
           <GoToTopMemo handler={goToTop} text={t("footer.action")} />
         </div>
-        <div className="flex flex-row flex-none grow-0 justify-start sm:justify-center items-center  order-1 sm:order-2">
+        <div className="flex flex-row items-center justify-start flex-none order-1 grow-0 sm:justify-center sm:order-2">
           <Text p degree="3" weight="semibold" size="sm" className="uppercase">
             {t("footer.name")}
           </Text>
@@ -386,7 +390,7 @@ const Footer = () => {
             {t("footer.copy")}
           </Text>
         </div>
-        <div className="order-3 flex-1">
+        <div className="flex-1 order-3">
           <FollowUs />
         </div>
       </div>

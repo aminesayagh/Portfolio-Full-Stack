@@ -77,6 +77,7 @@ const Phrase = ({ text, lang, refDescription }: { text: string, lang: string, re
                 tl.kill();
             }
         }
+        return () => null; 
     }, refDescription, [body?.length, text, lang]);
 
     return body ? body.map((word, index) => <span key={index} className='mr-[0.3rem]' >{word}</span>) : null

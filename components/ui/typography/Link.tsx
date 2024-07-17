@@ -1,4 +1,5 @@
 import { FC, useMemo } from 'react';
+
 import { LinkPropsExtended } from './Typography.type';
 import { twMerge } from 'tailwind-merge';
 import LinkNext from 'next/link';

@@ -1,6 +1,6 @@
 import Image, { ImageProps } from 'next/image';
 
-const images = {
+const images: { [key: string]: { src: string; width: number; height: number } } = {
     test: {
         src: '/images/test.png',
         width: 100,
@@ -15,9 +15,9 @@ interface Props extends Omit<ImageProps, 'src'> {
 }
 
 const ImageUi = ({ alt, src, ...props }: Props) => {
-    // @ts-ignore
     const imageProps = (typeof src == "string" && Object.keys(images).includes(src)) ? images[src] : { src };
-    return  <Image alt={alt} {...imageProps} {...props} />
+    if (!imageProps) return null;
+    return  <Image alt={alt} {...imageProps} src={imageProps.src as string} {...props} />
 }
 
 export default ImageUi;

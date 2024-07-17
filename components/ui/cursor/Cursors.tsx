@@ -32,7 +32,8 @@ const CursorScroll = ({ isActive, ctx, title }: {
         return () => ctx.revert();
     }, [ctx, ref]);
     useIsomorphicLayoutEffect(() => {
-        ctx.current?.cursorScroll(isActive);
+        if (!ctx.current) return;   
+        ctx.current['cursorScroll'](isActive);
     }, [isActive]);
 
     return (
@@ -71,13 +72,14 @@ const CursorActionIcon = ({ isActive, ctx, iconName, degree = 45 }: {
     }, [ctx, ref]);
 
     useIsomorphicLayoutEffect(() => {
-        ctx.current?.cursorActionIcon(isActive, degree);
-        if (!isActive) {
-            const idTimeout = setTimeout(() => {
-                setIcon(undefined);
-            }, 1000);
-            return () => clearTimeout(idTimeout);
-        }
+        const current = ctx.current;
+        if (!current) return;
+        current['cursorActionIcon'](isActive, degree);
+        if (isActive) return () => {}
+        const idTimeout = setTimeout(() => {
+            setIcon(undefined);
+        }, 1000);
+        return () => clearTimeout(idTimeout);
     }, [isActive, ctx, degree]);
 
     return <span ref={ref} >
@@ -94,7 +96,9 @@ const CursorEvent = ({ isActive, ctx, event }: {
     ctx: MutableRefObject<gsap.Context | undefined>,
 } & Partial<ItemCursorPropsByComponent['CursorEvent']>) => {
     useIsomorphicLayoutEffect(() => {
-        ctx.current?.CursorEvent(isActive, event);
+        const current = ctx.current;
+        if (!current) return;
+        current['CursorEvent'](isActive, event);
     }, [ctx, isActive, event]);
     return <span></span>
 }

@@ -51,7 +51,7 @@ export interface Project {
     tasks: TaskProject[];
     category: ('best' | 'ongoing' | 'completed')[];
     jobTitle: TitleProject[];
-    picture?: string[];
+    picture?: [string];
     country?: CountryNames;
 }
 const PROJECTS: Project[] = [

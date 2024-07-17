@@ -1,3 +1,68 @@
 {
-  "extends": "next/core-web-vitals"
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["react", "react-hooks", "jsx-a11y", "import", "tailwindcss"],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:tailwindcss/recommended"
+  ],
+  "rules": {
+    "react/react-in-jsx-scope": "off", // React is always in scope with Next.js
+    "react/prop-types": "off", // TypeScript types are sufficient for prop types
+    "@typescript-eslint/explicit-module-boundary-types": "off", // Explicit return types are not required for TS files
+    "@typescript-eslint/no-explicit-any": "warn", // Warn on usage of the `any` type
+    "jsx-a11y/anchor-is-valid": "off", // Next.js Link components don't need href
+    "import/no-anonymous-default-export": "off", // Anonymous default exports are useful for some cases
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          ["builtin", "external"],
+          "internal",
+          ["parent", "sibling", "index"]
+        ],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "tailwindcss/classnames-order": "warn", // Warn on classnames order
+    "tailwindcss/no-custom-classname": "off" // Allow custom classnames
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "./tsconfig.json"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
+      }
+    }
+  ]
 }

@@ -83,6 +83,10 @@ const Content = ({ children, className, ...props }: ContentProps) => {
 
     useEffect(() => {
         const activeItem = router.pathname.split('/')[1];
+        if (!activeItem) return;
+        if (activeItem === '') {
+            setActiveItem('home');
+        }
         setActiveItem(activeItem);
     }, [router.pathname])
     const handleItemClick = (item: string) => {

@@ -27,6 +27,7 @@ const Layer = ({ children }: {
                 clearTimeout(timer);
             }
         }
+        return () => null;
     }, [i18n.language, endLoading]);
 
     return <Cursor >

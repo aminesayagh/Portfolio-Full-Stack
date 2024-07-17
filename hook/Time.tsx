@@ -15,7 +15,7 @@ const Time = ({ city, country, format = 'HH:mm' }: { city: string, country: stri
 
             return () => clearInterval(interval);
         } else {
-            console.error(`Timezone ${timeZone} not found`);
+            return () => {}
         }
     }, [timeZone]);
     if(!moment.tz.zone(timeZone)) {

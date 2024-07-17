@@ -12,7 +12,7 @@ import { useIsomorphicLayoutEffect } from 'react-use';
 import { ScrollTrigger } from '@/utils/gsap';
 import { useLenis } from '@/lib/Lenis';
 
-const Case = ({ picture, index, id }: { picture?: string[], index: number, id: string }) => {
+const Case = ({ picture, index, id }: { picture?: [string], index: number, id: string }) => {
     const container = useRef<ElementRef<'div'>>(null);
     const { t } = useTranslation();
     const lenis  = useLenis();
@@ -111,7 +111,7 @@ const Case = ({ picture, index, id }: { picture?: string[], index: number, id: s
     const zIndexGradient = useMemo(() => 10 + (index + 13), [index]);
     const title = useMemo(() => t(`projects.${id}.title`), [t, id]);
     const description = useMemo(() => t(`projects.${id}.description`), [t, id]);
-    const pic = useMemo(() => picture ? picture[0] : '', [picture]);
+    const pic = useMemo<string>(() => picture ? picture[0] : '', [picture]);
 
     return <div data-scroll className={twMerge('relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden will-change-transform-animation')} ref={container} style={{
         zIndex: zIndexContainer,

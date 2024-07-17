@@ -1,5 +1,7 @@
+import { useFrame } from '@studio-freight/hamo'
 import { ReactElement, createContext, useEffect, useRef, forwardRef, useImperativeHandle, useState, ElementRef, useCallback } from 'react';
 
+import useResizeObserver from 'use-resize-observer';
 import { gsap, ScrollTrigger } from '@/utils/gsap';
 import Lenis from '@studio-freight/lenis';
 import { create } from 'zustand';
@@ -9,10 +11,7 @@ import { useTranslation } from 'next-i18next';
 
 import { twMerge } from 'tailwind-merge';
 
-import { useFrame } from '@studio-freight/hamo'
-import useResizeObserver from 'use-resize-observer';
 
-// LenisContextValue is a type that represents the value of the Lenis context.
 interface LenisContextValue {
     lenis: LenisInstance | undefined;
     addCallback: (callback: CallbackFunction, priority: number) => void;
@@ -176,8 +175,11 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
     }, [root, lenis, addCallback, removeCallback]);
 
     const onScroll = useCallback((e: LenisInstance) => {
+        const current = callbacks.current;
+        if (!current.length) return;
         for (let i = 0; i < callbacks.current.length; i++) {
-            callbacks.current[i].callback(e);
+            const c = current[i];
+            c && c.callback(e);
         }
     }, []);
 
