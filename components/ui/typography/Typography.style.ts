@@ -1,8 +1,9 @@
 
 import { cva } from 'class-variance-authority';
+
+import { twMerge } from 'tailwind-merge';
 import Style from './Typography.module.scss';
 import { TextPropsType } from './Typography.type';
-import { twMerge } from 'tailwind-merge';
 
 const textDefault = 'inline-block align-middle';
 const fontFamilyTitle = 'font-sans';

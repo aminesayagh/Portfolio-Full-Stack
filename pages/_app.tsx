@@ -1,11 +1,12 @@
-import { useMemo, useEffect, useState } from "react";
-import { appWithTranslation } from "next-i18next";
-import { Montserrat } from "next/font/google";
-
 import type { AppProps } from "next/app";
+import { Montserrat } from "next/font/google";
+import { appWithTranslation } from "next-i18next";
+import { useMemo, useEffect, useState } from "react";
+
 import nextI18NextConfig from "../next-i18next.config.js";
 import { LoadingProvider } from "@/components/ui/preloader";
 import Scripts from "@/components/common/script";
+
 import "../styles/globals.scss";
 import "../utils/i18n";
 
