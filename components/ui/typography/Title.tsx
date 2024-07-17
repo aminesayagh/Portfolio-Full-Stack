@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import { FC, useMemo, createElement } from "react";
 import { twMerge } from "tailwind-merge";
 
 import Style from "./Typography.module.scss";
@@ -54,7 +54,7 @@ const Title: FC<TitlePropsExtended> = ({
       ),
     [weight, className, ElementType, degree, exchange]
   );
-  return React.createElement(
+  return createElement(
     ElementType,
     {
       className: classes,

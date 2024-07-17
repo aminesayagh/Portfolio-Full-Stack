@@ -1,9 +1,6 @@
 
 import { cva } from 'class-variance-authority';
-
-
 import Style from './Typography.module.scss';
-
 import { TextPropsType } from './Typography.type';
 import { twMerge } from 'tailwind-merge';
 
