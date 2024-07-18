@@ -1,15 +1,13 @@
-import { useRef, useEffect, useState, ElementRef, RefObject } from 'react';
+import _ from 'lodash';
 import { useTranslation } from 'next-i18next';
+import { useRef, useEffect, useState, ElementRef, RefObject } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import Title from '@/components/ui/typography/Title';
-import Text from '@/components/ui/typography/Text';
 import Link from '@/components/ui/typography/Link';
-
-import { gsap } from '@/utils/gsap';
-
-import _ from 'lodash';
+import Text from '@/components/ui/typography/Text';
+import Title from '@/components/ui/typography/Title';
 import useGsap from '@/hook/useGsap';
+import { gsap } from '@/utils/gsap';
 
 const Phrase = ({ text, lang, refDescription }: { text: string, lang: string, refDescription: RefObject<HTMLDivElement> }) => {
     const refs = useRef<ElementRef<'span'>[]>([]);
@@ -34,7 +32,10 @@ const Phrase = ({ text, lang, refDescription }: { text: string, lang: string, re
     
     useGsap(() => {
         if (refs.current.length > 0) {
-            const descriptions = gsap.utils.toArray('.manifesto_description_gsap');
+            const descriptions = gsap.utils.toArray('.manifesto_description_gsap') as HTMLDivElement[];
+            const desc_1 = descriptions[0] as HTMLDivElement;
+            const desc_2 = descriptions[1] as HTMLDivElement;
+            if (!desc_1 || !desc_2) return;
             const letters = gsap.utils.toArray('.letter_gsap');
             const tl = gsap.timeline({
                 scrollTrigger: {
@@ -54,14 +55,14 @@ const Phrase = ({ text, lang, refDescription }: { text: string, lang: string, re
                 stagger: 0.2,
                 skewX: 0.3,
                 duration: 0.5,
-            }).fromTo(descriptions[0] as any, {
+            }).fromTo(desc_1, {
                 opacity: 0,
                 y: 30,
             }, {
                 opacity: 1,
                 ease: 'power1',
                 y: 0
-            }, "-=50%").fromTo(descriptions[1] as any, {
+            }, "-=50%").fromTo(desc_2, {
                 opacity: 0,
                 y: 30,
             }, {
@@ -103,7 +104,7 @@ const Manifesto = () => {
                     <Title h6 degree='4' weight='medium' >
                         {t(`manifesto.subtitle_1`)}
                     </Title>
-                    <div className='w-[0.3rem] h-[0.3rem] rounded-full bg-gray-500 items-center justify-start' ></div>
+                    <div className='size-[0.3rem] rounded-full bg-gray-500 items-center justify-start' ></div>
                     <Title h6 degree='4' weight='medium' >
                         {t(`manifesto.subtitle_2`)}
                     </Title>
@@ -139,11 +140,12 @@ const Manifesto = () => {
                         className='mt-[1.6%] 3xl:mt-[3%]'
                     >
                         <Text p degree='3' size='xl' weight='semibold'
-                            className='inline w-full textLink whitespace-inherit-important manifesto_description_action_gsap will-change-transform-animation' style={{
+                            className='inline w-full whitespace-inherit-important manifesto_description_action_gsap will-change-transform-animation' style={{
                                 WebkitLineClamp: 2,
                                 WebkitBoxOrient: 'vertical',
                                 overflow: 'hidden',
-                            }} >
+                                textWrap: 'inherit'
+                            }}>
                             {t(`manifesto.goal`)}
                             <Link degree='2' href='/resume' className='ml-1 transition-all duration-300 text-primary-500 hover:text-primary-400/70 hover:underline' weight='bold' >
                                 {t(`manifesto.action`)}
@@ -151,11 +153,6 @@ const Manifesto = () => {
                             .
                         </Text>
                     </span>
-                    <style jsx>{`
-                            .textLink {
-                                text-wrap: inherit !important;
-                            }`}
-                    </style>
                 </div>
             </div>
         </div>

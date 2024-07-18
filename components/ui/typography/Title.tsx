@@ -3,7 +3,6 @@ import { twMerge } from "tailwind-merge";
 
 import Style from "./Typography.module.scss";
 import { textColorDegree, titleStyle } from "./Typography.style";
-
 import type { TitleNames, TitlePropsExtended } from "./Typography.type";
 import { validTitleElements } from "./Typography.type";
 
@@ -29,11 +28,10 @@ const Title: FC<TitlePropsExtended> = ({
         acc: {
           [key: string]: TitlePropsExtended[keyof TitlePropsExtended];
         },
-        prop: any
+        prop
       ) => {
         if (!validTitleElements.includes(prop as TitleNames)) {
-          // @ts-expect-error
-          acc[prop] = props[prop as keyof TitlePropsExtended];
+          acc[prop] = props[prop];
         }
         return acc;
       },

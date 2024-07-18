@@ -1,11 +1,12 @@
-import React, { FC, useMemo } from "react";
+import { FC, useMemo, createElement } from "react";
 import { twMerge } from "tailwind-merge";
+
+import { textClassNames } from "./Typography.style";
 import {
   TextNames,
   TextPropsExtended,
   validTextElements,
 } from "./Typography.type";
-import { textClassNames } from "./Typography.style";
 
 const Text: FC<TextPropsExtended> = ({
   weight,
@@ -24,13 +25,12 @@ const Text: FC<TextPropsExtended> = ({
     );
   }, [props]);
   
-  const elmentProps = useMemo(() => {
+  const elementProps = useMemo(() => {
     return Object.keys(props).reduce((acc: {
         [key: string]: TextPropsExtended[keyof TextPropsExtended];
-    }, prop: any) => {
+    }, prop) => {
         if(!validTextElements.includes(prop as TextNames)) {
-            // @ts-expect-error
-            acc[prop] = props[prop as keyof TextPropsExtended];
+            acc[prop] = props[prop];
         }
         return acc;
     }, {});
@@ -43,11 +43,11 @@ const Text: FC<TextPropsExtended> = ({
     );
   }, [weight, size, degree, exchange, className])
 
-  return React.createElement(
+  return createElement(
     ElementType,
     {
       className: classes,
-      ...elmentProps
+      ...elementProps
     },
     children
   );

@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+
 import { LoadingContext } from './Preloader.context';
 
 export function usePreloader() {

@@ -1,10 +1,10 @@
+import { useRouter } from 'next/router';
 import React from "react";
 
-import Button from "@/components/ui/button";
 import Item from "@/components/ui/animation/item";
+import Button from "@/components/ui/button";
 import i18n from '@/utils/i18n';
 
-import { useRouter } from 'next/router';
 const langs = ['fr', 'en'];
 
 const SwitchLang = () => {
@@ -16,7 +16,7 @@ const SwitchLang = () => {
     }
 
     return <div className='flex flex-row items-center justify-start gap-12 xxs:gap-8 mdl:gap-6 lg:gap-8'>
-        {langs.map(l => <span key={l} className=' overflow-hidden'>
+        {langs.map(l => <span key={l} className='overflow-hidden '>
             <Button degree="2" size='xs' className="uppercase" onPress={() => changeLanguage(l)} style={{
                 color: 'inherit'
             }}>

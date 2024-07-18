@@ -1,7 +1,9 @@
-import { LenisProvider, useLenis } from "@/lib/Lenis";
-import { useRef } from "react";
-import { LenisInstance } from "@/lib/Lenis/Lenis.context.jsx";
 import { useFrame } from "@studio-freight/hamo";
+import { useRef } from "react";
+
+import { LenisProvider, useLenis } from "@/lib/Lenis";
+import { LenisInstance } from "@/lib/Lenis/Lenis.context.jsx";
+
 
 function Lenis({ children }: { children: React.ReactElement }) {
   const lenisRef = useRef<LenisInstance>();

@@ -1,16 +1,16 @@
-import { useState, useEffect, useContext, createContext, useRef, useMemo } from 'react';
 import { useRouter } from 'next/router';
+import { useState, useEffect, useContext, createContext, useRef, useMemo } from 'react';
+import { useHover } from 'react-aria';
 import { useIsomorphicLayoutEffect } from 'react-use';
+import { twMerge } from 'tailwind-merge';
 
-import LinkUi from '@/components/ui/typography/Link';
 import { containerStyle } from '@/components/ui/container';
+import LinkUi from '@/components/ui/typography/Link';
+import { useLenis } from '@/lib/Lenis';
+import { gsap } from '@/utils/gsap';
 
 import { NavbarProps, NavbarType, BrandProps, ContentProps, ItemProps, LinkProps } from './Navbar.type';
-import { twMerge } from 'tailwind-merge';
-import { useHover } from 'react-aria';
 import { zIndex } from '../conf';
-import { gsap } from '@/utils/gsap';
-import { useLenis } from '@/lib/Lenis';
 
 
 const Navbar: NavbarType = ({ children, size, className, inTopOfScroll, ...props }: NavbarProps) => {

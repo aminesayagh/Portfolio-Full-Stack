@@ -1,7 +1,7 @@
 import { createElement, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { containerStyle } from './Container.style';
 
+import { containerStyle } from './Container.style';
 import { ContainerProps } from './Container.type';
 
 const Container = ({ as = 'div', children, className, ...props }: ContainerProps) => {

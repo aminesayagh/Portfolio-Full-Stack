@@ -1,19 +1,18 @@
 
 import { useEffect, useRef, MutableRefObject, useState } from 'react';
-import { twMerge } from 'tailwind-merge';
-import _ from 'lodash';
 import { useIsomorphicLayoutEffect } from 'react-use';
+import { twMerge } from 'tailwind-merge';
 
-import Text from '@/components/ui/typography/Text';
 import {Icon, IconNames } from '@/components/ui/icon';
-
+import Text from '@/components/ui/typography/Text';
 import { gsap } from '@/utils/gsap';
+
 import { ItemCursorPropsByComponent } from './CursorType';
 
 const CursorScroll = ({ isActive, ctx, title }: {
     ctx: MutableRefObject<gsap.Context | undefined>,
     isActive: boolean,
-} & Partial<ItemCursorPropsByComponent['CursorScroll']>) => {
+} & ItemCursorPropsByComponent['CursorScroll']) => {
     const ref = useRef<HTMLDivElement>(null);
 
     useIsomorphicLayoutEffect(() => {
@@ -58,7 +57,7 @@ const CursorActionIcon = ({ isActive, ctx, iconName, degree = 45 }: {
     }, [iconName]);
 
     useIsomorphicLayoutEffect(() => {
-        let ctx = gsap.context(() => {
+        const ctx = gsap.context(() => {
             gsap.set('.cursor_action_icon_gsap', {
                 scale: 0,
                 display: 'none',

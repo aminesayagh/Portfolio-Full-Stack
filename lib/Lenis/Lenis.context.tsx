@@ -1,12 +1,13 @@
-import { ReactElement, createContext, useEffect, useRef, forwardRef, useImperativeHandle, useState, ElementRef, useCallback } from 'react';
-import { useTranslation } from 'next-i18next';
-import { twMerge } from 'tailwind-merge';
-import Lenis from '@studio-freight/lenis';
 import { useFrame } from '@studio-freight/hamo';
-import { gsap, ScrollTrigger } from '@/utils/gsap';
-import { useDebounce } from '@/hook/useDebounce';
+import Lenis from '@studio-freight/lenis';
+import { useTranslation } from 'next-i18next';
+import { ReactElement, createContext, useEffect, useRef, forwardRef, useImperativeHandle, useState, ElementRef, useCallback } from 'react';
+import { twMerge } from 'tailwind-merge';
 import useResizeObserver from 'use-resize-observer';
 import { create } from 'zustand';
+
+import { useDebounce } from '@/hook/useDebounce';
+import { gsap, ScrollTrigger } from '@/utils/gsap';
 
 
 interface LenisContextValue {

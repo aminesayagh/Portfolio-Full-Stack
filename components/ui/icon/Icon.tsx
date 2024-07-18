@@ -1,7 +1,8 @@
-import React from 'react';
+import { SVGAttributes, memo } from 'react';
+
 import Icons, { IconNames, IconProps as DefaultIconProps } from './IconsList';
 
-interface IconProps extends React.SVGAttributes<SVGElement>, DefaultIconProps {
+interface IconProps extends SVGAttributes<SVGElement>, DefaultIconProps {
     name: IconNames;
     className?: string;
 }
@@ -24,4 +25,4 @@ const Icon: React.FC<IconProps> = ({ size, name, className, ...props }) => {
     return <IconComponent {...iconProps} />;
 }
 
-export default React.memo(Icon);
+export default memo(Icon);

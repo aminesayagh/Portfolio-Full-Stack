@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { useTranslation } from 'next-i18next';
+import { useEffect } from 'react';
+import { twMerge } from 'tailwind-merge';
+
+import Container from '@/components/ui/container';
 import Cursor from '@/components/ui/cursor';
 import { usePreloader } from '@/components/ui/preloader';
-import Container from '@/components/ui/container';
-import { twMerge } from 'tailwind-merge';
 
 const HeaderDynamic = dynamic(() => import('@/components/common/header'), {});
 const FooterDynamic = dynamic(() => import('@/components/common/footer'), {});

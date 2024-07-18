@@ -1,20 +1,20 @@
 
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect, createContext } from 'react';
 import { useHover } from 'react-aria';
 
 import { cursorContext } from './Cursor';
-import { ItemCursor, CursorNames } from './CursorType';
+import { ItemCursor } from './CursorType';
 
-const cursorParentContext = React.createContext<{
+const cursorParentContext = createContext<{
     hasParent: boolean,
 }>({
     hasParent: false,
 });
 
-const CursorContainer = <C extends CursorNames>({ children, className = '', name, ...props }: {
+const CursorContainer = ({ children, className = '', name, ...props }: {
     children: React.ReactElement,
     className?: string,
-} & ItemCursor<C>) => {
+} & ItemCursor) => {
     const { addCursor, setKey } = useContext(cursorContext);
     const { hasParent } = useContext(cursorParentContext);
     
@@ -28,7 +28,6 @@ const CursorContainer = <C extends CursorNames>({ children, className = '', name
     });
 
     useEffect(() => {
-        // @ts-ignore
         addCursor && addCursor({
             name,
             ...props

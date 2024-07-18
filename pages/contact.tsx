@@ -1,22 +1,20 @@
-import React from "react";
-
-import { useTranslation } from "next-i18next";
 import dynamic from "next/dynamic.js";
-
-import nextI18NextConfig from "../next-i18next.config.js";
+import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import Head from "@/components/common/head";
-import Noise from "components/ui/noise";
 import Layer from "@/components/common/layer";
+import { ToastRegion } from "@/components/common/toast";
 import Lenis from "@/components/Lenis";
+import Noise from "components/ui/noise";
+
+import nextI18NextConfig from "../next-i18next.config.js";
 
 import "@/utils/gsap";
 const ContactPageDynamic = dynamic(
   () => import("@/components/pages/ContactPage"),
   {}
 );
-import { ToastRegion } from "@/components/common/toast";
 
 const Contact = () => {
   const { t } = useTranslation("common");
@@ -41,7 +39,9 @@ const Contact = () => {
   );
 };
 
-export async function getStaticProps({ locale }: any) {
+export async function getStaticProps({ locale }: {
+  locale: string
+}) {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"], nextI18NextConfig)),

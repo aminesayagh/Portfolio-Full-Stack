@@ -1,14 +1,15 @@
 import React, { useRef, useState, createContext, ElementRef, useMemo, useCallback } from 'react';
-
-import { gsap } from '@/utils/gsap';
+import { useIsomorphicLayoutEffect } from 'react-use';
 import { twMerge } from 'tailwind-merge';
+
+import { useEventListener } from '@/hook/useEventListener';
+import { gsap } from '@/utils/gsap';
+
 import Cursors, { CursorsArray } from './Cursors';
 import { ItemCursor } from './CursorType';
-import { useIsomorphicLayoutEffect } from 'react-use';
-import { useEventListener } from '@/hook/useEventListener';
 
 export const cursorContext = createContext<{
-    addCursor?: (item: ItemCursor<'CursorScroll'>) => void,
+    addCursor?: (item: ItemCursor) => void,
     setKey?: (key: string | null) => void,
 }>({});
 
@@ -28,12 +29,12 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
     }, []);
 
     const [key, setKey] = useState<string | null>(null);
-    let ctx = useRef<gsap.Context>();
+    const ctx = useRef<gsap.Context>();
 
     useIsomorphicLayoutEffect(() => {
         ctx.current = gsap.context((context) => {
-            let timeline = () => {
-                let tl = gsap.timeline({
+            const timeline = () => {
+                const tl = gsap.timeline({
                     paused: true,
                 });
                 return tl.to('.ball_main_gsap', {
@@ -52,7 +53,7 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
                     ease: 'Power4.easeOut',
                 }, 0.2);
             }
-            let cursorScrollTimeline = timeline().fromTo('.cursor_scroll_gsap', {
+            const cursorScrollTimeline = timeline().fromTo('.cursor_scroll_gsap', {
                 display: 'flex',
                 scale: 0,
                 opacity: 0,
@@ -71,7 +72,7 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
                 rotate: 0,
             });
 
-            let cursorActionIconTimeline = timeline().to('.cursor_action_icon_gsap', {
+            const cursorActionIconTimeline = timeline().to('.cursor_action_icon_gsap', {
                 duration: 0.1,
                 display: 'flex',
             }).fromTo('.cursor_action_icon_gsap', {
@@ -109,7 +110,7 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
                 }
             });
 
-            let timelineBallEventPointer =gsap.timeline({
+            const timelineBallEventPointer =gsap.timeline({
                 paused: true,
             }).fromTo('.ball_secondary_gsap', {
                 scale: 1,
@@ -259,7 +260,13 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
                             otherProps = currentCursor?.props;
                         }
                         return <span key={item}>
-                            {Cursors[item]({ ctx, isActive, ...otherProps })}
+                            {/*  */}
+                            {Cursors[item]({ 
+                                ctx,
+                                isActive,
+                                ...otherProps
+                            })} 
+                            
                         </span>
                     })}
                 </div>

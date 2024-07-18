@@ -1,13 +1,15 @@
 import { RefObject } from "react"
+import { useTranslation } from "react-i18next";
 import { useIsomorphicLayoutEffect } from "react-use";
 
 import { gsap } from "@/utils/gsap";
-import { useTranslation } from "react-i18next";
+
+
 const useGsap = (gsapCallback: gsap.ContextFunc, ref: RefObject<HTMLDivElement> | RefObject<HTMLCanvasElement> | undefined, rendered: unknown[] = []) => {
     const { i18n } = useTranslation();
 
     useIsomorphicLayoutEffect(() => {
-        let ctx: gsap.Context = gsap.context(gsapCallback, ref || undefined);
+        const ctx: gsap.Context = gsap.context(gsapCallback, ref || undefined);
         return () => {
             ctx && ctx.revert();
         }

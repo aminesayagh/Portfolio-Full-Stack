@@ -1,11 +1,10 @@
 import { useRef, useEffect } from "react";
-import { gsap } from "@/utils/gsap";
-
 import { twMerge } from "tailwind-merge";
 
 import { rounded } from "@/components/style";
 import { CursorContent } from "@/components/ui/cursor";
 import { usePreloader } from "@/components/ui/preloader";
+import { gsap } from "@/utils/gsap";
 
 const ORIGINAL_WIDTH = 1488; // Original image width
 const ORIGINAL_HEIGHT = 835; // Original image height
@@ -14,8 +13,8 @@ const FRAME_COUNT = 164;
 const LOADING_KEY = "Video";
 
 const Video = () => {
-  let ref = useRef<HTMLCanvasElement>(null);
-  let refContainer = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLCanvasElement>(null);
+  const refContainer = useRef<HTMLDivElement>(null);
   const imagesRef = useRef([] as Array<HTMLImageElement>);
 
   const { addLoadingComponent, removeLoadingComponent } = usePreloader();
@@ -74,9 +73,9 @@ const Video = () => {
       if (!imagesRef.current.length) return;
       const hands = { frame: 0 };
 
-      let canvas = ref.current;
+      const canvas = ref.current;
       if (!canvas) return;
-      let context = canvas.getContext("2d");
+      const context = canvas.getContext("2d");
 
       const screenSize = getScreenSize();
 

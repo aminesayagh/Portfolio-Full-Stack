@@ -1,30 +1,30 @@
-import { twMerge } from "tailwind-merge";
-import React, {
+import { useTranslation } from "next-i18next";
+import {
   useRef,
+  memo,
   useCallback,
   useMemo,
   ElementRef,
   useState,
   useEffect,
 } from "react";
-import { useTranslation } from "next-i18next";
+import { PressEvent } from "react-aria";
 import { useIsomorphicLayoutEffect } from "react-use";
+import { twMerge } from "tailwind-merge";
 
-import Text from "@/components/ui/typography/Text";
-import Button from "@/components/ui/button";
-import Display from "@/components/ui/typography/Display";
-import { Icon } from "@/components/ui/icon";
-import { CursorContent } from "@/components/ui/cursor";
 import Item from "@/components/ui/animation/item";
+import Button from "@/components/ui/button";
+import { CursorContent } from "@/components/ui/cursor";
+import { Icon } from "@/components/ui/icon";
 import { usePreloader } from "@/components/ui/preloader";
-
+import Display from "@/components/ui/typography/Display";
+import Text from "@/components/ui/typography/Text";
 import { MENU_ITEMS } from "@/conf/router";
-import { ScrollTrigger, gsap } from "@/utils/gsap";
 import useRouterChange from "@/hook/SafePush";
 import { useEventListener } from "@/hook/useEventListener";
 import useGsap from "@/hook/useGsap";
-
 import { useLenis } from "@/lib/Lenis";
+import { ScrollTrigger, gsap } from "@/utils/gsap";
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
   const ref = useRef<ElementRef<"div">>(null);
@@ -45,11 +45,14 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
             duration: 1,
             ease: "elastic.out(1, 0.3)",
           });
-        self.add("mouseMove", (e: any) => {
+        self.add("mouseMove", (e: {
+          clientX: number;  
+          clientY: number;
+        }) => {
+          const c = ref.current;
+          if (!c) return;
           const { clientX, clientY } = e;
-          // @ts-ignore
-          const { left, top, width, height } =
-            ref.current?.getBoundingClientRect();
+          const { left, top, width, height } = c.getBoundingClientRect();
           const x = clientX - (left + width / 2);
           const y = clientY - (top + height / 2);
           xTo && xTo(x);
@@ -81,8 +84,8 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
 
   return <div ref={ref}>{children}</div>;
 };
-
-const ButtonNext = ({ goToCases }: { goToCases: any }) => {
+type GoTOCases = ((e: PressEvent) => void) | undefined;
+const ButtonNext = ({ goToCases }: { goToCases: GoTOCases }) => {
   return (
     <GsapMagic>
       <Button
@@ -96,7 +99,7 @@ const ButtonNext = ({ goToCases }: { goToCases: any }) => {
         <div className=" [&>*]:stroke-black-200 transition-colors duration-300 p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6">
           <Icon
             name="IconCornerLeftDown"
-            className="w-8 h-8 stroke-1 xxs:w-7 xxs:h-7 sm:w-8 sm:h-8 xl:w-10 xl:h-10"
+            className="stroke-1 size-8 xxs:size-7 sm:size-8 xl:size-10"
           />
         </div>
       </Button>
@@ -174,7 +177,7 @@ function useFitText(options?: { factor?: number; maxFontSize?: number }) {
   return { fontSize, ref };
 }
 
-const Title = ({ goToCases }: { goToCases: any }) => {
+const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
   const { t, i18n } = useTranslation();
   const { fontSize: fontSizeInterface, ref: widthInterfaceRef } = useFitText({
     factor: 4.94,
@@ -185,7 +188,9 @@ const Title = ({ goToCases }: { goToCases: any }) => {
 
   const interfaceText = useMemo(() => {
     const title = t("intro.title.1");
-    let [inter, face] = title.split("r");
+    const splits = title.split("r");
+    let inter = splits[0];
+    const face = splits[1];
     inter += "r";
     return { inter, face };
   }, [t]);
@@ -407,7 +412,7 @@ const Menu = () => {
 
   const menuItemsData = useMemo(
     () =>
-      Array.apply(null, Array(4)).map((_, i) => {
+      [...Array(4)].map((_, i) => {
         return {
           key: i,
           number: `0${i + 1}`,
@@ -490,7 +495,7 @@ const Menu = () => {
   );
 };
 
-const MenuMemo = React.memo(Menu);
+const MenuMemo = memo(Menu);
 
 const Intro = () => {
   const introRef = useRef<ElementRef<"div">>(null);
@@ -517,9 +522,7 @@ const Intro = () => {
             amount: 0.4,
           },
           onComplete: function () {
-            this['targets']().forEach((el: any) => {
-              el.style.willChange = "";
-            });
+            this['targets']().forEach((el: HTMLElement) => el.style.willChange = "");
           },
         })
         .from(

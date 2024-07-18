@@ -1,21 +1,17 @@
-import React, { ElementRef, useRef, useEffect, useCallback } from "react";
-
-import { memo, useState } from "react";
+import _ from "lodash";
 import { useTranslation } from "next-i18next";
-import { twMerge } from "tailwind-merge";
+import { ElementRef, useRef, useEffect, useCallback, memo, useState, Fragment } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
+import { twMerge } from "tailwind-merge";
 
-import Link from "@/components/ui/typography/Link";
 import Button from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
-import _ from "lodash";
-
+import Link from "@/components/ui/typography/Link";
 import Text from "@/components/ui/typography/Text";
-import { gsap } from "utils/gsap";
+import { getMenuItems } from "@/conf/router";
 import { useEventListener } from "@/hook/useEventListener";
 import { useLenis } from "@/lib/Lenis";
-
-import { getMenuItems } from "@/conf/router";
+import { gsap } from "utils/gsap";
 
 const menuSocialNetworks = getMenuItems("socialNetworks");
 const BASE_LOCALE_SOCIAL = "socialNetwork";
@@ -203,7 +199,7 @@ const TextAnimated = ({
       >
         {body
           ? body.map((word, index) => (
-              <React.Fragment key={index}>{word} </React.Fragment>
+              <Fragment key={index}>{word} </Fragment>
             ))
           : null}
       </Text>

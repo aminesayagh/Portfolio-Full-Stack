@@ -1,18 +1,21 @@
-import React from 'react';
+import {
+    isValidElement,
+    cloneElement
+} from 'react';
+import { Label, TextField, Select, Button, SelectValue, Popover, ListBox, ListBoxItem as Item, RadioProps, Radio, RadioGroup, CheckboxGroup, CheckboxProps, Checkbox } from 'react-aria-components';
+import type { TextFieldProps, SelectProps, ListBoxProps, CheckboxGroupProps, ListBoxItemProps as ItemProps, RadioGroupProps, ButtonProps } from 'react-aria-components';
 import { useForm, FormProvider, Controller, useFormContext } from 'react-hook-form';
-import { FormProps, InputProps } from './Form.types';
-import { Label, TextField, Select, Button, SelectValue, Popover, ListBox, ListBoxItem as Item, RadioProps, Radio, CheckboxGroup, CheckboxProps, Checkbox } from 'react-aria-components';
-import { TextFieldProps, SelectProps, ListBoxProps, CheckboxGroupProps, ListBoxItemProps as ItemProps, RadioGroup, RadioGroupProps, ButtonProps } from 'react-aria-components';
-import { twJoin } from 'tailwind-merge';
-import ResizablePanel from '@/components/ui/resizablePanel';
-import { Icon } from '@/components/ui/icon';
-import type { IconNames } from '@/components/ui/icon';
+import { twJoin, twMerge } from 'tailwind-merge';
 
-import { twMerge } from 'tailwind-merge';
-import Style from './Form.module.scss';
+import type { IconNames } from '@/components/ui/icon';
+import { Icon } from '@/components/ui/icon';
+import ResizablePanel from '@/components/ui/resizablePanel';
 import { mergeClassName } from '@/helpers/className';
 
-const Form = <T extends { [x: string]: any }>({ onSubmit, onError, children, className, ...props }: FormProps<T>) => {
+import Style from './Form.module.scss';
+import { FormProps, InputProps } from './Form.types';
+
+const Form = <T extends { [x: string]: unknown }>({ onSubmit, onError, children, className, ...props }: FormProps<T>) => {
     const methods = useForm<T>({ ...props, shouldFocusError: true });
 
     return <FormProvider<T> {...methods}>
@@ -33,16 +36,15 @@ const NotificationError = ({ message }: { message?: string }) => {
     ) : <></>
 }
 
-const LayoutField = ({ label, className, icon, name, children, width, ...props }: { width?: string, label: string, className?: string, icon?: IconNames, name: string, children: React.ReactElement<InputProps> } & TextFieldProps) => {
+const LayoutField = ({ label, className, name, children, width, ...props }: { width?: string, label: string, className?: string, icon?: IconNames, name: string, children: React.ReactElement<InputProps> } & TextFieldProps) => {
     const {
         register,
-        getFieldState,
-        // @ts-ignore
-        ...methods
+        getFieldState
     } = useFormContext();
+    
     const { invalid, error } = getFieldState(name);
 
-    const childrenWithProps = React.isValidElement(children) ? React.cloneElement(children, {
+    const childrenWithProps = isValidElement(children) ? cloneElement(children, {
         label,
         ...children.props,
         ...register(name),
@@ -65,9 +67,11 @@ const LayoutField = ({ label, className, icon, name, children, width, ...props }
 }
 
 
-const SelectUi = <T extends {}>({ label, name, children, items, ...props }: { items: Iterable<T>, label: string, name: string, children: ListBoxProps<T>['children'] } & Omit<SelectProps<T>, 'children'>) => {
-    // @ts-ignore
-    const { register, getFieldState, control, ...methods } = useFormContext();
+const SelectUi = <T extends {
+    [x: string]: string;
+}>({ label, name, children, items, ...props }: { items: Iterable<T>, label: string, name: string, children: ListBoxProps<T>['children'] } & Omit<SelectProps<T>, 'children'>) => {
+    
+    const { control } = useFormContext();
     return (
         <>
             <div className={twMerge('w-full col-span-12', Style['text-field'])}>
@@ -110,8 +114,7 @@ interface RadioGroupUiProps extends RadioGroupProps {
 }
 
 const RadioGroupUi = ({ label, name, ...props }: RadioGroupUiProps) => {
-    // @ts-ignore
-    const { register, control, ...methods } = useFormContext();
+    const { control } = useFormContext();
     return (
         <>
             <Controller name={name} control={control} render={({ field, fieldState }) => {
@@ -143,8 +146,7 @@ interface CheckboxGroupUiProps extends CheckboxGroupProps {
 }
 
 const CheckboxGroupUi = ({ label, name, ...props }: CheckboxGroupUiProps) => {
-    // @ts-ignore
-    const { register, getFieldState, control, ...methods } = useFormContext();
+    const { control } = useFormContext();
     return (
         <>
             <Controller name={name} control={control} render={({ field, fieldState }) => (

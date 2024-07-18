@@ -1,23 +1,25 @@
-import { useState, useCallback, memo, useEffect, useRef, useMemo } from "react";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
+import { useState, useCallback, memo, useEffect, useRef, useMemo } from "react";
+import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
 
-import { gsap, Power3, ScrollTrigger } from "@/utils/gsap";
-
-import StyleAnimation from "@/styles/animation.module.scss";
-import { usePreloader } from "@/components/ui/preloader";
-import Navbar from "@/components/ui/navbar";
-import Logo from "@/components/ui/logo";
-import Link from "@/components/ui/typography/Link";
-import Button from "@/components/ui/button";
-import { containerStyle } from "@/components/ui/container";
-import Modal from "@/components/ui/overlay/modal";
-import Text from "@/components/ui/typography/Text";
-import Title from "@/components/ui/typography/Title";
 import HamburgerMenu from "@/components/common/hamburgerMenu";
 import SwitchLang from "@/components/common/switchLang";
+import Button from "@/components/ui/button";
+import { containerStyle } from "@/components/ui/container";
+import Logo from "@/components/ui/logo";
+import Navbar from "@/components/ui/navbar";
+import Modal from "@/components/ui/overlay/modal";
+import { usePreloader } from "@/components/ui/preloader";
+import Link from "@/components/ui/typography/Link";
+import Text from "@/components/ui/typography/Text";
+import Title from "@/components/ui/typography/Title";
 import { getMenuItems } from "@/conf/router";
+import useRouterChange from "@/hook/SafePush";
+import { useLenis } from "@/lib/Lenis";
+import StyleAnimation from "@/styles/animation.module.scss";
+import { gsap, Power3, ScrollTrigger } from "@/utils/gsap";
 
 const GAP_SIZE_LG = "gap-4 sm:gap-6 lg:gap-7 xl:gap-8";
 const GAP_SIZE_XL = "gap-8 mdl:gap-12";
@@ -27,10 +29,6 @@ const BASE_LOCALE_SOCIAL = "socialNetwork";
 const DURATION = 0.4;
 const TRANSLATE_Y = -110;
 
-import useRouterChange from "@/hook/SafePush";
-import { useIsomorphicLayoutEffect } from "react-use";
-import { useLenis } from "@/lib/Lenis";
-
 const menuHamburgerItems = getMenuItems("hamburger");
 const menuSocialNetworks = getMenuItems("socialNetworks");
 
@@ -38,7 +36,7 @@ const Header = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const { safePush } = useRouterChange();
-  let [openMenu, setOpenMenu] = useState<boolean>(false);
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
   const { endLoading } = usePreloader();
   // const { scrollTo } = useLocomotiveScroll();
   const lenis = useLenis();
@@ -151,7 +149,7 @@ const Header = () => {
   }, []);
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      let tl = gsap
+      const tl = gsap
         .timeline({
           paused: true,
         })
@@ -195,7 +193,7 @@ const Header = () => {
     }
   }, [openMenu]);
 
-  let idTimeout = useRef<NodeJS.Timeout>();
+  const idTimeout = useRef<NodeJS.Timeout>();
 
   const scrollToId = useCallback(
     (path: string, id: string | null = null) => {
@@ -293,7 +291,7 @@ const Header = () => {
                         "flex flex-row items-center gap-6 justify-end"
                       )}
                     >
-                      <span
+                      <button
                         className="hidden overflow-hidden cursor-pointer xxs:block"
                         onClick={() => handler()}
                       >
@@ -305,7 +303,7 @@ const Header = () => {
                         >
                           {t("header.close")}
                         </Text>
-                      </span>
+                      </button>
                       <HamburgerMenu isOpen={isOpen} setOpen={handler} />
                     </div>
                   </>

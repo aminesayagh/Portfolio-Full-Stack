@@ -1,8 +1,8 @@
-import Container from '@/components/ui/container';
-import React from 'react';
-
-
 import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
+
+import Container from '@/components/ui/container';
+
 
 const Intro = dynamic(() => import('./sections/1-intro'));
 const Manifesto = dynamic(() => import('./sections/2-manifesto'));
@@ -12,7 +12,6 @@ const CallToAction = dynamic(() => import('./sections/3_1-action'));
 const Cases = dynamic(() => import('./sections/4-cases'));
 const Action = dynamic(() => import('./sections/5-action'));
 
-import { Suspense } from 'react';
 
 const LandingPage = () => (<>
     <Container data-scroll-section as='section' size='lg' id='intro' >

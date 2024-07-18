@@ -1,15 +1,14 @@
-import Head from "@/components/common/head";
-import Noise from "@/components/ui/noise";
+import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import "@/utils/gsap";
-import Lenis from "@/components/Lenis";
 
+import Head from "@/components/common/head";
+import Layer from "@/components/common/layer";
+import Lenis from "@/components/Lenis";
+import LandingPage from "@/components/pages/LandingPage";
+import Noise from "@/components/ui/noise";
 
 import nextI18NextConfig from "../next-i18next.config.js";
-import { useTranslation } from "next-i18next";
-import LandingPage from "@/components/pages/LandingPage";
-
-import Layer from "@/components/common/layer";
 
 export default function Home() {
   const { t } = useTranslation("common");
@@ -33,7 +32,9 @@ export default function Home() {
   );
 }
 
-export async function getStaticProps({ locale }: any) {
+export async function getStaticProps({ locale }: {
+  locale: string
+}) {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"], nextI18NextConfig)),

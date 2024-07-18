@@ -1,12 +1,12 @@
-import Container from "@/components/ui/container";
-import Title from '@/components/ui/typography/Title';
-import Text from '@/components/ui/typography/Text';
-import Display from '@/components/ui/typography/Display';
-
-import Head from '@/components/common/head';
-
 import React from "react";
 import { twMerge } from 'tailwind-merge';
+
+import Head from '@/components/common/head';
+import Container from "@/components/ui/container";
+import Display from '@/components/ui/typography/Display';
+import Text from '@/components/ui/typography/Text';
+import Title from '@/components/ui/typography/Title';
+
 
 const listText = 'flex flex-col gap-8';
 const TEXT_LOREM = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
@@ -14,7 +14,7 @@ const title = (h: number) => `that is a title h${h} of my portfolio.`;
 const DEFAULT_TITLE_CLASSNAME = 'capitalize';
 
 const Divider = () => {
-    return <span className='h-px w-full bg-gray-600 dark:bg-gray-700' />
+    return <span className='w-full h-px bg-gray-600 dark:bg-gray-700' />
 }
 const Color = ({ className }: { className: string }) => {
     return <div className={twMerge('h-24 w-24', className)}></div>
@@ -28,7 +28,7 @@ const TitleOfSection = ({ children }: { children: React.ReactNode }) => {
 
 const Section = ({ title, children }: { title: string, children: React.ReactNode }) => {
     return (
-        <div className='flex flex-col md:flex-row gap-6'>
+        <div className='flex flex-col gap-6 md:flex-row'>
             <div className='w-32'>
                 <Text p weight='bold' degree='3' size='md'>
                     {title}
@@ -168,13 +168,13 @@ export default function App() {
                         <div>
                             <TitleOfSection >TYPOGRAPHY COLOR BRAND</TitleOfSection>
                         </div>
-                        <div className="flex flex-row flex-wrap gap-4 lg:gap-12 justify-between items-start">
+                        <div className="flex flex-row flex-wrap items-start justify-between gap-4 lg:gap-12">
                             <Title h4 weight='bold' degree="1" className='w-full md:w-1/2 xl:w-1/4'>TYPOGRAPHY TEXT BRAND</Title>
                             <Title h4 weight='bold' degree="2" className='w-full md:w-1/2 xl:w-1/4'>TYPOGRAPHY TEXT BRAND</Title>
                             <Title h4 weight='bold' degree="3" className='w-full md:w-1/2 xl:w-1/4'>TYPOGRAPHY TEXT BRAND</Title>
                             <Title h4 weight='bold' degree="4" className='w-full md:w-1/2 xl:w-1/4'>TYPOGRAPHY TEXT BRAND</Title>
                         </div>
-                        <div className='flex flex-row flex-wrap gap-4 lg:gap-12 justify-between items-start'>
+                        <div className='flex flex-row flex-wrap items-start justify-between gap-4 lg:gap-12'>
                             <Text p weight='medium' degree='1' size='md' className='w-full xl:w-1/2' >
                                 {TEXT_LOREM}
                             </Text>

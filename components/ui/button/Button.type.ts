@@ -1,10 +1,12 @@
 
+import { ReactNode } from 'react';
 import { ButtonProps as AriaButtonProps } from 'react-aria-components';
+
 import { TextPropsType } from '@/components/ui/typography';
-import React from 'react';
+
 interface PropsIcon {
-    icon?: React.ReactNode;
-    iconRight?: React.ReactNode,
+    icon?: ReactNode;
+    iconRight?: ReactNode,
 }
 
 export interface ButtonProps extends PropsIcon, AriaButtonProps, Partial<TextPropsType> {

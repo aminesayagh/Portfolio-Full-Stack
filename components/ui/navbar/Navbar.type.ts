@@ -1,9 +1,10 @@
 
-import React from 'react';
 import { VariantProps } from 'class-variance-authority';
-import { containerStyle } from '@/components/ui/container';
-import { TextType } from '../typography';
+import React from 'react';
 
+import { containerStyle } from '@/components/ui/container';
+
+import { TextType } from '../typography';
 
 export type NavbarProps = {
     children: React.ReactNode;

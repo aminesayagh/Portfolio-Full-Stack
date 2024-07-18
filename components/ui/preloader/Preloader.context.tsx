@@ -1,4 +1,6 @@
+import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 import {
   createContext,
   useState,
@@ -8,17 +10,15 @@ import {
   Suspense,
   useCallback,
 } from "react";
-import { useTranslation } from "next-i18next";
+import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
-import { AnimatePresence, motion, useAnimation } from "framer-motion";
 
 import Container from "@/components/ui/container";
-import Title from "@/components/ui/typography/Title";
-import Text from "@/components/ui/typography/Text";
 import Noise from "@/components/ui/noise";
-
+import Text from "@/components/ui/typography/Text";
+import Title from "@/components/ui/typography/Title";
 import { gsap } from "@/utils/gsap";
-import { useIsomorphicLayoutEffect } from "react-use";
+
 
 // config:
 const END_LOADING_IN = 99;
@@ -289,7 +289,7 @@ const Preloader = ({
                 </Title>
               }
             </span>
-            <ul className="h-[1.5rem] overflow-hidden element-content-gsap relative">
+            <ul className="relative h-6 overflow-hidden element-content-gsap">
               {Array.from({ length: 5 }).map((_, index) => (
                 <Text
                   suppressHydrationWarning

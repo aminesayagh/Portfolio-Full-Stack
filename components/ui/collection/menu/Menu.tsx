@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState, createContext, useContext } from 'react';
 import { MenuTrigger, Button, Popover, Menu, ListBoxItem as Item} from 'react-aria-components';
 import type { MenuTriggerProps, ButtonProps, PopoverProps, MenuProps, ListBoxItemProps as ItemProps } from 'react-aria-components';
-
 import { twMerge } from 'tailwind-merge';
+
 import { mergeClassName } from '@/helpers/className'
 
-const MenuContext = React.createContext<{ isOpen: boolean, setOpen: React.Dispatch<React.SetStateAction<boolean>> }>({
+const MenuContext = createContext<{ isOpen: boolean, setOpen: React.Dispatch<React.SetStateAction<boolean>> }>({
     isOpen: false,
     setOpen: () => { },
 });
@@ -22,7 +22,7 @@ const MenuUi = ({ children, ...props }: { children: React.ReactNode | React.Reac
 }
 
 const ButtonUi = ({ children, className = '', ...props }: { children: (({ open }: { open: () => void }) => React.ReactElement) } & { className?: string } | { children: React.ReactNode } & Omit<ButtonProps, 'children'>): React.ReactElement => {
-    const { setOpen } = React.useContext(MenuContext);
+    const { setOpen } = useContext(MenuContext);
     return typeof children == 'function' ? children({ open: () => setOpen(true) }) : <Button className={mergeClassName('outline-none', className)} onPress={() => setOpen(true)} {...props}>{children}</Button>
 }
 
@@ -35,7 +35,9 @@ const MenuPopoverUi = ({ className, children, ...props }: {
         </MenuContext.Consumer> : children}</Popover>
 }
 
-const MenuCollectionUi = <T extends {}>({ children, className, ...props }: MenuProps<T> & React.RefAttributes<HTMLDivElement>) => {
+const MenuCollectionUi = <T extends {
+    key: string;
+}>({ children, className, ...props }: MenuProps<T> & React.RefAttributes<HTMLDivElement>) => {
     return (
         <Menu className={twMerge(className, 'outline-none')}  {...props}>
             {children}
@@ -43,7 +45,9 @@ const MenuCollectionUi = <T extends {}>({ children, className, ...props }: MenuP
     )
 }
 
-const MenuItemUi = <T extends {}>({ className,...props }: ItemProps<T> ) => {
+const MenuItemUi = <T extends {
+    key: string;
+}>({ className,...props }: ItemProps<T> ) => {
     return (
         <Item {...props} className={mergeClassName('outline-none', className)} />
     )

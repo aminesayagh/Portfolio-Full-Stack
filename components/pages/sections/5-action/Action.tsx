@@ -1,16 +1,21 @@
-import React, { useRef } from "react";
 import { useTranslation } from "next-i18next";
+import { useRef } from "react";
+import { useIsomorphicLayoutEffect } from 'react-use';
 import { twMerge } from 'tailwind-merge';
-import Text from '@/components/ui/typography/Text';
-import Display from '@/components/ui/typography/Display';
-import Link from '@/components/ui/typography/Link';
+
 import { CursorContent } from '@/components/ui/cursor';
 import { Icon } from '@/components/ui/icon'
-
+import Display from '@/components/ui/typography/Display';
+import Link from '@/components/ui/typography/Link';
+import Text from '@/components/ui/typography/Text';
+import { useLenis } from "@/lib/Lenis";
 import { gsap } from "@/utils/gsap";
 
-import { useIsomorphicLayoutEffect } from 'react-use';
-import { useLenis } from "@/lib/Lenis";
+const CLASS_GSAP = {
+    title: 'contact-title-gsap',
+    quota: 'contact_quota_gsap',
+    arrow: 'contact-arrow-gsap',
+};
 
 const Action = () => {
     const { t, i18n } = useTranslation();
@@ -22,14 +27,16 @@ const Action = () => {
             const tl = gsap.timeline({
                 paused: true,
                 scrollTrigger: {
-                    trigger: refContainer.current as any,
+                    trigger: refContainer.current,
                     scrub: true,
                     start: 'top center',
                     end: 'top top',
                     toggleActions: 'play pause reverse reverse',
                     invalidateOnRefresh: true,
                 }
-            }).fromTo('.contact-title-gsap', {
+            }).fromTo(
+                CLASS_GSAP.title
+                , {
                 yPercent: -100,
             }, {
                 yPercent: 0,
@@ -70,7 +77,7 @@ const Action = () => {
                 {t('contactCall.title')}
             </Display>
         </span>
-        <div className='flex flex-row justify-start xs:justify-center items-start relative'>
+        <div className='relative flex flex-row items-start justify-start xs:justify-center'>
             <div className={twMerge(
                 'absolute hidden xxs:block',
                 'left-[103%] xs:right-[103%] rotate-180	xs:rotate-0',

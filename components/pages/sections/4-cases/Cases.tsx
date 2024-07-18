@@ -1,16 +1,14 @@
-import React, { ElementRef, useMemo, useRef } from 'react';
+import { useTranslation } from 'next-i18next';
+import { ElementRef, useMemo, useRef, memo } from 'react';
+import { useIsomorphicLayoutEffect } from 'react-use';
 import { twMerge } from 'tailwind-merge';
 
-import Title from '@/components/ui/typography/Title';
-import Text from '@/components/ui/typography/Text';
 import Image from '@/components/ui/image';
-
-import { useTranslation } from 'next-i18next';
+import Text from '@/components/ui/typography/Text';
+import Title from '@/components/ui/typography/Title';
 import { getProjectsByCategory } from '@/conf/projects';
-import { gsap, Power4 } from '@/utils/gsap';
-import { useIsomorphicLayoutEffect } from 'react-use';
-import { ScrollTrigger } from '@/utils/gsap';
 import { useLenis } from '@/lib/Lenis';
+import { gsap, Power4, ScrollTrigger } from '@/utils/gsap';
 
 const Case = ({ picture, index, id }: { picture?: [string], index: number, id: string }) => {
     const container = useRef<ElementRef<'div'>>(null);
@@ -19,9 +17,9 @@ const Case = ({ picture, index, id }: { picture?: [string], index: number, id: s
 
     useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            let tl2: gsap.core.Timeline = gsap.timeline({
+            const tl2: gsap.core.Timeline = gsap.timeline({
                 paused: true,
-            }).to('.fixed-gsap' as any, {
+            }).to('.fixed-gsap', {
                 ease: 'none',
             });
 
@@ -30,8 +28,8 @@ const Case = ({ picture, index, id }: { picture?: [string], index: number, id: s
             ScrollTrigger.create({
                 animation: tl2,
                 pin: true,
-                pinnedContainer: container.current as any,
-                trigger: container.current as any,
+                pinnedContainer: container.current,
+                trigger: container.current,
                 scrub: true,
                 pinType: isTouchDevice ? undefined : 'fixed',
                 
@@ -44,18 +42,18 @@ const Case = ({ picture, index, id }: { picture?: [string], index: number, id: s
             const tl = gsap.timeline({
                 paused: true,
             });
-            tl.fromTo('.image-gsap' as any, {
+            tl.fromTo('.image-gsap', {
                 scale: 1,
             }, {
                 scale: 1.3,
                 transformOrigin: 'center 10%',
                 ease: 'Power3.easeIn'
-            }).fromTo('.image-gsap' as any, {
+            }).fromTo('.image-gsap', {
                 backgroundPosition: 'center 20%',
             }, {
                 backgroundPosition: 'center 80%',
                 ease: 'Power3.easeOut',
-            }, 0).fromTo('.image-gsap' as any, {
+            }, 0).fromTo('.image-gsap', {
                 filter: 'blur(0px)',
             }, {
                 filter: 'blur(10px)',
@@ -64,7 +62,7 @@ const Case = ({ picture, index, id }: { picture?: [string], index: number, id: s
 
             ScrollTrigger.create({
                 animation: tl,
-                trigger: container.current as any,
+                trigger: container.current,
                 scrub: true,
                 start: 'top top',
                 end: 'bottom top',
@@ -75,7 +73,7 @@ const Case = ({ picture, index, id }: { picture?: [string], index: number, id: s
             const tlCase = gsap.timeline({
                 paused: true,
                 scrollTrigger: {
-                    trigger: container.current as any,
+                    trigger: container.current,
                     start: 'top bottom-=35%',
                     end: 'bottom center',
                     markers: false,
@@ -116,12 +114,12 @@ const Case = ({ picture, index, id }: { picture?: [string], index: number, id: s
     return <div data-scroll className={twMerge('relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden will-change-transform-animation')} ref={container} style={{
         zIndex: zIndexContainer,
     }} >
-        <div className='absolute top-0 left-0 right-0 w-full h-screen fixed-gsap'  >
+        <div className='absolute inset-x-0 top-0 w-full h-screen fixed-gsap'  >
             <Image src={pic} alt={description} className='object-cover h-screen image-gsap' priority={false} loading="lazy" sizes='100vw' width='6000' height='4500' style={{
                 zIndex: zIndexImage,
             }} />
         </div>
-        <div className='absolute top-0 left-0 right-0 w-full h-screen min-h-screen bg-no-repeat bg-cover fixed-gsap' >
+        <div className='absolute inset-x-0 top-0 w-full h-screen min-h-screen bg-no-repeat bg-cover fixed-gsap' >
             <div data-scroll data-scroll-speed='3' className={twMerge(
                 'relative w-fit flex flex-col justify-end h-full',
                 'px-5 xs:px-10 lg:px-24 py-32 xs:py-24 mdl:py-32',
@@ -142,7 +140,7 @@ const Case = ({ picture, index, id }: { picture?: [string], index: number, id: s
                     </Text>
                 </div>
             </div>
-            <div className={twMerge('absolute left-0 right-0 w-full h-80 -bottom-2 xs:h-72', 'bg-gradient-to-t from-black-100/80 to-black-100/0')} style={{
+            <div className={twMerge('absolute inset-x-0 w-full h-80 -bottom-2 xs:h-72', 'bg-gradient-to-t from-black-100/80 to-black-100/0')} style={{
                 zIndex: zIndexGradient,
             }}></div>
         </div>
@@ -158,14 +156,14 @@ const CaseHead = () => {
             {t('cases.title')}
         </Title>
         <div className='w-full xs:w-9/12 sm:w-7/12 md:w-6/12 lg:w-5/12 xl:w-4/12'>
-            <Text p size='md' degree='3' weight='semibold' className='w-auto max-w-[38rem] sm:max-w-[36rem] my-2 md:my-4' >
+            <Text p size='md' degree='3' weight='semibold' className='w-auto max-w-[38rem] sm:max-w-xl my-2 md:my-4' >
                 {t('cases.description')}
             </Text>
         </div>
     </>
 }
 
-const CaseHeadMemo = React.memo(CaseHead);
+const CaseHeadMemo = memo(CaseHead);
 
 const Cases = () => {
     const projectsImported = useMemo(() => getProjectsByCategory('best'), []);

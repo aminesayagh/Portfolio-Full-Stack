@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
 import { Client } from '@notionhq/client';
+import type { NextApiRequest, NextApiResponse } from 'next'
+
 import { NOTION_API_KEY, NOTION_DATABASE_ID } from 'utils/env';
 const notion = new Client({ auth: NOTION_API_KEY });
 type Data = {
@@ -20,68 +21,66 @@ export default async function handler(
   const { firstName, lastName, email, objective, message, locale } = req.body;
   // Notion API call
   async function addItem() {
-    try {
-      const response = await notion.pages.create({
-        parent: {
-          database_id: databaseId,
-        },
-        properties: {
-          Name: {
-            title: [
-              {
-                text: {
-                  content: `${firstName} ${lastName}`,
-                },
+    const response = await notion.pages.create({
+      parent: {
+        database_id: databaseId,
+      },
+      properties: {
+        Name: {
+          title: [
+            {
+              text: {
+                content: `${firstName} ${lastName}`,
               },
-            ],
-          },
-          firstName: {
-            rich_text: [
-              {
-                text: {
-                  content: firstName,
-                },
-
-              },
-            ],
-          },
-          lastName: {
-            rich_text: [
-              {
-                text: {
-                  content: lastName,
-                },
-              }
-            ],
-          },
-          email: {
-            email: email,
-          },
-          objective: {
-            select: {
-              name: objective,
             },
-          },
-          message: {
-            rich_text: [
-              {
-                text: {
-                  content: message,
-                },
-              },
-            ],
-          },
-          locale: {
-            select: {
-              name: locale
-            }
-          }
+          ],
         },
-      });
-      return response;
-    } catch (error: any) {
-      throw new Error(error.body);
-    }
+        firstName: {
+          rich_text: [
+            {
+              text: {
+                content: firstName,
+              },
+
+            },
+          ],
+        },
+        lastName: {
+          rich_text: [
+            {
+              text: {
+                content: lastName,
+              },
+            }
+          ],
+        },
+        email: {
+          email: email,
+        },
+        objective: {
+          select: {
+            name: objective,
+          },
+        },
+        message: {
+          rich_text: [
+            {
+              text: {
+                content: message,
+              },
+            },
+          ],
+        },
+        locale: {
+          select: {
+            name: locale
+          }
+        }
+      },
+    }).catch(err => {
+      throw new Error(err.body);
+    })
+    return response;
   }
   try {
     await addItem();

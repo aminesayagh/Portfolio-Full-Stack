@@ -1,10 +1,9 @@
 import { useTranslation } from "next-i18next";
+import { twMerge } from 'tailwind-merge';
 
-import Text from '@/components/ui/typography/Text';
 import Button from '@/components/ui/button';
 import {Icon} from '@/components/ui/icon';
-
-import { twMerge } from 'tailwind-merge';
+import Text from '@/components/ui/typography/Text';
 import useRouterChange from '@/hook/SafePush';
 
 const Action = () => {
@@ -24,10 +23,10 @@ const Action = () => {
                     'py-12'
                 )}>
                 <div className={twMerge('w-auto flex flex-row items-center justify-start', 'order-2 md:order-1')}>
-                    <Button size='sm' className='border rounded-full py-4 px-6' degree='2' onPress={goToContact} >
+                    <Button size='sm' className='px-6 py-4 border rounded-full' degree='2' onPress={goToContact} >
                         {t('motivation.action')}
                     </Button>
-                    <Button className='border rounded-full p-4' title={t('motivation.action')} name='button action icon' onPress={goToContact}>
+                    <Button className='p-4 border rounded-full' title={t('motivation.action')} name='button action icon' onPress={goToContact}>
                         <Icon name='IconArrowUpRight' size='22' className='stroke-white-100 stroke-[1.2px] lg:stroke-[2px]' />
                     </Button>
                 </div>

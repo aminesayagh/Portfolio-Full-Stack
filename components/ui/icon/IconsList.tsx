@@ -1,5 +1,4 @@
 import { IconChevronRight, IconChevronDown, IconExclamationCircle, IconCornerLeftDown, IconArrowUpRight, IconShare, IconArrowBigRightFilled } from '@tabler/icons-react';
-
 import { SVGAttributes } from "react";
 
 export interface IconProps extends SVGAttributes<SVGElement> {

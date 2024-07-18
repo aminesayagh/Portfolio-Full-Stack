@@ -43,7 +43,7 @@
         }
       }
     ],
-    "tailwindcss/classnames-order": "warn", // Warn on classnames order
+    "tailwindcss/classnames-order": "off", // Allow custom classnames
     "tailwindcss/no-custom-classname": "off" // Allow custom classnames
   },
   "settings": {

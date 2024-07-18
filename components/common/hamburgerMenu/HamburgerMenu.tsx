@@ -1,9 +1,10 @@
 
-import { useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import Button from '@/components/ui/button';
+import { useEffect } from 'react';
 import { useKeyboard } from 'react-aria';
-import { useMedia } from 'react-use'
+import { useMedia } from 'react-use';
+
+import Button from '@/components/ui/button';
 
 const SIZE = 26;
 const Y_PATH_01_CLOSED = '8';
@@ -45,7 +46,7 @@ const HamburgerMenu = ({ isOpen, setOpen }: { isOpen: boolean, setOpen: () => vo
             handlerHamburgerClick().then().catch(err => console.error(err));
         }
     }, [isOpen, path02Controls, path01Controls])
-    let { keyboardProps } = useKeyboard({
+    const { keyboardProps } = useKeyboard({
         onKeyDown: (e) => {
             if (['Escape', 'Esc'].includes(e.key)) {
             }

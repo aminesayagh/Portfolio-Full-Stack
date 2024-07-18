@@ -1,12 +1,13 @@
-import { FC, useMemo } from 'react';
-
-import { LinkPropsExtended } from './Typography.type';
-import { twMerge } from 'tailwind-merge';
 import LinkNext from 'next/link';
-import { textClassNames } from './Typography.style';
+import { FC, useMemo } from 'react';
+import { twMerge } from 'tailwind-merge';
+
 import { CursorContent } from '@/components/ui/cursor';
 
-const Link: FC<LinkPropsExtended> = ({ weight, degree = '3', size, exchange, className, animation, children, href, ...props }) => {
+import { textClassNames } from './Typography.style';
+import { LinkPropsExtended } from './Typography.type';
+
+const Link: FC<LinkPropsExtended> = ({ weight, degree = '3', size, exchange, className, children, href, ...props }) => {
     const classNameExtended = useMemo(() => {return (size && weight) ? textClassNames({ weight, size, degree, exchange }) : className}, [weight, size, degree, exchange, className]);
     return <CursorContent name={`cursorPointer_header_email`} component='CursorEvent' props={{
         event: 'pointer',

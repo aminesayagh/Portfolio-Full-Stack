@@ -1,15 +1,15 @@
+import { forwardRef, useMemo, memo } from 'react';
 import { FocusRing } from 'react-aria';
 import { Button } from 'react-aria-components';
-import { ButtonProps } from './Button.type';
 import { twMerge } from 'tailwind-merge';
-import { textClassNames } from '@/components/ui/typography';
+
 import { CursorContent } from '@/components/ui/cursor';
-import React, { forwardRef, useMemo, memo } from 'react';
+import { textClassNames } from '@/components/ui/typography';
+
+import { ButtonProps } from './Button.type';
 
 const ButtonUi = forwardRef<HTMLButtonElement, ButtonProps>(({
   children,
-  icon,
-  iconRight,
   size = 'auto',
   full,
   weight,

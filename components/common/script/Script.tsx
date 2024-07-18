@@ -1,4 +1,5 @@
 import Script from 'next/script';
+
 import { NEXT_PUBLIC_GOOGLE_ANALYTICS_ID } from 'utils/env';
 
 const Scripts = () => (

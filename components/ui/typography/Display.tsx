@@ -1,8 +1,9 @@
 import { FC, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { DisplayPropsExtended } from './Typography.type';
-import { textColorDegree, displayStyle } from './Typography.style'
+
 import Style from './Typography.module.scss';
+import { textColorDegree, displayStyle } from './Typography.style'
+import { DisplayPropsExtended } from './Typography.type';
 
 const Display: FC<DisplayPropsExtended> = ({ size, weight, exchange, children, className, ...props }) => {
     const classes = useMemo(() => {
