@@ -7,6 +7,14 @@ const nextConfig = {
   swcMinify: true,
   experimental: { esmExternals: true },
   i18n,
+  async rewrites() {
+    return [
+      {
+        source: '/robots.txt',
+        destination: '/api/robots',
+      },
+    ];
+  },
   async headers() {
     return [
       {

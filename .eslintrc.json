@@ -60,6 +60,15 @@
     "jsx-a11y/alt-text": "warn",
     "jsx-a11y/aria-role": "warn",
     "jsx-a11y/interactive-supports-focus": "warn",
+    "jsx-a11y/no-autofocus": "warn",
+    "jsx-a11y/no-noninteractive-element-interactions": "warn",
+    "jsx-a11y/no-static-element-interactions": "warn",
+    "jsx-a11y/no-redundant-roles": "warn",
+    "jsx-a11y/click-events-have-key-events": "warn",
+    "jsx-a11y/no-noninteractive-tabindex": "warn", // Warn if a non-interactive element is tabbable
+    "jsx-a11y/media-has-caption": "warn", // Warn if media does not have a <track> for captions
+    "jsx-a11y/role-supports-aria-props": "warn", // Warn if role attribute does not support aria-* props
+    "jsx-a11y/tabindex-no-positive": "warn", // Warn on positive tabindex
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn"
   },

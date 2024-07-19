@@ -74,6 +74,8 @@ const HamburgerMenu = ({
           onPress={() => setOpen()}
           name="Hamberger menu button"
           title="Hamberger menu button"
+          aria-label="Hamberger menu button"
+          aria-haspopup="true"
         >
           <svg
             width={`${isXxs ? SIZE : 22}`}

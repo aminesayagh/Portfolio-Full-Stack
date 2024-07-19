@@ -91,6 +91,8 @@ const ButtonNext = ({ goToCases }: { goToCases: GoTOCases }) => {
           "relative bg-white-100",
           "rounded-full overflow-hidden will-change-transform-animation next_button_gsap"
         )}
+        aria-label="Go to cases"
+        aria-haspopup="true"
       >
         <div className=" [&>*]:stroke-black-200 transition-colors duration-300 p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6">
           <Icon

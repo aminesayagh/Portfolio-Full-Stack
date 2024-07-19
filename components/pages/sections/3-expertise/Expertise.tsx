@@ -140,19 +140,16 @@ const Card = ({
           )}
         >
           {/* <Title h5 weight='bold' degree='2' className="order-1 transition-all duration-100 delay-100 max-w-48 lg:order-2 xl:order-1" exchange={!isHovered} >{name}</Title> */}
-          <h5
-            className={title(
-              {
-                weight: "bold",
-                degree: "2",
-                size: "h5",
-                mode: isHovered ? "normal" : "exchanged"
-              },
-              ""
-            )}
+          <h3
+            className={title({
+              weight: "bold",
+              degree: "2",
+              size: "h5",
+              mode: isHovered ? "normal" : "exchanged"
+            })}
           >
             {name}
-          </h5>
+          </h3>
           {/* <Text p weight='bold' degree='3' size="lg" exchange={!isHovered} className='order-2 duration-100 delay-100 opacity-60 lg:order-1 xl:order-2'>{number}</Text> */}
           <p
             className={text(
