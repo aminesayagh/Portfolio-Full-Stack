@@ -292,6 +292,8 @@ const Header = () => {
                       <button
                         className="hidden overflow-hidden cursor-pointer xxs:block"
                         onClick={() => handler()}
+                        aria-label="menu"
+                        aria-haspopup="true"
                       >
                         <p
                           className={text(

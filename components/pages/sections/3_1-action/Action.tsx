@@ -42,6 +42,7 @@ const Action = () => {
             title={t("motivation.action")}
             name="button action icon"
             onPress={goToContact}
+            aria-label="button action icon"
           >
             <Icon
               name="IconArrowUpRight"

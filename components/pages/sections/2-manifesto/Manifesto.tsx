@@ -169,7 +169,7 @@ const Manifesto = () => {
           )}
         >
           <div className="flex flex-row items-center justify-center gap-5">
-            <h6
+            <h2
               className={title({
                 degree: "4",
                 weight: "medium",
@@ -177,7 +177,7 @@ const Manifesto = () => {
               })}
             >
               {t(`manifesto.subtitle_1`)}
-            </h6>
+            </h2>
             <div className="size-[0.3rem] rounded-full bg-gray-500 items-center justify-start"></div>
             <h6
               className={title({
