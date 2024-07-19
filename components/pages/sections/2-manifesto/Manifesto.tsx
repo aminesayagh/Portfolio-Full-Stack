@@ -179,7 +179,7 @@ const Manifesto = () => {
               {t(`manifesto.subtitle_1`)}
             </h2>
             <div className="size-[0.3rem] rounded-full bg-gray-500 items-center justify-start"></div>
-            <h6
+            <h3
               className={title({
                 degree: "4",
                 weight: "medium",
@@ -187,7 +187,7 @@ const Manifesto = () => {
               })}
             >
               {t(`manifesto.subtitle_2`)}
-            </h6>
+            </h3>
           </div>
           <div
             className={title(
