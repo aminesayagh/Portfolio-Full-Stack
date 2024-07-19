@@ -8,7 +8,7 @@ function References() {
     // start a download file on the client side when the page is loaded
     const downloadFile = async () => {
       const response = await fetch(
-        "/Mohamed Amine SAYAGH - Full Stack Developer - RESUME.pdf"
+        "/Mohamed Amine SAYAGH - Sotware developer - Resume.pdf"
       );
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
