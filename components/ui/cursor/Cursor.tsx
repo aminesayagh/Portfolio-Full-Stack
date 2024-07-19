@@ -1,272 +1,351 @@
-import React, { useRef, useState, createContext, ElementRef, useMemo, useCallback } from 'react';
+import React, {
+  useRef,
+  useState,
+  ElementRef,
+  useMemo,
+  useCallback
+} from "react";
+import { useIsomorphicLayoutEffect } from "react-use";
+import { twMerge } from "tailwind-merge";
 
-import { gsap } from '@/utils/gsap';
-import { twMerge } from 'tailwind-merge';
-import Cursors, { CursorsArray } from './Cursors';
-import { ItemCursor } from './CursorType';
-import { useIsomorphicLayoutEffect } from 'react-use';
-import { useEventListener } from '@/hook/useEventListener';
+import { useEventListener } from "@/hook/useEventListener";
+import { gsap } from "@/utils/gsap";
 
-export const cursorContext = createContext<{
-    addCursor?: (item: ItemCursor<'CursorScroll'>) => void,
-    setKey?: (key: string | null) => void,
-}>({});
+import { cursorContext } from "./Cursor.context";
+import Cursors, { CursorsArray } from "./Cursors";
+import { ItemCursor } from "./CursorType";
 
-const DEFAULT_BALL_CLASS_NAME = ['fixed rounded-full pointer-events-none cursor-none will-change-transform-animation', 'top-0 left-0 z-cursor'];
+const DEFAULT_BALL_CLASS_NAME = [
+  "fixed rounded-full pointer-events-none cursor-none will-change-transform-animation",
+  "top-0 left-0 z-cursor"
+];
 
-const Cursor = ({ children }: { children: React.ReactElement | React.ReactElement[] }) => {
-    const ref = useRef<ElementRef<'div'>>(null);
+const Cursor = ({
+  children
+}: {
+  children: React.ReactElement | React.ReactElement[];
+}) => {
+  const ref = useRef<ElementRef<"div">>(null);
 
-    const list = useRef<ItemCursor[]>([]);
+  const list = useRef<ItemCursor[]>([]);
 
-    const addCursor = useCallback(({
-        ...props
-    }: ItemCursor) => {
-        list.current.push({
-            ...props
+  const addCursor = useCallback(({ ...props }: ItemCursor) => {
+    list.current.push({
+      ...props
+    });
+  }, []);
+
+  const [key, setKey] = useState<string | null>(null);
+  const ctx = useRef<gsap.Context>();
+
+  useIsomorphicLayoutEffect(() => {
+    ctx.current = gsap.context(context => {
+      const timeline = () => {
+        const tl = gsap.timeline({
+          paused: true
         });
-    }, []);
-
-    const [key, setKey] = useState<string | null>(null);
-    let ctx = useRef<gsap.Context>();
-
-    useIsomorphicLayoutEffect(() => {
-        ctx.current = gsap.context((context) => {
-            let timeline = () => {
-                let tl = gsap.timeline({
-                    paused: true,
-                });
-                return tl.to('.ball_main_gsap', {
-                    duration: 0.3,
-                    scale: 0,
-                    ease: 'Power4.easeOut',
-                }, 0).fromTo('.ball_secondary_gsap', {
-                    scale: 1
-                }, {
-                    duration: 0.2,
-                    scale: 0,
-                    ease: 'Power4.easeOut',
-                }).to('.ball_inner_top', {
-                    duration: 0.1,
-                    scale: 1,
-                    ease: 'Power4.easeOut',
-                }, 0.2);
+        return tl
+          .to(
+            ".ball_main_gsap",
+            {
+              duration: 0.3,
+              scale: 0,
+              ease: "Power4.easeOut"
+            },
+            0
+          )
+          .fromTo(
+            ".ball_secondary_gsap",
+            {
+              scale: 1
+            },
+            {
+              duration: 0.2,
+              scale: 0,
+              ease: "Power4.easeOut"
             }
-            let cursorScrollTimeline = timeline().fromTo('.cursor_scroll_gsap', {
-                display: 'flex',
-                scale: 0,
-                opacity: 0,
-            }, {
-                duration: 0.5,
-                scale: 1,
-                opacity: 1,
-                ease: 'Power4.easeOut',
-            }, '>').fromTo('.cursor_scroll_gsap .cursor_text_gsap', {
-                rotate: -45,
-                opacity: 0,
-            }, {
-                opacity: 1,
-                duration: 0.3,
-                ease: 'Expo.easeOut',
-                rotate: 0,
-            });
+          )
+          .to(
+            ".ball_inner_top",
+            {
+              duration: 0.1,
+              scale: 1,
+              ease: "Power4.easeOut"
+            },
+            0.2
+          );
+      };
+      const cursorScrollTimeline = timeline()
+        .fromTo(
+          ".cursor_scroll_gsap",
+          {
+            display: "flex",
+            scale: 0,
+            opacity: 0
+          },
+          {
+            duration: 0.5,
+            scale: 1,
+            opacity: 1,
+            ease: "Power4.easeOut"
+          },
+          ">"
+        )
+        .fromTo(
+          ".cursor_scroll_gsap .cursor_text_gsap",
+          {
+            rotate: -45,
+            opacity: 0
+          },
+          {
+            opacity: 1,
+            duration: 0.3,
+            ease: "Expo.easeOut",
+            rotate: 0
+          }
+        );
 
-            let cursorActionIconTimeline = timeline().to('.cursor_action_icon_gsap', {
-                duration: 0.1,
-                display: 'flex',
-            }).fromTo('.cursor_action_icon_gsap', {
-                scale: 0,
-                opacity: 0,
-                // backgroundColor: 'transparent',
-            }, {
-                duration: 0.4,
-                scale: 1,
-                opacity: 1,
-                // backgroundColor: 'var(--color-white-100)',
-                ease: 'Power4.easeOut',
-            }, '>').fromTo('.cursor_action_icon_gsap .cursorIconGsap', {
-                rotate: 45,
-                opacity: 0
-            }, {
-                duration: 0.5,
-                opacity: 1,
-                ease: 'Expo.easeOut',
-                rotate: 0,
-            });
+      const cursorActionIconTimeline = timeline()
+        .to(".cursor_action_icon_gsap", {
+          duration: 0.1,
+          display: "flex"
+        })
+        .fromTo(
+          ".cursor_action_icon_gsap",
+          {
+            scale: 0,
+            opacity: 0
+            // backgroundColor: 'transparent',
+          },
+          {
+            duration: 0.4,
+            scale: 1,
+            opacity: 1,
+            // backgroundColor: 'var(--color-white-100)',
+            ease: "Power4.easeOut"
+          },
+          ">"
+        )
+        .fromTo(
+          ".cursor_action_icon_gsap .cursorIconGsap",
+          {
+            rotate: 45,
+            opacity: 0
+          },
+          {
+            duration: 0.5,
+            opacity: 1,
+            ease: "Expo.easeOut",
+            rotate: 0
+          }
+        );
 
-            context.add('cursorScroll', (isActive: boolean) => {
-                if (isActive) {
-                    cursorScrollTimeline.play();
-                } else {
-                    cursorScrollTimeline.reverse();
-                }
-            });
-            context.add('cursorActionIcon', (isActive: boolean) => {
-                if (isActive) {
-                    cursorActionIconTimeline.play();
-                } else {
-                    cursorActionIconTimeline.reverse();
-                }
-            });
+      context.add("cursorScroll", (isActive: boolean) => {
+        if (isActive) {
+          cursorScrollTimeline.play();
+        } else {
+          cursorScrollTimeline.reverse();
+        }
+      });
+      context.add("cursorActionIcon", (isActive: boolean) => {
+        if (isActive) {
+          cursorActionIconTimeline.play();
+        } else {
+          cursorActionIconTimeline.reverse();
+        }
+      });
 
-            let timelineBallEventPointer =gsap.timeline({
-                paused: true,
-            }).fromTo('.ball_secondary_gsap', {
-                scale: 1,
-            }, {
-                duration: 0.4,
-                scale: 0,
-                ease: 'Power4.easeOut',
-            }).fromTo('.ball_main_gsap', {
-                scale: 1,
-                opacity: 1,
-            }, {
-                duration: 0.4,
-                scale: 1.2,
-                opacity: 0.8,
-                ease: 'Power4.easeOut',
-            }, '<');
-            context.add('CursorEvent', (isActive: boolean) => {
-                if (isActive) {
-                    timelineBallEventPointer.play();
-                } else {
-                    timelineBallEventPointer.reverse();
-                }
-            });
-            return () => {
-                cursorScrollTimeline.kill();
-                cursorActionIconTimeline.kill();
-                timelineBallEventPointer.kill();
-            }
+      const timelineBallEventPointer = gsap
+        .timeline({
+          paused: true
+        })
+        .fromTo(
+          ".ball_secondary_gsap",
+          {
+            scale: 1
+          },
+          {
+            duration: 0.4,
+            scale: 0,
+            ease: "Power4.easeOut"
+          }
+        )
+        .fromTo(
+          ".ball_main_gsap",
+          {
+            scale: 1,
+            opacity: 1
+          },
+          {
+            duration: 0.4,
+            scale: 1.2,
+            opacity: 0.8,
+            ease: "Power4.easeOut"
+          },
+          "<"
+        );
+      context.add("CursorEvent", (isActive: boolean) => {
+        if (isActive) {
+          timelineBallEventPointer.play();
+        } else {
+          timelineBallEventPointer.reverse();
+        }
+      });
+      return () => {
+        cursorScrollTimeline.kill();
+        cursorActionIconTimeline.kill();
+        timelineBallEventPointer.kill();
+      };
+    });
+    return () => ctx.current?.revert();
+  }, []);
+
+  // default ball animation
+  const ctxMouseMove = useRef<gsap.Context>();
+
+  useIsomorphicLayoutEffect(() => {
+    ctxMouseMove.current = gsap.context(context => {
+      // set initial position
+      gsap.set([".ball_main_gsap", ".ball_secondary_gsap", ".ball_inner_top"], {
+        xPercent: -50,
+        yPercent: -50
+      });
+
+      context.add("xTo", (x: number) => {
+        gsap.to(".ball_main_gsap", {
+          duration: 0.6,
+          ease: "Elastic.easeOut",
+          x
         });
-        return () => ctx.current?.revert();
-    }, []);
+      });
+      context.add("yTo", (y: number) => {
+        gsap.to(".ball_main_gsap", {
+          duration: 0.6,
+          ease: "Elastic.easeOut",
+          y
+        });
+      });
+      context.add("xToSecondary", (x: number) => {
+        gsap.to([".ball_secondary_gsap", ".ball_inner_top"], {
+          duration: 0.3,
+          ease: "Power4.easeOut",
+          x
+        });
+      });
+      context.add("yToSecondary", (y: number) => {
+        gsap.to([".ball_secondary_gsap", ".ball_inner_top"], {
+          duration: 0.3,
+          ease: "Power4.easeOut",
+          y
+        });
+      });
+      context.add("opacityTo", (opacity: number) => {
+        gsap.to([".ball_main_gsap", ".ball_secondary_gsap"], {
+          duration: 0.3,
+          ease: "Power4.easeOut",
+          opacity,
+          scale: 1
+        });
+      });
+    }, ref);
 
-    // default ball animation
-    const ctxMouseMove = useRef<gsap.Context>();
+    return () => ctxMouseMove.current?.revert();
+  }, [ref]);
 
-    useIsomorphicLayoutEffect(() => {
-        ctxMouseMove.current = gsap.context((context) => {
-            // set initial position
-            gsap.set(['.ball_main_gsap', '.ball_secondary_gsap', '.ball_inner_top'], {
-                xPercent: -50,
-                yPercent: -50,
-            });
-            
+  const mouseEnterHandler = useCallback(() => {
+    const current = ctxMouseMove.current;
+    if (!current) return;
+    current["opacityTo"](1);
+  }, [ctxMouseMove]);
+  const mouseLeaveHandler = useCallback(() => {
+    const current = ctxMouseMove.current;
+    if (!current) return;
+    current["opacityTo"](0);
+  }, [ctxMouseMove]);
+  const mouseMoveHandler = useCallback(
+    (e: MouseEvent) => {
+      const current = ctxMouseMove.current;
+      if (!current) return;
+      current["xTo"](e.clientX);
+      current["yTo"](e.clientY);
 
-            context.add('xTo', (x: number) => {
-                gsap.to('.ball_main_gsap', {
-                    duration: 0.6,
-                    ease: 'Elastic.easeOut',
-                    x
-                });
-            })
-            context.add('yTo', (y: number) => {
-                gsap.to('.ball_main_gsap', {
-                    duration: 0.6,
-                    ease: 'Elastic.easeOut',
-                    y
-                });
-            })
-            context.add('xToSecondary', (x: number) => {
-                gsap.to(['.ball_secondary_gsap', '.ball_inner_top'], {
-                    duration: 0.3,
-                    ease: 'Power4.easeOut',
-                    x
-                });
-            })
-            context.add('yToSecondary', (y: number) => {
-                gsap.to(['.ball_secondary_gsap', '.ball_inner_top'], {
-                    duration: 0.3,
-                    ease: 'Power4.easeOut',
-                    y
-                });
-            })
-            context.add('opacityTo', (opacity: number) => {
-                gsap.to(['.ball_main_gsap', '.ball_secondary_gsap'], {
-                    duration: 0.3,
-                    ease: 'Power4.easeOut',
-                    opacity,
-                    scale: 1,
-                });
-            })
-        }, ref);
+      current["xToSecondary"](e.clientX);
+      current["yToSecondary"](e.clientY);
+    },
+    [ctxMouseMove]
+  );
+  useEventListener("mouseenter", mouseEnterHandler, ref);
+  useEventListener("mouseleave", mouseLeaveHandler, ref);
+  useEventListener("mousemove", mouseMoveHandler, ref);
 
-        return () => ctxMouseMove.current?.revert();
-    }, [ref])
+  const blend = useMemo(
+    () => (typeof key == "string" ? "" : "mix-blend-difference"),
+    [key]
+  );
+  const currentCursor = useMemo(
+    () => list.current.find(item => item.name == key),
+    [key]
+  );
 
-    const mouseEnterHandler = useCallback(() => {
-        const current = ctxMouseMove.current;
-        if (!current) return;
-        current['opacityTo'](1);
-    }, [ctxMouseMove]);
-    const mouseLeaveHandler = useCallback(() => {
-        const current = ctxMouseMove.current;
-        if (!current) return;
-        current['opacityTo'](0);
-    }, [ctxMouseMove]);
-    const mouseMoveHandler = useCallback((e: MouseEvent) => {
-        const current = ctxMouseMove.current;
-        if (!current) return;
-        current['xTo'](e.clientX);
-        current['yTo'](e.clientY);
-
-        current['xToSecondary'](e.clientX);
-        current['yToSecondary'](e.clientY);
-    }, [ctxMouseMove]);
-    useEventListener('mouseenter', mouseEnterHandler, ref);
-    useEventListener('mouseleave', mouseLeaveHandler, ref);
-    useEventListener('mousemove', mouseMoveHandler, ref);
-    
-
-    const blend = useMemo(() => typeof key == 'string' ? '' : 'mix-blend-difference', [key])
-    const currentCursor = useMemo(() => list.current.find(item => item.name == key), [key]);
-
-    return <>
-        <div className='cursor-container' ref={ref}>
-            <cursorContext.Provider value={{
-                addCursor, setKey
-            }}>
-                <div className='relative cursor_container' >
-                    {children}
-                </div>
-                <div className={twMerge(
-                    DEFAULT_BALL_CLASS_NAME,
-                    blend,
-                    'ball_gsap ball_secondary_gsap pointer-events-none',
-                    'h-4 sm:h-5 w-4 sm:w-5',
-                    'bg-primary-600/80'
-                )} ></div>
-                <div className={twMerge(
-                    DEFAULT_BALL_CLASS_NAME,
-                    blend,
-                    'ball_gsap ball_main_gsap',
-                    'w-10 sm:w-12 h-10 sm:h-12',
-                    'border border-primary-500 bg-white-300/5 backdrop-blur-xs')}
-                ></div>
-                <div className={
-                    twMerge(
-                        DEFAULT_BALL_CLASS_NAME,
-                        blend,
-                        'ball_gsap ball_inner_top',
-                        'w-full', 'flex justify-center items-center uppercase')
-                    }
-                >
-                    {CursorsArray.map((item) => {
-                        const isActive = item == currentCursor?.component;
-                        let otherProps = {};
-                        if (isActive) {
-                            otherProps = currentCursor?.props;
-                        }
-                        return <span key={item}>
-                            {Cursors[item]({ ctx, isActive, ...otherProps })}
-                        </span>
-                    })}
-                </div>
-            </cursorContext.Provider>
-        </div>
-        <style >
-            {`
+  return (
+    <>
+      <div className="cursor-container" ref={ref}>
+        <cursorContext.Provider
+          value={{
+            addCursor,
+            setKey
+          }}
+        >
+          <div className="relative cursor_container">{children}</div>
+          <div
+            className={twMerge(
+              DEFAULT_BALL_CLASS_NAME,
+              blend,
+              "ball_gsap ball_secondary_gsap pointer-events-none",
+              "h-4 sm:h-5 w-4 sm:w-5",
+              "bg-primary-600/80"
+            )}
+          ></div>
+          <div
+            className={twMerge(
+              DEFAULT_BALL_CLASS_NAME,
+              blend,
+              "ball_gsap ball_main_gsap",
+              "w-10 sm:w-12 h-10 sm:h-12",
+              "border border-primary-500 bg-white-300/5 backdrop-blur-xs"
+            )}
+          ></div>
+          <div
+            className={twMerge(
+              DEFAULT_BALL_CLASS_NAME,
+              blend,
+              "ball_gsap ball_inner_top",
+              "w-full",
+              "flex justify-center items-center uppercase"
+            )}
+          >
+            {CursorsArray.map(item => {
+              const isActive = item == currentCursor?.component;
+              let otherProps = {};
+              if (isActive) {
+                otherProps = currentCursor?.props;
+              }
+              return (
+                <span key={item}>
+                  {/*  */}
+                  {Cursors[item]({
+                    ctx,
+                    isActive,
+                    ...otherProps
+                  })}
+                </span>
+              );
+            })}
+          </div>
+        </cursorContext.Provider>
+      </div>
+      <style>
+        {`
                 .cursor_container {
                     cursor: default;
                 }
@@ -301,8 +380,9 @@ const Cursor = ({ children }: { children: React.ReactElement | React.ReactElemen
                     z-index: 9999999999999;
                 }
             `}
-        </style>
-    </>;
-}
+      </style>
+    </>
+  );
+};
 
 export default Cursor;

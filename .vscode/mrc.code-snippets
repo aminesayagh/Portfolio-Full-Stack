@@ -17,7 +17,7 @@
 		"prefix": "mrc",
 		"body": [
 			"// ---------------- DEPENDANCIES ---------------------- //",
-			"import * as React from 'react';",
+			"import * as React from "react";",
 			"",
 			"// ---------------- COMPONENTS ---------------------- //",
 			"",
@@ -44,7 +44,7 @@
 		"prefix": "mrct",
 		"body": [
 			"// global resources",
-			"import React , { FC } from 'react'",
+			"import React , { FC } from "react"",
 			"",
 			"",
 			"// interne resources",

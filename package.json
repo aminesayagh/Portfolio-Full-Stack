@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "debug": "NODE_OPTIONS='--inspect' next dev",
-    "knip": "knip"
+    "knip": "knip",
+    "format": "prettier --write \"**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -75,7 +76,9 @@
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.34.4",
     "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.8",
     "eslint-plugin-tailwindcss": "^3.17.4",
-    "knip": "^5.22.2"
+    "knip": "^5.22.2",
+    "prettier": "^3.3.3"
   }
 }

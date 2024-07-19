@@ -1,23 +1,23 @@
-import { useState, useCallback, memo, useEffect, useRef, useMemo } from "react";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
+import { useState, useCallback, memo, useEffect, useRef, useMemo } from "react";
+import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
 
-import { gsap, Power3, ScrollTrigger } from "@/utils/gsap";
-
-import StyleAnimation from "@/styles/animation.module.scss";
-import { usePreloader } from "@/components/ui/preloader";
-import Navbar from "@/components/ui/navbar";
-import Logo from "@/components/ui/logo";
-import Link from "@/components/ui/typography/Link";
-import Button from "@/components/ui/button";
-import { containerStyle } from "@/components/ui/container";
-import Modal from "@/components/ui/overlay/modal";
-import Text from "@/components/ui/typography/Text";
-import Title from "@/components/ui/typography/Title";
 import HamburgerMenu from "@/components/common/hamburgerMenu";
 import SwitchLang from "@/components/common/switchLang";
+import Button from "@/components/ui/button";
+import { containerStyle } from "@/components/ui/container";
+import Logo from "@/components/ui/logo";
+import Navbar from "@/components/ui/navbar";
+import Modal from "@/components/ui/overlay/modal";
+import { usePreloader } from "@/components/ui/preloader";
+import { text, title, Link } from "@/components/ui/typography";
 import { getMenuItems } from "@/conf/router";
+import useRouterChange from "@/hook/SafePush";
+import { useLenis } from "@/lib/Lenis";
+import StyleAnimation from "@/styles/animation.module.scss";
+import { gsap, Power3, ScrollTrigger } from "@/utils/gsap";
 
 const GAP_SIZE_LG = "gap-4 sm:gap-6 lg:gap-7 xl:gap-8";
 const GAP_SIZE_XL = "gap-8 mdl:gap-12";
@@ -27,10 +27,6 @@ const BASE_LOCALE_SOCIAL = "socialNetwork";
 const DURATION = 0.4;
 const TRANSLATE_Y = -110;
 
-import useRouterChange from "@/hook/SafePush";
-import { useIsomorphicLayoutEffect } from "react-use";
-import { useLenis } from "@/lib/Lenis";
-
 const menuHamburgerItems = getMenuItems("hamburger");
 const menuSocialNetworks = getMenuItems("socialNetworks");
 
@@ -38,7 +34,7 @@ const Header = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const { safePush } = useRouterChange();
-  let [openMenu, setOpenMenu] = useState<boolean>(false);
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
   const { endLoading } = usePreloader();
   // const { scrollTo } = useLocomotiveScroll();
   const lenis = useLenis();
@@ -47,7 +43,7 @@ const Header = () => {
   const ctx = useRef<gsap.Context>();
 
   useIsomorphicLayoutEffect(() => {
-    ctx.current = gsap.context((self) => {
+    ctx.current = gsap.context(self => {
       self.add("open", () => {
         tl.current
           .fromTo(
@@ -57,7 +53,7 @@ const Header = () => {
               yPercent: TRANSLATE_Y,
               transformOrigin: "right top",
               skewY: 2,
-              onStartParams: [],
+              onStartParams: []
             },
             {
               duration: DURATION,
@@ -65,8 +61,8 @@ const Header = () => {
               yPercent: 0,
               skewY: 0,
               stagger: {
-                amount: 0.2,
-              },
+                amount: 0.2
+              }
             }
           )
           .to(
@@ -74,7 +70,7 @@ const Header = () => {
             {
               duration: DURATION / 2,
               yPercent: 100,
-              ease: Power3.easeInOut,
+              ease: Power3.easeInOut
             },
             "<"
           )
@@ -84,20 +80,20 @@ const Header = () => {
             opacity: 0,
             ease: Power3.easeInOut,
             stagger: {
-              amount: 0.2,
-            },
+              amount: 0.2
+            }
           })
           .fromTo(
             ".modal-close",
             {
               display: "none",
-              opacity: 0,
+              opacity: 0
             },
             {
               opacity: 1,
               ease: Power3.easeInOut,
               duration: DURATION / 2,
-              display: "block",
+              display: "block"
             }
           )
           .from(
@@ -106,7 +102,7 @@ const Header = () => {
               duration: DURATION,
               yPercent: 100,
               opacity: 0,
-              ease: Power3.easeInOut,
+              ease: Power3.easeInOut
             },
             "<"
           )
@@ -117,7 +113,7 @@ const Header = () => {
               yPercent: 100,
               opacity: 0,
               transformOrigin: "center bottom",
-              ease: Power3.easeInOut,
+              ease: Power3.easeInOut
             },
             "<50%"
           )
@@ -127,7 +123,7 @@ const Header = () => {
               xPercent: -100,
               transformOrigin: "left center",
               ease: Power3.easeInOut,
-              duration: DURATION / 2,
+              duration: DURATION / 2
             },
             "<25%"
           );
@@ -146,25 +142,25 @@ const Header = () => {
       const currentCtx = ctx.current;
       const currentTl = tl.current;
       if (currentCtx) currentCtx.revert();
-      if (currentTl) currentTl.kill
+      if (currentTl) currentTl.kill;
     };
   }, []);
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      let tl = gsap
+      const tl = gsap
         .timeline({
-          paused: true,
+          paused: true
         })
         .from(".navbar_gsap", {
           delay: 0.3,
           yPercent: 160,
-          duration: 0.5,
+          duration: 0.5
         });
       const scrollTrigger = ScrollTrigger.create({
         trigger: ".navbar_gsap",
         markers: false,
         toggleActions: "play pause none pause",
-        animation: tl,
+        animation: tl
       });
       scrollTrigger.disable();
       if (endLoading) {
@@ -184,18 +180,18 @@ const Header = () => {
     } else {
       const current = ctx.current;
       if (current) {
-        current['close']();
+        current["close"]();
       }
     }
   }, [openMenu, ctx]);
   useEffect(() => {
     if (openMenu) {
       const current = ctx.current;
-      if (current) current['open']();  
+      if (current) current["open"]();
     }
   }, [openMenu]);
 
-  let idTimeout = useRef<NodeJS.Timeout>();
+  const idTimeout = useRef<NodeJS.Timeout>();
 
   const scrollToId = useCallback(
     (path: string, id: string | null = null) => {
@@ -293,19 +289,24 @@ const Header = () => {
                         "flex flex-row items-center gap-6 justify-end"
                       )}
                     >
-                      <span
+                      <button
                         className="hidden overflow-hidden cursor-pointer xxs:block"
                         onClick={() => handler()}
                       >
-                        <Text
-                          p
-                          size="xs"
-                          degree="3"
-                          className={twMerge("mr-2 hidden", "modal-close")}
+                        <p
+                          className={text(
+                            {
+                              size: "xs",
+                              degree: "3",
+                              weight: "semibold"
+                            },
+                            "mr-2 hidden",
+                            "modal-close"
+                          )}
                         >
-                          {t("header.close")}
-                        </Text>
-                      </span>
+                          {t("header.menu")}
+                        </p>
+                      </button>
                       <HamburgerMenu isOpen={isOpen} setOpen={handler} />
                     </div>
                   </>
@@ -379,14 +380,18 @@ const Header = () => {
                                 <span className="overflow-hidden">
                                   {t(`${BASE_LOCALE_MENU}.${item.id}.more`) !==
                                   "null" ? (
-                                    <Text
-                                      size="xs"
-                                      p
-                                      degree="4"
-                                      className="absolute overflow-hidden left-[calc(100%_+_4px)] w-full top-[19%] modal-item-info"
+                                    <p
+                                      className={text(
+                                        {
+                                          size: "xs",
+                                          degree: "4",
+                                          weight: "semibold"
+                                        },
+                                        "absolute overflow-hidden left-[calc(100%_+_4px)] w-full top-[19%] modal-item-info"
+                                      )}
                                     >
                                       {t(`${BASE_LOCALE_MENU}.${item.id}.more`)}
-                                    </Text>
+                                    </p>
                                   ) : null}
                                 </span>
                               </div>
@@ -401,24 +406,40 @@ const Header = () => {
                         )}
                       >
                         <span className="overflow-hidden mdl:w-max">
-                          <Title
-                            h6
-                            degree="2"
-                            weight="bold"
-                            className="overflow-hidden tracking-widest uppercase modal-description"
+                          <h6
+                            className={title(
+                              {
+                                size: "h6",
+                                degree: "2",
+                                weight: "bold"
+                              },
+                              "overflow-hidden tracking-widest uppercase modal-description"
+                            )}
                           >
                             {t("header.description.title")}
-                          </Title>
+                          </h6>
                         </span>
                         <span className="mr-1 overflow-hidden w-fit mdl:mr-6">
-                          <Text
+                          {/* <Text
                             p
                             degree="4"
                             size="xs"
                             className="overflow-hidden modal-description"
                           >
                             {t("header.description.content")}
-                          </Text>
+                          </Text> */}
+                          <p
+                            className={text(
+                              {
+                                size: "xs",
+                                degree: "4",
+                                weight: "semibold"
+                              },
+                              "overflow-hidden modal-description"
+                            )}
+                          >
+                            {t("header.description.content")}
+                          </p>
                         </span>
                       </div>
                     </div>
@@ -435,9 +456,21 @@ const Header = () => {
                           "overflow-hidden"
                         )}
                       >
-                        <Text p degree="4" size="sm" className="modal-footer">
+                        {/* <Text p degree="4" size="sm" className="modal-footer">
                           {t("header.copyright")}
-                        </Text>
+                        </Text> */}
+                        <p
+                          className={text(
+                            {
+                              size: "sm",
+                              degree: "4",
+                              weight: "semibold"
+                            },
+                            "modal-footer"
+                          )}
+                        >
+                          {t("header.copyRight")}
+                        </p>
                       </div>
                       <ul
                         className={twMerge(
@@ -471,4 +504,5 @@ const Header = () => {
   );
 };
 
-export default memo(Header);
+const HeaderMemo = memo(Header);
+export default HeaderMemo;

@@ -1,7 +1,9 @@
-
 const App = () => {
-    return <>
+  return (
+    <>
+      <h1>404</h1>
     </>
-}
+  );
+};
 
 export default App;

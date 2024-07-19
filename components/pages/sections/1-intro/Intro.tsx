@@ -1,30 +1,29 @@
-import { twMerge } from "tailwind-merge";
-import React, {
+import { useTranslation } from "next-i18next";
+import {
   useRef,
+  memo,
   useCallback,
   useMemo,
   ElementRef,
   useState,
-  useEffect,
+  useEffect
 } from "react";
-import { useTranslation } from "next-i18next";
+import { PressEvent } from "react-aria";
 import { useIsomorphicLayoutEffect } from "react-use";
+import { twMerge } from "tailwind-merge";
 
-import Text from "@/components/ui/typography/Text";
-import Button from "@/components/ui/button";
-import Display from "@/components/ui/typography/Display";
-import { Icon } from "@/components/ui/icon";
-import { CursorContent } from "@/components/ui/cursor";
 import Item from "@/components/ui/animation/item";
+import Button from "@/components/ui/button";
+import { CursorContent } from "@/components/ui/cursor";
+import { Icon } from "@/components/ui/icon";
 import { usePreloader } from "@/components/ui/preloader";
-
+import { text, display } from "@/components/ui/typography";
 import { MENU_ITEMS } from "@/conf/router";
-import { ScrollTrigger, gsap } from "@/utils/gsap";
 import useRouterChange from "@/hook/SafePush";
 import { useEventListener } from "@/hook/useEventListener";
 import useGsap from "@/hook/useGsap";
-
 import { useLenis } from "@/lib/Lenis";
+import { ScrollTrigger, gsap } from "@/utils/gsap";
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
   const ref = useRef<ElementRef<"div">>(null);
@@ -32,24 +31,24 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
 
   useIsomorphicLayoutEffect(() => {
     if (!!ref.current) {
-      ctx.current = gsap.context((self) => {
+      ctx.current = gsap.context(self => {
         const xTo =
           ref.current &&
           gsap.quickTo(ref.current, "x", {
             duration: 1,
-            ease: "elastic.out(1, 0.3)",
+            ease: "elastic.out(1, 0.3)"
           });
         const yTo =
           ref.current &&
           gsap.quickTo(ref.current, "y", {
             duration: 1,
-            ease: "elastic.out(1, 0.3)",
+            ease: "elastic.out(1, 0.3)"
           });
-        self.add("mouseMove", (e: any) => {
+        self.add("mouseMove", (e: { clientX: number; clientY: number }) => {
+          const c = ref.current;
+          if (!c) return;
           const { clientX, clientY } = e;
-          // @ts-ignore
-          const { left, top, width, height } =
-            ref.current?.getBoundingClientRect();
+          const { left, top, width, height } = c.getBoundingClientRect();
           const x = clientX - (left + width / 2);
           const y = clientY - (top + height / 2);
           xTo && xTo(x);
@@ -66,13 +65,13 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
   }, [ref]);
   const handleMouseEnter = useCallback(
     (e: MouseEvent) => {
-      ctx.current && ctx.current['mouseMove'](e);
+      ctx.current && ctx.current["mouseMove"](e);
     },
     [ctx]
   );
   const handleMouseLeave = useCallback(
     (e: MouseEvent) => {
-      ctx.current && ctx.current['mouseLeave'](e);
+      ctx.current && ctx.current["mouseLeave"](e);
     },
     [ctx]
   );
@@ -81,8 +80,8 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
 
   return <div ref={ref}>{children}</div>;
 };
-
-const ButtonNext = ({ goToCases }: { goToCases: any }) => {
+type GoTOCases = ((e: PressEvent) => void) | undefined;
+const ButtonNext = ({ goToCases }: { goToCases: GoTOCases }) => {
   return (
     <GsapMagic>
       <Button
@@ -96,7 +95,7 @@ const ButtonNext = ({ goToCases }: { goToCases: any }) => {
         <div className=" [&>*]:stroke-black-200 transition-colors duration-300 p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6">
           <Icon
             name="IconCornerLeftDown"
-            className="w-8 h-8 stroke-1 xxs:w-7 xxs:h-7 sm:w-8 sm:h-8 xl:w-10 xl:h-10"
+            className="stroke-1 size-8 xxs:size-7 sm:size-8 xl:size-10"
           />
         </div>
       </Button>
@@ -120,30 +119,34 @@ const FullStack = ({ className }: { className: string }) => {
         )}
       >
         <span className="overflow-y-animate">
-          <Display
-            size="md"
-            weight="semibold"
-            className={twMerge(
+          <h1
+            className={display(
+              {
+                size: "md",
+                weight: "semibold"
+              },
               DISPLAY_2_CLASS_NAME,
               "tracking-[-0.05rem] sm:tracking-wider",
               "will-change-transform-animation splitText_fullStack_gsap"
             )}
           >
             {t("intro.title.2_1")}
-          </Display>
+          </h1>
         </span>
         <span className="overflow-y-animate">
-          <Display
-            size="md"
-            weight="semibold"
-            className={twMerge(
+          <h1
+            className={display(
+              {
+                size: "md",
+                weight: "semibold"
+              },
               DISPLAY_2_CLASS_NAME,
               "tracking-[-0.05rem] sm:tracking-wider",
               "will-change-transform-animation splitText_fullStack_gsap"
             )}
           >
             {t("intro.title.2_2")}
-          </Display>
+          </h1>
         </span>
       </div>
     </>
@@ -160,7 +163,7 @@ function useFitText(options?: { factor?: number; maxFontSize?: number }) {
     const containerWidth = ref.current.getBoundingClientRect().width;
     const factor = options?.factor || 1;
     const newSize = containerWidth / factor;
-  
+
     setFontSize(() => `${newSize}px`);
   }, [ref, setFontSize, options?.factor]);
 
@@ -174,18 +177,20 @@ function useFitText(options?: { factor?: number; maxFontSize?: number }) {
   return { fontSize, ref };
 }
 
-const Title = ({ goToCases }: { goToCases: any }) => {
+const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
   const { t, i18n } = useTranslation();
   const { fontSize: fontSizeInterface, ref: widthInterfaceRef } = useFitText({
-    factor: 4.94,
+    factor: 4.94
   });
   const { fontSize: fontSizeDev, ref: widthDevRef } = useFitText({
-    factor: i18n.language == "en" ? 5.55 : 7,
+    factor: i18n.language == "en" ? 5.55 : 7
   });
 
   const interfaceText = useMemo(() => {
     const title = t("intro.title.1");
-    let [inter, face] = title.split("r");
+    const splits = title.split("r");
+    let inter = splits[0];
+    const face = splits[1];
     inter += "r";
     return { inter, face };
   }, [t]);
@@ -207,20 +212,22 @@ const Title = ({ goToCases }: { goToCases: any }) => {
           "overflow-y-animate"
         )}
       >
-        <Display
-          weight="bold"
+        <div
           style={{
             fontSize: fontSizeInterface,
-            lineHeight: "96%",
+            lineHeight: "96%"
           }}
-          className={twMerge(
+          className={display(
+            {
+              weight: "bold"
+            },
             DISPLAY_1_CLASS_NAME,
             "splitText_gsap will-change-transform-animation flex flex-row gap-2 intro_scroll_gsap"
           )}
         >
-          <span>{interfaceText.inter as string}</span>
-          <span className="lowercase">{interfaceText.face as string}</span>
-        </Display>
+          <span>{interfaceText.inter}</span>
+          <span className="lowercase">{interfaceText.face}</span>
+        </div>
       </div>
       {/* description */}
       <div
@@ -272,36 +279,36 @@ const Title = ({ goToCases }: { goToCases: any }) => {
       >
         <div>
           <span data-scroll className="overflow-hidden h-fit">
-            <Text
+            <p
               data-scroll
-              p
-              weight="semibold"
-              size="sm"
-              className={twMerge(
-                "text-start sm:text-end",
-                "w-full will-change-transform-animation splitText_description_gsap"
+              className={text(
+                {
+                  degree: "2",
+                  weight: "semibold",
+                  size: "sm"
+                },
+                "text-start sm:text-end w-full will-change-transform-animation splitText_description_gsap"
               )}
-              degree="2"
             >
               {t("intro.descriptions.1")}
-            </Text>
+            </p>
           </span>
         </div>
         <div>
           <span data-scroll className="overflow-hidden h-fit">
-            <Text
+            <p
               data-scroll
-              p
-              weight="semibold"
-              size="sm"
-              className={twMerge(
-                "text-start sm:text-end",
-                "w-full will-change-transform-animation splitText_description_gsap"
+              className={text(
+                {
+                  degree: "2",
+                  weight: "semibold",
+                  size: "sm"
+                },
+                "text-start sm:text-end w-full will-change-transform-animation splitText_description_gsap"
               )}
-              degree="2"
             >
               {t("intro.descriptions.2")}
-            </Text>
+            </p>
           </span>
         </div>
       </div>
@@ -361,19 +368,21 @@ const Title = ({ goToCases }: { goToCases: any }) => {
           "overflow-y-animate"
         )}
       >
-        <Display
-          weight="bold"
+        <h1
           style={{
             fontSize: fontSizeDev,
-            lineHeight: "100%",
+            lineHeight: "100%"
           }}
-          className={twMerge(
+          className={display(
+            {
+              weight: "bold"
+            },
             DISPLAY_1_CLASS_NAME,
             "splitText_gsap will-change-transform-animation"
           )}
         >
           {t("intro.title.3")}
-        </Display>
+        </h1>
       </div>
     </>
   );
@@ -383,7 +392,7 @@ const menuItems = {
   "1": MENU_ITEMS.manifesto.id,
   "2": MENU_ITEMS.experience.id,
   "3": MENU_ITEMS.cases.id,
-  "4": MENU_ITEMS.contact.id,
+  "4": MENU_ITEMS.contact.id
 } as const;
 
 const menuKeys = ["manifesto", "experience", "cases", "contact"];
@@ -407,11 +416,11 @@ const Menu = () => {
 
   const menuItemsData = useMemo(
     () =>
-      Array.apply(null, Array(4)).map((_, i) => {
+      [...Array(4)].map((_, i) => {
         return {
           key: i,
           number: `0${i + 1}`,
-          title: t(`header.menu.${menuKeys[i]}.attribute`),
+          title: t(`header.menu.${menuKeys[i]}.attribute`)
         };
       }),
     [t]
@@ -431,20 +440,19 @@ const Menu = () => {
                 "flex flex-col justify-start items-start gap-1 w-1/2 sm:w-auto md:w-1/4"
               )}
             >
-              <Text
-                p
-                weight="medium"
-                size="sm"
-                degree="3"
-                className="number_menu_gsap will-change-transform-animation"
+              <p
+                className={text(
+                  { size: "sm", degree: "3", weight: "medium" },
+                  "number_menu_gsap will-change-transform-animation"
+                )}
               >
                 {number}
-              </Text>
+              </p>
               <CursorContent
                 name={`cursorPointer_intro_menu_${number}`}
                 component="CursorEvent"
                 props={{
-                  event: "pointer",
+                  event: "pointer"
                 }}
                 className="overflow-y-animate"
               >
@@ -461,7 +469,7 @@ const Menu = () => {
                   }
                   className="uppercase item_menu_gsap will-change-transform-animation"
                   style={{
-                    color: "inherit",
+                    color: "inherit"
                   }}
                 >
                   <Item>{title}</Item>
@@ -472,25 +480,26 @@ const Menu = () => {
         })}
       </div>
       <span className="overflow-hidden">
-        <Text
-          p
-          weight="medium"
-          size="sm"
-          degree="3"
-          className={twMerge(
+        <p
+          className={text(
+            {
+              degree: "3",
+              weight: "medium",
+              size: "sm"
+            },
             "w-max whitespace-nowrap-important",
             "pr-1 hidden xxs:flex sm:hidden md:flex",
             "item_menu_gsap will-change-transform-animation"
           )}
         >
           {t("intro.copy")}
-        </Text>
+        </p>
       </span>
     </>
   );
 };
 
-const MenuMemo = React.memo(Menu);
+const MenuMemo = memo(Menu);
 
 const Intro = () => {
   const introRef = useRef<ElementRef<"div">>(null);
@@ -505,7 +514,7 @@ const Intro = () => {
     () => {
       const tl = gsap
         .timeline({
-          paused: true,
+          paused: true
         })
         .from(".splitText_gsap", {
           yPercent: 200,
@@ -514,20 +523,20 @@ const Intro = () => {
           ease: "power4.out",
           delay: 0.4,
           stagger: {
-            amount: 0.4,
+            amount: 0.4
           },
           onComplete: function () {
-            this['targets']().forEach((el: any) => {
-              el.style.willChange = "";
-            });
-          },
+            this["targets"]().forEach(
+              (el: HTMLElement) => (el.style.willChange = "")
+            );
+          }
         })
         .from(
           ".splitText_fullStack_gsap",
           {
             yPercent: 120,
             duration: 0.9,
-            ease: "power4.out",
+            ease: "power4.out"
           },
           "<90%"
         )
@@ -538,8 +547,8 @@ const Intro = () => {
             duration: 0.9,
             ease: "power4.out",
             stagger: {
-              amount: 0.1,
-            },
+              amount: 0.1
+            }
           },
           "<"
         )
@@ -549,7 +558,7 @@ const Intro = () => {
             opacity: 0,
             autoAlpha: 0,
             duration: 0.4,
-            ease: "power4.out",
+            ease: "power4.out"
           },
           "<"
         )
@@ -558,19 +567,19 @@ const Intro = () => {
           {
             opacity: 0,
             autoAlpha: 0,
-            duration: 0.3,
+            duration: 0.3
           },
           "<"
         )
         .fromTo(
           ".item_menu_gsap",
           {
-            yPercent: 105,
+            yPercent: 105
           },
           {
             yPercent: 0,
             duration: 0.4,
-            ease: "power4.out",
+            ease: "power4.out"
           },
           "<60%"
         )
@@ -579,7 +588,7 @@ const Intro = () => {
         trigger: introRef.current,
         start: "top top",
         toggleActions: "play play restart play",
-        animation: tl,
+        animation: tl
       });
       scrollTrigger.disable();
       if (endLoading) {
