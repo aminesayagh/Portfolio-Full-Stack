@@ -7,8 +7,7 @@ import { twMerge } from "tailwind-merge";
 
 import { rounded } from "@/components/style";
 import Noise from '@/components/ui/noise/Noise';
-import Text from '@/components/ui/typography/Text';
-import Title from '@/components/ui/typography/Title';
+import { title, text } from "@/components/ui/typography/Typography";
 import useGsap from '@/hook/useGsap';
 import { useLenis } from '@/lib/Lenis';
 import { gsap } from '@/utils/gsap';
@@ -26,13 +25,27 @@ const ExpertiseHead = () => {
             <IconMemo />
         </div>
         <div className={twMerge('w-full xs:w-9/12 sm:w-1/2 xl:w-5/12')}>
-            <Title h2 weight='bold' degree='1' exchange className="capitalize">{t('experience.title')}</Title>
+            <h2 className={title({
+                weight: 'bold',
+                degree: '1',
+                size: 'h2',
+                mode: 'exchanged'
+            }, 'capitalize')}>
+                {t('experience.title')}
+            </h2>
         </div>
         <div className={twMerge('w-11/12 xs:w-10/12 sm:w-1/2 xl:w-5/12', 'flex flex-col gap-4 mdl:gap-5', 'sm:items-end')}>
             <div className='hidden sm:block'>
                 <IconMemo />
             </div>
-            <Text p weight='medium' degree='3' size='md' className='text-start sm:text-end' exchange>{t('experience.description')}</Text>
+            <p className={text({
+                weight: 'medium',
+                degree: '4',
+                size: 'md',
+                mode: 'exchanged'
+            }, 'text-start sm:text-end')}>
+                {t('experience.description')}
+            </p>
         </div>
     </div>
 }
@@ -40,7 +53,7 @@ const ExpertiseHeadMemo = memo(ExpertiseHead);
 
 const BORDER_CARD_CLASS_NAME = 'rounded-xl border border-dashed border-black-500';
 
-const Card = ({ title, description, number }: { title: string, description: string, number: string }) => {
+const Card = ({ name, description, number }: { name: string, description: string, number: string }) => {
 
     const { hoverProps, isHovered } = useHover({
         onHoverStart: (e) => {
@@ -74,11 +87,28 @@ const Card = ({ title, description, number }: { title: string, description: stri
             'w-full h-full'
         )} {...hoverProps} >
             <div className={twMerge('flex flex-row lg:flex-col xl:flex-row justify-between items-start', 'gap-4 lg:gap-2 xl:gap-4', 'w-full')}>
-                <Title h5 weight='bold' degree='2' className="order-1 transition-all duration-100 delay-100 max-w-48 lg:order-2 xl:order-1" exchange={!isHovered} >{title}</Title>
-                <Text p weight='bold' degree='3' size="lg" exchange={!isHovered} className='order-2 duration-100 delay-100 opacity-60 lg:order-1 xl:order-2'>{number}</Text>
+                {/* <Title h5 weight='bold' degree='2' className="order-1 transition-all duration-100 delay-100 max-w-48 lg:order-2 xl:order-1" exchange={!isHovered} >{name}</Title> */}
+                <h5 className={title({
+                    weight: 'bold',
+                    degree: '2',
+                    size: 'h5',
+                    mode: isHovered ? 'normal' : 'exchanged'
+                }, '')} >{name}</h5>
+                {/* <Text p weight='bold' degree='3' size="lg" exchange={!isHovered} className='order-2 duration-100 delay-100 opacity-60 lg:order-1 xl:order-2'>{number}</Text> */}
+                <p className={text({
+                    weight: 'bold',
+                    degree: '3',
+                    size: 'lg',
+                    mode: isHovered ? 'normal' : 'exchanged'
+                }, 'opacity-60')} >{number}</p>
             </div>
             <div className="max-w-72">
-                <Text p weight='medium' degree='3' size="sm" exchange={!isHovered} className='duration-100 delay-100'>{description}</Text>
+                <p className={text({
+                    weight: 'medium',
+                    degree: '3',
+                    size: 'sm',
+                    mode: isHovered ? 'normal' : 'exchanged'
+                }, '')} >{description}</p>
             </div>
         </div>
     </>
@@ -129,7 +159,7 @@ const CardElement = ({ i }: { i: number }) => {
     }, undefined, [isLg, isXs, lenis]);
 
     return <div className={`expertise-card-gsap relative will-change-transform-animation`} key={i} ref={ref}>
-        {i >= 4 ? <EmptyCardMemo /> : <CardMemo title={t(`experience.stages.${i + 1}.title`)} description={t(`experience.stages.${i + 1}.description`)} number={t(`experience.stages.${i + 1}.count`)} />}
+        {i >= 4 ? <EmptyCardMemo /> : <CardMemo name={t(`experience.stages.${i + 1}.title`)} description={t(`experience.stages.${i + 1}.description`)} number={t(`experience.stages.${i + 1}.count`)} />}
     </div>
 }
 const CardElementMemo = memo(CardElement);

@@ -10,10 +10,7 @@ import { addToast } from "@/components/common/toast";
 import Container from "@/components/ui/container";
 import Form from "@/components/ui/form";
 import type { OptionOnSubmit } from "@/components/ui/form";
-import Display from "@/components/ui/typography/Display";
-import Link from "@/components/ui/typography/Link";
-import Text from "@/components/ui/typography/Text";
-import Title from "@/components/ui/typography/Title";
+import { text, title, Link, display } from "@/components/ui/typography";
 import { getProjectsByCategory } from "@/conf/projects";
 import { getMenuItems } from "@/conf/router";
 import { useTime } from "@/hook";
@@ -233,23 +230,29 @@ const AgencyList = () => {
               "flex flex-row gap-12 items-start justify-between w-full md:w-5/12 2xl:w-1/2"
             )}
           >
-            <Title
-              h6
-              weight="semibold"
-              degree="1"
-              className="tracking-wider uppercase opacity-80"
+            <h6
+              className={title(
+                {
+                  weight: "semibold",
+                  degree: "1",
+                },
+                "tracking-wider uppercase opacity-80"
+              )}
             >
               {t(`projects.${project.id}.title`)}
-            </Title>
-            <Text
-              p
-              size="sm"
-              weight="bold"
-              degree="1"
-              className="block tracking-wider md:hidden opacity-80"
+            </h6>
+            <p
+              className={text(
+                {
+                  size: "sm",
+                  weight: "bold",
+                  degree: "1",
+                },
+                "tracking-wider uppercase"
+              )}
             >
               {t(`country.${project.country}`)}
-            </Text>
+            </p>
           </div>
           <div
             className={twMerge(
@@ -257,18 +260,35 @@ const AgencyList = () => {
               "flex flex-col gap-5"
             )}
           >
-            <Text
+            {/* <Text
               p
               size="sm"
               weight="bold"
               degree="1"
               className="hidden tracking-wider md:block opacity-80"
             >
+            </Text> */}
+            <p
+              className={text(
+                {
+                  size: "sm",
+                  weight: "bold",
+                  degree: "1",
+                },
+                "hidden tracking-wider md:block opacity-80"
+              )}
+            >
               {t(`country.${project.country}`)}
-            </Text>
-            <Text p size="sm" weight="medium" degree="2">
+            </p>
+            <p
+              className={text({
+                size: "sm",
+                weight: "medium",
+                degree: "2",
+              })}
+            >
               {t(`projects.${project.id}.description`)}
-            </Text>
+            </p>
             <div
               className="inline"
               style={{
@@ -277,17 +297,20 @@ const AgencyList = () => {
             >
               {project.jobTitle.map((jobTitle, index) => {
                 return (
-                  <Text
+                  <p
                     key={index}
-                    p
-                    size="sm"
-                    weight="medium"
-                    degree="2"
-                    className={twMerge("pr-2")}
+                    className={text(
+                      {
+                        size: "sm",
+                        weight: "medium",
+                        degree: "2",
+                      },
+                      "pr-2"
+                    )}
                   >
                     {t(`jobTItle.${jobTitle}`)}
                     {index < project.jobTitle.length - 1 ? "," : ""}
-                  </Text>
+                  </p>
                 );
               })}
             </div>
@@ -347,10 +370,12 @@ const ContactPage = () => {
         <section className={twMerge("flex flex-col gap-14 xl:gap-20 py-40")}>
           {/* title */}
           <div className="grid grid-cols-12 gap-4 overflow-hidden">
-            <Display
-              size="xl"
-              weight="bold"
-              className={twMerge(
+            <h1
+              className={display(
+                {
+                  size: "xl",
+                  weight: "bold",
+                },
                 "col-start-1 col-span-12",
                 "mdl:col-start-4 mdl:col-span-9",
                 "lg:col-start-3 lg:col-span-10",
@@ -358,7 +383,7 @@ const ContactPage = () => {
               )}
             >
               {t("contact.title")}
-            </Display>
+            </h1>
           </div>
           {/* form */}
           <div
@@ -377,15 +402,13 @@ const ContactPage = () => {
                 "row-start-1 row-span-1"
               )}
             >
-              <Text
-                p
-                weight="medium"
-                size="sm"
-                degree="2"
-                className="uppercase text-start"
-              >
+              <p className={text({
+                size: "sm",
+                weight: "medium",
+                degree: "2",
+              }, 'uppercase text-start')}>
                 {t("contact.subtitle")}
-              </Text>
+              </p>
               <hr className="relative h-[2px] w-4 bg-gray-200" />
             </div>
             <div
@@ -419,25 +442,20 @@ const ContactPage = () => {
               )}
             >
               <div className="flex flex-col gap-1">
-                <Text
-                  size="sm"
-                  degree="2"
-                  p
-                  weight="medium"
-                  suppressHydrationWarning
-                  className="whitespace-nowrap-important"
-                >
+                <p className={text({
+                  size: 'sm',
+                  degree: '2',
+                  weight: 'medium',
+                })} suppressHydrationWarning>
                   {t("contact.localTime")} {timer?.formattedTime}
-                </Text>
-                <Text
-                  size="sm"
-                  degree="2"
-                  p
-                  weight="medium"
-                  suppressHydrationWarning
-                >
+                </p>
+                <p className={text({
+                  size: 'sm',
+                  degree: '2',
+                  weight: 'medium',
+                })} suppressHydrationWarning>
                   {t("contact.gmtTime")}({timer?.gmtOffset})
-                </Text>
+                </p>
               </div>
             </div>
           </div>
@@ -454,15 +472,13 @@ const ContactPage = () => {
                 "sm:col-start-1 sm:col-span-2"
               )}
             >
-              <Text
-                p
-                weight="medium"
-                size="sm"
-                degree="2"
-                className="uppercase text-start"
-              >
+              <p className={text({
+                size: 'sm',
+                degree: '2',
+                weight: 'medium',
+              }, 'uppercase text-start')}>
                 {t("contact.reppedBy")}
-              </Text>
+              </p>
               <hr className="relative h-[2px] w-4 bg-gray-200" />
             </div>
             <div

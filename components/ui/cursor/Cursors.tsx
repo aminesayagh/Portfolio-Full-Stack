@@ -4,7 +4,7 @@ import { useIsomorphicLayoutEffect } from 'react-use';
 import { twMerge } from 'tailwind-merge';
 
 import {Icon, IconNames } from '@/components/ui/icon';
-import Text from '@/components/ui/typography/Text';
+import {text} from '@/components/ui/typography';
 import { gsap } from '@/utils/gsap';
 
 import { ItemCursorPropsByComponent } from './CursorType';
@@ -38,7 +38,12 @@ const CursorScroll = ({ isActive, ctx, title }: {
     return (
         <span ref={ref} >
             <div className={twMerge('w-32 h-32 bg-white-100 cursor_scroll_gsap', 'rounded-full', 'flex-col justify-center items-center will-change-transform-animation')}>
-                <Text p size='sm' exchange degree='1' className='cursor_text_gsap'>{title ? title : 'scroll'}</Text>
+                <p className={text({
+                    size: 'sm',
+                    mode: 'exchanged'
+                }, 'cursor_text_grap')} >
+                    {title ? title : 'scroll'}
+                </p>
             </div>
         </span>
     )

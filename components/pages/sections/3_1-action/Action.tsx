@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge';
 
 import Button from '@/components/ui/button';
 import {Icon} from '@/components/ui/icon';
-import Text from '@/components/ui/typography/Text';
+import { text } from '@/components/ui/typography';
 import useRouterChange from '@/hook/SafePush';
 
 const Action = () => {
@@ -34,12 +34,12 @@ const Action = () => {
                     'w-full xxs:w-11/12 xs:w-10/12 sm:w-full md:w-6/12 lg:w-5/12 xl:w-4/12',
                     'order-1 md:order-2'
                 )} >
-                    <Text p degree="3" weight='semibold' size='md' className='w-full sm:w-1/2 md:w-full' >
+                    <p className={text({ size: 'md', degree: '3', weight: 'semibold' }, 'w-full sm:w-1/2 md:w-full')} >
                         {t('motivation.content.1')}
-                    </Text>
-                    <Text p degree='3' weight='semibold' size='md' className='w-full sm:w-1/2 md:w-full' >
+                    </p>
+                    <p className={text({ size: 'md', degree: '3', weight: 'semibold' }, 'w-full sm:w-1/2 md:w-full')} >
                         {t('motivation.content.2')}
-                    </Text>
+                    </p>
                 </div>
             </div>
         </>

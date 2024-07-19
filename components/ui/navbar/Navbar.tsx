@@ -5,7 +5,7 @@ import { useIsomorphicLayoutEffect } from 'react-use';
 import { twMerge } from 'tailwind-merge';
 
 import { containerStyle } from '@/components/ui/container';
-import LinkUi from '@/components/ui/typography/Link';
+import { Link as LinkUi } from '@/components/ui/typography';
 import { useLenis } from '@/lib/Lenis';
 import { gsap } from '@/utils/gsap';
 

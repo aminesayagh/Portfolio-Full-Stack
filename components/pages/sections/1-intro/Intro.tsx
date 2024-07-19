@@ -17,8 +17,7 @@ import Button from "@/components/ui/button";
 import { CursorContent } from "@/components/ui/cursor";
 import { Icon } from "@/components/ui/icon";
 import { usePreloader } from "@/components/ui/preloader";
-import Display from "@/components/ui/typography/Display";
-import Text from "@/components/ui/typography/Text";
+import { text, display } from "@/components/ui/typography";
 import { MENU_ITEMS } from "@/conf/router";
 import useRouterChange from "@/hook/SafePush";
 import { useEventListener } from "@/hook/useEventListener";
@@ -45,10 +44,7 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
             duration: 1,
             ease: "elastic.out(1, 0.3)",
           });
-        self.add("mouseMove", (e: {
-          clientX: number;  
-          clientY: number;
-        }) => {
+        self.add("mouseMove", (e: { clientX: number; clientY: number }) => {
           const c = ref.current;
           if (!c) return;
           const { clientX, clientY } = e;
@@ -69,13 +65,13 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
   }, [ref]);
   const handleMouseEnter = useCallback(
     (e: MouseEvent) => {
-      ctx.current && ctx.current['mouseMove'](e);
+      ctx.current && ctx.current["mouseMove"](e);
     },
     [ctx]
   );
   const handleMouseLeave = useCallback(
     (e: MouseEvent) => {
-      ctx.current && ctx.current['mouseLeave'](e);
+      ctx.current && ctx.current["mouseLeave"](e);
     },
     [ctx]
   );
@@ -123,30 +119,34 @@ const FullStack = ({ className }: { className: string }) => {
         )}
       >
         <span className="overflow-y-animate">
-          <Display
-            size="md"
-            weight="semibold"
-            className={twMerge(
+          <h1
+            className={display(
+              {
+                size: "md",
+                weight: "semibold",
+              },
               DISPLAY_2_CLASS_NAME,
               "tracking-[-0.05rem] sm:tracking-wider",
               "will-change-transform-animation splitText_fullStack_gsap"
             )}
           >
             {t("intro.title.2_1")}
-          </Display>
+          </h1>
         </span>
         <span className="overflow-y-animate">
-          <Display
-            size="md"
-            weight="semibold"
-            className={twMerge(
+          <h1
+            className={display(
+              {
+                size: "md",
+                weight: "semibold",
+              },
               DISPLAY_2_CLASS_NAME,
               "tracking-[-0.05rem] sm:tracking-wider",
               "will-change-transform-animation splitText_fullStack_gsap"
             )}
           >
             {t("intro.title.2_2")}
-          </Display>
+          </h1>
         </span>
       </div>
     </>
@@ -163,7 +163,7 @@ function useFitText(options?: { factor?: number; maxFontSize?: number }) {
     const containerWidth = ref.current.getBoundingClientRect().width;
     const factor = options?.factor || 1;
     const newSize = containerWidth / factor;
-  
+
     setFontSize(() => `${newSize}px`);
   }, [ref, setFontSize, options?.factor]);
 
@@ -212,20 +212,22 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
           "overflow-y-animate"
         )}
       >
-        <Display
-          weight="bold"
+        <div
           style={{
             fontSize: fontSizeInterface,
             lineHeight: "96%",
           }}
-          className={twMerge(
+          className={display(
+            {
+              weight: "bold",
+            },
             DISPLAY_1_CLASS_NAME,
             "splitText_gsap will-change-transform-animation flex flex-row gap-2 intro_scroll_gsap"
           )}
         >
-          <span>{interfaceText.inter as string}</span>
-          <span className="lowercase">{interfaceText.face as string}</span>
-        </Display>
+          <span>{interfaceText.inter}</span>
+          <span className="lowercase">{interfaceText.face}</span>
+        </div>
       </div>
       {/* description */}
       <div
@@ -277,36 +279,24 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
       >
         <div>
           <span data-scroll className="overflow-hidden h-fit">
-            <Text
-              data-scroll
-              p
-              weight="semibold"
-              size="sm"
-              className={twMerge(
-                "text-start sm:text-end",
-                "w-full will-change-transform-animation splitText_description_gsap"
-              )}
-              degree="2"
-            >
+            <p data-scroll className={text({
+              degree: '2',
+              weight: 'semibold',
+              size: 'sm'
+            }, 'text-start sm:text-end w-full will-change-transform-animation splitText_description_gsap')}>
               {t("intro.descriptions.1")}
-            </Text>
+            </p>
           </span>
         </div>
         <div>
           <span data-scroll className="overflow-hidden h-fit">
-            <Text
-              data-scroll
-              p
-              weight="semibold"
-              size="sm"
-              className={twMerge(
-                "text-start sm:text-end",
-                "w-full will-change-transform-animation splitText_description_gsap"
-              )}
-              degree="2"
-            >
+            <p data-scroll className={text({
+              degree: '2',
+              weight: 'semibold',
+              size: 'sm'
+            }, 'text-start sm:text-end w-full will-change-transform-animation splitText_description_gsap')}>
               {t("intro.descriptions.2")}
-            </Text>
+            </p>
           </span>
         </div>
       </div>
@@ -366,19 +356,21 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
           "overflow-y-animate"
         )}
       >
-        <Display
-          weight="bold"
+        <h1
           style={{
             fontSize: fontSizeDev,
             lineHeight: "100%",
           }}
-          className={twMerge(
+          className={display(
+            {
+              weight: "bold",
+            },
             DISPLAY_1_CLASS_NAME,
             "splitText_gsap will-change-transform-animation"
           )}
         >
           {t("intro.title.3")}
-        </Display>
+        </h1>
       </div>
     </>
   );
@@ -436,15 +428,14 @@ const Menu = () => {
                 "flex flex-col justify-start items-start gap-1 w-1/2 sm:w-auto md:w-1/4"
               )}
             >
-              <Text
-                p
-                weight="medium"
-                size="sm"
-                degree="3"
-                className="number_menu_gsap will-change-transform-animation"
+              <p
+                className={text(
+                  { size: "sm", degree: "3", weight: "medium" },
+                  "number_menu_gsap will-change-transform-animation"
+                )}
               >
                 {number}
-              </Text>
+              </p>
               <CursorContent
                 name={`cursorPointer_intro_menu_${number}`}
                 component="CursorEvent"
@@ -477,19 +468,20 @@ const Menu = () => {
         })}
       </div>
       <span className="overflow-hidden">
-        <Text
-          p
-          weight="medium"
-          size="sm"
-          degree="3"
-          className={twMerge(
+        <p
+          className={text(
+            {
+              degree: "3",
+              weight: "medium",
+              size: "sm",
+            },
             "w-max whitespace-nowrap-important",
             "pr-1 hidden xxs:flex sm:hidden md:flex",
             "item_menu_gsap will-change-transform-animation"
           )}
         >
           {t("intro.copy")}
-        </Text>
+        </p>
       </span>
     </>
   );
@@ -522,7 +514,9 @@ const Intro = () => {
             amount: 0.4,
           },
           onComplete: function () {
-            this['targets']().forEach((el: HTMLElement) => el.style.willChange = "");
+            this["targets"]().forEach(
+              (el: HTMLElement) => (el.style.willChange = "")
+            );
           },
         })
         .from(

@@ -1,5 +1,5 @@
 import { cva, VariantProps } from 'class-variance-authority';
-import { twMerge } from 'tailwind-merge';
+import { twMerge, ClassNameValue } from 'tailwind-merge';
 
 import Style from './Typography.module.scss';
 
@@ -70,7 +70,7 @@ export const typographyColorDegree = cva('', {
 
 export type TypographyColorProps = VariantProps<typeof typographyColorDegree>;
 
-export const displayStyle = cva([textDefault, fontFamilyTitle], {
+export const displayStyle = cva([textDefault, fontFamilyTitle, Style['display']], {
     variants: {
         weight: {
             bold: 'font-black',
@@ -90,7 +90,7 @@ export const displayStyle = cva([textDefault, fontFamilyTitle], {
 
 export type DisplayPropsExtended = VariantProps<typeof displayStyle> & TypographyColorProps;
 
-export const titleStyle = cva([textDefault, fontFamilyTitle], {
+export const titleStyle = cva([textDefault, fontFamilyTitle, Style['title']], {
     variants: {
         weight: {
             bold: 'font-extrabold',
@@ -107,8 +107,7 @@ export const titleStyle = cva([textDefault, fontFamilyTitle], {
         }
     },
     defaultVariants: {
-        weight: 'bold',
-        size: 'h1'
+        weight: 'bold'
     }
 });
 
@@ -139,17 +138,20 @@ export const textStyle = cva([textDefault, fontFamilyText, Style['text']], {
 
 export type TextPropsExtended = VariantProps<typeof textStyle> & TypographyColorProps;
 
-export const title = ({ mode, degree, weight, size }: TitlePropsExtended) => twMerge(
+export const title = ({ mode, degree, weight, size }: TitlePropsExtended, ...className: ClassNameValue[]) => twMerge(
     titleStyle({ weight, size }),
-    typographyColorDegree({ mode, degree })
+    typographyColorDegree({ mode, degree }),
+    ...className
 );
 
-export const display = ({ mode, degree, weight, size }: DisplayPropsExtended) => twMerge(
+export const display = ({ mode, degree, weight, size }: DisplayPropsExtended, ...className: ClassNameValue[]) => twMerge(
     displayStyle({ weight, size }),
-    typographyColorDegree({ mode, degree })
+    typographyColorDegree({ mode, degree }),
+    ...className
 );
 
-export const text = ({ mode, degree, weight, size }: TextPropsExtended) => twMerge(
+export const text = ({ mode, degree, weight, size }: TextPropsExtended, ...className: ClassNameValue[]) => twMerge(
     textStyle({ weight, size }),
-    typographyColorDegree({ mode, degree })
+    typographyColorDegree({ mode, degree }),
+    ...className
 );

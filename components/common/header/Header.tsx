@@ -12,9 +12,7 @@ import Logo from "@/components/ui/logo";
 import Navbar from "@/components/ui/navbar";
 import Modal from "@/components/ui/overlay/modal";
 import { usePreloader } from "@/components/ui/preloader";
-import Link from "@/components/ui/typography/Link";
-import Text from "@/components/ui/typography/Text";
-import Title from "@/components/ui/typography/Title";
+import { text, title, Link } from "@/components/ui/typography";
 import { getMenuItems } from "@/conf/router";
 import useRouterChange from "@/hook/SafePush";
 import { useLenis } from "@/lib/Lenis";
@@ -144,7 +142,7 @@ const Header = () => {
       const currentCtx = ctx.current;
       const currentTl = tl.current;
       if (currentCtx) currentCtx.revert();
-      if (currentTl) currentTl.kill
+      if (currentTl) currentTl.kill;
     };
   }, []);
   useIsomorphicLayoutEffect(() => {
@@ -182,14 +180,14 @@ const Header = () => {
     } else {
       const current = ctx.current;
       if (current) {
-        current['close']();
+        current["close"]();
       }
     }
   }, [openMenu, ctx]);
   useEffect(() => {
     if (openMenu) {
       const current = ctx.current;
-      if (current) current['open']();  
+      if (current) current["open"]();
     }
   }, [openMenu]);
 
@@ -295,14 +293,19 @@ const Header = () => {
                         className="hidden overflow-hidden cursor-pointer xxs:block"
                         onClick={() => handler()}
                       >
-                        <Text
-                          p
-                          size="xs"
-                          degree="3"
-                          className={twMerge("mr-2 hidden", "modal-close")}
+                        <p
+                          className={text(
+                            {
+                              size: "xs",
+                              degree: "3",
+                              weight: "semibold",
+                            },
+                            "mr-2 hidden",
+                            "modal-close"
+                          )}
                         >
-                          {t("header.close")}
-                        </Text>
+                          {t("header.menu")}
+                        </p>
                       </button>
                       <HamburgerMenu isOpen={isOpen} setOpen={handler} />
                     </div>
@@ -377,14 +380,18 @@ const Header = () => {
                                 <span className="overflow-hidden">
                                   {t(`${BASE_LOCALE_MENU}.${item.id}.more`) !==
                                   "null" ? (
-                                    <Text
-                                      size="xs"
-                                      p
-                                      degree="4"
-                                      className="absolute overflow-hidden left-[calc(100%_+_4px)] w-full top-[19%] modal-item-info"
+                                    <p
+                                      className={text(
+                                        {
+                                          size: "xs",
+                                          degree: "4",
+                                          weight: "semibold",
+                                        },
+                                        "absolute overflow-hidden left-[calc(100%_+_4px)] w-full top-[19%] modal-item-info"
+                                      )}
                                     >
                                       {t(`${BASE_LOCALE_MENU}.${item.id}.more`)}
-                                    </Text>
+                                    </p>
                                   ) : null}
                                 </span>
                               </div>
@@ -399,24 +406,40 @@ const Header = () => {
                         )}
                       >
                         <span className="overflow-hidden mdl:w-max">
-                          <Title
-                            h6
-                            degree="2"
-                            weight="bold"
-                            className="overflow-hidden tracking-widest uppercase modal-description"
+                          <h6
+                            className={title(
+                              {
+                                size: "h6",
+                                degree: "2",
+                                weight: "bold",
+                              },
+                              "overflow-hidden tracking-widest uppercase modal-description"
+                            )}
                           >
                             {t("header.description.title")}
-                          </Title>
+                          </h6>
                         </span>
                         <span className="mr-1 overflow-hidden w-fit mdl:mr-6">
-                          <Text
+                          {/* <Text
                             p
                             degree="4"
                             size="xs"
                             className="overflow-hidden modal-description"
                           >
                             {t("header.description.content")}
-                          </Text>
+                          </Text> */}
+                          <p
+                            className={text(
+                              {
+                                size: "xs",
+                                degree: "4",
+                                weight: "semibold",
+                              },
+                              "overflow-hidden modal-description"
+                            )}
+                          >
+                            {t("header.description.content")}
+                          </p>
                         </span>
                       </div>
                     </div>
@@ -433,9 +456,16 @@ const Header = () => {
                           "overflow-hidden"
                         )}
                       >
-                        <Text p degree="4" size="sm" className="modal-footer">
+                        {/* <Text p degree="4" size="sm" className="modal-footer">
                           {t("header.copyright")}
-                        </Text>
+                        </Text> */}
+                        <p className={text({
+                          size: 'sm',
+                          degree: '4',
+                          weight: 'semibold'
+                        }, 'modal-footer')} >
+                          {t("header.copyRight")}
+                        </p>
                       </div>
                       <ul
                         className={twMerge(

@@ -3,8 +3,7 @@ import { VariantProps } from 'class-variance-authority';
 import React from 'react';
 
 import { containerStyle } from '@/components/ui/container';
-
-import { TextType } from '../typography';
+import { LinkPropsExtended } from '@/components/ui/typography/Link';
 
 export type NavbarProps = {
     children: React.ReactNode;
@@ -32,7 +31,7 @@ export type LinkProps = {
         | React.ReactNode
         | React.ReactNode[]
         | string;
-} & TextType.LinkPropsExtended;
+} & LinkPropsExtended;
 
 export type NavbarType = React.FC<NavbarProps> & {
     Brand: React.FC<BrandProps>;

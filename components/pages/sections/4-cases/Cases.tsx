@@ -4,8 +4,7 @@ import { useIsomorphicLayoutEffect } from 'react-use';
 import { twMerge } from 'tailwind-merge';
 
 import Image from '@/components/ui/image';
-import Text from '@/components/ui/typography/Text';
-import Title from '@/components/ui/typography/Title';
+import { text, title } from '@/components/ui/typography';
 import { getProjectsByCategory } from '@/conf/projects';
 import { useLenis } from '@/lib/Lenis';
 import { gsap, Power4, ScrollTrigger } from '@/utils/gsap';
@@ -107,7 +106,7 @@ const Case = ({ picture, index, id }: { picture?: [string], index: number, id: s
     const zIndexImage = useMemo(() => 10 + (index + 11), [index]);
     const zIndexContent = useMemo(() => 10 + (index + 14), [index]);
     const zIndexGradient = useMemo(() => 10 + (index + 13), [index]);
-    const title = useMemo(() => t(`projects.${id}.title`), [t, id]);
+    const name = useMemo(() => t(`projects.${id}.title`), [t, id]);
     const description = useMemo(() => t(`projects.${id}.description`), [t, id]);
     const pic = useMemo<string>(() => picture ? picture[0] : '', [picture]);
 
@@ -130,14 +129,23 @@ const Case = ({ picture, index, id }: { picture?: [string], index: number, id: s
                 }}
             >
                 <div className='w-full overflow-hidden' >
-                    <Title h1 degree='1' className='case-text-gsap will-change-transform-animation' >
-                        {title}
-                    </Title>
+                    {/* <Title h1 degree='1' className='case-text-gsap will-change-transform-animation' >
+                        {name}
+                    </Title> */}
+                    <h1 className={title({
+                        size: 'h1',
+                        degree: '1',
+                    }, 'case-text-gsap will-change-transform-animation')} >
+                        {name}
+                    </h1>
                 </div>
                 <div className='hidden w-full overflow-hidden xs:w-8/12 md:w-1/2 sm:block'>
-                    <Text p size='md' degree='2' className='case-text-gsap will-change-transform-animation'>
+                    <p className={text({
+                        size: 'md',
+                        degree: '2',
+                    }, 'case-text-gsap will-change-transform-animation')} >
                         {description}
-                    </Text>
+                    </p>
                 </div>
             </div>
             <div className={twMerge('absolute inset-x-0 w-full h-80 -bottom-2 xs:h-72', 'bg-gradient-to-t from-black-100/80 to-black-100/0')} style={{
@@ -152,13 +160,21 @@ const CaseHead = () => {
     const { t } = useTranslation();
 
     return <>
-        <Title h2 weight='bold' degree='2' className='sm:w-min'>
+        <h2 className={title({
+            size: 'h2',
+            weight: 'bold',
+            degree: '2',
+        }, 'sm:w-min')} >
             {t('cases.title')}
-        </Title>
+        </h2>
         <div className='w-full xs:w-9/12 sm:w-7/12 md:w-6/12 lg:w-5/12 xl:w-4/12'>
-            <Text p size='md' degree='3' weight='semibold' className='w-auto max-w-[38rem] sm:max-w-xl my-2 md:my-4' >
+            <p className={text({
+                size: 'md',
+                degree: '3',
+                weight: 'semibold',
+            }, 'w-auto max-w-[38rem] sm:max-w-xl my-2 md:my-4')} >
                 {t('cases.description')}
-            </Text>
+            </p>
         </div>
     </>
 }

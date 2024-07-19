@@ -1,13 +1,20 @@
 import _ from "lodash";
 import { useTranslation } from "next-i18next";
-import { ElementRef, useRef, useEffect, useCallback, memo, useState, Fragment } from "react";
+import {
+  ElementRef,
+  useRef,
+  useEffect,
+  useCallback,
+  memo,
+  useState,
+  Fragment,
+} from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
 
 import Button from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
-import Link from "@/components/ui/typography/Link";
-import Text from "@/components/ui/typography/Text";
+import { Link, text, TextPropsExtended } from "@/components/ui/typography";
 import { getMenuItems } from "@/conf/router";
 import { useEventListener } from "@/hook/useEventListener";
 import { useLenis } from "@/lib/Lenis";
@@ -83,11 +90,11 @@ const FollowUs = () => {
   }, [ref, menuSocialNetworks.length]);
   const handler = useCallback(() => {
     if (!ctx.current) return;
-    ctx.current['followButtonShow']();
+    ctx.current["followButtonShow"]();
   }, [ctx]);
   const handlerLeave = useCallback(() => {
     if (!ctx.current) return;
-    ctx.current['followButtonHide']();
+    ctx.current["followButtonHide"]();
   }, [ctx]);
   useEventListener("mouseenter", handler, ref);
   useEventListener("mouseleave", handlerLeave, ref);
@@ -111,15 +118,18 @@ const FollowUs = () => {
         ))}
       </ul>
       <span className="flex overflow-hidden">
-        <Text
-          p
-          className="fallow-button-gsap whitespace-nowrap-important"
-          degree="3"
-          weight="semibold"
-          size="sm"
+        <p
+          className={text(
+            {
+              size: "sm",
+              degree: "3",
+              weight: "semibold",
+            },
+            "fallow-button-gsap whitespace-nowrap-important"
+          )}
         >
           {t("footer.socialNetwork")}
-        </Text>
+        </p>
       </span>
       <Icon
         name="IconShare"
@@ -137,10 +147,11 @@ const TextAnimated = ({
   phrase,
   className,
   ...props
-}: { lang: string; phrase: string } & Omit<
-  React.ComponentProps<typeof Text>,
-  "div" | "children"
->) => {
+}: {
+  lang: string;
+  phrase: string;
+  className?: string;
+} & TextPropsExtended) => {
   const container = useRef<ElementRef<"div">>(null);
   const refs = useRef<ElementRef<"div">[]>([]);
   const [body, setBody] = useState<React.JSX.Element[] | null>(null);
@@ -167,8 +178,8 @@ const TextAnimated = ({
       );
     }, container);
     return () => {
-        ctx.revert();
-    }
+      ctx.revert();
+    };
   }, [body, lang]);
   useEffect(() => {
     setBody(null);
@@ -192,7 +203,7 @@ const TextAnimated = ({
 
   return (
     <span ref={container}>
-      <Text
+      {/* <Text
         div
         className={twMerge("flex flex-row flex-wrap", className)}
         {...props}
@@ -202,12 +213,27 @@ const TextAnimated = ({
               <Fragment key={index}>{word} </Fragment>
             ))
           : null}
-      </Text>
+      </Text> */}
+      <div
+        className={text(
+          {
+            size: props.size,
+            degree: props.degree,
+            weight: props.weight,
+          },
+          "flex flex-row flex-wrap",
+          className
+        )}
+      >
+        {body
+          ? body.map((word, index) => <Fragment key={index}>{word} </Fragment>)
+          : null}
+      </div>
     </span>
   );
 };
 
-const GoToTop = ({ handler, text }: { handler: () => void; text: string }) => {
+const GoToTop = ({ handler, name }: { handler: () => void; name: string }) => {
   const ref = useRef<HTMLButtonElement | null>(null);
   const ctx = useRef<gsap.Context | null>(null);
 
@@ -323,9 +349,18 @@ const GoToTop = ({ handler, text }: { handler: () => void; text: string }) => {
         size="24"
         className={twMerge("stroke-gray-400 icon_gsap", ICON_SIZE_CLASS_NAME)}
       />
-      <Text p size="sm" weight="semibold" degree="3" className="text_gsap">
-        {text}
-      </Text>
+      <p
+        className={text(
+          {
+            size: "sm",
+            weight: "semibold",
+            degree: "3",
+          },
+          "text_gsap"
+        )}
+      >
+        {name}
+      </p>
     </Button>
   );
 };
@@ -370,21 +405,36 @@ const Footer = () => {
         )}
       >
         <div className={twMerge("flex flex-row flex-1", "order-2 sm:order-1")}>
-          <GoToTopMemo handler={goToTop} text={t("footer.action")} />
+          <GoToTopMemo handler={goToTop} name={t("footer.action")} />
         </div>
         <div className="flex flex-row items-center justify-start flex-none order-1 grow-0 sm:justify-center sm:order-2">
-          <Text p degree="3" weight="semibold" size="sm" className="uppercase">
+          {/* <Text p degree="3" weight="semibold" size="sm" className="uppercase">
             {t("footer.name")}
-          </Text>
-          <Text
-            p
-            degree="3"
-            weight="semibold"
-            size="sm"
-            className={twMerge("ml-2")}
+          </Text> */}
+          <p
+            className={text(
+              {
+                size: "sm",
+                degree: "3",
+                weight: "semibold",
+              },
+              "uppercase"
+            )}
+          >
+            {t("footer.name")}
+          </p>
+          <p
+            className={text(
+              {
+                size: "sm",
+                degree: "3",
+                weight: "semibold",
+              },
+              "ml-2"
+            )}
           >
             {t("footer.copy")}
-          </Text>
+          </p>
         </div>
         <div className="flex-1 order-3">
           <FollowUs />

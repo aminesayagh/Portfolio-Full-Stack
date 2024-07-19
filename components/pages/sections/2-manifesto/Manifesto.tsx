@@ -3,9 +3,7 @@ import { useTranslation } from 'next-i18next';
 import { useRef, useEffect, useState, ElementRef, RefObject } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import Link from '@/components/ui/typography/Link';
-import Text from '@/components/ui/typography/Text';
-import Title from '@/components/ui/typography/Title';
+import { text, title, Link } from '@/components/ui/typography';
 import useGsap from '@/hook/useGsap';
 import { gsap } from '@/utils/gsap';
 
@@ -101,16 +99,23 @@ const Manifesto = () => {
                 'col-start-1 col-span-12 xs:col-start-2 xs:col-span-11 md:col-start-2 md:col-span-10 mdl:col-start-2 mdl:col-span-10 xl:col-start-2 xl:col-span-9',
             )}>
                 <div className='flex flex-row items-center justify-center gap-5'>
-                    <Title h6 degree='4' weight='medium' >
-                        {t(`manifesto.subtitle_1`)}
-                    </Title>
+                    <h6 className={title({
+                        degree: '4',
+                        weight: 'medium',
+                        size: 'h6'
+                    })} >{t(`manifesto.subtitle_1`)}</h6>
                     <div className='size-[0.3rem] rounded-full bg-gray-500 items-center justify-start' ></div>
-                    <Title h6 degree='4' weight='medium' >
-                        {t(`manifesto.subtitle_2`)}
-                    </Title>
+                    <h6 className={title({
+                        degree: '4',
+                        weight: 'medium',
+                        size: 'h6'
+                    })} >{t(`manifesto.subtitle_2`)}</h6>
                 </div>
-                <Title h4 degree='1' weight='semibold' className={twMerge(
-                    'flex flex-row flex-wrap',
+                <div className={title({
+                    degree: '1',
+                    weight: 'semibold',
+                    size: 'h4'
+                }, 'flex flex-row flex-wrap', 
                     i18n.language == 'en' ?
                         'gap-y-[0.01rem] xxs:gap-y-[0.04rem] gap-x-[0.06rem] sm:gap-y-[0.07rem] sm:gap-x-[0.1rem] mdl:gap-y-[0.08rem] mdl:gap-x-[0.16rem] lg:gap-y-[0.15rem] lg:gap-x-[0.23rem]' :
                         'gap-y-[0rem] xxs:gap-y-[0.03rem] gap-x-[0.06rem] sm:gap-y-[0.06rem] sm:gap-x-[0.1rem] mdl:gap-y-[0.07rem] mdl:gap-x-[0.16rem] lg:gap-y-[0.13rem] lg:gap-x-[0.23rem]'
@@ -119,7 +124,7 @@ const Manifesto = () => {
                         {t(`manifesto.slogan`)}
                     </strong>
                     <Phrase text={phrase} lang={i18n.language} refDescription={refDescription} />
-                </Title>
+                </div>
             </div>
             <div className={twMerge(
                 'flex flex-row gap-12 items-start justify-between',
@@ -127,31 +132,42 @@ const Manifesto = () => {
                 'col-start-1 col-span-12 xxs:col-start-2 xxs:col-span-11 xs:col-start-2 xs:col-span-10 sm:col-start-4 sm:col-span-9 md:col-start-5 md:col-span-7 lg:col-start-6 lg:col-span-6 xl:col-start-6 xl:col-span-5',
             )}>
                 <div className={twMerge('flex flex-col gap-4 xxs:gap-5', 'manifesto_description_container_gsap will-change-transform-animation')}>
-                    <Text p degree='3' weight='medium' size='lg' className='manifesto_description_gsap will-change-transform-animation' >
+                    <p className={text({
+                        degree: '3',
+                        weight: 'medium',
+                        size: 'lg'
+                    }, 'manifesto_description_gsap will-change-transform-animation')}>
                         {t(`manifesto.who_i_am`)}
-                    </Text>
-                    <Text p degree='3' weight='medium' size='lg' className='manifesto_description_gsap will-change-transform-animation'>
+                    </p>
+                    <p className={text({
+                        degree: '3',
+                        weight: 'medium',
+                        size: 'lg'
+                    }, 'manifesto_description_gsap will-change-transform-animation')}>
                         {t(`manifesto.what_i_do`)}
-                    </Text>
+                    </p>
                     <span
                         data-scroll
                         data-scroll-position='start'
                         data-scroll-speed='0.4'
                         className='mt-[1.6%] 3xl:mt-[3%]'
                     >
-                        <Text p degree='3' size='xl' weight='semibold'
-                            className='inline w-full whitespace-inherit-important manifesto_description_action_gsap will-change-transform-animation' style={{
-                                WebkitLineClamp: 2,
-                                WebkitBoxOrient: 'vertical',
-                                overflow: 'hidden',
-                                textWrap: 'inherit'
-                            }}>
+                        <p className={text({
+                            degree: '3',
+                            weight: 'semibold',
+                            size: 'xl'
+                        }, 'inline w-full whitespace-inherit-important manifesto_description_action_gsap will-change-transform-animation')} style={{
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                            textWrap: 'inherit'
+                        }}>
                             {t(`manifesto.goal`)}
-                            <Link degree='2' href='/resume' className='ml-1 transition-all duration-300 text-primary-500 hover:text-primary-400/70 hover:underline' weight='bold' >
+                            <Link degree='2' weight='bold' className='ml-1 transition-all duration-300 text-primary-500 hover:text-primary-400/70 hover:underline' href='/resume' >
                                 {t(`manifesto.action`)}
                             </Link>
-                            .
-                        </Text>
+                            
+                        </p>
                     </span>
                 </div>
             </div>

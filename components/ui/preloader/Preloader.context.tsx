@@ -15,8 +15,7 @@ import { twMerge } from "tailwind-merge";
 
 import Container from "@/components/ui/container";
 import Noise from "@/components/ui/noise";
-import Text from "@/components/ui/typography/Text";
-import Title from "@/components/ui/typography/Title";
+import { text, title } from "@/components/ui/typography";
 import { gsap } from "@/utils/gsap";
 
 
@@ -284,27 +283,32 @@ const Preloader = ({
           <div className="flex flex-col gap-0 sm:gap-1">
             <span className="invisible py-1 element-content-gsap text-loader-gsap">
               {
-                <Title h6 degree="4" exchange suppressHydrationWarning>
+                <h6 className={title({
+                  weight: "bold",
+                  mode: 'exchanged',
+                  size: 'h6',
+                  degree: '4'
+                })} suppressHydrationWarning>
                   {t("loading.intro")}
-                </Title>
+                </h6>
               }
             </span>
             <ul className="relative h-6 overflow-hidden element-content-gsap">
               {Array.from({ length: 5 }).map((_, index) => (
-                <Text
+                <li
                   suppressHydrationWarning
                   key={index}
-                  degree="0"
-                  li
-                  size="md"
-                  weight="bold"
-                  className={twMerge(
+                  className={text(
+                    {
+                      size: "md",
+                      weight: "bold",
+                    },
                     "item-gsap capitalize will-change-transform-animation absolute left-0 right-0 top-[100%]",
                     index == 4 ? "text-primary-500" : "text-black-300/80"
                   )}
                 >
                   {t(`loading.message_${index + 1}`)}
-                </Text>
+                </li>
               ))}
             </ul>
           </div>
