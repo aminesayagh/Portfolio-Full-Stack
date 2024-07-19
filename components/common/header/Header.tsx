@@ -43,7 +43,7 @@ const Header = () => {
   const ctx = useRef<gsap.Context>();
 
   useIsomorphicLayoutEffect(() => {
-    ctx.current = gsap.context((self) => {
+    ctx.current = gsap.context(self => {
       self.add("open", () => {
         tl.current
           .fromTo(
@@ -53,7 +53,7 @@ const Header = () => {
               yPercent: TRANSLATE_Y,
               transformOrigin: "right top",
               skewY: 2,
-              onStartParams: [],
+              onStartParams: []
             },
             {
               duration: DURATION,
@@ -61,8 +61,8 @@ const Header = () => {
               yPercent: 0,
               skewY: 0,
               stagger: {
-                amount: 0.2,
-              },
+                amount: 0.2
+              }
             }
           )
           .to(
@@ -70,7 +70,7 @@ const Header = () => {
             {
               duration: DURATION / 2,
               yPercent: 100,
-              ease: Power3.easeInOut,
+              ease: Power3.easeInOut
             },
             "<"
           )
@@ -80,20 +80,20 @@ const Header = () => {
             opacity: 0,
             ease: Power3.easeInOut,
             stagger: {
-              amount: 0.2,
-            },
+              amount: 0.2
+            }
           })
           .fromTo(
             ".modal-close",
             {
               display: "none",
-              opacity: 0,
+              opacity: 0
             },
             {
               opacity: 1,
               ease: Power3.easeInOut,
               duration: DURATION / 2,
-              display: "block",
+              display: "block"
             }
           )
           .from(
@@ -102,7 +102,7 @@ const Header = () => {
               duration: DURATION,
               yPercent: 100,
               opacity: 0,
-              ease: Power3.easeInOut,
+              ease: Power3.easeInOut
             },
             "<"
           )
@@ -113,7 +113,7 @@ const Header = () => {
               yPercent: 100,
               opacity: 0,
               transformOrigin: "center bottom",
-              ease: Power3.easeInOut,
+              ease: Power3.easeInOut
             },
             "<50%"
           )
@@ -123,7 +123,7 @@ const Header = () => {
               xPercent: -100,
               transformOrigin: "left center",
               ease: Power3.easeInOut,
-              duration: DURATION / 2,
+              duration: DURATION / 2
             },
             "<25%"
           );
@@ -149,18 +149,18 @@ const Header = () => {
     const ctx = gsap.context(() => {
       const tl = gsap
         .timeline({
-          paused: true,
+          paused: true
         })
         .from(".navbar_gsap", {
           delay: 0.3,
           yPercent: 160,
-          duration: 0.5,
+          duration: 0.5
         });
       const scrollTrigger = ScrollTrigger.create({
         trigger: ".navbar_gsap",
         markers: false,
         toggleActions: "play pause none pause",
-        animation: tl,
+        animation: tl
       });
       scrollTrigger.disable();
       if (endLoading) {
@@ -298,7 +298,7 @@ const Header = () => {
                             {
                               size: "xs",
                               degree: "3",
-                              weight: "semibold",
+                              weight: "semibold"
                             },
                             "mr-2 hidden",
                             "modal-close"
@@ -385,7 +385,7 @@ const Header = () => {
                                         {
                                           size: "xs",
                                           degree: "4",
-                                          weight: "semibold",
+                                          weight: "semibold"
                                         },
                                         "absolute overflow-hidden left-[calc(100%_+_4px)] w-full top-[19%] modal-item-info"
                                       )}
@@ -411,7 +411,7 @@ const Header = () => {
                               {
                                 size: "h6",
                                 degree: "2",
-                                weight: "bold",
+                                weight: "bold"
                               },
                               "overflow-hidden tracking-widest uppercase modal-description"
                             )}
@@ -433,7 +433,7 @@ const Header = () => {
                               {
                                 size: "xs",
                                 degree: "4",
-                                weight: "semibold",
+                                weight: "semibold"
                               },
                               "overflow-hidden modal-description"
                             )}
@@ -459,11 +459,16 @@ const Header = () => {
                         {/* <Text p degree="4" size="sm" className="modal-footer">
                           {t("header.copyright")}
                         </Text> */}
-                        <p className={text({
-                          size: 'sm',
-                          degree: '4',
-                          weight: 'semibold'
-                        }, 'modal-footer')} >
+                        <p
+                          className={text(
+                            {
+                              size: "sm",
+                              degree: "4",
+                              weight: "semibold"
+                            },
+                            "modal-footer"
+                          )}
+                        >
                           {t("header.copyRight")}
                         </p>
                       </div>
@@ -499,4 +504,5 @@ const Header = () => {
   );
 };
 
-export default memo(Header);
+const HeaderMemo = memo(Header);
+export default HeaderMemo;

@@ -8,7 +8,7 @@ import {
   useRef,
   ElementRef,
   Suspense,
-  useCallback,
+  useCallback
 } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
@@ -17,7 +17,6 @@ import Container from "@/components/ui/container";
 import Noise from "@/components/ui/noise";
 import { text, title } from "@/components/ui/typography";
 import { gsap } from "@/utils/gsap";
-
 
 // config:
 const END_LOADING_IN = 99;
@@ -33,7 +32,7 @@ export const LoadingContext = createContext<{
   addLoadingComponent: () => {},
   removeLoadingComponent: () => {},
   isLoading: true,
-  endLoading: false,
+  endLoading: false
 });
 
 type LoadingElement = {
@@ -42,7 +41,7 @@ type LoadingElement = {
 
 export function LoadingProvider({
   fontReady,
-  children,
+  children
 }: {
   children: React.ReactNode;
   fontReady: boolean;
@@ -55,7 +54,7 @@ export function LoadingProvider({
 
   const loadingState = useCallback(() => {
     const loadingValues = Object.values(loadingComponentList);
-    const inLoadingState = loadingValues.filter((item) => item === true);
+    const inLoadingState = loadingValues.filter(item => item === true);
 
     setIsLoading(inLoadingState.length > 0);
   }, [loadingComponentList]);
@@ -64,13 +63,13 @@ export function LoadingProvider({
     // add data set of loading to document html
     const html = document.querySelector("html");
     if (html) {
-      html.dataset['is_loading'] = (!endLoading).toString();
+      html.dataset["is_loading"] = (!endLoading).toString();
     }
   }, [endLoading, loadingComponentList]);
 
   const addLoadingComponent = useCallback(
     (key: string) => {
-      setLoadingComponentList((prev) => {
+      setLoadingComponentList(prev => {
         if (prev.hasOwnProperty(key)) return prev;
         const updated = { ...prev, [key]: true };
         loadingState();
@@ -82,7 +81,7 @@ export function LoadingProvider({
 
   const removeLoadingComponent = useCallback(
     (key: string) => {
-      setLoadingComponentList((prev) => {
+      setLoadingComponentList(prev => {
         if (!prev[key]) return prev;
         const updated = { ...prev, [key]: false };
         loadingState();
@@ -106,7 +105,7 @@ export function LoadingProvider({
 
   useEffect(() => {
     addLoadingComponent(LOADING_KEY);
-  
+
     return () => {
       removeLoadingComponent(LOADING_KEY);
     };
@@ -117,7 +116,7 @@ export function LoadingProvider({
         addLoadingComponent,
         removeLoadingComponent,
         isLoading,
-        endLoading,
+        endLoading
       }}
     >
       <Preloader
@@ -133,7 +132,7 @@ export function LoadingProvider({
 const Preloader = ({
   isLoading,
   setEndLoading,
-  fontReady,
+  fontReady
 }: {
   isLoading: boolean;
   fontReady: boolean;
@@ -148,7 +147,7 @@ const Preloader = ({
       const tl = gsap.timeline({
         repeat: -1,
         paused: true,
-        repeatDelay: 0.5,
+        repeatDelay: 0.5
       });
       const DELAY = 1;
       const OFFSET = 0.3;
@@ -157,10 +156,10 @@ const Preloader = ({
         keyframes: [
           { top: "100%", duration: FRAME_DURATION },
           { top: "0%" },
-          { top: "-100%", delay: DELAY, duration: FRAME_DURATION },
+          { top: "-100%", delay: DELAY, duration: FRAME_DURATION }
         ],
         ease: "power2.out",
-        stagger: DELAY + OFFSET,
+        stagger: DELAY + OFFSET
       });
 
       if (fontReady) {
@@ -175,29 +174,29 @@ const Preloader = ({
   }, [ref, fontReady]);
 
   useIsomorphicLayoutEffect(() => {
-    const ctx = gsap.context((self) => {
+    const ctx = gsap.context(self => {
       const skew = 2;
       const tl = gsap
         .timeline({
-          paused: true,
+          paused: true
         })
         .fromTo(
           [".element-content-gsap", ".element-counter-gsap"],
           {
             yPercent: 0,
-            opacity: 1,
+            opacity: 1
           },
           {
             yPercent: -10,
             duration: 0.4,
-            opacity: 0,
+            opacity: 0
           }
         )
         .fromTo(
           ".element-container",
           {
             yPercent: 0,
-            skewY: 0,
+            skewY: 0
           },
           {
             duration: 0.5,
@@ -206,20 +205,20 @@ const Preloader = ({
             skewY: skew,
             onComplete: () => {
               setEndLoading(true);
-            },
+            }
           }
         )
         .fromTo(
           ".element-bg",
           {
             yPercent: 0,
-            skewY: 0,
+            skewY: 0
           },
           {
             skewY: skew,
             duration: 0.5,
             yPercent: -120,
-            ease: "power2.out",
+            ease: "power2.out"
           }
         );
       self.add("endPreload", () => {
@@ -239,17 +238,17 @@ const Preloader = ({
     const ctx = gsap.context(() => {
       const tl = gsap
         .timeline({
-          paused: true,
+          paused: true
         })
         .fromTo(
           ".text-loader-gsap",
           {
-            autoAlpha: 0,
+            autoAlpha: 0
           },
           {
             autoAlpha: 1,
             duration: 0.5,
-            ease: "power2.out",
+            ease: "power2.out"
           }
         );
       if (fontReady) {
@@ -283,12 +282,15 @@ const Preloader = ({
           <div className="flex flex-col gap-0 sm:gap-1">
             <span className="invisible py-1 element-content-gsap text-loader-gsap">
               {
-                <h6 className={title({
-                  weight: "bold",
-                  mode: 'exchanged',
-                  size: 'h6',
-                  degree: '4'
-                })} suppressHydrationWarning>
+                <h6
+                  className={title({
+                    weight: "bold",
+                    mode: "exchanged",
+                    size: "h6",
+                    degree: "4"
+                  })}
+                  suppressHydrationWarning
+                >
                   {t("loading.intro")}
                 </h6>
               }
@@ -301,7 +303,7 @@ const Preloader = ({
                   className={text(
                     {
                       size: "md",
-                      weight: "bold",
+                      weight: "bold"
                     },
                     "item-gsap capitalize will-change-transform-animation absolute left-0 right-0 top-[100%]",
                     index == 4 ? "text-primary-500" : "text-black-300/80"
@@ -345,7 +347,7 @@ const Preloader = ({
 
 const Percent = ({
   isLoading,
-  setEndLoadingProgress,
+  setEndLoadingProgress
 }: {
   isLoading: boolean;
   setEndLoadingProgress: (b: boolean) => void;
@@ -369,12 +371,11 @@ const Percent = ({
     }
   }, [percent, isLoading, controls, setEndLoadingProgress]);
 
-
   useEffect(() => {
     controls.start({
       y: 0,
       opacity: 1,
-      transition: { duration: 0.04 },
+      transition: { duration: 0.04 }
     });
   }, [percent, controls]);
 

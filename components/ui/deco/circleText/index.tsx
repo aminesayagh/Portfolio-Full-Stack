@@ -1,1 +1,1 @@
-export { default } from './CircleText'
+export { default } from "./CircleText";

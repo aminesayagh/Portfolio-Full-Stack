@@ -1,1 +1,1 @@
-export { default } from './Cases'
+export { default } from "./Cases";

@@ -9,7 +9,15 @@
     },
     "project": "./tsconfig.json"
   },
-  "plugins": ["react", "react-hooks", "jsx-a11y", "import", "tailwindcss"],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "jsx-a11y",
+    "import",
+    "tailwindcss",
+    "prettier",
+    "react-refresh"
+  ],
   "extends": [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
@@ -19,7 +27,9 @@
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:import/typescript",
-    "plugin:tailwindcss/recommended"
+    "plugin:tailwindcss/recommended",
+    "plugin:prettier/recommended",
+    "next/core-web-vitals"
   ],
   "rules": {
     "react/react-in-jsx-scope": "off", // React is always in scope with Next.js
@@ -44,7 +54,14 @@
       }
     ],
     "tailwindcss/classnames-order": "off", // Allow custom classnames
-    "tailwindcss/no-custom-classname": "off" // Allow custom classnames
+    "tailwindcss/no-custom-classname": "off", // Allow custom classnames
+    "prettier/prettier": "error",
+    "react-refresh/only-export-components": "warn",
+    "jsx-a11y/alt-text": "warn",
+    "jsx-a11y/aria-role": "warn",
+    "jsx-a11y/interactive-supports-focus": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   },
   "settings": {
     "react": {
@@ -61,7 +78,10 @@
     {
       "files": ["*.ts", "*.tsx"],
       "rules": {
-        "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          { "argsIgnorePattern": "^_" }
+        ]
       }
     }
   ]

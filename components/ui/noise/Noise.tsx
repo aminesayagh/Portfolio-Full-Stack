@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 const Noise = ({
   position = "fixed",
-  className = "opacity-70",
+  className = "opacity-70"
 }: {
   position?: "fixed" | "absolute";
   className?: string;
@@ -14,8 +14,8 @@ const Noise = ({
     transition: {
       duration: 1,
       ease: "linear",
-      repeat: Infinity,
-    },
+      repeat: Infinity
+    }
   };
   return (
     <motion.div

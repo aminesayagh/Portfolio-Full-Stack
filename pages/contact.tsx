@@ -39,13 +39,12 @@ const Contact = () => {
   );
 };
 
-export async function getStaticProps({ locale }: {
-  locale: string
-}) {
+// eslint-disable-next-line react-refresh/only-export-components
+export async function getStaticProps({ locale }: { locale: string }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common"], nextI18NextConfig)),
-    },
+      ...(await serverSideTranslations(locale, ["common"], nextI18NextConfig))
+    }
   };
 }
 

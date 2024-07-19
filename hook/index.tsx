@@ -1,1 +1,1 @@
-export { default as useTime } from './Time';
+export { default as useTime } from "./Time";

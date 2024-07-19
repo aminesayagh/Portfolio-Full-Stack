@@ -51,17 +51,17 @@ const Video = () => {
           img.style.objectFit = "cover";
           img.style.objectPosition = "center";
 
-          return new Promise((resolve) => {
+          return new Promise(resolve => {
             img.onload = () => resolve(img);
           });
         })
-    ).then((images) => {
+    ).then(images => {
       imagesRef.current = images;
       removeLoadingComponent(LOADING_KEY);
     });
     return () => {
       if (imagesRef.current) {
-        imagesRef.current.forEach((image) => {
+        imagesRef.current.forEach(image => {
           image.src = "";
         });
       }
@@ -88,14 +88,14 @@ const Video = () => {
         ease: "none",
         scrollTrigger: {
           scrub: 0.5,
-          trigger: canvas,
+          trigger: canvas
         },
-        onUpdate: render,
+        onUpdate: render
       });
 
-      const current =  imagesRef.current;
+      const current = imagesRef.current;
       if (!current) return;
-      current[0] && (current[0]['onload'] = render);
+      current[0] && (current[0]["onload"] = render);
 
       function render() {
         if (!imagesRef.current.length) return;
@@ -123,7 +123,7 @@ const Video = () => {
           rounded({ size: "xl" })
         )}
         style={{
-          height: "100%",
+          height: "100%"
         }}
       >
         <CursorContent

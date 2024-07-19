@@ -7,7 +7,7 @@ import {
   useCallback,
   memo,
   useState,
-  Fragment,
+  Fragment
 } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
@@ -32,37 +32,37 @@ const FollowUs = () => {
 
   useIsomorphicLayoutEffect(() => {
     if (!menuSocialNetworks.length) return;
-    ctx.current = gsap.context((self) => {
+    ctx.current = gsap.context(self => {
       const tl = gsap
         .timeline({
-          paused: true,
+          paused: true
         })
         .fromTo(
           ".fallow-button-gsap",
           {
-            xPercent: 0,
+            xPercent: 0
           },
           {
             xPercent: 100,
             duration: 0.2,
-            ease: "Power4.out",
+            ease: "Power4.out"
           }
         )
         .to(".fallow-button-gsap", {
           width: 0,
-          duration: 0.01,
+          duration: 0.01
         })
         .fromTo(
           ".social-button-gsap",
           {
             xPercent: -100,
-            opacity: 0,
+            opacity: 0
           },
           {
             opacity: 1,
             xPercent: 0,
             stagger: -0.07,
-            duration: 0.3,
+            duration: 0.3
           }
         );
 
@@ -75,10 +75,10 @@ const FollowUs = () => {
 
       gsap.set(".social-button-gsap", {
         xPercent: -100,
-        opacity: 0,
+        opacity: 0
       });
       gsap.set(".fallow-button-gsap", {
-        xPercent: 0,
+        xPercent: 0
       });
       return () => {
         tl.kill();
@@ -123,7 +123,7 @@ const FollowUs = () => {
             {
               size: "sm",
               degree: "3",
-              weight: "semibold",
+              weight: "semibold"
             },
             "fallow-button-gsap whitespace-nowrap-important"
           )}
@@ -162,7 +162,7 @@ const TextAnimated = ({
       gsap.fromTo(
         ".word-gsap",
         {
-          y: "100%",
+          y: "100%"
         },
         {
           y: "0%",
@@ -172,8 +172,8 @@ const TextAnimated = ({
           scrollTrigger: {
             trigger: container.current,
             start: "top bottom-=80px",
-            toggleActions: "play none reverse reverse",
-          },
+            toggleActions: "play none reverse reverse"
+          }
         }
       );
     }, container);
@@ -187,7 +187,7 @@ const TextAnimated = ({
       return (
         <div key={index} className="py-px overflow-y-animate">
           <div
-            ref={(ref) => {
+            ref={ref => {
               if (!ref) return;
               refs.current[index] = ref;
             }}
@@ -219,7 +219,7 @@ const TextAnimated = ({
           {
             size: props.size,
             degree: props.degree,
-            weight: props.weight,
+            weight: props.weight
           },
           "flex flex-row flex-wrap",
           className
@@ -238,23 +238,23 @@ const GoToTop = ({ handler, name }: { handler: () => void; name: string }) => {
   const ctx = useRef<gsap.Context | null>(null);
 
   useIsomorphicLayoutEffect(() => {
-    ctx.current = gsap.context((self) => {
+    ctx.current = gsap.context(self => {
       const tlIcon = gsap
         .timeline({
-          paused: true,
+          paused: true
         })
         .fromTo(
           ".icon_gsap",
           {
             opacity: 1,
             yPercent: 0,
-            xPercent: 0,
+            xPercent: 0
           },
           {
             opacity: 0,
             yPercent: -100,
             xPercent: 100,
-            duration: 0.3,
+            duration: 0.3
           }
         )
         .fromTo(
@@ -262,41 +262,41 @@ const GoToTop = ({ handler, name }: { handler: () => void; name: string }) => {
           {
             opacity: 0,
             yPercent: 100,
-            xPercent: -100,
+            xPercent: -100
           },
           {
             opacity: 1,
             yPercent: 0,
             duration: 0.3,
-            xPercent: 0,
+            xPercent: 0
           }
         );
       const tlText = gsap
         .timeline({
-          paused: true,
+          paused: true
         })
         .fromTo(
           ".text_gsap",
           {
             opacity: 1,
-            yPercent: 0,
+            yPercent: 0
           },
           {
             opacity: 0,
             yPercent: -100,
-            duration: 0.3,
+            duration: 0.3
           }
         )
         .fromTo(
           ".text_gsap",
           {
             opacity: 0,
-            yPercent: 100,
+            yPercent: 100
           },
           {
             opacity: 1,
             yPercent: 0,
-            duration: 0.3,
+            duration: 0.3
           }
         );
       tlIcon.play();
@@ -354,7 +354,7 @@ const GoToTop = ({ handler, name }: { handler: () => void; name: string }) => {
           {
             size: "sm",
             weight: "semibold",
-            degree: "3",
+            degree: "3"
           },
           "text_gsap"
         )}
@@ -370,7 +370,7 @@ const GoToTopMemo = memo(GoToTop);
 const Footer = () => {
   const {
     t,
-    i18n: { language },
+    i18n: { language }
   } = useTranslation();
   // const { scrollTo } = useLocomotiveScroll();
   const lenis = useLenis();
@@ -416,7 +416,7 @@ const Footer = () => {
               {
                 size: "sm",
                 degree: "3",
-                weight: "semibold",
+                weight: "semibold"
               },
               "uppercase"
             )}
@@ -428,7 +428,7 @@ const Footer = () => {
               {
                 size: "sm",
                 degree: "3",
-                weight: "semibold",
+                weight: "semibold"
               },
               "ml-2"
             )}
@@ -444,4 +444,5 @@ const Footer = () => {
   );
 };
 
-export default memo(Footer);
+const FooterMemo = memo(Footer);
+export default FooterMemo;

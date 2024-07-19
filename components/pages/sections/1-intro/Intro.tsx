@@ -6,7 +6,7 @@ import {
   useMemo,
   ElementRef,
   useState,
-  useEffect,
+  useEffect
 } from "react";
 import { PressEvent } from "react-aria";
 import { useIsomorphicLayoutEffect } from "react-use";
@@ -31,18 +31,18 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
 
   useIsomorphicLayoutEffect(() => {
     if (!!ref.current) {
-      ctx.current = gsap.context((self) => {
+      ctx.current = gsap.context(self => {
         const xTo =
           ref.current &&
           gsap.quickTo(ref.current, "x", {
             duration: 1,
-            ease: "elastic.out(1, 0.3)",
+            ease: "elastic.out(1, 0.3)"
           });
         const yTo =
           ref.current &&
           gsap.quickTo(ref.current, "y", {
             duration: 1,
-            ease: "elastic.out(1, 0.3)",
+            ease: "elastic.out(1, 0.3)"
           });
         self.add("mouseMove", (e: { clientX: number; clientY: number }) => {
           const c = ref.current;
@@ -123,7 +123,7 @@ const FullStack = ({ className }: { className: string }) => {
             className={display(
               {
                 size: "md",
-                weight: "semibold",
+                weight: "semibold"
               },
               DISPLAY_2_CLASS_NAME,
               "tracking-[-0.05rem] sm:tracking-wider",
@@ -138,7 +138,7 @@ const FullStack = ({ className }: { className: string }) => {
             className={display(
               {
                 size: "md",
-                weight: "semibold",
+                weight: "semibold"
               },
               DISPLAY_2_CLASS_NAME,
               "tracking-[-0.05rem] sm:tracking-wider",
@@ -180,10 +180,10 @@ function useFitText(options?: { factor?: number; maxFontSize?: number }) {
 const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
   const { t, i18n } = useTranslation();
   const { fontSize: fontSizeInterface, ref: widthInterfaceRef } = useFitText({
-    factor: 4.94,
+    factor: 4.94
   });
   const { fontSize: fontSizeDev, ref: widthDevRef } = useFitText({
-    factor: i18n.language == "en" ? 5.55 : 7,
+    factor: i18n.language == "en" ? 5.55 : 7
   });
 
   const interfaceText = useMemo(() => {
@@ -215,11 +215,11 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
         <div
           style={{
             fontSize: fontSizeInterface,
-            lineHeight: "96%",
+            lineHeight: "96%"
           }}
           className={display(
             {
-              weight: "bold",
+              weight: "bold"
             },
             DISPLAY_1_CLASS_NAME,
             "splitText_gsap will-change-transform-animation flex flex-row gap-2 intro_scroll_gsap"
@@ -279,22 +279,34 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
       >
         <div>
           <span data-scroll className="overflow-hidden h-fit">
-            <p data-scroll className={text({
-              degree: '2',
-              weight: 'semibold',
-              size: 'sm'
-            }, 'text-start sm:text-end w-full will-change-transform-animation splitText_description_gsap')}>
+            <p
+              data-scroll
+              className={text(
+                {
+                  degree: "2",
+                  weight: "semibold",
+                  size: "sm"
+                },
+                "text-start sm:text-end w-full will-change-transform-animation splitText_description_gsap"
+              )}
+            >
               {t("intro.descriptions.1")}
             </p>
           </span>
         </div>
         <div>
           <span data-scroll className="overflow-hidden h-fit">
-            <p data-scroll className={text({
-              degree: '2',
-              weight: 'semibold',
-              size: 'sm'
-            }, 'text-start sm:text-end w-full will-change-transform-animation splitText_description_gsap')}>
+            <p
+              data-scroll
+              className={text(
+                {
+                  degree: "2",
+                  weight: "semibold",
+                  size: "sm"
+                },
+                "text-start sm:text-end w-full will-change-transform-animation splitText_description_gsap"
+              )}
+            >
               {t("intro.descriptions.2")}
             </p>
           </span>
@@ -359,11 +371,11 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
         <h1
           style={{
             fontSize: fontSizeDev,
-            lineHeight: "100%",
+            lineHeight: "100%"
           }}
           className={display(
             {
-              weight: "bold",
+              weight: "bold"
             },
             DISPLAY_1_CLASS_NAME,
             "splitText_gsap will-change-transform-animation"
@@ -380,7 +392,7 @@ const menuItems = {
   "1": MENU_ITEMS.manifesto.id,
   "2": MENU_ITEMS.experience.id,
   "3": MENU_ITEMS.cases.id,
-  "4": MENU_ITEMS.contact.id,
+  "4": MENU_ITEMS.contact.id
 } as const;
 
 const menuKeys = ["manifesto", "experience", "cases", "contact"];
@@ -408,7 +420,7 @@ const Menu = () => {
         return {
           key: i,
           number: `0${i + 1}`,
-          title: t(`header.menu.${menuKeys[i]}.attribute`),
+          title: t(`header.menu.${menuKeys[i]}.attribute`)
         };
       }),
     [t]
@@ -440,7 +452,7 @@ const Menu = () => {
                 name={`cursorPointer_intro_menu_${number}`}
                 component="CursorEvent"
                 props={{
-                  event: "pointer",
+                  event: "pointer"
                 }}
                 className="overflow-y-animate"
               >
@@ -457,7 +469,7 @@ const Menu = () => {
                   }
                   className="uppercase item_menu_gsap will-change-transform-animation"
                   style={{
-                    color: "inherit",
+                    color: "inherit"
                   }}
                 >
                   <Item>{title}</Item>
@@ -473,7 +485,7 @@ const Menu = () => {
             {
               degree: "3",
               weight: "medium",
-              size: "sm",
+              size: "sm"
             },
             "w-max whitespace-nowrap-important",
             "pr-1 hidden xxs:flex sm:hidden md:flex",
@@ -502,7 +514,7 @@ const Intro = () => {
     () => {
       const tl = gsap
         .timeline({
-          paused: true,
+          paused: true
         })
         .from(".splitText_gsap", {
           yPercent: 200,
@@ -511,20 +523,20 @@ const Intro = () => {
           ease: "power4.out",
           delay: 0.4,
           stagger: {
-            amount: 0.4,
+            amount: 0.4
           },
           onComplete: function () {
             this["targets"]().forEach(
               (el: HTMLElement) => (el.style.willChange = "")
             );
-          },
+          }
         })
         .from(
           ".splitText_fullStack_gsap",
           {
             yPercent: 120,
             duration: 0.9,
-            ease: "power4.out",
+            ease: "power4.out"
           },
           "<90%"
         )
@@ -535,8 +547,8 @@ const Intro = () => {
             duration: 0.9,
             ease: "power4.out",
             stagger: {
-              amount: 0.1,
-            },
+              amount: 0.1
+            }
           },
           "<"
         )
@@ -546,7 +558,7 @@ const Intro = () => {
             opacity: 0,
             autoAlpha: 0,
             duration: 0.4,
-            ease: "power4.out",
+            ease: "power4.out"
           },
           "<"
         )
@@ -555,19 +567,19 @@ const Intro = () => {
           {
             opacity: 0,
             autoAlpha: 0,
-            duration: 0.3,
+            duration: 0.3
           },
           "<"
         )
         .fromTo(
           ".item_menu_gsap",
           {
-            yPercent: 105,
+            yPercent: 105
           },
           {
             yPercent: 0,
             duration: 0.4,
-            ease: "power4.out",
+            ease: "power4.out"
           },
           "<60%"
         )
@@ -576,7 +588,7 @@ const Intro = () => {
         trigger: introRef.current,
         start: "top top",
         toggleActions: "play play restart play",
-        animation: tl,
+        animation: tl
       });
       scrollTrigger.disable();
       if (endLoading) {

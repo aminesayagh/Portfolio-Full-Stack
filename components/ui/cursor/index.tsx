@@ -1,2 +1,2 @@
-export { default } from './Cursor';
-export { default as CursorContent } from './CursorContainer';
+export { default as Cursors } from "./Cursor";
+export { default as CursorContent } from "./CursorContainer";

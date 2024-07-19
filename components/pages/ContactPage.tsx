@@ -8,7 +8,7 @@ import { z } from "zod";
 
 import { addToast } from "@/components/common/toast";
 import Container from "@/components/ui/container";
-import Form from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import type { OptionOnSubmit } from "@/components/ui/form";
 import { text, title, Link, display } from "@/components/ui/typography";
 import { getProjectsByCategory } from "@/conf/projects";
@@ -22,7 +22,7 @@ const CONTACT_SUBJECTS = {
   "3": "Portfolio Feedback",
   "4": "Getting to know Each Other",
   "5": "Say Hello",
-  "6": "Other",
+  "6": "Other"
 } as const;
 
 const ERROR_TRANSLATION_PATH = "form.error";
@@ -37,28 +37,28 @@ const contactSubjectItems: {
 }[] = [
   {
     key: "1",
-    text: contactSubjectValues[0] as ContactSubject,
+    text: contactSubjectValues[0] as ContactSubject
   },
   {
     key: "2",
-    text: contactSubjectValues[1] as ContactSubject,
+    text: contactSubjectValues[1] as ContactSubject
   },
   {
     key: "3",
-    text: contactSubjectValues[2] as ContactSubject,
+    text: contactSubjectValues[2] as ContactSubject
   },
   {
     key: "4",
-    text: contactSubjectValues[3] as ContactSubject,
+    text: contactSubjectValues[3] as ContactSubject
   },
   {
     key: "5",
-    text: contactSubjectValues[4] as ContactSubject,
+    text: contactSubjectValues[4] as ContactSubject
   },
   {
     key: "6",
-    text: contactSubjectValues[5] as ContactSubject,
-  },
+    text: contactSubjectValues[5] as ContactSubject
+  }
 ];
 
 type TypeFormContact = {
@@ -100,12 +100,12 @@ const FormContact = () => {
         objective: z.string().nonempty(t(`${ERROR_TRANSLATION_PATH}.required`)),
         message: required()
           .min(10, {
-            message: t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 10 }),
+            message: t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 10 })
           })
           .max(500, {
-            message: t(`${ERROR_TRANSLATION_PATH}.maxLength`, { max: 500 }),
+            message: t(`${ERROR_TRANSLATION_PATH}.maxLength`, { max: 500 })
           })
-          .nonempty(),
+          .nonempty()
       }),
     [required, t, createZodString]
   );
@@ -120,18 +120,18 @@ const FormContact = () => {
       await fetch("/api/contact", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify({ ...data, locale: i18n.language }),
+        body: JSON.stringify({ ...data, locale: i18n.language })
       });
       // const responseData = await response.json();
       addToast(
         {
           variant: "positive",
-          description: successMessage,
+          description: successMessage
         },
         {
-          timeout: 10000,
+          timeout: 10000
         }
       );
       options.reset();
@@ -139,10 +139,10 @@ const FormContact = () => {
       addToast(
         {
           variant: "negative",
-          description: errorMessage,
+          description: errorMessage
         },
         {
-          timeout: 10000,
+          timeout: 10000
         }
       );
 
@@ -234,7 +234,7 @@ const AgencyList = () => {
               className={title(
                 {
                   weight: "semibold",
-                  degree: "1",
+                  degree: "1"
                 },
                 "tracking-wider uppercase opacity-80"
               )}
@@ -246,7 +246,7 @@ const AgencyList = () => {
                 {
                   size: "sm",
                   weight: "bold",
-                  degree: "1",
+                  degree: "1"
                 },
                 "tracking-wider uppercase"
               )}
@@ -273,7 +273,7 @@ const AgencyList = () => {
                 {
                   size: "sm",
                   weight: "bold",
-                  degree: "1",
+                  degree: "1"
                 },
                 "hidden tracking-wider md:block opacity-80"
               )}
@@ -284,7 +284,7 @@ const AgencyList = () => {
               className={text({
                 size: "sm",
                 weight: "medium",
-                degree: "2",
+                degree: "2"
               })}
             >
               {t(`projects.${project.id}.description`)}
@@ -292,7 +292,7 @@ const AgencyList = () => {
             <div
               className="inline"
               style={{
-                display: "-webkit-box",
+                display: "-webkit-box"
               }}
             >
               {project.jobTitle.map((jobTitle, index) => {
@@ -303,7 +303,7 @@ const AgencyList = () => {
                       {
                         size: "sm",
                         weight: "medium",
-                        degree: "2",
+                        degree: "2"
                       },
                       "pr-2"
                     )}
@@ -333,7 +333,7 @@ const ContactPage = () => {
   const timer = useTime({
     city: "Casablanca",
     country: "Africa",
-    format: "HH:mm",
+    format: "HH:mm"
   });
 
   useIsomorphicLayoutEffect(() => {
@@ -344,15 +344,15 @@ const ContactPage = () => {
             trigger: "#contact",
             start: "top 60%",
             toggleActions: "play play restart play",
-            markers: false,
-          },
+            markers: false
+          }
         })
         .from(".splitText_gsap", {
           yPercent: 220,
           skewY: 7,
           duration: 1.2,
           ease: "Power4.easeOut",
-          delay: 0.2,
+          delay: 0.2
         });
       return () => tl.kill();
     });
@@ -374,7 +374,7 @@ const ContactPage = () => {
               className={display(
                 {
                   size: "xl",
-                  weight: "bold",
+                  weight: "bold"
                 },
                 "col-start-1 col-span-12",
                 "mdl:col-start-4 mdl:col-span-9",
@@ -402,11 +402,16 @@ const ContactPage = () => {
                 "row-start-1 row-span-1"
               )}
             >
-              <p className={text({
-                size: "sm",
-                weight: "medium",
-                degree: "2",
-              }, 'uppercase text-start')}>
+              <p
+                className={text(
+                  {
+                    size: "sm",
+                    weight: "medium",
+                    degree: "2"
+                  },
+                  "uppercase text-start"
+                )}
+              >
                 {t("contact.subtitle")}
               </p>
               <hr className="relative h-[2px] w-4 bg-gray-200" />
@@ -442,18 +447,24 @@ const ContactPage = () => {
               )}
             >
               <div className="flex flex-col gap-1">
-                <p className={text({
-                  size: 'sm',
-                  degree: '2',
-                  weight: 'medium',
-                })} suppressHydrationWarning>
+                <p
+                  className={text({
+                    size: "sm",
+                    degree: "2",
+                    weight: "medium"
+                  })}
+                  suppressHydrationWarning
+                >
                   {t("contact.localTime")} {timer?.formattedTime}
                 </p>
-                <p className={text({
-                  size: 'sm',
-                  degree: '2',
-                  weight: 'medium',
-                })} suppressHydrationWarning>
+                <p
+                  className={text({
+                    size: "sm",
+                    degree: "2",
+                    weight: "medium"
+                  })}
+                  suppressHydrationWarning
+                >
                   {t("contact.gmtTime")}({timer?.gmtOffset})
                 </p>
               </div>
@@ -472,11 +483,16 @@ const ContactPage = () => {
                 "sm:col-start-1 sm:col-span-2"
               )}
             >
-              <p className={text({
-                size: 'sm',
-                degree: '2',
-                weight: 'medium',
-              }, 'uppercase text-start')}>
+              <p
+                className={text(
+                  {
+                    size: "sm",
+                    degree: "2",
+                    weight: "medium"
+                  },
+                  "uppercase text-start"
+                )}
+              >
                 {t("contact.reppedBy")}
               </p>
               <hr className="relative h-[2px] w-4 bg-gray-200" />

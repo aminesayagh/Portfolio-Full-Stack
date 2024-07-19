@@ -1,31 +1,35 @@
+import { useContext, useEffect } from "react";
 
-import { useContext, useEffect } from 'react';
-
-import { LenisContext, LenisInstance, useRoot } from './Lenis.context';
+import { LenisInstance, useRoot } from "./lenis";
+import { LenisContext } from "./Lenis.context";
 
 function useCurrentLenis() {
-    const local = useContext(LenisContext);
-    const root = useRoot();
+  const local = useContext(LenisContext);
+  const root = useRoot();
 
-    return local ?? root;
+  return local ?? root;
 }
 
-export function useLenis(callback?: (lenis: LenisInstance) => void, deps = [], priority = 0) {
-    const { lenis, addCallback, removeCallback } = useCurrentLenis();
-    
-    useEffect(() => {
-        if(!callback || !addCallback || !removeCallback || !lenis) return;
-    
-        addCallback(callback, priority);
-        callback(lenis);
-    
-        return () => {
-            removeCallback(callback);
-        }
-    }, [lenis, addCallback, removeCallback, priority, callback, deps]);
+export function useLenis(
+  callback?: (lenis: LenisInstance) => void,
+  deps = [],
+  priority = 0
+) {
+  const { lenis, addCallback, removeCallback } = useCurrentLenis();
 
-    return lenis;
+  useEffect(() => {
+    if (!callback || !addCallback || !removeCallback || !lenis) return;
+
+    addCallback(callback, priority);
+    callback(lenis);
+
+    return () => {
+      removeCallback(callback);
+    };
+  }, [lenis, addCallback, removeCallback, priority, callback, deps]);
+
+  return lenis;
 }
 
-useCurrentLenis.displayName = 'useCurrentLenis';
-useLenis.displayName = 'useLenis';
+useCurrentLenis.displayName = "useCurrentLenis";
+useLenis.displayName = "useLenis";

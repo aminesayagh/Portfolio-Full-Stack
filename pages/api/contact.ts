@@ -1,18 +1,19 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { Client } from '@notionhq/client';
-import type { NextApiRequest, NextApiResponse } from 'next'
+import { Client } from "@notionhq/client";
+import type { NextApiRequest, NextApiResponse } from "next";
 
-import { NOTION_API_KEY, NOTION_DATABASE_ID } from 'utils/env';
+import { NOTION_API_KEY, NOTION_DATABASE_ID } from "utils/env";
 const notion = new Client({ auth: NOTION_API_KEY });
-type Data = {
-  status: 'success',
-} | {
-  status: 'error',
-  message: string
-}
+type Data =
+  | {
+      status: "success";
+    }
+  | {
+      status: "error";
+      message: string;
+    };
 
-const databaseId = NOTION_DATABASE_ID || '';
-
+const databaseId = NOTION_DATABASE_ID || "";
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,71 +22,72 @@ export default async function handler(
   const { firstName, lastName, email, objective, message, locale } = req.body;
   // Notion API call
   async function addItem() {
-    const response = await notion.pages.create({
-      parent: {
-        database_id: databaseId,
-      },
-      properties: {
-        Name: {
-          title: [
-            {
-              text: {
-                content: `${firstName} ${lastName}`,
-              },
-            },
-          ],
+    const response = await notion.pages
+      .create({
+        parent: {
+          database_id: databaseId
         },
-        firstName: {
-          rich_text: [
-            {
-              text: {
-                content: firstName,
-              },
-
-            },
-          ],
-        },
-        lastName: {
-          rich_text: [
-            {
-              text: {
-                content: lastName,
-              },
-            }
-          ],
-        },
-        email: {
-          email: email,
-        },
-        objective: {
-          select: {
-            name: objective,
+        properties: {
+          Name: {
+            title: [
+              {
+                text: {
+                  content: `${firstName} ${lastName}`
+                }
+              }
+            ]
           },
-        },
-        message: {
-          rich_text: [
-            {
-              text: {
-                content: message,
-              },
-            },
-          ],
-        },
-        locale: {
-          select: {
-            name: locale
+          firstName: {
+            rich_text: [
+              {
+                text: {
+                  content: firstName
+                }
+              }
+            ]
+          },
+          lastName: {
+            rich_text: [
+              {
+                text: {
+                  content: lastName
+                }
+              }
+            ]
+          },
+          email: {
+            email: email
+          },
+          objective: {
+            select: {
+              name: objective
+            }
+          },
+          message: {
+            rich_text: [
+              {
+                text: {
+                  content: message
+                }
+              }
+            ]
+          },
+          locale: {
+            select: {
+              name: locale
+            }
           }
         }
-      },
-    }).catch(err => {
-      throw new Error(err.body);
-    })
+      })
+      .catch(err => {
+        throw new Error(err.body);
+      });
     return response;
   }
   try {
     await addItem();
-    res.status(200).json({ status: 'success' });
+    res.status(200).json({ status: "success" });
   } catch (error) {
-    res.status(500).json({ status: 'error', message: 'Error back end' });
+    res.status(500).json({ status: "error", message: "Error back end" });
   }
 }

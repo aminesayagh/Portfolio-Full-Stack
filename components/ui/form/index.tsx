@@ -1,3 +1,3 @@
-export { default } from './Form'
+export { default as Form } from "./Form";
 
-export type { OptionOnSubmit } from './Form.types'
+export type { OptionOnSubmit } from "./Form.types";

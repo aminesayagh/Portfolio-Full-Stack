@@ -1,1 +1,1 @@
-export { default } from './ResizablePanel';
+export { default } from "./ResizablePanel";

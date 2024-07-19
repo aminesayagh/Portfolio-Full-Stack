@@ -12,7 +12,7 @@ import { gsap } from "@/utils/gsap";
 const CLASS_GSAP = {
   title: "contact-title-gsap",
   quota: "contact_quota_gsap",
-  arrow: "contact-arrow-gsap",
+  arrow: "contact-arrow-gsap"
 };
 
 const Action = () => {
@@ -31,30 +31,30 @@ const Action = () => {
             start: "top center",
             end: "top top",
             toggleActions: "play pause reverse reverse",
-            invalidateOnRefresh: true,
-          },
+            invalidateOnRefresh: true
+          }
         })
         .fromTo(
           CLASS_GSAP.title,
           {
-            yPercent: -100,
+            yPercent: -100
           },
           {
             yPercent: 0,
             duration: 1,
             stagger: 0.4,
-            ease: "Power3.easeOut",
+            ease: "Power3.easeOut"
           }
         )
         .fromTo(
           ".contact_quota_gsap",
           {
             opacity: 0,
-            left: "-100%",
+            left: "-100%"
           },
           {
             opacity: 1,
-            left: "0%",
+            left: "0%"
           },
           "-=0.7"
         )
@@ -62,13 +62,13 @@ const Action = () => {
           ".contact-arrow-gsap",
           {
             opacity: 0,
-            xPercent: -50,
+            xPercent: -50
           },
           {
             xPercent: 0,
             duration: 0.5,
             opacity: 1,
-            ease: "elastic.out(1, 0.6)",
+            ease: "elastic.out(1, 0.6)"
           },
           "-=0.2"
         );
@@ -95,7 +95,7 @@ const Action = () => {
           className={display(
             {
               size: "lg",
-              weight: "bold",
+              weight: "bold"
             },
             "uppercase text-start xs:text-center",
             "contact-title-gsap will-change-transform-animation"
@@ -122,7 +122,7 @@ const Action = () => {
           component="CursorActionIcon"
           props={{
             degree: -45,
-            iconName: "IconArrowUpRight",
+            iconName: "IconArrowUpRight"
           }}
           className="overflow-hidden"
         >
@@ -131,7 +131,7 @@ const Action = () => {
               className={display(
                 {
                   size: "lg",
-                  weight: "bold",
+                  weight: "bold"
                 },
                 "whitespace-nowrap-important uppercase text-primary-400",
                 "contact-title-gsap will-change-transform-animation"
@@ -146,7 +146,7 @@ const Action = () => {
             {
               size: i18n.language == "en" ? "xxs" : "xs",
               degree: "3",
-              weight: "medium",
+              weight: "medium"
             },
             "absolute left-[-1.5%] xs:left-auto sm:left-[103%]",
             "top-[100%] sm:top-[-6px]",

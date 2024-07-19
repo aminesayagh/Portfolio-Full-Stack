@@ -1,1 +1,1 @@
-export { default as CircleText } from './circleText';
+export { default as CircleText } from "./circleText";

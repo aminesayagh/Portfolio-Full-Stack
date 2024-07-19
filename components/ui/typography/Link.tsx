@@ -6,8 +6,8 @@ import { CursorContent } from "@/components/ui/cursor";
 import { TextPropsExtended, text } from "./Typography";
 
 export interface LinkPropsExtended extends TextPropsExtended, LinkProps {
-    className?: string;
-    children: React.ReactNode;
+  className?: string;
+  children: React.ReactNode;
 }
 
 export const Link: FC<LinkPropsExtended> = ({
@@ -25,22 +25,24 @@ export const Link: FC<LinkPropsExtended> = ({
       name="cursorPointer_header_email"
       component="CursorEvent"
       props={{
-        event: "pointer",
+        event: "pointer"
       }}
       {...props}
     >
       <LinkNext
         href={href}
-        className={text({
-          weight,
-          degree,
-          size,
-          mode,
-        }, className)}
+        className={text(
+          {
+            weight,
+            degree,
+            size,
+            mode
+          },
+          className
+        )}
       >
         {children}
       </LinkNext>
     </CursorContent>
   );
 };
-
