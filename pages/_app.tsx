@@ -3,7 +3,7 @@ import { Montserrat } from "next/font/google";
 import { appWithTranslation } from "next-i18next";
 import { useMemo, useEffect, useState } from "react";
 
-import Scripts from "@/components/common/script";
+import Scripts from "@/components/common/Script";
 import { LoadingProvider } from "@/components/ui/preloader";
 
 import nextI18NextConfig from "../next-i18next.config.js";

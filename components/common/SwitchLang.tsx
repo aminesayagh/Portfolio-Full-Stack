@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 
-import Item from "@/components/ui/animation/item";
+import Item from "@/components/ui/animation/Item";
 import Button from "@/components/ui/button";
 import i18n from "@/utils/i18n";
 

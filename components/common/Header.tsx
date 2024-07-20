@@ -4,8 +4,7 @@ import { useState, useCallback, memo, useEffect, useRef, useMemo } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
 
-import HamburgerMenu from "@/components/common/hamburgerMenu";
-import SwitchLang from "@/components/common/switchLang";
+import HamburgerMenu from "@/components/common/HamburgerMenu";
 import Button from "@/components/ui/button";
 import { containerStyle } from "@/components/ui/container";
 import Logo from "@/components/ui/logo";
@@ -18,6 +17,8 @@ import useRouterChange from "@/hook/SafePush";
 import { useLenis } from "@/lib/Lenis";
 import StyleAnimation from "@/styles/animation.module.scss";
 import { gsap, Power3, ScrollTrigger } from "@/utils/gsap";
+
+import SwitchLang from "./SwitchLang";
 
 const GAP_SIZE_LG = "gap-4 sm:gap-6 lg:gap-7 xl:gap-8";
 const GAP_SIZE_XL = "gap-8 mdl:gap-12";

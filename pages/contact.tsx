@@ -2,8 +2,8 @@ import dynamic from "next/dynamic.js";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import Head from "@/components/common/head";
-import Layer from "@/components/common/layer";
+import Head from "@/components/common/Head";
+import Layer from "@/components/common/Layer";
 import { ToastRegion } from "@/components/common/toast";
 import Lenis from "@/components/Lenis";
 import Noise from "components/ui/noise";
