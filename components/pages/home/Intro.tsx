@@ -12,7 +12,7 @@ import { PressEvent } from "react-aria";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
 
-import Item from "@/components/ui/animation/item";
+import Item from "@/components/ui/animation/Item";
 import Button from "@/components/ui/button";
 import { CursorContent } from "@/components/ui/cursor";
 import { Icon } from "@/components/ui/icon";

@@ -7,8 +7,8 @@ import Container from "@/components/ui/container";
 import { Cursors as Cursor } from "@/components/ui/cursor";
 import { usePreloader } from "@/components/ui/preloader";
 
-const HeaderDynamic = dynamic(() => import("@/components/common/header"), {});
-const FooterDynamic = dynamic(() => import("@/components/common/footer"), {});
+const HeaderDynamic = dynamic(() => import("@/components/common/Header"), {});
+const FooterDynamic = dynamic(() => import("@/components/common/Footer"), {});
 
 const Layer = ({
   children
