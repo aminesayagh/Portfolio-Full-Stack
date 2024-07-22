@@ -1,6 +1,6 @@
 import { useTranslation } from "next-i18next";
-import React from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import React from "react";
 import "@/utils/gsap";
 
 import Head from "@/components/common/Head";
