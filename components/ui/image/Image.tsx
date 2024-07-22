@@ -1,4 +1,5 @@
 import Image, { ImageProps } from "next/image";
+import React from "react";
 
 const images: {
   [key: string]: { src: string; width: number; height: number };

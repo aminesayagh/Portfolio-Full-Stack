@@ -1,4 +1,5 @@
 import Link, { LinkProps } from "next/link";
+import React from "react";
 import { twMerge } from "tailwind-merge";
 
 import Image from "@/components/ui/image";

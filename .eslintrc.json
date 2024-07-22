@@ -32,12 +32,16 @@
     "next/core-web-vitals"
   ],
   "rules": {
-    "react/react-in-jsx-scope": "off", // React is always in scope with Next.js
-    "react/prop-types": "off", // TypeScript types are sufficient for prop types
-    "@typescript-eslint/explicit-module-boundary-types": "off", // Explicit return types are not required for TS files
+    "no-unused-vars": "warn", // TypeScript takes care of this
+    "react/react-in-jsx-scope": "warn", // React is always in scope with Next.js
+    "react/prop-types": "warn", // TypeScript types are sufficient for prop types
+    "react/display-name": "off", // Display names are not required for TS files
+    "@typescript-eslint/no-unused-vars": "warn", // Warn on unused variables
+    
+    "@next/next/no-img-element": "warn", // Warn on usage of <img> elements
     "@typescript-eslint/no-explicit-any": "warn", // Warn on usage of the `any` type
-    "jsx-a11y/anchor-is-valid": "off", // Next.js Link components don't need href
-    "import/no-anonymous-default-export": "off", // Anonymous default exports are useful for some cases
+    "jsx-a11y/anchor-is-valid": "warn", // Next.js Link components don't need href
+    "import/no-anonymous-default-export": "warn", // Anonymous default exports are useful for some cases
     "import/order": [
       "error",
       {

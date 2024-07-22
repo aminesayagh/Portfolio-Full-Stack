@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default (_: NextApiRequest, res: NextApiResponse) => {
+const HandlerRobots = (_: NextApiRequest, res: NextApiResponse) => {
   res.setHeader("Content-Type", "text/plain");
   res.write(`User-agent: *
         Disallow: /api/
@@ -9,3 +9,5 @@ export default (_: NextApiRequest, res: NextApiResponse) => {
     `);
   res.end();
 };
+
+export default HandlerRobots;

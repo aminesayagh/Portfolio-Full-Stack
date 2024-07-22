@@ -1,6 +1,13 @@
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-import { useState, useCallback, memo, useEffect, useRef, useMemo } from "react";
+import React, {
+  useState,
+  useCallback,
+  memo,
+  useEffect,
+  useRef,
+  useMemo
+} from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
 

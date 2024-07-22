@@ -1,7 +1,7 @@
 import { useFrame } from "@studio-freight/hamo";
 import Lenis from "@studio-freight/lenis";
 import { useTranslation } from "next-i18next";
-import {
+import React, {
   ReactElement,
   createContext,
   useEffect,

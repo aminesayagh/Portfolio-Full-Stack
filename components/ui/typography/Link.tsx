@@ -1,5 +1,5 @@
 import LinkNext, { LinkProps } from "next/link";
-import { FC } from "react";
+import React, { FC } from "react";
 
 import { CursorContent } from "@/components/ui/cursor";
 

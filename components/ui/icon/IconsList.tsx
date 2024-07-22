@@ -7,7 +7,7 @@ import {
   IconShare,
   IconArrowBigRightFilled
 } from "@tabler/icons-react";
-import { SVGAttributes } from "react";
+import React, { SVGAttributes } from "react";
 
 export interface IconProps extends SVGAttributes<SVGElement> {
   color?: string;

@@ -1,4 +1,4 @@
-import { FormHTMLAttributes, DetailedHTMLProps } from "react";
+import React, { FormHTMLAttributes, DetailedHTMLProps } from "react";
 import {
   FieldValues,
   FormProvider,

@@ -1,4 +1,5 @@
 import { useTranslation } from "next-i18next";
+import React from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import "@/utils/gsap";
 

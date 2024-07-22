@@ -1,4 +1,4 @@
-import { useContext, useEffect, createContext } from "react";
+import React, { useContext, useEffect, createContext } from "react";
 import { useHover } from "react-aria";
 
 import { cursorContext } from "./Cursor.context";
