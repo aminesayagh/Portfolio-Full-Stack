@@ -1,127 +1,22 @@
 import { useTranslation } from "next-i18next";
-import { useMemo, memo, ElementRef, useRef } from "react";
+import { useMemo, ElementRef, useRef } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
 
 import Container from "@/components/ui/container";
-import { text, title, Link, display } from "@/components/ui/typography";
-import { getProjectsByCategory } from "@/conf/projects";
+import { text, Link, display } from "@/components/ui/typography";
 import { getMenuItems } from "@/conf/router";
 import { useTime } from "@/hook";
 import { gsap } from "@/utils/gsap";
 
+import AgencyList from "./AgencyList";
 import ContactForm from "./ContactForm";
-
-const AgencyList = () => {
-  const { t } = useTranslation();
-
-  const projects = useMemo(() => getProjectsByCategory("ongoing"), []);
-
-  return (
-    <ul
-      className={twMerge("flex flex-col gap-0", "border-b border-gray-800/60")}
-    >
-      {projects.map((project, index) => (
-        <li
-          key={index}
-          className={twMerge(
-            "flex flex-col md:flex-row gap-8 md:gap-4 py-10",
-            "items-start",
-            "border-t border-gray-800/60"
-          )}
-        >
-          <div
-            className={twMerge(
-              "flex flex-row gap-12 items-start justify-between w-full md:w-5/12 2xl:w-1/2"
-            )}
-          >
-            <h6
-              className={title(
-                {
-                  weight: "semibold",
-                  degree: "1"
-                },
-                "tracking-wider uppercase opacity-80"
-              )}
-            >
-              {t(`projects.${project.id}.title`)}
-            </h6>
-          </div>
-          <div
-            className={twMerge(
-              "w-full xxs:w-10/12 md:w-7/12 2xl:w-1/2",
-              "flex flex-col gap-5"
-            )}
-          >
-            {/* <Text
-              p
-              size="sm"
-              weight="bold"
-              degree="1"
-              className="hidden tracking-wider md:block opacity-80"
-            >
-            </Text> */}
-            <p
-              className={text(
-                {
-                  size: "sm",
-                  weight: "bold",
-                  degree: "1"
-                },
-                "hidden tracking-wider md:block opacity-80"
-              )}
-            >
-              {t(`country.${project.country}`)}
-            </p>
-            <p
-              className={text({
-                size: "sm",
-                weight: "medium",
-                degree: "2"
-              })}
-            >
-              {t(`projects.${project.id}.description`)}
-            </p>
-            <div
-              className="inline"
-              style={{
-                display: "-webkit-box"
-              }}
-            >
-              {project.jobTitle.map((jobTitle, index) => {
-                return (
-                  <p
-                    key={index}
-                    className={text(
-                      {
-                        size: "sm",
-                        weight: "medium",
-                        degree: "2"
-                      },
-                      "pr-2"
-                    )}
-                  >
-                    {t(`jobTItle.${jobTitle}`)}
-                    {index < project.jobTitle.length - 1 ? "," : ""}
-                  </p>
-                );
-              })}
-            </div>
-          </div>
-        </li>
-      ))}
-    </ul>
-  );
-};
-
-const AgencyListMemo = memo(AgencyList);
 
 const ContactPage = () => {
   const { t } = useTranslation();
   const contactRef = useRef<ElementRef<"div">>(null);
 
   const socialNetworkItems = useMemo(() => getMenuItems("socialNetworks"), []);
-  // const { isReady } = useLocomotiveScroll();
 
   const timer = useTime({
     city: "Casablanca",
@@ -300,7 +195,7 @@ const ContactPage = () => {
                 "xl:col-start-3 xl:col-span-6"
               )}
             >
-              <AgencyListMemo />
+              <AgencyList />
             </div>
             <div
               className={twMerge(
