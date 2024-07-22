@@ -12,7 +12,7 @@ import nextI18NextConfig from "../next-i18next.config.js";
 
 import "@/utils/gsap";
 const ContactPageDynamic = dynamic(
-  () => import("@/components/pages/ContactPage"),
+  () => import("@/components/pages/Contact/Index"),
   {}
 );
 

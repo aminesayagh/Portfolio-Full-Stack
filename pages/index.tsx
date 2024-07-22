@@ -5,7 +5,7 @@ import "@/utils/gsap";
 import Head from "@/components/common/Head";
 import Layer from "@/components/common/Layer";
 import Lenis from "@/components/Lenis";
-import LandingPage from "@/components/pages/LandingPage";
+import LandingPage from "@/components/pages/home/Index";
 import Noise from "@/components/ui/noise";
 
 import nextI18NextConfig from "../next-i18next.config.js";

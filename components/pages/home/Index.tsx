@@ -3,13 +3,13 @@ import { Suspense } from "react";
 
 import Container from "@/components/ui/container";
 
-const Intro = dynamic(() => import("./sections/Intro"));
-const Manifesto = dynamic(() => import("./sections/Manifesto"));
-const Video = dynamic(() => import("./sections/Video"));
-const Expertise = dynamic(() => import("./sections/Expertise"));
-const CallToAction = dynamic(() => import("./sections/Action"));
-const Cases = dynamic(() => import("./sections/Cases"));
-const Action = dynamic(() => import("./sections/ActionContact"));
+const Intro = dynamic(() => import("./Intro"));
+const Manifesto = dynamic(() => import("./Manifesto"));
+const Video = dynamic(() => import("./Video"));
+const Expertise = dynamic(() => import("./Expertise"));
+const CallToAction = dynamic(() => import("./Action"));
+const Cases = dynamic(() => import("./Cases"));
+const Action = dynamic(() => import("./ActionContact"));
 
 const LandingPage = () => (
   <>
