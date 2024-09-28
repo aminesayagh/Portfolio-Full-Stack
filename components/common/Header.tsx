@@ -310,7 +310,7 @@ const Header = () => {
                             "modal-close"
                           )}
                         >
-                          {t("header.key_menu")}
+                          Menu
                         </p>
                       </button>
                       <HamburgerMenu isOpen={isOpen} setOpen={handler} />

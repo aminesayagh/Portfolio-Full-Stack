@@ -14,7 +14,7 @@ function References() {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "Mohamed Amine SAYAGH - Full Stack Developer - RESUME.pdf";
+      a.download = "/Mohamed Amine SAYAGH - Sotware developer - Resume.pdf";
       a.click();
       a.remove();
     };

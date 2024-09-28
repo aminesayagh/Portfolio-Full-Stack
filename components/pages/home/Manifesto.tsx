@@ -159,7 +159,7 @@ const Manifesto = () => {
       data-scroll-sticky
       data-scroll-target="#manifesto"
       data-scroll-speed="4"
-      className="relative py-20 h-fit xxs:py-28 md:py-32 2xl:py-40"
+      className="relative py-20 h-fit xxs:py-28"
       ref={refDescription}
     >
       <div
