@@ -1,6 +1,12 @@
 import _ from "lodash";
 import { useTranslation } from "next-i18next";
-import { useRef, useEffect, useState, ElementRef, RefObject } from "react";
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  ElementRef,
+  RefObject
+} from "react";
 import { twMerge } from "tailwind-merge";
 
 import { text, title, Link } from "@/components/ui/typography";
@@ -153,7 +159,7 @@ const Manifesto = () => {
       data-scroll-sticky
       data-scroll-target="#manifesto"
       data-scroll-speed="4"
-      className="relative py-20 h-fit xxs:py-28 md:py-32 2xl:py-40"
+      className="relative py-20 h-fit xxs:py-28"
       ref={refDescription}
     >
       <div

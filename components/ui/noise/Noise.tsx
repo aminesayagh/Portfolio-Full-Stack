@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import React from "react";
 import { twMerge } from "tailwind-merge";
 
 const Noise = ({

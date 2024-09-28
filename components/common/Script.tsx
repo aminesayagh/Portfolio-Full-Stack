@@ -1,4 +1,5 @@
 import Script from "next/script";
+import React from "react";
 
 import { NEXT_PUBLIC_GOOGLE_ANALYTICS_ID } from "utils/env";
 

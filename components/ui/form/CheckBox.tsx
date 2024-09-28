@@ -1,3 +1,4 @@
+import React from "react";
 import { Checkbox, CheckboxGroup, Label } from "react-aria-components";
 import type { CheckboxGroupProps } from "react-aria-components";
 const CheckboxUi = Checkbox;

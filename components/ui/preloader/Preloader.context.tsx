@@ -1,14 +1,15 @@
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-import {
+import React, {
   createContext,
   useState,
   useEffect,
   useRef,
   ElementRef,
   Suspense,
-  useCallback
+  useCallback,
+  ReactNode
 } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
@@ -43,7 +44,7 @@ export function LoadingProvider({
   fontReady,
   children
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   fontReady: boolean;
 }) {
   const [isLoading, setIsLoading] = useState(true);

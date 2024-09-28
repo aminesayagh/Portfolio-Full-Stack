@@ -1,5 +1,5 @@
 import { useFrame } from "@studio-freight/hamo";
-import { useRef } from "react";
+import React, { useRef } from "react";
 
 import { LenisProvider, useLenis } from "@/lib/Lenis";
 import { LenisInstance } from "@/lib/Lenis/lenis";

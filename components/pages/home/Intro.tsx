@@ -1,5 +1,5 @@
 import { useTranslation } from "next-i18next";
-import {
+import React, {
   useRef,
   memo,
   useCallback,

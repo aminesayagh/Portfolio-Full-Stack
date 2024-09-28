@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic.js";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import React from "react";
 
 import Head from "@/components/common/Head";
 import Layer from "@/components/common/Layer";

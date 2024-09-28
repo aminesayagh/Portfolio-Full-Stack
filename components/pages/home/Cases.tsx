@@ -1,5 +1,5 @@
 import { useTranslation } from "next-i18next";
-import { ElementRef, useMemo, useRef, memo } from "react";
+import React, { ElementRef, useMemo, useRef, memo } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
 

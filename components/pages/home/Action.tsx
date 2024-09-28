@@ -1,4 +1,5 @@
 import { useTranslation } from "next-i18next";
+import React from "react";
 import { twMerge } from "tailwind-merge";
 
 import Button from "@/components/ui/button";

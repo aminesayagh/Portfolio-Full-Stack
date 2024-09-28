@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import { useTranslation } from "next-i18next";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 
 import Container from "@/components/ui/container";

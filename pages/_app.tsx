@@ -1,7 +1,7 @@
 import type { AppProps } from "next/app";
 import { Montserrat } from "next/font/google";
 import { appWithTranslation } from "next-i18next";
-import { useMemo, useEffect, useState } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 
 import Scripts from "@/components/common/Script";
 import { LoadingProvider } from "@/components/ui/preloader";

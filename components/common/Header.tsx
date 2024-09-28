@@ -1,6 +1,13 @@
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-import { useState, useCallback, memo, useEffect, useRef, useMemo } from "react";
+import React, {
+  useState,
+  useCallback,
+  memo,
+  useEffect,
+  useRef,
+  useMemo
+} from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
 
@@ -37,7 +44,6 @@ const Header = () => {
   const { safePush } = useRouterChange();
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const { endLoading } = usePreloader();
-  // const { scrollTo } = useLocomotiveScroll();
   const lenis = useLenis();
 
   const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
@@ -236,9 +242,6 @@ const Header = () => {
               <Logo href="/" size={64} alt={t("header.logo")} mode="dark" />
             </span>
           </Navbar.Brand>
-          {/* <Navbar.Content className={twMerge('flex-1', GAP_SIZE_LG)}> */}
-          {/* <Link degree='2' href={`mailto:${t('header.email')}?subject=Contact from Portfolio&body=Hello Mohamed Amine,`} size='xs' weight='semibold' className='hidden mdl:flex'>{t('header.email')}</Link> */}
-          {/* </Navbar.Content> */}
           <Navbar.Content
             className={twMerge(
               "flex-1 justify-end overflow-hidden",
@@ -307,7 +310,7 @@ const Header = () => {
                             "modal-close"
                           )}
                         >
-                          {t("header.menu")}
+                          Menu
                         </p>
                       </button>
                       <HamburgerMenu isOpen={isOpen} setOpen={handler} />
@@ -459,9 +462,6 @@ const Header = () => {
                           "overflow-hidden"
                         )}
                       >
-                        {/* <Text p degree="4" size="sm" className="modal-footer">
-                          {t("header.copyright")}
-                        </Text> */}
                         <p
                           className={text(
                             {
@@ -472,7 +472,7 @@ const Header = () => {
                             "modal-footer"
                           )}
                         >
-                          {t("header.copyRight")}
+                          {t("header.copyright")}
                         </p>
                       </div>
                       <ul

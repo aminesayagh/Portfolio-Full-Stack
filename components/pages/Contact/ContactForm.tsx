@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "next-i18next";
-import { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Input, Button } from "react-aria-components";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";

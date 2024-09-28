@@ -1,4 +1,4 @@
-import { createElement, useMemo } from "react";
+import React, { createElement, useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { containerStyle } from "./Container.style";

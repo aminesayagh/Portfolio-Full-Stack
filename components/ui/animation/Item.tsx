@@ -1,4 +1,4 @@
-import { ElementRef, useRef, useState } from "react";
+import React, { ElementRef, useRef, useState } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
 
 import { CursorContent } from "@/components/ui/cursor";

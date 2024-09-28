@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { useTranslation } from "next-i18next";
-import {
+import React, {
   ElementRef,
   useRef,
   useEffect,
