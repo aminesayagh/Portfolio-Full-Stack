@@ -59,6 +59,7 @@
                 "label": "FR"
             }
         },
+        "key_menu": "Contact",
         "menu": {
             "manifesto": {"attribute": "Manifesto", "more": "null" },
             "experience": {"attribute": "Experience", "more": "(40+)" },

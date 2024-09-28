@@ -51,6 +51,7 @@
         "locale": "fr",
         "logo": "Mohamed Amine SAYAGH",
         "close": "Fermer",
+        "key_menu": "Menu",
         "langs": {
             "fr": {
                 "label": "EN"
