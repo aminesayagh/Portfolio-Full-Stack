@@ -4,7 +4,6 @@ Welcome to my portfolio repository. This project showcases my skills and project
 
 ## Table of Contents
 
-
 - [Overview](#overview)
 - [Project Structure](#project-structure)
   - [Components](#components)
@@ -105,4 +104,3 @@ components/
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for more information.
-

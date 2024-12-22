@@ -1,0 +1,315 @@
+{
+  "head": {
+    "home": {
+      "title": "Mohamed Amine SAYAGH - Full Stack Web Developer",
+      "description": "Mohamed Amine SAYAGH - Full Stack Web Developer",
+      "keywords": "Mohamed Amine SAYAGH - Full Stack Web Developer",
+      "author": "Mohamed Amine SAYAGH",
+      "url": "https://ma-sayagh.vercel.app/"
+    },
+    "contact": {
+      "title": "Mohamed Amine SAYAGH - Contact",
+      "description": "Mohamed Amine SAYAGH - Contact",
+      "keywords": "Mohamed Amine SAYAGH - Contact",
+      "author": "Mohamed Amine SAYAGH",
+      "url": "https://ma-sayagh.vercel.app/contact"
+    }
+  },
+  "loading": {
+    "intro": "Web Portfolio",
+    "message_1": "Hi, I'm",
+    "message_2": "mohamed",
+    "message_3": "amine",
+    "message_4": "sayagh",
+    "message_5": "nice to meet you...",
+    "percent": "%"
+  },
+  "socialNetwork": {
+    "instagram": {
+      "key": "IN",
+      "name": "Instagram"
+    },
+    "linkedin": {
+      "key": "LI",
+      "name": "Linkedin"
+    },
+    "github": {
+      "key": "GH",
+      "name": "Github"
+    },
+    "dribbble": {
+      "key": "DR",
+      "name": "Dribbble"
+    },
+    "medium": {
+      "key": "MD",
+      "name": "Medium"
+    }
+  },
+  "header": {
+    "email": "AMINESAYAGH1997@GMAIL.COM",
+    "locale": "fr",
+    "logo": "Mohamed Amine SAYAGH",
+    "close": "Close",
+    "langs": {
+      "fr": {
+        "label": "EN"
+      },
+      "en": {
+        "label": "FR"
+      }
+    },
+    "key_menu": "Menu",
+    "menu": {
+      "manifesto": { "attribute": "Manifesto", "more": "null" },
+      "experience": { "attribute": "Experience", "more": "(40+)" },
+      "cases": { "attribute": "Cases", "more": "(☺ 90+)" },
+      "contact": { "attribute": "Contact", "more": "null" }
+    },
+    "socialNetwork": {
+      "instagram": "IN",
+      "linkedin": "LI",
+      "github": "GH"
+    },
+    "description": {
+      "title": "Who's Behind the Screen?",
+      "content": "Mohamed Amine Sayagh, Drived by a passion for full stack web development, I dedicate my work to creating web solutions, specifically designed for branding identities. I thrive in kick starting and steering projects from concept to completion."
+    },
+    "copyright": "© 2023 MOHAMED AMINE SAYAGH.",
+    "action": "LET'S TALK",
+    "home": "GO HOME",
+    "project": "MY PROJECTS"
+  },
+  "intro": {
+    "title": {
+      "1": "interface",
+      "2_1": "full",
+      "2_2": "stack",
+      "3": "Developer"
+    },
+    "descriptions": {
+      "1": "Mohamed Amine SAYAGH, An independent web developer, with experience in UI/UX design.",
+      "2": "I am Creating agreeable web experience for next generation of customers facing companies."
+    },
+    "menu": {
+      "Manifesto": "Manifesto",
+      "Experience": "Experience",
+      "Cases": "Cases",
+      "Contact": "Contact"
+    },
+    "copy": "© 2023"
+  },
+  "manifesto": {
+    "subtitle_1": "Manifesto",
+    "subtitle_2": "How I Approach Problem Solving Process",
+    "slogan": "Being correct is not enough",
+    "description": "it's merely the inception. An exceptional engineer devotes a substantial amount of time to deep, unbiased listening. They consider real-world experimentation as their source of truth, adamantly differentiating between judgments drawn from perspectives and concrete facts.",
+    "who_i_am": "My name is Mohamed Amine SAYAGH, A Passionate and independent web developer, deeply versed in science and of Web Design Interface, With a keen eye for detail and a growth understanding of user-centric design principles, I constantly push the boundaries of what's possible in the digital realm.",
+    "what_i_do": "I love transforming everything by unique, problem solving and usable designs, whether it's about digital products, brands, website. I ensure that every digital interaction is not just functional, but also delightful and memorable.",
+    "goal": "Want to know more about me?,",
+    "action": "Download Resume"
+  },
+  "manifesto_old": {
+    "title_1": "Perspective",
+    "title_1_2": "thinking",
+    "title_2": "Manifesto",
+    "image_alt": "Mohamed Amine SAYAGH",
+    "slogan": "We provide more than solutions, we deliver understanding.",
+    "subtitle_1": "HOW I DO",
+    "subtitle_2": "PROBLEM SOLVING",
+    "content": "Being correct is not enough, it's merely the inception. An exceptional engineer devotes a substantial amount of time to deep, unbiased listening. They consider real-world experimentation as their source of truth, adamantly differentiating between judgments drawn from perspectives and concrete facts."
+  },
+  "experience": {
+    "title": "Evolution through expertise",
+    "description": "Life hides in places we never look, the things we desire lie on the streets we haven't yet walked, it's these untraveled roads that call to me, igniting an endless quest in my heart.",
+    "stages": {
+      "1": {
+        "title": "Innovative Exploration",
+        "count": "01",
+        "description": "I activate the narrative of your digital brand. Through bespoke digital design, I collaborate with you to craft experiences that resonate authentically with your users, establishing a robust user-product relationship that is enduring and fruitful."
+      },
+      "2": {
+        "title": "User-Centered Design",
+        "count": "02",
+        "description": "You speak, I translate - into design. My process is deeply rooted in understanding your vision, ensuring that every pixel and code reflects your needs. I don't just create; I tailor an experience, making sure that your brand's voice is heard loud and clear in every interaction."
+      },
+      "3": {
+        "title": "Technical Precision",
+        "count": "03",
+        "description": "Precision is my guiding principle. I meticulously construct every line of code and design element with accuracy and intent. My goal is to deliver a product that not only meets but exceeds expectations, ensuring a flawless user journey from start to finish."
+      },
+      "4": {
+        "title": "Dynamic Collaboration",
+        "count": "04",
+        "description": "I adapt, I adjust, I evolve. Collaboration is key to our mutual success. As your brand grows and shifts, I'm right there with you, making real-time changes that are as dynamic as the market. I'm your partner in progress, evolving solutions that thrive."
+      }
+    }
+  },
+  "motivation": {
+    "action": "START A PROJECT",
+    "content": {
+      "1": "Open, bold, and engaging, without the trappings of entrenched or outdated opinions. My work thrives in the freedom and room to grow, driven by responsibility and inner drive. I work within diverse teams, powered by remarkable personalities.",
+      "2": "My work aspires to be special, to spring from the creativity of diverse minds - irrespective of gender, age, or any other factors."
+    }
+  },
+  "cases": {
+    "title": "Selected Projects",
+    "description": "Creativity requires Aim, Orientation, Responsibility, and discipline. the willingness to make sacrifices which is the hallmark of maturity in the service of a higher goal."
+  },
+  "contactCall": {
+    "title": "GOT A PROJECT?",
+    "action": "LET'S TALK",
+    "description": "Face your being with the necessity of transformation"
+  },
+  "footer": {
+    "state": "I usually work on several projects, but I'll be happy to discuss new opportunities.",
+    "action": "BACK TOP",
+    "name": "Mohamed Amine SAYAGH",
+    "copy": "© 2023",
+    "socialNetwork": "FOLLOW ME"
+  },
+  "contact": {
+    "title": "Get in touch",
+    "subtitle": "Tell me more",
+    "localTime": "MY LOCAL TIME IS",
+    "gmtTime": "GMT ",
+    "reppedBy": "Repped by"
+  },
+  "form": {
+    "field": {
+      "firstName": {
+        "placeholder": "Your first name",
+        "label": "First Name"
+      },
+      "lastName": {
+        "placeholder": "Your last name",
+        "label": "Last Name"
+      },
+      "email": {
+        "placeholder": "Your email",
+        "label": "Email"
+      },
+      "message": {
+        "placeholder": "Your message",
+        "label": "Message"
+      },
+      "phoneNumber": {
+        "placeholder": "Your phone number",
+        "label": "Phone Number"
+      },
+      "objective": {
+        "placeholder": "Your objective",
+        "label": "Objective",
+        "options": {
+          "1": "Project Inquiry",
+          "2": "Job Opportunity",
+          "3": "Portfolio Feedback",
+          "4": "Getting to know Each Other",
+          "5": "Say Hello",
+          "6": "Other"
+        }
+      },
+      "submit": {
+        "label": "Send"
+      }
+    },
+    "error": {
+      "required": "This field is required.",
+      "email": "Please enter a valid email address.",
+      "minLength": "Please enter at least {{min}} characters.",
+      "maxLength": "Please enter no more than {{max}} characters.",
+      "pattern": "Please match the requested format."
+    },
+    "notification": {
+      "success": "😎 Awesome, I got your message! I'll get back to you soon",
+      "error": "😱 Oops! Something went wrong. Please try again"
+    }
+  },
+  "tasks": {
+    "Web Designer": "Web Designer",
+    "Web Developer": "Web Developer",
+    "Mobile Developer": "Mobile Developer",
+    "Crypto Developer": "Crypto Developer",
+    "Graphic Designer": "GRAPHIC DESIGNER",
+    "Marketer": "Marketer",
+    "Database Consultant": "Database Consultant",
+    "Scrape Developer": "Scrape Developer",
+    "Backend Developer": "Backend Developer",
+    "Frontend Developer": "Frontend Developer",
+    "Infrastructure Developer": "Infrastructure Developer",
+    "Technical Advisor": "Technical Advisor",
+    "Full Stack Developer": "Full Stack Developer",
+    "Fullstack Developer": "Fullstack Developer"
+  },
+  "jobTItle": {
+    "CTO": "CTO",
+    "CEO": "CEO",
+    "CO-FOUNDER": "CO-FOUNDER",
+    "FOUNDER": "FOUNDER",
+    "TECHNICAL ADVISOR": "TECHNICAL ADVISOR",
+    "RECHERCHE AND DEVELOPMENT": "RECHERCHE AND DEVELOPMENT",
+    "FREELANCER": "FREELANCER",
+    "AUTOMATION SPECIALIST": "AUTOMATION SPECIALIST",
+    "ACADEMIC PROJECT PLATFORM ARCHITECT": "ACADEMIC PROJECT PLATFORM ARCHITECT"
+  },
+  "country": {
+    "Morocco": "Morocco",
+    "France": "France",
+    "United States": "United States",
+    "Singapore": "Singapore",
+    "Lithuania": "Lithuania",
+    "London": "London"
+  },
+  "projects": {
+    "1": {
+      "title": "Happy Water",
+      "alt": "Happy Water",
+      "description": "Contributed as a key designer and developer for an ecologically-focused NFT platform website."
+    },
+    "2": {
+      "title": "Sofiane Pamart's Musical NFT",
+      "alt": "Sofiane Pamart's Musical NFT",
+      "description": "Collaborated within a 140-member team, including 40 international developers, under the leadership of entrepreneur Oussama Ommar. Spearheaded the creation of visual music NFTs capturing the unique identity of artist Sofiane Pamart, paving the way for a significant fundraising campaign."
+    },
+    "3": {
+      "title": "Cyber Cohesion",
+      "alt": "Cyber Cohesion",
+      "description": "Singapore-based security firm offering technical consultation for appropriate development solutions."
+    },
+    "4": {
+      "title": "Shinobi Boy",
+      "alt": "Shinobi boy",
+      "description": ""
+    },
+    "5": {
+      "title": "Web Application for managing university Projects",
+      "alt": "Web Application for managing university Projects",
+      "description": ""
+    },
+    "6": {
+      "title": "Sodiadd",
+      "alt": "Sodiadd",
+      "description": "Real estate investment agency; developed a monolithic web application for individual investors."
+    },
+    "7": {
+      "title": "Jonas Agency",
+      "alt": "Jonas Agency",
+      "description": "Digital marketing agency; crafted websites tailored for strategic online promotion."
+    },
+    "8": {
+      "title": "Lavish Trading",
+      "alt": "Lavish Trading",
+      "description": "Spearheaded the design and development of a web identity for an individual-focused trading agency, offering online investment plans and expert consulting services."
+    },
+    "9": {
+      "title": "Maschool",
+      "alt": "Maschool",
+      "description": ""
+    },
+    "10": {
+      "title": "FreeLance Projects",
+      "alt": "FreeLance Projects",
+      "description": ""
+    }
+  }
+}

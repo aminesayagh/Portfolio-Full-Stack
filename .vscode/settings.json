@@ -1,6 +1,11 @@
 {
-    "typescript.tsdk": "node_modules/typescript/lib",
-    "typescript.enablePromptUseWorkspaceTsdk": true,
-    "editor.cursorSurroundingLines": 10,
-    "editor.cursorWidth": 10
-  }
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "editor.cursorSurroundingLines": 10,
+  "editor.cursorWidth": 10,
+  "cSpell.words": [
+    "gsap",
+    "sonarjs",
+    "timelinemax"
+  ]
+}
