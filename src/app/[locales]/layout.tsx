@@ -36,6 +36,7 @@ export default async function RootLayout({
   // Providing all messages to the client
   // side is the easiest way to get started
   const messages = await getMessages();
+  console.log(messages);
   return (
     <html lang={locale} suppressHydrationWarning>
       <Scripts />
@@ -48,8 +49,8 @@ export default async function RootLayout({
         />
       </head>
       <body className={`${montserrat.variable} antialiased`}>
-        <NextIntlClientProvider locale={locale} messages={messages}>
           Test
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <LoadingProvider>{children}</LoadingProvider>
         </NextIntlClientProvider>
       </body>

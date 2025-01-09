@@ -1,9 +1,6 @@
 "use client";
 
-import type {
-  ElementRef,
-  ReactNode
-} from "react";
+import type { ReactNode } from "react";
 import React, {
   createContext,
   useState,
@@ -94,7 +91,7 @@ export function LoadingProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       const values = Object.values(loadingComponentList);
-      if (values.length == 1 && loadingComponentList[LOADING_KEY]) {
+      if (values.length === 1 && loadingComponentList[LOADING_KEY]) {
         setIsLoading(false);
       }
     }, 1000);
@@ -133,7 +130,7 @@ const Preloader = ({
   setEndLoading: (value: boolean) => void;
 }) => {
   const { t } = useTranslation();
-  const ref = useRef<ElementRef<"span">>(null);
+  const ref = useRef<HTMLSpanElement>(null);
   const [endLoadingProgress, setEndLoadingProgress] = useState(false);
 
   const [fontReady, setFontReady] = useState(false);
@@ -285,16 +282,16 @@ const Preloader = ({
           <div className="flex flex-col gap-0 sm:gap-1">
             <span className="invisible py-1 element-content-gsap text-loader-gsap">
               <h6
-                  className={title({
-                    weight: "bold",
-                    mode: "exchanged",
-                    size: "h6",
-                    degree: "4"
-                  })}
-                  suppressHydrationWarning
-                >
-                  {t("loading.intro")}
-                </h6>
+                className={title({
+                  weight: "bold",
+                  mode: "exchanged",
+                  size: "h6",
+                  degree: "4"
+                })}
+                suppressHydrationWarning
+              >
+                {t("loading.intro")}
+              </h6>
             </span>
             <ul className="relative h-6 overflow-hidden element-content-gsap">
               {Array.from({ length: 5 }).map((_, index) => (
@@ -307,7 +304,7 @@ const Preloader = ({
                       weight: "bold"
                     },
                     "item-gsap capitalize will-change-transform-animation absolute left-0 right-0 top-[100%]",
-                    index == 4 ? "text-primary-500" : "text-black-300/80"
+                    index === 4 ? "text-primary-500" : "text-black-300/80"
                   )}
                 >
                   {t(`loading.message_${index + 1}`)}

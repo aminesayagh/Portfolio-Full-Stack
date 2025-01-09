@@ -18,36 +18,8 @@ const ROUTER_CONFIGS = {
     path: "/",
     inDevelopment: false
   },
-  features: {
-    path: "/#features",
-    inDevelopment: true
-  },
-  marketplace: {
-    path: "/#marketplace",
-    inDevelopment: true
-  },
-  workflows: {
-    path: "/#workflows",
-    inDevelopment: true
-  },
   contact: {
     path: "/contact",
-    inDevelopment: true
-  },
-  signup: {
-    path: "/signup",
-    inDevelopment: true
-  },
-  github: {
-    path: "https://github.com/aminesayagh/Code-Wrangler",
-    inDevelopment: false
-  },
-  linkedin: {
-    path: "https://www.linkedin.com/in/mohamedamine-sayagh/",
-    inDevelopment: false
-  },
-  discord: {
-    path: "https://discord.gg/code-wrangler",
     inDevelopment: false
   }
 } as const;

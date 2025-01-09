@@ -8,7 +8,7 @@ import { LenisProvider, useLenis } from "@/lib/Lenis";
 import type { LenisInstance } from "@/lib/Lenis/lenis";
 
 function Lenis({ children }: { children: React.ReactElement }) {
-  const lenisRef = useRef<LenisInstance>();
+  const lenisRef = useRef<LenisInstance>(null);
 
   useFrame((time: number) => {
     lenisRef.current?.raf(time);

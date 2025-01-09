@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "analyze": "ANALYZE=true next build",
-    "dev": "next dev --port 3006",
+    "dev": "next dev --port 3006 --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -28,6 +28,7 @@
     "@studio-freight/lenis": "^1.0.42",
     "@tabler/icons-react": "^3.1.0",
     "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
     "cssnano": "^6.1.2",
     "framer-motion": "^11.0.24",
     "gsap": "^3.12.5",
@@ -62,6 +63,7 @@
   },
   "devDependencies": {
     "@csstools/postcss-oklab-function": "^3.0.12",
+    "@next/eslint-plugin-next": "^15.1.4",
     "@studio-freight/hamo": "^0.6.28",
     "@types/imagemin": "^8.0.5",
     "@types/imagemin-jpegtran": "^5.0.4",

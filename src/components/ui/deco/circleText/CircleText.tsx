@@ -10,12 +10,12 @@ interface CircleTextProps {
 }
 
 const CircleText = ({ text, size, radius, children }: CircleTextProps) => {
-  const [characters, setCharacters] = useState<(string | JSX.Element)[]>([]);
+  const [characters, setCharacters] = useState<(string | React.ReactElement)[]>([]);
   const diameter = radius * size * 21;
 
   useEffect(() => {
     const chars = text.split("");
-    const elements: (string | JSX.Element)[] = [];
+    const elements: (string | React.ReactElement)[] = [];
 
     chars.forEach((char, index) => {
       elements.push(

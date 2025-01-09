@@ -124,65 +124,65 @@ const Card = ({
 
   return (
     <div
+      className={twMerge(
+        "flex flex-col gap-8 sm:gap-12 lg:gap-6 xl:gap-16 justify-between items-baseline",
+        "p-5 sm:p-7 lg:p-5 xl:p-6 will-change-transform-animation",
+        "transition-colors duration-300 ease-in-out relative",
+        isHovered ? "bg-black-200" : "bg-transparent",
+        BORDER_CARD_CLASS_NAME,
+        "w-full h-full"
+      )}
+      {...hoverProps}
+    >
+      <div
         className={twMerge(
-          "flex flex-col gap-8 sm:gap-12 lg:gap-6 xl:gap-16 justify-between items-baseline",
-          "p-5 sm:p-7 lg:p-5 xl:p-6 will-change-transform-animation",
-          "transition-colors duration-300 ease-in-out relative",
-          isHovered ? "bg-black-200" : "bg-transparent",
-          BORDER_CARD_CLASS_NAME,
-          "w-full h-full"
+          "flex flex-row lg:flex-col xl:flex-row justify-between items-start",
+          "gap-4 lg:gap-2 xl:gap-4",
+          "w-full"
         )}
-        {...hoverProps}
       >
-        <div
-          className={twMerge(
-            "flex flex-row lg:flex-col xl:flex-row justify-between items-start",
-            "gap-4 lg:gap-2 xl:gap-4",
-            "w-full"
+        {/* <Title h5 weight='bold' degree='2' className="order-1 transition-all duration-100 delay-100 max-w-48 lg:order-2 xl:order-1" exchange={!isHovered} >{name}</Title> */}
+        <h3
+          className={title({
+            weight: "bold",
+            degree: "2",
+            size: "h5",
+            mode: isHovered ? "normal" : "exchanged"
+          })}
+        >
+          {name}
+        </h3>
+        {/* <Text p weight='bold' degree='3' size="lg" exchange={!isHovered} className='order-2 duration-100 delay-100 opacity-60 lg:order-1 xl:order-2'>{number}</Text> */}
+        <p
+          className={text(
+            {
+              weight: "bold",
+              degree: "3",
+              size: "lg",
+              mode: isHovered ? "normal" : "exchanged"
+            },
+            "opacity-60"
           )}
         >
-          {/* <Title h5 weight='bold' degree='2' className="order-1 transition-all duration-100 delay-100 max-w-48 lg:order-2 xl:order-1" exchange={!isHovered} >{name}</Title> */}
-          <h3
-            className={title({
-              weight: "bold",
-              degree: "2",
-              size: "h5",
-              mode: isHovered ? "normal" : "exchanged"
-            })}
-          >
-            {name}
-          </h3>
-          {/* <Text p weight='bold' degree='3' size="lg" exchange={!isHovered} className='order-2 duration-100 delay-100 opacity-60 lg:order-1 xl:order-2'>{number}</Text> */}
-          <p
-            className={text(
-              {
-                weight: "bold",
-                degree: "3",
-                size: "lg",
-                mode: isHovered ? "normal" : "exchanged"
-              },
-              "opacity-60"
-            )}
-          >
-            {number}
-          </p>
-        </div>
-        <div className="max-w-72">
-          <p
-            className={text(
-              {
-                weight: "medium",
-                degree: "3",
-                size: "sm",
-                mode: isHovered ? "normal" : "exchanged"
-              },
-              ""
-            )}
-          >
-            {description}
-          </p>
-        </div>
+          {number}
+        </p>
       </div>
+      <div className="max-w-72">
+        <p
+          className={text(
+            {
+              weight: "medium",
+              degree: "3",
+              size: "sm",
+              mode: isHovered ? "normal" : "exchanged"
+            },
+            ""
+          )}
+        >
+          {description}
+        </p>
+      </div>
+    </div>
   );
 };
 const CardMemo = memo(Card);
@@ -190,14 +190,14 @@ const CardMemo = memo(Card);
 const EmptyCard = () => {
   return (
     <div
-        className={twMerge(
-          "h-full w-full col-span-1 row-span-1",
-          "opacity-60 relative",
-          BORDER_CARD_CLASS_NAME
-        )}
-      >
-        <span />
-      </div>
+      className={twMerge(
+        "h-full w-full col-span-1 row-span-1",
+        "opacity-60 relative",
+        BORDER_CARD_CLASS_NAME
+      )}
+    >
+      <span />
+    </div>
   );
 };
 const EmptyCardMemo = memo(EmptyCard);
@@ -306,7 +306,7 @@ const Expertise = () => {
           "absolute w-full h-[26vh] bottom-0 left-0",
           "bg-gradient-to-t from-black-100/25 via-black-100/10 to-black-100/0"
         )}
-       />
+      />
     </div>
   );
 };

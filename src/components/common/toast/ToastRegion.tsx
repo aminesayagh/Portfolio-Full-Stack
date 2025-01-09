@@ -1,9 +1,6 @@
 import React, { useRef } from "react";
 
-import {
-  useToast,
-  useToastRegion
-} from "@react-aria/toast";
+import { useToast, useToastRegion } from "@react-aria/toast";
 import { useToastQueue } from "@react-stately/toast";
 import { motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
@@ -11,10 +8,8 @@ import { twMerge } from "tailwind-merge";
 
 import { toastQueue } from "./addToast";
 
-import type { ToastItem} from "./addToast";
-import type {
-  AriaToastProps,
-  AriaToastRegionProps} from "@react-aria/toast";
+import type { ToastItem } from "./addToast";
+import type { AriaToastProps, AriaToastRegionProps } from "@react-aria/toast";
 import type { ToastState } from "@react-stately/toast";
 
 interface ToastProps extends AriaToastProps<ToastItem> {

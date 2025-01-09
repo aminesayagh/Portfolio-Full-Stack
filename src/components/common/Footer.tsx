@@ -1,5 +1,4 @@
-import type {
-  ElementRef} from "react";
+import type { RefObject } from "react";
 import React, {
   useRef,
   useEffect,
@@ -29,7 +28,7 @@ const BASE_LOCALE_SOCIAL = "socialNetwork";
 const ICON_SIZE_CLASS_NAME = "w-5 h-5 lg:w-6 lg:h-6";
 
 const FollowUs = () => {
-  const ref = useRef<ElementRef<"div">>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const ctx = useRef<gsap.Context | null>(null);
 
@@ -99,8 +98,12 @@ const FollowUs = () => {
     if (!ctx.current) return;
     ctx.current["followButtonHide"]();
   }, [ctx]);
-  useEventListener("mouseenter", handler, ref);
-  useEventListener("mouseleave", handlerLeave, ref);
+  useEventListener("mouseenter", handler, ref as RefObject<HTMLDivElement>);
+  useEventListener(
+    "mouseleave",
+    handlerLeave,
+    ref as RefObject<HTMLDivElement>
+  );
 
   const { t } = useTranslation();
   return (
@@ -155,8 +158,8 @@ const TextAnimated = ({
   phrase: string;
   className?: string;
 } & TextPropsExtended) => {
-  const container = useRef<ElementRef<"div">>(null);
-  const refs = useRef<ElementRef<"div">[]>([]);
+  const container = useRef<HTMLDivElement>(null);
+  const refs = useRef<HTMLDivElement[]>([]);
   const [body, setBody] = useState<React.JSX.Element[] | null>(null);
 
   useIsomorphicLayoutEffect(() => {
@@ -206,17 +209,6 @@ const TextAnimated = ({
 
   return (
     <span ref={container}>
-      {/* <Text
-        div
-        className={twMerge("flex flex-row flex-wrap", className)}
-        {...props}
-      >
-        {body
-          ? body.map((word, index) => (
-              <Fragment key={index}>{word} </Fragment>
-            ))
-          : null}
-      </Text> */}
       <div
         className={text(
           {
@@ -334,8 +326,16 @@ const GoToTop = ({ handler, name }: { handler: () => void; name: string }) => {
     ctx.current["handlerGoToTopLeave"]();
   }, [ctx]);
 
-  useEventListener("mouseenter", handlerMouse, ref);
-  useEventListener("mouseleave", handlerMouseLeave, ref);
+  useEventListener(
+    "mouseenter",
+    handlerMouse,
+    ref as RefObject<HTMLButtonElement>
+  );
+  useEventListener(
+    "mouseleave",
+    handlerMouseLeave,
+    ref as RefObject<HTMLButtonElement>
+  );
 
   return (
     <Button
@@ -379,14 +379,16 @@ const Footer = () => {
   const lenis = useLenis();
 
   const goToTop = useCallback(() => {
-    lenis && lenis.scrollTo(0);
+    if (lenis) {
+      lenis.scrollTo(0);
+    }
   }, [lenis]);
 
   return (
     <>
       <div
         className={twMerge(
-          language == "en"
+          language === "en"
             ? "max-w-[16rem] xxs:w-8/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[32vw] mdl:max-w-[30vw] xl:max-w-[20vw] 2xl:max-w-[28vw] 3xl:max-w-[22rem]"
             : "max-w-[16rem] xxs:w-9/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[32vw] mdl:max-w-[30vw] xl:max-w-[20vw] 2xl:max-w-[28vw] 3xl:max-w-[22rem]"
         )}
@@ -411,9 +413,6 @@ const Footer = () => {
           <GoToTopMemo handler={goToTop} name={t("footer.action")} />
         </div>
         <div className="flex flex-row items-center justify-start flex-none order-1 grow-0 sm:justify-center sm:order-2">
-          {/* <Text p degree="3" weight="semibold" size="sm" className="uppercase">
-            {t("footer.name")}
-          </Text> */}
           <p
             className={text(
               {

@@ -10,6 +10,7 @@ import eslintPluginJsxA11y from "eslint-plugin-jsx-a11y";
 import sonarjs from "eslint-plugin-sonarjs";
 import security from "eslint-plugin-security";
 import promise from "eslint-plugin-promise";
+import nextPlugin from "@next/eslint-plugin-next";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -35,6 +36,7 @@ const eslintConfig = [
   {
     files: ["**/*.{js,jsx,mjs,cjs,ts,tsx}"],
     plugins: {
+      "@next/next": nextPlugin,
       react,
       import: eslintPluginImport,
       "jsx-a11y": eslintPluginJsxA11y,
@@ -67,6 +69,11 @@ const eslintConfig = [
       }
     },
     rules: {
+      // Add Next.js specific rules
+      "@next/next/no-html-link-for-pages": "error",
+      "@next/next/no-img-element": "error",
+      "@next/next/no-sync-scripts": "error",
+      "@next/next/no-script-component-in-head": "error",
       // TypeScript Specific Rules
       "@typescript-eslint/consistent-type-imports": [
         "error",

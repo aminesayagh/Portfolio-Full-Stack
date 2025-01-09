@@ -10,7 +10,7 @@ import { z } from "zod";
 import { addToast } from "@/components/common/toast";
 import { Form, Field, Item, Select } from "@/components/ui/form";
 
-import type { SubmitHandler} from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
 
 const CONTACT_SUBJECTS = {
   "1": "Project Inquiry",
@@ -122,6 +122,7 @@ const ContactForm = () => {
         }
       );
     } catch (err) {
+      console.error(err);
       addToast(
         {
           variant: "negative",

@@ -5,7 +5,6 @@ import React, { useRef, useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { rounded } from "@/components/style";
-import { CursorContent } from "@/components/ui/cursor";
 import { usePreloader } from "@/components/ui/preloader";
 import { gsap } from "@/utils/gsap";
 
@@ -58,10 +57,13 @@ const Video = () => {
             img.onload = () => resolve(img);
           });
         })
-    ).then(images => {
-      imagesRef.current = images;
-      removeLoadingComponent(LOADING_KEY);
-    });
+    )
+      .then(images => {
+        imagesRef.current = images;
+        removeLoadingComponent(LOADING_KEY);
+        return null;
+      })
+      .catch(err => console.error(err));
     return () => {
       if (imagesRef.current) {
         imagesRef.current.forEach(image => {
@@ -98,7 +100,9 @@ const Video = () => {
 
       const current = imagesRef.current;
       if (!current) return;
-      current[0] && (current[0]["onload"] = render);
+      if (current[0]) {
+        current[0]["onload"] = render;
+      }
 
       function render() {
         if (!imagesRef.current.length) return;
@@ -118,32 +122,26 @@ const Video = () => {
 
   return (
     <div
+      data-scroll
+      ref={refContainer}
+      className={twMerge(
+        "block relative w-full rounded-3xl video_gsap overflow-hidden",
+        rounded({ size: "xl" })
+      )}
+      style={{
+        height: "100%"
+      }}
+    >
+      <canvas
         data-scroll
-        ref={refContainer}
+        ref={ref}
         className={twMerge(
-          "block relative w-full rounded-3xl video_gsap overflow-hidden",
+          "h-full w-full will-change-transform-animation",
           rounded({ size: "xl" })
         )}
-        style={{
-          height: "100%"
-        }}
-      >
-        <CursorContent
-          name="CursorScrollVideo"
-          component="CursorScroll"
-          props={{ title: "scroll" }}
-        >
-          <canvas
-            data-scroll
-            ref={ref}
-            className={twMerge(
-              "h-full w-full will-change-transform-animation",
-              rounded({ size: "xl" })
-            )}
-            style={{ width: "100%", objectFit: "cover" }}
-          />
-        </CursorContent>
-      </div>
+        style={{ width: "100%", objectFit: "cover" }}
+      />
+    </div>
   );
 };
 

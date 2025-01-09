@@ -23,7 +23,6 @@ import { text, title, Link } from "@/components/ui/typography";
 import { getMenuItems } from "@/conf/router";
 import useRouterChange from "@/hook/SafePush";
 import { useLenis } from "@/lib/Lenis";
-import StyleAnimation from "@/styles/animation.module.scss";
 import { gsap, Power3, ScrollTrigger } from "@/utils/gsap";
 
 import SwitchLang from "./SwitchLang";
@@ -48,7 +47,7 @@ const Header = () => {
   const lenis = useLenis();
 
   const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
-  const ctx = useRef<gsap.Context>();
+  const ctx = useRef<gsap.Context>(null);
 
   useIsomorphicLayoutEffect(() => {
     ctx.current = gsap.context(self => {
@@ -138,19 +137,23 @@ const Header = () => {
         tl.current.play();
       });
       self.add("close", () => {
-        tl.current.reverse().then(() => {
-          const current = ctx.current;
-          if (!current) return;
-          setOpenMenu(false);
-          current.revert(); // revert timeline to the beginning
-        });
+        tl.current
+          .reverse()
+          .then(() => {
+            const current = ctx.current;
+            if (!current) return null;
+            setOpenMenu(false);
+            current.revert(); // revert timeline to the beginning
+            return null;
+          })
+          .catch(err => console.error(err));
       });
     });
     return () => {
       const currentCtx = ctx.current;
       const currentTl = tl.current;
       if (currentCtx) currentCtx.revert();
-      if (currentTl) currentTl.kill;
+      if (currentTl) currentTl.kill();
     };
   }, []);
   useIsomorphicLayoutEffect(() => {
@@ -199,13 +202,13 @@ const Header = () => {
     }
   }, [openMenu]);
 
-  const idTimeout = useRef<NodeJS.Timeout>();
+  const idTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const scrollToId = useCallback(
     (path: string, id: string | null = null) => {
       safePush(path);
-      if (id) {
-        lenis?.scrollTo && lenis?.scrollTo(`#${id}`);
+      if (id && lenis && lenis.scrollTo) {
+        lenis.scrollTo(`#${id}`);
       }
     },
     [lenis, safePush]
@@ -216,12 +219,16 @@ const Header = () => {
       if (!openMenu) {
         safePush(path);
       } else {
-        tl.current.reverse().then(() => {
-          setOpenMenu(false);
-          idTimeout.current = setTimeout(() => {
-            scrollToId(path, id);
-          }, 20);
-        });
+        tl.current
+          .reverse()
+          .then(() => {
+            setOpenMenu(false);
+            idTimeout.current = setTimeout(() => {
+              scrollToId(path, id);
+            }, 20);
+            return null; // Return value to satisfy promise/always-return
+          })
+          .catch(err => console.error(err));
       }
     },
     [openMenu, safePush, scrollToId, idTimeout]
@@ -266,7 +273,6 @@ const Header = () => {
                 "py-2 border-none overflow-hidden",
                 "subElement-item hidden sm:block",
                 openMenu ? "hidden w-0" : ""
-                // StyleAnimation['underline-animation'],
               )}
             >
               {pageName !== "contact" ? t("header.action") : t("header.home")}
@@ -280,7 +286,12 @@ const Header = () => {
                 "py-2 border-none overflow-hidden",
                 "subElement-item hidden sm:block",
                 openMenu ? "hidden w-0" : "",
-                StyleAnimation["underline-animation"]
+                "relative transition-colors duration-300",
+                "hover:text-primary-500",
+                "text-white-200",
+                "after:content-[''] after:w-full after:absolute after:bottom-0 after:left-0 after:h-[3px] after:bg-primary-500",
+                "hover:after:animation-underline",
+                "not-hover:after:animation-underlineExit"
               )}
             >
               {t("header.project")}
@@ -289,32 +300,32 @@ const Header = () => {
               {({ handler, isOpen }) => {
                 return (
                   <div
-                      className={twMerge(
-                        "flex flex-row items-center gap-6 justify-end"
-                      )}
+                    className={twMerge(
+                      "flex flex-row items-center gap-6 justify-end"
+                    )}
+                  >
+                    <button
+                      className="hidden overflow-hidden cursor-pointer xxs:block"
+                      onClick={() => handler()}
+                      aria-label="menu"
+                      aria-haspopup="true"
                     >
-                      <button
-                        className="hidden overflow-hidden cursor-pointer xxs:block"
-                        onClick={() => handler()}
-                        aria-label="menu"
-                        aria-haspopup="true"
+                      <p
+                        className={text(
+                          {
+                            size: "xs",
+                            degree: "3",
+                            weight: "semibold"
+                          },
+                          "mr-2 hidden",
+                          "modal-close"
+                        )}
                       >
-                        <p
-                          className={text(
-                            {
-                              size: "xs",
-                              degree: "3",
-                              weight: "semibold"
-                            },
-                            "mr-2 hidden",
-                            "modal-close"
-                          )}
-                        >
-                          Menu
-                        </p>
-                      </button>
-                      <HamburgerMenu isOpen={isOpen} setOpen={handler} />
-                    </div>
+                        Menu
+                      </p>
+                    </button>
+                    <HamburgerMenu isOpen={isOpen} setOpen={handler} />
+                  </div>
                 );
               }}
             </Modal.Button>

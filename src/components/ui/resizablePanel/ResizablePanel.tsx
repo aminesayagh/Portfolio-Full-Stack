@@ -24,7 +24,7 @@ const ResizablePanel = ({
   duration = 0.4,
   y = 20
 }: {
-  children: React.ReactElement | JSX.Element | boolean | null;
+  children: React.ReactElement | boolean | null;
   duration?: number;
   y?: number;
 }) => {

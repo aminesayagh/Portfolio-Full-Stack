@@ -117,9 +117,7 @@ const Navbar: NavbarType = ({
 };
 
 const Brand = ({ children, className }: BrandProps) => {
-  return (
-    <div className={twMerge(className)}>{children}</div>
-  );
+  return <div className={twMerge(className)}>{children}</div>;
 };
 
 const ContentActiveItem = createContext<{
@@ -144,13 +142,13 @@ const Content = ({ children, className, ...props }: ContentProps) => {
   };
   return (
     <ContentActiveItem.Provider value={{ activeItem, handleItemClick }}>
-        <div
-          className={twMerge("flex flex-row items-center", className)}
-          {...props}
-        >
-          {children}
-        </div>
-      </ContentActiveItem.Provider>
+      <div
+        className={twMerge("flex flex-row items-center", className)}
+        {...props}
+      >
+        {children}
+      </div>
+    </ContentActiveItem.Provider>
   );
 };
 
@@ -169,7 +167,7 @@ const useActiveItem = (href: string) => {
 const Item = ({ children, href }: ItemProps) => {
   const { isActive, handlerActiveItem } = useActiveItem(href.toString());
 
-  if (!handlerActiveItem) return <></>;
+  if (!handlerActiveItem) return null;
 
   return <>{children({ isActive, handlerActiveItem })}</>;
 };

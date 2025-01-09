@@ -1,4 +1,4 @@
-import type { SVGAttributes} from "react";
+import type { SVGAttributes } from "react";
 import React, { memo } from "react";
 
 import Icons from "./IconsList";

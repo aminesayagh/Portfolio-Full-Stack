@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 import { NOTION_API_KEY, NOTION_DATABASE_ID } from "@/utils/env";
 
-import type { NextRequest} from "next/server";
+import type { NextRequest } from "next/server";
 
 const notion = new Client({ auth: NOTION_API_KEY });
 const databaseId = NOTION_DATABASE_ID || "";

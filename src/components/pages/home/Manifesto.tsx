@@ -1,14 +1,7 @@
 "use client";
 
-import type {
-  ElementRef,
-  RefObject
-} from "react";
-import React, {
-  useRef,
-  useEffect,
-  useState
-} from "react";
+import type { RefObject } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 import _ from "lodash";
 import { useTranslation } from "next-i18next";
@@ -27,7 +20,7 @@ const Phrase = ({
   lang: string;
   refDescription: RefObject<HTMLDivElement>;
 }) => {
-  const refs = useRef<ElementRef<"span">[]>([]);
+  const refs = useRef<HTMLSpanElement[]>([]);
 
   const [body, setBody] = useState<React.JSX.Element[] | null>(null);
 
@@ -151,7 +144,7 @@ const Phrase = ({
 
 const Manifesto = () => {
   const { t, i18n } = useTranslation();
-  const refDescription = useRef<ElementRef<"div">>(null);
+  const refDescription = useRef<HTMLDivElement>(null);
   const [phrase, setPhrase] = useState(t("manifesto.description"));
 
   useEffect(() => {
@@ -208,7 +201,7 @@ const Manifesto = () => {
                 size: "h4"
               },
               "flex flex-row flex-wrap",
-              i18n.language == "en"
+              i18n.language === "en"
                 ? "gap-y-[0.01rem] xxs:gap-y-[0.04rem] gap-x-[0.06rem] sm:gap-y-[0.07rem] sm:gap-x-[0.1rem] mdl:gap-y-[0.08rem] mdl:gap-x-[0.16rem] lg:gap-y-[0.15rem] lg:gap-x-[0.23rem]"
                 : "gap-y-[0rem] xxs:gap-y-[0.03rem] gap-x-[0.06rem] sm:gap-y-[0.06rem] sm:gap-x-[0.1rem] mdl:gap-y-[0.07rem] mdl:gap-x-[0.16rem] lg:gap-y-[0.13rem] lg:gap-x-[0.23rem]"
             )}
@@ -219,7 +212,7 @@ const Manifesto = () => {
             <Phrase
               text={phrase}
               lang={i18n.language}
-              refDescription={refDescription}
+              refDescription={refDescription as RefObject<HTMLDivElement>}
             />
           </div>
         </div>

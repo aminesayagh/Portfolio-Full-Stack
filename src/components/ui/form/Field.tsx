@@ -1,11 +1,11 @@
 import React, { isValidElement, cloneElement } from "react";
 
 import { TextField, Label } from "react-aria-components";
-import { twJoin, twMerge } from "tailwind-merge";
 
 import type { IconNames } from "@/components/ui/icon";
+import { cn } from "@/lib/utils";
 
-import Style from "./Form.module.scss";
+import { formFieldInput } from "./Style";
 
 import type { TextFieldProps, InputProps } from "react-aria-components";
 
@@ -26,37 +26,30 @@ const LayoutField = ({
 } & TextFieldProps) => {
   const childrenWithProps = isValidElement(children)
     ? cloneElement(children, {
-        label,
         ...children.props,
-        className: twMerge(
-          children.props.className,
-          "w-full",
-          Style["input"]
-          // invalid ? Style["invalid"] : ""
-        )
+        className: cn(children.props.className, "w-full", formFieldInput)
       })
     : children;
   return (
     <TextField
-        className={twJoin(
-          Style["text-field"],
-          "flex flex-col",
-          width ? width : "col-span-12",
-          className ? className : "w-full"
-        )}
-        {...props}
-      >
-        <div className="flex flex-col w-full gap-2">
-          <Label
-            className={twJoin(Style["label"])}
-            htmlFor={name}
-            suppressHydrationWarning
-          >
-            {label}
-          </Label>
-          {childrenWithProps}
-        </div>
-      </TextField>
+      className={cn(
+        "flex flex-col gap-0",
+        width ? width : "col-span-12",
+        className ? className : "w-full"
+      )}
+      {...props}
+    >
+      <div className="flex flex-col w-full gap-2">
+        <Label
+          className="font-sans px-0 text-xs font-medium text-gray-600"
+          htmlFor={name}
+          suppressHydrationWarning
+        >
+          {label}
+        </Label>
+        {childrenWithProps}
+      </div>
+    </TextField>
   );
 };
 

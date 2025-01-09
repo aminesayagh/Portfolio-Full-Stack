@@ -1,4 +1,3 @@
-import type { ElementRef} from "react";
 import React, { useMemo, useRef } from "react";
 
 import { useTranslation } from "next-i18next";
@@ -14,9 +13,11 @@ import { gsap } from "@/utils/gsap";
 import AgencyList from "./AgencyList";
 import ContactForm from "./ContactForm";
 
+const GRID_DEFAULT_CLASS = "col-start-1 col-span-12";
+
 const ContactPage = () => {
   const { t } = useTranslation();
-  const contactRef = useRef<ElementRef<"div">>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
 
   const socialNetworkItems = useMemo(() => getMenuItems("socialNetworks"), []);
 
@@ -85,7 +86,7 @@ const ContactPage = () => {
             <div
               className={twMerge(
                 "flex flex-col gap-3",
-                "col-start-1 col-span-12",
+                GRID_DEFAULT_CLASS,
                 "xxs:col-start-1 xxs:col-span-4",
                 "sm:col-start-10 sm:col-span-3",
                 "mdl:col-start-1 mdl:col-span-2",
@@ -108,7 +109,7 @@ const ContactPage = () => {
             </div>
             <div
               className={twMerge(
-                "col-start-1 col-span-12",
+                GRID_DEFAULT_CLASS,
                 "xxs:col-start-1 xxs:col-span-12",
                 "xs:col-start-1 xs:col-span-11",
                 "sm:col-start-1 sm:col-span-9",
@@ -125,7 +126,7 @@ const ContactPage = () => {
             <div
               className={twMerge(
                 "flex flex-col sm:justify-end items-start xl:items-end",
-                "col-start-1 col-span-12",
+                GRID_DEFAULT_CLASS,
                 "xxs:col-start-8 xxs:col-span-4",
                 "sm:col-start-10 sm:col-span-3",
                 "mdl:col-start-1 mdl:col-span-3",
@@ -189,7 +190,7 @@ const ContactPage = () => {
             </div>
             <div
               className={twMerge(
-                "col-start-1 col-span-12",
+                GRID_DEFAULT_CLASS,
                 "xs:col-start-1 xs:col-span-11",
                 "sn:col-start-1 sm:col-span-9",
                 "mdl:col-start-3 mdl:col-span-8",
@@ -202,7 +203,7 @@ const ContactPage = () => {
             <div
               className={twMerge(
                 "flex flex-row flex-wrap sm:flex-col gap-x-10 xs:gap-x-12 gap-y-4 sm:gap-4 justify-start xs:justify-end items-end",
-                "col-start-1 col-span-12",
+                GRID_DEFAULT_CLASS,
                 "xs:col-start-1 xs:col-span-11",
                 "sm:col-start-11 sm:col-span-2"
               )}

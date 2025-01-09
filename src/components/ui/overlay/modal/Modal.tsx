@@ -8,11 +8,9 @@ import {
   ModalOverlay
 } from "react-aria-components";
 
-import { mergeClassName } from "@/helpers/className";
+import { mergeClassName } from "@/lib/utils";
 
-import type {
-  ModalOverlayProps
-} from "react-aria-components";
+import type { ModalOverlayProps } from "react-aria-components";
 
 const ModalContext = createContext<{ isOpen: boolean; handler: () => void }>({
   isOpen: false,
@@ -131,7 +129,9 @@ const ModalUiContent = ({
       {...props}
     >
       <Dialog className="remove_outline">
-        {typeof children === "function" ? () => children({ handler }) : children}
+        {typeof children === "function"
+          ? () => children({ handler })
+          : children}
       </Dialog>
     </Modal>
   );

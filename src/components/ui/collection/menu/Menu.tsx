@@ -9,7 +9,7 @@ import {
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 
-import { mergeClassName } from "@/helpers/className";
+import { mergeClassName } from "@/lib/utils";
 
 import type {
   MenuTriggerProps,

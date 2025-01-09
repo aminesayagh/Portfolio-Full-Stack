@@ -15,7 +15,6 @@ import { twMerge } from "tailwind-merge";
 
 import Item from "@/components/ui/animation/Item";
 import Button from "@/components/ui/button";
-import { CursorContent } from "@/components/ui/cursor";
 import { Icon } from "@/components/ui/icon";
 import { usePreloader } from "@/components/ui/preloader";
 import { text, display } from "@/components/ui/typography";
@@ -24,7 +23,7 @@ import useRouterChange from "@/hook/SafePush";
 import { useEventListener } from "@/hook/useEventListener";
 import useGsap from "@/hook/useGsap";
 import { useLenis } from "@/lib/Lenis";
-import { ScrollTrigger, gsap } from "@/utils/gsap";
+import { ScrollTrigger, gsap, Power4 } from "@/utils/gsap";
 
 import type { PressEvent } from "react-aria";
 
@@ -54,12 +53,12 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
           const { left, top, width, height } = c.getBoundingClientRect();
           const x = clientX - (left + width / 2);
           const y = clientY - (top + height / 2);
-          xTo && xTo(x);
-          yTo && yTo(y);
+          if (xTo) xTo(x);
+          if (yTo) yTo(y);
         });
         self.add("mouseLeave", () => {
-          xTo && xTo(0);
-          yTo && yTo(0);
+          if (xTo) xTo(0);
+          if (yTo) yTo(0);
         });
       });
       return () => ctx.current?.revert();
@@ -68,18 +67,26 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
   }, [ref]);
   const handleMouseEnter = useCallback(
     (e: MouseEvent) => {
-      ctx.current && ctx.current["mouseMove"](e);
+      if (ctx.current) ctx.current["mouseMove"](e);
     },
     [ctx]
   );
   const handleMouseLeave = useCallback(
     (e: MouseEvent) => {
-      ctx.current && ctx.current["mouseLeave"](e);
+      if (ctx.current) ctx.current["mouseLeave"](e);
     },
     [ctx]
   );
-  useEventListener("mousemove", handleMouseEnter, ref as React.RefObject<HTMLDivElement>);
-  useEventListener("mouseleave", handleMouseLeave, ref as React.RefObject<HTMLDivElement>);
+  useEventListener(
+    "mousemove",
+    handleMouseEnter,
+    ref as React.RefObject<HTMLDivElement>
+  );
+  useEventListener(
+    "mouseleave",
+    handleMouseLeave,
+    ref as React.RefObject<HTMLDivElement>
+  );
 
   return <div ref={ref}>{children}</div>;
 };
@@ -116,43 +123,43 @@ const FullStack = ({ className }: { className: string }) => {
 
   return (
     <div
-        className={twMerge(
-          className,
-          "flex flex-col items-start xs:items-end justify-center",
-          "space-y-0 xs:-space-y-1 md:space-y-0 mdl:-space-y-1 lg:-space-y-[3%] xl:-space-y-[3%] 2xl:-space-y-[4%] 3xl:-space-y-1 4xl:space-y-0"
-        )}
-      >
-        <span className="overflow-y-animate">
-          <h1
-            className={display(
-              {
-                size: "md",
-                weight: "semibold"
-              },
-              DISPLAY_2_CLASS_NAME,
-              "tracking-[-0.05rem] sm:tracking-wider",
-              "will-change-transform-animation splitText_fullStack_gsap"
-            )}
-          >
-            {t("intro.title.2_1")}
-          </h1>
-        </span>
-        <span className="overflow-y-animate">
-          <h1
-            className={display(
-              {
-                size: "md",
-                weight: "semibold"
-              },
-              DISPLAY_2_CLASS_NAME,
-              "tracking-[-0.05rem] sm:tracking-wider",
-              "will-change-transform-animation splitText_fullStack_gsap"
-            )}
-          >
-            {t("intro.title.2_2")}
-          </h1>
-        </span>
-      </div>
+      className={twMerge(
+        className,
+        "flex flex-col items-start xs:items-end justify-center",
+        "space-y-0 xs:-space-y-1 md:space-y-0 mdl:-space-y-1 lg:-space-y-[3%] xl:-space-y-[3%] 2xl:-space-y-[4%] 3xl:-space-y-1 4xl:space-y-0"
+      )}
+    >
+      <span className="overflow-y-animate">
+        <h1
+          className={display(
+            {
+              size: "md",
+              weight: "semibold"
+            },
+            DISPLAY_2_CLASS_NAME,
+            "tracking-[-0.05rem] sm:tracking-wider",
+            "will-change-transform-animation splitText_fullStack_gsap"
+          )}
+        >
+          {t("intro.title.2_1")}
+        </h1>
+      </span>
+      <span className="overflow-y-animate">
+        <h1
+          className={display(
+            {
+              size: "md",
+              weight: "semibold"
+            },
+            DISPLAY_2_CLASS_NAME,
+            "tracking-[-0.05rem] sm:tracking-wider",
+            "will-change-transform-animation splitText_fullStack_gsap"
+          )}
+        >
+          {t("intro.title.2_2")}
+        </h1>
+      </span>
+    </div>
   );
 };
 
@@ -174,7 +181,11 @@ function useFitText(options?: { factor?: number; maxFontSize?: number }) {
     adjustFontSize();
   }, [optionsString, adjustFontSize]);
   useEventListener("resize", adjustFontSize);
-  useEventListener("resize", adjustFontSize, ref as React.RefObject<HTMLDivElement>);
+  useEventListener(
+    "resize",
+    adjustFontSize,
+    ref as React.RefObject<HTMLDivElement>
+  );
   useIsomorphicLayoutEffect(adjustFontSize, [ref]);
 
   return { fontSize, ref };
@@ -186,7 +197,7 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
     factor: 4.94
   });
   const { fontSize: fontSizeDev, ref: widthDevRef } = useFitText({
-    factor: i18n.language == "en" ? 5.55 : 7
+    factor: i18n.language === "en" ? 5.55 : 7
   });
 
   const interfaceText = useMemo(() => {
@@ -204,7 +215,7 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
         ref={widthInterfaceRef}
         className={twMerge(
           // col
-          i18n.language == "en"
+          i18n.language === "en"
             ? "col-start-1 col-span-12"
             : "col-start-1 col-span-11",
           "xs:col-start-1 xs:col-span-9",
@@ -258,11 +269,11 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
           "xxs:col-start-5 xxs:col-span-8", // none
           "xs:col-start-1 xs:col-span-12", // xxs
           "sm:col-start-2 sm:col-span-11", // sm
-          i18n.language == "en"
+          i18n.language === "en"
             ? "md:col-start-4 md:col-span-9"
             : "md:col-start-3 md:col-span-10", // md
           "mdl:col-start-7 mdl:col-span-6", // mdl
-          i18n.language == "en"
+          i18n.language === "en"
             ? "xl:col-start-8 xl:col-span-5"
             : "xl:col-start-7 xl:col-span-6", // xl
           "4xl:col-span-6 4xl:col-start-7", // 4xl
@@ -270,10 +281,10 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
           "row-start-2 row-span-1", // none
           "mdl:row-start-1 mdl:row-span-1", //mdl
           // children
-          i18n.language == "en"
+          i18n.language === "en"
             ? "[&>*]:w-full [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-5/12 [&>*]:mdl:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-4/12"
             : "[&>*]:w-10/12 [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-5/12",
-          i18n.language == "en"
+          i18n.language === "en"
             ? "[&>*>span]:max-w-[14rem]"
             : "[&>*>span]:xxs:max-w-[12rem] [&>*>span]:sm:max-w-[17rem] [&>*>span]:mdl:max-w-[12rem] [&>*>span]:lg:max-w-[17rem]",
           "[&>*]:flex [&>*]:flex-row [&>*]:justify-start [&>*]:sm:justify-end",
@@ -321,7 +332,7 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
           "mdl:w-2/12",
           "hidden xs:flex flex-col items-end mdl:items-start justify-end w-fit mdl:w-fit",
           "mt-1 lg:mt-4",
-          i18n.language == "en"
+          i18n.language === "en"
             ? "mb-0 xxs:mb-3 mdl:mb-0 lg:mb-4"
             : "mb-0 xxs:mb-3 mdl:mb-2 lg:mb-4",
           "col-start-11 col-span-2",
@@ -339,10 +350,10 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
           "row-start-3 row-span-1",
           "mdl:row-start-2 mdl:row-span-1",
           "col-start-1 col-span-3",
-          i18n.language == "en"
+          i18n.language === "en"
             ? "mdl:col-start-5 mdl:col-span-2"
             : "mdl:col-start-4 mdl:col-span-2",
-          i18n.language == "en"
+          i18n.language === "en"
             ? "xl:col-start-5 xl:col-span-2"
             : "xl:col-start-4 xl:col-span-2",
           "justify-self-end"
@@ -360,10 +371,10 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
           "mdl:row-start-2 mdl:row-span-1",
           "col-start-1 col-span-12",
           "xs:col-start-4 xs:col-span-9",
-          i18n.language == "en"
+          i18n.language === "en"
             ? "mdl:col-start-7 mdl:col-span-6"
             : "mdl:col-start-6 mdl:col-span-7", // xs
-          i18n.language == "en"
+          i18n.language === "en"
             ? "xl:col-start-7 xl:col-span-6"
             : "xl:col-start-6 xl:col-span-7", // xl
           "gap-2 sm:gap-1 md:gap-5 mdl:gap-8", // gap
@@ -408,7 +419,7 @@ const Menu = () => {
 
   const goToSection = useCallback(
     (section: string) => {
-      if (section == "contact") {
+      if (section === "contact") {
         safePush("/contact");
       } else {
         lenis?.scrollTo(`#${section}`);
@@ -451,33 +462,22 @@ const Menu = () => {
               >
                 {number}
               </p>
-              <CursorContent
-                name={`cursorPointer_intro_menu_${number}`}
-                component="CursorEvent"
-                props={{
-                  event: "pointer"
+              <Button
+                degree="1"
+                size="sm"
+                weight="semibold"
+                onPress={() =>
+                  goToSection(
+                    menuItems[`${key + 1}` as keyof typeof menuItems] as string
+                  )
+                }
+                className="uppercase item_menu_gsap will-change-transform-animation"
+                style={{
+                  color: "inherit"
                 }}
-                className="overflow-y-animate"
               >
-                <Button
-                  degree="1"
-                  size="sm"
-                  weight="semibold"
-                  onPress={() =>
-                    goToSection(
-                      menuItems[
-                        `${key + 1}` as keyof typeof menuItems
-                      ] as string
-                    )
-                  }
-                  className="uppercase item_menu_gsap will-change-transform-animation"
-                  style={{
-                    color: "inherit"
-                  }}
-                >
-                  <Item>{title}</Item>
-                </Button>
-              </CursorContent>
+                <Item>{title}</Item>
+              </Button>
             </div>
           );
         })}
@@ -510,7 +510,9 @@ const Intro = () => {
   const lenis = useLenis();
 
   const goToCases = useCallback(() => {
-    lenis?.scrollTo && lenis?.scrollTo("#cases");
+    if (lenis && lenis.scrollTo) {
+      lenis.scrollTo("#cases");
+    }
   }, [lenis]);
 
   useGsap(
@@ -523,7 +525,7 @@ const Intro = () => {
           yPercent: 200,
           skewY: 16,
           duration: 1,
-          ease: "power4.out",
+          ease: Power4.easeOut,
           delay: 0.4,
           stagger: {
             amount: 0.4
@@ -539,7 +541,7 @@ const Intro = () => {
           {
             yPercent: 120,
             duration: 0.9,
-            ease: "power4.out"
+            ease: Power4.easeOut
           },
           "<90%"
         )
@@ -548,7 +550,7 @@ const Intro = () => {
           {
             yPercent: 105,
             duration: 0.9,
-            ease: "power4.out",
+            ease: Power4.easeOut,
             stagger: {
               amount: 0.1
             }
@@ -561,7 +563,7 @@ const Intro = () => {
             opacity: 0,
             autoAlpha: 0,
             duration: 0.4,
-            ease: "power4.out"
+            ease: Power4.easeOut
           },
           "<"
         )
@@ -582,7 +584,7 @@ const Intro = () => {
           {
             yPercent: 0,
             duration: 0.4,
-            ease: "power4.out"
+            ease: Power4.easeOut
           },
           "<60%"
         )
@@ -612,31 +614,31 @@ const Intro = () => {
 
   return (
     <div
+      className={twMerge(
+        "pt-28 sm:pt-36 mdl:pt-40",
+        "flex flex-col gap-20 xs:gap-32 xl:gap-40"
+      )}
+      ref={introRef}
+    >
+      <div
         className={twMerge(
-          "pt-28 sm:pt-36 mdl:pt-40",
-          "flex flex-col gap-20 xs:gap-32 xl:gap-40"
+          "flex flex-row flex-wrap",
+          "grid grid-cols-12 grid-row-4 xxs:grid-row-3 mdl:grid-row-2",
+          "gap-x-3 md:gap-x-4 gap-y-6 xxs:gap-y-8 xs:gap-y-6 sm:gap-y-8 mdl:gap-y-8 lg:gap-y-10",
+          "justify-items-stretch"
         )}
-        ref={introRef}
       >
-        <div
-          className={twMerge(
-            "flex flex-row flex-wrap",
-            "grid grid-cols-12 grid-row-4 xxs:grid-row-3 mdl:grid-row-2",
-            "gap-x-3 md:gap-x-4 gap-y-6 xxs:gap-y-8 xs:gap-y-6 sm:gap-y-8 mdl:gap-y-8 lg:gap-y-10",
-            "justify-items-stretch"
-          )}
-        >
-          <Title goToCases={goToCases} />
-        </div>
-        <div
-          className={twMerge(
-            "flex flex-row justify-between items-end",
-            "gap-0 xl:gap-6 4xl:gap-20"
-          )}
-        >
-          <MenuMemo />
-        </div>
+        <Title goToCases={goToCases} />
       </div>
+      <div
+        className={twMerge(
+          "flex flex-row justify-between items-end",
+          "gap-0 xl:gap-6 4xl:gap-20"
+        )}
+      >
+        <MenuMemo />
+      </div>
+    </div>
   );
 };
 

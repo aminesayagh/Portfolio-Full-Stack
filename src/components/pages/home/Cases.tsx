@@ -1,6 +1,4 @@
 "use client";
-
-import type { ElementRef} from "react";
 import React, { useMemo, useRef, memo } from "react";
 
 import { useTranslation } from "next-i18next";
@@ -22,7 +20,7 @@ const Case = ({
   index: number;
   id: string;
 }) => {
-  const container = useRef<ElementRef<"div">>(null);
+  const container = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
   const lenis = useLenis();
 
@@ -221,7 +219,7 @@ const Case = ({
           style={{
             zIndex: zIndexGradient
           }}
-         />
+        />
       </div>
     </div>
   );

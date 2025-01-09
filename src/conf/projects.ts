@@ -63,15 +63,12 @@ export type ProjectTitle =
   | "Maschool"
   | "FreeLance Projects";
 
-const COUNTRY_NAMES = {
-  FRANCE: "France",
-  MOROCCO: "Morocco",
-  UNITED_STATES: "United States",
-  SINGAPORE: "Singapore",
-  LONDON: "London"
-} as const;
-
-export type CountryNames = (typeof COUNTRY_NAMES)[keyof typeof COUNTRY_NAMES];
+export type CountryNames =
+  | "France"
+  | "Morocco"
+  | "United States"
+  | "Singapore"
+  | "London";
 
 export interface Project {
   id: `${number}`;

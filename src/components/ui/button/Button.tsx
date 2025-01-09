@@ -6,7 +6,6 @@ import { FocusRing } from "react-aria";
 import { Button } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 
-import { CursorContent } from "@/components/ui/cursor";
 import { text } from "@/components/ui/typography";
 
 import type { ButtonProps } from "./Button.type";
@@ -43,15 +42,9 @@ const ButtonUi = forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <FocusRing>
-        <CursorContent
-          name="cursorPointer_header_email"
-          component="CursorEvent"
-          props={{ event: "pointer" }}
-        >
           <Button name={name} ref={ref} className={buttonClasses} {...props}>
-            {children}
-          </Button>
-        </CursorContent>
+          {children}
+        </Button>
       </FocusRing>
     );
   }

@@ -6,7 +6,6 @@ import { useTranslation } from "next-i18next";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
 
-import { CursorContent } from "@/components/ui/cursor";
 import { Icon } from "@/components/ui/icon";
 import { display, Link, text } from "@/components/ui/typography";
 import { useLenis } from "@/lib/Lenis";
@@ -120,34 +119,24 @@ const Action = () => {
             className="w-[2.8rem] xs:w-12 md:w-14 lg:w-16 xl:w-20 [&>*]:fill-primary-400"
           />
         </div>
-        <CursorContent
-          name="CursorActionIconContactAction"
-          component="CursorActionIcon"
-          props={{
-            degree: -45,
-            iconName: "IconArrowUpRight"
-          }}
-          className="overflow-hidden"
-        >
-          <Link href="/contact">
-            <h1
-              className={display(
-                {
-                  size: "lg",
-                  weight: "bold"
-                },
-                "whitespace-nowrap-important uppercase text-primary-400",
-                "contact-title-gsap will-change-transform-animation"
-              )}
-            >
-              {t("contactCall.action")}
-            </h1>
-          </Link>
-        </CursorContent>
+        <Link href="/contact">
+          <h1
+            className={display(
+              {
+                size: "lg",
+                weight: "bold"
+              },
+              "whitespace-nowrap-important uppercase text-primary-400",
+              "contact-title-gsap will-change-transform-animation"
+            )}
+          >
+            {t("contactCall.action")}
+          </h1>
+        </Link>
         <p
           className={text(
             {
-              size: i18n.language == "en" ? "xxs" : "xs",
+              size: i18n.language === "en" ? "xxs" : "xs",
               degree: "3",
               weight: "medium"
             },
@@ -156,7 +145,7 @@ const Action = () => {
             "xs:right-[-1%] md:right-auto", // right
             "mt-3 xl:mt-4", // margin top
             "ml-2",
-            i18n.language == "en"
+            i18n.language === "en"
               ? "w-32 xl:w-40 4xl:w-52"
               : "w-36 xl:w-46 4xl:w-52", // width
             "text-start xs:text-end sm:text-start"

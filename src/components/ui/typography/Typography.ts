@@ -1,12 +1,11 @@
 import { cva } from "class-variance-authority";
-import { twMerge } from "tailwind-merge";
 
-import Style from "./Typography.module.scss";
+import { cn } from "@/lib/utils";
 
 import type { VariantProps } from "class-variance-authority";
 import type { ClassNameValue } from "tailwind-merge";
 
-const textDefault = "inline-block align-middle";
+const textDefault = "inline-block align-middle hyphens-manual text-balance";
 const fontFamilyTitle = "font-sans";
 const fontFamilyText = "font-sans";
 
@@ -73,31 +72,28 @@ export const typographyColorDegree = cva("", {
 
 export type TypographyColorProps = VariantProps<typeof typographyColorDegree>;
 
-export const displayStyle = cva(
-  [textDefault, fontFamilyTitle, Style["display"]],
-  {
-    variants: {
-      weight: {
-        bold: "font-black",
-        semibold: "font-bold",
-        medium: "font-regular"
-      },
-      size: {
-        xl: Style["display_xl"],
-        lg: Style["display_lg"],
-        md: Style["display_md"]
-      }
+export const displayStyle = cva([textDefault, fontFamilyTitle], {
+  variants: {
+    weight: {
+      bold: "font-black",
+      semibold: "font-bold",
+      medium: "font-regular"
     },
-    defaultVariants: {
-      weight: "bold"
+    size: {
+      xl: "text-display-xl",
+      lg: "text-display-lg",
+      md: "text-display-md"
     }
+  },
+  defaultVariants: {
+    weight: "bold"
   }
-);
+});
 
 export type DisplayPropsExtended = VariantProps<typeof displayStyle> &
   TypographyColorProps;
 
-export const titleStyle = cva([textDefault, fontFamilyTitle, Style["title"]], {
+export const titleStyle = cva([textDefault, fontFamilyTitle], {
   variants: {
     weight: {
       bold: "font-extrabold",
@@ -105,12 +101,12 @@ export const titleStyle = cva([textDefault, fontFamilyTitle, Style["title"]], {
       medium: "font-medium"
     },
     size: {
-      h1: Style["title_h1"],
-      h2: Style["title_h2"],
-      h3: Style["title_h3"],
-      h4: Style["title_h4"],
-      h5: Style["title_h5"],
-      h6: Style["title_h6"]
+      h1: "text-title-h1",
+      h2: "text-title-h2",
+      h3: "text-title-h3",
+      h4: "text-title-h4",
+      h5: "text-title-h5",
+      h6: "text-title-h6"
     }
   },
   defaultVariants: {
@@ -121,7 +117,7 @@ export const titleStyle = cva([textDefault, fontFamilyTitle, Style["title"]], {
 export type TitlePropsExtended = VariantProps<typeof titleStyle> &
   TypographyColorProps;
 
-export const textStyle = cva([textDefault, fontFamilyText, Style["text"]], {
+export const textStyle = cva([textDefault, fontFamilyText], {
   variants: {
     weight: {
       bold: "font-black",
@@ -129,13 +125,13 @@ export const textStyle = cva([textDefault, fontFamilyText, Style["text"]], {
       medium: "font-medium"
     },
     size: {
-      xl: Style["text_xl"],
-      lg: Style["text_lg"],
-      md: Style["text_md"],
-      sm: Style["text_sm"],
-      xs: Style["text_xs"],
-      xxs: Style["text_xxs"],
-      auto: Style["text_auto"]
+      xl: "text-xl",
+      lg: "text-lg",
+      md: "text-md",
+      sm: "text-sm",
+      xs: "text-xs",
+      xxs: "text-xxs",
+      auto: "text-auto"
     }
   },
   defaultVariants: {
@@ -151,7 +147,7 @@ export const title = (
   { mode, degree, weight, size }: TitlePropsExtended,
   ...className: ClassNameValue[]
 ) =>
-  twMerge(
+  cn(
     titleStyle({ weight, size }),
     typographyColorDegree({ mode, degree }),
     ...className
@@ -161,7 +157,7 @@ export const display = (
   { mode, degree, weight, size }: DisplayPropsExtended,
   ...className: ClassNameValue[]
 ) =>
-  twMerge(
+  cn(
     displayStyle({ weight, size }),
     typographyColorDegree({ mode, degree }),
     ...className
@@ -171,7 +167,7 @@ export const text = (
   { mode, degree, weight, size }: TextPropsExtended,
   ...className: ClassNameValue[]
 ) =>
-  twMerge(
+  cn(
     textStyle({ weight, size }),
     typographyColorDegree({ mode, degree }),
     ...className

@@ -7,7 +7,6 @@ import { useTranslation } from "next-i18next";
 import { twMerge } from "tailwind-merge";
 
 import Container from "@/components/ui/container";
-import { Cursors as Cursor } from "@/components/ui/cursor";
 import { usePreloader } from "@/components/ui/preloader";
 
 const HeaderDynamic = dynamic(() => import("@/components/common/Header"), {});
@@ -37,9 +36,9 @@ const Layer = ({
   }, [i18n.language, endLoading]);
 
   return (
-    <Cursor>
+    <>
       <HeaderDynamic />
-      <>{children}</>
+      {children as React.ReactElement}
       <Container
         data-scroll-section
         as="footer"
@@ -49,7 +48,7 @@ const Layer = ({
       >
         <FooterDynamic />
       </Container>
-    </Cursor>
+    </>
   );
 };
 

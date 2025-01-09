@@ -1,9 +1,7 @@
-import type { ElementRef} from "react";
 import React, { useRef, useState } from "react";
 
 import { useIsomorphicLayoutEffect } from "react-use";
 
-import { CursorContent } from "@/components/ui/cursor";
 import { gsap } from "@/utils/gsap";
 
 const Item = ({
@@ -13,7 +11,7 @@ const Item = ({
   children: string;
   defaultColor?: `var(--color-${string})`;
 }) => {
-  const ref = useRef<ElementRef<"div">>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const [onHoverStart, setOnHoverStart] = useState(false);
   const [onHoverEnd, setOnHoverEnd] = useState(false);
@@ -88,19 +86,11 @@ const Item = ({
     };
   }, [ref, defaultColor]);
   return (
-    <CursorContent
-      name="cursorPointer_header_email"
-      component="CursorEvent"
-      props={{
-        event: "pointer"
-      }}
-    >
-      <div className="relative overflow-hidden" ref={ref}>
-        <div className="flex w-auto cursor-pointer item-child-grap">
-          {children}
-        </div>
+    <div className="relative overflow-hidden" ref={ref}>
+      <div className="flex w-auto cursor-pointer item-child-grap">
+        {children}
       </div>
-    </CursorContent>
+    </div>
   );
 };
 

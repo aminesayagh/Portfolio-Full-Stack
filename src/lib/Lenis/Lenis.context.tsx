@@ -1,6 +1,4 @@
-import type {
-  ReactElement,
-  ElementRef} from "react";
+import type { ReactElement, RefObject } from "react";
 import React, {
   createContext,
   useEffect,
@@ -22,7 +20,7 @@ import { gsap, ScrollTrigger } from "@/utils/gsap";
 
 import { useRoot } from "./lenis";
 
-import type { LenisInstance, CallbackFunction} from "./lenis";
+import type { LenisInstance, CallbackFunction } from "./lenis";
 
 interface LenisContextValue {
   lenis: LenisInstance | undefined;
@@ -101,8 +99,8 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
     ref
   ) => {
     // Create refs for the wrapper and content elements.
-    const wrapper = useRef<ElementRef<"div">>(null);
-    const content = useRef<ElementRef<"div">>(null);
+    const wrapper = useRef<HTMLDivElement>(null);
+    const content = useRef<HTMLDivElement>(null);
     const { i18n } = useTranslation();
 
     // Create state for the Lenis instance.
@@ -110,7 +108,9 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
 
     // Create a debounced value for the container width and height.
     const { width: widthContainer, height: heightContainer } =
-      useResizeObserver<HTMLDivElement>({ ref: content });
+      useResizeObserver<HTMLDivElement>({
+        ref: content as RefObject<HTMLDivElement>
+      });
 
     // Create a debounced value for the container width and height.
     const width = useDebounce(widthContainer, 30);
@@ -151,7 +151,9 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
 
     useImperativeHandle(ref, () => lenis, [lenis]); // Expose the Lenis instance via the ref.
 
-    useResizeObserver<HTMLDivElement>({ ref: content });
+    useResizeObserver<HTMLDivElement>({
+      ref: content as RefObject<HTMLDivElement>
+    });
 
     useEffect(() => {
       const lenisInstance = new Lenis({
@@ -202,7 +204,7 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
       if (!current.length) return;
       for (let i = 0; i < callbacks.current.length; i++) {
         const c = current[i];
-        c && c.callback(e);
+        if (c && c.callback) c.callback(e);
       }
     }, []);
 

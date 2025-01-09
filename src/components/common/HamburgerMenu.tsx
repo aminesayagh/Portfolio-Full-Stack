@@ -60,7 +60,9 @@ const HamburgerMenu = ({
     },
     onKeyUp: e => {
       if (["Escape", "Esc"].includes(e.key)) {
-        isOpen && setOpen();
+        if (isOpen) {
+          setOpen();
+        }
       }
     }
   });
@@ -70,34 +72,34 @@ const HamburgerMenu = ({
 
   return (
     <span {...keyboardProps}>
-        <Button
-          onPress={() => setOpen()}
-          name="Hamberger menu button"
-          title="Hamberger menu button"
-          aria-label="Hamberger menu button"
-          aria-haspopup="true"
+      <Button
+        onPress={() => setOpen()}
+        name="Hamberger menu button"
+        title="Hamberger menu button"
+        aria-label="Hamberger menu button"
+        aria-haspopup="true"
+      >
+        <svg
+          width={`${isXxs ? SIZE : 22}`}
+          height={`${isXxs ? SIZE : 22}`}
+          viewBox="0 0 24 24"
+          strokeWidth={STROKE_WIDTH}
         >
-          <svg
-            width={`${isXxs ? SIZE : 22}`}
-            height={`${isXxs ? SIZE : 22}`}
-            viewBox="0 0 24 24"
-            strokeWidth={STROKE_WIDTH}
-          >
-            <motion.path
-              {...path01Variants.closed}
-              animate={path01Controls}
-              transition={{ duration: DURATION }}
-              stroke="var(--color-white-100)"
-            />
-            <motion.path
-              {...path02Variants.closed}
-              animate={path02Controls}
-              transition={{ duration: DURATION }}
-              stroke="var(--color-white-100)"
-            />
-          </svg>
-        </Button>
-      </span>
+          <motion.path
+            {...path01Variants.closed}
+            animate={path01Controls}
+            transition={{ duration: DURATION }}
+            stroke="var(--color-white-100)"
+          />
+          <motion.path
+            {...path02Variants.closed}
+            animate={path02Controls}
+            transition={{ duration: DURATION }}
+            stroke="var(--color-white-100)"
+          />
+        </svg>
+      </Button>
+    </span>
   );
 };
 

@@ -15,7 +15,7 @@ const useGsap = (
   useIsomorphicLayoutEffect(() => {
     const ctx: gsap.Context = gsap.context(gsapCallback, ref || undefined);
     return () => {
-      ctx && ctx.revert();
+      if (ctx) ctx.revert();
     };
   }, [ref, i18n.language, ...rendered]);
 };
