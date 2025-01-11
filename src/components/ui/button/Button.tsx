@@ -4,9 +4,9 @@ import React, { forwardRef, useMemo, memo } from "react";
 
 import { FocusRing } from "react-aria";
 import { Button } from "react-aria-components";
-import { twMerge } from "tailwind-merge";
 
 import { text } from "@/components/ui/typography";
+import { cn } from "@/lib/utils";
 
 import type { ButtonProps } from "./Button.type";
 
@@ -27,7 +27,7 @@ const ButtonUi = forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const buttonClasses = useMemo(
       () =>
-        twMerge(
+        cn(
           "touch-none select-none focus:outline-none",
           "gap-2 flex flex-row flex-nowrap self-center items-center justify-center",
           "font-sans font-bold",

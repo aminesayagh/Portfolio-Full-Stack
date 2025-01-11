@@ -1,145 +1,15 @@
 # Project Tree Structure
-
 ```plaintext
 .
-|-- components
-|   |-- common
-|   |   |-- toast
-|   |   |   |-- addToast.ts
-|   |   |   |-- index.ts
-|   |   |   `-- ToastRegion.tsx
-|   |   |-- Footer.tsx
-|   |   |-- HamburgerMenu.tsx
-|   |   |-- Header.tsx
-|   |   |-- Head.tsx
-|   |   |-- Layer.tsx
-|   |   |-- Script.tsx
-|   |   `-- SwitchLang.tsx
-|   |-- pages
-|   |   |-- Contact
-|   |   |   |-- AgencyList.tsx
-|   |   |   |-- ContactForm.tsx
-|   |   |   `-- Index.tsx
-|   |   `-- home
-|   |       |-- ActionContact.tsx
-|   |       |-- Action.tsx
-|   |       |-- Cases.tsx
-|   |       |-- Expertise.tsx
-|   |       |-- Index.tsx
-|   |       |-- Intro.tsx
-|   |       |-- Manifesto.tsx
-|   |       `-- Video.tsx
-|   |-- ui
-|   |   |-- animation
-|   |   |   `-- Item.tsx
-|   |   |-- button
-|   |   |   |-- Button.tsx
-|   |   |   |-- Button.type.ts
-|   |   |   `-- index.tsx
-|   |   |-- collection
-|   |   |   |-- menu
-|   |   |   |   |-- index.tsx
-|   |   |   |   `-- Menu.tsx
-|   |   |   `-- index.tsx
-|   |   |-- container
-|   |   |   |-- Container.style.ts
-|   |   |   |-- Container.tsx
-|   |   |   |-- Container.type.ts
-|   |   |   `-- index.tsx
-|   |   |-- cursor
-|   |   |   |-- CursorContainer.tsx
-|   |   |   |-- Cursor.context.ts
-|   |   |   |-- Cursors.tsx
-|   |   |   |-- Cursor.tsx
-|   |   |   |-- CursorType.ts
-|   |   |   `-- index.tsx
-|   |   |-- deco
-|   |   |   |-- circleText
-|   |   |   |   |-- CircleText.tsx
-|   |   |   |   `-- index.tsx
-|   |   |   `-- index.tsx
-|   |   |-- form
-|   |   |   |-- CheckBox.tsx
-|   |   |   |-- Field.tsx
-|   |   |   |-- Form.module.scss
-|   |   |   |-- Form.tsx
-|   |   |   |-- index.tsx
-|   |   |   |-- Item.tsx
-|   |   |   |-- Radio.tsx
-|   |   |   `-- Select.tsx
-|   |   |-- icon
-|   |   |   |-- IconsList.tsx
-|   |   |   |-- Icon.tsx
-|   |   |   `-- index.tsx
-|   |   |-- image
-|   |   |   |-- Image.tsx
-|   |   |   `-- index.tsx
-|   |   |-- logo
-|   |   |   |-- index.tsx
-|   |   |   `-- Logo.tsx
-|   |   |-- navbar
-|   |   |   |-- index.tsx
-|   |   |   |-- Navbar.tsx
-|   |   |   `-- Navbar.type.ts
-|   |   |-- noise
-|   |   |   |-- index.tsx
-|   |   |   `-- Noise.tsx
-|   |   |-- overlay
-|   |   |   |-- modal
-|   |   |   |   |-- index.tsx
-|   |   |   |   `-- Modal.tsx
-|   |   |   |-- popover
-|   |   |   |   |-- index.tsx
-|   |   |   |   `-- Popover.tsx
-|   |   |   `-- index.tsx
-|   |   |-- preloader
-|   |   |   |-- index.ts
-|   |   |   |-- Preloader.context.tsx
-|   |   |   `-- Preloader.hook.tsx
-|   |   |-- resizablePanel
-|   |   |   |-- index.tsx
-|   |   |   `-- ResizablePanel.tsx
-|   |   |-- typography
-|   |   |   |-- index.ts
-|   |   |   |-- Link.tsx
-|   |   |   |-- Typography.module.scss
-|   |   |   `-- Typography.ts
-|   |   |-- animation.ts
-|   |   `-- conf.ts
-|   |-- Lenis.tsx
-|   `-- style.ts
-|-- conf
-|   |-- projects.ts
-|   `-- router.ts
+|-- analyze
+|   `-- nodejs.html
 |-- docs
 |   |-- config-docs.md
 |   |-- project-tree.md
 |   `-- src-docs.md
-|-- helpers
-|   `-- className.ts
-|-- hook
-|   |-- index.tsx
-|   |-- SafePush.tsx
-|   |-- Time.tsx
-|   |-- useDebounce.tsx
-|   |-- useEventListener.tsx
-|   `-- useGsap.tsx
-|-- lib
-|   `-- Lenis
-|       |-- index.ts
-|       |-- Lenis.context.tsx
-|       |-- Lenis.hook.tsx
-|       `-- lenis.ts
-|-- pages
-|   |-- api
-|   |   |-- contact.ts
-|   |   `-- robots.ts
-|   |-- _app.tsx
-|   |-- contact.tsx
-|   |-- _document.tsx
-|   |-- index.tsx
-|   |-- references.tsx
-|   `-- resume.tsx
+|-- messages
+|   |-- en.json
+|   `-- fr.json
 |-- public
 |   |-- fonts
 |   |   `-- Montserrat
@@ -1787,11 +1657,6 @@
 |   |   |   `-- sodiadd_mockup_main.webp
 |   |   |-- 2.png
 |   |   `-- noise-transparent.png
-|   |-- locales
-|   |   |-- en
-|   |   |   `-- common.json
-|   |   `-- fr
-|   |       `-- common.json
 |   |-- logo
 |   |   |-- logo_portfolio_dark.svg
 |   |   `-- logo.svg
@@ -1803,30 +1668,164 @@
 |-- scripts
 |   |-- mas.sh
 |   `-- preinstall
-|-- styles
-|   |-- animation.module.scss
-|   `-- globals.scss
-|-- utils
-|   |-- env.ts
-|   |-- gsap.tsx
-|   `-- i18n.ts
+|-- src
+|   |-- app
+|   |   |-- api
+|   |   |   `-- contact
+|   |   |       `-- route.ts
+|   |   |-- [locale]
+|   |   |   |-- layout.tsx
+|   |   |   `-- page.tsx
+|   |   `-- globals.css
+|   |-- components
+|   |   |-- common
+|   |   |   |-- toast
+|   |   |   |   |-- addToast.ts
+|   |   |   |   |-- index.ts
+|   |   |   |   `-- ToastRegion.tsx
+|   |   |   |-- Footer.tsx
+|   |   |   |-- HamburgerMenu.tsx
+|   |   |   |-- Header.tsx
+|   |   |   |-- Head.tsx
+|   |   |   |-- Layer.tsx
+|   |   |   |-- Script.tsx
+|   |   |   `-- SwitchLang.tsx
+|   |   |-- pages
+|   |   |   |-- Contact
+|   |   |   |   |-- AgencyList.tsx
+|   |   |   |   |-- ContactForm.tsx
+|   |   |   |   `-- Index.tsx
+|   |   |   `-- home
+|   |   |       |-- ActionContact.tsx
+|   |   |       |-- Action.tsx
+|   |   |       |-- Cases.tsx
+|   |   |       |-- Expertise.tsx
+|   |   |       |-- Index.tsx
+|   |   |       |-- Intro.tsx
+|   |   |       |-- Manifesto.tsx
+|   |   |       `-- Video.tsx
+|   |   |-- ui
+|   |   |   |-- animation
+|   |   |   |   `-- Item.tsx
+|   |   |   |-- button
+|   |   |   |   |-- Button.tsx
+|   |   |   |   |-- Button.type.ts
+|   |   |   |   `-- index.tsx
+|   |   |   |-- collection
+|   |   |   |   |-- menu
+|   |   |   |   |   |-- index.tsx
+|   |   |   |   |   `-- Menu.tsx
+|   |   |   |   `-- index.tsx
+|   |   |   |-- container
+|   |   |   |   |-- Container.style.ts
+|   |   |   |   |-- Container.tsx
+|   |   |   |   |-- Container.type.ts
+|   |   |   |   `-- index.tsx
+|   |   |   |-- deco
+|   |   |   |   |-- circleText
+|   |   |   |   |   |-- CircleText.tsx
+|   |   |   |   |   `-- index.tsx
+|   |   |   |   `-- index.tsx
+|   |   |   |-- form
+|   |   |   |   |-- CheckBox.tsx
+|   |   |   |   |-- Field.tsx
+|   |   |   |   |-- Form.tsx
+|   |   |   |   |-- index.tsx
+|   |   |   |   |-- Item.tsx
+|   |   |   |   |-- Radio.tsx
+|   |   |   |   |-- Select.tsx
+|   |   |   |   `-- Style.ts
+|   |   |   |-- icon
+|   |   |   |   |-- IconsList.tsx
+|   |   |   |   |-- Icon.tsx
+|   |   |   |   `-- index.tsx
+|   |   |   |-- image
+|   |   |   |   |-- Image.tsx
+|   |   |   |   `-- index.tsx
+|   |   |   |-- logo
+|   |   |   |   |-- index.tsx
+|   |   |   |   `-- Logo.tsx
+|   |   |   |-- navbar
+|   |   |   |   |-- index.tsx
+|   |   |   |   |-- Navbar.tsx
+|   |   |   |   `-- Navbar.type.ts
+|   |   |   |-- noise
+|   |   |   |   |-- index.tsx
+|   |   |   |   `-- Noise.tsx
+|   |   |   |-- overlay
+|   |   |   |   |-- modal
+|   |   |   |   |   |-- index.tsx
+|   |   |   |   |   `-- Modal.tsx
+|   |   |   |   |-- popover
+|   |   |   |   |   |-- index.tsx
+|   |   |   |   |   `-- Popover.tsx
+|   |   |   |   `-- index.tsx
+|   |   |   |-- preloader
+|   |   |   |   |-- index.ts
+|   |   |   |   |-- Preloader.context.tsx
+|   |   |   |   `-- Preloader.hook.tsx
+|   |   |   |-- resizablePanel
+|   |   |   |   |-- index.tsx
+|   |   |   |   `-- ResizablePanel.tsx
+|   |   |   |-- typography
+|   |   |   |   |-- index.ts
+|   |   |   |   |-- Link.tsx
+|   |   |   |   `-- Typography.ts
+|   |   |   |-- animation.ts
+|   |   |   `-- conf.ts
+|   |   |-- Lenis.tsx
+|   |   `-- style.ts
+|   |-- conf
+|   |   |-- projects.ts
+|   |   `-- router.ts
+|   |-- helpers
+|   |   `-- types
+|   |       |-- index.ts
+|   |       |-- is-union.ts
+|   |       |-- keys-as-dot-notation.ts
+|   |       `-- union-to-intersection.ts
+|   |-- hook
+|   |   |-- index.tsx
+|   |   |-- Time.tsx
+|   |   |-- useDebounce.tsx
+|   |   |-- useEventListener.tsx
+|   |   `-- useGsap.tsx
+|   |-- i18n
+|   |   |-- request.tsx
+|   |   `-- routing.ts
+|   |-- lib
+|   |   |-- Lenis
+|   |   |   |-- index.ts
+|   |   |   |-- Lenis.context.tsx
+|   |   |   |-- Lenis.hook.tsx
+|   |   |   `-- lenis.ts
+|   |   `-- utils.ts
+|   |-- styles
+|   |   `-- globals.scss
+|   |-- types
+|   |-- utils
+|   |   |-- env.ts
+|   |   `-- gsap.tsx
+|   `-- middleware.ts
 |-- .vscode
 |   |-- mrc.code-snippets
 |   `-- settings.json
 |-- .env.local
-|-- .eslintrc.json
+|-- eslint.config.mjs
 |-- .gitignore
+|-- i18nConfig.js
 |-- knip.ts
-|-- next.config.js
+|-- next.config.ts
 |-- next-env.d.ts
-|-- next-i18next.config.js
 |-- package.json
-|-- package-lock.json
+|-- pnpm-lock.yaml
 |-- postcss.config.js
+|-- .prettierignore
 |-- .prettierrc
 |-- README.md
-|-- tailwind.config.js
-`-- tsconfig.json
+|-- tailwind.config.ts
+|-- tsconfig.json
+`-- tsconfig.tsbuildinfo
 
-50 directories, 1775 files
+54 directories, 1771 files
 ```

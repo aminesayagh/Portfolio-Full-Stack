@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 import { useLocale } from "next-intl";
 import { twMerge as tw } from "tailwind-merge";
@@ -7,6 +7,7 @@ import Item from "@/components/ui/animation/Item";
 import Button from "@/components/ui/button";
 import type { Lang } from "@/i18n/request";
 import { useRouter, usePathname } from "@/i18n/routing";
+import { text } from "@/components/ui/typography";
 
 const languages = [
   {
@@ -28,10 +29,15 @@ const SwitchLang = () => {
   const currentLocale = useLocale() as Lang;
   const pathname = usePathname();
 
-  const handleSelectionChange = (value: string) => {
-    const selectedLang = value as Lang;
-    router.replace(pathname, { locale: selectedLang });
-  };
+  console.log(currentLocale);
+
+  const handleSelectionChange = useCallback(
+    (value: string) => {
+      const selectedLang = value as Lang;
+      router.replace(pathname, { locale: selectedLang });
+    },
+    [router, pathname]
+  );
 
   return (
     <div className="flex flex-row items-center justify-start gap-12 xxs:gap-8 mdl:gap-6 lg:gap-8">
@@ -42,14 +48,15 @@ const SwitchLang = () => {
             size="xs"
             className={tw(
               "uppercase",
-              currentLocale === l.value && "text-primary"
+              text(
+                { weight: "semibold", size: "xs", degree: "2" },
+                "uppercase",
+                currentLocale === l.value && "opacity-80"
+              )
             )}
             onPress={() => handleSelectionChange(l.value)}
-            style={{
-              color: "inherit"
-            }}
           >
-            <Item defaultColor="var(--color-white-600)">{l.short}</Item>
+            <Item>{l.short}</Item>
           </Button>
         </span>
       ))}

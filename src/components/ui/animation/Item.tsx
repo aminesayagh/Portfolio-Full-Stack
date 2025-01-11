@@ -1,95 +1,90 @@
-import React, { useRef, useState } from "react";
+import { motion, useAnimation, AnimatePresence } from "framer-motion";
+import React, { useState, useCallback, useMemo } from "react";
 
-import { useIsomorphicLayoutEffect } from "react-use";
+import { cn } from "@/lib/utils";
 
-import { gsap } from "@/utils/gsap";
+const slideVariants = {
+  initial: {
+    y: "0%",
+    skewY: 0
+  },
+  exit: {
+    y: "-100%",
+    skewY: 15,
+    transition: {
+      duration: 0.15,
+      ease: [0.7, 0, 0.84, 0] // power4.easeIn
+    }
+  },
+  enter: {
+    y: "100%",
+    skewY: 15,
+    transition: {
+      duration: 0.15
+    }
+  },
+  animate: {
+    y: "0%",
+    skewY: 0,
+    transition: {
+      duration: 0.15,
+      ease: [0.16, 1, 0.3, 1] // power4.easeOut
+    }
+  }
+};
 
 const Item = ({
   children,
-  defaultColor = "var(--color-white-100)"
+  className
 }: {
   children: string;
-  defaultColor?: `var(--color-${string})`;
+  className?: string;
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const controls = useAnimation();
 
-  const [onHoverStart, setOnHoverStart] = useState(false);
-  const [onHoverEnd, setOnHoverEnd] = useState(false);
+  const handleHoverStart = useCallback(() => {
+    setIsHovered(true);
+    controls.start("animate");
+  }, [controls]);
 
-  useIsomorphicLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const timeline = gsap.timeline({
-        paused: true,
-        defaults: {
-          duration: 0.15
-        }
-      });
-      timeline
-        .fromTo(
-          ".item-child-grap",
-          {
-            yPercent: 0,
-            skewY: 0,
-            color: defaultColor
-          },
-          {
-            yPercent: -100,
-            skewY: 5,
-            color: defaultColor,
-            ease: "power4.easeIn"
-          }
-        )
-        .fromTo(
-          ".item-child-grap",
-          {
-            yPercent: 100,
-            skewY: 5,
-            color: "var(--color-primary-500)"
-          },
-          {
-            yPercent: 0,
-            skewY: 0,
-            ease: "power4.easeOut",
-            color: "var(--color-primary-500)"
-          }
-        )
-        .progress(0);
-      gsap.set(".item-child-grap", {
-        yPercent: 0,
-        skewY: 0,
-        color: "var(--color-white-100)"
-      });
-      ref.current?.addEventListener("pointerenter", () => {
-        if (onHoverStart) return;
-        if (onHoverEnd) return;
-        setOnHoverStart(true);
-        timeline?.play().then(() => setOnHoverStart(false));
-      });
-      ref.current?.addEventListener("pointerleave", () => {
-        if (onHoverEnd) return;
-        if (onHoverStart) return;
-        setOnHoverEnd(true);
-        timeline?.reverse().then(() => setOnHoverEnd(false));
-      });
-      return () => {
-        ref.current?.removeEventListener("mouseenter", () => {
-          timeline?.play();
-        });
-        ref.current?.removeEventListener("mouseleave", () => {
-          timeline?.reverse();
-        });
-        timeline?.kill();
-      };
-    }, ref);
-    return () => {
-      ctx.revert();
-    };
-  }, [ref, defaultColor]);
+  const handleHoverEnd = useCallback(() => {
+    setIsHovered(false);
+    controls.start("initial");
+  }, [controls]);
+
+  
+  const initialAnimation = useMemo(() => 
+    isHovered ? "enter" : "initial"
+  , [isHovered]);
+
+  
+  const combinedClassName = useMemo(() => 
+    cn(
+      "flex w-auto transform-gpu will-change-transform transition-colors duration-300",
+      isHovered ? "text-primary-500" : "",
+      className
+    )
+  , [isHovered, className]);
+
   return (
-    <div className="relative overflow-hidden" ref={ref}>
-      <div className="flex w-auto cursor-pointer item-child-grap">
-        {children}
-      </div>
+    <div
+      className="relative overflow-hidden cursor-pointer"
+      onPointerEnter={handleHoverStart}
+      onPointerLeave={handleHoverEnd}
+    >
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={isHovered ? "hovered" : "default"}
+          className={combinedClassName}
+          variants={slideVariants}
+          initial={initialAnimation}
+          animate={isHovered ? "enter" : "initial"}
+          exit="exit"
+        >
+          {children}
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };
