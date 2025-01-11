@@ -51,83 +51,85 @@ export default {
         ...defaultTheme.fontFamily.sans
       ]
     },
-    extends: {
-      colors: {
-        transparent: "transparent",
-        current: "currentColor",
-        primary: {
-          DEFAULT: "oklch(var(--primary-500) / <alpha-value>)",
-          100: "oklch(var(--primary-100) / <alpha-value>)",
-          200: "oklch(var(--primary-200) / <alpha-value>)",
-          300: "oklch(var(--primary-300) / <alpha-value>)",
-          400: "oklch(var(--primary-400) / <alpha-value>)",
-          500: "oklch(var(--primary-500) / <alpha-value>)",
-          600: "oklch(var(--primary-600) / <alpha-value>)",
-          700: "oklch(var(--primary-700) / <alpha-value>)",
-          800: "oklch(var(--primary-800) / <alpha-value>)",
-          900: "oklch(var(--primary-900) / <alpha-value>)"
-        },
-        secondary: {
-          DEFAULT: "oklch(var(--secondary-500) / <alpha-value>)",
-          100: "oklch(var(--secondary-100) / <alpha-value>)",
-          200: "oklch(var(--secondary-200) / <alpha-value>)",
-          300: "oklch(var(--secondary-300) / <alpha-value>)",
-          400: "oklch(var(--secondary-400) / <alpha-value>)",
-          500: "oklch(var(--secondary-500) / <alpha-value>)",
-          600: "oklch(var(--secondary-600) / <alpha-value>)",
-          700: "oklch(var(--secondary-700) / <alpha-value>)",
-          800: "oklch(var(--secondary-800) / <alpha-value>)",
-          900: "oklch(var(--secondary-900) / <alpha-value>)"
-        },
-        white: {
-          DEFAULT: "oklch(var(--white-100) / <alpha-value>)",
-          100: "oklch(var(--white-100) / <alpha-value>)",
-          200: "oklch(var(--white-200) / <alpha-value>)",
-          300: "oklch(var(--white-300) / <alpha-value>)",
-          400: "oklch(var(--white-400) / <alpha-value>)",
-          500: "oklch(var(--white-500) / <alpha-value>)",
-          600: "oklch(var(--white-600) / <alpha-value>)",
-          700: "oklch(var(--white-700) / <alpha-value>)",
-          800: "oklch(var(--white-800) / <alpha-value>)",
-          900: "oklch(var(--white-900) / <alpha-value>)"
-        },
-        gray: {
-          DEFAULT: "oklch(var(--gray-500) / <alpha-value>)",
-          100: "oklch(var(--gray-100) / <alpha-value>)",
-          200: "oklch(var(--gray-200) / <alpha-value>)",
-          300: "oklch(var(--gray-300) / <alpha-value>)",
-          400: "oklch(var(--gray-400) / <alpha-value>)",
-          500: "oklch(var(--gray-500) / <alpha-value>)",
-          600: "oklch(var(--gray-600) / <alpha-value>)",
-          700: "oklch(var(--gray-700) / <alpha-value>)",
-          800: "oklch(var(--gray-800) / <alpha-value>)",
-          900: "oklch(var(--gray-900) / <alpha-value>)"
-        },
-        black: {
-          DEFAULT: "oklch(var(--black-100) / <alpha-value>)",
-          100: "oklch(var(--black-100) / <alpha-value>)",
-          200: "oklch(var(--black-200) / <alpha-value>)",
-          300: "oklch(var(--black-300) / <alpha-value>)",
-          400: "oklch(var(--black-400) / <alpha-value>)",
-          500: "oklch(var(--black-500) / <alpha-value>)",
-          600: "oklch(var(--black-600) / <alpha-value>)",
-          700: "oklch(var(--black-700) / <alpha-value>)",
-          800: "oklch(var(--black-800) / <alpha-value>)",
-          900: "oklch(var(--black-900) / <alpha-value>)"
-        },
-        red: {
-          DEFAULT: "oklch(var(--red-500) / <alpha-value>)",
-          100: "oklch(var(--red-100) / <alpha-value>)",
-          200: "oklch(var(--red-200) / <alpha-value>)",
-          300: "oklch(var(--red-300) / <alpha-value>)",
-          400: "oklch(var(--red-400) / <alpha-value>)",
-          500: "oklch(var(--red-500) / <alpha-value>)",
-          600: "oklch(var(--red-600) / <alpha-value>)",
-          700: "oklch(var(--red-700) / <alpha-value>)",
-          800: "oklch(var(--red-800) / <alpha-value>)",
-          900: "oklch(var(--red-900) / <alpha-value>)"
-        }
+    colors: {
+      transparent: "transparent",
+      current: "currentColor",
+      background: "oklch(17.3% 0.01 281.25 / <alpha-value>)",
+      foreground: "#fff",
+      primary: {
+        DEFAULT: "oklch(53.26% 0.21 281.25 / <alpha-value>)",
+        100: "oklch(69.06% 0.15 281.25 / <alpha-value>)",
+        200: "oklch(62.88% 0.165 281.25 / <alpha-value>)",
+        300: "oklch(60.61% 0.19 281.25 / <alpha-value>)",
+        400: "oklch(56.82% 0.21 281.25 / <alpha-value>)",
+        500: "oklch(53.26% 0.21 281.26 / <alpha-value>)",
+        600: "oklch(46.41% 0.207 281.25 / <alpha-value>)",
+        700: "oklch(42.29% 0.202 281.25 / <alpha-value>)",
+        800: "oklch(38.47% 0.209 281.25 / <alpha-value>)",
+        900: "oklch(35.24% 0.185 281.25 / <alpha-value>)"
       },
+      secondary: {
+        DEFAULT: "oklch(53.26% 0.21 234.51 / <alpha-value>)",
+        100: "oklch(69.06% 0.15 234.51 / <alpha-value>)",
+        200: "oklch(62.88% 0.165 234.51 / <alpha-value>)",
+        300: "oklch(60.61% 0.19 234.51 / <alpha-value>)",
+        400: "oklch(56.82% 0.21 234.51 / <alpha-value>)",
+        500: "oklch(53.26% 0.21 234.51 / <alpha-value>)",
+        600: "oklch(46.41% 0.207 234.51 / <alpha-value>)",
+        700: "oklch(42.29% 0.202 234.51 / <alpha-value>)",
+        800: "oklch(38.47% 0.209 234.51 / <alpha-value>)",
+        900: "oklch(35.24% 0.185 234.51 / <alpha-value>)"
+      },
+      white: {
+        DEFAULT: "oklch(98.18% 0.004 281.25 / <alpha-value>)",
+        100: "oklch(98.18% 0.004 281.25 / <alpha-value>)",
+        200: "oklch(96.47% 0.004 281.25 / <alpha-value>)",
+        300: "oklch(94.12% 0.004 281.25 / <alpha-value>)",
+        400: "oklch(90.59% 0.004 281.25 / <alpha-value>)",
+        500: "oklch(87.06% 0.004 281.25 / <alpha-value>)",
+        600: "oklch(80.78% 0.004 281.25 / <alpha-value>)",
+        700: "oklch(74.12% 0.004 281.25 / <alpha-value>)",
+        800: "oklch(67.06% 0.004 281.25 / <alpha-value>)",
+        900: "oklch(60.39% 0.004 281.25 / <alpha-value>)"
+      },
+      gray: {
+        DEFAULT: "oklch(63.92% 0.0321 281.25 / <alpha-value>)",
+        100: "oklch(85.98% 0.0321 281.25 / <alpha-value>)",
+        200: "oklch(81.18% 0.0321 281.25 / <alpha-value>)",
+        300: "oklch(75.69% 0.0321 281.25 / <alpha-value>)",
+        400: "oklch(69.8% 0.0321 281.25 / <alpha-value>)",
+        500: "oklch(63.92% 0.0321 281.25 / <alpha-value>)",
+        600: "oklch(55.69% 0.0321 281.25 / <alpha-value>)",
+        700: "oklch(48.24% 0.0321 281.25 / <alpha-value>)",
+        800: "oklch(40.39% 0.0321 281.25 / <alpha-value>)",
+        900: "oklch(33.33% 0.0321 281.25 / <alpha-value>)"
+      },
+      black: {
+        DEFAULT: "oklch(17.3% 0.01 281.25 / <alpha-value>)",
+        100: "oklch(17.3% 0.01 281.25 / <alpha-value>)",
+        200: "oklch(18.6% 0.019 281.25 / <alpha-value>)",
+        300: "oklch(20.39% 0.019 281.25 / <alpha-value>)",
+        400: "oklch(22.35% 0.019 281.25 / <alpha-value>)",
+        500: "oklch(24.31% 0.019 281.25 / <alpha-value>)",
+        600: "oklch(26.27% 0.019 281.25 / <alpha-value>)",
+        700: "oklch(28.24% 0.019 281.25 / <alpha-value>)",
+        800: "oklch(30.2% 0.019 281.25 / <alpha-value>)",
+        900: "oklch(32.16% 0.019 281.25 / <alpha-value>)"
+      },
+      red: {
+        DEFAULT: "oklch(70.39% 0.191 37.127 / <alpha-value>)",
+        100: "oklch(85.88% 0.102 37.127 / <alpha-value>)",
+        200: "oklch(76.95% 0.128 37.127 / <alpha-value>)",
+        300: "oklch(72.83% 0.141 37.127 / <alpha-value>)",
+        400: "oklch(70.48% 0.168 37.127 / <alpha-value>)",
+        500: "oklch(70.39% 0.191 37.127 / <alpha-value>)",
+        600: "oklch(66.36% 0.192 37.127 / <alpha-value>)",
+        700: "oklch(60.48% 0.173 37.127 / <alpha-value>)",
+        800: "oklch(53.13% 0.168 37.127 / <alpha-value>)",
+        900: "oklch(47.83% 0.153 37.127 / <alpha-value>)"
+      }
+    },
+    extends: {
       animation: {
         underline: "underline 0.3s forwards",
         underlineExit: "underlineExit 0.3s forwards"
