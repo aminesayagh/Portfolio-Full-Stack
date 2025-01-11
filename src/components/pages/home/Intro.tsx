@@ -240,8 +240,7 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
             "splitText_gsap will-change-transform-animation flex flex-row gap-2 intro_scroll_gsap"
           )}
         >
-          <span>{interfaceText.inter}</span>
-          <span className="lowercase">{interfaceText.face}</span>
+          <span>{t("intro.title.1")}</span>
         </div>
       </div>
       {/* description */}

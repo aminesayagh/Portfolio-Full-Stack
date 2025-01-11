@@ -11,6 +11,6 @@ export default middleware;
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/images|favicon.ico|.*\\.(?:ico|jpg|jpeg|svg|css|mp4|js|woff|woff2|ttf|eot|webp|avif)$).*)"
+    "/((?!api|_next/static|_next/images|favicon.ico|.*\\.(?:ico|jpg|jpeg|svg|css|mp4|js|png|woff|woff2|ttf|eot|webp|avif)$).*)"
   ]
 };
