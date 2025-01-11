@@ -7,7 +7,6 @@ import React, {
   useMemo
 } from "react";
 
-import { useRouter } from "next/router";
 import { useHover } from "react-aria";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
@@ -27,6 +26,7 @@ import type {
   ItemProps,
   LinkProps
 } from "./Navbar.type";
+import { usePathname } from "next/navigation";
 
 const Navbar: NavbarType = ({
   children,
@@ -126,17 +126,17 @@ const ContentActiveItem = createContext<{
 } | null>(null);
 
 const Content = ({ children, className, ...props }: ContentProps) => {
-  const router = useRouter();
+  const pathname = usePathname();
   const [activeItem, setActiveItem] = useState<string>("");
 
   useEffect(() => {
-    const activeItem = router.pathname.split("/")[1];
+    const activeItem = pathname.split("/")[1];
     if (!activeItem) return;
     if (activeItem === "") {
       setActiveItem("home");
     }
     setActiveItem(activeItem);
-  }, [router.pathname]);
+  }, [pathname]);
   const handleItemClick = (item: string) => {
     setActiveItem(item);
   };

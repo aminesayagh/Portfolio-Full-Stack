@@ -1,6 +1,6 @@
 import React, { useMemo, useRef } from "react";
 
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
 
@@ -16,7 +16,7 @@ import ContactForm from "./ContactForm";
 const GRID_DEFAULT_CLASS = "col-start-1 col-span-12";
 
 const ContactPage = () => {
-  const { t } = useTranslation();
+  const t = useTranslations();
   const contactRef = useRef<HTMLDivElement>(null);
 
   const socialNetworkItems = useMemo(() => getMenuItems("socialNetworks"), []);
@@ -210,7 +210,7 @@ const ContactPage = () => {
             >
               {socialNetworkItems.map((item, index) => (
                 <Link
-                  key={index}
+                  key={item.id + "_" + index}
                   weight="medium"
                   href={item.link}
                   size="sm"

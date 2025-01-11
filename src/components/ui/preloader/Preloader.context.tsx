@@ -11,8 +11,7 @@ import React, {
 } from "react";
 
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
-import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
 
@@ -47,7 +46,6 @@ export function LoadingProvider({ children }: { children: ReactNode }) {
   const [endLoading, setEndLoading] = useState(false);
   const [loadingComponentList, setLoadingComponentList] =
     useState<LoadingElement>({});
-  const { asPath } = useRouter();
 
   const loadingState = useCallback(() => {
     const loadingValues = Object.values(loadingComponentList);
@@ -106,7 +104,7 @@ export function LoadingProvider({ children }: { children: ReactNode }) {
     return () => {
       removeLoadingComponent(LOADING_KEY);
     };
-  }, [asPath, addLoadingComponent, removeLoadingComponent]);
+  }, [addLoadingComponent, removeLoadingComponent]);
   return (
     <LoadingContext.Provider
       value={{
@@ -129,7 +127,7 @@ const Preloader = ({
   isLoading: boolean;
   setEndLoading: (value: boolean) => void;
 }) => {
-  const { t } = useTranslation();
+  const t  = useTranslations();
   const ref = useRef<HTMLSpanElement>(null);
   const [endLoadingProgress, setEndLoadingProgress] = useState(false);
 
@@ -297,7 +295,7 @@ const Preloader = ({
               {Array.from({ length: 5 }).map((_, index) => (
                 <li
                   suppressHydrationWarning
-                  key={index}
+                  key={`${index}`}
                   className={text(
                     {
                       size: "md",

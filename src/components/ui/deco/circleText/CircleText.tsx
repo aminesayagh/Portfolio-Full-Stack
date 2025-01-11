@@ -27,7 +27,7 @@ const CircleText = ({ text, size, radius, children }: CircleTextProps) => {
             left: "50%",
             transform: `translate(-50%, -50%) rotate(${(360 / chars.length) * index}deg) translateY(${-radius}ch)`
           }}
-          key={index}
+          key={`${char} + ${index}`}
         >
           {char}
         </span>

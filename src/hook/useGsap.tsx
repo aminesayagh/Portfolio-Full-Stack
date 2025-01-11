@@ -1,6 +1,6 @@
 import type { RefObject } from "react";
 
-import { useTranslation } from "react-i18next";
+import { useLocale } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
 
 import { gsap } from "@/utils/gsap";
@@ -10,14 +10,14 @@ const useGsap = (
   ref: RefObject<HTMLDivElement> | RefObject<HTMLCanvasElement> | undefined,
   rendered: unknown[] = []
 ) => {
-  const { i18n } = useTranslation();
+  const locale = useLocale();
 
   useIsomorphicLayoutEffect(() => {
     const ctx: gsap.Context = gsap.context(gsapCallback, ref || undefined);
     return () => {
       if (ctx) ctx.revert();
     };
-  }, [ref, i18n.language, ...rendered]);
+  }, [ref, locale, ...rendered]);
 };
 
 export default useGsap;

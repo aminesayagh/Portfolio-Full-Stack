@@ -2,7 +2,7 @@
 
 import React, { memo, useRef } from "react";
 
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import { useHover } from "react-aria";
 import { useMedia } from "react-use";
 import { twMerge } from "tailwind-merge";
@@ -33,7 +33,7 @@ const Icon = () => (
 const IconMemo = memo(Icon);
 
 const ExpertiseHead = () => {
-  const { t } = useTranslation();
+  const t = useTranslations();
   return (
     <div
       className={twMerge(
@@ -203,7 +203,7 @@ const EmptyCard = () => {
 const EmptyCardMemo = memo(EmptyCard);
 
 const CardElement = ({ i }: { i: number }) => {
-  const { t } = useTranslation();
+  const t  = useTranslations();
   const ref = useRef<HTMLDivElement>(null);
 
   const lenis = useLenis();

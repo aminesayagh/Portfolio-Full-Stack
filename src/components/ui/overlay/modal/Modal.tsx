@@ -14,7 +14,7 @@ import type { ModalOverlayProps } from "react-aria-components";
 
 const ModalContext = createContext<{ isOpen: boolean; handler: () => void }>({
   isOpen: false,
-  handler: () => console.log("error")
+  handler: () => {}
 });
 
 const ModalUi = ({

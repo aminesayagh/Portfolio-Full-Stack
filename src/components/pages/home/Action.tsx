@@ -1,21 +1,20 @@
-"use client ";
-
+"use client";
 import React from "react";
 
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import { twMerge } from "tailwind-merge";
 
 import Button from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { text } from "@/components/ui/typography";
-import useRouterChange from "@/hook/SafePush";
+import { useRouter } from "@/i18n/routing";
 
 const Action = () => {
-  const { safePush } = useRouterChange();
+  const router = useRouter();
 
-  const { t } = useTranslation();
+  const t = useTranslations();
   const goToContact = () => {
-    safePush("/contact");
+    router.push("/contact");
   };
   return (
     <div

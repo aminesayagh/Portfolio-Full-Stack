@@ -11,7 +11,7 @@ import React, {
 
 import { useFrame } from "@studio-freight/hamo";
 import Lenis from "@studio-freight/lenis";
-import { useTranslation } from "next-i18next";
+import { useLocale } from "next-intl";
 import { twMerge } from "tailwind-merge";
 import useResizeObserver from "use-resize-observer";
 
@@ -101,7 +101,7 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
     // Create refs for the wrapper and content elements.
     const wrapper = useRef<HTMLDivElement>(null);
     const content = useRef<HTMLDivElement>(null);
-    const { i18n } = useTranslation();
+    const locale = useLocale();
 
     // Create state for the Lenis instance.
     const [lenis, setLenis] = useState<Lenis>();
@@ -128,7 +128,7 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
       if (lenis) {
         refresh();
       }
-    }, [lenis, width, height, i18n.language, refresh]); // Refresh the Lenis instance when the width, height, or language changes.
+    }, [lenis, width, height, locale, refresh]); // Refresh the Lenis instance when the width, height, or language changes.
 
     // Create a ref for the callbacks used for scroll events.
     const callbacks = useRef<

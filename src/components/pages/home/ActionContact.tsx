@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 
-import { useTranslation } from "next-i18next";
+import { useTranslations, useLocale } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
 
@@ -18,10 +18,10 @@ const CLASS_GSAP = {
 };
 
 const Action = () => {
-  const { t, i18n } = useTranslation();
+  const t = useTranslations();
   const refContainer = useRef<HTMLDivElement>(null);
   const lenis = useLenis();
-
+  const locale = useLocale();
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap
@@ -136,7 +136,7 @@ const Action = () => {
         <p
           className={text(
             {
-              size: i18n.language === "en" ? "xxs" : "xs",
+              size: locale === "en" ? "xxs" : "xs",
               degree: "3",
               weight: "medium"
             },
@@ -145,7 +145,7 @@ const Action = () => {
             "xs:right-[-1%] md:right-auto", // right
             "mt-3 xl:mt-4", // margin top
             "ml-2",
-            i18n.language === "en"
+            locale === "en"
               ? "w-32 xl:w-40 4xl:w-52"
               : "w-36 xl:w-46 4xl:w-52", // width
             "text-start xs:text-end sm:text-start"

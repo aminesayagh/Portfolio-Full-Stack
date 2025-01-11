@@ -4,7 +4,7 @@ import type { RefObject } from "react";
 import React, { useRef, useEffect, useState } from "react";
 
 import _ from "lodash";
-import { useTranslation } from "next-i18next";
+import { useLocale, useTranslations } from "next-intl";
 import { twMerge } from "tailwind-merge";
 
 import { text, title, Link } from "@/components/ui/typography";
@@ -135,7 +135,7 @@ const Phrase = ({
 
   return body
     ? body.map((word, index) => (
-        <span key={index} className="mr-[0.3rem]">
+        <span key={`${word} + ${index}`} className="mr-[0.3rem]">
           {word}
         </span>
       ))
@@ -143,13 +143,14 @@ const Phrase = ({
 };
 
 const Manifesto = () => {
-  const { t, i18n } = useTranslation();
+  const t = useTranslations();
+  const locale = useLocale();
   const refDescription = useRef<HTMLDivElement>(null);
   const [phrase, setPhrase] = useState(t("manifesto.description"));
 
   useEffect(() => {
     setPhrase(t("manifesto.description"));
-  }, [i18n.language, phrase, t]);
+  }, [locale, phrase, t]);
 
   return (
     <div
@@ -201,7 +202,7 @@ const Manifesto = () => {
                 size: "h4"
               },
               "flex flex-row flex-wrap",
-              i18n.language === "en"
+              locale === "en"
                 ? "gap-y-[0.01rem] xxs:gap-y-[0.04rem] gap-x-[0.06rem] sm:gap-y-[0.07rem] sm:gap-x-[0.1rem] mdl:gap-y-[0.08rem] mdl:gap-x-[0.16rem] lg:gap-y-[0.15rem] lg:gap-x-[0.23rem]"
                 : "gap-y-[0rem] xxs:gap-y-[0.03rem] gap-x-[0.06rem] sm:gap-y-[0.06rem] sm:gap-x-[0.1rem] mdl:gap-y-[0.07rem] mdl:gap-x-[0.16rem] lg:gap-y-[0.13rem] lg:gap-x-[0.23rem]"
             )}
@@ -211,7 +212,7 @@ const Manifesto = () => {
             </strong>
             <Phrase
               text={phrase}
-              lang={i18n.language}
+              lang={locale}
               refDescription={refDescription as RefObject<HTMLDivElement>}
             />
           </div>

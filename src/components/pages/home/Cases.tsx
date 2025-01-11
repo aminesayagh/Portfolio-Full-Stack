@@ -1,7 +1,7 @@
 "use client";
 import React, { useMemo, useRef, memo } from "react";
 
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
 
@@ -21,7 +21,7 @@ const Case = ({
   id: string;
 }) => {
   const container = useRef<HTMLDivElement>(null);
-  const { t } = useTranslation();
+  const t = useTranslations();
   const lenis = useLenis();
 
   useIsomorphicLayoutEffect(() => {
@@ -226,7 +226,7 @@ const Case = ({
 };
 
 const CaseHead = () => {
-  const { t } = useTranslation();
+  const t  = useTranslations();
 
   return (
     <>

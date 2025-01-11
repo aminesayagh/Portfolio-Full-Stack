@@ -9,7 +9,7 @@ import React, {
 } from "react";
 
 import _ from "lodash";
-import { useTranslation } from "next-i18next";
+import { useTranslations, useLocale } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
 
@@ -105,12 +105,12 @@ const FollowUs = () => {
     ref as RefObject<HTMLDivElement>
   );
 
-  const { t } = useTranslation();
+  const t = useTranslations();
   return (
     <div ref={ref} className="flex flex-row items-center justify-end gap-4">
       <ul className="flex flex-row items-center gap-8">
         {menuSocialNetworks.map((item, index) => (
-          <li key={index} className="overflow-hidden list-none">
+          <li key={item.id + "_" + index} className="overflow-hidden list-none">
             <Link
               size="sm"
               href={item.link}
@@ -221,7 +221,7 @@ const TextAnimated = ({
         )}
       >
         {body
-          ? body.map((word, index) => <Fragment key={index}>{word} </Fragment>)
+          ? body.map((word, index) => <Fragment key={`${word} + ${index}`}>{word} </Fragment>)
           : null}
       </div>
     </span>
@@ -371,10 +371,8 @@ const GoToTop = ({ handler, name }: { handler: () => void; name: string }) => {
 const GoToTopMemo = memo(GoToTop);
 
 const Footer = () => {
-  const {
-    t,
-    i18n: { language }
-  } = useTranslation();
+  const t = useTranslations();
+  const locale = useLocale();
   // const { scrollTo } = useLocomotiveScroll();
   const lenis = useLenis();
 
@@ -388,13 +386,13 @@ const Footer = () => {
     <>
       <div
         className={twMerge(
-          language === "en"
+          locale === "en"
             ? "max-w-[16rem] xxs:w-8/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[32vw] mdl:max-w-[30vw] xl:max-w-[20vw] 2xl:max-w-[28vw] 3xl:max-w-[22rem]"
             : "max-w-[16rem] xxs:w-9/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[32vw] mdl:max-w-[30vw] xl:max-w-[20vw] 2xl:max-w-[28vw] 3xl:max-w-[22rem]"
         )}
       >
         <TextAnimated
-          lang={language}
+          lang={locale}
           degree="3"
           weight="medium"
           size="md"

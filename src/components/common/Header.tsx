@@ -1,3 +1,4 @@
+"use client";
 import React, {
   useState,
   useCallback,
@@ -7,11 +8,11 @@ import React, {
   useMemo
 } from "react";
 
-import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
 
+import { useRouter, usePathname } from "@/i18n/routing";
 import HamburgerMenu from "@/components/common/HamburgerMenu";
 import Button from "@/components/ui/button";
 import { containerStyle } from "@/components/ui/container";
@@ -21,7 +22,6 @@ import Modal from "@/components/ui/overlay/modal";
 import { usePreloader } from "@/components/ui/preloader";
 import { text, title, Link } from "@/components/ui/typography";
 import { getMenuItems } from "@/conf/router";
-import useRouterChange from "@/hook/SafePush";
 import { useLenis } from "@/lib/Lenis";
 import { gsap, Power3, ScrollTrigger } from "@/utils/gsap";
 
@@ -39,9 +39,9 @@ const menuHamburgerItems = getMenuItems("hamburger");
 const menuSocialNetworks = getMenuItems("socialNetworks");
 
 const Header = () => {
-  const { t } = useTranslation();
+  const t = useTranslations();
   const router = useRouter();
-  const { safePush } = useRouterChange();
+  const pathname = usePathname();
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const { endLoading } = usePreloader();
   const lenis = useLenis();
@@ -206,18 +206,18 @@ const Header = () => {
 
   const scrollToId = useCallback(
     (path: string, id: string | null = null) => {
-      safePush(path);
+      router.push(path);
       if (id && lenis && lenis.scrollTo) {
         lenis.scrollTo(`#${id}`);
       }
     },
-    [lenis, safePush]
+    [lenis]
   );
 
   const onButtonClick = useCallback(
     (path: string, id?: string) => {
       if (!openMenu) {
-        safePush(path);
+        router.push(path);
       } else {
         tl.current
           .reverse()
@@ -231,7 +231,7 @@ const Header = () => {
           .catch(err => console.error(err));
       }
     },
-    [openMenu, safePush, scrollToId, idTimeout]
+    [openMenu, scrollToId, idTimeout]
   );
 
   useEffect(() => {
@@ -240,7 +240,7 @@ const Header = () => {
     };
   }, []);
 
-  const pageName = useMemo(() => router.pathname.split("/")[1], [router]);
+  const pageName = useMemo(() => pathname.split("/")[1], [router]);
   return (
     <Modal isOpenExternal={openMenu} menuHandler={menuHandler}>
       <Navbar size="lg" inTopOfScroll={openMenu} className="overflow-hidden">
@@ -365,7 +365,7 @@ const Header = () => {
                         {menuHamburgerItems.map((item, index) => {
                           return (
                             <li
-                              key={index}
+                              key={item.id + "_" + index}
                               className={twMerge(
                                 "flex flex-col items-start",
                                 "overflow-hidden"
@@ -492,7 +492,7 @@ const Header = () => {
                         )}
                       >
                         {menuSocialNetworks.map((item, index) => (
-                          <li key={index} className="overflow-hidden">
+                          <li key={item.id + "_" + index} className="overflow-hidden">
                             <Link
                               size="sm"
                               href={item.link}

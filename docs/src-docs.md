@@ -710,7 +710,7 @@ export { useEventListener };
 
 ```tsx
 import { RefObject } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { gsap } from "@/utils/gsap";
 const useGsap = (
@@ -718,7 +718,7 @@ const useGsap = (
   ref: RefObject<HTMLDivElement> | RefObject<HTMLCanvasElement> | undefined,
   rendered: unknown[] = []
 ) => {
-  const { i18n } = useTranslation();
+  const { i18n } = useTranslations();
   useIsomorphicLayoutEffect(() => {
     const ctx: gsap.Context = gsap.context(gsapCallback, ref || undefined);
     return () => {
@@ -821,7 +821,7 @@ export default function Document() {
 
 ```tsx
 import dynamic from "next/dynamic.js";
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import React from "react";
 import Head from "@/components/common/Head";
@@ -836,7 +836,7 @@ const ContactPageDynamic = dynamic(
   {}
 );
 const Contact = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslations("common");
   return (
     <>
       <Head
@@ -876,7 +876,7 @@ export default Contact;
 - Lines of code: 38
 
 ```tsx
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import React from "react";
 import "@/utils/gsap";
@@ -887,7 +887,7 @@ import LandingPage from "@/components/pages/home/Index";
 import Noise from "@/components/ui/noise";
 import nextI18NextConfig from "../next-i18next.config.js";
 export default function Home() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslations("common");
   return (
     <>
       <Head
@@ -1081,7 +1081,7 @@ export default i18n;
 
 ```tsx
 import _ from "lodash";
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-i18next";
 import React, {
   ElementRef,
   useRef,
@@ -1172,7 +1172,7 @@ const FollowUs = () => {
   }, [ctx]);
   useEventListener("mouseenter", handler, ref);
   useEventListener("mouseleave", handlerLeave, ref);
-  const { t } = useTranslation();
+  const { t } = useTranslations();
   return (
     <div ref={ref} className="flex flex-row items-center justify-end gap-4">
       <ul className="flex flex-row items-center gap-8">
@@ -1431,7 +1431,7 @@ const Footer = () => {
   const {
     t,
     i18n: { language }
-  } = useTranslation();
+  } = useTranslations();
   const lenis = useLenis();
   const goToTop = useCallback(() => {
     lenis && lenis.scrollTo(0);
@@ -1735,7 +1735,7 @@ export default Head;
 
 ```tsx
 import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-i18next";
 import React, {
   useState,
   useCallback,
@@ -1769,7 +1769,7 @@ const TRANSLATE_Y = -110;
 const menuHamburgerItems = getMenuItems("hamburger");
 const menuSocialNetworks = getMenuItems("socialNetworks");
 const Header = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslations();
   const router = useRouter();
   const { safePush } = useRouterChange();
   const [openMenu, setOpenMenu] = useState<boolean>(false);
@@ -2242,7 +2242,7 @@ export default HeaderMemo;
 
 ```tsx
 import dynamic from "next/dynamic";
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-i18next";
 import React, { useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 import Container from "@/components/ui/container";
@@ -2256,7 +2256,7 @@ const Layer = ({
   children: React.ReactElement | React.ReactElement[];
 }) => {
   const { endLoading } = usePreloader();
-  const { i18n } = useTranslation();
+  const { i18n } = useTranslations();
   useEffect(() => {
     if (endLoading) {
       if (!document.body.classList.contains("is-loaded")) {
@@ -2448,7 +2448,7 @@ export const zIndex = {
 ```tsx
 import { useFrame } from "@studio-freight/hamo";
 import Lenis from "@studio-freight/lenis";
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-i18next";
 import React, {
   ReactElement,
   createContext,
@@ -2538,7 +2538,7 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
   ) => {
     const wrapper = useRef<ElementRef<"div">>(null);
     const content = useRef<ElementRef<"div">>(null);
-    const { i18n } = useTranslation();
+    const { i18n } = useTranslations();
     const [lenis, setLenis] = useState<Lenis>();
     const { width: widthContainer, height: heightContainer } =
       useResizeObserver<HTMLDivElement>({ ref: content });
@@ -3014,12 +3014,12 @@ export { addToast } from "./addToast";
 
 ```tsx
 import React, { memo, useMemo } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 import { text, title } from "@/components/ui/typography";
 import { getProjectsByCategory } from "@/conf/projects";
 const AgencyList = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslations();
   const projects = useMemo(() => getProjectsByCategory("ongoing"), []);
   return (
     <ul
@@ -3124,7 +3124,7 @@ export default AgencyListMemo;
 
 ```tsx
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-i18next";
 import React, { useCallback, useMemo } from "react";
 import { Input, Button } from "react-aria-components";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -3173,7 +3173,7 @@ const contactSubjectItems: {
   }
 ];
 const ContactForm = () => {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslations();
   const required = useCallback(
     () =>
       z
@@ -3314,7 +3314,7 @@ export default ContactForm;
 - Lines of code: 220
 
 ```tsx
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-i18next";
 import React, { useMemo, ElementRef, useRef } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
@@ -3326,7 +3326,7 @@ import { gsap } from "@/utils/gsap";
 import AgencyList from "./AgencyList";
 import ContactForm from "./ContactForm";
 const ContactPage = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslations();
   const contactRef = useRef<ElementRef<"div">>(null);
   const socialNetworkItems = useMemo(() => getMenuItems("socialNetworks"), []);
   const timer = useTime({
@@ -3546,7 +3546,7 @@ export default ContactPage;
 - Lines of code: 80
 
 ```tsx
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-i18next";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 import Button from "@/components/ui/button";
@@ -3555,7 +3555,7 @@ import { text } from "@/components/ui/typography";
 import useRouterChange from "@/hook/SafePush";
 const Action = () => {
   const { safePush } = useRouterChange();
-  const { t } = useTranslation();
+  const { t } = useTranslations();
   const goToContact = () => {
     safePush("/contact");
   };
@@ -3638,7 +3638,7 @@ export default Action;
 - Lines of code: 162
 
 ```tsx
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-i18next";
 import React, { useRef } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
@@ -3653,7 +3653,7 @@ const CLASS_GSAP = {
   arrow: "contact-arrow-gsap"
 };
 const Action = () => {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslations();
   const refContainer = useRef<HTMLDivElement>(null);
   const lenis = useLenis();
   useIsomorphicLayoutEffect(() => {
@@ -3812,7 +3812,7 @@ export default Action;
 - Lines of code: 271
 
 ```tsx
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-i18next";
 import React, { ElementRef, useMemo, useRef, memo } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
@@ -3831,7 +3831,7 @@ const Case = ({
   id: string;
 }) => {
   const container = useRef<ElementRef<"div">>(null);
-  const { t } = useTranslation();
+  const { t } = useTranslations();
   const lenis = useLenis();
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -4026,7 +4026,7 @@ const Case = ({
   );
 };
 const CaseHead = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslations();
   return (
     <>
       <h2
@@ -4095,7 +4095,7 @@ export default Cases;
 - Lines of code: 299
 
 ```tsx
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-i18next";
 import React, { memo, useRef } from "react";
 import { useHover } from "react-aria";
 import { useMedia } from "react-use";
@@ -4123,7 +4123,7 @@ const Icon = () => (
 );
 const IconMemo = memo(Icon);
 const ExpertiseHead = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslations();
   return (
     <div
       className={twMerge(
@@ -4292,7 +4292,7 @@ const EmptyCard = () => {
 };
 const EmptyCardMemo = memo(EmptyCard);
 const CardElement = ({ i }: { i: number }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslations();
   const ref = useRef<HTMLDivElement>(null);
   const lenis = useLenis();
   const isLg = useMedia("(min-width: 1024px)", true);
@@ -4481,7 +4481,7 @@ export default LandingPage;
 - Lines of code: 617
 
 ```tsx
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-i18next";
 import React, {
   useRef,
   memo,
@@ -4586,7 +4586,7 @@ const ButtonNext = ({ goToCases }: { goToCases: GoTOCases }) => {
 const DISPLAY_1_CLASS_NAME = "capitalize";
 const DISPLAY_2_CLASS_NAME = "uppercase italic text-primary-500";
 const FullStack = ({ className }: { className: string }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslations();
   return (
     <>
       <div
@@ -4650,7 +4650,7 @@ function useFitText(options?: { factor?: number; maxFontSize?: number }) {
   return { fontSize, ref };
 }
 const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslations();
   const { fontSize: fontSizeInterface, ref: widthInterfaceRef } = useFitText({
     factor: 4.94
   });
@@ -4860,7 +4860,7 @@ const menuItems = {
 } as const;
 const menuKeys = ["manifesto", "experience", "cases", "contact"];
 const Menu = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslations();
   const { safePush } = useRouterChange();
   const lenis = useLenis();
   const goToSection = useCallback(
@@ -5106,7 +5106,7 @@ export default Intro;
 
 ```tsx
 import _ from "lodash";
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-i18next";
 import React, {
   useRef,
   useEffect,
@@ -5243,7 +5243,7 @@ const Phrase = ({
     : null;
 };
 const Manifesto = () => {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslations();
   const refDescription = useRef<ElementRef<"div">>(null);
   const [phrase, setPhrase] = useState(t("manifesto.description"));
   useEffect(() => {
@@ -7402,7 +7402,7 @@ export { default as Popover } from "./popover";
 ```tsx
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-i18next";
 import React, {
   createContext,
   useState,
@@ -7525,7 +7525,7 @@ const Preloader = ({
   fontReady: boolean;
   setEndLoading: (value: boolean) => void;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslations();
   const ref = useRef<ElementRef<"span">>(null);
   const [endLoadingProgress, setEndLoadingProgress] = useState(false);
   useIsomorphicLayoutEffect(() => {

@@ -36,11 +36,10 @@ export default async function RootLayout({
   // Providing all messages to the client
   // side is the easiest way to get started
   const messages = await getMessages();
-  console.log(messages);
   return (
     <html lang={locale} suppressHydrationWarning>
-      <Scripts />
       <head>
+        <Scripts />
         <link rel="icon" href="/logo/favicon.svg" type="image/svg+xml" />
         <link
           rel="apple-touch-icon"
@@ -49,7 +48,6 @@ export default async function RootLayout({
         />
       </head>
       <body className={`${montserrat.variable} antialiased`}>
-          Test
         <NextIntlClientProvider locale={locale} messages={messages}>
           <LoadingProvider>{children}</LoadingProvider>
         </NextIntlClientProvider>

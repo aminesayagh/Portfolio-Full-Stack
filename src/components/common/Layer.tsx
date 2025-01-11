@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 
 import dynamic from "next/dynamic";
-import { useTranslation } from "next-i18next";
+import { useLocale } from "next-intl";
 import { twMerge } from "tailwind-merge";
 
 import Container from "@/components/ui/container";
@@ -18,7 +18,7 @@ const Layer = ({
   children: React.ReactElement | React.ReactElement[];
 }) => {
   const { endLoading } = usePreloader();
-  const { i18n } = useTranslation();
+  const locale = useLocale();
   useEffect(() => {
     if (endLoading) {
       if (!document.body.classList.contains("is-loaded")) {
@@ -33,7 +33,7 @@ const Layer = ({
       };
     }
     return () => null;
-  }, [i18n.language, endLoading]);
+  }, [locale, endLoading]);
 
   return (
     <>

@@ -1,13 +1,13 @@
 import React, { memo, useMemo } from "react";
 
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import { twMerge } from "tailwind-merge";
 
 import { text, title } from "@/components/ui/typography";
 import { getProjectsByCategory } from "@/conf/projects";
 
 const AgencyList = () => {
-  const { t } = useTranslation();
+  const t = useTranslations();
 
   const projects = useMemo(() => getProjectsByCategory("ongoing"), []);
 
@@ -17,7 +17,7 @@ const AgencyList = () => {
     >
       {projects.map((project, index) => (
         <li
-          key={index}
+          key={project.id + "_" + index}
           className={twMerge(
             "flex flex-col md:flex-row gap-8 md:gap-4 py-10",
             "items-start",
@@ -77,7 +77,7 @@ const AgencyList = () => {
               {project.jobTitle.map((jobTitle, index) => {
                 return (
                   <p
-                    key={index}
+                    key={project.id + "_" + index}
                     className={text(
                       {
                         size: "sm",

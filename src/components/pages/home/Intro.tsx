@@ -9,7 +9,7 @@ import React, {
   useEffect
 } from "react";
 
-import { useTranslation } from "next-i18next";
+import { useTranslations, useLocale } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
 
@@ -19,7 +19,7 @@ import { Icon } from "@/components/ui/icon";
 import { usePreloader } from "@/components/ui/preloader";
 import { text, display } from "@/components/ui/typography";
 import { MENU_ITEMS } from "@/conf/router";
-import useRouterChange from "@/hook/SafePush";
+import { useRouter } from "@/i18n/routing";
 import { useEventListener } from "@/hook/useEventListener";
 import useGsap from "@/hook/useGsap";
 import { useLenis } from "@/lib/Lenis";
@@ -119,7 +119,7 @@ const DISPLAY_1_CLASS_NAME = "capitalize";
 const DISPLAY_2_CLASS_NAME = "uppercase italic text-primary-500";
 
 const FullStack = ({ className }: { className: string }) => {
-  const { t } = useTranslation();
+  const t = useTranslations();
 
   return (
     <div
@@ -192,12 +192,13 @@ function useFitText(options?: { factor?: number; maxFontSize?: number }) {
 }
 
 const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
-  const { t, i18n } = useTranslation();
+  const t = useTranslations();
+  const locale = useLocale();
   const { fontSize: fontSizeInterface, ref: widthInterfaceRef } = useFitText({
     factor: 4.94
   });
   const { fontSize: fontSizeDev, ref: widthDevRef } = useFitText({
-    factor: i18n.language === "en" ? 5.55 : 7
+    factor: locale === "en" ? 5.55 : 7
   });
 
   const interfaceText = useMemo(() => {
@@ -215,7 +216,7 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
         ref={widthInterfaceRef}
         className={twMerge(
           // col
-          i18n.language === "en"
+          locale === "en"
             ? "col-start-1 col-span-12"
             : "col-start-1 col-span-11",
           "xs:col-start-1 xs:col-span-9",
@@ -269,11 +270,11 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
           "xxs:col-start-5 xxs:col-span-8", // none
           "xs:col-start-1 xs:col-span-12", // xxs
           "sm:col-start-2 sm:col-span-11", // sm
-          i18n.language === "en"
+          locale === "en"
             ? "md:col-start-4 md:col-span-9"
             : "md:col-start-3 md:col-span-10", // md
           "mdl:col-start-7 mdl:col-span-6", // mdl
-          i18n.language === "en"
+          locale === "en"
             ? "xl:col-start-8 xl:col-span-5"
             : "xl:col-start-7 xl:col-span-6", // xl
           "4xl:col-span-6 4xl:col-start-7", // 4xl
@@ -281,10 +282,10 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
           "row-start-2 row-span-1", // none
           "mdl:row-start-1 mdl:row-span-1", //mdl
           // children
-          i18n.language === "en"
+          locale === "en"
             ? "[&>*]:w-full [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-5/12 [&>*]:mdl:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-4/12"
             : "[&>*]:w-10/12 [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-5/12",
-          i18n.language === "en"
+          locale === "en"
             ? "[&>*>span]:max-w-[14rem]"
             : "[&>*>span]:xxs:max-w-[12rem] [&>*>span]:sm:max-w-[17rem] [&>*>span]:mdl:max-w-[12rem] [&>*>span]:lg:max-w-[17rem]",
           "[&>*]:flex [&>*]:flex-row [&>*]:justify-start [&>*]:sm:justify-end",
@@ -332,7 +333,7 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
           "mdl:w-2/12",
           "hidden xs:flex flex-col items-end mdl:items-start justify-end w-fit mdl:w-fit",
           "mt-1 lg:mt-4",
-          i18n.language === "en"
+          locale === "en"
             ? "mb-0 xxs:mb-3 mdl:mb-0 lg:mb-4"
             : "mb-0 xxs:mb-3 mdl:mb-2 lg:mb-4",
           "col-start-11 col-span-2",
@@ -350,10 +351,10 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
           "row-start-3 row-span-1",
           "mdl:row-start-2 mdl:row-span-1",
           "col-start-1 col-span-3",
-          i18n.language === "en"
+          locale === "en"
             ? "mdl:col-start-5 mdl:col-span-2"
             : "mdl:col-start-4 mdl:col-span-2",
-          i18n.language === "en"
+          locale === "en"
             ? "xl:col-start-5 xl:col-span-2"
             : "xl:col-start-4 xl:col-span-2",
           "justify-self-end"
@@ -371,10 +372,10 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
           "mdl:row-start-2 mdl:row-span-1",
           "col-start-1 col-span-12",
           "xs:col-start-4 xs:col-span-9",
-          i18n.language === "en"
+          locale === "en"
             ? "mdl:col-start-7 mdl:col-span-6"
             : "mdl:col-start-6 mdl:col-span-7", // xs
-          i18n.language === "en"
+          locale === "en"
             ? "xl:col-start-7 xl:col-span-6"
             : "xl:col-start-6 xl:col-span-7", // xl
           "gap-2 sm:gap-1 md:gap-5 mdl:gap-8", // gap
@@ -412,20 +413,20 @@ const menuItems = {
 const menuKeys = ["manifesto", "experience", "cases", "contact"];
 
 const Menu = () => {
-  const { t } = useTranslation();
-  const { safePush } = useRouterChange();
+  const t = useTranslations();
+  const router = useRouter();
 
   const lenis = useLenis();
 
   const goToSection = useCallback(
     (section: string) => {
       if (section === "contact") {
-        safePush("/contact");
+        router.push("/contact");
       } else {
         lenis?.scrollTo(`#${section}`);
       }
     },
-    [safePush, lenis]
+    [lenis]
   );
 
   const menuItemsData = useMemo(

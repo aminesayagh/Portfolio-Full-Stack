@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTranslation } from "next-i18next";
+import { useTranslations, useLocale } from "next-intl";
 import { Input, Button } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
@@ -57,7 +57,8 @@ const contactSubjectItems: {
 ];
 
 const ContactForm = () => {
-  const { t, i18n } = useTranslation();
+  const t = useTranslations();
+  const locale = useLocale();
 
   const required = useCallback(
     () =>
@@ -110,7 +111,7 @@ const ContactForm = () => {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ ...data, locale: i18n.language })
+        body: JSON.stringify({ ...data, locale })
       });
       addToast(
         {
