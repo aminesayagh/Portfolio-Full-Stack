@@ -19,13 +19,14 @@ import { Icon } from "@/components/ui/icon";
 import { usePreloader } from "@/components/ui/preloader";
 import { text, display } from "@/components/ui/typography";
 import { MENU_ITEMS } from "@/conf/router";
-import { useRouter } from "@/i18n/routing";
+import { getHref, useRouter } from "@/i18n/routing";
 import { useEventListener } from "@/hook/useEventListener";
 import useGsap from "@/hook/useGsap";
 import { useLenis } from "@/lib/Lenis";
 import { ScrollTrigger, gsap, Power4 } from "@/utils/gsap";
 
 import type { PressEvent } from "react-aria";
+import { getHash } from "next/dist/server/image-optimizer";
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -116,7 +117,11 @@ const ButtonNext = ({ goToCases }: { goToCases: GoTOCases }) => {
 };
 
 const DISPLAY_1_CLASS_NAME = "capitalize";
-const DISPLAY_2_CLASS_NAME = "uppercase italic text-primary-500";
+const DISPLAY_2_CLASS_NAME = [
+  "uppercase italic !text-primary-500",
+  "tracking-[-0.05rem] sm:tracking-wider !leading-[1.3]",
+  "will-change-transform-animation splitText_fullStack_gsap"
+];
 
 const FullStack = ({ className }: { className: string }) => {
   const t = useTranslations();
@@ -134,11 +139,9 @@ const FullStack = ({ className }: { className: string }) => {
           className={display(
             {
               size: "md",
-              weight: "semibold"
+              weight: "bold"
             },
-            DISPLAY_2_CLASS_NAME,
-            "tracking-[-0.05rem] sm:tracking-wider",
-            "will-change-transform-animation splitText_fullStack_gsap"
+            DISPLAY_2_CLASS_NAME
           )}
         >
           {t("intro.title.2_1")}
@@ -149,11 +152,9 @@ const FullStack = ({ className }: { className: string }) => {
           className={display(
             {
               size: "md",
-              weight: "semibold"
+              weight: "bold"
             },
-            DISPLAY_2_CLASS_NAME,
-            "tracking-[-0.05rem] sm:tracking-wider",
-            "will-change-transform-animation splitText_fullStack_gsap"
+            DISPLAY_2_CLASS_NAME
           )}
         >
           {t("intro.title.2_2")}
@@ -201,17 +202,8 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
     factor: locale === "en" ? 5.55 : 7
   });
 
-  const interfaceText = useMemo(() => {
-    const title = t("intro.title.1");
-    const splits = title.split("r");
-    let inter = splits[0];
-    const face = splits[1];
-    inter += "r";
-    return { inter, face };
-  }, [t]);
   return (
     <>
-      {/* title 1  */}
       <div
         ref={widthInterfaceRef}
         className={twMerge(
@@ -260,7 +252,7 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
         className={twMerge(
           // flex
           "flex flex-col xs:flex-row justify-between mdl:justify-end",
-          "gap-6 xxs:gap-8 xs:gap-4 mdl:gap-2 lg:gap-4 2xl:gap-8 4xl:gap-28", // gap
+          "gap-6 xxs:gap-8 xs:gap-4 mdl:gap-2 lg:gap-4 4xl:gap-28", // gap
           "pl-0 lg:pl-4 xl:pl-0", // pl
           "pt-0 xs:pt-2 xl:pt-3", // pt
           // grid position
@@ -274,8 +266,8 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
             : "md:col-start-3 md:col-span-10", // md
           "mdl:col-start-7 mdl:col-span-6", // mdl
           locale === "en"
-            ? "xl:col-start-8 xl:col-span-5"
-            : "xl:col-start-7 xl:col-span-6", // xl
+            ? "3xl:col-start-8 3xl:col-span-5"
+            : "3xl:col-start-7 3xl:col-span-6", // xl
           "4xl:col-span-6 4xl:col-start-7", // 4xl
           // row grid
           "row-start-2 row-span-1", // none
@@ -418,9 +410,10 @@ const Menu = () => {
   const lenis = useLenis();
 
   const goToSection = useCallback(
-    (section: string) => {
+    (index: number) => {
+      const section = menuKeys[`${index + 1}` as keyof typeof menuKeys];
       if (section === "contact") {
-        router.push("/contact");
+        router.push(getHref("contact"));
       } else {
         lenis?.scrollTo(`#${section}`);
       }
@@ -441,25 +434,17 @@ const Menu = () => {
   );
   return (
     <>
-      <div
-        className={twMerge(
-          "flex flex-row flex-wrap justify-between items-start w-full gap-y-6"
-        )}
-      >
+      <div className="flex flex-row flex-wrap justify-between items-start w-full gap-y-6">
         {menuItemsData.map(({ key, number, title }) => {
           return (
             <div
               key={key}
-              className={twMerge(
-                "flex flex-col justify-start items-start gap-1 w-1/2 sm:w-auto md:w-1/4"
+              className={text(
+                { size: "sm", degree: "1", weight: "medium" },
+                "flex flex-col justify-start items-start overflow-hidden gap-1 w-1/2 sm:w-auto md:w-1/4"
               )}
             >
-              <p
-                className={text(
-                  { size: "sm", degree: "3", weight: "medium" },
-                  "number_menu_gsap will-change-transform-animation"
-                )}
-              >
+              <p className="number_menu_gsap opacity-0 will-change-transform-animation">
                 {number}
               </p>
               <Button
@@ -467,11 +452,9 @@ const Menu = () => {
                 size="sm"
                 weight="semibold"
                 onPress={() =>
-                  goToSection(
-                    menuItems[`${key + 1}` as keyof typeof menuItems] as string
-                  )
+                  goToSection(key)
                 }
-                className="uppercase item_menu_gsap will-change-transform-animation"
+                className="uppercase text-start item_menu_gsap will-change-transform-animation"
                 style={{
                   color: "inherit"
                 }}
@@ -567,11 +550,16 @@ const Intro = () => {
           },
           "<"
         )
-        .from(
+        .fromTo(
           ".number_menu_gsap",
           {
             opacity: 0,
             autoAlpha: 0,
+            duration: 0.3
+          },
+          {
+            opacity: 0.6,
+            autoAlpha: 1,
             duration: 0.3
           },
           "<"

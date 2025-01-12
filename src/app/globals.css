@@ -182,6 +182,10 @@ body {
   background-color: oklch(40.39% 0.0321 281.25);
 }
 
+.body-background {
+  background-color: oklch(17.3% 0.01 281.25);
+}
+
 @media (max-width: 1024px) {
   .scrollbar {
     display: none;

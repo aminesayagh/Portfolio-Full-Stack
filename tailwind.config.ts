@@ -128,7 +128,7 @@ export default {
         800: "oklch(53.13% 0.168 37.127 / <alpha-value>)",
         900: "oklch(47.83% 0.153 37.127 / <alpha-value>)"
       }
-    },
+    }, 
     extend: {
       animation: {
         underline: "underline 0.3s forwards",
@@ -145,49 +145,70 @@ export default {
         }
       },
       fontSize: {
-        "text-xl": [
+        "display-xl": [
+          "clamp(2.8rem, 2.5vw + 1rem, 3.5rem)",
+          {
+            lineHeight: "1.2",
+            letterSpacing: "0.05em"
+          }
+        ],
+        "display-lg": [
+          "clamp(2.25rem, 2.5vw + 1rem, 2.75rem)",
+          {
+            lineHeight: "1.2",
+            letterSpacing: "0.05em"
+          }
+        ],
+        "display-md": [
+          "clamp(2rem, 2.5vw + 1rem, 2.75rem)",
+          {
+            lineHeight: "1.2",
+            letterSpacing: "0.05em"
+          }
+        ],
+        "body-xl": [
           "clamp(1.5rem, 2.5vw + 1rem, 2rem)",
           {
             lineHeight: "1.7",
             letterSpacing: "0.05em"
           }
         ],
-        "text-lg": [
-          "clamp(1.25rem, 2.5vw + 1rem, 1.5rem)",
+        "body-lg": [
+          "clamp(1.1rem, 2.5vw + 1rem, 1.5rem)",
           {
             lineHeight: "1.7",
             letterSpacing: "0.05em"
           }
         ],
-        "text-md": [
-          "clamp(1rem, 2.5vw + 1rem, 1.25rem)",
+        "body-md": [
+          "clamp(0.9rem, 2.5vw + 1rem, 1rem)",
           {
             lineHeight: "1.7",
             letterSpacing: "0.05em"
           }
         ],
-        "text-sm": [
-          "clamp(0.875rem, 2.5vw + 1rem, 1rem)",
+        "body-sm": [
+          "clamp(0.72rem, 2.5vw + 1rem, 0.8rem)",
           {
             lineHeight: "1.7",
             letterSpacing: "0.05em"
           }
         ],
-        "text-xs": [
-          "clamp(0.75rem, 2.5vw + 1rem, 0.875rem)",
+        "body-xs": [
+          "clamp(0.7rem, 2.5vw + 1rem, 0.76rem)",
           {
             lineHeight: "1.7",
             letterSpacing: "0.05em"
           }
         ],
-        "text-xxs": [
+        "body-xxs": [
           "clamp(0.625rem, 2.5vw + 1rem, 0.75rem)",
           {
             lineHeight: "1.7",
             letterSpacing: "0.05em"
           }
         ],
-        "text-auto": [
+        "body-auto": [
           "clamp(0.625rem, 2.5vw + 1rem, 0.75rem)",
           {
             lineHeight: "1.7",

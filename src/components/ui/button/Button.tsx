@@ -29,7 +29,7 @@ const ButtonUi = forwardRef<HTMLButtonElement, ButtonProps>(
       () =>
         cn(
           "touch-none select-none focus:outline-none",
-          "gap-2 flex flex-row flex-nowrap self-center items-center justify-center",
+          "gap-2 flex flex-row flex-nowrap items-center justify-center",
           "font-sans font-bold",
           "text-clip whitespace-nowrap overflow-hidden",
           "align-middle",

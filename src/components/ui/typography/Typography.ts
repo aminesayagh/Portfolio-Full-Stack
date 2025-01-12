@@ -125,13 +125,13 @@ export const textStyle = cva([textDefault, fontFamilyText, "tracking-widest"], {
       medium: "font-medium"
     },
     size: {
-      xl: "text-xl",
-      lg: "text-lg",
-      md: "text-md",
-      sm: "text-sm",
-      xs: "text-xs",
-      xxs: "text-xxs",
-      auto: "text-auto"
+      xl: "text-body-xl",
+      lg: "text-body-lg",
+      md: "text-body-md",
+      sm: "text-body-sm",
+      xs: "text-body-xs",
+      xxs: "text-body-xxs",
+      auto: "text-body-auto"
     }
   },
   defaultVariants: {
@@ -168,7 +168,7 @@ export const text = (
   ...className: ClassNameValue[]
 ) =>
   cn(
-    textStyle({ weight, size }),
     typographyColorDegree({ mode, degree }),
+    textStyle({ weight, size }),
     ...className
   );
