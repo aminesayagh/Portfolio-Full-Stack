@@ -269,7 +269,12 @@ const Header = () => {
               }
               size="sm"
               degree="1"
-              className={twMerge(
+              className={text(
+                {
+                  size: "xs",
+                  degree: "1",
+                  weight: "semibold"
+                },
                 "py-2 border-none overflow-hidden",
                 "subElement-item hidden sm:block",
                 openMenu ? "hidden w-0" : ""
@@ -282,16 +287,20 @@ const Header = () => {
               onPress={() => scrollToId("/#cases")}
               size="sm"
               degree="1"
-              className={twMerge(
+              className={text(
+                {
+                  size: "xs",
+                  degree: "1",
+                  weight: "semibold"
+                },
                 "py-2 border-none overflow-hidden",
                 "subElement-item hidden sm:block",
                 openMenu ? "hidden w-0" : "",
                 "relative transition-colors duration-300",
                 "hover:text-primary-500",
-                "text-white-200",
-                "after:content-[''] after:w-full after:absolute after:bottom-0 after:left-0 after:h-[3px] after:bg-primary-500",
-                "hover:after:animation-underline",
-                "not-hover:after:animation-underlineExit"
+                "after:content-[''] after:w-full after:absolute after:bottom-0 after:left-0 after:h-[4px] after:bg-primary-500",
+                "hover:after:animate-underline",
+                "not-hover:after:animate-underlineExit"
               )}
             >
               {t("header.project")}

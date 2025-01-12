@@ -129,7 +129,7 @@ export default {
         900: "oklch(47.83% 0.153 37.127 / <alpha-value>)"
       }
     },
-    extends: {
+    extend: {
       animation: {
         underline: "underline 0.3s forwards",
         underlineExit: "underlineExit 0.3s forwards"

@@ -89,13 +89,13 @@ const HamburgerMenu = ({
             {...path01Variants.closed}
             animate={path01Controls}
             transition={{ duration: DURATION }}
-            stroke="var(--color-white-100)"
+            stroke="currentColor"
           />
           <motion.path
             {...path02Variants.closed}
             animate={path02Controls}
             transition={{ duration: DURATION }}
-            stroke="var(--color-white-100)"
+            stroke="currentColor"
           />
         </svg>
       </Button>

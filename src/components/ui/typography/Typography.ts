@@ -35,17 +35,17 @@ export const typographyColorDegree = cva("", {
     {
       mode: "normal",
       degree: "2",
-      className: "text-white-600"
+      className: "text-white-400"
     },
     {
       mode: "normal",
       degree: "3",
-      className: "text-white-700"
+      className: "text-white-500"
     },
     {
       mode: "normal",
       degree: "4",
-      className: "text-white-800"
+      className: "text-white-600"
     },
     {
       mode: "exchanged",
@@ -117,7 +117,7 @@ export const titleStyle = cva([textDefault, fontFamilyTitle], {
 export type TitlePropsExtended = VariantProps<typeof titleStyle> &
   TypographyColorProps;
 
-export const textStyle = cva([textDefault, fontFamilyText], {
+export const textStyle = cva([textDefault, fontFamilyText, "tracking-widest"], {
   variants: {
     weight: {
       bold: "font-black",
