@@ -18,15 +18,13 @@ import Button from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { usePreloader } from "@/components/ui/preloader";
 import { text, display } from "@/components/ui/typography";
-import { MENU_ITEMS } from "@/conf/router";
-import { getHref, useRouter } from "@/i18n/routing";
+import { RouteSettingPath, getHref, useRouter } from "@/i18n/routing";
 import { useEventListener } from "@/hook/useEventListener";
 import useGsap from "@/hook/useGsap";
 import { useLenis } from "@/lib/Lenis";
 import { ScrollTrigger, gsap, Power4 } from "@/utils/gsap";
 
 import type { PressEvent } from "react-aria";
-import { getHash } from "next/dist/server/image-optimizer";
 
 const GsapMagic = ({ children }: { children: React.ReactElement }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -394,14 +392,8 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
   );
 };
 
-const menuItems = {
-  "1": MENU_ITEMS.manifesto.id,
-  "2": MENU_ITEMS.experience.id,
-  "3": MENU_ITEMS.cases.id,
-  "4": MENU_ITEMS.contact.id
-} as const;
 
-const menuKeys = ["manifesto", "experience", "cases", "contact"];
+const menuKeys = ["manifesto", "experience", "cases", "contact"] as RouteSettingPath[];
 
 const Menu = () => {
   const t = useTranslations();
@@ -410,12 +402,11 @@ const Menu = () => {
   const lenis = useLenis();
 
   const goToSection = useCallback(
-    (index: number) => {
-      const section = menuKeys[`${index + 1}` as keyof typeof menuKeys];
-      if (section === "contact") {
+    (key: RouteSettingPath) => {
+      if (key === "contact") {
         router.push(getHref("contact"));
       } else {
-        lenis?.scrollTo(`#${section}`);
+        lenis?.scrollTo(getHref(key));
       }
     },
     [lenis]
@@ -423,9 +414,9 @@ const Menu = () => {
 
   const menuItemsData = useMemo(
     () =>
-      [...Array(4)].map((_, i) => {
+      menuKeys.map((key, i) => {
         return {
-          key: i,
+          key: key,
           number: `0${i + 1}`,
           title: t(`header.menu.${menuKeys[i]}.attribute`)
         };
@@ -451,9 +442,7 @@ const Menu = () => {
                 degree="1"
                 size="sm"
                 weight="semibold"
-                onPress={() =>
-                  goToSection(key)
-                }
+                onPress={() => goToSection(key)}
                 className="uppercase text-start item_menu_gsap will-change-transform-animation"
                 style={{
                   color: "inherit"
@@ -618,12 +607,7 @@ const Intro = () => {
       >
         <Title goToCases={goToCases} />
       </div>
-      <div
-        className={twMerge(
-          "flex flex-row justify-between items-end",
-          "gap-0 xl:gap-6 4xl:gap-20"
-        )}
-      >
+      <div className="flex flex-row justify-between items-end gap-0 xl:gap-6 4xl:gap-20">
         <MenuMemo />
       </div>
     </div>

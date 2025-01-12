@@ -1,23 +1,22 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 
 .remove_outline {
-  @apply outline-none focus:outline-none touch-none;
+  outline: none;
+  touch-action: none;
 }
 
-html[data-is_loading="false"] .cursor-container {
-  @apply relative z-auto;
-}
-
-html:not([data-is_loading="false"]) .cursor-container {
-  @apply relative z-cursor;
+.remove_outline:focus {
+  outline: none;
 }
 
 main,
 html,
 body {
-  @apply font-sans;
+  font-family: "Montserrat", sans-serif;
 }
 
 @font-face {
@@ -33,7 +32,7 @@ body {
 }
 
 .will-change-transform-animation {
-  @apply will-change-transform;
+  will-change: transform;
 }
 
 .is-loaded p,
@@ -49,7 +48,6 @@ body {
   transition:
     color 0.3s ease-in-out,
     background-color 0.3s ease-in-out;
-  /* Plus spécifique pour éviter les transitions non désirées */
 }
 
 .is-loaded p:lang(fr),
@@ -127,12 +125,12 @@ body {
   overflow-y: auto;
   scrollbar-width: none !important;
 
-  &::-webkit-scrollbar {
-    width: 0 !important;
-    height: 0 !important;
-  }
 }
 
+.lenis &::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+}
 .lenis.lenis-smooth {
   scroll-behavior: auto;
 }

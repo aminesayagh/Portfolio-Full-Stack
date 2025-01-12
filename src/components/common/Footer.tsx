@@ -17,12 +17,11 @@ import Button from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import type { TextPropsExtended } from "@/components/ui/typography";
 import { Link, text } from "@/components/ui/typography";
-import { getMenuItems } from "@/conf/router";
+import { getMenuItems } from "@/i18n/routing";
 import { useEventListener } from "@/hook/useEventListener";
 import { useLenis } from "@/lib/Lenis";
 import { gsap } from "@/utils/gsap";
 
-const menuSocialNetworks = getMenuItems("socialNetworks");
 const BASE_LOCALE_SOCIAL = "socialNetwork";
 
 const ICON_SIZE_CLASS_NAME = "w-5 h-5 lg:w-6 lg:h-6";
@@ -31,6 +30,10 @@ const FollowUs = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   const ctx = useRef<gsap.Context | null>(null);
+
+  const menuSocialNetworks = getMenuItems("socialNetwork");
+
+  console.log(menuSocialNetworks);
 
   useIsomorphicLayoutEffect(() => {
     if (!menuSocialNetworks.length) return;
@@ -113,7 +116,7 @@ const FollowUs = () => {
           <li key={item.id + "_" + index} className="overflow-hidden list-none">
             <Link
               size="sm"
-              href={item.link}
+              href={item.path}
               degree="4"
               weight="semibold"
               className="social-button-gsap"

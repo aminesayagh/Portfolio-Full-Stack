@@ -6,7 +6,7 @@ import { twMerge } from "tailwind-merge";
 
 import Container from "@/components/ui/container";
 import { text, Link, display } from "@/components/ui/typography";
-import { getMenuItems } from "@/conf/router";
+import { getMenuItems } from "@/i18n/routing";
 import { useTime } from "@/hook";
 import { gsap } from "@/utils/gsap";
 
@@ -19,7 +19,7 @@ const ContactPage = () => {
   const t = useTranslations();
   const contactRef = useRef<HTMLDivElement>(null);
 
-  const socialNetworkItems = useMemo(() => getMenuItems("socialNetworks"), []);
+  const socialNetworkItems = useMemo(() => getMenuItems("socialNetwork"), []);
 
   const timer = useTime({
     city: "Casablanca",
@@ -210,9 +210,9 @@ const ContactPage = () => {
             >
               {socialNetworkItems.map((item, index) => (
                 <Link
-                  key={item.id + "_" + index}
+                  key={item.path + "_" + index}
                   weight="medium"
-                  href={item.link}
+                  href={item.path}
                   size="sm"
                   degree="2"
                 >

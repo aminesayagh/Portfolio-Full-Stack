@@ -12,7 +12,7 @@ import { useTranslations } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
 
-import { useRouter, usePathname } from "@/i18n/routing";
+import { useRouter, usePathname, RouteSettingPathKey } from "@/i18n/routing";
 import HamburgerMenu from "@/components/common/HamburgerMenu";
 import Button from "@/components/ui/button";
 import { containerStyle } from "@/components/ui/container";
@@ -21,7 +21,7 @@ import Navbar from "@/components/ui/navbar";
 import Modal from "@/components/ui/overlay/modal";
 import { usePreloader } from "@/components/ui/preloader";
 import { text, title, Link } from "@/components/ui/typography";
-import { getMenuItems } from "@/conf/router";
+import { getMenuItems } from "@/i18n/routing";
 import { useLenis } from "@/lib/Lenis";
 import { gsap, Power3, ScrollTrigger } from "@/utils/gsap";
 
@@ -36,7 +36,7 @@ const DURATION = 0.4;
 const TRANSLATE_Y = -110;
 
 const menuHamburgerItems = getMenuItems("hamburger");
-const menuSocialNetworks = getMenuItems("socialNetworks");
+const menuSocialNetworks = getMenuItems("socialNetwork");
 
 const Header = () => {
   const t = useTranslations();
@@ -215,7 +215,7 @@ const Header = () => {
   );
 
   const onButtonClick = useCallback(
-    (path: string, id?: string) => {
+    (path: RouteSettingPathKey, id?: string) => {
       if (!openMenu) {
         router.push(path);
       } else {
@@ -389,7 +389,7 @@ const Header = () => {
                                 <Button
                                   size="auto"
                                   onPress={() => {
-                                    onButtonClick(item.link, item.id);
+                                    onButtonClick(item.path, item.id);
                                   }}
                                   degree="1"
                                   name="menuItem"
@@ -504,7 +504,7 @@ const Header = () => {
                           <li key={item.id + "_" + index} className="overflow-hidden">
                             <Link
                               size="sm"
-                              href={item.link}
+                              href={item.path}
                               degree="4"
                               weight="semibold"
                               className="modal-footer"

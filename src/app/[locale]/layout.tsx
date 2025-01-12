@@ -7,8 +7,9 @@ import Scripts from "@/components/common/Script";
 import { LoadingProvider } from "@/components/ui/preloader";
 import type { Lang } from "@/i18n/request";
 import { routing } from "@/i18n/routing";
-
 import "../globals.css";
+
+
 
 const montserrat = Montserrat({
   subsets: ["cyrillic"],
