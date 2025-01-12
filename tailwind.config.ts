@@ -28,19 +28,14 @@ export default {
         mdl: "2rem",
         lg: "2rem",
         xl: "2rem",
-        "2xl": "2rem",
-        "3xl": "2rem",
-        "4xl": "2rem"
+        "2xl": "2.5rem",
+        "3xl": "2.5rem",
+        "4xl": "2.5rem"
       },
       screens: {
-        sm: "640px",
-        md: "768px",
-        mdl: "900px",
-        lg: "1024px",
-        xl: "1280px",
-        "2xl": "1536px",
-        "3xl": "1600px",
-        "4xl": "2100px"
+        "2xl": "1400px",
+        "3xl": "1500px",
+        "4xl": "1600px"
       }
     },
     fontSize,

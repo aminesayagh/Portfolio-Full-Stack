@@ -25,7 +25,7 @@
     "@notionhq/client": "^2.2.14",
     "@react-aria/toast": "^3.0.0-beta.10",
     "@react-stately/toast": "^3.0.0-beta.2",
-    "@studio-freight/lenis": "^1.0.42",
+    "lenis": "^1.1.19",
     "@tabler/icons-react": "^3.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

@@ -10,7 +10,7 @@ import React, {
 } from "react";
 
 import { useFrame } from "@studio-freight/hamo";
-import Lenis from "@studio-freight/lenis";
+import Lenis from "lenis";
 import { useLocale } from "next-intl";
 import { twMerge } from "tailwind-merge";
 import useResizeObserver from "use-resize-observer";
@@ -225,10 +225,10 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
     useEffect(() => {
       onClassNameChange();
 
-      lenis?.on("className change", onClassNameChange);
+      lenis?.on("scroll", onClassNameChange);
 
       return () => {
-        lenis?.off("className change", onClassNameChange);
+        lenis?.off("scroll", onClassNameChange);
       };
     }, [lenis, onClassNameChange]);
 

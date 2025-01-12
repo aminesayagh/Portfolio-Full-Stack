@@ -1,8 +1,6 @@
 # Project Tree Structure
 ```plaintext
 .
-|-- analyze
-|   `-- nodejs.html
 |-- docs
 |   |-- config-docs.md
 |   |-- project-tree.md
@@ -1696,12 +1694,21 @@
 |   |   |   |   |-- ContactForm.tsx
 |   |   |   |   `-- Index.tsx
 |   |   |   `-- home
+|   |   |       |-- intro
+|   |   |       |   |-- ButtonNext.tsx
+|   |   |       |   |-- FullStack.tsx
+|   |   |       |   |-- index.ts
+|   |   |       |   |-- Intro.tsx
+|   |   |       |   |-- Menu.tsx
+|   |   |       |   `-- style.ts
+|   |   |       |-- overview
+|   |   |       |   |-- index.ts
+|   |   |       |   `-- Overview.tsx
 |   |   |       |-- ActionContact.tsx
 |   |   |       |-- Action.tsx
 |   |   |       |-- Cases.tsx
 |   |   |       |-- Expertise.tsx
 |   |   |       |-- Index.tsx
-|   |   |       |-- Intro.tsx
 |   |   |       |-- Manifesto.tsx
 |   |   |       `-- Video.tsx
 |   |   |-- ui
@@ -1776,8 +1783,7 @@
 |   |   |-- Lenis.tsx
 |   |   `-- style.ts
 |   |-- conf
-|   |   |-- projects.ts
-|   |   `-- router.ts
+|   |   `-- projects.ts
 |   |-- helpers
 |   |   `-- types
 |   |       |-- index.ts
@@ -1789,6 +1795,7 @@
 |   |   |-- Time.tsx
 |   |   |-- useDebounce.tsx
 |   |   |-- useEventListener.tsx
+|   |   |-- useFitText.ts
 |   |   `-- useGsap.tsx
 |   |-- i18n
 |   |   |-- request.tsx
@@ -1800,8 +1807,6 @@
 |   |   |   |-- Lenis.hook.tsx
 |   |   |   `-- lenis.ts
 |   |   `-- utils.ts
-|   |-- styles
-|   |   `-- globals.scss
 |   |-- types
 |   |-- utils
 |   |   |-- env.ts
@@ -1827,5 +1832,5 @@
 |-- tsconfig.json
 `-- tsconfig.tsbuildinfo
 
-54 directories, 1771 files
+54 directories, 1776 files
 ```

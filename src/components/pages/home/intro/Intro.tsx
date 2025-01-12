@@ -2,193 +2,24 @@
 
 import React, {
   useRef,
-  memo,
   useCallback,
-  useMemo,
-  useState,
-  useEffect
 } from "react";
 
 import { useTranslations, useLocale } from "next-intl";
-import { useIsomorphicLayoutEffect } from "react-use";
 import { twMerge } from "tailwind-merge";
 
-import Item from "@/components/ui/animation/Item";
-import Button from "@/components/ui/button";
-import { Icon } from "@/components/ui/icon";
 import { usePreloader } from "@/components/ui/preloader";
 import { text, display } from "@/components/ui/typography";
-import { RouteSettingPath, getHref, useRouter } from "@/i18n/routing";
-import { useEventListener } from "@/hook/useEventListener";
 import useGsap from "@/hook/useGsap";
+import useFitText from "@/hook/useFitText";
 import { useLenis } from "@/lib/Lenis";
 import { ScrollTrigger, gsap, Power4 } from "@/utils/gsap";
 
-import type { PressEvent } from "react-aria";
-
-const GsapMagic = ({ children }: { children: React.ReactElement }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const ctx = useRef<gsap.Context | null>(null);
-
-  useIsomorphicLayoutEffect(() => {
-    if (!!ref.current) {
-      ctx.current = gsap.context(self => {
-        const xTo =
-          ref.current &&
-          gsap.quickTo(ref.current, "x", {
-            duration: 1,
-            ease: "elastic.out(1, 0.3)"
-          });
-        const yTo =
-          ref.current &&
-          gsap.quickTo(ref.current, "y", {
-            duration: 1,
-            ease: "elastic.out(1, 0.3)"
-          });
-        self.add("mouseMove", (e: { clientX: number; clientY: number }) => {
-          const c = ref.current;
-          if (!c) return;
-          const { clientX, clientY } = e;
-          const { left, top, width, height } = c.getBoundingClientRect();
-          const x = clientX - (left + width / 2);
-          const y = clientY - (top + height / 2);
-          if (xTo) xTo(x);
-          if (yTo) yTo(y);
-        });
-        self.add("mouseLeave", () => {
-          if (xTo) xTo(0);
-          if (yTo) yTo(0);
-        });
-      });
-      return () => ctx.current?.revert();
-    }
-    return () => {};
-  }, [ref]);
-  const handleMouseEnter = useCallback(
-    (e: MouseEvent) => {
-      if (ctx.current) ctx.current["mouseMove"](e);
-    },
-    [ctx]
-  );
-  const handleMouseLeave = useCallback(
-    (e: MouseEvent) => {
-      if (ctx.current) ctx.current["mouseLeave"](e);
-    },
-    [ctx]
-  );
-  useEventListener(
-    "mousemove",
-    handleMouseEnter,
-    ref as React.RefObject<HTMLDivElement>
-  );
-  useEventListener(
-    "mouseleave",
-    handleMouseLeave,
-    ref as React.RefObject<HTMLDivElement>
-  );
-
-  return <div ref={ref}>{children}</div>;
-};
-type GoTOCases = ((e: PressEvent) => void) | undefined;
-const ButtonNext = ({ goToCases }: { goToCases: GoTOCases }) => {
-  return (
-    <GsapMagic>
-      <Button
-        onPress={goToCases}
-        data-scroll
-        className={twMerge(
-          "relative bg-white-100",
-          "rounded-full overflow-hidden will-change-transform-animation next_button_gsap"
-        )}
-        aria-label="Go to cases"
-        aria-haspopup="true"
-      >
-        <div className=" [&>*]:stroke-black-200 transition-colors duration-300 p-3 xxs:p-3 xs:p-4 md:p-5 xl:p-6">
-          <Icon
-            name="IconCornerLeftDown"
-            className="stroke-1 size-8 xxs:size-7 sm:size-8 xl:size-10"
-          />
-        </div>
-      </Button>
-    </GsapMagic>
-  );
-};
+import ButtonNext, { GoTOCases } from "./ButtonNext";
+import FullStack from "./FullStack";
+import Menu from "./Menu";
 
 const DISPLAY_1_CLASS_NAME = "capitalize";
-const DISPLAY_2_CLASS_NAME = [
-  "uppercase italic !text-primary-500",
-  "tracking-[-0.05rem] sm:tracking-wider !leading-[1.3]",
-  "will-change-transform-animation splitText_fullStack_gsap"
-];
-
-const FullStack = ({ className }: { className: string }) => {
-  const t = useTranslations();
-
-  return (
-    <div
-      className={twMerge(
-        className,
-        "flex flex-col items-start xs:items-end justify-center",
-        "space-y-0 xs:-space-y-1 md:space-y-0 mdl:-space-y-1 lg:-space-y-[3%] xl:-space-y-[3%] 2xl:-space-y-[4%] 3xl:-space-y-1 4xl:space-y-0"
-      )}
-    >
-      <span className="overflow-y-animate">
-        <h1
-          className={display(
-            {
-              size: "md",
-              weight: "bold"
-            },
-            DISPLAY_2_CLASS_NAME
-          )}
-        >
-          {t("intro.title.2_1")}
-        </h1>
-      </span>
-      <span className="overflow-y-animate">
-        <h1
-          className={display(
-            {
-              size: "md",
-              weight: "bold"
-            },
-            DISPLAY_2_CLASS_NAME
-          )}
-        >
-          {t("intro.title.2_2")}
-        </h1>
-      </span>
-    </div>
-  );
-};
-
-function useFitText(options?: { factor?: number; maxFontSize?: number }) {
-  const [fontSize, setFontSize] = useState("initial");
-  const ref = useRef<HTMLDivElement>(null);
-
-  const optionsString = JSON.stringify(options);
-  const adjustFontSize = useCallback(() => {
-    if (!ref.current) return;
-    const containerWidth = ref.current.getBoundingClientRect().width;
-    const factor = options?.factor || 1;
-    const newSize = containerWidth / factor;
-
-    setFontSize(() => `${newSize}px`);
-  }, [ref, setFontSize, options?.factor]);
-
-  useEffect(() => {
-    adjustFontSize();
-  }, [optionsString, adjustFontSize]);
-  useEventListener("resize", adjustFontSize);
-  useEventListener(
-    "resize",
-    adjustFontSize,
-    ref as React.RefObject<HTMLDivElement>
-  );
-  useIsomorphicLayoutEffect(adjustFontSize, [ref]);
-
-  return { fontSize, ref };
-}
 
 const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
   const t = useTranslations();
@@ -393,89 +224,6 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
 };
 
 
-const menuKeys = ["manifesto", "experience", "cases", "contact"] as RouteSettingPath[];
-
-const Menu = () => {
-  const t = useTranslations();
-  const router = useRouter();
-
-  const lenis = useLenis();
-
-  const goToSection = useCallback(
-    (key: RouteSettingPath) => {
-      if (key === "contact") {
-        router.push(getHref("contact"));
-      } else {
-        lenis?.scrollTo(getHref(key));
-      }
-    },
-    [lenis]
-  );
-
-  const menuItemsData = useMemo(
-    () =>
-      menuKeys.map((key, i) => {
-        return {
-          key: key,
-          number: `0${i + 1}`,
-          title: t(`header.menu.${menuKeys[i]}.attribute`)
-        };
-      }),
-    [t]
-  );
-  return (
-    <>
-      <div className="flex flex-row flex-wrap justify-between items-start w-full gap-y-6">
-        {menuItemsData.map(({ key, number, title }) => {
-          return (
-            <div
-              key={key}
-              className={text(
-                { size: "sm", degree: "1", weight: "medium" },
-                "flex flex-col justify-start items-start overflow-hidden gap-1 w-1/2 sm:w-auto md:w-1/4"
-              )}
-            >
-              <p className="number_menu_gsap opacity-0 will-change-transform-animation">
-                {number}
-              </p>
-              <Button
-                degree="1"
-                size="sm"
-                weight="semibold"
-                onPress={() => goToSection(key)}
-                className="uppercase text-start item_menu_gsap will-change-transform-animation"
-                style={{
-                  color: "inherit"
-                }}
-              >
-                <Item>{title}</Item>
-              </Button>
-            </div>
-          );
-        })}
-      </div>
-      <span className="overflow-hidden">
-        <p
-          className={text(
-            {
-              degree: "3",
-              weight: "medium",
-              size: "sm"
-            },
-            "w-max whitespace-nowrap-important",
-            "pr-1 hidden xxs:flex sm:hidden md:flex",
-            "item_menu_gsap will-change-transform-animation"
-          )}
-        >
-          {t("intro.copy")}
-        </p>
-      </span>
-    </>
-  );
-};
-
-const MenuMemo = memo(Menu);
-
 const Intro = () => {
   const introRef = useRef<HTMLDivElement>(null);
   const { endLoading } = usePreloader();
@@ -591,10 +339,7 @@ const Intro = () => {
 
   return (
     <div
-      className={twMerge(
-        "pt-28 sm:pt-36 mdl:pt-40",
-        "flex flex-col gap-20 xs:gap-32 xl:gap-40"
-      )}
+      className="pt-28 sm:pt-36 mdl:pt-40 flex flex-col gap-20 xs:gap-32 xl:gap-40"
       ref={introRef}
     >
       <div
@@ -608,7 +353,7 @@ const Intro = () => {
         <Title goToCases={goToCases} />
       </div>
       <div className="flex flex-row justify-between items-end gap-0 xl:gap-6 4xl:gap-20">
-        <MenuMemo />
+        <Menu />
       </div>
     </div>
   );

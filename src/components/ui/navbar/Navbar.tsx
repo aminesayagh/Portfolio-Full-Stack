@@ -30,7 +30,6 @@ import { usePathname } from "next/navigation";
 
 const Navbar: NavbarType = ({
   children,
-  size,
   className,
   inTopOfScroll,
   ...props
@@ -107,7 +106,7 @@ const Navbar: NavbarType = ({
       <div
         className={twMerge(
           "flex flex-row items-center justify-between w-full",
-          containerStyle({ size })
+          containerStyle()
         )}
       >
         {children}

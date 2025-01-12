@@ -243,7 +243,7 @@ const Header = () => {
   const pageName = useMemo(() => pathname.split("/")[1], [router]);
   return (
     <Modal isOpenExternal={openMenu} menuHandler={menuHandler}>
-      <Navbar size="lg" inTopOfScroll={openMenu} className="overflow-hidden">
+      <Navbar inTopOfScroll={openMenu} className="overflow-hidden">
         <span className="flex flex-row items-center justify-between w-full navbar_gsap">
           <Navbar.Brand>
             <span>
@@ -354,7 +354,7 @@ const Header = () => {
                       "flex flex-col justify-between",
                       "min-h-screen w-screen",
                       "py-8 sm:py-12",
-                      containerStyle({ size: "lg" })
+                      containerStyle()
                     )}
                   >
                     <div className="h-5 xxs:h-0" />

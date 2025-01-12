@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import type Lenis from "@studio-freight/lenis";
+import type Lenis from "lenis";
 
 export type LenisInstance = Lenis; // This is a placeholder for the actual Lenis instance type.
 export type CallbackFunction = (instance: LenisInstance) => void;
