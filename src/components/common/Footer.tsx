@@ -33,8 +33,6 @@ const FollowUs = () => {
 
   const menuSocialNetworks = getMenuItems("socialNetwork");
 
-  console.log(menuSocialNetworks);
-
   useIsomorphicLayoutEffect(() => {
     if (!menuSocialNetworks.length) return;
     ctx.current = gsap.context(self => {

@@ -58,7 +58,7 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
               weight: "bold"
             },
             DISPLAY_1_CLASS_NAME,
-            "splitText_gsap will-change-transform-animation flex flex-row gap-2 intro_scroll_gsap"
+            "splitText_gsap will-change-transform-animation tracking-[0.01em] flex flex-row gap-2 intro_scroll_gsap"
           )}
         >
           <span>{t("intro.title.1")}</span>
