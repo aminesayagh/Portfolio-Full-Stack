@@ -24,11 +24,16 @@ function Overview() {
   const { addCallback } = lenis;
 
   addCallback(params => {
-    scrollY.set(params.actualScroll);
+    const scroll = Number(params.actualScroll - (containerRef.current?.getBoundingClientRect().top as number));
+    if (scroll > 0) {
+      scrollY.set(scroll);
+    } else {
+      scrollY.set(0);
+    }
   }, 0);
 
   // Transform width from container width to full window width
-  const scale = useTransform(scrollY, [0, windowWidth], [1, 1.15]);
+  const scale = useTransform(scrollY, [0, 2000], [1, 1.5]);
 
   return (
     <section
@@ -37,9 +42,10 @@ function Overview() {
     >
       <motion.div
         style={{
-          scale: scale
+          top: 0,
+          scale: scale,
         }}
-        className="h-screen w-full container self-center origin-center bg-red-500 mx-auto"
+        className="size-full container self-center origin-center bg-red-500 mx-auto"
       />
     </section>
   );
