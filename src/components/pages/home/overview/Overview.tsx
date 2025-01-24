@@ -4,6 +4,7 @@ import React, { useRef, useContext } from "react";
 import { motion, useTransform, useMotionValue } from "framer-motion";
 
 import { LenisContext } from "@/lib/Lenis";
+import ParallaxProject from "./ParallaxProject";
 
 function Overview() {
   // Create a reference for the container section
@@ -14,14 +15,15 @@ function Overview() {
   
   // Transform width from container width to full window width
   const scale = useTransform(scrollY, [0, 2000], [1, 3]);
-  const height = useTransform(scrollY, [0, 2000], [2000, 900], { clamp: true });
+  const height = useTransform(scrollY, [0, 2000], [2000, 900]);
 
 
-  if (!lenis) return null;
+  if (!lenis) {
+    return null;
+  }
   const { addCallback } = lenis;
 
-  addCallback(params => {
-    console.log("Position: ",containerRef.current?.getBoundingClientRect().top, params.actualScroll);
+  addCallback(() => {
     const scroll = containerRef.current?.getBoundingClientRect().top as number;
     if (scroll < 0) {
       scrollY.set(-1 * scroll);
@@ -36,7 +38,7 @@ function Overview() {
       style={{
         height
       }}
-      className="w-full relative overflow-hidden bg-red-500/40 will-change-transform"
+      className="w-full relative overflow-hidden will-change-transform"
     >
       <div className="w-full container h-full">
         <motion.div
@@ -44,8 +46,10 @@ function Overview() {
             top: 0,
             scale,
           }}
-          className="size-full self-center origin-center bg-red-500 mx-auto will-change-transform"
-        />
+          className="size-full self-center origin-center mx-auto will-change-transform"
+        >
+          <ParallaxProject />
+        </motion.div>
       </div>
     </motion.section>
   );

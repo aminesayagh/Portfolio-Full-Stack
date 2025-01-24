@@ -61,9 +61,10 @@
       }
     },
     "menu": {
+      "intro": { "attribute": "Profile", "more": "null" },
       "manifesto": { "attribute": "Manifeste", "more": "null" },
       "experience": { "attribute": "Expérience", "more": "(40+)" },
-      "cases": { "attribute": "Projets", "more": "(☺ 90+)" },
+      "cases": { "attribute": "Projets", "more": "(☺ 15+)" },
       "contact": { "attribute": "Contact", "more": "null" }
     },
     "socialNetwork": {

@@ -25,8 +25,9 @@ const Layer = ({
         document.body.classList.add("is-loaded");
       }
       const timer = setTimeout(() => {
-        if (document.body.classList.contains("is-loaded"))
+        if (document.body.classList.contains("is-loaded")) {
           document.body.classList.remove("is-loaded");
+        }
       }, 2000);
       return () => {
         clearTimeout(timer);

@@ -1,4 +1,5 @@
 "use client";
+
 import React, {
   useState,
   useCallback,
@@ -392,6 +393,7 @@ const Header = () => {
                                     onButtonClick(item.path, item.id);
                                   }}
                                   degree="1"
+                                  weight="bold"
                                   name="menuItem"
                                   className={twMerge(
                                     "capitalize relative text-white-600 bg-black-100 z-10 hover:text-primary-500",
@@ -445,14 +447,6 @@ const Header = () => {
                           </h6>
                         </span>
                         <span className="mr-1 overflow-hidden w-fit mdl:mr-6">
-                          {/* <Text
-                            p
-                            degree="4"
-                            size="xs"
-                            className="overflow-hidden modal-description"
-                          >
-                            {t("header.description.content")}
-                          </Text> */}
                           <p
                             className={text(
                               {
@@ -503,11 +497,12 @@ const Header = () => {
                         {menuSocialNetworks.map((item, index) => (
                           <li key={item.id + "_" + index} className="overflow-hidden">
                             <Link
-                              size="sm"
                               href={item.path}
-                              degree="4"
-                              weight="semibold"
-                              className="modal-footer"
+                              className={text({
+                                size: "sm",
+                                degree: "4",
+                                weight: "bold"
+                              }, "modal-footer")}
                             >
                               {t(`${BASE_LOCALE_SOCIAL}.${item.id}.key`)}
                             </Link>
