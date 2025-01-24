@@ -15,7 +15,7 @@ function Overview() {
   
   // Transform width from container width to full window width
   const scale = useTransform(scrollY, [0, 2000], [1, 3]);
-  const height = useTransform(scrollY, [0, 2000], [2000, 900]);
+  const height = useTransform(scrollY, [0, 2000], [2400, 900]);
 
 
   if (!lenis) {

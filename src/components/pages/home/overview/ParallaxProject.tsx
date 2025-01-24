@@ -1,19 +1,22 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import { useRef, useState, useEffect, useContext } from "react";
+import { motion, useTransform, MotionValue, useMotionValue } from "framer-motion";
 import Image from "next/image";
 import Lenis from "lenis";
 
-function Column({ images, y }: { images: string[]; y: MotionValue<number> }) {
+import { LenisContext } from "@/lib/Lenis";
+
+function Row({ images, x }: { images: string[]; x: MotionValue<number> }) {
   return (
     <motion.div
-      className="relative h-full w-1/4 min-w-[250px] flex flex-col gap-[2vw]"
-      style={{ y }}
+      className="relative h-full w-[450%] grid grid-cols-8 min-w-[250px] gap-[2vw]"
+      style={{ x }}
     >
-      {images.map((image, index) => (
-        <motion.div key={index} className="relative h-full w-full">
-          <Image src={image} alt={`Image ${index}`} fill />
+      {[...images, ...images].map((image, index) => (
+        <motion.div key={index} className="relative h-full w-full overflow-hidden rounded-xl object-cover">
+          <div className="absolute inset-0 z-10 bg-black-100 opacity-10"></div>
+          <Image src={image} alt={`Image ${index}`} fill className="object-cover object-top rounded-xl h-full w-full" />
         </motion.div>
       ))}
     </motion.div>
@@ -21,19 +24,16 @@ function Column({ images, y }: { images: string[]; y: MotionValue<number> }) {
 }
 function ParallaxProject() {
   const galleryRef = useRef<HTMLDivElement>(null);
+  const scrollYProgress = useMotionValue(0);
   const [dimension, setDimension] = useState<{ width: number; height: number }>(
     { width: 0, height: 0 }
   );
 
-  const { scrollYProgress } = useScroll({
-    target: galleryRef,
-    offset: ["start start", "end end"]
-  });
-  const { height } = dimension;
-  const y = useTransform(scrollYProgress, [0, 1], [0, height * 2]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, height * 3.3]);
-  const y3 = useTransform(scrollYProgress, [0, 1], [0, height * 1.25]);
-  const y4 = useTransform(scrollYProgress, [0, 1], [0, height * 3]);
+  const lenis = useContext(LenisContext);
+  
+  const { width } = dimension;
+  const x = useTransform(scrollYProgress, [0, 4000], [width * -1.2, 0]);
+  const x2 = useTransform(scrollYProgress, [0, 4000], [0, width * -1.2]);
 
   useEffect( () => {
     const lenis = new Lenis()
@@ -56,15 +56,24 @@ function ParallaxProject() {
     }
   }, [])
 
+  if (!lenis) {
+    return null;
+  }
+  const { addCallback } = lenis;
+  
+  addCallback((p) => {
+    scrollYProgress.set(p.actualScroll);
+  }, 0);
+
   return (
     <div
       ref={galleryRef}
-      className="h-full bg-black-700 relative flex gap-[2vw] p-[2vw] overflow-hidden"
+      className="h-full bg-black-800 relative flex flex-col gap-[2vw] p-[2vw] overflow-hidden rounded-2xl"
     >
-      <Column images={[]} y={y} />
-      <Column images={[]} y={y2} />
-      <Column images={[]} y={y3} />
-      <Column images={[]} y={y4} />
+      <Row images={['/images/screens/1.jpg', '/images/screens/2.jpg', '/images/screens/3.jpg', '/images/screens/4.jpg']} x={x} />
+      <Row images={['/images/screens/5.jpg', '/images/screens/6.jpg', '/images/screens/7.jpg', '/images/screens/8.jpg']} x={x2} />
+      <Row images={['/images/screens/9.jpg', '/images/screens/1.jpg', '/images/screens/2.jpg', '/images/screens/3.jpg']} x={x} />
+      <Row images={['/images/screens/4.jpg', '/images/screens/5.jpg', '/images/screens/6.jpg', '/images/screens/7.jpg']} x={x2} />
     </div>
   );
 }

@@ -4,13 +4,19 @@ import React from "react";
 import LinkNext from "next/link";
 import type { LinkProps } from "next/link";
 
-export interface LinkPropsExtended extends LinkProps {
+import { TextPropsExtended, text } from "./Typography";
+
+export interface LinkPropsExtended extends TextPropsExtended, LinkProps {
   className?: string;
   children: React.ReactNode;
 }
 
 export const Link: FC<LinkPropsExtended> = ({
   href,
+  weight,
+  degree,
+  size,
+  mode,
   className,
   children,
   ...props
@@ -18,7 +24,15 @@ export const Link: FC<LinkPropsExtended> = ({
   return (
     <LinkNext
       href={href}
-      className={className}
+      className={text(
+        {
+          weight,
+          degree,
+          size,
+          mode
+        },
+        className
+      )}
       {...props}
     >
       {children}
