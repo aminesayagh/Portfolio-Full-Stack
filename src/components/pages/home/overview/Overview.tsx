@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useContext } from "react";
-import { motion, useTransform, useMotionValue, useScroll } from "framer-motion";
+import { motion, useTransform, useMotionValue } from "framer-motion";
 
 import { LenisContext } from "@/lib/Lenis";
 import ParallaxProject from "./ParallaxProject";

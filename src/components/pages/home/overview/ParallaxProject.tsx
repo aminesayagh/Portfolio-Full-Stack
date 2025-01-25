@@ -98,6 +98,7 @@ function ParallaxProject() {
             "/images/screens/4.jpg"
           ]}
           x={x}
+          reverse={true}
         />
         <Row
           images={[
@@ -107,7 +108,6 @@ function ParallaxProject() {
             "/images/screens/8.jpg"
           ]}
           x={x2}
-          reverse={true}
         />
         <Row
           images={[
@@ -117,6 +117,7 @@ function ParallaxProject() {
             "/images/screens/3.jpg"
           ]}
           x={x}
+          reverse={true}
         />
         <Row
           images={[
@@ -126,7 +127,6 @@ function ParallaxProject() {
             "/images/screens/7.jpg"
           ]}
           x={x2}
-          reverse={true}
         />
     </div>
   );
