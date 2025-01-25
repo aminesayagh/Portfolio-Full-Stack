@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useContext } from "react";
-import { motion, useTransform, useMotionValue } from "framer-motion";
+import { motion, useTransform, useMotionValue, useScroll } from "framer-motion";
 
 import { LenisContext } from "@/lib/Lenis";
 import ParallaxProject from "./ParallaxProject";
@@ -12,7 +12,6 @@ function Overview() {
   const lenis = useContext(LenisContext);
   const scrollY = useMotionValue(0);
 
-  
   // Transform width from container width to full window width
   const scale = useTransform(scrollY, [0, 2000], [1, 3]);
   const height = useTransform(scrollY, [0, 2000], [2400, 900]);

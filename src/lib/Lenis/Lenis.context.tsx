@@ -11,6 +11,7 @@ import React, {
 
 import { useFrame } from "@studio-freight/hamo";
 import Lenis from "lenis";
+import { cancelFrame, frame } from "framer-motion";
 import { useLocale } from "next-intl";
 import { twMerge } from "tailwind-merge";
 import useResizeObserver from "use-resize-observer";
@@ -125,6 +126,17 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
     }, [lenis]); // Refresh the Lenis instance.
 
     useEffect(() => {
+      function update(data: { timestamp: number }) {
+        const time = data.timestamp;
+        lenis?.raf(time);
+      }
+
+      frame.update(update, true);
+
+      return () => cancelFrame(update);
+    }, []);
+
+    useEffect(() => {
       if (lenis) {
         refresh();
       }
@@ -201,10 +213,14 @@ const LenisProvider = forwardRef<LenisInstance | undefined, LenisProviderProps>(
 
     const onScroll = useCallback((e: LenisInstance) => {
       const current = callbacks.current;
-      if (!current.length) return;
+      if (!current.length) {
+        return;
+      }
       for (let i = 0; i < callbacks.current.length; i++) {
         const c = current[i];
-        if (c && c.callback) c.callback(e);
+        if (c && c.callback) {
+          c.callback(e);
+        }
       }
     }, []);
 

@@ -211,7 +211,7 @@ const Manifesto = () => {
               {t(`manifesto.slogan`)}
             </strong>
             <Phrase
-              text={phrase}
+              text={That's amazing! I just feel that the keyword "specializing" doesn't adequately describe the uniqueness of my profile.g}
               lang={locale}
               refDescription={refDescription as RefObject<HTMLDivElement>}
             />

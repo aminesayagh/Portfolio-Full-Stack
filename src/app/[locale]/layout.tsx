@@ -8,7 +8,7 @@ import { LoadingProvider } from "@/components/ui/preloader";
 import type { Lang } from "@/i18n/request";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
-
+import 'lenis/dist/lenis.css'
 
 
 const montserrat = Montserrat({

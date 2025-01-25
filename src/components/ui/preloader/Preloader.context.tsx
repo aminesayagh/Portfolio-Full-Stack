@@ -65,7 +65,9 @@ export function LoadingProvider({ children }: { children: ReactNode }) {
   const addLoadingComponent = useCallback(
     (key: string) => {
       setLoadingComponentList(prev => {
-        if (prev.hasOwnProperty(key)) return prev;
+        if (prev.hasOwnProperty(key)) {
+          return prev;
+        }
         const updated = { ...prev, [key]: true };
         loadingState();
         return updated;
@@ -77,7 +79,9 @@ export function LoadingProvider({ children }: { children: ReactNode }) {
   const removeLoadingComponent = useCallback(
     (key: string) => {
       setLoadingComponentList(prev => {
-        if (!prev[key]) return prev;
+        if (!prev[key]) {
+          return prev;
+        }
         const updated = { ...prev, [key]: false };
         loadingState();
         return updated;

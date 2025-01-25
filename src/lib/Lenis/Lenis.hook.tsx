@@ -20,7 +20,9 @@ export function useLenis(
   const { lenis, addCallback, removeCallback } = useCurrentLenis();
 
   useEffect(() => {
-    if (!callback || !addCallback || !removeCallback || !lenis) return;
+    if (!callback || !addCallback || !removeCallback || !lenis) {
+      return;
+    }
 
     addCallback(callback, priority);
     callback(lenis);

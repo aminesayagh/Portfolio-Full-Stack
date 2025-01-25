@@ -110,6 +110,11 @@
     "goal": "Want to know more about me?,",
     "action": "Download Resume"
   },
+  "about": {
+    "subtitle_1": "Perspective",
+    "subtitle_2": "thinking",
+    "content": "I am a digital consultant devoted to transforming code into authentic solutions that reflect my clients’ unique visions. By bridging technical expertise with deep understanding of client needs. I deliver web solutions that build trust, drive growth, and leave a lasting Impact."
+  },
   "manifesto_old": {
     "title_1": "Perspective",
     "title_1_2": "thinking",

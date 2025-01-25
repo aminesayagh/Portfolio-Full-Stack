@@ -127,7 +127,9 @@ export default {
     extend: {
       animation: {
         underline: "underline 0.3s forwards",
-        underlineExit: "underlineExit 0.3s forwards"
+        underlineExit: "underlineExit 0.3s forwards",
+        marquee: "marquee var(--duration) linear infinite",
+        "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
       },
       keyframes: {
         underline: {
@@ -137,7 +139,15 @@ export default {
         underlineExit: {
           "0%": { width: "45%" },
           "100%": { width: "100%" }
-        }
+        },
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap)))" },
+        },
+        "marquee-vertical": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-100% - var(--gap)))" },
+        },
       },
       fontSize: {
         "display-xl": [
