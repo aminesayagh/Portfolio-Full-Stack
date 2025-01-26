@@ -4,8 +4,8 @@ import { useMemo, useContext } from "react";
 import {
   motion,
   MotionValue,
-  useMotionValue,
-  useTransform
+  useTransform,
+  useScroll
 } from "framer-motion";
 import { ComponentPropsWithoutRef, FC, ReactNode, useRef } from "react";
 
@@ -18,23 +18,11 @@ export interface TextRevealProps extends ComponentPropsWithoutRef<"div"> {
 
 export const TextReveal: FC<TextRevealProps> = ({ text, className }) => {
   const targetRef = useRef<HTMLDivElement>(null);
-  const lenis = useContext(LenisContext);
-  const scrollY = useMotionValue(0);
+  const { scrollY } = useScroll({
+    target: targetRef
+  });
 
-  if (!lenis) {
-    return null;
-  }
-  const { addCallback } = lenis;
-
-  addCallback((params) => {
-    const scroll = (targetRef.current?.getBoundingClientRect().top as number) - window.innerHeight / 2;
-    if (scroll < 0) {
-      scrollY.set(params.actualScroll);
-    } else {
-      scrollY.set(0);
-    }
-  }, 0);
-
+  
   const words = useMemo(() => text.split(" "), [text]);
 
   return (
