@@ -1,35 +1,33 @@
 "use client";
 
-import React, { useRef, useContext } from "react";
-import { motion, useTransform, useMotionValue } from "framer-motion";
+import React, { useRef } from "react";
+import { motion, useTransform, useScroll, useMotionValueEvent, useMotionValue } from "framer-motion";
 
-import { LenisContext } from "@/lib/Lenis";
 import ParallaxProject from "./ParallaxProject";
 
 function Overview() {
   // Create a reference for the container section
-  const containerRef = useRef<HTMLDivElement>(null);
-  const lenis = useContext(LenisContext);
-  const scrollY = useMotionValue(0);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const scrollYPosition = useMotionValue(0);
 
   // Transform width from container width to full window width
-  const scale = useTransform(scrollY, [0, 2000], [1, 3]);
-  const height = useTransform(scrollY, [0, 2000], [2400, 900]);
+  const { scrollY } = useScroll({
+    target: containerRef
+  });
 
 
-  if (!lenis) {
-    return null;
-  }
-  const { addCallback } = lenis;
-
-  addCallback(() => {
-    const scroll = containerRef.current?.getBoundingClientRect().top as number;
-    if (scroll < 0) {
-      scrollY.set(-1 * scroll);
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const s = latest - Number(containerRef.current?.getBoundingClientRect().top) - window.innerHeight / 2;
+    if (s > 0) {
+      scrollYPosition.set(s);
     } else {
-      scrollY.set(0);
+      scrollYPosition.set(0);
     }
-  }, 0);
+  });
+
+  const scale = useTransform(scrollYPosition, [0, 2000], [1, 2]);
+  const height = useTransform(scrollYPosition, [0, 2000], [2400, 900]);
+
 
   return (
     <motion.section
@@ -44,8 +42,9 @@ function Overview() {
           style={{
             top: 0,
             scale,
+            transformOrigin: "top center"
           }}
-          className="size-full self-center origin-center mx-auto will-change-transform"
+          className="size-full self-center mx-auto will-change-transform"
         >
           <ParallaxProject />
         </motion.div>

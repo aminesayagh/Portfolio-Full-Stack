@@ -42,8 +42,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.1
       lenis:
-        specifier: ^1.1.19
-        version: 1.1.19(react@19.0.0)
+        specifier: ^1.1.20
+        version: 1.1.20(react@19.0.0)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -2994,8 +2994,8 @@ packages:
     resolution: {integrity: sha512-MbjN408fEndfiQXbFQ1vnd+1NoLDsnQW41410oQBXiyXDMYH5z505juWa4KUE1LqxRC7DgOgZDbKLxHIwm27hA==}
     engines: {node: '>=0.10'}
 
-  lenis@1.1.19:
-    resolution: {integrity: sha512-EWRYEqMMcnsQgFtr67jEKaVx1mn9Dgw1rM5iT4VxxUV6ln++Cq2nahglBko2aEiD4Lik357wkLBjOjdIwjnmdQ==}
+  lenis@1.1.20:
+    resolution: {integrity: sha512-UE64mlJEN4W8DWP2tfHzPzygk94Q2BhjzeG/YHWoyeMJ2Fd6XziBCNN+IvHwmB4GkmKIYxgr0+TvRYTSAMTMFA==}
     peerDependencies:
       react: '>=17.0.0'
       vue: '>=3.0.0'
@@ -7569,7 +7569,7 @@ snapshots:
     dependencies:
       language-subtag-registry: 0.3.23
 
-  lenis@1.1.19(react@19.0.0):
+  lenis@1.1.20(react@19.0.0):
     optionalDependencies:
       react: 19.0.0
 

@@ -29,8 +29,6 @@ const SwitchLang = () => {
   const currentLocale = useLocale() as Lang;
   const pathname = usePathname();
 
-  console.log(currentLocale);
-
   const handleSelectionChange = useCallback(
     (value: string) => {
       const selectedLang = value as Lang;

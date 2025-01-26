@@ -17,12 +17,12 @@ function Row({ images, x, reverse = false }: { images: string[]; x: MotionValue<
   return (
     <motion.div
       className={cn(
-        "relative h-full w-[450%] grid grid-cols-8 min-w-[250px] gap-[2vw]",
+        "relative h-full w-[750%] grid grid-cols-12 min-w-[250px] gap-[2vw]",
         "group [--duration:40s] [--gap:2rem]"
       )}
       style={{ x }}
     >
-      {Array(8).fill(0).map((_, index) => (
+      {Array(12).fill(0).map((_, index) => (
         <motion.div
           key={index}
           className={cn("relative h-full w-full overflow-hidden rounded-xl  object-cover", 

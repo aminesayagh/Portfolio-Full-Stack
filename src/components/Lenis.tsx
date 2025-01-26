@@ -1,41 +1,67 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 
-import { useFrame } from "@studio-freight/hamo";
+import gsap from "gsap";
+import { ReactLenis } from "@/lib/Lenis/provider";
+import { LenisRef } from "@/lib/Lenis/types";
 
-import { LenisProvider, useLenis } from "@/lib/Lenis";
-import type { LenisInstance } from "@/lib/Lenis/lenis";
+import { cancelFrame, frame } from 'framer-motion';
+
 
 function Lenis({ children }: { children: React.ReactElement }) {
-  const lenisRef = useRef<LenisInstance>(null);
+  const lenisRef = useRef<LenisRef>(null);
+  
+  
+  useEffect(() => {
+    const update = (time: number) => {
+      lenisRef.current?.lenis?.raf(time)
+    }
+  
+    const rafId = requestAnimationFrame(update)
+  
+    return () => cancelAnimationFrame(rafId)
+  }, [])
 
-  useFrame((time: number) => {
-    lenisRef.current?.raf(time);
-  });
 
-  useLenis(() => {
-    ScrollTrigger.refresh();
-  });
+
+  useEffect(() => {
+    const update = (data: { timestamp: number }) => {
+      const time = data.timestamp
+      lenisRef.current?.lenis?.raf(time)
+    }
+
+    frame.update(update, true)
+
+    return () => cancelFrame(update)
+  }, [])
+
+  
+  useEffect(() => {
+    const update = (time: number) => {
+      lenisRef.current?.lenis?.raf(time * 1000)
+    }
+  
+    gsap.ticker.add(update)
+  
+    return () => gsap.ticker.remove(update)
+  }, [])
+
+
   return (
-    <LenisProvider
-      autoRaf={true}
+    <ReactLenis
+      root
       ref={lenisRef}
       options={{
-        smoothTouch: true,
-        isSmooth: true,
-        duration: 1.2,
-        wheelMultiplier: 1.15,
-        touchMultiplier: 1.9,
-        infinite: false,
-        autoResize: false,
-        direction: "vertical",
-        gestureDirection: "vertical",
-        easing: t => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))
+        autoRaf: false, // used to enable RAF(Request Animation Frame)
+        duration: 1.2, // duration of the scrolling animation
+        easing: t => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)), // easing function used to smooth the scrolling
+        infinite: false, // used to disable infinite scrolling
+        autoResize: true, // used to resize the container to the viewport size when the window is resized
       }}
     >
       {children}
-    </LenisProvider>
+    </ReactLenis>
   );
 }
 

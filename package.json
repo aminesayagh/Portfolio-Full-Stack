@@ -16,7 +16,8 @@
     "preinstall": "scripts/preinstall",
     "check": "pnpm run lint && pnpm run typecheck && pnpm run knip",
     "fix": "pnpm run lint:fix && pnpm run format",
-    "mas": "scripts/mas.sh"
+    "mas": "scripts/mas.sh",
+    "clean": "rm -rf .next && rm -rf node_modules && rm -rf pnpm-lock.yaml"
   },
   "packageManager": "pnpm@8.15.4",
   "dependencies": {
@@ -25,13 +26,13 @@
     "@notionhq/client": "^2.2.14",
     "@react-aria/toast": "^3.0.0-beta.10",
     "@react-stately/toast": "^3.0.0-beta.2",
-    "lenis": "^1.1.19",
     "@tabler/icons-react": "^3.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.0.24",
     "gsap": "^3.12.5",
     "i18next-resources-to-backend": "^1.2.0",
+    "lenis": "^1.1.20",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
     "moment-timezone": "^0.5.45",

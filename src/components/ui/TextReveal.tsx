@@ -26,10 +26,10 @@ export const TextReveal: FC<TextRevealProps> = ({ text, className }) => {
   }
   const { addCallback } = lenis;
 
-  addCallback(() => {
-    const scroll = targetRef.current?.getBoundingClientRect().top as number;
+  addCallback((params) => {
+    const scroll = (targetRef.current?.getBoundingClientRect().top as number) - window.innerHeight / 2;
     if (scroll < 0) {
-      scrollY.set(-1 * scroll);
+      scrollY.set(params.actualScroll);
     } else {
       scrollY.set(0);
     }
@@ -56,8 +56,7 @@ export const TextReveal: FC<TextRevealProps> = ({ text, className }) => {
       <div className="flex gap-0 flex-row flex-wrap">
         {words.map((word, index) => {
           const start = index / words.length;
-          const end = start + 1 / words.length;
-
+          const end = start + 100 / words.length;
           return (
             <Word key={index} progress={scrollY} range={[start, end]}>
               {word}
@@ -77,12 +76,13 @@ interface WordProps {
 
 const Word: FC<WordProps> = ({ children, progress, range }) => {
   const opacity = useTransform(progress, range, [0, 1]);
+  console.log(opacity.get());
   return (
     <span className="xl:lg-3 relative mx-1 lg:mx-2.5">
       <span className={"absolute opacity-30"}>{children}</span>
       <motion.span
         style={{ opacity: opacity }}
-        className={"text-black dark:text-white"}
+        className={"text-white"}
       >
         {children}
       </motion.span>
