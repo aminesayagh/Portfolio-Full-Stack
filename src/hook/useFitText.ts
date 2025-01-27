@@ -40,7 +40,7 @@ function useFitText({
   }, [factor]);
 
   const adjustFontSize = useCallback(() => {
-    if (!ref.current) return;
+    if (!ref.current) {return;}
 
     const containerWidth = ref.current.getBoundingClientRect().width;
     const currentFactor = getCurrentFactor();
@@ -50,7 +50,6 @@ function useFitText({
     );
 
     setFontSize(`${newSize}px`);
-    console.log(newSize);
   }, [getCurrentFactor, maxFontSize, minFontSize]);
 
   const debouncedAdjust = useCallback(() => {
