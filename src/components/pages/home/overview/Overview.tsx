@@ -13,7 +13,6 @@ import {
   wrap,
   useAnimationFrame
 } from "framer-motion";
-import { useWindowSize } from "react-use";
 import { cn } from "@/lib/utils";
 
 function Row({
@@ -94,7 +93,6 @@ function Overview() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const scrollYPosition = useMotionValue(0);
   const scrollYProgress = useMotionValue(0);
-  const { width } = useWindowSize();
 
   // Transform width from container width to full window width
   const { scrollY } = useScroll({
@@ -116,9 +114,6 @@ function Overview() {
 
   const height = useTransform(scrollYPosition, [0, 2000], [2400, 900]);
   const scale = useTransform(scrollYPosition, [0, 2000], [1, 2]);
-
-  const x = useTransform(scrollYProgress, [0, 4000], [width * -1.2, 0]);
-  const x2 = useTransform(scrollYProgress, [0, 4000], [0, width * -1.2]);
 
   return (
     <motion.section
