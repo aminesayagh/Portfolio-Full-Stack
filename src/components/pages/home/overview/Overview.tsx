@@ -8,38 +8,73 @@ import {
   useScroll,
   useMotionValueEvent,
   useMotionValue,
-  MotionValue
+  useVelocity,
+  useSpring,
+  wrap,
+  useAnimationFrame
 } from "framer-motion";
 import { useWindowSize } from "react-use";
 import { cn } from "@/lib/utils";
 
 function Row({
   images,
-  x,
-  reverse = false
+  baseVelocity = 100
 }: {
   images: string[];
-  x: MotionValue<number>;
-  reverse?: boolean;
+  baseVelocity?: number;
 }) {
+  const baseX = useMotionValue(0);
+  const { scrollY } = useScroll();
+  const scrollVelocity = useVelocity(scrollY);
+  const smoothScroll = useSpring(scrollVelocity, {
+    stiffness: 100,
+    damping: 50
+  });
+  const velocityFactor = useTransform(smoothScroll, [0, 1000], [0, 5], {
+    clamp: false
+  });
+
+  const x = useTransform(baseX, v => `${wrap(-20, -45, v)}%`);
+
+  const directionFactor = useRef<number>(1);
+  useAnimationFrame((_, delta) => {
+    let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
+    
+    /**
+     * This is what changes the direction of the scroll once we
+     * switch scrolling directions.
+     */
+    if (velocityFactor.get() < 0) {
+      directionFactor.current = -1;
+    } else if (velocityFactor.get() > 0) {
+      directionFactor.current = 1;
+    }
+
+    moveBy += directionFactor.current * moveBy * velocityFactor.get();
+
+    baseX.set(baseX.get() + moveBy);
+  });
+
   return (
     <motion.div
       className={cn(
-        "relative h-full w-[750%] grid grid-cols-12 min-w-[250px] gap-[2vw] will-change-transform",
+        "relative h-full w-[750%] flex flex-row min-w-[250px] gap-[2vw] will-change-transform",
         "group [--duration:40s] [--gap:2rem]"
       )}
       style={{ x }}
+      onHoverStart={() => {
+        x.stop();
+      }}
+      onHoverEnd={() => {
+
+      }}
     >
       {Array(12)
         .fill(0)
         .map((_, index) => (
           <motion.div
             key={index}
-            className={cn(
-              "relative h-full w-full overflow-hidden rounded-xl  object-cover",
-              "animate-marquee flex-row group-hover:[animation-play-state:paused]",
-              { "[animation-direction:reverse]": reverse }
-            )}
+            className="relative h-full w-full overflow-hidden rounded-xl object-cover"
           >
             <div className="absolute inset-0 z-10 bg-black-100 opacity-10"></div>
             <Image
@@ -115,8 +150,7 @@ function Overview() {
               "/images/screens/3.webp",
               "/images/screens/4.webp"
             ]}
-            x={x}
-            reverse={true}
+            baseVelocity={1}
           />
           <Row
             images={[
@@ -125,7 +159,7 @@ function Overview() {
               "/images/screens/7.webp",
               "/images/screens/8.webp"
             ]}
-            x={x2}
+            baseVelocity={-1}
           />
           <Row
             images={[
@@ -134,8 +168,7 @@ function Overview() {
               "/images/screens/2.webp",
               "/images/screens/3.webp"
             ]}
-            x={x}
-            reverse={true}
+            baseVelocity={1}
           />
           <Row
             images={[
@@ -144,7 +177,7 @@ function Overview() {
               "/images/screens/6.webp",
               "/images/screens/7.webp"
             ]}
-            x={x2}
+            baseVelocity={-1}
           />
         </motion.div>
       </motion.div>
