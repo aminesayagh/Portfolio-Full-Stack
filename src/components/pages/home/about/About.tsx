@@ -1,8 +1,7 @@
-"use client";
 
 import { useTranslations } from "next-intl"
 
-import { title, text } from "@/components/ui/typography";
+import { text } from "@/components/ui/typography";
 import { TextReveal } from "@/components/ui/TextReveal";
 import Button from "@/components/ui/button";
 
