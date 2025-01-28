@@ -1,39 +1,32 @@
-import React from "react";
+import React, { forwardRef, memo } from "react";
 
 import Image from "next/image";
-
 import type { ImageProps } from "next/image";
 
-const images: {
-  [key: string]: { src: string; width: number; height: number };
-} = {
-  test: {
-    src: "/images/test.png",
-    width: 100,
-    height: 100
-  }
-} as const;
-
-type ImageName = keyof typeof images;
+import { cn } from "@/lib/utils";
 
 interface Props extends Omit<ImageProps, "src"> {
-  src: ImageName | ImageProps["src"];
+  src: ImageProps["src"];
+  alt: string;
 }
 
-const ImageUi = ({ alt, src, ...props }: Props) => {
-  const imageProps =
-    typeof src === "string" && Object.keys(images).includes(src)
-      ? images[src]
-      : { src };
-  if (!imageProps) return null;
-  return (
-    <Image
-      alt={alt}
-      {...imageProps}
-      src={imageProps.src as string}
-      {...props}
-    />
-  );
-};
+const ImageUi = forwardRef<HTMLImageElement, Props>(
+  ({ src, alt, className, priority = false, quality = 80, sizes, ...props }, ref) => {
+    return (
+      <Image
+        ref={ref}
+        src={src}
+        alt={alt}
+        priority={priority}
+        quality={quality}
+        placeholder="blur"
+        loading={priority ? "eager" : "lazy"}
+        sizes={sizes || "(max-width: 768px) 100vw, 50vw"}
+        className={cn(className, "w-full")}
+        {...props}
+      />
+    );
+  }
+);
 
-export default ImageUi;
+export default memo(ImageUi);

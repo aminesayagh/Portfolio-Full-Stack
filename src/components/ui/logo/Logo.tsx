@@ -23,6 +23,8 @@ const Logo = ({ alt, size, ...props }: LogoProps) => {
         alt={alt}
         width={size}
         height={size}
+        placeholder={undefined}
+        priority={true}
       />
     </Link>
   );

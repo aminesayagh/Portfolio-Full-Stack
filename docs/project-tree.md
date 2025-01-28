@@ -1653,6 +1653,26 @@
 |   |   |   |-- lavish_mockup_main.webp
 |   |   |   |-- sodiadd_mockup_main.jpg
 |   |   |   `-- sodiadd_mockup_main.webp
+|   |   |-- screens
+|   |   |   |-- 1.jpg
+|   |   |   |-- 1.webp
+|   |   |   |-- 2.jpg
+|   |   |   |-- 2.webp
+|   |   |   |-- 3.jpg
+|   |   |   |-- 3.webp
+|   |   |   |-- 4.jpg
+|   |   |   |-- 4.webp
+|   |   |   |-- 5.jpg
+|   |   |   |-- 5.webp
+|   |   |   |-- 6.jpg
+|   |   |   |-- 6.webp
+|   |   |   |-- 7.jpg
+|   |   |   |-- 7.webp
+|   |   |   |-- 8.jpg
+|   |   |   |-- 8.webp
+|   |   |   |-- 9.jpg
+|   |   |   |-- 9.webp
+|   |   |   `-- compress-images.sh
 |   |   |-- 2.png
 |   |   `-- noise-transparent.png
 |   |-- logo
@@ -1694,6 +1714,9 @@
 |   |   |   |   |-- ContactForm.tsx
 |   |   |   |   `-- Index.tsx
 |   |   |   `-- home
+|   |   |       |-- about
+|   |   |       |   |-- About.tsx
+|   |   |       |   `-- index.ts
 |   |   |       |-- intro
 |   |   |       |   |-- ButtonNext.tsx
 |   |   |       |   |-- FullStack.tsx
@@ -1779,7 +1802,9 @@
 |   |   |   |   |-- Link.tsx
 |   |   |   |   `-- Typography.ts
 |   |   |   |-- animation.ts
-|   |   |   `-- conf.ts
+|   |   |   |-- conf.ts
+|   |   |   |-- Marque.tsx
+|   |   |   `-- TextReveal.tsx
 |   |   |-- Lenis.tsx
 |   |   `-- style.ts
 |   |-- conf
@@ -1802,6 +1827,12 @@
 |   |   `-- routing.ts
 |   |-- lib
 |   |   |-- Lenis
+|   |   |   |-- index.ts
+|   |   |   |-- provider.tsx
+|   |   |   |-- store.ts
+|   |   |   |-- types.ts
+|   |   |   `-- use-lenis.ts
+|   |   |-- Lenis_old
 |   |   |   |-- index.ts
 |   |   |   |-- Lenis.context.tsx
 |   |   |   |-- Lenis.hook.tsx
@@ -1832,5 +1863,5 @@
 |-- tsconfig.json
 `-- tsconfig.tsbuildinfo
 
-54 directories, 1776 files
+57 directories, 1804 files
 ```

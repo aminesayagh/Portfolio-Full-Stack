@@ -1,7 +1,13 @@
 "use client";
 
-import React, { useRef } from "react";
-import Image from "next/image";
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import {
   motion,
   useTransform,
@@ -13,9 +19,11 @@ import {
   wrap,
   useAnimationFrame
 } from "framer-motion";
+
+import Image from "@/components/ui/image";
 import { cn } from "@/lib/utils";
 
-function Row({
+const Row = memo(function Row({
   images,
   baseVelocity = 100
 }: {
@@ -29,16 +37,19 @@ function Row({
     stiffness: 100,
     damping: 50
   });
+
   const velocityFactor = useTransform(smoothScroll, [0, 1000], [0, 5], {
     clamp: false
   });
 
-  const x = useTransform(baseX, v => `${wrap(-20, -45, v)}%`);
-
+  // Calculate the width of one complete set of images
+  const oneSetWidth = useMemo(() => 100 * images.length, [images.length]);
+  const x = useTransform(baseX, v => `${wrap(-oneSetWidth, 0, v)}%`);
   const directionFactor = useRef<number>(1);
+
   useAnimationFrame((_, delta) => {
     let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
-    
+
     /**
      * This is what changes the direction of the scroll once we
      * switch scrolling directions.
@@ -51,131 +62,195 @@ function Row({
 
     moveBy += directionFactor.current * moveBy * velocityFactor.get();
 
-    baseX.set(baseX.get() + moveBy);
+    // Update position with wrapping logic
+    let newX = baseX.get() + moveBy;
+
+    
+    // Implement seamless looping
+    if (newX <= -oneSetWidth) {
+      newX = 0;
+    } else if (newX >= 0) {
+      newX = -oneSetWidth;
+    }
+
+    baseX.set(newX);
   });
+
+  const imagesElements = useMemo(() => {
+    const imagesElements = Array(images.length * 4)
+      .fill(0)
+      .map((_, index) => (
+        <motion.div
+          key={index}
+          className="relative h-full overflow-hidden rounded-xl object-cover min-w-[40vw]"
+        >
+          <div className="absolute inset-0 z-10 bg-black/20"></div>
+          <Image
+            src={images[index % images.length] || ""}
+            alt={`Image ${index}`}
+            fill
+            className="object-cover object-top rounded-xl"
+            placeholder="empty"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </motion.div>
+      ));
+
+    return [...imagesElements];
+  }, [images]);
 
   return (
     <motion.div
       className={cn(
-        "relative h-full w-[750%] flex flex-row min-w-[250px] gap-[2vw] will-change-transform",
+        "relative h-full flex flex-row w-full min-w-screen gap-[2vw] will-change-transform",
         "group [--duration:40s] [--gap:2rem]"
       )}
       style={{ x }}
-      onHoverStart={() => {
-        x.stop();
-      }}
-      onHoverEnd={() => {
-
-      }}
     >
-      {Array(12)
-        .fill(0)
-        .map((_, index) => (
-          <motion.div
-            key={index}
-            className="relative h-full w-full overflow-hidden rounded-xl object-cover"
-          >
-            <div className="absolute inset-0 z-10 bg-black-100 opacity-10"></div>
-            <Image
-              src={images[index % images.length] || ""}
-              alt={`Image ${index}`}
-              fill
-              className="object-cover object-top rounded-xl h-full w-full"
-            />
-          </motion.div>
-        ))}
+      {imagesElements}
     </motion.div>
   );
-}
+});
+
+// Utility function to calculate container width based on screen size// Memoized utility for width calculation
+const getContainerWidth = (screenWidth: number): number => {
+  let padding = 0;
+  if (screenWidth >= 1600) {
+    padding = 80;
+    return 1600 - padding;
+  } else if (screenWidth >= 1500) {
+    padding = 64;
+    return 1500 - padding;
+  } else if (screenWidth >= 1400) {
+    padding = 64;
+    return 1400 - padding;
+  } else if (screenWidth >= 640) {
+    padding = 64;
+    return screenWidth - padding;
+  } else {
+    padding = 32;
+    return screenWidth - padding;
+  }
+};
+
+// Memoized image sets
+const IMAGE_SETS = {
+  SET_1: [
+    "/images/screens/1.webp",
+    "/images/screens/2.webp",
+    "/images/screens/3.webp",
+    "/images/screens/4.webp"
+  ],
+  SET_2: [
+    "/images/screens/5.webp",
+    "/images/screens/6.webp",
+    "/images/screens/7.webp",
+    "/images/screens/8.webp"
+  ],
+  SET_3: [
+    "/images/screens/9.webp",
+    "/images/screens/1.webp",
+    "/images/screens/2.webp",
+    "/images/screens/3.webp"
+  ],
+  SET_4: [
+    "/images/screens/4.webp",
+    "/images/screens/5.webp",
+    "/images/screens/6.webp",
+    "/images/screens/7.webp"
+  ]
+} as Record<string, string[]>;
 
 function Overview() {
   // Create a reference for the container section
   const containerRef = useRef<HTMLDivElement | null>(null);
   const scrollYPosition = useMotionValue(0);
   const scrollYProgress = useMotionValue(0);
+  const [initialWidth, setInitialWidth] = useState(0);
+
+  const handleResize = useCallback(() => {
+    const maxWidth = getContainerWidth(window.innerWidth);
+    setInitialWidth(prev => {
+      // Only update if the width has actually changed
+      if (Math.abs(prev - maxWidth) > 1) {
+        return maxWidth;
+      }
+      return prev;
+    });
+  }, []);
+
+  // Handle window resize
+  useEffect(() => {
+    // Set initial width
+    handleResize();
+
+    // Debounced resize handler
+    let timeoutId: NodeJS.Timeout;
+    const debouncedResize = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(handleResize, 100);
+    };
+
+    window.addEventListener("resize", debouncedResize);
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener("resize", debouncedResize);
+    };
+  }, []);
 
   // Transform width from container width to full window width
   const { scrollY } = useScroll({
-    target: containerRef
+    target: containerRef,
+    offset: ["start center", "end center"]
   });
 
   useMotionValueEvent(scrollY, "change", latest => {
+    if (!containerRef.current) {
+      return;
+    }
+
     const s =
       latest -
       Number(containerRef.current?.getBoundingClientRect().top) -
       window.innerHeight / 2;
-    if (s > 0) {
-      scrollYPosition.set(s);
-    } else {
-      scrollYPosition.set(0);
-    }
+
+    scrollYPosition.set(Math.max(s, 0));
     scrollYProgress.set(latest);
   });
 
+  // Transform height from initial to final height
   const height = useTransform(scrollYPosition, [0, 2000], [2400, 900]);
-  const scale = useTransform(scrollYPosition, [0, 2000], [1, 2]);
+
+  const maxWidth = useMemo(() => window.innerWidth + 40, [window.innerWidth]);
+
+  // Transform width from initial container width to full viewport width
+  const width = useTransform(
+    scrollYPosition,
+    [0, 2000],
+    [initialWidth, maxWidth] // Add 40px to account for the rounded corners
+  );
 
   return (
     <motion.section
       ref={containerRef}
       style={{
-        height
+        height,
+        width
       }}
-      className="w-full relative overflow-hidden will-change-transform"
+      className="w-full relative  will-change-transform overflow-hidden mx-auto rounded-2xl bg-primary-500"
     >
-      <motion.div
+      <div
         style={{
-          top: 0,
           transformOrigin: "top center",
           height: 2400
         }}
-        className="size-full container absolute inset-0 self-center mx-auto will-change-transform"
+        className="w-screen container absolute flex flex-col gap-[2vw] py-[2vw] inset-0 mx-auto"
       >
-        <motion.div
-          style={{
-            transformOrigin: "top center",
-            scale
-          }}
-          className="h-full bg-primary-500 relative flex flex-col gap-[2vw] p-[2vw] overflow-hidden rounded-2xl"
-        >
-          <Row
-            images={[
-              "/images/screens/1.webp",
-              "/images/screens/2.webp",
-              "/images/screens/3.webp",
-              "/images/screens/4.webp"
-            ]}
-            baseVelocity={1}
-          />
-          <Row
-            images={[
-              "/images/screens/5.webp",
-              "/images/screens/6.webp",
-              "/images/screens/7.webp",
-              "/images/screens/8.webp"
-            ]}
-            baseVelocity={-1}
-          />
-          <Row
-            images={[
-              "/images/screens/9.webp",
-              "/images/screens/1.webp",
-              "/images/screens/2.webp",
-              "/images/screens/3.webp"
-            ]}
-            baseVelocity={1}
-          />
-          <Row
-            images={[
-              "/images/screens/4.webp",
-              "/images/screens/5.webp",
-              "/images/screens/6.webp",
-              "/images/screens/7.webp"
-            ]}
-            baseVelocity={-1}
-          />
-        </motion.div>
-      </motion.div>
+        <Row images={IMAGE_SETS["SET_1"] || []} baseVelocity={2} />
+        <Row images={IMAGE_SETS["SET_2"] || []} baseVelocity={-2} />
+        <Row images={IMAGE_SETS["SET_3"] || []} baseVelocity={2} />
+        <Row images={IMAGE_SETS["SET_4"] || []} baseVelocity={-2} />
+      </div>
     </motion.section>
   );
 }
