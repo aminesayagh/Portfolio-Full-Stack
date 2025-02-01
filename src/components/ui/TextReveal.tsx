@@ -65,8 +65,6 @@ export const TextReveal: FC<TextRevealProps> = ({ text, className }) => {
   // Smooth out the scroll progress
   const smoothProgress = useSpring(scrollYProgress, springConfig);
 
-  // const words = useMemo(() => text.split(" "), [text]);
-
   const wordsData = useMemo(() => {
     const words = text.split(" ");
     return words.map((word, index) => {

@@ -23,6 +23,8 @@ import {
 import Image from "@/components/ui/image";
 import { cn } from "@/lib/utils";
 
+const BASE_VELOCITY = 4;
+
 const Row = memo(function Row({
   images,
   baseVelocity = 100
@@ -31,6 +33,9 @@ const Row = memo(function Row({
   baseVelocity?: number;
 }) {
   const baseX = useMotionValue(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const currentVelocity = useRef(baseVelocity);
+  const targetVelocity = useRef(baseVelocity);
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);
   const smoothScroll = useSpring(scrollVelocity, {
@@ -48,7 +53,12 @@ const Row = memo(function Row({
   const directionFactor = useRef<number>(1);
 
   useAnimationFrame((_, delta) => {
-    let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
+    targetVelocity.current = isHovered ? 0 : baseVelocity;
+
+    const ease = 0.25; // Adjust this value to control the smoothing speed (0-1)
+    currentVelocity.current += (targetVelocity.current - currentVelocity.current) * ease;
+
+    let moveBy = directionFactor.current * currentVelocity.current * (delta / 1000);
 
     /**
      * This is what changes the direction of the scroll once we
@@ -81,15 +91,18 @@ const Row = memo(function Row({
       .fill(0)
       .map((_, index) => (
         <motion.div
-          key={index}
-          className="relative h-full overflow-hidden rounded-xl object-cover min-w-[40vw]"
+          key={`${index}-image`}
+          className="relative h-full overflow-hidden rounded-xl object-cover min-w-[66vh]"
+          style={{
+            aspectRatio: "2/1"
+          }}
         >
-          <div className="absolute inset-0 z-10 bg-black/20"></div>
+          <div className="absolute inset-0 z-10 bg-black/15"></div>
           <Image
             src={images[index % images.length] || ""}
             alt={`Image ${index}`}
             fill
-            className="object-cover object-top rounded-xl"
+            className="object-cover object-top rounded-xl size-full"
             placeholder="empty"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
@@ -101,9 +114,11 @@ const Row = memo(function Row({
 
   return (
     <motion.div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       className={cn(
         "relative h-full flex flex-row w-full min-w-screen gap-[2vw] will-change-transform",
-        "group [--duration:40s] [--gap:2rem]"
+        "group [--gap:2rem] "
       )}
       style={{ x }}
     >
@@ -246,10 +261,10 @@ function Overview() {
         }}
         className="w-screen container absolute flex flex-col gap-[2vw] py-[2vw] inset-0 mx-auto"
       >
-        <Row images={IMAGE_SETS["SET_1"] || []} baseVelocity={2} />
-        <Row images={IMAGE_SETS["SET_2"] || []} baseVelocity={-2} />
-        <Row images={IMAGE_SETS["SET_3"] || []} baseVelocity={2} />
-        <Row images={IMAGE_SETS["SET_4"] || []} baseVelocity={-2} />
+        <Row images={IMAGE_SETS["SET_1"] || []} baseVelocity={BASE_VELOCITY} />
+        <Row images={IMAGE_SETS["SET_2"] || []} baseVelocity={-BASE_VELOCITY} />
+        <Row images={IMAGE_SETS["SET_3"] || []} baseVelocity={BASE_VELOCITY} />
+        <Row images={IMAGE_SETS["SET_4"] || []} baseVelocity={-BASE_VELOCITY} />
       </div>
     </motion.section>
   );
