@@ -26,7 +26,7 @@ const MemoizedWord: FC<WordProps> = memo(({ children, progress, range }) => {
   });
 
   return (
-    <span className="xl:lg-3 relative mx-1 lg:mx-2.5 inline-block">
+    <span className="xl:lg-3 relative mr-1.5 lg:mr-2.5 inline-block">
       <span className="absolute opacity-30">{children}</span>
       <motion.span
         style={{ opacity: opacity }}
@@ -81,10 +81,10 @@ export const TextReveal: FC<TextRevealProps> = ({ text, className }) => {
       title(
         {
           degree: "1",
-          weight: "semibold",
-          size: "h4"
+          weight: "medium",
+          size: "h2"
         },
-        "tracking-normal"
+        "tracking-wide"
       ),
       className
     )

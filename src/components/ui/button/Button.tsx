@@ -4,8 +4,6 @@ import React, { forwardRef, useMemo, memo } from "react";
 
 import { FocusRing } from "react-aria";
 import { Button } from "react-aria-components";
-
-import { text } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 
 import type { ButtonProps } from "./Button.type";
@@ -14,12 +12,8 @@ const ButtonUi = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       children,
-      size = "auto",
       full,
-      weight,
       name,
-      degree = "1",
-      mode,
       className,
       ...props
     },
@@ -34,15 +28,14 @@ const ButtonUi = forwardRef<HTMLButtonElement, ButtonProps>(
           "text-clip whitespace-nowrap overflow-hidden",
           "align-middle",
           full ? "w-full" : "",
-          text({ weight, size, degree, mode }),
           typeof className === "string" ? className : ""
         ),
-      [size, full, weight, degree, mode, className]
+      [full, className]
     );
 
     return (
       <FocusRing>
-          <Button name={name} ref={ref} className={buttonClasses} {...props}>
+        <Button name={name} ref={ref} className={buttonClasses} {...props}>
           {children}
         </Button>
       </FocusRing>

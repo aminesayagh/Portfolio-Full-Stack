@@ -1,8 +1,7 @@
 import { useTranslations } from "next-intl";
 
-import { text } from "@/components/ui/typography";
 import { TextReveal } from "@/components/ui/TextReveal";
-import Button from "@/components/ui/button";
+import { ButtonCallToActionScroll } from "@/components/ui/button";
 
 export default function About() {
   const t = useTranslations("about");
@@ -10,8 +9,8 @@ export default function About() {
   return (
     <div className="flex flex-row gap-0 container items-start justify-end py-24 h-[200vh]">
       {/* head */}
-      <div className="w-9/12 flex flex-col items-start justify-start gap-12">
-        <div className="flex flex-row items-center justify-start gap-6">
+      <div className="w-10/12 flex flex-col items-start justify-start gap-12">
+        {/* <div className="flex flex-row items-center justify-start gap-6">
           <h2
             className={text({
               degree: "3",
@@ -31,25 +30,15 @@ export default function About() {
           >
             {t("subtitle_2")}
           </h3>
-        </div>
+        </div> */}
         {/* body */}
-        <div className="w-full -ml-3 relative">
+        <div className="w-full -ml-0 relative">
           <TextReveal text={t("content")} />
         </div>
         {/* call to action */}
-        <div>
-          <Button
-            className={text(
-              {
-                weight: "medium",
-                size: "md"
-              },
-              "w-fit"
-            )}
-          >
-            {t("action")}
-          </Button>
-        </div>
+        <ButtonCallToActionScroll>
+          {t("action")}
+        </ButtonCallToActionScroll>
       </div>
     </div>
   );

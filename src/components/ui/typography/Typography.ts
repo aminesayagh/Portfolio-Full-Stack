@@ -98,7 +98,7 @@ export const titleStyle = cva([textDefault, fontFamilyTitle], {
     weight: {
       bold: "font-extrabold",
       semibold: "font-bold",
-      medium: "font-medium"
+      medium: "font-semibold"
     },
     size: {
       h1: "text-title-h1",

@@ -22,6 +22,7 @@ import {
 
 import Image from "@/components/ui/image";
 import { cn } from "@/lib/utils";
+import useWindowSize from "@/hook/useWindowSize";
 
 const BASE_VELOCITY = 4;
 
@@ -236,13 +237,13 @@ function Overview() {
   // Transform height from initial to final height
   const height = useTransform(scrollYPosition, [0, 2000], [2400, 900]);
 
-  const maxWidth = useMemo(() => window.innerWidth + 40, [window.innerWidth]);
+  const { width: windowWidth } = useWindowSize();
 
   // Transform width from initial container width to full viewport width
   const width = useTransform(
     scrollYPosition,
     [0, 2000],
-    [initialWidth, maxWidth] // Add 40px to account for the rounded corners
+    [initialWidth, (windowWidth || 0) + 40] // Add 40px to account for the rounded corners
   );
 
   return (
@@ -257,7 +258,7 @@ function Overview() {
       <div
         style={{
           transformOrigin: "top center",
-          height: 2400
+          height: 2500
         }}
         className="w-screen container absolute flex flex-col gap-[2vw] py-[2vw] inset-0 mx-auto"
       >
