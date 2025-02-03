@@ -142,7 +142,7 @@ const Header = () => {
           .reverse()
           .then(() => {
             const current = ctx.current;
-            if (!current) return null;
+            if (!current) { return null; }
             setOpenMenu(false);
             current.revert(); // revert timeline to the beginning
             return null;
@@ -153,8 +153,8 @@ const Header = () => {
     return () => {
       const currentCtx = ctx.current;
       const currentTl = tl.current;
-      if (currentCtx) currentCtx.revert();
-      if (currentTl) currentTl.kill();
+      if (currentCtx) { currentCtx.revert(); }
+      if (currentTl) { currentTl.kill(); }
     };
   }, []);
   useIsomorphicLayoutEffect(() => {
@@ -199,7 +199,7 @@ const Header = () => {
   useEffect(() => {
     if (openMenu) {
       const current = ctx.current;
-      if (current) current["open"]();
+      if (current) { current["open"](); }
     }
   }, [openMenu]);
 
@@ -237,7 +237,7 @@ const Header = () => {
 
   useEffect(() => {
     return () => {
-      if (!!idTimeout.current) clearTimeout(idTimeout.current);
+      if (!!idTimeout.current) { clearTimeout(idTimeout.current); }
     };
   }, []);
 
@@ -257,13 +257,15 @@ const Header = () => {
               GAP_SIZE_LG
             )}
           >
-            {!openMenu && <SwitchLang />}
-            <span
-              className={cn(
-                "w-[1.4px] bg-gray-200 h-[13px] rotate-[25deg] hidden mdl:block",
-                openMenu ? "hidden w-0" : ""
-              )}
-            />
+            {!openMenu && (<>
+              <SwitchLang />
+              <span
+                className={cn(
+                  "w-[1.4px] bg-gray-200 h-[13px] rotate-[25deg] hidden mdl:block",
+                  openMenu ? "hidden w-0" : ""
+                )}
+              />
+            </>)}
             <Button
               onPress={() =>
                 onButtonClick(pageName !== "contact" ? "/contact" : "/")
@@ -310,9 +312,7 @@ const Header = () => {
               {({ handler, isOpen }) => {
                 return (
                   <div
-                    className={cn(
-                      "flex flex-row items-center gap-6 justify-end"
-                    )}
+                    className="flex flex-row items-center gap-6 justify-end"
                   >
                     <button
                       className="hidden overflow-hidden cursor-pointer xxs:block"
@@ -349,7 +349,7 @@ const Header = () => {
                 isDismissable
                 className={cn("body-background modal-content")}
               >
-                {({}) => (
+                {({ }) => (
                   <div
                     className={cn(
                       "flex flex-col justify-between",
@@ -406,7 +406,7 @@ const Header = () => {
                                 </Button>
                                 <span className="overflow-hidden">
                                   {t(`${BASE_LOCALE_MENU}.${item.id}.more`) !==
-                                  "null" ? (
+                                    "null" ? (
                                     <p
                                       className={text(
                                         {

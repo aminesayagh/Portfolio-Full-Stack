@@ -34,9 +34,9 @@ const HamburgerMenu = ({
   const isXxs = useMedia("(min-width: 390px)", false);
 
   useEffect(() => {
-    if (typeof isOpen !== "boolean") return;
+    if (typeof isOpen !== "boolean") {return;}
     async function handlerHamburgerClick() {
-      if (!path02Controls || !path01Controls) return;
+      if (!path02Controls || !path01Controls) {return;}
       if (isOpen) {
         await path02Controls.start(path02Variants.moving);
         path01Controls.start(path01Variants.open);
@@ -54,30 +54,29 @@ const HamburgerMenu = ({
     }
   }, [isOpen, path02Controls, path01Controls]);
   const { keyboardProps } = useKeyboard({
-    onKeyDown: e => {
-      if (["Escape", "Esc"].includes(e.key)) {
-      }
-    },
+    // onKeyDown: e => {
+    //   if (["Escape", "Esc"].includes(e.key)) {
+    //   }
+    // }, // TODO: test the need of a keydown event
     onKeyUp: e => {
-      if (["Escape", "Esc"].includes(e.key)) {
-        if (isOpen) {
-          setOpen();
-        }
+      if (["Escape", "Esc"].includes(e.key) && isOpen) {
+        setOpen();
       }
     }
   });
 
-  if (typeof setOpen !== "function" || typeof isOpen !== "boolean")
-    throw new Error("HamburgerMenu: setOpen is undefined");
+  if (typeof setOpen !== "function" || typeof isOpen !== "boolean"){
+    throw new Error("HamburgerMenu: setOpen is undefined");}
 
   return (
     <span {...keyboardProps}>
       <Button
         onPress={() => setOpen()}
-        name="Hamberger menu button"
-        title="Hamberger menu button"
-        aria-label="Hamberger menu button"
+        name="Hamburger menu button"
+        title="Hamburger menu button"
+        aria-label="Hamburger menu button"
         aria-haspopup="true"
+        className="text-white-100"
       >
         <svg
           width={`${isXxs ? SIZE : 22}`}
