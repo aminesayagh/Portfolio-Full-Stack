@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 
 import { useTranslations, useLocale } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 import { Icon } from "@/components/ui/icon";
 import { display, Link, text } from "@/components/ui/typography";
@@ -87,7 +87,7 @@ const Action = () => {
   return (
     <div
       ref={refContainer}
-      className={twMerge(
+      className={cn(
         "h-[64vh] flex flex-col gap-1 xs:gap-2 sm:gap-6",
         "justify-center items-start xs:items-center place-content-start"
       )}
@@ -108,7 +108,7 @@ const Action = () => {
       </span>
       <div className="relative flex flex-row items-start justify-start xs:justify-center">
         <div
-          className={twMerge(
+          className={cn(
             "absolute hidden xxs:block",
             "left-[103%] xs:right-[103%] rotate-180	xs:rotate-0",
             "right-auto xs:left-auto xs:top-1 will-change-transform-animation contact-arrow-gsap"

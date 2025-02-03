@@ -1,10 +1,18 @@
 import { useTranslations } from "next-intl";
-
+import { useMemo } from "react";
 import { TextReveal } from "@/components/ui/TextReveal";
 import { ButtonCallToActionScroll } from "@/components/ui/button";
 
+import CardHovered from "@/components/ui/CardHovered";
+
 export default function About() {
   const t = useTranslations("about");
+
+  const sellingPoints = useMemo<{
+    number: string;
+    description: string;
+    suffix?: string;
+  }[]>(() => t.raw("selling_point"), [t]);
 
   return (
     <div className="flex flex-row gap-0 container items-start justify-end py-24 h-[200vh]">
@@ -39,6 +47,20 @@ export default function About() {
         <ButtonCallToActionScroll>
           {t("action")}
         </ButtonCallToActionScroll>
+        <span className="h-24"></span>
+        <div className="w-full grid grid-cols-3 gap-8">
+          {sellingPoints.map((point, index) => (
+            <CardHovered
+              key={`${index}-${point.number}`}
+              description={point.description}
+              number={point.number}
+              suffix={point.suffix}
+              style={{
+                zIndex: 10 + index
+              }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

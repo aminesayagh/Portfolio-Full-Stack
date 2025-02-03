@@ -11,63 +11,16 @@ const fontFamilyText = "font-sans";
 
 export const typographyColorDegree = cva("", {
   variants: {
-    mode: {
-      normal: "",
-      exchanged: ""
-    },
     degree: {
-      "1": "",
-      "2": "",
-      "3": "",
-      "4": ""
+      "1": "text-content-100 dark:text-content-dark-100",
+      "2": "text-content-200 dark:text-content-dark-200",
+      "3": "text-content-300 dark:text-content-dark-300",
+      "4": "text-content-400 dark:text-content-dark-400"
     }
   },
   defaultVariants: {
-    mode: "normal",
     degree: "1"
-  },
-  compoundVariants: [
-    {
-      mode: "normal",
-      degree: "1",
-      className: "text-white-100"
-    },
-    {
-      mode: "normal",
-      degree: "2",
-      className: "text-white-400"
-    },
-    {
-      mode: "normal",
-      degree: "3",
-      className: "text-white-500"
-    },
-    {
-      mode: "normal",
-      degree: "4",
-      className: "text-white-600"
-    },
-    {
-      mode: "exchanged",
-      degree: "1",
-      className: "text-black-100"
-    },
-    {
-      mode: "exchanged",
-      degree: "2",
-      className: "text-black-400"
-    },
-    {
-      mode: "exchanged",
-      degree: "3",
-      className: "text-black-700"
-    },
-    {
-      mode: "exchanged",
-      degree: "4",
-      className: "text-black-800"
-    }
-  ]
+  }
 });
 
 export type TypographyColorProps = VariantProps<typeof typographyColorDegree>;
@@ -144,31 +97,31 @@ export type TextPropsExtended = VariantProps<typeof textStyle> &
   TypographyColorProps;
 
 export const title = (
-  { mode, degree, weight, size }: TitlePropsExtended,
+  { degree, weight, size }: TitlePropsExtended,
   ...className: ClassNameValue[]
 ) =>
   cn(
     titleStyle({ weight, size }),
-    typographyColorDegree({ mode, degree }),
+    typographyColorDegree({ degree }),
     ...className
   );
 
 export const display = (
-  { mode, degree, weight, size }: DisplayPropsExtended,
+  { degree, weight, size }: DisplayPropsExtended,
   ...className: ClassNameValue[]
 ) =>
   cn(
     displayStyle({ weight, size }),
-    typographyColorDegree({ mode, degree }),
+    typographyColorDegree({ degree }),
     ...className
   );
 
 export const text = (
-  { mode, degree, weight, size }: TextPropsExtended,
+  { degree, weight, size }: TextPropsExtended,
   ...className: ClassNameValue[]
 ) =>
   cn(
-    typographyColorDegree({ mode, degree }),
+    typographyColorDegree({ degree }),
     textStyle({ weight, size }),
     ...className
   );

@@ -48,7 +48,7 @@ export default async function RootLayout({
           type="image/svg+xml"
         />
       </head>
-      <body className={`${montserrat.variable} antialiased bg-background`}>
+      <body className={`${montserrat.variable} antialiased bg-background dark`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <LoadingProvider>{children}</LoadingProvider>
         </NextIntlClientProvider>

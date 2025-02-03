@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations, useLocale } from "next-intl";
 import { Input, Button } from "react-aria-components";
 import { useForm } from "react-hook-form";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 import { z } from "zod";
 
 import { addToast } from "@/components/common/toast";
@@ -177,7 +177,7 @@ const ContactForm = () => {
         <textarea placeholder={t("form.field.message.placeholder")} />
       </Field>
       <Button
-        className={twMerge(
+        className={cn(
           "text-xs md:text-sm",
           "px-10 py-4 w=full bg-white-100 font-semibold",
           "rounded-sm",

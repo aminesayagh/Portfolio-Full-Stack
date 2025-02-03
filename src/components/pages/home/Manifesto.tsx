@@ -5,7 +5,7 @@ import React, { useRef, useEffect, useState } from "react";
 
 import _ from "lodash";
 import { useLocale, useTranslations } from "next-intl";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 import { text, title, Link } from "@/components/ui/typography";
 import useGsap from "@/hook/useGsap";
@@ -62,7 +62,9 @@ const Phrase = ({
         ) as HTMLDivElement[];
         const desc_1 = descriptions[0] as HTMLDivElement;
         const desc_2 = descriptions[1] as HTMLDivElement;
-        if (!desc_1 || !desc_2) return;
+        if (!desc_1 || !desc_2) {
+          return;
+        }
         const letters = gsap.utils.toArray(".letter_gsap");
         const tl = gsap
           .timeline({
@@ -162,13 +164,13 @@ const Manifesto = () => {
       ref={refDescription}
     >
       <div
-        className={twMerge(
+        className={cn(
           `grid grid-cols-12 gap-y-8 xxs:gap-y-12 xs:gap-y-8 mdl:gap-y-12`,
           "h-fit strick"
         )}
       >
         <div
-          className={twMerge(
+          className={cn(
             "flex flex-col gap-6 xs:gap-7 items-start justify-start manifesto_quote_gsap will-change-transform-animation",
             "col-start-1 col-span-12 xs:col-start-2 xs:col-span-11 md:col-start-2 md:col-span-10 mdl:col-start-2 mdl:col-span-10 xl:col-start-2 xl:col-span-9"
           )}
@@ -211,21 +213,21 @@ const Manifesto = () => {
               {t(`manifesto.slogan`)}
             </strong>
             <Phrase
-              text={That's amazing! I just feel that the keyword "specializing" doesn't adequately describe the uniqueness of my profile.g}
+              text={t(`manifesto.description`)}
               lang={locale}
               refDescription={refDescription as RefObject<HTMLDivElement>}
             />
           </div>
         </div>
         <div
-          className={twMerge(
+          className={cn(
             "flex flex-row gap-12 items-start justify-between",
             "mr-7 xl:mr-6 2xl:mr-0",
             "col-start-1 col-span-12 xxs:col-start-2 xxs:col-span-11 xs:col-start-2 xs:col-span-10 sm:col-start-4 sm:col-span-9 md:col-start-5 md:col-span-7 lg:col-start-6 lg:col-span-6 xl:col-start-6 xl:col-span-5"
           )}
         >
           <div
-            className={twMerge(
+            className={cn(
               "flex flex-col gap-4 xxs:gap-5",
               "manifesto_description_container_gsap will-change-transform-animation"
             )}

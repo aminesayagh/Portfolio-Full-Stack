@@ -114,7 +114,24 @@
     "subtitle_1": "Perspective",
     "subtitle_2": "Impact",
     "action": "Download Resume",
-    "content": "I am a digital consultant devoted to transforming code into authentic solutions that reflect my clients’ unique visions. By bridging technical expertise with deep understanding of client needs. I deliver web solutions that build trust, drive growth, and leave a lasting Impact."
+    "content": "I am a digital consultant devoted to transforming code into authentic solutions that reflect my clients’ unique visions. By bridging technical expertise with deep understanding of client needs. I deliver web solutions that build trust, drive growth, and leave a lasting Impact.",
+    "selling_point": [
+      {
+        "number": "8",
+        "description": "Years of experience in developing digital solutions.",
+        "suffix": "+"
+      },
+      {
+        "number": "19",
+        "description": "Projects completed for global clients.",
+        "suffix": "+"
+      },
+      {
+        "number": "87",
+        "description": "Of my clients return from another project.",
+        "suffix": "%"
+      }
+    ]
   },
   "manifesto_old": {
     "title_1": "Perspective",

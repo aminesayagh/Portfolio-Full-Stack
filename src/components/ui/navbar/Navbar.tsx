@@ -9,7 +9,7 @@ import React, {
 
 import { useHover } from "react-aria";
 import { useIsomorphicLayoutEffect } from "react-use";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 import { containerStyle } from "@/components/ui/container";
 import { Link as LinkUi } from "@/components/ui/typography";
@@ -89,7 +89,7 @@ const Navbar: NavbarType = ({
   );
   return (
     <header
-      className={twMerge(
+      className={cn(
         "fixed top-0 left-0 w-full max-w-[100vw] py-4 z-header",
         className,
         zIndex.navbar,
@@ -104,7 +104,7 @@ const Navbar: NavbarType = ({
       {...props}
     >
       <div
-        className={twMerge(
+        className={cn(
           "flex flex-row items-center justify-between w-full",
           containerStyle()
         )}
@@ -116,7 +116,7 @@ const Navbar: NavbarType = ({
 };
 
 const Brand = ({ children, className }: BrandProps) => {
-  return <div className={twMerge(className)}>{children}</div>;
+  return <div className={cn(className)}>{children}</div>;
 };
 
 const ContentActiveItem = createContext<{
@@ -142,7 +142,7 @@ const Content = ({ children, className, ...props }: ContentProps) => {
   return (
     <ContentActiveItem.Provider value={{ activeItem, handleItemClick }}>
       <div
-        className={twMerge("flex flex-row items-center", className)}
+        className={cn("flex flex-row items-center", className)}
         {...props}
       >
         {children}
@@ -191,7 +191,7 @@ const Link = ({ children, href, className, ...props }: LinkProps) => {
       href={href}
       {...hoverProps}
       {...data}
-      className={twMerge(className, "whitespace-nowrap")}
+      className={cn(className, "whitespace-nowrap")}
       {...props}
     >
       {typeof children === "function"

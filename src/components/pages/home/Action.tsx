@@ -2,7 +2,7 @@
 import React from "react";
 
 import { useTranslations } from "next-intl";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 import Button from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
@@ -19,14 +19,14 @@ const Action = () => {
   return (
     <div
       data-scroll
-      className={twMerge(
+      className={cn(
         "flex flex-col md:flex-row justify-between items-start md:items-end",
         "gap-8 md:gap-0",
         "py-12"
       )}
     >
       <div
-        className={twMerge(
+        className={cn(
           "w-auto flex flex-row items-center justify-start",
           "order-2 md:order-1"
         )}
@@ -54,7 +54,7 @@ const Action = () => {
         </Button>
       </div>
       <div
-        className={twMerge(
+        className={cn(
           "flex flex-col sm:flex-row md:flex-col gap-4 sm:gap-16 md:gap-4",
           "w-full xxs:w-11/12 xs:w-10/12 sm:w-full md:w-6/12 lg:w-5/12 xl:w-4/12",
           "order-1 md:order-2"

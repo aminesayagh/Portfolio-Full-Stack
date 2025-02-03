@@ -2,9 +2,9 @@ import React, { useRef } from "react";
 
 import { useToast, useToastRegion } from "@react-aria/toast";
 import { useToastQueue } from "@react-stately/toast";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { createPortal } from "react-dom";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 import { toastQueue } from "./addToast";
 
@@ -25,7 +25,7 @@ const Toast = ({ state, ...props }: ToastProps) => {
   const { toastProps, descriptionProps } = useToast(props, state, ref);
   return (
     <div
-      className={twMerge(
+      className={cn(
         `relative flex flex-row gap-4 items-center p-6 rounded-md bg-black-200 text-gray-300`,
         `border border-gray-900/60`,
         "shadow-md shadow-white-200/5"

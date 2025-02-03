@@ -10,10 +10,10 @@ import React, {
   useCallback
 } from "react";
 
-import { AnimatePresence, motion, useAnimation } from "framer-motion";
+import { AnimatePresence, motion, useAnimation } from "motion/react";
 import { useTranslations } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 import Container from "@/components/ui/container";
 import Noise from "@/components/ui/noise";
@@ -266,17 +266,17 @@ const Preloader = ({
   return (
     <span ref={ref} className="contents">
       <div
-        className={twMerge(
-          "w-screen cursor-none  h-screen overflow-hidden",
+        className={cn(
+          "w-screen cursor-none h-screen overflow-hidden",
           "z-preload bg-white-400",
-          " fixed",
+          "fixed",
           "element-container"
         )}
       >
         <Container
           as="div"
           size="lg"
-          className={twMerge(
+          className={cn(
             "h-screen pt-4 sm:pt-8",
             "flex flex-col justify-between"
           )}
@@ -286,7 +286,6 @@ const Preloader = ({
               <h6
                 className={title({
                   weight: "bold",
-                  mode: "exchanged",
                   size: "h6",
                   degree: "4"
                 })}
@@ -315,7 +314,7 @@ const Preloader = ({
             </ul>
           </div>
           <div
-            className={twMerge(
+            className={cn(
               "w-full",
               "text-loader-gsap invisible",
               "flex flex-row justify-end",
@@ -323,7 +322,7 @@ const Preloader = ({
             )}
           >
             <div
-              className={twMerge(
+              className={cn(
                 "flex flex-row gap-2 flex-nowrap",
                 "uppercase element-counter-gsap",
                 "font-sans font-black text-black-500 will-change-transform-animation",

@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 
 import dynamic from "next/dynamic";
 import { useLocale } from "next-intl";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 import Container from "@/components/ui/container";
 import { usePreloader } from "@/components/ui/preloader";
@@ -45,7 +45,7 @@ const Layer = ({
         as="footer"
         size="lg"
         id="footer"
-        className={twMerge("flex flex-col gap-8 xl:gap-12")}
+        className={cn("flex flex-col gap-8 xl:gap-12")}
       >
         <FooterDynamic />
       </Container>

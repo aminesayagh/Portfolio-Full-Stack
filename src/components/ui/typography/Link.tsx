@@ -16,7 +16,6 @@ export const Link: FC<LinkPropsExtended> = ({
   weight,
   degree,
   size,
-  mode,
   className,
   children,
   ...props
@@ -28,8 +27,7 @@ export const Link: FC<LinkPropsExtended> = ({
         {
           weight,
           degree,
-          size,
-          mode
+          size
         },
         className
       )}

@@ -50,7 +50,6 @@ export default {
       transparent: "transparent",
       current: "currentColor",
       background: "oklch(17.3% 0.01 281.25 / <alpha-value>)",
-      foreground: "#fff",
       primary: {
         DEFAULT: "oklch(53.26% 0.21 281.25 / <alpha-value>)",
         100: "oklch(69.06% 0.15 281.25 / <alpha-value>)",
@@ -122,6 +121,20 @@ export default {
         700: "oklch(60.48% 0.173 37.127 / <alpha-value>)",
         800: "oklch(53.13% 0.168 37.127 / <alpha-value>)",
         900: "oklch(47.83% 0.153 37.127 / <alpha-value>)"
+      },
+      "content-dark": {
+        DEFAULT: "oklch(98.18% 0.004 281.25 / <alpha-value>)",
+        100: "oklch(98.18% 0.004 281.25 / <alpha-value>)",
+        200: "oklch(94.12% 0.004 281.25 / <alpha-value>)",
+        300: "oklch(87.06% 0.004 281.25 / <alpha-value>)",
+        400: "oklch(74.12% 0.004 281.25 / <alpha-value>)"
+      },
+      "content": {
+        DEFAULT: "oklch(17.3% 0.01 281.25 / <alpha-value>)",
+        100: "oklch(17.3% 0.01 281.25 / <alpha-value>)",
+        200: "oklch(20.39% 0.019 281.25 / <alpha-value>)",
+        300: "oklch(24.31% 0.019 281.25 / <alpha-value>)",
+        400: "oklch(28.24% 0.019 281.25 / <alpha-value>)"
       }
     }, 
     extend: {

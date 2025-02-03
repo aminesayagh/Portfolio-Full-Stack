@@ -1,4 +1,4 @@
-import { motion, useAnimation, AnimatePresence } from "framer-motion";
+import { motion, useAnimation, AnimatePresence } from "motion/react";
 import React, { useState, useCallback, useMemo } from "react";
 
 import { cn } from "@/lib/utils";

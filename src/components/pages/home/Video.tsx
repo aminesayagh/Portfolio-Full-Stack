@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect } from "react";
 
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 import { rounded } from "@/components/style";
 import { usePreloader } from "@/components/ui/preloader";
@@ -124,7 +124,7 @@ const Video = () => {
     <div
       data-scroll
       ref={refContainer}
-      className={twMerge(
+      className={cn(
         "block relative w-full rounded-3xl video_gsap overflow-hidden",
         rounded({ size: "xl" })
       )}
@@ -135,7 +135,7 @@ const Video = () => {
       <canvas
         data-scroll
         ref={ref}
-        className={twMerge(
+        className={cn(
           "h-full w-full will-change-transform-animation",
           rounded({ size: "xl" })
         )}

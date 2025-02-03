@@ -1,6 +1,6 @@
 import React, { createElement, useMemo } from "react";
 
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 import type { ContainerProps } from "./Container.type";
 
@@ -11,7 +11,7 @@ const Container = ({
   ...props
 }: ContainerProps) => {
   const classNames = useMemo(
-    () => twMerge("mx-auto w-full z-container h-fit container", className),
+    () => cn("mx-auto w-full z-container h-fit container", className),
     [props.size, className]
   );
   return (

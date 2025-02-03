@@ -11,7 +11,7 @@ import React, {
 
 import { useTranslations } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 import { useRouter, usePathname, RouteSettingPathKey } from "@/i18n/routing";
 import HamburgerMenu from "@/components/common/HamburgerMenu";
@@ -252,14 +252,14 @@ const Header = () => {
             </span>
           </Navbar.Brand>
           <Navbar.Content
-            className={twMerge(
+            className={cn(
               "flex-1 justify-end overflow-hidden",
               GAP_SIZE_LG
             )}
           >
             {!openMenu && <SwitchLang />}
             <span
-              className={twMerge(
+              className={cn(
                 "w-[1.4px] bg-gray-200 h-[13px] rotate-[25deg] hidden mdl:block",
                 openMenu ? "hidden w-0" : ""
               )}
@@ -310,7 +310,7 @@ const Header = () => {
               {({ handler, isOpen }) => {
                 return (
                   <div
-                    className={twMerge(
+                    className={cn(
                       "flex flex-row items-center gap-6 justify-end"
                     )}
                   >
@@ -340,18 +340,18 @@ const Header = () => {
               }}
             </Modal.Button>
             <Modal.Overlay
-              className={twMerge(
+              className={cn(
                 "opacity-0 fixed left-0 top-0 w-full min-h-full bg-primary-500 modal-overlay"
               )}
             >
               {/* <Cursor > */}
               <Modal.Content
                 isDismissable
-                className={twMerge("body-background modal-content")}
+                className={cn("body-background modal-content")}
               >
                 {({}) => (
                   <div
-                    className={twMerge(
+                    className={cn(
                       "flex flex-col justify-between",
                       "min-h-screen w-screen",
                       "py-8 sm:py-12",
@@ -360,14 +360,14 @@ const Header = () => {
                   >
                     <div className="h-5 xxs:h-0" />
                     <div
-                      className={twMerge(
+                      className={cn(
                         "flex flex-col sm:flex-row sm:justify-between",
                         "gap-10 sm:gap-0",
                         "items-start sm:items-end md:items-center"
                       )}
                     >
                       <ul
-                        className={twMerge(
+                        className={cn(
                           "flex flex-col gap-6 lg:gap-4",
                           "w-full sm:w-8/12"
                         )}
@@ -376,13 +376,13 @@ const Header = () => {
                           return (
                             <li
                               key={item.id + "_" + index}
-                              className={twMerge(
+                              className={cn(
                                 "flex flex-col items-start",
                                 "overflow-hidden"
                               )}
                             >
                               <div
-                                className={twMerge(
+                                className={cn(
                                   "flex flex-row justify-start items-start relative cursor-pointer",
                                   "modal-item"
                                 )}
@@ -395,7 +395,7 @@ const Header = () => {
                                   degree="1"
                                   weight="bold"
                                   name="menuItem"
-                                  className={twMerge(
+                                  className={cn(
                                     "capitalize relative text-white-600 bg-black-100 z-10 hover:text-primary-500",
                                     "text-7xl sm:text-8xl mdl:text-9xl lg:text-15xl xl:text-[5rem] font-bold leading-tight tracking-wide transition-colors duration-150"
                                   )}
@@ -427,7 +427,7 @@ const Header = () => {
                         })}
                       </ul>
                       <div
-                        className={twMerge(
+                        className={cn(
                           "flex flex-col gap-2 xxs:gap-4",
                           "w-full xxs:max-w-[75%] sm:max-w-[32%] mdl:w-min"
                         )}
@@ -463,13 +463,13 @@ const Header = () => {
                       </div>
                     </div>
                     <div
-                      className={twMerge(
+                      className={cn(
                         "flex flex-col xxs:flex-row justify-between items-start xxs:items-end",
                         "gap-2 xxs:gap-0"
                       )}
                     >
                       <div
-                        className={twMerge(
+                        className={cn(
                           "flex flex-row justify-start items-center",
                           "order-2 xxs:order-1",
                           "overflow-hidden"
@@ -489,7 +489,7 @@ const Header = () => {
                         </p>
                       </div>
                       <ul
-                        className={twMerge(
+                        className={cn(
                           "flex flex-row items-center justify-end order-1 xxs:order-2",
                           GAP_SIZE_XL
                         )}

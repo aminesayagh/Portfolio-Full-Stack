@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 
-import { motion } from "framer-motion";
-import { twMerge } from "tailwind-merge";
+import { motion } from "motion/react";
+import { cn } from "@/lib/utils";
 
 const Noise = ({
   position = "fixed",
@@ -23,7 +23,7 @@ const Noise = ({
   return (
     <motion.div
       animate={noiseAnimation}
-      className={twMerge(
+      className={cn(
         "bg-noise",
         className || "opacity-70",
         "-top-1/2 -left-1/2 -bottom-1/2 -right-1/2 bg-repeat",

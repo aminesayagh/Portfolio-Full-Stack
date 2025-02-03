@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation } from "motion/react";;
 import { useKeyboard } from "react-aria";
 import { useMedia } from "react-use";
 

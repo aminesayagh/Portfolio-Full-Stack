@@ -2,7 +2,7 @@ import React, { useMemo, useRef } from "react";
 
 import { useTranslations } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 import Container from "@/components/ui/container";
 import { text, Link, display } from "@/components/ui/typography";
@@ -56,9 +56,9 @@ const ContactPage = () => {
         size="lg"
         data-scroll-section
         id="contact"
-        className={twMerge("flex flex-col gap-12", "items-stretch")}
+        className={cn("flex flex-col gap-12", "items-stretch")}
       >
-        <section className={twMerge("flex flex-col gap-14 xl:gap-20 py-40")}>
+        <section className={cn("flex flex-col gap-14 xl:gap-20 py-40")}>
           {/* title */}
           <div className="grid grid-cols-12 gap-4 overflow-hidden">
             <h1
@@ -78,13 +78,13 @@ const ContactPage = () => {
           </div>
           {/* form */}
           <div
-            className={twMerge(
+            className={cn(
               "grid grid-cols-12 gap-y-10 gap-x-0 xxs:gap-8 sm:gap-3 md:gap-8 mdl:gap-4 xl:gap-8",
               "grid-rows-[repeat(3,_minmax(0,_auto))] xxs:grid-rows-[repeat(2,_minmax(0,_auto))] sm:grid-rows-2"
             )}
           >
             <div
-              className={twMerge(
+              className={cn(
                 "flex flex-col gap-3",
                 GRID_DEFAULT_CLASS,
                 "xxs:col-start-1 xxs:col-span-4",
@@ -108,7 +108,7 @@ const ContactPage = () => {
               <hr className="relative h-[2px] w-4 bg-gray-200" />
             </div>
             <div
-              className={twMerge(
+              className={cn(
                 GRID_DEFAULT_CLASS,
                 "xxs:col-start-1 xxs:col-span-12",
                 "xs:col-start-1 xs:col-span-11",
@@ -124,7 +124,7 @@ const ContactPage = () => {
               <ContactForm />
             </div>
             <div
-              className={twMerge(
+              className={cn(
                 "flex flex-col sm:justify-end items-start xl:items-end",
                 GRID_DEFAULT_CLASS,
                 "xxs:col-start-8 xxs:col-span-4",
@@ -164,10 +164,10 @@ const ContactPage = () => {
           <span className="h-6 md:h-10" />
           {/* repped */}
           <div
-            className={twMerge("grid grid-cols-12 gap-x-0 gap-y-8 xs:gap-8")}
+            className={cn("grid grid-cols-12 gap-x-0 gap-y-8 xs:gap-8")}
           >
             <div
-              className={twMerge(
+              className={cn(
                 "flex flex-col",
                 "gap-3",
                 "col-start-1 col-span-12",
@@ -189,7 +189,7 @@ const ContactPage = () => {
               <hr className="relative h-[2px] w-4 bg-gray-200" />
             </div>
             <div
-              className={twMerge(
+              className={cn(
                 GRID_DEFAULT_CLASS,
                 "xs:col-start-1 xs:col-span-11",
                 "sn:col-start-1 sm:col-span-9",
@@ -201,7 +201,7 @@ const ContactPage = () => {
               <AgencyList />
             </div>
             <div
-              className={twMerge(
+              className={cn(
                 "flex flex-row flex-wrap sm:flex-col gap-x-10 xs:gap-x-12 gap-y-4 sm:gap-4 justify-start xs:justify-end items-end",
                 GRID_DEFAULT_CLASS,
                 "xs:col-start-1 xs:col-span-11",

@@ -6,7 +6,7 @@ import gsap from "gsap";
 import { ReactLenis } from "@/lib/Lenis/provider";
 import { LenisRef } from "@/lib/Lenis/types";
 
-import { cancelFrame, frame } from 'framer-motion';
+import { cancelFrame, frame } from "motion/react";
 
 
 function Lenis({ children }: { children: React.ReactElement }) {

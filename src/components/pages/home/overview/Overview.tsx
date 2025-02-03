@@ -18,7 +18,7 @@ import {
   useSpring,
   wrap,
   useAnimationFrame
-} from "framer-motion";
+} from "motion/react";;
 
 import Image from "@/components/ui/image";
 import { cn } from "@/lib/utils";
@@ -217,7 +217,7 @@ function Overview() {
   // Transform width from container width to full window width
   const { scrollY } = useScroll({
     target: containerRef,
-    offset: ["start center", "end center"]
+    offset: ["start center", "end end"]
   });
 
   useMotionValueEvent(scrollY, "change", latest => {
@@ -243,7 +243,7 @@ function Overview() {
   const width = useTransform(
     scrollYPosition,
     [0, 2000],
-    [initialWidth, (windowWidth || 0) + 40] // Add 40px to account for the rounded corners
+    [initialWidth, (windowWidth || 0) + 1000] // Add 40px to account for the rounded corners
   );
 
   return (

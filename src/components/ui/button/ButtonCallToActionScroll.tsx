@@ -1,11 +1,11 @@
 "use client";
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
     useInView,
     motion,
     Variants,
     AnimatePresence
-} from "framer-motion";
+} from "motion/react";;
 
 import { cn } from "@/lib/utils";
 import Button from "./Button";

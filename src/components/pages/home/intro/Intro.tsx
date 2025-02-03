@@ -1,12 +1,9 @@
 "use client";
 
-import React, {
-  useRef,
-  useCallback,
-} from "react";
+import React, { useRef, useCallback } from "react";
 
 import { useTranslations, useLocale } from "next-intl";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 import { usePreloader } from "@/components/ui/preloader";
 import { text, display } from "@/components/ui/typography";
@@ -35,7 +32,7 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
     <>
       <div
         ref={widthInterfaceRef}
-        className={twMerge(
+        className={cn(
           // col
           locale === "en"
             ? "col-start-1 col-span-12"
@@ -66,7 +63,7 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
       </div>
       {/* description */}
       <div
-        className={twMerge(
+        className={cn(
           "flex flex-row xxs:flex-col justify-between items-start xs:hidden",
           "col-start-1 col-span-12 xxs:col-span-4 row-start-3 row-span-1 xxs:row-start-2 xxs:row-span-1"
         )}
@@ -78,7 +75,7 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
       </div>
 
       <div
-        className={twMerge(
+        className={cn(
           // flex
           "flex flex-col xs:flex-row justify-between mdl:justify-end",
           "gap-6 xxs:gap-8 xs:gap-4 mdl:gap-2 lg:gap-4 4xl:gap-28", // gap
@@ -149,7 +146,7 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
       </div>
       {/* button next */}
       <div
-        className={twMerge(
+        className={cn(
           "mdl:w-2/12",
           "hidden xs:flex flex-col items-end mdl:items-start justify-end w-fit mdl:w-fit",
           "mt-1 lg:mt-4",
@@ -166,7 +163,7 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
         <ButtonNext goToCases={goToCases} />
       </div>
       <div
-        className={twMerge(
+        className={cn(
           "hidden xs:flex",
           "row-start-3 row-span-1",
           "mdl:row-start-2 mdl:row-span-1",
@@ -185,7 +182,7 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
       {/* DEVELOPER */}
       <div
         ref={widthDevRef}
-        className={twMerge(
+        className={cn(
           "flex flex-col xxs:flex-row justify-start xs:justify-end",
           "row-start-4 row-span-1",
           "xxs:row-start-3 xxs:row-span-1",
@@ -343,7 +340,7 @@ const Intro = () => {
       ref={introRef}
     >
       <div
-        className={twMerge(
+        className={cn(
           "flex flex-row flex-wrap",
           "grid grid-cols-12 grid-row-4 xxs:grid-row-3 mdl:grid-row-2",
           "gap-x-3 md:gap-x-4 gap-y-6 xxs:gap-y-8 xs:gap-y-6 sm:gap-y-8 mdl:gap-y-8 lg:gap-y-10",

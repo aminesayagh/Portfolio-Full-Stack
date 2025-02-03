@@ -1,7 +1,7 @@
 
 import { useRef, useCallback } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 import type { PressEvent } from "react-aria";
 
 import Button from "@/components/ui/button";
@@ -81,7 +81,7 @@ const ButtonNext = ({ goToCases }: { goToCases: GoTOCases }) => {
       <Button
         onPress={goToCases}
         data-scroll
-        className={twMerge(
+        className={cn(
           "relative bg-white-100",
           "rounded-full overflow-hidden will-change-transform-animation next_button_gsap"
         )}

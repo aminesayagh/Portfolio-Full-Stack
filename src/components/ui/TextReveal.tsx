@@ -8,7 +8,7 @@ import {
   useScroll,
   useSpring,
   UseScrollOptions
-} from "framer-motion";
+} from "motion/react";
 import { ComponentPropsWithoutRef, FC, ReactNode, useRef, memo } from "react";
 
 import { cn } from "@/lib/utils";

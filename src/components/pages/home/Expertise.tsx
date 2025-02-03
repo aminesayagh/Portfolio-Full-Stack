@@ -5,7 +5,7 @@ import React, { memo, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { useHover } from "react-aria";
 import { useMedia } from "react-use";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 import { rounded } from "@/components/style";
 import Noise from "@/components/ui/noise/Noise";
@@ -36,7 +36,7 @@ const ExpertiseHead = () => {
   const t = useTranslations();
   return (
     <div
-      className={twMerge(
+      className={cn(
         "flex flex-col sm:flex-row gap-5 sm:gap-0 items-start sm:items-end justify-between",
         "w-full"
       )}
@@ -44,14 +44,13 @@ const ExpertiseHead = () => {
       <div className="block sm:hidden">
         <IconMemo />
       </div>
-      <div className={twMerge("w-full xs:w-9/12 sm:w-1/2 xl:w-5/12")}>
+      <div className={cn("w-full xs:w-9/12 sm:w-1/2 xl:w-5/12")}>
         <h2
           className={title(
             {
               weight: "bold",
               degree: "1",
-              size: "h2",
-              mode: "exchanged"
+              size: "h2"
             },
             "capitalize"
           )}
@@ -60,7 +59,7 @@ const ExpertiseHead = () => {
         </h2>
       </div>
       <div
-        className={twMerge(
+        className={cn(
           "w-11/12 xs:w-10/12 sm:w-1/2 xl:w-5/12",
           "flex flex-col gap-4 mdl:gap-5",
           "sm:items-end"
@@ -74,8 +73,7 @@ const ExpertiseHead = () => {
             {
               weight: "medium",
               degree: "4",
-              size: "md",
-              mode: "exchanged"
+              size: "md"
             },
             "text-start sm:text-end"
           )}
@@ -124,7 +122,7 @@ const Card = ({
 
   return (
     <div
-      className={twMerge(
+      className={cn(
         "flex flex-col gap-8 sm:gap-12 lg:gap-6 xl:gap-16 justify-between items-baseline",
         "p-5 sm:p-7 lg:p-5 xl:p-6 will-change-transform-animation",
         "transition-colors duration-300 ease-in-out relative",
@@ -135,7 +133,7 @@ const Card = ({
       {...hoverProps}
     >
       <div
-        className={twMerge(
+        className={cn(
           "flex flex-row lg:flex-col xl:flex-row justify-between items-start",
           "gap-4 lg:gap-2 xl:gap-4",
           "w-full"
@@ -147,7 +145,7 @@ const Card = ({
             weight: "bold",
             degree: "2",
             size: "h5",
-            mode: isHovered ? "normal" : "exchanged"
+            // mode: isHovered ? "normal" : "exchanged"
           })}
         >
           {name}
@@ -159,7 +157,7 @@ const Card = ({
               weight: "bold",
               degree: "3",
               size: "lg",
-              mode: isHovered ? "normal" : "exchanged"
+              // mode: isHovered ? "normal" : "exchanged"
             },
             "opacity-60"
           )}
@@ -174,7 +172,7 @@ const Card = ({
               weight: "medium",
               degree: "3",
               size: "sm",
-              mode: isHovered ? "normal" : "exchanged"
+              // mode: isHovered ? "normal" : "exchanged"
             },
             ""
           )}
@@ -190,7 +188,7 @@ const CardMemo = memo(Card);
 const EmptyCard = () => {
   return (
     <div
-      className={twMerge(
+      className={cn(
         "h-full w-full col-span-1 row-span-1",
         "opacity-60 relative",
         BORDER_CARD_CLASS_NAME
@@ -203,7 +201,7 @@ const EmptyCard = () => {
 const EmptyCardMemo = memo(EmptyCard);
 
 const CardElement = ({ i }: { i: number }) => {
-  const t  = useTranslations();
+  const t = useTranslations();
   const ref = useRef<HTMLDivElement>(null);
 
   const lenis = useLenis();
@@ -267,7 +265,7 @@ const ExpertiseStages = () => {
   const array = useRef(Array.apply("", Array(8)).map((_, i) => i));
   return (
     <div
-      className={twMerge(
+      className={cn(
         "grid",
         "grid-cols-1 xs:grid-cols-2 lg:grid-cols-4",
         "grid-rows-5 xs:grid-rows-3 lg:grid-rows-2",
@@ -289,7 +287,7 @@ const Expertise = () => {
     <div
       data-scroll
       data-scroll-speed="0.5"
-      className={twMerge(
+      className={cn(
         "flex flex-col",
         "gap-20 xs:gap-32 sm:gap-16 mdl:gap-32 lg:gap-28 2xl:gap-44",
         "justify-center items-center h-full",
@@ -302,7 +300,7 @@ const Expertise = () => {
       <ExpertiseStagesMemo />
       <Noise position="absolute" className="opacity-60 md:opacity-90" />
       <div
-        className={twMerge(
+        className={cn(
           "absolute w-full h-[26vh] bottom-0 left-0",
           "bg-gradient-to-t from-black-100/25 via-black-100/10 to-black-100/0"
         )}

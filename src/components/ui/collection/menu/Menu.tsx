@@ -7,7 +7,7 @@ import {
   Menu,
   ListBoxItem as Item
 } from "react-aria-components";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 import { mergeClassName } from "@/lib/utils";
 
@@ -103,7 +103,7 @@ const MenuCollectionUi = <
   ...props
 }: MenuProps<T> & React.RefAttributes<HTMLDivElement>) => {
   return (
-    <Menu className={twMerge(className, "outline-none")} {...props}>
+    <Menu className={cn(className, "outline-none")} {...props}>
       {children}
     </Menu>
   );

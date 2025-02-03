@@ -8,10 +8,10 @@ import React, {
   Fragment
 } from "react";
 
+import { cn } from "@/lib/utils";
 import _ from "lodash";
 import { useTranslations, useLocale } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
-import { twMerge } from "tailwind-merge";
 
 import Button from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
@@ -34,7 +34,7 @@ const FollowUs = () => {
   const menuSocialNetworks = getMenuItems("socialNetwork");
 
   useIsomorphicLayoutEffect(() => {
-    if (!menuSocialNetworks.length) return;
+    if (!menuSocialNetworks.length) {return;}
     ctx.current = gsap.context(self => {
       const tl = gsap
         .timeline({
@@ -92,11 +92,11 @@ const FollowUs = () => {
     };
   }, [ref, menuSocialNetworks.length]);
   const handler = useCallback(() => {
-    if (!ctx.current) return;
+    if (!ctx.current) {return;}
     ctx.current["followButtonShow"]();
   }, [ctx]);
   const handlerLeave = useCallback(() => {
-    if (!ctx.current) return;
+    if (!ctx.current) {return;}
     ctx.current["followButtonHide"]();
   }, [ctx]);
   useEventListener("mouseenter", handler, ref as RefObject<HTMLDivElement>);
@@ -141,7 +141,7 @@ const FollowUs = () => {
       <Icon
         name="IconShare"
         size="24"
-        className={twMerge("stroke-gray-400", ICON_SIZE_CLASS_NAME)}
+        className={cn("stroke-gray-400", ICON_SIZE_CLASS_NAME)}
       />
     </div>
   );
@@ -164,7 +164,7 @@ const TextAnimated = ({
   const [body, setBody] = useState<React.JSX.Element[] | null>(null);
 
   useIsomorphicLayoutEffect(() => {
-    if (!body) return;
+    if (!body) {return;}
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".word-gsap",
@@ -319,11 +319,11 @@ const GoToTop = ({ handler, name }: { handler: () => void; name: string }) => {
   }, [ref]);
 
   const handlerMouse = useCallback(() => {
-    if (!ctx.current) return;
+    if (!ctx.current) {return;}
     ctx.current["handlerGoToTop"]();
   }, [ctx]);
   const handlerMouseLeave = useCallback(() => {
-    if (!ctx.current) return;
+    if (!ctx.current) {return;}
     ctx.current["handlerGoToTopLeave"]();
   }, [ctx]);
 
@@ -342,7 +342,7 @@ const GoToTop = ({ handler, name }: { handler: () => void; name: string }) => {
     <Button
       ref={ref}
       onPress={() => handler()}
-      className={twMerge(
+      className={cn(
         "flex flex-row justify-start items-center",
         "gap-6 md:gap-8",
         "uppercase"
@@ -351,7 +351,7 @@ const GoToTop = ({ handler, name }: { handler: () => void; name: string }) => {
       <Icon
         name="IconArrowUpRight"
         size="24"
-        className={twMerge("stroke-gray-400 icon_gsap", ICON_SIZE_CLASS_NAME)}
+        className={cn("stroke-gray-400 icon_gsap", ICON_SIZE_CLASS_NAME)}
       />
       <p
         className={text(
@@ -386,7 +386,7 @@ const Footer = () => {
   return (
     <>
       <div
-        className={twMerge(
+        className={cn(
           locale === "en"
             ? "max-w-[16rem] xxs:w-8/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[32vw] mdl:max-w-[30vw] xl:max-w-[20vw] 2xl:max-w-[28vw] 3xl:max-w-[22rem]"
             : "max-w-[16rem] xxs:w-9/12 xs:max-w-[46vw] sm:max-w-[40vw] md:max-w-[32vw] mdl:max-w-[30vw] xl:max-w-[20vw] 2xl:max-w-[28vw] 3xl:max-w-[22rem]"
@@ -402,13 +402,13 @@ const Footer = () => {
         />
       </div>
       <div
-        className={twMerge(
+        className={cn(
           "flex flex-row flex-wrap sm:flex-nowrap justify-between",
           "gap-y-4",
           "pb-10 pt-6"
         )}
       >
-        <div className={twMerge("flex flex-row flex-1", "order-2 sm:order-1")}>
+        <div className={cn("flex flex-row flex-1", "order-2 sm:order-1")}>
           <GoToTopMemo handler={goToTop} name={t("footer.action")} />
         </div>
         <div className="flex flex-row items-center justify-start flex-none order-1 grow-0 sm:justify-center sm:order-2">

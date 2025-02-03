@@ -1,9 +1,9 @@
 import type { LegacyRef } from "react";
 import React from "react";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { useMeasure } from "react-use";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 const ignoreCircularReferences = () => {
   const cache = new WeakSet();
@@ -71,7 +71,7 @@ const ResizablePanel = ({
         >
           <div
             ref={ref as LegacyRef<HTMLDivElement>}
-            className={twMerge(height ? "relative" : "absolute", "px-0 pb-0")}
+            className={cn(height ? "relative" : "absolute", "px-0 pb-0")}
           >
             {children}
           </div>

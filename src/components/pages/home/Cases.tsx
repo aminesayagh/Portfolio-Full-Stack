@@ -3,7 +3,7 @@ import React, { useMemo, useRef, memo } from "react";
 
 import { useTranslations } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 import Image from "@/components/ui/image";
 import { text, title } from "@/components/ui/typography";
@@ -145,7 +145,7 @@ const Case = ({
   return (
     <div
       data-scroll
-      className={twMerge(
+      className={cn(
         "relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden will-change-transform-animation"
       )}
       ref={container}
@@ -172,7 +172,7 @@ const Case = ({
         <div
           data-scroll
           data-scroll-speed="3"
-          className={twMerge(
+          className={cn(
             "relative w-fit flex flex-col justify-end h-full",
             "px-5 xs:px-10 lg:px-24 py-32 xs:py-24 mdl:py-32",
             "gap-2 xs:gap-4 content-gsap will-change-transform-animation"
@@ -212,7 +212,7 @@ const Case = ({
           </div>
         </div>
         <div
-          className={twMerge(
+          className={cn(
             "absolute inset-x-0 w-full h-80 -bottom-2 xs:h-72",
             "bg-gradient-to-t from-black-100/80 to-black-100/0"
           )}

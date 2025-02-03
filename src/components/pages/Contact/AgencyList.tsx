@@ -1,7 +1,7 @@
 import React, { memo, useMemo } from "react";
 
 import { useTranslations } from "next-intl";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 import { text, title } from "@/components/ui/typography";
 import { getProjectsByCategory } from "@/conf/projects";
@@ -13,19 +13,19 @@ const AgencyList = () => {
 
   return (
     <ul
-      className={twMerge("flex flex-col gap-0", "border-b border-gray-800/60")}
+      className={cn("flex flex-col gap-0", "border-b border-gray-800/60")}
     >
       {projects.map((project, index) => (
         <li
           key={project.id + "_" + index}
-          className={twMerge(
+          className={cn(
             "flex flex-col md:flex-row gap-8 md:gap-4 py-10",
             "items-start",
             "border-t border-gray-800/60"
           )}
         >
           <div
-            className={twMerge(
+            className={cn(
               "flex flex-row gap-12 items-start justify-between w-full md:w-5/12 2xl:w-1/2"
             )}
           >
@@ -42,7 +42,7 @@ const AgencyList = () => {
             </h6>
           </div>
           <div
-            className={twMerge(
+            className={cn(
               "w-full xxs:w-10/12 md:w-7/12 2xl:w-1/2",
               "flex flex-col gap-5"
             )}
