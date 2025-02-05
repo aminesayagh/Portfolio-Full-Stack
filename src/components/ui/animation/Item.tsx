@@ -1,34 +1,60 @@
-import { motion, useAnimation, AnimatePresence } from "motion/react";
-import React, { useState, useCallback, useMemo } from "react";
+import { motion } from "motion/react";
+import React, { useState, useMemo } from "react";
 
-import { cn } from "@/lib/utils";
+import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 
-const slideVariants = {
-  initial: {
-    y: "0%",
-    skewY: 0
-  },
+const transitionConfig = {
+  easeIn: [0.7, 0, 0.84, 0],
+  easeOut: [0.16, 1, 0.3, 1],
+  duration: 0.5
+};
+
+// Variants for the first div (exits upwards, enters from below)
+const firstVariants = {
+  initial: { y: 0 },
   exit: {
     y: "-100%",
-    skewY: 15,
+    skewY: 5,
     transition: {
-      duration: 0.15,
-      ease: [0.7, 0, 0.84, 0] // power4.easeIn
+      ...transitionConfig
     }
   },
   enter: {
     y: "100%",
-    skewY: 15,
-    transition: {
-      duration: 0.15
-    }
+    skewY: -5,
+    transition: { duration: 0 }
   },
   animate: {
-    y: "0%",
+    y: 0,
     skewY: 0,
     transition: {
-      duration: 0.15,
-      ease: [0.16, 1, 0.3, 1] // power4.easeOut
+      ...transitionConfig,
+      delay: 0.35
+    }
+  }
+};
+
+// Variants for the second div (enters from below, exits downwards)
+const secondVariants = {
+  initial: { y: 0 },
+  exit: {
+    y: "100%",
+    skewY: -5,
+    transition: {
+      ...transitionConfig
+    }
+  },
+  enter: {
+    y: "100%",
+    skewY: 5,
+    transition: { duration: 0 }
+  },
+  animate: {
+    y: 0,
+    skewY: 0,
+    transition: {
+      ...transitionConfig,
+      delay: 0.35
     }
   }
 };
@@ -41,50 +67,48 @@ const Item = ({
   className?: string;
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const controls = useAnimation();
 
-  const handleHoverStart = useCallback(() => {
-    setIsHovered(true);
-    controls.start("animate");
-  }, [controls]);
+  const hoverHandlers = useMemo(() => ({
+    onPointerEnter: () => setIsHovered(true),
+    onPointerLeave: () => setIsHovered(false)
+  }), []);
 
-  const handleHoverEnd = useCallback(() => {
-    setIsHovered(false);
-    controls.start("initial");
-  }, [controls]);
-
-  
-  const initialAnimation = useMemo(() => 
-    isHovered ? "enter" : "initial"
-  , [isHovered]);
-
-  
-  const combinedClassName = useMemo(() => 
+  const baseClassName = useMemo(() => 
     cn(
-      "flex w-auto transform-gpu will-change-transform transition-colors duration-300",
-      isHovered ? "text-primary-500" : "",
+      "flex w-auto absolute inset-0",
+      ANIMATION_GPU_OPTIMIZATION,
       className
     )
-  , [isHovered, className]);
+  , [className]);
 
   return (
     <div
-      className="relative overflow-hidden cursor-pointer"
-      onPointerEnter={handleHoverStart}
-      onPointerLeave={handleHoverEnd}
+      className="relative cursor-pointer"
+      {...hoverHandlers}
     >
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={isHovered ? "hovered" : "default"}
-          className={combinedClassName}
-          variants={slideVariants}
-          initial={initialAnimation}
-          animate={isHovered ? "enter" : "initial"}
-          exit="exit"
-        >
-          {children}
-        </motion.div>
-      </AnimatePresence>
+      <div className="relative invisible">
+        {children}
+      </div>
+      
+      {/* First div - original text */}
+      <motion.div
+        className={baseClassName}
+        variants={firstVariants}
+        initial="initial"
+        animate={isHovered ? "exit" : "animate"}
+      >
+        {children}
+      </motion.div>
+
+      {/* Second div - hover text */}
+      <motion.div
+        className={cn(baseClassName, "text-primary-400")}
+        variants={secondVariants}
+        initial="enter"
+        animate={isHovered ? "animate" : "exit"}
+      >
+        {children}
+      </motion.div>
     </div>
   );
 };

@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect } from "react";
 
-import { cn } from "@/lib/utils";
+import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 
 import { rounded } from "@/components/style";
 import { usePreloader } from "@/components/ui/preloader";
@@ -23,11 +23,11 @@ const Video = () => {
 
   const getScreenSize = (): number => {
     const width = window.innerWidth;
-    if (width < 480) return 320;
-    if (width < 768) return 480;
-    if (width < 1024) return 768;
-    if (width < 1280) return 1024;
-    if (width < 1600) return 1280;
+    if (width < 480) { return 320; }
+    if (width < 768) { return 480; }
+    if (width < 1024) { return 768; }
+    if (width < 1280) { return 1024; }
+    if (width < 1600) { return 1280; }
     return 1600; // for larger screens
   };
 
@@ -75,11 +75,11 @@ const Video = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      if (!imagesRef.current.length) return;
+      if (!imagesRef.current.length) { return; }
       const hands = { frame: 0 };
 
       const canvas = ref.current;
-      if (!canvas) return;
+      if (!canvas) { return; }
       const context = canvas.getContext("2d");
 
       const screenSize = getScreenSize();
@@ -99,19 +99,19 @@ const Video = () => {
       });
 
       const current = imagesRef.current;
-      if (!current) return;
+      if (!current) { return; }
       if (current[0]) {
         current[0]["onload"] = render;
       }
 
       function render() {
-        if (!imagesRef.current.length) return;
-        if (!context) return;
-        if (!ref.current) return;
+        if (!imagesRef.current.length) { return; }
+        if (!context) { return; }
+        if (!ref.current) { return; }
         context?.clearRect(0, 0, ref.current.width, ref.current.height);
         const frame = hands.frame;
         const image = imagesRef.current[frame];
-        if (!image) return;
+        if (!image) { return; }
         context?.drawImage(image, 0, 0);
       }
     }, refContainer);
@@ -136,7 +136,8 @@ const Video = () => {
         data-scroll
         ref={ref}
         className={cn(
-          "h-full w-full will-change-transform-animation",
+          "h-full w-full",
+          ANIMATION_GPU_OPTIMIZATION,
           rounded({ size: "xl" })
         )}
         style={{ width: "100%", objectFit: "cover" }}

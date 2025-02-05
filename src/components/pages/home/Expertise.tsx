@@ -1,11 +1,11 @@
 "use client";
 
-import React, { memo, useRef } from "react";
+import React, { memo, useMemo, useRef } from "react";
 
 import { useTranslations } from "next-intl";
 import { useHover } from "react-aria";
 import { useMedia } from "react-use";
-import { cn } from "@/lib/utils";
+import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 
 import { rounded } from "@/components/style";
 import Noise from "@/components/ui/noise/Noise";
@@ -124,7 +124,8 @@ const Card = ({
     <div
       className={cn(
         "flex flex-col gap-8 sm:gap-12 lg:gap-6 xl:gap-16 justify-between items-baseline",
-        "p-5 sm:p-7 lg:p-5 xl:p-6 will-change-transform-animation",
+        "p-5 sm:p-7 lg:p-5 xl:p-6",
+        ANIMATION_GPU_OPTIMIZATION,
         "transition-colors duration-300 ease-in-out relative",
         isHovered ? "bg-black-200" : "bg-transparent",
         BORDER_CARD_CLASS_NAME,
@@ -241,9 +242,18 @@ const CardElement = ({ i }: { i: number }) => {
     [isLg, isXs, lenis]
   );
 
+  const cardMemoText = useMemo(() => ({
+    name: t(`experience.stages.${i + 1}.title`),
+    description: t(`experience.stages.${i + 1}.description`),
+    number: t(`experience.stages.${i + 1}.count`)
+  }), [i, t]);
+
   return (
     <div
-      className="expertise-card-gsap relative will-change-transform-animation"
+      className={cn(
+        "expertise-card-gsap relative",
+        ANIMATION_GPU_OPTIMIZATION
+      )}
       key={i}
       ref={ref}
     >
@@ -251,9 +261,9 @@ const CardElement = ({ i }: { i: number }) => {
         <EmptyCardMemo />
       ) : (
         <CardMemo
-          name={t(`experience.stages.${i + 1}.title`)}
-          description={t(`experience.stages.${i + 1}.description`)}
-          number={t(`experience.stages.${i + 1}.count`)}
+          name={cardMemoText.name}
+          description={cardMemoText.description}
+          number={cardMemoText.number}
         />
       )}
     </div>

@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 
 import { useTranslations, useLocale } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
-import { cn } from "@/lib/utils";
+import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 
 import { Icon } from "@/components/ui/icon";
 import { display, Link, text } from "@/components/ui/typography";
@@ -100,7 +100,8 @@ const Action = () => {
               weight: "bold"
             },
             "uppercase text-start xs:text-center",
-            "contact-title-gsap will-change-transform-animation"
+            "contact-title-gsap",
+            ANIMATION_GPU_OPTIMIZATION
           )}
         >
           {t("contactCall.title")}
@@ -111,7 +112,9 @@ const Action = () => {
           className={cn(
             "absolute hidden xxs:block",
             "left-[103%] xs:right-[103%] rotate-180	xs:rotate-0",
-            "right-auto xs:left-auto xs:top-1 will-change-transform-animation contact-arrow-gsap"
+            "right-auto xs:left-auto xs:top-1",
+            ANIMATION_GPU_OPTIMIZATION,
+            "contact-arrow-gsap"
           )}
         >
           <Icon
@@ -127,7 +130,8 @@ const Action = () => {
                 weight: "bold"
               },
               "whitespace-nowrap-important uppercase text-primary-400",
-              "contact-title-gsap will-change-transform-animation"
+              "contact-title-gsap",
+              ANIMATION_GPU_OPTIMIZATION
             )}
           >
             {t("contactCall.action")}

@@ -1,26 +1,23 @@
 import type { RefObject } from "react";
 import React, {
   useRef,
-  useEffect,
   useCallback,
-  memo,
-  useState,
-  Fragment
+  memo
 } from "react";
 
-import { cn } from "@/lib/utils";
 import _ from "lodash";
 import { useTranslations, useLocale } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
 
+import { cn } from "@/lib/utils";
 import Button from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
-import type { TextPropsExtended } from "@/components/ui/typography";
 import { Link, text } from "@/components/ui/typography";
 import { getMenuItems } from "@/i18n/routing";
 import { useEventListener } from "@/hook/useEventListener";
 import { useLenis } from "@/lib/Lenis";
 import { gsap } from "@/utils/gsap";
+import TextAnimated from "@/components/ui/TextReveal2";
 
 const BASE_LOCALE_SOCIAL = "socialNetwork";
 
@@ -149,85 +146,6 @@ const FollowUs = () => {
 
 // const FollowUs = memo(FollowUs);
 
-const TextAnimated = ({
-  lang,
-  phrase,
-  className,
-  ...props
-}: {
-  lang: string;
-  phrase: string;
-  className?: string;
-} & TextPropsExtended) => {
-  const container = useRef<HTMLDivElement>(null);
-  const refs = useRef<HTMLDivElement[]>([]);
-  const [body, setBody] = useState<React.JSX.Element[] | null>(null);
-
-  useIsomorphicLayoutEffect(() => {
-    if (!body) {return;}
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".word-gsap",
-        {
-          y: "100%"
-        },
-        {
-          y: "0%",
-          stagger: 0.04,
-          duration: 0.3,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: container.current,
-            start: "top bottom-=80px",
-            toggleActions: "play none reverse reverse"
-          }
-        }
-      );
-    }, container);
-    return () => {
-      ctx.revert();
-    };
-  }, [body, lang]);
-  useEffect(() => {
-    setBody(null);
-    const splitWords = _.map(phrase.split(" "), (word, index) => {
-      return (
-        <div key={index} className="py-px overflow-y-animate">
-          <div
-            ref={ref => {
-              if (!ref) return;
-              refs.current[index] = ref;
-            }}
-            className="word-gsap will-change-transform-animation"
-          >
-            {word}
-          </div>
-        </div>
-      );
-    });
-    setBody(splitWords);
-  }, [phrase, lang]);
-
-  return (
-    <span ref={container}>
-      <div
-        className={text(
-          {
-            size: props.size,
-            degree: props.degree,
-            weight: props.weight
-          },
-          "flex flex-row flex-wrap",
-          className
-        )}
-      >
-        {body
-          ? body.map((word, index) => <Fragment key={`${word} + ${index}`}>{word} </Fragment>)
-          : null}
-      </div>
-    </span>
-  );
-};
 
 const GoToTop = ({ handler, name }: { handler: () => void; name: string }) => {
   const ref = useRef<HTMLButtonElement | null>(null);
@@ -394,9 +312,6 @@ const Footer = () => {
       >
         <TextAnimated
           lang={locale}
-          degree="3"
-          weight="medium"
-          size="md"
           className="justify-start max-w-xs uppercase gap-x-2"
           phrase={t("footer.state")}
         />

@@ -3,7 +3,7 @@
 import React, { useRef, useCallback } from "react";
 
 import { useTranslations, useLocale } from "next-intl";
-import { cn } from "@/lib/utils";
+import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 
 import { usePreloader } from "@/components/ui/preloader";
 import { text, display } from "@/components/ui/typography";
@@ -55,7 +55,9 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
               weight: "bold"
             },
             DISPLAY_1_CLASS_NAME,
-            "splitText_gsap will-change-transform-animation tracking-[0.01em] flex flex-row gap-2 intro_scroll_gsap"
+            "splitText_gsap",
+            ANIMATION_GPU_OPTIMIZATION,
+            "tracking-[0.01em] flex flex-row gap-2 intro_scroll_gsap"
           )}
         >
           <span>{t("intro.title.1")}</span>
@@ -119,7 +121,9 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
                   weight: "semibold",
                   size: "sm"
                 },
-                "text-start sm:text-end w-full will-change-transform-animation splitText_description_gsap"
+                "text-start sm:text-end w-full",
+                "splitText_description_gsap",
+                ANIMATION_GPU_OPTIMIZATION
               )}
             >
               {t("intro.descriptions.1")}
@@ -136,7 +140,9 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
                   weight: "semibold",
                   size: "sm"
                 },
-                "text-start sm:text-end w-full will-change-transform-animation splitText_description_gsap"
+                "text-start sm:text-end w-full",
+                "splitText_description_gsap",
+                ANIMATION_GPU_OPTIMIZATION
               )}
             >
               {t("intro.descriptions.2")}
@@ -210,7 +216,8 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
               weight: "bold"
             },
             DISPLAY_1_CLASS_NAME,
-            "splitText_gsap will-change-transform-animation"
+            "splitText_gsap",
+            ANIMATION_GPU_OPTIMIZATION
           )}
         >
           {t("intro.title.3")}

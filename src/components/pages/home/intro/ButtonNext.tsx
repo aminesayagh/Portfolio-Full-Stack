@@ -1,7 +1,7 @@
 
 import { useRef, useCallback } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
-import { cn } from "@/lib/utils";
+import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 import type { PressEvent } from "react-aria";
 
 import Button from "@/components/ui/button";
@@ -32,12 +32,12 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
           });
         self.add("mouseMove", (e: { clientX: number; clientY: number }) => {
           const c = ref.current;
-          if (!c) return;
+          if (!c){ return;}
           const { clientX, clientY } = e;
           const { left, top, width, height } = c.getBoundingClientRect();
           const x = clientX - (left + width / 2);
           const y = clientY - (top + height / 2);
-          if (xTo) xTo(x);
+          if (xTo) {xTo(x);}
           if (yTo) yTo(y);
         });
         self.add("mouseLeave", () => {
@@ -51,13 +51,13 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
   }, [ref]);
   const handleMouseEnter = useCallback(
     (e: MouseEvent) => {
-      if (ctx.current) ctx.current["mouseMove"](e);
+      if (ctx.current) {ctx.current["mouseMove"](e);}
     },
     [ctx]
   );
   const handleMouseLeave = useCallback(
     (e: MouseEvent) => {
-      if (ctx.current) ctx.current["mouseLeave"](e);
+      if (ctx.current) {ctx.current["mouseLeave"](e);}
     },
     [ctx]
   );
@@ -83,7 +83,9 @@ const ButtonNext = ({ goToCases }: { goToCases: GoTOCases }) => {
         data-scroll
         className={cn(
           "relative bg-white-100",
-          "rounded-full overflow-hidden will-change-transform-animation next_button_gsap"
+          "rounded-full overflow-hidden",
+          "next_button_gsap",
+          ANIMATION_GPU_OPTIMIZATION
         )}
         aria-label="Go to cases"
         aria-haspopup="true"

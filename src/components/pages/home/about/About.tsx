@@ -15,30 +15,9 @@ export default function About() {
   }[]>(() => t.raw("selling_point"), [t]);
 
   return (
-    <div className="flex flex-row gap-0 container items-start justify-end py-24 h-[200vh]">
+    <div className="flex flex-row gap-0 container items-start justify-end py-24">
       {/* head */}
       <div className="w-10/12 flex flex-col items-start justify-start gap-12">
-        {/* <div className="flex flex-row items-center justify-start gap-6">
-          <h2
-            className={text({
-              degree: "3",
-              weight: "medium",
-              size: "md"
-            })}
-          >
-            {t("subtitle_1")}
-          </h2>
-          <div className="size-[0.4rem] rounded-full bg-gray-500 items-center justify-start" />
-          <h3
-            className={text({
-              degree: "3",
-              weight: "medium",
-              size: "md"
-            })}
-          >
-            {t("subtitle_2")}
-          </h3>
-        </div> */}
         {/* body */}
         <div className="w-full -ml-0 relative">
           <TextReveal text={t("content")} />

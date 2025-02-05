@@ -13,7 +13,7 @@ import React, {
 import { AnimatePresence, motion, useAnimation } from "motion/react";
 import { useTranslations } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
-import { cn } from "@/lib/utils";
+import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 
 import Container from "@/components/ui/container";
 import Noise from "@/components/ui/noise";
@@ -304,7 +304,8 @@ const Preloader = ({
                       size: "md",
                       weight: "bold"
                     },
-                    "item-gsap capitalize will-change-transform-animation absolute left-0 right-0 top-[100%]",
+                    "item-gsap capitalize absolute left-0 right-0 top-[100%]",
+                    ANIMATION_GPU_OPTIMIZATION,
                     index === 4 ? "text-primary-500" : "text-black-300/80"
                   )}
                 >

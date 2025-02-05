@@ -13,3 +13,5 @@ export function mergeClassName<T>(
     ? (state: T) => twMerge(className(state), defaultClassName)
     : twMerge(className, defaultClassName);
 }
+
+export const ANIMATION_GPU_OPTIMIZATION = "transform-gpu will-change-transform perspective-1000 backface-visibility-hidden";

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useRef } from "react";
 
 import { useToast, useToastRegion } from "@react-aria/toast";

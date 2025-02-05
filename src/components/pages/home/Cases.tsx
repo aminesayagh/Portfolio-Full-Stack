@@ -3,7 +3,7 @@ import React, { useMemo, useRef, memo } from "react";
 
 import { useTranslations } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
-import { cn } from "@/lib/utils";
+import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 
 import Image from "@/components/ui/image";
 import { text, title } from "@/components/ui/typography";
@@ -146,7 +146,8 @@ const Case = ({
     <div
       data-scroll
       className={cn(
-        "relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden will-change-transform-animation"
+        "relative h-[110vh] xxs:h-[120vh] sm:h-[140vh] overflow-hidden",
+        ANIMATION_GPU_OPTIMIZATION
       )}
       ref={container}
       style={{
@@ -175,23 +176,22 @@ const Case = ({
           className={cn(
             "relative w-fit flex flex-col justify-end h-full",
             "px-5 xs:px-10 lg:px-24 py-32 xs:py-24 mdl:py-32",
-            "gap-2 xs:gap-4 content-gsap will-change-transform-animation"
+            "gap-2 xs:gap-4 content-gsap",
+            ANIMATION_GPU_OPTIMIZATION
           )}
           style={{
             zIndex: zIndexContent
           }}
         >
           <div className="w-full overflow-hidden">
-            {/* <Title h1 degree='1' className='case-text-gsap will-change-transform-animation' >
-                        {name}
-                    </Title> */}
             <h1
               className={title(
                 {
                   size: "h1",
                   degree: "1"
                 },
-                "case-text-gsap will-change-transform-animation"
+                "case-text-gsap",
+                ANIMATION_GPU_OPTIMIZATION
               )}
             >
               {name}
@@ -204,7 +204,8 @@ const Case = ({
                   size: "md",
                   degree: "2"
                 },
-                "case-text-gsap will-change-transform-animation"
+                "case-text-gsap",
+                ANIMATION_GPU_OPTIMIZATION
               )}
             >
               {description}

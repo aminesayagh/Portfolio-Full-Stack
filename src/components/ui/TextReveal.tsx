@@ -47,12 +47,10 @@ export interface TextRevealProps extends ComponentPropsWithoutRef<"div"> {
 export const TextReveal: FC<TextRevealProps> = ({ text, className }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const scrollConfig = useMemo(() => {
-    return {
-      target: containerRef,
-      offset: ["center end", "center center"]
-    } as UseScrollOptions;
-  }, [containerRef])
+  const scrollConfig = useMemo(() => ({
+    target: containerRef,
+    offset: ["center end", "center center"]
+  } as UseScrollOptions), [containerRef]);
 
   const { scrollYProgress } = useScroll(scrollConfig);
 

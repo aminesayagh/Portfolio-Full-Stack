@@ -10,6 +10,7 @@ import { RouteSettingPath } from "@/i18n/routing";
 import { getHref } from "@/i18n/routing";
 import Button from "@/components/ui/button";
 import { text } from "@/components/ui/typography";
+import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 
 const menuKeys = [
   "manifesto",
@@ -60,7 +61,12 @@ const Menu = () => {
                 "flex flex-col justify-start items-start overflow-hidden gap-1 w-1/2 sm:w-auto md:w-1/4"
               )}
             >
-              <p className="number_menu_gsap opacity-0 will-change-transform-animation">
+              <p
+                className={cn(
+                  "number_menu_gsap opacity-0",
+                  ANIMATION_GPU_OPTIMIZATION
+                )}
+              >
                 {number}
               </p>
               <Button
@@ -68,7 +74,10 @@ const Menu = () => {
                 size="sm"
                 weight="semibold"
                 onPress={() => goToSection(key)}
-                className="uppercase text-start item_menu_gsap will-change-transform-animation"
+                className={cn(
+                  "uppercase text-start item_menu_gsap",
+                  ANIMATION_GPU_OPTIMIZATION
+                )}
                 style={{
                   color: "inherit"
                 }}
@@ -89,7 +98,8 @@ const Menu = () => {
             },
             "w-max whitespace-nowrap-important",
             "pr-1 hidden xxs:flex sm:hidden md:flex",
-            "item_menu_gsap will-change-transform-animation"
+            "item_menu_gsap",
+            ANIMATION_GPU_OPTIMIZATION
           )}
         >
           {t("intro.copy")}

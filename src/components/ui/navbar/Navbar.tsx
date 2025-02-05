@@ -9,7 +9,7 @@ import React, {
 
 import { useHover } from "react-aria";
 import { useIsomorphicLayoutEffect } from "react-use";
-import { cn } from "@/lib/utils";
+import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 
 import { containerStyle } from "@/components/ui/container";
 import { Link as LinkUi } from "@/components/ui/typography";
@@ -93,7 +93,8 @@ const Navbar: NavbarType = ({
         "fixed top-0 left-0 w-full max-w-[100vw] py-4 z-header",
         className,
         zIndex.navbar,
-        "header-gsap will-change-transform-animation"
+        "header-gsap",
+        ANIMATION_GPU_OPTIMIZATION
       )}
       style={{
         paddingTop: padding,

@@ -35,7 +35,8 @@ body {
 }
 
 .will-change-transform-animation {
-  will-change: transform;
+  will-change: all;
+  
 }
 
 .is-loaded p,

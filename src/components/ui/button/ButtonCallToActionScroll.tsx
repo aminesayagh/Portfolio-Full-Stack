@@ -7,12 +7,11 @@ import {
     AnimatePresence
 } from "motion/react";;
 
-import { cn } from "@/lib/utils";
+import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 import Button from "./Button";
 import { IconArrowUpRight } from "@tabler/icons-react";
 import { text } from "@/components/ui/typography";
-
-const ButtonMotion = motion(Button)
+import HoveredScrollUp from "../HoveredScrollUp";
 
 // Animation variants for consistent timing
 const variants = {
@@ -89,7 +88,7 @@ export default function ButtonCallToActionScroll({
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            <ButtonMotion
+            <Button
                 className={cn(className, text({
                     weight: "medium",
                     size: "md",
@@ -101,20 +100,22 @@ export default function ButtonCallToActionScroll({
 
                 <AnimatePresence mode="wait">
                     <span className="flex flex-row overflow-hidden items-center w-fit pb-1 gap-2">
-                        {children}
+                        <HoveredScrollUp isHovered={isHovered} >
+                            {children}
+                        </HoveredScrollUp>
                         <div className="relative size-4">
                             <motion.span
                                 initial="initial"
                                 animate={inView ? "animate" : "initial"}
                                 variants={variants.icon}
-                                className="flex absolute inset-0"
+                                className={cn("flex absolute inset-0", ANIMATION_GPU_OPTIMIZATION)}
                             >
                                 <motion.span
                                     key={`${isHovered ? "hover" : "exit"}`}
                                     initial="initial"
                                     animate={isHovered ? "hover" : "exit"}
                                     variants={variants.iconHover}
-                                    className="relative flex will-change-transform"
+                                    className={cn("relative flex", ANIMATION_GPU_OPTIMIZATION)}
                                 >
                                     <IconArrowUpRight className="size-4" />
                                 </motion.span>
@@ -130,10 +131,10 @@ export default function ButtonCallToActionScroll({
                     variants={variants.underline}
                     className={cn(
                         "absolute bottom-0 left-0 h-[1px] bg-current origin-left",
-                        "will-change-transform"
+                        ANIMATION_GPU_OPTIMIZATION
                     )}
                 />
-            </ButtonMotion>
+            </Button>
         </motion.span>
     )
 }

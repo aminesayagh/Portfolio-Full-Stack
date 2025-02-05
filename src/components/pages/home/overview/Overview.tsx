@@ -242,8 +242,8 @@ function Overview() {
   // Transform width from initial container width to full viewport width
   const width = useTransform(
     scrollYPosition,
-    [0, 2000],
-    [initialWidth, (windowWidth || 0) + 1000] // Add 40px to account for the rounded corners
+    [0, 800, 2000],
+    [initialWidth, windowWidth ,windowWidth] // Add 40px to account for the rounded corners
   );
 
   return (

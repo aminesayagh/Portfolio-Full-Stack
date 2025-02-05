@@ -3,11 +3,9 @@
 import React, { memo, useMemo } from "react";
 import { motion, useAnimationControls } from "motion/react";
 
-import { cn } from "@/lib/utils";
+import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 import { title, text } from "@/components/ui/typography";
 import NumberTicker from "@/components/ui/NumberTicker";
-const BORDER_CARD_CLASS_NAME =
-    "rounded-xl border-[] border-dashed border-white-500";
 
 const animationVariants = {
     initial: {
@@ -80,7 +78,8 @@ const Card = ({
             <motion.div
                 className={cn(
                     "flex flex-col gap-8 sm:gap-12 lg:gap-6 xl:gap-40 justify-between items-baseline",
-                    "p-5 sm:p-7 lg:p-5 xl:p-8 will-change-transform-animation",
+                    "p-5 sm:p-7 lg:p-5 xl:p-8",
+                    ANIMATION_GPU_OPTIMIZATION,
                     "transition-colors duration-300 ease-in-out relative",
                     "w-full h-full z-10","rounded-xl", 
                     "border-[2px] border-dashed border-white-600 group-hover:border-[2px] group-hover:border-solid group-hover:border-white-100",
