@@ -73,8 +73,12 @@ const ContactForm = () => {
       z
         .string({ required_error: t(`${ERROR_TRANSLATION_PATH}.required`) })
         .nonempty(t(`${ERROR_TRANSLATION_PATH}.required`))
-        .min(min, t(`${ERROR_TRANSLATION_PATH}.minLength`, { min }))
-        .max(max, t(`${ERROR_TRANSLATION_PATH}.maxLength`, { max }))
+        .min(min, {
+          message: t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: min.toString() })
+        })
+        .max(max, {
+          message: t(`${ERROR_TRANSLATION_PATH}.maxLength`, { max: max.toString() })
+        })
         .regex(/^[a-zA-Z\s]+$/, t(`${ERROR_TRANSLATION_PATH}.pattern`)),
     [t]
   );
@@ -88,10 +92,10 @@ const ContactForm = () => {
         objective: z.string().nonempty(t(`${ERROR_TRANSLATION_PATH}.required`)),
         message: required()
           .min(10, {
-            message: t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: 10 })
+            message: t(`${ERROR_TRANSLATION_PATH}.minLength`, { min: "10" })
           })
           .max(500, {
-            message: t(`${ERROR_TRANSLATION_PATH}.maxLength`, { max: 500 })
+            message: t(`${ERROR_TRANSLATION_PATH}.maxLength`, { max: "500" })
           })
           .nonempty()
       }),
@@ -101,11 +105,20 @@ const ContactForm = () => {
   const successMessage = useMemo(() => t("form.notification.success"), [t]);
   const errorMessage = useMemo(() => t("form.notification.error"), [t]);
   const methods = useForm<FormContact>({
-    resolver: zodResolver(contactFormDataSchema)
+    resolver: zodResolver(contactFormDataSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      objective: "",
+      message: ""
+    },
+    mode: "onSubmit"
   });
 
-  const onSubmitForm: SubmitHandler<FormContact> = async data => {
+  const onSubmitForm: SubmitHandler<FormContact> = useCallback(async data => {
     try {
+      console.log(data);
       await fetch("/api/contact", {
         method: "POST",
         headers: {
@@ -134,36 +147,40 @@ const ContactForm = () => {
         }
       );
     }
-  };
+  }, [locale, t, successMessage, errorMessage, methods]);
+
+  const { handleSubmit, formState: { isSubmitting }, register } = methods;
+
+  
   return (
     <Form<FormContact>
       className="grid grid-cols-12 gap-4"
       methods={methods}
-      onSubmit={methods.handleSubmit(onSubmitForm)}
+      onSubmit={handleSubmit(onSubmitForm)}
     >
       <Field
         width="col-span-12 mdl:col-span-6"
         name="firstName"
         label={t("form.field.firstName.label")}
       >
-        <Input placeholder={t("form.field.firstName.placeholder")} />
+        <Input placeholder={t("form.field.firstName.placeholder")} {...register("firstName")} />
       </Field>
       <Field
         width="col-span-12 mdl:col-span-6"
         name="lastName"
         label={t("form.field.lastName.label")}
       >
-        <Input placeholder={t("form.field.lastName.placeholder")} />
+        <Input placeholder={t("form.field.lastName.placeholder")} {...register("lastName")} />
       </Field>
       <Field name="email" inputMode="email" label={t("form.field.email.label")}>
-        <Input placeholder={t("form.field.email.placeholder")} />
+        <Input placeholder={t("form.field.email.placeholder")} {...register("email")} />
       </Field>
       <Select
-        name="objective"
         label={t("form.field.objective.label")}
         placeholder={t("form.field.objective.placeholder")}
         items={contactSubjectItems}
         defaultSelectedKey="1"
+        {...register("objective")}
       >
         {(item: { key: string; text: string }) => {
           return (
@@ -174,7 +191,7 @@ const ContactForm = () => {
         }}
       </Select>
       <Field name="message" label={t("form.field.message.label")}>
-        <textarea placeholder={t("form.field.message.placeholder")} />
+        <textarea placeholder={t("form.field.message.placeholder")} {...register("message")} />
       </Field>
       <Button
         className={cn(
@@ -183,7 +200,7 @@ const ContactForm = () => {
           "rounded-sm",
           "col-span-12 w-1/2 xxs:w-5/12 sm:w-4/12 md:w-3/12 place-self-end"
         )}
-        isDisabled={methods.formState.isSubmitting ? true : false}
+        isDisabled={isSubmitting}
         type="submit"
       >
         {t("form.field.submit.label")}

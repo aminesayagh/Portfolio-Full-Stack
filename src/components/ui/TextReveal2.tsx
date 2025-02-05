@@ -16,12 +16,9 @@ const MemoizedWord = memo(({ children, progress, range }: { children: React.Reac
                 className={text({
                     weight: "bold",
                     size: "xs",
-                    degree: "2"
+                    degree: "4"
                 }, "block relative")}
-                style={{
-                    opacity,
-                    y
-                }}
+                style={{ opacity, y }}
             >
                 {children}
             </motion.span>

@@ -1,21 +1,15 @@
-import dynamic from "next/dynamic.js";
 
 import Layer from "@/components/common/Layer";
 import Lenis from "@/components/Lenis";
 import Noise from "@/components/ui/noise";
 import { ToastRegion } from "@/components/common/toast";
+import ContactPage from "@/components/pages/Contact/Index";
 
-
-const ContactPageDynamic = dynamic(
-    () => import("@/components/pages/Contact/Index"),
-    {}
-  );
-
-function Page() {
+async function Page() {
     return (
         <Lenis>
             <Layer>
-                <ContactPageDynamic />
+                <ContactPage />
                 <Noise />
                 <ToastRegion />
             </Layer>

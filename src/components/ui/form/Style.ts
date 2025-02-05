@@ -12,3 +12,7 @@ export const formFieldInput = [
   "focus:text-active focus:outline-none focus:scale-[1.004] focus:translate-y-[-0.02rem] focus:border-primary-400",
   "&::placeholder:text-inactive"
 ] as string[];
+
+export const formFieldColor = [
+  "text-content-dark-300 placeholder:text-content-dark-300 hover:text-content-dark-200"
+] as string[];

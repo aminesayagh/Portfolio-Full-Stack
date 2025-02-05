@@ -1,13 +1,16 @@
-import React, { isValidElement, cloneElement } from "react";
+import React, { isValidElement, cloneElement, useMemo } from "react";
 
 import { TextField, Label } from "react-aria-components";
 
 import type { IconNames } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
 
-import { formFieldInput } from "./Style";
+import { formFieldInput, formFieldColor } from "./Style";
 
 import type { TextFieldProps, InputProps } from "react-aria-components";
+import { useFormContext } from "react-hook-form";
+
+import ErrorMessage from "./ErrorMessage";
 
 const LayoutField = ({
   label,
@@ -24,12 +27,15 @@ const LayoutField = ({
   name: string;
   children: React.ReactElement<InputProps>;
 } & TextFieldProps) => {
-  const childrenWithProps = isValidElement(children)
+  const { formState: { errors }, register } = useFormContext();
+  const childrenWithProps = useMemo(() => isValidElement(children)
     ? cloneElement(children, {
-        ...children.props,
-        className: cn(children.props.className, "w-full", formFieldInput)
-      })
-    : children;
+      ...children.props,
+      ...register(name),
+      className: cn(children.props.className, "w-full", formFieldInput, formFieldColor, errors[name] ? "border-red-600/30 focus:border-red-600" : null)
+    })
+    : children, [children, errors, name, register]);
+
   return (
     <TextField
       className={cn(
@@ -48,6 +54,7 @@ const LayoutField = ({
           {label}
         </Label>
         {childrenWithProps}
+        <ErrorMessage name={name} />
       </div>
     </TextField>
   );

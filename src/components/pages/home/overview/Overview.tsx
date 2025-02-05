@@ -21,7 +21,7 @@ import {
 } from "motion/react";;
 
 import Image from "@/components/ui/image";
-import { cn } from "@/lib/utils";
+import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 import useWindowSize from "@/hook/useWindowSize";
 
 const BASE_VELOCITY = 4;
@@ -103,7 +103,7 @@ const Row = memo(function Row({
             src={images[index % images.length] || ""}
             alt={`Image ${index}`}
             fill
-            className="object-cover object-top rounded-xl size-full"
+            className={cn("object-cover object-top rounded-xl size-full", ANIMATION_GPU_OPTIMIZATION)}
             placeholder="empty"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
@@ -118,8 +118,9 @@ const Row = memo(function Row({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        "relative h-full flex flex-row w-full min-w-screen gap-[2vw] will-change-transform",
-        "group [--gap:2rem] "
+        "relative h-full flex flex-row w-full min-w-screen gap-[2vw]",
+        "group [--gap:2rem] ",
+        ANIMATION_GPU_OPTIMIZATION
       )}
       style={{ x }}
     >
@@ -253,7 +254,7 @@ function Overview() {
         height,
         width
       }}
-      className="w-full relative  will-change-transform overflow-hidden mx-auto rounded-2xl bg-primary-500"
+      className={cn("w-full relative overflow-hidden mx-auto rounded-2xl bg-primary-500", ANIMATION_GPU_OPTIMIZATION)}
     >
       <div
         style={{

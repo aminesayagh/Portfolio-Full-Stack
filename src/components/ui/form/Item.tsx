@@ -1,10 +1,10 @@
 import React from "react";
 
 import { ListBoxItem as Item } from "react-aria-components";
+import type { ListBoxItemProps as ItemProps } from "react-aria-components";
 
 import { mergeClassName } from "@/lib/utils";
-
-import type { ListBoxItemProps as ItemProps } from "react-aria-components";
+import { formFieldColor } from "./Style";
 
 const itemClassName = [
   "flex flex-row gap-2 px-4 py-4 outline-none w-full",
@@ -17,7 +17,7 @@ const itemClassName = [
 
 const ItemUi = ({ className, ...props }: ItemProps) => {
   return (
-    <Item className={mergeClassName(itemClassName, className)} {...props} />
+    <Item className={mergeClassName([...itemClassName, ...formFieldColor], className)} {...props} />
   );
 };
 
