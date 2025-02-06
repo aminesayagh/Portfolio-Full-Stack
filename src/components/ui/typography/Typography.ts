@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import type { VariantProps } from "class-variance-authority";
 import type { ClassNameValue } from "tailwind-merge";
 
-const textDefault = "inline-block align-middle hyphens-manual text-balance";
+const textDefault = "inline-block align-middle hyphens-manual text-balance selection:bg-primary-500/50 selection:text-white";
 const fontFamilyTitle = "font-sans";
 const fontFamilyText = "font-sans";
 

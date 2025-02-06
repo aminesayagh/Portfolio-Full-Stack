@@ -15,7 +15,7 @@ export default function About() {
   }[]>(() => t.raw("selling_point"), [t]);
 
   return (
-    <div className="flex flex-row gap-0 container items-start justify-end py-24">
+    <div id="manifesto" className="flex flex-row gap-0 container items-start justify-end py-24">
       {/* head */}
       <div className="w-10/12 flex flex-col items-start justify-start gap-12">
         {/* body */}
@@ -27,7 +27,7 @@ export default function About() {
           {t("action")}
         </ButtonCallToActionScroll>
         <span className="h-24"></span>
-        <div className="w-full grid grid-cols-3 gap-8">
+        <div id="experience" className="w-full grid grid-cols-3 gap-8">
           {sellingPoints.map((point, index) => (
             <CardHovered
               key={`${index}-${point.number}`}

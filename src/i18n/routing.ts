@@ -34,19 +34,25 @@ const ROUTER_CONFIGS = {
   },
   manifesto: {
     id: "manifesto",
-    path: "/#manifesto",
+    path: "#manifesto",
     inDevelopment: false,
     menu: ["secondary", "hamburger"]
   },
   experience: {
     id: "experience",
-    path: "/#experience",
+    path: "#experience",
     inDevelopment: false,
     menu: ["secondary", "hamburger"]
   },
   cases: {
     id: "cases",
     path: "/#cases",
+    inDevelopment: false,
+    menu: ["secondary", "hamburger"]
+  },
+  resume: {
+    id: "resume",
+    path: "/resume",
     inDevelopment: false,
     menu: ["secondary", "hamburger"]
   },

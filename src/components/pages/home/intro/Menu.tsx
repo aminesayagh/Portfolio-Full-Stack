@@ -7,8 +7,7 @@ import { useCallback, useMemo } from "react";
 import { motion } from "motion/react";
 
 import { useLenis } from "@/lib/Lenis";
-import { RouteSettingPath } from "@/i18n/routing";
-import { getHref } from "@/i18n/routing";
+import { RouteSettingPath, getHref } from "@/i18n/routing";
 import Button from "@/components/ui/button";
 import { text } from "@/components/ui/typography";
 import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
@@ -17,7 +16,7 @@ import HoveredScrollUp from "@/components/ui/HoveredScrollUp";
 const menuKeys = [
   "manifesto",
   "experience",
-  "cases",
+  "resume",
   "contact"
 ] as RouteSettingPath[];
 
@@ -87,6 +86,13 @@ const Menu = () => {
     (key: RouteSettingPath) => {
       if (key === "contact") {
         router.push(getHref("contact"));
+      } else if (key === "resume") {
+        // download resume pdf
+        const resumeUrl = "/Mohamed Amine SAYAGH - Software Developer - RESUME.pdf";
+        const link = document.createElement("a");
+        link.href = resumeUrl;
+        link.download = "Mohamed Amine SAYAGH - Software Developer - RESUME.pdf";
+        link.click();
       } else {
         lenis?.scrollTo(getHref(key));
       }

@@ -2,7 +2,8 @@ import React, { useCallback, useState } from "react";
 import { motion } from "motion/react";
 
 import { useLocale } from "next-intl";
-import { twMerge as tw } from "tailwind-merge";
+
+import { cn } from "@/lib/utils";
 
 // import Item from "@/components/ui/animation/Item";
 import HoveredScrollUp from "@/components/ui/HoveredScrollUp";
@@ -41,7 +42,7 @@ const SwitchLangItem = ({ value, short, isCurrentLocale, handleSelectionChange }
     <Button
       degree="2"
       size="xs"
-      className={tw(
+      className={cn(
         "uppercase",
         text(
           { weight: "semibold", size: "xs", degree: "2" },

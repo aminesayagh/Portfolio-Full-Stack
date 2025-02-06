@@ -19,7 +19,6 @@ const ImageUi = forwardRef<HTMLImageElement, Props>(
         alt={alt}
         priority={priority}
         quality={quality}
-        placeholder="blur"
         loading={priority ? "eager" : "lazy"}
         sizes={sizes || "(max-width: 768px) 100vw, 50vw"}
         className={cn(className, "w-full")}

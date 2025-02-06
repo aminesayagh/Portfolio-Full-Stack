@@ -14,7 +14,7 @@ interface LogoProps extends Omit<LinkProps, "size" | "degree" | "children"> {
 const Logo = ({ alt, size, ...props }: LogoProps) => {
   return (
     <Link
-      className="flex flex-row items-center justify-center gap-2"
+      className="flex flex-row items-center justify-center gap-2 select-none"
       {...props}
     >
       <Image

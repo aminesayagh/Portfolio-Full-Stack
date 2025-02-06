@@ -241,11 +241,13 @@ function Overview() {
 
   const { width: windowWidth } = useWindowSize();
 
+  const widthMax = useMemo(() => (windowWidth || 0) + 60, [windowWidth]);
+
   // Transform width from initial container width to full viewport width
   const width = useTransform(
     scrollYPosition,
     [0, 800, 2000],
-    [initialWidth, windowWidth ,windowWidth] // Add 40px to account for the rounded corners
+    [initialWidth, widthMax, widthMax] // Add 40px to account for the rounded corners
   );
 
   return (

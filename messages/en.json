@@ -65,7 +65,8 @@
       "manifesto": { "attribute": "Manifesto", "more": "null" },
       "experience": { "attribute": "Experience", "more": "(40+)" },
       "cases": { "attribute": "Cases", "more": "(☺ 90+)" },
-      "contact": { "attribute": "Contact", "more": "null" }
+      "contact": { "attribute": "Contact", "more": "null" },
+      "resume": { "attribute": "Resume", "more": "null" }
     },
     "socialNetwork": {
       "instagram": "IN",
