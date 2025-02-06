@@ -16,7 +16,6 @@ import { cn } from "@/lib/utils";
 
 import { useRouter, usePathname, RouteSettingPathKey } from "@/i18n/routing";
 import HamburgerMenu from "@/components/common/HamburgerMenu";
-import Button from "@/components/ui/button";
 import { containerStyle } from "@/components/ui/container";
 import Logo from "@/components/ui/logo";
 import Navbar from "@/components/ui/navbar";
@@ -41,10 +40,11 @@ const TRANSLATE_Y = -110;
 const menuHamburgerItems = getMenuItems("hamburger");
 const menuSocialNetworks = getMenuItems("socialNetwork");
 
-const HeaderButton = ({ children, onClick, openMenu }: {
+const HeaderButton = ({ children, onClick, openMenu, className }: {
   children: React.ReactNode;
-  onClick: () => void;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
   openMenu: boolean;
+  className?: string;
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -59,9 +59,10 @@ const HeaderButton = ({ children, onClick, openMenu }: {
           degree: "1",
           weight: "semibold"
         },
-        "py-2 border-none overflow-hidden",
+        "py-1 border-none overflow-hidden",
         "subElement-item hidden sm:block",
-        openMenu ? "hidden w-0" : ""
+        openMenu ? "hidden w-0" : "",
+        className
       )}
     >
       <HoveredScrollUp
@@ -254,15 +255,31 @@ const Header = () => {
   const onButtonClick = useCallback(
     (path: RouteSettingPathKey, id?: string) => {
       if (!openMenu) {
-        router.push(path);
+        if (path == "/resume") {
+          const resumeUrl = "/Mohamed Amine SAYAGH - Software Developer - RESUME.pdf";
+          const link = document.createElement("a");
+          link.href = resumeUrl;
+          link.download = "Mohamed Amine SAYAGH - Software Developer - RESUME.pdf";
+          link.click();
+        } else {
+          router.push(path);
+        }
       } else {
         tl.current
           .reverse()
           .then(() => {
             setOpenMenu(false);
-            idTimeout.current = setTimeout(() => {
-              scrollToId(path, id);
-            }, 20);
+            if (path == "/resume") {
+              const resumeUrl = "/Mohamed Amine SAYAGH - Software Developer - RESUME.pdf";
+              const link = document.createElement("a");
+              link.href = resumeUrl;
+              link.download = "Mohamed Amine SAYAGH - Software Developer - RESUME.pdf";
+              link.click();
+            } else {
+              idTimeout.current = setTimeout(() => {
+                scrollToId(path, id);
+              }, 20);
+            }
             return null; // Return value to satisfy promise/always-return
           })
           .catch(err => console.error(err));
@@ -310,29 +327,19 @@ const Header = () => {
             >
               {pageName !== "contact" ? t("header.action") : t("header.home")}
             </HeaderButton>
-            <Button
-              // on press scroll to the project section
-              onPress={() => scrollToId("/#cases")}
-              size="sm"
-              degree="1"
-              className={text(
-                {
-                  size: "xs",
-                  degree: "1",
-                  weight: "semibold"
-                },
-                "py-2 border-none overflow-hidden",
-                "subElement-item hidden sm:block",
-                openMenu ? "hidden w-0" : "",
-                "relative transition-colors duration-300",
-                "hover:text-primary-500",
-                "after:content-[''] after:w-full after:absolute after:bottom-0 after:left-0 after:h-[4px] after:bg-primary-500",
-                "hover:after:animate-underline",
-                "not-hover:after:animate-underlineExit"
-              )}
+            <HeaderButton
+              onClick={() => {
+                const resumeUrl = "/Mohamed Amine SAYAGH - Software Developer - RESUME.pdf";
+                const link = document.createElement("a");
+                link.href = resumeUrl;
+                link.download = "Mohamed Amine SAYAGH - Software Developer - RESUME.pdf";
+                link.click();
+              }}
+              openMenu={openMenu}
+              className="uppercase"
             >
-              {t("header.project")}
-            </Button>
+              {t("header.resume")}
+            </HeaderButton>
             <Modal.Button>
               {({ handler, isOpen }) => {
                 return (

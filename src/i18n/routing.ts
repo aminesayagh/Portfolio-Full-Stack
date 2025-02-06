@@ -20,15 +20,9 @@ const ROUTER_CONFIGS = {
     inDevelopment: false,
     menu: []
   },
-  contact: {
-    id: "contact",
-    path: "/contact",
-    inDevelopment: false,
-    menu: ["secondary", "hamburger"]
-  },
   intro: {
     id: "intro",
-    path: "/#intro",
+    path: "#intro",
     inDevelopment: false,
     menu: ["secondary", "hamburger"]
   },
@@ -48,11 +42,18 @@ const ROUTER_CONFIGS = {
     id: "cases",
     path: "/#cases",
     inDevelopment: false,
-    menu: ["secondary", "hamburger"]
+    menu: ["secondary"]
   },
   resume: {
     id: "resume",
     path: "/resume",
+    inDevelopment: false,
+    menu: ["secondary", "hamburger"]
+  },
+  
+  contact: {
+    id: "contact",
+    path: "/contact",
     inDevelopment: false,
     menu: ["secondary", "hamburger"]
   },
