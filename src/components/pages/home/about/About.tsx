@@ -17,7 +17,7 @@ export default function About() {
   return (
     <div id="manifesto" className="flex flex-row gap-0 container items-start justify-end py-24">
       {/* head */}
-      <div className="w-10/12 flex flex-col items-start justify-start gap-12">
+      <div className="w-full lg:w-10/12 flex flex-col items-start justify-start gap-12">
         {/* body */}
         <div className="w-full -ml-0 relative">
           <TextReveal text={t("content")} />
@@ -27,7 +27,7 @@ export default function About() {
           {t("action")}
         </ButtonCallToActionScroll>
         <span className="h-24"></span>
-        <div id="experience" className="w-full grid grid-cols-3 gap-8">
+        <div id="experience" className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {sellingPoints.map((point, index) => (
             <CardHovered
               key={`${index}-${point.number}`}

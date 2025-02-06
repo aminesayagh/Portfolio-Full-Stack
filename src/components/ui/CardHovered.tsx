@@ -69,7 +69,7 @@ const Card = ({
 
     return (
         <motion.span 
-            className={cn("w-full relative block group", className)}
+            className={cn("w-full relative block group min-h-[400px]", className)}
             initial="initial"
             whileHover="hover"
             animate={controls}

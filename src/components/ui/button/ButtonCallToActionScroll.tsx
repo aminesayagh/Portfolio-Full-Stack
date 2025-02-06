@@ -89,6 +89,13 @@ export default function ButtonCallToActionScroll({
             onMouseLeave={() => setIsHovered(false)}
         >
             <Button
+                onPress={() => {
+                    const resumeUrl = "/Mohamed Amine SAYAGH - Software Developer - RESUME.pdf";
+                    const link = document.createElement("a");
+                    link.href = resumeUrl;
+                    link.download = "Mohamed Amine SAYAGH - Software Developer - RESUME.pdf";
+                    link.click();
+                }}
                 className={cn(className, text({
                     weight: "medium",
                     size: "md",

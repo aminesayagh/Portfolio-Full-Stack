@@ -28,10 +28,12 @@ const BASE_VELOCITY = 4;
 
 const Row = memo(function Row({
   images,
-  baseVelocity = 100
+  baseVelocity = 100,
+  className
 }: {
   images: string[];
   baseVelocity?: number;
+  className?: string;
 }) {
   const baseX = useMotionValue(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -94,7 +96,7 @@ const Row = memo(function Row({
       .map((_, index) => (
         <motion.div
           key={`${index}-image`}
-          className="relative h-full overflow-hidden rounded-xl object-cover min-w-[66vh]"
+          className="relative h-full overflow-hidden rounded-xl object-cover min-w-[max(80vw,66vh)] md:min-w-[max(66vh,890px)] 4xl:min-w-[max(66vh,920px)]"
           style={{
             aspectRatio: "2/1"
           }}
@@ -119,9 +121,10 @@ const Row = memo(function Row({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        "relative h-full flex flex-row w-full min-w-screen gap-[2vw]",
+        "relative h-full flex flex-row w-full min-w-screen gap-8 mdl:gap-[4vw] 2xl:gap-[2vw]",
         "group [--gap:2rem] ",
-        ANIMATION_GPU_OPTIMIZATION
+        ANIMATION_GPU_OPTIMIZATION,
+        className
       )}
       style={{ x }}
     >
@@ -264,12 +267,13 @@ function Overview() {
           transformOrigin: "top center",
           height: 2500
         }}
-        className="w-screen container absolute flex flex-col gap-[2vw] py-[2vw] inset-0 mx-auto"
+        className="w-screen container absolute flex flex-col gap-8 mdl:gap-[4vw] 2xl:gap-[2vw] py-8 mdl:py-[4vw] 2xl:py-[2vw] inset-0 mx-auto"
       >
         <Row images={IMAGE_SETS["SET_1"] || []} baseVelocity={BASE_VELOCITY} />
         <Row images={IMAGE_SETS["SET_2"] || []} baseVelocity={-BASE_VELOCITY} />
         <Row images={IMAGE_SETS["SET_3"] || []} baseVelocity={BASE_VELOCITY} />
         <Row images={IMAGE_SETS["SET_4"] || []} baseVelocity={-BASE_VELOCITY} />
+        <Row images={IMAGE_SETS["SET_1"] || []} baseVelocity={-BASE_VELOCITY} className="hidden mdl:block" />
       </div>
     </motion.section>
   );
