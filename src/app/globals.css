@@ -1,0 +1,195 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark, :not(.dark .light) *));
+@custom-variant light (&:where(.light, .light, :not(.dark) *));
+.remove_outline {
+  outline: none;
+  touch-action: none;
+}
+
+.remove_outline:focus {
+  outline: none;
+}
+
+main,
+html,
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/Montserrat/Montserrat-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.will-change-transform-animation {
+  will-change: all;
+  
+}
+
+.is-loaded p,
+.is-loaded h1,
+.is-loaded h2,
+.is-loaded h3,
+.is-loaded h4,
+.is-loaded h5,
+.is-loaded h6,
+.is-loaded button,
+.is-loaded li,
+.is-loaded em {
+  transition:
+    color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
+}
+
+.is-loaded p:lang(fr),
+.is-loaded h1:lang(fr),
+.is-loaded h2:lang(fr),
+.is-loaded h3:lang(fr),
+.is-loaded h4:lang(fr),
+.is-loaded h5:lang(fr),
+.is-loaded h6:lang(fr),
+.is-loaded button:lang(fr),
+.is-loaded li:lang(fr),
+.is-loaded em:lang(fr),
+.is-loaded p:lang(en),
+.is-loaded h1:lang(en),
+.is-loaded h2:lang(en),
+.is-loaded h3:lang(en),
+.is-loaded h4:lang(en),
+.is-loaded h5:lang(en),
+.is-loaded h6:lang(en),
+.is-loaded button:lang(en),
+.is-loaded li:lang(en),
+.is-loaded em:lang(en) {
+  animation: textFadeInOut 2s ease forwards;
+}
+
+@keyframes textFadeInOut {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.overflow-y-animate {
+  overflow-y: clip;
+  overflow-x: visible;
+}
+
+.overflow-y-animate > * {
+  will-change: transform;
+}
+
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-overflow-scrolling: touch;
+  -webkit-touch-callout: none;
+}
+
+.whitespace-nowrap-important {
+  white-space: nowrap !important;
+}
+
+.whitespace-inherit-important {
+  white-space: inherit !important;
+}
+
+body {
+  scroll-behavior: smooth;
+  /* overflow: hidden; */
+}
+
+.lenis {
+  -ms-overflow-style: none;
+  height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: none !important;
+
+}
+
+.lenis &::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+.scrollbar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 16px;
+  z-index: 1000;
+  padding: 6px 0;
+}
+
+.scrollbar .inner {
+  height: 100%;
+  position: relative;
+  background-color: oklch(22.35% 0.019 281.25 / 0.05);
+  backdrop-filter: blur(8px);
+}
+
+.scrollbar .thumb {
+  min-height: 120px;
+  width: 8px;
+  background-color: oklch(32.16% 0.019 281.25);
+  position: absolute;
+  right: 4px;
+  border-radius: 2.8px;
+  border: 1px solid oklch(18.6% 0.019 281.25);
+  cursor: grab;
+}
+
+.scrollbar .thumb:active {
+  cursor: grabbing;
+  background-color: oklch(40.39% 0.0321 281.25);
+}
+
+.body-background {
+  background-color: oklch(17.3% 0.01 281.25);
+}
+
+@media (max-width: 1024px) {
+  .scrollbar {
+    display: none;
+  }
+}

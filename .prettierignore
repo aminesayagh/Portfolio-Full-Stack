@@ -1,0 +1,12 @@
+coverage
+public
+dist
+node_modules
+.next
+.turbo
+.vscode
+.DS_Store
+.env
+.env.local
+.env.development
+.env.production

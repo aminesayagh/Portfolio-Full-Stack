@@ -4,7 +4,6 @@ Welcome to my portfolio repository. This project showcases my skills and project
 
 ## Table of Contents
 
-
 - [Overview](#overview)
 - [Project Structure](#project-structure)
   - [Components](#components)
@@ -25,4 +24,3 @@ The components directory contains all the reusable UI components used throughout
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for more information.
-
