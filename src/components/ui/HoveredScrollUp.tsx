@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
-import React, { memo, useMemo } from "react";
+import React, { memo, useMemo, useState } from "react";
 
 import { Button } from "react-aria-components";
 
@@ -86,3 +86,16 @@ const HoveredScrollUp = memo(
 HoveredScrollUp.displayName = "HoveredScrollUp";
 
 export default HoveredScrollUp;
+
+
+export const HoveredScrollUpInternal = ({ children, ...props }: Omit<HoveredScrollUpProps, "isHovered">) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+      <HoveredScrollUp isHovered={isHovered} {...props}>
+        {children}
+      </HoveredScrollUp>
+    </div>
+  );
+};

@@ -28,7 +28,7 @@ import { useLenis } from "@/lib/Lenis";
 import { gsap, Power3, ScrollTrigger } from "@/utils/gsap";
 
 import SwitchLang from "./SwitchLang";
-import HoveredScrollUp from "../ui/HoveredScrollUp";
+import HoveredScrollUp, { HoveredScrollUpInternal } from "../ui/HoveredScrollUp";
 
 const GAP_SIZE_LG = "gap-4 sm:gap-6 lg:gap-7 xl:gap-8";
 const GAP_SIZE_XL = "gap-8 mdl:gap-12";
@@ -412,23 +412,19 @@ const Header = () => {
                                   "modal-item"
                                 )}
                               >
-                                <Button
-                                  size="auto"
-                                  onPress={() => {
-                                    onButtonClick(item.path, item.id);
-                                  }}
-                                  degree="1"
-                                  weight="bold"
-                                  name="menuItem"
+                                <HoveredScrollUpInternal
+                                  onPress={() => onButtonClick(item.path, item.id)}
+                                  secondaryClassName="text-white-600 bg-black-100 z-10 hover:text-primary-500"
                                   className={cn(
-                                    "capitalize relative text-white-600 bg-black-100 z-10 hover:text-primary-500",
-                                    "text-7xl sm:text-8xl mdl:text-9xl lg:text-15xl xl:text-[5rem] font-bold leading-tight tracking-wide transition-colors duration-150"
+                                    "capitalize relative text-white-600 bg-black-100 z-10",
+                                    "text-7xl sm:text-8xl mdl:text-9xl lg:text-15xl xl:text-[5rem] font-bold leading-tight tracking-wide"
                                   )}
+                                  skewY={-20}
                                 >
                                   {t(
                                     `${BASE_LOCALE_MENU}.${item.id}.attribute`
                                   )}
-                                </Button>
+                                </HoveredScrollUpInternal>
                                 <span className="overflow-hidden">
                                   {t(`${BASE_LOCALE_MENU}.${item.id}.more`) !==
                                     "null" ? (
