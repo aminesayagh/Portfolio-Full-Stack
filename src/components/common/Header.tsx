@@ -8,6 +8,7 @@ import React, {
   useRef,
   useMemo
 } from "react";
+import { motion } from "motion/react";
 
 import { useTranslations } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
@@ -27,6 +28,7 @@ import { useLenis } from "@/lib/Lenis";
 import { gsap, Power3, ScrollTrigger } from "@/utils/gsap";
 
 import SwitchLang from "./SwitchLang";
+import HoveredScrollUp from "../ui/HoveredScrollUp";
 
 const GAP_SIZE_LG = "gap-4 sm:gap-6 lg:gap-7 xl:gap-8";
 const GAP_SIZE_XL = "gap-8 mdl:gap-12";
@@ -38,6 +40,40 @@ const TRANSLATE_Y = -110;
 
 const menuHamburgerItems = getMenuItems("hamburger");
 const menuSocialNetworks = getMenuItems("socialNetwork");
+
+const HeaderButton = ({ children, onClick, openMenu }: {
+  children: React.ReactNode;
+  onClick: () => void;
+  openMenu: boolean;
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <motion.button
+      onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className={text(
+        {
+          size: "xs",
+          degree: "1",
+          weight: "semibold"
+        },
+        "py-2 border-none overflow-hidden",
+        "subElement-item hidden sm:block",
+        openMenu ? "hidden w-0" : ""
+      )}
+    >
+      <HoveredScrollUp
+        isHovered={isHovered}
+        skewY={10}
+        secondaryClassName="text-primary-200"
+        className="w-fit"
+      >
+        {children}
+      </HoveredScrollUp>
+    </motion.button>);
+}
 
 const Header = () => {
   const t = useTranslations();
@@ -266,25 +302,14 @@ const Header = () => {
                 )}
               />
             </>)}
-            <Button
-              onPress={() =>
+            <HeaderButton
+              onClick={() =>
                 onButtonClick(pageName !== "contact" ? "/contact" : "/")
               }
-              size="sm"
-              degree="1"
-              className={text(
-                {
-                  size: "xs",
-                  degree: "1",
-                  weight: "semibold"
-                },
-                "py-2 border-none overflow-hidden",
-                "subElement-item hidden sm:block",
-                openMenu ? "hidden w-0" : ""
-              )}
+              openMenu={openMenu}
             >
               {pageName !== "contact" ? t("header.action") : t("header.home")}
-            </Button>
+            </HeaderButton>
             <Button
               // on press scroll to the project section
               onPress={() => scrollToId("/#cases")}

@@ -178,7 +178,7 @@ export default {
           }
         ],
         "display-md": [
-          "clamp(2rem, 2.5vw + 1rem, 2.75rem)",
+          "clamp(2rem, 2.5vw + 1rem, 3rem)",
           {
             lineHeight: "1.2",
             letterSpacing: "0.05em"

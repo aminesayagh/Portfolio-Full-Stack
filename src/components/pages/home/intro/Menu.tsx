@@ -1,9 +1,10 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
+import { motion } from "motion/react";
 
 import { useLenis } from "@/lib/Lenis";
 import { RouteSettingPath } from "@/i18n/routing";
@@ -11,6 +12,7 @@ import { getHref } from "@/i18n/routing";
 import Button from "@/components/ui/button";
 import { text } from "@/components/ui/typography";
 import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
+import HoveredScrollUp from "@/components/ui/HoveredScrollUp";
 
 const menuKeys = [
   "manifesto",
@@ -19,7 +21,61 @@ const menuKeys = [
   "contact"
 ] as RouteSettingPath[];
 
-import Item from "@/components/ui/animation/Item";
+
+const MenuItem = ({
+  title,
+  number,
+  path,
+  goToSection
+}: {
+  title: string;
+  number: string;
+  path: RouteSettingPath;
+  goToSection: (key: RouteSettingPath) => void;
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
+  return (
+    <div
+      className={text(
+        { size: "sm", degree: "1", weight: "medium" },
+        "flex relative flex-col justify-start items-start overflow-hidden gap-1 w-1/2 sm:w-auto md:w-1/4"
+      )}
+    >
+      <motion.span
+        className="w-fit relative"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <p
+          className={cn("number_menu_gsap opacity-0", ANIMATION_GPU_OPTIMIZATION)}
+        >
+          {number}
+        </p>
+        <Button
+          degree="1"
+          size="sm"
+          weight="semibold"
+          onPress={() => goToSection(path)}
+          className={cn(
+            "uppercase text-start item_menu_gsap",
+            ANIMATION_GPU_OPTIMIZATION
+          )}
+          style={{
+            color: "inherit"
+          }}
+        >
+          <HoveredScrollUp
+            isHovered={isHovered}
+            skewY={10}
+            secondaryClassName="text-primary-500"
+          >
+            {title}
+          </HoveredScrollUp>
+        </Button>
+      </motion.span>
+    </div>
+  );
+};
 
 const Menu = () => {
   const t = useTranslations();
@@ -52,41 +108,15 @@ const Menu = () => {
   return (
     <>
       <div className="flex flex-row flex-wrap justify-between items-start w-full gap-y-6">
-        {menuItemsData.map(({ key, number, title }) => {
-          return (
-            <div
-              key={key}
-              className={text(
-                { size: "sm", degree: "1", weight: "medium" },
-                "flex flex-col justify-start items-start overflow-hidden gap-1 w-1/2 sm:w-auto md:w-1/4"
-              )}
-            >
-              <p
-                className={cn(
-                  "number_menu_gsap opacity-0",
-                  ANIMATION_GPU_OPTIMIZATION
-                )}
-              >
-                {number}
-              </p>
-              <Button
-                degree="1"
-                size="sm"
-                weight="semibold"
-                onPress={() => goToSection(key)}
-                className={cn(
-                  "uppercase text-start item_menu_gsap",
-                  ANIMATION_GPU_OPTIMIZATION
-                )}
-                style={{
-                  color: "inherit"
-                }}
-              >
-                <Item>{title}</Item>
-              </Button>
-            </div>
-          );
-        })}
+        {menuItemsData.map(({ key, number, title }) => (
+          <MenuItem
+            key={key}
+            path={key}
+            title={title}
+            number={number}
+            goToSection={goToSection}
+          />
+        ))}
       </div>
       <span className="overflow-hidden">
         <p

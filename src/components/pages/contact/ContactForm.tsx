@@ -135,6 +135,7 @@ const ContactForm = () => {
           timeout: 10000
         }
       );
+      methods.reset();
     } catch (err) {
       console.error(err);
       addToast(

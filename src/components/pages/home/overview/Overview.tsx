@@ -41,7 +41,8 @@ const Row = memo(function Row({
   const scrollVelocity = useVelocity(scrollY);
   const smoothScroll = useSpring(scrollVelocity, {
     stiffness: 100,
-    damping: 50
+    damping: 50,
+    restDelta: 0.001
   });
 
   const velocityFactor = useTransform(smoothScroll, [0, 1000], [0, 5], {
