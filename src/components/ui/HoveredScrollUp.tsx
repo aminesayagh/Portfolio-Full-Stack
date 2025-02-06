@@ -1,14 +1,16 @@
 import { AnimatePresence, motion } from "motion/react";
 import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
-import { memo, useMemo } from "react";
+import React, { memo, useMemo } from "react";
+
+import { Button } from "react-aria-components";
 
 interface HoveredScrollUpProps {
   children: React.ReactNode;
   isHovered: boolean;
-  skewX?: number;
   skewY?: number;
   secondaryClassName?: string;
   className?: string;
+  onPress?: () => void;
 }
 const HoveredScrollUp = memo(
   ({
@@ -16,7 +18,8 @@ const HoveredScrollUp = memo(
     isHovered,
     secondaryClassName = "text-inherit",
     className,
-    skewY = 0
+    skewY = 0,
+    onPress
   }: HoveredScrollUpProps) => {
 
     const textVariants = useMemo(
@@ -54,8 +57,11 @@ const HoveredScrollUp = memo(
       [skewY]
     );
 
+    // if onPress is provided, wrap the children in a Button else use a span
+    const Wrapper = useMemo(() => onPress ? Button : "span", [onPress]);
+
     return (
-      <div className={cn("relative overflow-hidden", className)}>
+      <Wrapper className={cn("relative overflow-hidden", className)} {...(onPress ? { onPress } : {})}>
         <AnimatePresence mode="wait">
           <motion.span
             key={isHovered ? "hover" : "initial"}
@@ -72,7 +78,7 @@ const HoveredScrollUp = memo(
             {children}
           </motion.span>
         </AnimatePresence>
-      </div>
+      </Wrapper>
     );
   }
 );

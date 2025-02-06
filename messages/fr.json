@@ -112,6 +112,39 @@
     "goal": "Vous voulez en savoir plus sur moi?,",
     "action": "Découvrez mon Résumé"
   },
+  "manifesto_old": {
+    "title_1": "Perspective",
+    "title_1_2": "thinking",
+    "title_2": "Manifeste",
+    "image_alt": "Mohamed Amine SAYAGH",
+    "slogan": "We provide more than solutions, we deliver understanding.",
+    "subtitle_1": "HOW I DO",
+    "subtitle_2": "PROBLEM SOLVING",
+    "content": "Being correct is not enough, it's merely the inception. An exceptional engineer devotes a substantial amount of time to deep, unbiased listening. They consider real-world experimentation as their source of truth, adamantly differentiating between judgments drawn from perspectives and concrete facts."
+  },
+  "about": {
+    "subtitle_1": "Perspective",
+    "subtitle_2": "Impact",
+    "action": "Découvrez mon Résumé",
+    "content": "Je suis un consultant numérique dévoué à transformer le code en solutions authentiques qui reflètent les visions uniques de mes clients. En bridant l'expertise technique avec une compréhension approfondie des besoins des clients, je livre des solutions web qui construisent la confiance, font progresser et laissent une trace durable.",
+    "selling_point": [
+      {
+        "number": "8",
+        "description": "Années d'expérience dans le développement numérique.",
+        "suffix": "+"
+      },
+      {
+        "number": "19",
+        "description": "Projets réalisés pour des clients internationaux.",
+        "suffix": "+"
+      },
+      {
+        "number": "87",
+        "description": "De mes clients reviennent d'un autre projet.",
+        "suffix": "%"
+      }
+    ]
+  },
   "experience": {
     "title": "Évolution à travers l'expertise",
     "description": "La vie se cache dans des endroits que nous ne regardons jamais, les choses que nous désirons se trouvent dans les rues que nous n'avons pas encore parcourues. Ce sont ces routes inexplorées qui m'appellent, enflammant une quête sans fin dans mon cœur.",
@@ -251,7 +284,8 @@
     "France": "France",
     "United States": "États-Unis",
     "Singapore": "Singapour",
-    "London": "London"
+    "London": "Londres",
+    "Lithuania": "Lituanie"
   },
   "projects": {
     "1": {

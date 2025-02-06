@@ -374,7 +374,7 @@ const Header = () => {
                 isDismissable
                 className={cn("body-background modal-content")}
               >
-                {({ }) => (
+                {() => (
                   <div
                     className={cn(
                       "flex flex-col justify-between",
