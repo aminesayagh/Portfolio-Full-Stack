@@ -84,7 +84,7 @@ const Header = () => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   // const { endLoading } = usePreloader();
   const lenis = useLenis();
-  const { downloadPdf, isLoading, error } = usePdfDownload();
+  const { downloadPdf } = usePdfDownload();
 
   const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
   const ctx = useRef<gsap.Context>(null);
@@ -278,7 +278,7 @@ const Header = () => {
           .catch(err => console.error(err));
       }
     },
-    [openMenu, scrollToId, idTimeout, router]
+    [openMenu, scrollToId, idTimeout, router, downloadPdf]
   );
 
   useEffect(() => {

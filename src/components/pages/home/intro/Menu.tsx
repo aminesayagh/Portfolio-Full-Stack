@@ -94,7 +94,7 @@ const Menu = () => {
         lenis?.scrollTo(getHref(key));
       }
     },
-    [lenis, router]
+    [lenis, router, downloadPdf]
   );
 
   const menuItemsData = useMemo(
