@@ -10,6 +10,7 @@ interface HoveredScrollUpProps {
   skewY?: number;
   secondaryClassName?: string;
   className?: string;
+  x?: boolean;
   onPress?: () => void;
 }
 const HoveredScrollUp = memo(
@@ -19,6 +20,7 @@ const HoveredScrollUp = memo(
     secondaryClassName = "text-inherit",
     className,
     skewY = 0,
+    x = false,
     onPress
   }: HoveredScrollUpProps) => {
 
@@ -26,6 +28,7 @@ const HoveredScrollUp = memo(
       () => ({
         initial: {
           y: 0,
+          x: 0,
           skewX: 0,
           transition: {
             duration: 0.45,
@@ -35,6 +38,7 @@ const HoveredScrollUp = memo(
         exit: {
           y: "-100%",
           skewY: -skewY,
+          x: x ? "-100%" : 0,
           transition: {
             duration: 0.45,
             ease: [0.7, 0, 0.84, 0] // easeIn
@@ -43,11 +47,13 @@ const HoveredScrollUp = memo(
         enter: {
           y: "100%",
           skewY: skewY,
+          x: x ? "100%" : 0,
           transition: { duration: 0 }
         },
         animate: {
           y: 0,
           skewY: 0,
+          x: 0,
           transition: {
             duration: 0.45,
             ease: [0.16, 1, 0.3, 1] // easeOut
