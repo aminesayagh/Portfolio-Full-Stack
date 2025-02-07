@@ -1,2 +1,2 @@
-export { LoadingProvider } from "./Preloader.context";
-export { LOADING_TIMEOUT, EXTERNAL_LOADING_TIMEOUT } from "./Preloader.context";
+export { LoadingProvider } from "./PreloaderProvider";
+export { LOADING_TIMEOUT, EXTERNAL_LOADING_TIMEOUT } from "./constants";

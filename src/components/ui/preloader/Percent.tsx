@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, animate, useMotionValue } from 'motion/react';
-
-const INITIAL_PERCENT = 0;
-const END_LOADING_IN = 100;
-const LOADING_TIMEOUT = 3000;
+import { INITIAL_PERCENT, END_LOADING_IN, LOADING_TIMEOUT } from './constants';
 
 const Percent = ({ setEndLoadingProgress }: { 
   setEndLoadingProgress: (b: boolean) => void 
