@@ -6,12 +6,12 @@ import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { motion } from "motion/react";
 
-import { useLenis } from "@/lib/Lenis";
 import { RouteSettingPath, getHref } from "@/i18n/routing";
+import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
+import { useLenis } from "@/lib/Lenis";
+import HoveredScrollUp from "@/components/ui/HoveredScrollUp";
 import Button from "@/components/ui/button";
 import { text } from "@/components/ui/typography";
-import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
-import HoveredScrollUp from "@/components/ui/HoveredScrollUp";
 
 const menuKeys = [
   "manifesto",

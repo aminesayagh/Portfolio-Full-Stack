@@ -8,7 +8,6 @@ import React, {
   Suspense
 } from "react";
 
-import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
@@ -17,51 +16,25 @@ import Container from "@/components/ui/container";
 import Noise from "@/components/ui/noise";
 import { text, title } from "@/components/ui/typography";
 import { gsap } from "@/utils/gsap";
+import Percent from "./Percent";
 
 // config:
-const END_LOADING_IN = 99;
-const INITIAL_PERCENT = 1;
+// const END_LOADING_IN = 99;
+// const INITIAL_PERCENT = 1;
 export const LOADING_TIMEOUT = 5000;
 export const EXTERNAL_LOADING_TIMEOUT = LOADING_TIMEOUT + 1000;
 
 export function LoadingProvider({ children }: { children: ReactNode }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const timer = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    // add data set of loading to document html
-    const html = document.querySelector("html");
-    if (html) {
-      html.dataset["is_loading"] = (!isLoading).toString();
-    }
-  }, [isLoading]);
-
-  useEffect(() => {
-    timer.current = setTimeout(() => {
-      setIsLoading(false);
-    }, LOADING_TIMEOUT);
-    return () => {
-      if (timer.current) {
-        clearTimeout(timer.current);
-      }
-    };
-  }, []);
   return (
     <>
-      <Preloader isLoading={isLoading} setEndLoading={setIsLoading} />
+      <Preloader />
       <Suspense>{children}</Suspense>
     </>
   );
 }
 
-const Preloader = ({
-  isLoading,
-  setEndLoading
-}: {
-  isLoading: boolean;
-  setEndLoading: (value: boolean) => void;
-}) => {
-  const t  = useTranslations();
+const Preloader = () => {
+  const t = useTranslations();
   const ref = useRef<HTMLSpanElement>(null);
   const [endLoadingProgress, setEndLoadingProgress] = useState(false);
 
@@ -136,7 +109,7 @@ const Preloader = ({
             ease: "power2.out",
             skewY: skew,
             onComplete: () => {
-              setEndLoading(true);
+              setEndLoadingProgress(true);
             }
           }
         )
@@ -164,7 +137,7 @@ const Preloader = ({
       ctx["endPreload"]();
     }
     return () => ctx.revert();
-  }, [ref, isLoading, setEndLoading, endLoadingProgress]);
+  }, [ref, endLoadingProgress]);
 
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -272,50 +245,5 @@ const Preloader = ({
       </div>
       <div className="fixed w-screen h-screen bg-primary-500 element-bg z-preload_bg" />
     </span>
-  );
-};
-
-const Percent = ({
-  setEndLoadingProgress,
-}: {
-  setEndLoadingProgress: (b: boolean) => void;
-}) => {
-  const [percent, setPercent] = useState(INITIAL_PERCENT);
-  const percentRef = useRef(INITIAL_PERCENT);
-
-  useIsomorphicLayoutEffect(() => {
-    const tl = gsap.to(percentRef, {
-      current: END_LOADING_IN,
-      duration: LOADING_TIMEOUT / 1000, // Convert ms to seconds
-      ease: "none",
-      onUpdate: () => {
-        const current = Math.floor(percentRef.current);
-        if (current !== percent) {
-          setPercent(current);
-        }
-      },
-      onComplete: () => {
-        setEndLoadingProgress(true);
-      },
-    });
-
-    return () => {
-      tl.kill();
-    }
-  }, [setEndLoadingProgress]);
-
-  return (
-    <div className="flex flex-row gap-0 py-2 overflow-hidden">
-      <motion.span
-        initial={{ y: 40, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.04 }}
-        className="relative flex items-center gap-1 will-change-transform-animation"
-      >
-        <p className="flex flex-col w-auto leading-3 align-middle text-end">
-          {percent}
-        </p>
-      </motion.span>
-    </div>
   );
 };
