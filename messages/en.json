@@ -145,30 +145,58 @@
     "subtitle_2": "PROBLEM SOLVING",
     "content": "Being correct is not enough, it's merely the inception. An exceptional engineer devotes a substantial amount of time to deep, unbiased listening. They consider real-world experimentation as their source of truth, adamantly differentiating between judgments drawn from perspectives and concrete facts."
   },
-  "experience": {
+  "experiences": {
     "title": "Evolution through expertise",
     "description": "Life hides in places we never look, the things we desire lie on the streets we haven't yet walked, it's these untraveled roads that call to me, igniting an endless quest in my heart.",
-    "stages": {
-      "1": {
-        "title": "Innovative Exploration",
-        "count": "01",
-        "description": "I activate the narrative of your digital brand. Through bespoke digital design, I collaborate with you to craft experiences that resonate authentically with your users, establishing a robust user-product relationship that is enduring and fruitful."
+    "list": {
+      "french_dandy": {
+        "title": "French Dandy"
       },
-      "2": {
-        "title": "User-Centered Design",
-        "count": "02",
-        "description": "You speak, I translate - into design. My process is deeply rooted in understanding your vision, ensuring that every pixel and code reflects your needs. I don't just create; I tailor an experience, making sure that your brand's voice is heard loud and clear in every interaction."
+      "cyber_cohesion": {
+        "title": "Cyber Cohesion"
       },
-      "3": {
-        "title": "Technical Precision",
-        "count": "03",
-        "description": "Precision is my guiding principle. I meticulously construct every line of code and design element with accuracy and intent. My goal is to deliver a product that not only meets but exceeds expectations, ensuring a flawless user journey from start to finish."
+      "happy_water": {
+        "title": "Happy Water"
       },
-      "4": {
-        "title": "Dynamic Collaboration",
-        "count": "04",
-        "description": "I adapt, I adjust, I evolve. Collaboration is key to our mutual success. As your brand grows and shifts, I'm right there with you, making real-time changes that are as dynamic as the market. I'm your partner in progress, evolving solutions that thrive."
+      "code_wrangler": {
+        "title": "Code Wrangler"
+      },
+      "lavish_trading": {
+        "title": "Lavish Trading"
       }
+    },
+    "archive": {
+      "title": "Archive",
+      "list": [
+        {
+          "id": "horde_studio",
+          "title": "Horde Studio"
+        },
+        {
+          "id": "iso_what",
+          "title": "ISO WHAT"
+        },
+        {
+          "id": "maud",
+          "title": "Maud Diamond"
+        },
+        {
+          "id": "sodiadd",
+          "title": "Sodiadd"
+        },
+        {
+          "id": "jonas_agency",
+          "title": "Jonas Agency"
+        },
+        {
+          "id": "shinobi_boy",
+          "title": "Shinobi Boy"
+        },
+        {
+          "id": "maschool",
+          "title": "Maschool"
+        }
+      ]
     }
   },
   "motivation": {

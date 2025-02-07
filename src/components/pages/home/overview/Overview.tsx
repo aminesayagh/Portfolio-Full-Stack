@@ -96,7 +96,7 @@ const Row = memo(function Row({
       .map((_, index) => (
         <motion.div
           key={`${index}-image`}
-          className="relative h-full overflow-hidden rounded-xl object-cover min-w-[max(80vw,66vh)] md:min-w-[max(66vh,890px)] 3xl:min-w-[900px]"
+          className="relative h-full overflow-hidden rounded-xl object-cover min-w-[min(90vw,66vh)] md:min-w-[max(66vh,890px)] 3xl:min-w-[900px]"
           style={{
             aspectRatio: "2/1"
           }}
@@ -244,10 +244,13 @@ function Overview() {
     scrollYProgress.set(latest);
   });
 
-  // Transform height from initial to final height
-  const height = useTransform(scrollYPosition, [0, 2000], [2400, 900]);
-
   const { width: windowWidth } = useWindowSize();
+
+  const maxHeight = (windowWidth || 0) > 1600 ? 2500 : 3000;
+  
+  // Transform height from initial to final height
+  const height = useTransform(scrollYPosition, [0, 2000], [maxHeight, 900]);
+
 
   const widthMax = useMemo(() => (windowWidth || 0) + 60, [windowWidth]);
 
@@ -267,14 +270,14 @@ function Overview() {
       }}
       className={cn(
         "w-full relative overflow-hidden mx-auto rounded-2xl bg-primary-500",
-        "[--space-gap:2rem] mdl:[--space-gap:2vw] 3xl:[--space-gap:2vw]",
+        "[--space-gap:1.5rem] sm:[--space-gap:2rem] mdl:[--space-gap:2vw] 3xl:[--space-gap:2vw]",
         "will-change-transform"
       )}
     >
       <div
         style={{
           transformOrigin: "top center",
-          height: 2500
+          height: maxHeight
         }}
         className="w-screen container absolute flex flex-col gap-y-[var(--space-gap)] py-[var(--space-gap)] inset-0 mx-auto"
       >
@@ -282,7 +285,7 @@ function Overview() {
         <Row images={IMAGE_SETS["SET_2"] || []} baseVelocity={-BASE_VELOCITY} />
         <Row images={IMAGE_SETS["SET_3"] || []} baseVelocity={BASE_VELOCITY} />
         <Row images={IMAGE_SETS["SET_4"] || []} baseVelocity={-BASE_VELOCITY} />
-        <Row images={IMAGE_SETS["SET_5"] || []} baseVelocity={-BASE_VELOCITY} className="block mdl:hidden" />
+        <Row images={IMAGE_SETS["SET_5"] || []} baseVelocity={BASE_VELOCITY} className="block mdl:hidden" />
       </div>
     </motion.section>
   );
