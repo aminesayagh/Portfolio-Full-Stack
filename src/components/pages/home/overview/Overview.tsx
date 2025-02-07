@@ -121,8 +121,7 @@ const Row = memo(function Row({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        "relative h-full flex flex-row w-full min-w-screen gap-8 mdl:gap-[4vw] xl:gap-[2vw]",
-        "group [--gap:2rem] ",
+        "group relative h-full flex flex-row w-full min-w-screen gap-[var(--space-gap)]",
         ANIMATION_GPU_OPTIMIZATION,
         className
       )}
@@ -255,7 +254,7 @@ function Overview() {
   // Transform width from initial container width to full viewport width
   const width = useTransform(
     scrollYPosition,
-    [0, 800, 2000],
+    [0, 500, 2000],
     [initialWidth, widthMax, widthMax] // Add 40px to account for the rounded corners
   );
 
@@ -266,14 +265,18 @@ function Overview() {
         height,
         width
       }}
-      className={cn("w-full relative overflow-hidden mx-auto rounded-2xl bg-primary-500", ANIMATION_GPU_OPTIMIZATION)}
+      className={cn(
+        "w-full relative overflow-hidden mx-auto rounded-2xl bg-primary-500",
+        "[--space-gap:2rem] mdl:[--space-gap:2vw] 3xl:[--space-gap:2vw]",
+        "will-change-transform"
+      )}
     >
       <div
         style={{
           transformOrigin: "top center",
           height: 2500
         }}
-        className="w-screen container absolute flex flex-col gap-8 mdl:gap-[4vw] xl:gap-[2vw] py-8 mdl:py-[4vw] xl:py-[2vw] inset-0 mx-auto"
+        className="w-screen container absolute flex flex-col gap-y-[var(--space-gap)] py-[var(--space-gap)] inset-0 mx-auto"
       >
         <Row images={IMAGE_SETS["SET_1"] || []} baseVelocity={BASE_VELOCITY} />
         <Row images={IMAGE_SETS["SET_2"] || []} baseVelocity={-BASE_VELOCITY} />

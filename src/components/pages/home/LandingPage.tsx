@@ -10,7 +10,7 @@ const About = dynamic(() => import("./about/About"));
 
 const LandingPage = () => (
   <>
-    <Container data-scroll-section as="section" size="lg" id="intro">
+    <Container as="section" size="lg" id="intro">
       <Intro />
     </Container>
     <span className="h-24 block" />
@@ -20,8 +20,7 @@ const LandingPage = () => (
     <Suspense fallback={<div>Loading...</div>}>
       <About />
     </Suspense>
-
-    <div data-scroll-section className="block w-full h-6 xs:h-12" />
+    <div className="block w-full h-6 xs:h-[20vh]" />
   </>
 );
 

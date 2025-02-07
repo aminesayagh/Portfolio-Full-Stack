@@ -12,7 +12,6 @@ import Button from "@/components/ui/button";
 import { text } from "@/components/ui/typography";
 import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 import HoveredScrollUp from "@/components/ui/HoveredScrollUp";
-import usePdfDownload from "@/hook/usePdfDownload";
 
 const menuKeys = [
   "manifesto",
@@ -80,7 +79,6 @@ const MenuItem = ({
 const Menu = () => {
   const t = useTranslations();
   const router = useRouter();
-  const { downloadPdf } = usePdfDownload();
 
   const lenis = useLenis();
 
@@ -89,12 +87,12 @@ const Menu = () => {
       if (key === "contact") {
         router.push(getHref("contact"));
       } else if (key === "resume") {
-        downloadPdf("/Mohamed Amine SAYAGH - Software Developer - CV.pdf", "Mohamed Amine SAYAGH - Software Developer - CV.pdf");
+        router.push(getHref("resume"));
       } else {
         lenis?.scrollTo(getHref(key));
       }
     },
-    [lenis, router, downloadPdf]
+    [lenis, router]
   );
 
   const menuItemsData = useMemo(

@@ -46,7 +46,7 @@ const ROUTER_CONFIGS = {
   },
   resume: {
     id: "resume",
-    path: "/resume",
+    path: "https://drive.usercontent.google.com/u/0/uc?id=1rhQdSeDsF9sdg_Fp7wqrGnlF1KR4X2km",
     inDevelopment: false,
     menu: ["secondary", "hamburger"]
   },
