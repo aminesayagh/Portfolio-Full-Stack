@@ -1,3 +1,4 @@
+"use client";
 import type { RefObject } from "react";
 import React, {
   useRef,
