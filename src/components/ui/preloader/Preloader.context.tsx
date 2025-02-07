@@ -21,7 +21,7 @@ import { gsap } from "@/utils/gsap";
 // config:
 const END_LOADING_IN = 99;
 const INITIAL_PERCENT = 1;
-export const LOADING_TIMEOUT = 9000;
+export const LOADING_TIMEOUT = 5000;
 export const EXTERNAL_LOADING_TIMEOUT = LOADING_TIMEOUT + 1000;
 
 export function LoadingProvider({ children }: { children: ReactNode }) {

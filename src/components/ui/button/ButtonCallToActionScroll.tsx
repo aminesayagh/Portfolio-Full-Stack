@@ -5,15 +5,15 @@ import {
     motion,
     Variants,
     AnimatePresence
-} from "motion/react";;
+} from "motion/react";
+import { useRouter } from "next/navigation";
 
 import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 import Button from "./Button";
 import { IconArrowUpRight } from "@tabler/icons-react";
 import { text } from "@/components/ui/typography";
 import HoveredScrollUp from "../HoveredScrollUp";
-import usePdfDownload from "@/hook/usePdfDownload";
-
+import { getHref } from "@/i18n/routing";
 // Animation variants for consistent timing
 const variants = {
     icon: {
@@ -78,7 +78,7 @@ export default function ButtonCallToActionScroll({
     className?: string;
 }) {
     const containerRef = useRef<HTMLButtonElement>(null);
-    const { downloadPdf } = usePdfDownload();
+    const router = useRouter();
     const [isHovered, setIsHovered] = useState(false);
     const inView = useInView(containerRef, {
         margin: "-100px"
@@ -92,7 +92,7 @@ export default function ButtonCallToActionScroll({
         >
             <Button
                 onPress={() => {
-                    downloadPdf("/Mohamed Amine SAYAGH - Software Developer - CV.pdf", "Mohamed Amine SAYAGH - Software Developer - CV.pdf");
+                    router.push(getHref("resume"));
                 }}
                 className={cn(className, text({
                     weight: "medium",

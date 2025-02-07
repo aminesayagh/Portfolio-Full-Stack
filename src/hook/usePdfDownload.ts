@@ -16,20 +16,16 @@ const usePdfDownload = (): UsePdfDownloadResult => {
 
     try {
       // Validate URL format
-      const validUrl = new URL(url);
-      if (!validUrl.pathname.endsWith('.pdf')) {
-        throw new Error('URL must point to a PDF file');
-      }
-
-      // Fetch the PDF file
       const response = await fetch(url, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/pdf',
+          "mode": "no-cors"
         },
       });
 
       if (!response.ok) {
+        console.log(response);
         throw new Error(`Failed to download PDF: ${response.statusText}`);
       }
 

@@ -22,10 +22,9 @@ import Navbar from "@/components/ui/navbar";
 import Modal from "@/components/ui/overlay/modal";
 import { EXTERNAL_LOADING_TIMEOUT } from "@/components/ui/preloader";
 import { text, title, Link } from "@/components/ui/typography";
-import { getMenuItems } from "@/i18n/routing";
+import { getMenuItems, getHref } from "@/i18n/routing";
 import { useLenis } from "@/lib/Lenis";
 import { gsap, Power3, ScrollTrigger } from "@/utils/gsap";
-import usePdfDownload from "@/hook/usePdfDownload";
 
 import SwitchLang from "./SwitchLang";
 import HoveredScrollUp, { HoveredScrollUpInternal } from "../ui/HoveredScrollUp";
@@ -84,7 +83,6 @@ const Header = () => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   // const { endLoading } = usePreloader();
   const lenis = useLenis();
-  const { downloadPdf } = usePdfDownload();
 
   const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
   const ctx = useRef<gsap.Context>(null);
@@ -256,18 +254,15 @@ const Header = () => {
   const onButtonClick = useCallback(
     (path: RouteSettingPathKey, id?: string) => {
       if (!openMenu) {
-        if (path == "/resume") {
-          downloadPdf("/Mohamed Amine SAYAGH - Software Developer - CV.pdf", "Mohamed Amine SAYAGH - Software Developer - CV.pdf");
-        } else {
           router.push(path);
-        }
+        
       } else {
         tl.current
           .reverse()
           .then(() => {
             setOpenMenu(false);
-            if (path == "/resume") {
-              downloadPdf("/Mohamed Amine SAYAGH - Software Developer - CV.pdf", "Mohamed Amine SAYAGH - Software Developer - CV.pdf");
+            if (path == getHref("resume")) {
+              router.push(getHref("resume"));
             } else {
               idTimeout.current = setTimeout(() => {
                 scrollToId(path, id);
@@ -278,7 +273,7 @@ const Header = () => {
           .catch(err => console.error(err));
       }
     },
-    [openMenu, scrollToId, idTimeout, router, downloadPdf]
+    [openMenu, scrollToId, idTimeout, router]
   );
 
   useEffect(() => {
@@ -322,7 +317,7 @@ const Header = () => {
             </HeaderButton>
             <HeaderButton
               onClick={() => {
-                downloadPdf("/Mohamed Amine SAYAGH - Software Developer - CV.pdf", "Mohamed Amine SAYAGH - Software Developer - CV.pdf");
+                router.push(getHref("resume"));
               }}
               openMenu={openMenu}
               className="uppercase"
