@@ -60,7 +60,7 @@ const HoveredScrollUp = memo(
           }
         }
       }),
-      [skewY]
+      [skewY, x]
     );
 
     // if onPress is provided, wrap the children in a Button else use a span
