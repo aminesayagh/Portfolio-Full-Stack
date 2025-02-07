@@ -15,6 +15,8 @@ import { ScrollTrigger, gsap, Power4 } from "@/utils/gsap";
 import ButtonNext, { GoTOCases } from "./ButtonNext";
 import FullStack from "./FullStack";
 import Menu from "./Menu";
+import { getHref } from "@/i18n/routing";
+import { useLenisScrollTo } from "@/lib/Lenis/use-lenis";
 
 const DISPLAY_1_CLASS_NAME = "capitalize";
 
@@ -231,14 +233,8 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
 const Intro = () => {
   const introRef = useRef<HTMLDivElement>(null);
   const { endLoading } = usePreloader();
-  const lenis = useLenis();
-
-  const goToCases = useCallback(() => {
-    if (lenis && lenis.scrollTo) {
-      lenis.scrollTo("#cases");
-    }
-  }, [lenis]);
-
+  const goTo = useLenisScrollTo();
+  
   useGsap(
     () => {
       const tl = gsap
@@ -354,7 +350,7 @@ const Intro = () => {
           "justify-items-stretch"
         )}
       >
-        <Title goToCases={goToCases} />
+        <Title goToCases={() => goTo("manifesto")} />
       </div>
       <div className="flex flex-row justify-between items-end gap-0 xl:gap-6 4xl:gap-20">
         <Menu />

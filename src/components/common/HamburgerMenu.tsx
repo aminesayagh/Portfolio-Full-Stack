@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 
 import { motion, useAnimation } from "motion/react";;
 import { useKeyboard } from "react-aria";
@@ -33,26 +33,30 @@ const HamburgerMenu = ({
   const path02Controls = useAnimation();
   const isXxs = useMedia("(min-width: 390px)", false);
 
+  const handlerHamburgerClick = useCallback(async () => {
+    if (typeof setOpen !== "function") {return;}
+
+    if (!path02Controls || !path01Controls) {return;}
+    if (isOpen) {
+      await path02Controls.start(path02Variants.moving);
+      path01Controls.start(path01Variants.open);
+      path02Controls.start(path02Variants.open);
+    } else {
+      path01Controls.start(path01Variants.closed);
+      await path02Controls.start(path02Variants.moving);
+      path02Controls.start(path02Variants.closed);
+    }
+  }, [setOpen, isOpen, path02Controls, path01Controls]);
+
   useEffect(() => {
     if (typeof isOpen !== "boolean") {return;}
-    async function handlerHamburgerClick() {
-      if (!path02Controls || !path01Controls) {return;}
-      if (isOpen) {
-        await path02Controls.start(path02Variants.moving);
-        path01Controls.start(path01Variants.open);
-        path02Controls.start(path02Variants.open);
-      } else {
-        path01Controls.start(path01Variants.closed);
-        await path02Controls.start(path02Variants.moving);
-        path02Controls.start(path02Variants.closed);
-      }
-    }
     if (typeof isOpen === "boolean") {
       handlerHamburgerClick()
         .then()
         .catch(err => console.error(err));
     }
   }, [isOpen, path02Controls, path01Controls]);
+
   const { keyboardProps } = useKeyboard({
     // onKeyDown: e => {
     //   if (["Escape", "Esc"].includes(e.key)) {

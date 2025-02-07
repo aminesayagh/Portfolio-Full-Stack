@@ -121,7 +121,7 @@ const Row = memo(function Row({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        "relative h-full flex flex-row w-full min-w-screen gap-8 mdl:gap-[4vw] 2xl:gap-[2vw]",
+        "relative h-full flex flex-row w-full min-w-screen gap-8 mdl:gap-[4vw] xl:gap-[2vw]",
         "group [--gap:2rem] ",
         ANIMATION_GPU_OPTIMIZATION,
         className
@@ -179,6 +179,12 @@ const IMAGE_SETS = {
     "/images/screens/5.webp",
     "/images/screens/6.webp",
     "/images/screens/7.webp"
+  ],
+  SET_5: [
+    "/images/screens/8.webp",
+    "/images/screens/9.webp",
+    "/images/screens/2.webp",
+    "/images/screens/1.webp"
   ]
 } as Record<string, string[]>;
 
@@ -267,13 +273,13 @@ function Overview() {
           transformOrigin: "top center",
           height: 2500
         }}
-        className="w-screen container absolute flex flex-col gap-8 mdl:gap-[4vw] 2xl:gap-[2vw] py-8 mdl:py-[4vw] 2xl:py-[2vw] inset-0 mx-auto"
+        className="w-screen container absolute flex flex-col gap-8 mdl:gap-[4vw] xl:gap-[2vw] py-8 mdl:py-[4vw] xl:py-[2vw] inset-0 mx-auto"
       >
         <Row images={IMAGE_SETS["SET_1"] || []} baseVelocity={BASE_VELOCITY} />
         <Row images={IMAGE_SETS["SET_2"] || []} baseVelocity={-BASE_VELOCITY} />
         <Row images={IMAGE_SETS["SET_3"] || []} baseVelocity={BASE_VELOCITY} />
         <Row images={IMAGE_SETS["SET_4"] || []} baseVelocity={-BASE_VELOCITY} />
-        <Row images={IMAGE_SETS["SET_1"] || []} baseVelocity={-BASE_VELOCITY} className="hidden mdl:block" />
+        <Row images={IMAGE_SETS["SET_5"] || []} baseVelocity={-BASE_VELOCITY} className="block mdl:hidden" />
       </div>
     </motion.section>
   );
