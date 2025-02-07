@@ -118,7 +118,6 @@ const ContactForm = () => {
 
   const onSubmitForm: SubmitHandler<FormContact> = useCallback(async data => {
     try {
-      console.log(data);
       await fetch("/api/contact", {
         method: "POST",
         headers: {
@@ -148,7 +147,7 @@ const ContactForm = () => {
         }
       );
     }
-  }, [locale, t, successMessage, errorMessage, methods]);
+  }, [locale, successMessage, errorMessage, methods]);
 
   const { handleSubmit, formState: { isSubmitting }, register } = methods;
 

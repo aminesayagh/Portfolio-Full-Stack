@@ -14,25 +14,13 @@ const LandingPage = () => (
       <Intro />
     </Container>
     <span className="h-24 block" />
-    <div style={{
-      scrollSnapType: "y mandatory"
-    }}>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Overview />
-      </Suspense>
-      <div
-        style={{
-          scrollSnapAlign: "start",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center"
-        }}
-      >
-        <Suspense fallback={<div>Loading...</div>}>
-          <About />
-        </Suspense>
-      </div>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Overview />
+    </Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
+      <About />
+    </Suspense>
+
     <div data-scroll-section className="block w-full h-6 xs:h-12" />
   </>
 );

@@ -7,7 +7,7 @@ import { useLocale } from "next-intl";
 import { cn } from "@/lib/utils";
 
 import Container from "@/components/ui/container";
-import { usePreloader } from "@/components/ui/preloader";
+import { EXTERNAL_LOADING_TIMEOUT } from "@/components/ui/preloader";
 
 const HeaderDynamic = dynamic(() => import("@/components/common/Header"), {});
 const FooterDynamic = dynamic(() => import("@/components/common/Footer"), {});
@@ -17,24 +17,22 @@ const Layer = ({
 }: {
   children: React.ReactElement | React.ReactElement[];
 }) => {
-  const { endLoading } = usePreloader();
+  // const { endLoading } = usePreloader();
   const locale = useLocale();
   useEffect(() => {
-    if (endLoading) {
-      if (!document.body.classList.contains("is-loaded")) {
-        document.body.classList.add("is-loaded");
-      }
-      const timer = setTimeout(() => {
-        if (document.body.classList.contains("is-loaded")) {
-          document.body.classList.remove("is-loaded");
-        }
-      }, 2000);
-      return () => {
-        clearTimeout(timer);
-      };
+    if (!document.body.classList.contains("is-loaded")) {
+      document.body.classList.add("is-loaded");
     }
-    return () => null;
-  }, [locale, endLoading]);
+    const timer = setTimeout(() => {
+      if (document.body.classList.contains("is-loaded")) {
+        document.body.classList.remove("is-loaded");
+      }
+    }, 2000 + EXTERNAL_LOADING_TIMEOUT);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [locale]);
 
   return (
     <>

@@ -14,6 +14,7 @@ import { gsap } from "@/utils/gsap";
 
 import AgencyList from "./AgencyList";
 import ContactForm from "./ContactForm";
+import { HoveredScrollUpInternal } from "@/components/ui/HoveredScrollUp";
 
 const GRID_DEFAULT_CLASS = "col-start-1 col-span-12";
 
@@ -217,8 +218,11 @@ const ContactPage = () => {
                   href={item.path}
                   size="sm"
                   degree="2"
+                  className="flex overflow-hidden"
                 >
-                  {t(`socialNetwork.${item.id}.name`)}
+                  <HoveredScrollUpInternal secondaryClassName="text-primary-200">
+                    {t(`socialNetwork.${item.id}.name`)}
+                  </HoveredScrollUpInternal>
                 </Link>
               ))}
             </div>

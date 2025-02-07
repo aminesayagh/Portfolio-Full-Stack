@@ -1,3 +1,2 @@
 export { LoadingProvider } from "./Preloader.context";
-// export { LoadingContext } from './Preloader.context';
-export { usePreloader } from "./Preloader.hook";
+export { LOADING_TIMEOUT, EXTERNAL_LOADING_TIMEOUT } from "./Preloader.context";

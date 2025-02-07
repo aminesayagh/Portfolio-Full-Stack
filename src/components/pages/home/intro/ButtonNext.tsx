@@ -16,7 +16,7 @@ const GsapMagic = ({ children }: { children: React.ReactElement }) => {
   const ctx = useRef<gsap.Context | null>(null);
 
   useIsomorphicLayoutEffect(() => {
-    if (!!ref.current) {
+    if (ref.current) {
       ctx.current = gsap.context(self => {
         const xTo =
           ref.current &&

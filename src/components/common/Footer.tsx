@@ -326,7 +326,7 @@ const Footer = () => {
         <div className={cn("flex flex-row flex-1", "order-2 sm:order-1")}>
           <GoToTopMemo handler={goToTop} name={t("footer.action")} />
         </div>
-        <div className="flex flex-row items-center w-full justify-start flex-grow sm:flex-none order-1 sm:grow-0 sm:justify-center sm:order-2">
+        <div className="flex flex-row items-center w-full justify-start flex-grow sm:flex-none order-1 sm:grow-0 sm:w-auto sm:justify-center sm:order-2">
           <p
             className={text(
               {

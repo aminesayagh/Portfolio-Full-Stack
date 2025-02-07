@@ -12,7 +12,7 @@ const Container = ({
 }: ContainerProps) => {
   const classNames = useMemo(
     () => cn("mx-auto w-full z-container h-fit container", className),
-    [props.size, className]
+    [className]
   );
   return (
     <>

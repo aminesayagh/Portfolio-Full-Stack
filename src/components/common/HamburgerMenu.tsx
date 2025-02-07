@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 
 import { motion, useAnimation } from "motion/react";;
 import { useKeyboard } from "react-aria";
@@ -33,26 +33,30 @@ const HamburgerMenu = ({
   const path02Controls = useAnimation();
   const isXxs = useMedia("(min-width: 390px)", false);
 
-  useEffect(() => {
-    if (typeof isOpen !== "boolean") {return;}
-    async function handlerHamburgerClick() {
-      if (!path02Controls || !path01Controls) {return;}
-      if (isOpen) {
-        await path02Controls.start(path02Variants.moving);
-        path01Controls.start(path01Variants.open);
-        path02Controls.start(path02Variants.open);
-      } else {
-        path01Controls.start(path01Variants.closed);
-        await path02Controls.start(path02Variants.moving);
-        path02Controls.start(path02Variants.closed);
-      }
+  const handlerHamburgerClick = useCallback(async () => {
+    if (typeof setOpen !== "function") { return; }
+
+    if (!path02Controls || !path01Controls) { return; }
+    if (isOpen) {
+      await path02Controls.start(path02Variants.moving);
+      path01Controls.start(path01Variants.open);
+      path02Controls.start(path02Variants.open);
+    } else {
+      path01Controls.start(path01Variants.closed);
+      await path02Controls.start(path02Variants.moving);
+      path02Controls.start(path02Variants.closed);
     }
+  }, [isOpen, path02Controls, path01Controls, setOpen]);
+
+  useEffect(() => {
+    if (typeof isOpen !== "boolean") { return; }
     if (typeof isOpen === "boolean") {
       handlerHamburgerClick()
         .then()
         .catch(err => console.error(err));
     }
-  }, [isOpen, path02Controls, path01Controls]);
+  }, [isOpen, handlerHamburgerClick]);
+
   const { keyboardProps } = useKeyboard({
     // onKeyDown: e => {
     //   if (["Escape", "Esc"].includes(e.key)) {
@@ -65,8 +69,9 @@ const HamburgerMenu = ({
     }
   });
 
-  if (typeof setOpen !== "function" || typeof isOpen !== "boolean"){
-    throw new Error("HamburgerMenu: setOpen is undefined");}
+  if (typeof setOpen !== "function" || typeof isOpen !== "boolean") {
+    throw new Error("HamburgerMenu: setOpen is undefined");
+  }
 
   return (
     <span {...keyboardProps}>

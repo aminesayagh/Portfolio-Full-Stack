@@ -20,11 +20,12 @@ import { containerStyle } from "@/components/ui/container";
 import Logo from "@/components/ui/logo";
 import Navbar from "@/components/ui/navbar";
 import Modal from "@/components/ui/overlay/modal";
-import { usePreloader } from "@/components/ui/preloader";
+import { EXTERNAL_LOADING_TIMEOUT } from "@/components/ui/preloader";
 import { text, title, Link } from "@/components/ui/typography";
 import { getMenuItems } from "@/i18n/routing";
 import { useLenis } from "@/lib/Lenis";
 import { gsap, Power3, ScrollTrigger } from "@/utils/gsap";
+import usePdfDownload from "@/hook/usePdfDownload";
 
 import SwitchLang from "./SwitchLang";
 import HoveredScrollUp, { HoveredScrollUpInternal } from "../ui/HoveredScrollUp";
@@ -81,8 +82,9 @@ const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [openMenu, setOpenMenu] = useState<boolean>(false);
-  const { endLoading } = usePreloader();
+  // const { endLoading } = usePreloader();
   const lenis = useLenis();
+  const { downloadPdf, isLoading, error } = usePdfDownload();
 
   const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
   const ctx = useRef<gsap.Context>(null);
@@ -212,17 +214,16 @@ const Header = () => {
         animation: tl
       });
       scrollTrigger.disable();
-      if (endLoading) {
+      const timer = setTimeout(() => {
         scrollTrigger.enable();
         tl.play();
-        return () => {
-          tl.kill();
-        };
-      }
-      return null;
+      }, EXTERNAL_LOADING_TIMEOUT);
+      return () => {
+        clearTimeout(timer);
+      };
     });
     return () => ctx.revert();
-  }, [endLoading]);
+  }, []);
   const menuHandler = useCallback(() => {
     if (!openMenu) {
       setOpenMenu(true);
@@ -249,18 +250,14 @@ const Header = () => {
         lenis.scrollTo(`#${id}`);
       }
     },
-    [lenis]
+    [lenis, router]
   );
 
   const onButtonClick = useCallback(
     (path: RouteSettingPathKey, id?: string) => {
       if (!openMenu) {
         if (path == "/resume") {
-          const resumeUrl = "/Mohamed Amine SAYAGH - Software Developer - RESUME.pdf";
-          const link = document.createElement("a");
-          link.href = resumeUrl;
-          link.download = "Mohamed Amine SAYAGH - Software Developer - RESUME.pdf";
-          link.click();
+          downloadPdf("/Mohamed Amine SAYAGH - Software Developer - CV.pdf", "Mohamed Amine SAYAGH - Software Developer - CV.pdf");
         } else {
           router.push(path);
         }
@@ -270,11 +267,7 @@ const Header = () => {
           .then(() => {
             setOpenMenu(false);
             if (path == "/resume") {
-              const resumeUrl = "/Mohamed Amine SAYAGH - Software Developer - RESUME.pdf";
-              const link = document.createElement("a");
-              link.href = resumeUrl;
-              link.download = "Mohamed Amine SAYAGH - Software Developer - RESUME.pdf";
-              link.click();
+              downloadPdf("/Mohamed Amine SAYAGH - Software Developer - CV.pdf", "Mohamed Amine SAYAGH - Software Developer - CV.pdf");
             } else {
               idTimeout.current = setTimeout(() => {
                 scrollToId(path, id);
@@ -285,16 +278,16 @@ const Header = () => {
           .catch(err => console.error(err));
       }
     },
-    [openMenu, scrollToId, idTimeout]
+    [openMenu, scrollToId, idTimeout, router]
   );
 
   useEffect(() => {
     return () => {
-      if (!!idTimeout.current) { clearTimeout(idTimeout.current); }
+      if (idTimeout.current) { clearTimeout(idTimeout.current); }
     };
   }, []);
 
-  const pageName = useMemo(() => pathname.split("/")[1], [router]);
+  const pageName = useMemo(() => pathname.split("/")[1], [pathname]);
   return (
     <Modal isOpenExternal={openMenu} menuHandler={menuHandler}>
       <Navbar inTopOfScroll={openMenu} className="overflow-hidden">
@@ -329,11 +322,7 @@ const Header = () => {
             </HeaderButton>
             <HeaderButton
               onClick={() => {
-                const resumeUrl = "/Mohamed Amine SAYAGH - Software Developer - RESUME.pdf";
-                const link = document.createElement("a");
-                link.href = resumeUrl;
-                link.download = "Mohamed Amine SAYAGH - Software Developer - RESUME.pdf";
-                link.click();
+                downloadPdf("/Mohamed Amine SAYAGH - Software Developer - CV.pdf", "Mohamed Amine SAYAGH - Software Developer - CV.pdf");
               }}
               openMenu={openMenu}
               className="uppercase"

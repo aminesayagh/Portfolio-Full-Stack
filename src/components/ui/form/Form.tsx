@@ -30,7 +30,7 @@ const Form = <T extends FieldValues>({
   children: React.ReactNode;
   className?: string;
 } & TFormProps) => {
-  if (!!methods) {
+  if (methods) {
     return (
       <FormProvider {...methods}>
         <form className={className} {...props}>

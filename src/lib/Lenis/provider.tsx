@@ -70,7 +70,7 @@ export const ReactLenis = forwardRef<LenisRef, LenisProps>(
         lenis.destroy()
         setLenis(undefined)
       }
-    }, [root, JSON.stringify(options)])
+    }, [root, options, autoRaf, wrapperRef, contentRef])
 
     // Handle callbacks
     const callbacksRefs = useRef<
@@ -141,3 +141,5 @@ export const ReactLenis = forwardRef<LenisRef, LenisProps>(
     )
   }
 )
+
+ReactLenis.displayName = 'ReactLenis'

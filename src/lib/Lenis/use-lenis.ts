@@ -3,6 +3,8 @@ import { useContext, useEffect } from 'react'
 import { LenisContext, rootLenisContextStore } from './provider'
 import { useStore } from './store'
 import type { LenisContextValue } from './types'
+import { RouteSettingPath } from '@/i18n/routing'
+import { getHref } from '@/i18n/routing'
 
 // Fall back to an empty object if both context and store are not available
 const fallbackContext: Partial<LenisContextValue> = {}
@@ -49,7 +51,6 @@ const fallbackContext: Partial<LenisContextValue> = {}
  */
 export function useLenis(
   callback?: ScrollCallback,
-  deps: any[] = [],
   priority = 0
 ) {
   // Try to get the lenis instance from the context first
@@ -63,7 +64,7 @@ export function useLenis(
 
   useEffect(() => {
     if (!callback || !addCallback || !removeCallback || !lenis) {
-        return;
+      return;
     }
 
     addCallback(callback, priority)
@@ -72,7 +73,24 @@ export function useLenis(
     return () => {
       removeCallback(callback)
     }
-  }, [lenis, addCallback, removeCallback, priority, ...deps])
+  }, [lenis, addCallback, removeCallback, priority, callback])
 
   return lenis
+}
+
+export function useLenisScrollTo() {
+  const lenis = useLenis()
+  const goTo = (path: RouteSettingPath) => {
+    if (!lenis) {
+      return
+    }
+    const target = getHref(path);
+    lenis.scrollTo(target, {
+      offset: 200,
+      duration: 1.5,
+      easing: (t) => 1 - Math.cos((t * Math.PI) / 2)
+    });
+  };
+
+  return goTo
 }

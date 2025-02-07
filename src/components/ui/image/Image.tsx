@@ -28,4 +28,6 @@ const ImageUi = forwardRef<HTMLImageElement, Props>(
   }
 );
 
+ImageUi.displayName = 'ImageUi'
+
 export default memo(ImageUi);

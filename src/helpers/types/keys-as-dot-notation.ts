@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IsUnion } from "./is-union";
 
 type DefaultIgnoredTypes =
-  | (() => any)
+  | (() => unknown)
   | number
   | string
-  | Map<any, any>
-  | Promise<any>
+  | Map<unknown, unknown>
+  | Promise<unknown>
   | Date
   | RegExp;
 
@@ -28,6 +27,6 @@ export type KeysAsDotNotation<
               | `${Key}.${KeysAsDotNotation<Exclude<T[Key], undefined>, IgnoredTypes>}`
           : never;
 
-type DistributeDotNotation<T, IgnoredTypes> = T extends any
+type DistributeDotNotation<T, IgnoredTypes> = T extends unknown
   ? KeysAsDotNotation<T, IgnoredTypes>
   : never;

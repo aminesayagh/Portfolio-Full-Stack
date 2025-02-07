@@ -12,6 +12,7 @@ import Button from "./Button";
 import { IconArrowUpRight } from "@tabler/icons-react";
 import { text } from "@/components/ui/typography";
 import HoveredScrollUp from "../HoveredScrollUp";
+import usePdfDownload from "@/hook/usePdfDownload";
 
 // Animation variants for consistent timing
 const variants = {
@@ -77,6 +78,7 @@ export default function ButtonCallToActionScroll({
     className?: string;
 }) {
     const containerRef = useRef<HTMLButtonElement>(null);
+    const { downloadPdf } = usePdfDownload();
     const [isHovered, setIsHovered] = useState(false);
     const inView = useInView(containerRef, {
         margin: "-100px"
@@ -90,11 +92,7 @@ export default function ButtonCallToActionScroll({
         >
             <Button
                 onPress={() => {
-                    const resumeUrl = "/Mohamed Amine SAYAGH - Software Developer - RESUME.pdf";
-                    const link = document.createElement("a");
-                    link.href = resumeUrl;
-                    link.download = "Mohamed Amine SAYAGH - Software Developer - RESUME.pdf";
-                    link.click();
+                    downloadPdf("/Mohamed Amine SAYAGH - Software Developer - CV.pdf", "Mohamed Amine SAYAGH - Software Developer - CV.pdf");
                 }}
                 className={cn(className, text({
                     weight: "medium",
