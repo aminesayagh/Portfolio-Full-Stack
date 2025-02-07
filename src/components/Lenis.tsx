@@ -56,7 +56,7 @@ function Lenis({ children }: { children: React.ReactElement }) {
         autoRaf: false, // used to enable RAF(Request Animation Frame)
         duration: 0.2, // duration of the scrolling animation
         easing: t => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)), // easing function used to smooth the scrolling
-        infinite: true, // used to disable infinite scrolling
+        infinite: false, // used to disable infinite scrolling
         autoResize: true, // used to resize the container to the viewport size when the window is resized
         lerp: 0.05,
       }}

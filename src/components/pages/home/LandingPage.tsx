@@ -4,9 +4,10 @@ import dynamic from "next/dynamic";
 
 import Container from "@/components/ui/container";
 
-const Intro = dynamic(() => import("./intro/Intro"));
-const Overview = dynamic(() => import("./overview/Overview"));
-const About = dynamic(() => import("./about/About"));
+const Intro = dynamic(() => import("./intro"));
+const Overview = dynamic(() => import("./overview"));
+const About = dynamic(() => import("./about"));
+const Experiences = dynamic(() => import("./experiences"));
 
 const LandingPage = () => (
   <>
@@ -19,6 +20,9 @@ const LandingPage = () => (
     </Suspense>
     <Suspense fallback={<div>Loading...</div>}>
       <About />
+    </Suspense>
+    <Suspense fallback={<div>Loading...</div>}> 
+      <Experiences />
     </Suspense>
     <div className="block w-full h-6 xs:h-[20vh]" />
   </>
