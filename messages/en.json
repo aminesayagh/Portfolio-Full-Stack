@@ -164,6 +164,39 @@
       "lavish_trading": {
         "title": "Lavish Trading"
       }
+    },
+    "archive": {
+      "title": "Archive",
+      "list": [
+        {
+          "id": "horde_studio",
+          "title": "Horde Studio"
+        },
+        {
+          "id": "iso_what",
+          "title": "ISO WHAT"
+        },
+        {
+          "id": "maud",
+          "title": "Maud Diamond"
+        },
+        {
+          "id": "sodiadd",
+          "title": "Sodiadd"
+        },
+        {
+          "id": "jonas_agency",
+          "title": "Jonas Agency"
+        },
+        {
+          "id": "shinobi_boy",
+          "title": "Shinobi Boy"
+        },
+        {
+          "id": "maschool",
+          "title": "Maschool"
+        }
+      ]
     }
   },
   "motivation": {

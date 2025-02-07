@@ -1,36 +1,27 @@
+
+import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
-import Image from "@/components/ui/image";
-import { text } from "@/components/ui/typography";
+import { text, title } from "@/components/ui/typography";
+import ExperienceCard from "./Experience";
 
-function ExperienceCard({ className, name, image }: { className?: string, name: string, image: string }) {
-    return (
-        <div className={cn("object-cover rounded-2xl overflow-hidden relative w-full h-full bg-primary-500", className)}>
-            <div className="absolute bottom-0 left-0 flex flex-row gap-4 w-full p-6">
-                <h4 className={text({
-                    size: "md",
-                    weight: "semibold",
-                    degree: "2"
-                }, "py-5 bg-white rounded-full !text-black-100 px-8")}>{name}</h4>
-                <div className="aspect-square rounded-full overflow-hidden bg-white">
-                    
-                </div>
-            </div>
-            <Image src={image} alt={name} width={1000} height={1000} />
-        </div>
-    )
-}
+const CLASSNAME_GAP = "gap-14 xl:gap-20 2xl:gap-24";
 
 function Experiences() {
     const t = useTranslations("experiences");
+    const archive = useMemo(() => t.raw("archive.list") as { id: string, title: string }[], [t]);
     return (
-        <div className="container w-full h-full flex flex-col justify-between items-center gap-24">
-            <div className="w-full flex flex-row gap-24 justify-between items-end">
-                <ExperienceCard name={t("list.french_dandy.title")} image="/images/experiences/experience-1.jpg" className="w-8/12" />
-                <div className="w-4/12 flex flex-col gap-4">
-                    <div>
-                        <h1>{t("title")}</h1>
+        <div className={cn("container w-full h-full flex flex-col justify-between items-center", CLASSNAME_GAP)}>
+            <div className={cn("w-full flex flex-row justify-between items-end", CLASSNAME_GAP)}>
+                <ExperienceCard name={t("list.french_dandy.title")} image="/images/experiences/experience-1.jpg" className="-top-14 xl:top-0 w-7/12 xl:w-8/12" />
+                <div className={cn("w-5/12 xl:w-4/12 flex flex-col", CLASSNAME_GAP)}>
+                    <div className="pl-8 pr-0 xl:px-12">
+                        <h1 className={title({
+                            size: "h4",
+                            weight: "semibold",
+                            degree: "2"
+                        })}>{t("title")}</h1>
                     </div>
                     <ExperienceCard name={t("list.cyber_cohesion.title")} image="/images/experiences/experience-2.jpg" />
                 </div>
@@ -38,9 +29,33 @@ function Experiences() {
             <div className="w-9/12">
                 <ExperienceCard name={t("list.happy_water.title")} image="/images/experiences/experience-3.jpg" />
             </div>
-            <div className="w-full flex flex-row gap-24 justify-between items-end">
+            <div className={cn("w-full flex flex-row justify-between items-end", CLASSNAME_GAP)}>
                 <ExperienceCard name={t("list.code_wrangler.title")} image="/images/experiences/experience-4.jpg" className="w-8/12 -bottom-40" />
                 <ExperienceCard name={t("list.lavish_trading.title")} image="/images/experiences/experience-5.jpg" />
+            </div>
+            <div className="w-full flex items-end justify-end">
+                <div className="w-2/12 relative right-[10%] flex flex-col gap-6 py-24">
+                    <h5 className={text({
+                        size: "sm",
+                        weight: "semibold",
+                        degree: "3"
+                    }, "uppercase")}>
+                        {t("archive.title")}
+                    </h5>
+                    <div className="flex flex-col gap-4">
+                        {archive.map((item) => (
+                            <div key={item.id}>
+                                <h6 className={text({
+                                    size: "sm",
+                                    weight: "semibold",
+                                    degree: "1"
+                                }, "border-b border-white/70 uppercase pr-2 pb-1")}>
+                                    {item.title}
+                                </h6>
+                            </div>
+                        ))}
+                    </div>
+                </div>     
             </div>
         </div>
     )
