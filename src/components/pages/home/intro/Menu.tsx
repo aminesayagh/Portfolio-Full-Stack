@@ -12,7 +12,6 @@ import Button from "@/components/ui/button";
 import { text } from "@/components/ui/typography";
 import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 import HoveredScrollUp from "@/components/ui/HoveredScrollUp";
-import usePdfDownload from "@/hook/usePdfDownload";
 
 const menuKeys = [
   "manifesto",
