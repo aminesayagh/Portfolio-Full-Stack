@@ -15,8 +15,8 @@ function ExperienceCard({ className, name, image }: { className?: string, name: 
         offset: ["start end", "end start"]
     });
 
-    const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
-    const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.3, 1, 1, 0.3]);
+    // const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
+    // const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.3, 1, 1, 0.3]);
     return (
         <div className={cn("object-cover aspect-square rounded-2xl overflow-hidden relative w-full h-full bg-primary-500", className)}>
             <div className="absolute bottom-0 left-0 flex flex-row gap-3 xl:gap-4 w-full p-6">
