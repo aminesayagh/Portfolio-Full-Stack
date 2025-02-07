@@ -1,5 +1,5 @@
 import type { ScrollCallback } from 'lenis'
-import { useContext, useEffect, useCallback } from 'react'
+import { useContext, useEffect } from 'react'
 import { LenisContext, rootLenisContextStore } from './provider'
 import { useStore } from './store'
 import type { LenisContextValue } from './types'
@@ -51,7 +51,6 @@ const fallbackContext: Partial<LenisContextValue> = {}
  */
 export function useLenis(
   callback?: ScrollCallback,
-  deps: any[] = [],
   priority = 0
 ) {
   // Try to get the lenis instance from the context first
@@ -74,7 +73,7 @@ export function useLenis(
     return () => {
       removeCallback(callback)
     }
-  }, [lenis, addCallback, removeCallback, priority, ...deps])
+  }, [lenis, addCallback, removeCallback, priority, callback])
 
   return lenis
 }

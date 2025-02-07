@@ -23,7 +23,7 @@ export const addToast = (
   options?: ToastOptions | undefined
 ) => {
   if (
-    !!toastQueue.visibleToasts.find(
+    toastQueue.visibleToasts.find(
       t => t.content.description === toast.description
     )
   )

@@ -214,8 +214,7 @@ const CardElement = ({ i }: { i: number }) => {
     () => {
       let space = 40;
       let y = i % 2 === 0 ? 1 : -1;
-      if (isLg) {
-      } else if (isXs) {
+      if (isXs) {
         space = 35;
       } else {
         space = 30;

@@ -223,7 +223,7 @@ function Overview() {
       clearTimeout(timeoutId);
       window.removeEventListener("resize", debouncedResize);
     };
-  }, []);
+  }, [handleResize]);
 
   // Transform width from container width to full window width
   const { scrollY } = useScroll({

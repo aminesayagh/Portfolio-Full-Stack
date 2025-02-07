@@ -86,7 +86,7 @@ const Head = ({
         },
         images: [
           {
-            url: "https://res.cloudinary.com/dvxn9nvjs/image/upload/v1668256745/team/mohamed_amine_sayagh.jpg",
+            url: "/logo/logo.svg",
             width: 800,
             height: 600,
             alt: "Mohamed Amine SAYAGH"

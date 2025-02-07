@@ -1,21 +1,19 @@
 "use client";
 
-import React, { useRef, useCallback } from "react";
+import React, { useMemo, useRef } from "react";
 
 import { useTranslations, useLocale } from "next-intl";
 import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 
-import { usePreloader } from "@/components/ui/preloader";
 import { text, display } from "@/components/ui/typography";
 import useGsap from "@/hook/useGsap";
 import useFitText from "@/hook/useFitText";
-import { useLenis } from "@/lib/Lenis";
 import { ScrollTrigger, gsap, Power4 } from "@/utils/gsap";
+import { EXTERNAL_LOADING_TIMEOUT } from "@/components/ui/preloader";	
 
 import ButtonNext, { GoTOCases } from "./ButtonNext";
 import FullStack from "./FullStack";
 import Menu from "./Menu";
-import { getHref } from "@/i18n/routing";
 import { useLenisScrollTo } from "@/lib/Lenis/use-lenis";
 
 const DISPLAY_1_CLASS_NAME = "capitalize";
@@ -30,22 +28,102 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
     factor: locale === "en" ? 5.55 : 7
   });
 
+  const classNameLocal = useMemo(() => ({
+    container: cn(
+      // col
+      locale === "en"
+        ? "col-start-1 col-span-12"
+        : "col-start-1 col-span-11",
+      "xs:col-start-1 xs:col-span-9",
+      "mdl:col-start-1 mdl:col-span-6",
+      "xl:col-start-1 xl:col-span-6",
+      "4xl:col-start-1 4xl:col-span-6",
+      "row-start-1 row-span-1",
+      "overflow-y-animate"
+    ),
+    descriptions: cn(
+      // flex
+      "flex flex-col xs:flex-row justify-between mdl:justify-end",
+      "gap-6 xxs:gap-8 xs:gap-4 mdl:gap-2 lg:gap-4 4xl:gap-28", // gap
+      "pl-0 lg:pl-4 xl:pl-0", // pl
+      "pt-0 xs:pt-2 xl:pt-3", // pt
+      // grid position
+      "max-w-[20rem] xxs:max-w-full",
+      "col-start-1 col-span-12",
+      "xxs:col-start-5 xxs:col-span-8", // none
+      "xs:col-start-1 xs:col-span-12", // xxs
+      "sm:col-start-2 sm:col-span-11", // sm
+      locale === "en"
+        ? "md:col-start-4 md:col-span-9"
+        : "md:col-start-3 md:col-span-10", // md
+      "mdl:col-start-7 mdl:col-span-6", // mdl
+      locale === "en"
+        ? "3xl:col-start-8 3xl:col-span-5"
+        : "3xl:col-start-7 3xl:col-span-6", // xl
+      "4xl:col-span-6 4xl:col-start-7", // 4xl
+      // row grid
+      "row-start-2 row-span-1", // none
+      "mdl:row-start-1 mdl:row-span-1", //mdl
+      // children
+      locale === "en"
+        ? "[&>*]:w-full [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-5/12 [&>*]:mdl:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-4/12"
+        : "[&>*]:w-10/12 [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-5/12",
+      locale === "en"
+        ? "[&>*>span]:max-w-[14rem]"
+        : "[&>*>span]:xxs:max-w-[12rem] [&>*>span]:sm:max-w-[17rem] [&>*>span]:mdl:max-w-[12rem] [&>*>span]:lg:max-w-[17rem]",
+      "[&>*]:flex [&>*]:flex-row [&>*]:justify-start [&>*]:sm:justify-end",
+      "[&>*]:mdl:ml-2 [&>*]:lg:ml-0"
+    ),
+    buttonGoNext: cn(
+      "mdl:w-2/12",
+      "hidden xs:flex flex-col items-end mdl:items-start justify-end w-fit mdl:w-fit",
+      "mt-1 lg:mt-4",
+      locale === "en"
+        ? "mb-0 xxs:mb-3 mdl:mb-0 lg:mb-4"
+        : "mb-0 xxs:mb-3 mdl:mb-2 lg:mb-4",
+      "col-start-11 col-span-2",
+      "mdl:col-span-2 mdl:col-start-1",
+      "row-start-1 row-span-1",
+      "mdl:row-start-2 mdl:row-span-1",
+      "justify-self-end mdl:justify-self-start"
+    ),
+    fullStack: cn(
+      "hidden xs:flex",
+      "row-start-3 row-span-1",
+      "mdl:row-start-2 mdl:row-span-1",
+      "col-start-1 col-span-3",
+      locale === "en"
+        ? "mdl:col-start-5 mdl:col-span-2"
+        : "mdl:col-start-4 mdl:col-span-2",
+      locale === "en"
+        ? "xl:col-start-5 xl:col-span-2"
+        : "xl:col-start-4 xl:col-span-2",
+      "justify-self-end"
+    ),
+    developer: cn(
+      "flex flex-col xxs:flex-row justify-start xs:justify-end",
+      "row-start-4 row-span-1",
+      "xxs:row-start-3 xxs:row-span-1",
+      "mdl:row-start-2 mdl:row-span-1",
+      "col-start-1 col-span-12",
+      "xs:col-start-4 xs:col-span-9",
+      locale === "en"
+        ? "mdl:col-start-7 mdl:col-span-6"
+        : "mdl:col-start-6 mdl:col-span-7", // xs
+      locale === "en"
+        ? "xl:col-start-7 xl:col-span-6"
+        : "xl:col-start-6 xl:col-span-7", // xl
+      "gap-2 sm:gap-1 md:gap-5 mdl:gap-8", // gap
+      "justify-end mdl:justify-center items-end mdl:items-center",
+      "overflow-y-animate"
+    )
+  }), [locale])
+
   return (
     <>
       <div
         ref={widthInterfaceRef}
-        className={cn(
-          // col
-          locale === "en"
-            ? "col-start-1 col-span-12"
-            : "col-start-1 col-span-11",
-          "xs:col-start-1 xs:col-span-9",
-          "mdl:col-start-1 mdl:col-span-6",
-          "xl:col-start-1 xl:col-span-6",
-          "4xl:col-start-1 4xl:col-span-6",
-          "row-start-1 row-span-1",
-          "overflow-y-animate"
-        )}
+        className={classNameLocal.container}
       >
         <div
           style={{
@@ -79,39 +157,7 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
       </div>
 
       <div
-        className={cn(
-          // flex
-          "flex flex-col xs:flex-row justify-between mdl:justify-end",
-          "gap-6 xxs:gap-8 xs:gap-4 mdl:gap-2 lg:gap-4 4xl:gap-28", // gap
-          "pl-0 lg:pl-4 xl:pl-0", // pl
-          "pt-0 xs:pt-2 xl:pt-3", // pt
-          // grid position
-          "max-w-[20rem] xxs:max-w-full",
-          "col-start-1 col-span-12",
-          "xxs:col-start-5 xxs:col-span-8", // none
-          "xs:col-start-1 xs:col-span-12", // xxs
-          "sm:col-start-2 sm:col-span-11", // sm
-          locale === "en"
-            ? "md:col-start-4 md:col-span-9"
-            : "md:col-start-3 md:col-span-10", // md
-          "mdl:col-start-7 mdl:col-span-6", // mdl
-          locale === "en"
-            ? "3xl:col-start-8 3xl:col-span-5"
-            : "3xl:col-start-7 3xl:col-span-6", // xl
-          "4xl:col-span-6 4xl:col-start-7", // 4xl
-          // row grid
-          "row-start-2 row-span-1", // none
-          "mdl:row-start-1 mdl:row-span-1", //mdl
-          // children
-          locale === "en"
-            ? "[&>*]:w-full [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-5/12 [&>*]:mdl:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-4/12"
-            : "[&>*]:w-10/12 [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-5/12",
-          locale === "en"
-            ? "[&>*>span]:max-w-[14rem]"
-            : "[&>*>span]:xxs:max-w-[12rem] [&>*>span]:sm:max-w-[17rem] [&>*>span]:mdl:max-w-[12rem] [&>*>span]:lg:max-w-[17rem]",
-          "[&>*]:flex [&>*]:flex-row [&>*]:justify-start [&>*]:sm:justify-end",
-          "[&>*]:mdl:ml-2 [&>*]:lg:ml-0"
-        )}
+        className={classNameLocal.descriptions}
       >
         <div>
           <span data-scroll className="overflow-hidden h-fit">
@@ -154,59 +200,19 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
       </div>
       {/* button next */}
       <div
-        className={cn(
-          "mdl:w-2/12",
-          "hidden xs:flex flex-col items-end mdl:items-start justify-end w-fit mdl:w-fit",
-          "mt-1 lg:mt-4",
-          locale === "en"
-            ? "mb-0 xxs:mb-3 mdl:mb-0 lg:mb-4"
-            : "mb-0 xxs:mb-3 mdl:mb-2 lg:mb-4",
-          "col-start-11 col-span-2",
-          "mdl:col-span-2 mdl:col-start-1",
-          "row-start-1 row-span-1",
-          "mdl:row-start-2 mdl:row-span-1",
-          "justify-self-end mdl:justify-self-start"
-        )}
+        className={classNameLocal.buttonGoNext}
       >
         <ButtonNext goToCases={goToCases} />
       </div>
       <div
-        className={cn(
-          "hidden xs:flex",
-          "row-start-3 row-span-1",
-          "mdl:row-start-2 mdl:row-span-1",
-          "col-start-1 col-span-3",
-          locale === "en"
-            ? "mdl:col-start-5 mdl:col-span-2"
-            : "mdl:col-start-4 mdl:col-span-2",
-          locale === "en"
-            ? "xl:col-start-5 xl:col-span-2"
-            : "xl:col-start-4 xl:col-span-2",
-          "justify-self-end"
-        )}
+        className={classNameLocal.fullStack}
       >
         <FullStack className="hidden xxs:flex w-min" />
       </div>
       {/* DEVELOPER */}
       <div
         ref={widthDevRef}
-        className={cn(
-          "flex flex-col xxs:flex-row justify-start xs:justify-end",
-          "row-start-4 row-span-1",
-          "xxs:row-start-3 xxs:row-span-1",
-          "mdl:row-start-2 mdl:row-span-1",
-          "col-start-1 col-span-12",
-          "xs:col-start-4 xs:col-span-9",
-          locale === "en"
-            ? "mdl:col-start-7 mdl:col-span-6"
-            : "mdl:col-start-6 mdl:col-span-7", // xs
-          locale === "en"
-            ? "xl:col-start-7 xl:col-span-6"
-            : "xl:col-start-6 xl:col-span-7", // xl
-          "gap-2 sm:gap-1 md:gap-5 mdl:gap-8", // gap
-          "justify-end mdl:justify-center items-end mdl:items-center",
-          "overflow-y-animate"
-        )}
+        className={classNameLocal.developer}
       >
         <h1
           style={{
@@ -232,9 +238,9 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
 
 const Intro = () => {
   const introRef = useRef<HTMLDivElement>(null);
-  const { endLoading } = usePreloader();
+  // const { endLoading } = usePreloader();
   const goTo = useLenisScrollTo();
-  
+
   useGsap(
     () => {
       const tl = gsap
@@ -321,20 +327,20 @@ const Intro = () => {
         animation: tl
       });
       scrollTrigger.disable();
-      if (endLoading) {
+      const timer = setTimeout(() => {
         scrollTrigger.enable();
         tl.play();
         return () => {
           tl?.kill();
         };
-      }
+      }, EXTERNAL_LOADING_TIMEOUT);
       return () => {
         tl?.pause();
         tl?.progress(0);
+        clearTimeout(timer);
       };
     },
     introRef as React.RefObject<HTMLDivElement>,
-    [endLoading]
   );
 
   return (

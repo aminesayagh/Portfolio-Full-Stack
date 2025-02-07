@@ -22,7 +22,7 @@ function useFitText({
 }: UseFitTextOptions) {
   const [fontSize, setFontSize] = useState("initial");
   const ref = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<NodeJS.Timeout>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const getCurrentFactor = useCallback(() => {
     if (typeof factor === 'number') return factor;

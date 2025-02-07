@@ -34,9 +34,9 @@ const HamburgerMenu = ({
   const isXxs = useMedia("(min-width: 390px)", false);
 
   const handlerHamburgerClick = useCallback(async () => {
-    if (typeof setOpen !== "function") {return;}
+    if (typeof setOpen !== "function") { return; }
 
-    if (!path02Controls || !path01Controls) {return;}
+    if (!path02Controls || !path01Controls) { return; }
     if (isOpen) {
       await path02Controls.start(path02Variants.moving);
       path01Controls.start(path01Variants.open);
@@ -46,16 +46,16 @@ const HamburgerMenu = ({
       await path02Controls.start(path02Variants.moving);
       path02Controls.start(path02Variants.closed);
     }
-  }, [setOpen, isOpen, path02Controls, path01Controls]);
+  }, [isOpen, path02Controls, path01Controls, setOpen]);
 
   useEffect(() => {
-    if (typeof isOpen !== "boolean") {return;}
+    if (typeof isOpen !== "boolean") { return; }
     if (typeof isOpen === "boolean") {
       handlerHamburgerClick()
         .then()
         .catch(err => console.error(err));
     }
-  }, [isOpen, path02Controls, path01Controls]);
+  }, [isOpen, handlerHamburgerClick]);
 
   const { keyboardProps } = useKeyboard({
     // onKeyDown: e => {
@@ -69,8 +69,9 @@ const HamburgerMenu = ({
     }
   });
 
-  if (typeof setOpen !== "function" || typeof isOpen !== "boolean"){
-    throw new Error("HamburgerMenu: setOpen is undefined");}
+  if (typeof setOpen !== "function" || typeof isOpen !== "boolean") {
+    throw new Error("HamburgerMenu: setOpen is undefined");
+  }
 
   return (
     <span {...keyboardProps}>

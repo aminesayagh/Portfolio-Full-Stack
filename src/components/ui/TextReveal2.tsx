@@ -56,7 +56,7 @@ const TextReveal2 = ({
             const end = start + 1 / words.length;
             return { word, range: [start, center, end] as [number, number, number] };
         });
-    }, [phrase, lang]);
+    }, [phrase]);
 
     return (
         <motion.div
