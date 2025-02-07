@@ -254,7 +254,7 @@ function Overview() {
   // Transform width from initial container width to full viewport width
   const width = useTransform(
     scrollYPosition,
-    [0, 800, 2000],
+    [0, 500, 2000],
     [initialWidth, widthMax, widthMax] // Add 40px to account for the rounded corners
   );
 
@@ -265,7 +265,11 @@ function Overview() {
         height,
         width
       }}
-      className={cn("w-full relative overflow-hidden mx-auto rounded-2xl bg-primary-500", "[--space-gap:2rem] mdl:[--space-gap:2vw] 3xl:[--space-gap:2vw]", ANIMATION_GPU_OPTIMIZATION)}
+      className={cn(
+        "w-full relative overflow-hidden mx-auto rounded-2xl bg-primary-500",
+        "[--space-gap:2rem] mdl:[--space-gap:2vw] 3xl:[--space-gap:2vw]",
+        "will-change-transform"
+      )}
     >
       <div
         style={{
