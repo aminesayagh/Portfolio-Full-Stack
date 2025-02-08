@@ -1,3 +1,5 @@
+"use client";
+
 import { AnimatePresence, motion } from "motion/react";
 import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 import React, { memo, useMemo, useState } from "react";
@@ -12,7 +14,9 @@ interface HoveredScrollUpProps {
   className?: string;
   x?: boolean;
   onPress?: () => void;
+  overflowed?: boolean
 }
+
 const HoveredScrollUp = memo(
   ({
     children,
@@ -21,7 +25,8 @@ const HoveredScrollUp = memo(
     className,
     skewY = 0,
     x = false,
-    onPress
+    onPress,
+    overflowed = true
   }: HoveredScrollUpProps) => {
 
     const textVariants = useMemo(
@@ -38,7 +43,7 @@ const HoveredScrollUp = memo(
         exit: {
           y: "-100%",
           skewY: -skewY,
-          x: x ? "-100%" : 0,
+          x: x ? "100%" : 0,
           transition: {
             duration: 0.45,
             ease: [0.7, 0, 0.84, 0] // easeIn
@@ -47,7 +52,7 @@ const HoveredScrollUp = memo(
         enter: {
           y: "100%",
           skewY: skewY,
-          x: x ? "100%" : 0,
+          x: x ? "-100%" : 0,
           transition: { duration: 0 }
         },
         animate: {
@@ -67,7 +72,7 @@ const HoveredScrollUp = memo(
     const Wrapper = useMemo(() => onPress ? Button : "span", [onPress]);
 
     return (
-      <Wrapper className={cn("relative overflow-hidden", className)} {...(onPress ? { onPress } : {})}>
+      <Wrapper className={cn("relative", overflowed ? "overflow-hidden" : undefined, className)} {...(onPress ? { onPress } : {})}>
         <AnimatePresence mode="wait">
           <motion.span
             key={isHovered ? "hover" : "initial"}

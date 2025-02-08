@@ -8,6 +8,7 @@ const Intro = dynamic(() => import("./intro"));
 const Overview = dynamic(() => import("./overview"));
 const About = dynamic(() => import("./about"));
 const Experiences = dynamic(() => import("./experiences"));
+// const Works = dynamic(() => import("./works"));
 
 const LandingPage = () => (
   <>
@@ -25,6 +26,9 @@ const LandingPage = () => (
     <Suspense fallback={<div>Loading...</div>}> 
       <Experiences />
     </Suspense>
+    {/* <Suspense fallback={<div>Loading...</div>}>
+      <Works />
+    </Suspense> */}
     <div className="block w-full h-6 xs:h-[20vh]" />
   </>
 );

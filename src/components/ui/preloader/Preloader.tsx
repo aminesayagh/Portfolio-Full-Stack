@@ -33,9 +33,9 @@ const Preloader = () => {
                 paused: true,
                 repeatDelay: 0.5
             });
-            const DELAY = 1;
-            const OFFSET = 0.3;
-            const FRAME_DURATION = 0.2;
+            const DELAY = 0.9;
+            const OFFSET = 0.2;
+            const FRAME_DURATION = 0.1;
             tl.to(".item-gsap", {
                 keyframes: [
                     { top: "100%", duration: FRAME_DURATION },

@@ -16,6 +16,7 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"]
 });
+import Provider from "@/components/common/Provider";
 
 export function generateStaticParams() {
   return routing.locales.map(locale => ({ locale }));
@@ -50,7 +51,10 @@ export default async function RootLayout({
       </head>
       <body className={`${montserrat.variable} antialiased bg-background dark`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <LoadingProvider>{children}</LoadingProvider>
+          <Provider>
+
+            <LoadingProvider>{children}</LoadingProvider>
+          </Provider>
         </NextIntlClientProvider>
       </body>
     </html>
