@@ -51,6 +51,7 @@
     "locale": "fr",
     "logo": "Mohamed Amine SAYAGH",
     "close": "Fermer",
+    "resume": "Resume",
     "key_menu": "Menu",
     "langs": {
       "fr": {
@@ -65,7 +66,8 @@
       "manifesto": { "attribute": "Manifeste", "more": "null" },
       "experience": { "attribute": "Expérience", "more": "(40+)" },
       "cases": { "attribute": "Projets", "more": "(☺ 15+)" },
-      "contact": { "attribute": "Contact", "more": "null" }
+      "contact": { "attribute": "Contact", "more": "null" },
+      "resume": { "attribute": "Resume", "more": "null" }
     },
     "socialNetwork": {
       "instagram": "IN",
@@ -111,6 +113,63 @@
     "what_i_do": "Ma passion est de métamorphoser les idées en designs distinctifs, fonctionnels et résolvant des problèmes, qu'il s'agisse de produits numériques, de marques ou de sites web. Mon objectif est que chaque interaction numérique soit non seulement fonctionnelle, mais également agréable et marquante.",
     "goal": "Vous voulez en savoir plus sur moi?,",
     "action": "Découvrez mon Résumé"
+  },
+  "experiences": {
+    "title": "Projets Sélectionnés",
+    "description": "La créativité requiert un But, une Orientation, une Responsabilité et de la discipline. La volonté de faire des sacrifices, qui est le signe distinctif de la maturité au service d'un objectif plus élevé.",
+    "list": {
+      "french_dandy": {
+        "title": "French Dandy"
+      },
+      "cyber_cohesion": {
+        "title": "Cyber Cohesion"
+      },
+      "happy_water": {
+        "title": "Happy Water"
+      },
+      "code_wrangler": {
+        "title": "Code Wrangler"
+      },
+      "lavish_trading": {
+        "title": "Lavish Trading"
+      },
+      "sodiadd": {
+        "title": "Sodiadd"
+      }
+    },
+    "archive": {
+      "title": "Archive",
+      "list": [
+        {
+          "id": "horde_studio",
+          "title": "Horde Studio"
+        },
+        {
+          "id": "iso_what",
+          "title": "ISO WHAT"
+        },
+        {
+          "id": "maud",
+          "title": "Maud Diamond"
+        },
+        {
+          "id": "sodiadd",
+          "title": "Sodiadd"
+        },
+        {
+          "id": "jonas_agency",
+          "title": "Jonas Agency"
+        },
+        {
+          "id": "shinobi_boy",
+          "title": "Shinobi Boy"
+        },
+        {
+          "id": "maschool",
+          "title": "Maschool"
+        }
+      ]
+    }
   },
   "works": {
     "title": "Évolution à travers l'expertise",
