@@ -18,15 +18,15 @@ function ExperienceButton({ name }: { name: string }) {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            <HoveredScrollUp isHovered={isHovered}>
-                <h4 className={text({
-                    size: "md",
-                    weight: "semibold",
-                    degree: "2"
-                }, "py-5 bg-white rounded-full flex items-center !text-black-100 px-5 xl:px-8")}>
+            <h4 className={text({
+                size: "md",
+                weight: "semibold",
+                degree: "2"
+            }, "py-5 bg-white rounded-full flex items-center !text-black-100 px-5 xl:px-8 overflow-hidden")}>
+                <HoveredScrollUp isHovered={isHovered}>
                     {name}
-                </h4>
-            </HoveredScrollUp>
+                </HoveredScrollUp>
+            </h4>
             <div className="aspect-square h-[4rem] xl:h-[4.5rem] rounded-full flex items-center justify-center overflow-hidden bg-white">
                 <HoveredScrollUp isHovered={isHovered} x={true}>
                     <Icon name="IconArrowUpRight" className="size-8 xl:size-10 text-black-100" strokeWidth={1.1} />

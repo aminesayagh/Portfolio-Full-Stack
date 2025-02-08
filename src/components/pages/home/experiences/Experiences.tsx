@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { text, title } from "@/components/ui/typography";
 import ExperienceCard from "./Experience";
+import { HoveredScrollUpInternal } from "@/components/ui/HoveredScrollUp";
 
 const CLASSNAME_GAP = "gap-6 sm:gap-14 xl:gap-20 2xl:gap-24";
 
@@ -44,18 +45,20 @@ function Experiences() {
                     </h5>
                     <div className="flex flex-col gap-4">
                         {archive.map((item) => (
-                            <div key={item.id}>
-                                <h6 className={text({
-                                    size: "sm",
-                                    weight: "semibold",
-                                    degree: "1"
-                                }, "border-b border-white/70 uppercase pr-2 pb-1")}>
-                                    {item.title}
-                                </h6>
+                            <div key={item.id} className="overflow-hidden w-fit border-b border-white/60">
+                                <HoveredScrollUpInternal>
+                                    <h6 className={text({
+                                        size: "sm",
+                                        weight: "semibold",
+                                        degree: "1"
+                                    }, "uppercase pr-2 pb-1")}>
+                                        {item.title}
+                                    </h6>
+                                </HoveredScrollUpInternal>
                             </div>
                         ))}
                     </div>
-                </div>     
+                </div>
             </div>
         </div>
     )
