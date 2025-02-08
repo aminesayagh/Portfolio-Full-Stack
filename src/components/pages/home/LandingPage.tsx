@@ -8,7 +8,7 @@ const Intro = dynamic(() => import("./intro"));
 const Overview = dynamic(() => import("./overview"));
 const About = dynamic(() => import("./about"));
 const Experiences = dynamic(() => import("./experiences"));
-const Works = dynamic(() => import("./works"));
+// const Works = dynamic(() => import("./works"));
 
 const LandingPage = () => (
   <>
