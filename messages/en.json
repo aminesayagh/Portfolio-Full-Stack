@@ -146,7 +146,7 @@
     "content": "Being correct is not enough, it's merely the inception. An exceptional engineer devotes a substantial amount of time to deep, unbiased listening. They consider real-world experimentation as their source of truth, adamantly differentiating between judgments drawn from perspectives and concrete facts."
   },
   "experiences": {
-    "title": "Evolution through expertise",
+    "title": "Selected Projects",
     "description": "Life hides in places we never look, the things we desire lie on the streets we haven't yet walked, it's these untraveled roads that call to me, igniting an endless quest in my heart.",
     "list": {
       "french_dandy": {
@@ -163,6 +163,9 @@
       },
       "lavish_trading": {
         "title": "Lavish Trading"
+      },
+      "sodiadd": {
+        "title": "Sodiadd"
       }
     },
     "archive": {
@@ -197,6 +200,47 @@
           "title": "Maschool"
         }
       ]
+    }
+  },
+  "works": {
+    "title": "Evolution through expertise",
+    "description": "We provide more than solutions, we deliver understanding.",
+    "list": {
+      "ckm_ckp_accelerator": {
+        "title": "CKM CKP Accelerator",
+        "date": "Dec 2024 - Present",
+        "time": "3 months"
+      },
+      "rich_media": {
+        "title": "Rich Media",
+        "date": "Dec 2024 - Jun 2025",
+        "time": "2 months"
+      },
+      "French Dandy": {
+        "title": "French Dandy",
+        "date": "Aug 2024 - Nov 2024",
+        "time": "3 months"
+      },
+      "miratti_morocco": {
+        "title": "Miratti Morocco",
+        "date": "Jun 2025 - Present",
+        "time": "1 month"
+      },
+      "Maud Diamond": {
+        "title": "Maud Diamond",
+        "date": "Aug 2024 - Oct 2024",
+        "time": "2 months"
+      },
+      "horde_studio": {
+        "title": "Horde Studio",
+        "date": "May 2024 - Aug 2024",
+        "time": "3 months"
+      },
+      "cyber_cohesion": {
+        "title": "Cyber Cohesion",
+        "date": "Apr 2024 - May 2024",
+        "time": "1 month"
+      }
     }
   },
   "motivation": {

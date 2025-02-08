@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion, useScroll, useSpring, useTransform } from "motion/react";
 
 import { cn } from "@/lib/utils";
 import Image from "@/components/ui/image";
@@ -14,7 +14,7 @@ function ExperienceButton({ name }: { name: string }) {
 
     return (
         <motion.div
-            className="absolute bottom-0 left-0 flex flex-row gap-3 xl:gap-4 w-full p-6"
+            className="absolute bottom-0 left-0 flex flex-row gap-3 xl:gap-4 w-full p-6 z-10"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
@@ -22,7 +22,7 @@ function ExperienceButton({ name }: { name: string }) {
                 size: "md",
                 weight: "semibold",
                 degree: "2"
-            }, "py-5 bg-white rounded-full flex items-center !text-black-100 px-5 xl:px-8 overflow-hidden")}>
+            }, "py-5 bg-white rounded-full flex items-center !text-black-100 px-5 xl:px-8 select-none overflow-hidden")}>
                 <HoveredScrollUp isHovered={isHovered}>
                     {name}
                 </HoveredScrollUp>
@@ -43,15 +43,19 @@ function ExperienceCard({ className, name, image }: { className?: string, name: 
         offset: ["start end", "end start"]
     });
 
+    const y = useSpring(useTransform(scrollYProgress, [0, 1], ["20%", "-20%"]), {
+        stiffness: 100,
+        damping: 100
+    });
     // const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
     // const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.3, 1, 1, 0.3]);
     return (
-        <div className={cn("object-cover aspect-square rounded-2xl overflow-hidden relative w-full h-full bg-primary-500", className)}>
+        <div className={cn("object-cover group aspect-square rounded-2xl overflow-hidden relative w-full h-full bg-transparent", className)}>
             <ExperienceButton name={name} />
             <motion.div
-                className="absolute inset-0"
+                className="absolute inset-0 w-full h-full z-0"
                 style={{
-                    y: useTransform(scrollYProgress, [0, 1], ["0%", "-20%"])
+                    y
                 }}
             >
                 <Image
@@ -59,7 +63,7 @@ function ExperienceCard({ className, name, image }: { className?: string, name: 
                     alt={name}
                     width={1000}
                     height={1000}
-                    className="object-cover w-full h-full"
+                    className="object-cover w-full h-full group-hover:scale-[1.5] duration-500 transition-all scale-[1.4]"
                 />
             </motion.div>
         </div>

@@ -15,24 +15,24 @@ function Experiences() {
     return (
         <div className={cn("container w-full h-full flex flex-col justify-between items-center", CLASSNAME_GAP)}>
             <div className={cn("w-full flex flex-col-reverse mdl:flex-row justify-between items-start mdl:items-end", CLASSNAME_GAP)}>
-                <ExperienceCard name={t("list.french_dandy.title")} image="/images/experiences/experience-1.jpg" className="top-0 mdl:-top-14 xl:top-0 w-full mdl:w-7/12 xl:w-8/12" />
+                <ExperienceCard name={t("list.french_dandy.title")} image="/images/project/french-dandy.webp" className="top-0 mdl:-top-14 xl:top-0 w-full mdl:w-7/12 xl:w-8/12" />
                 <div className={cn("w-10/12 mdl:w-5/12 xl:w-4/12 flex flex-col", CLASSNAME_GAP)}>
                     <div className="pl-0 mdl:pl-8 pr-0 xl:px-12">
                         <h1 className={title({
-                            size: "h4",
+                            size: "h3",
                             weight: "semibold",
                             degree: "2"
                         }, "max-w-96")}>{t("title")}</h1>
                     </div>
-                    <ExperienceCard name={t("list.cyber_cohesion.title")} image="/images/experiences/experience-2.jpg" />
+                    <ExperienceCard name={t("list.cyber_cohesion.title")} image="/images/project/cyber_cohesion_mockup_main.webp" />
                 </div>
             </div>
             <div className="w-full sm:w-9/12">
-                <ExperienceCard name={t("list.happy_water.title")} image="/images/experiences/experience-3.jpg" />
+                <ExperienceCard name={t("list.happy_water.title")} image="/images/project/happy_water_mockup_main.jpg" />
             </div>
             <div className={cn("w-full flex flex-col mdl:flex-row justify-between items-end", CLASSNAME_GAP)}>
-                <ExperienceCard name={t("list.code_wrangler.title")} image="/images/experiences/experience-4.jpg" className="w-full sm:w-8/12 bottom-0 mdl:-bottom-40" />
-                <ExperienceCard name={t("list.lavish_trading.title")} image="/images/experiences/experience-5.jpg" />
+                <ExperienceCard name={t("list.sodiadd.title")} image="/images/project/sodiadd_mockup_main.webp" className="w-full sm:w-8/12 bottom-0 mdl:-bottom-40" />
+                <ExperienceCard name={t("list.lavish_trading.title")} image="/images/project/lavish_mockup_main.webp" />
             </div>
             <div className="w-full flex items-end justify-end">
                 <div className="w-5/12 sm:w-3/12 mdl:w-2/12 relative right-[10%] flex flex-col gap-6 py-12 sm:py-24">
