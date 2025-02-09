@@ -9,7 +9,7 @@ import { text, display } from "@/components/ui/typography";
 import useGsap from "@/hook/useGsap";
 import useFitText from "@/hook/useFitText";
 import { ScrollTrigger, gsap, Power4 } from "@/utils/gsap";
-import { EXTERNAL_LOADING_TIMEOUT } from "@/components/ui/preloader";	
+import { LOADING_TIMEOUT } from "@/components/ui/preloader";	
 
 import ButtonNext, { GoTOCases } from "./ButtonNext";
 import FullStack from "./FullStack";
@@ -44,7 +44,8 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
     descriptions: cn(
       // flex
       "flex flex-col xs:flex-row justify-between mdl:justify-end",
-      "gap-6 xxs:gap-8 xs:gap-4 mdl:gap-2 lg:gap-4 4xl:gap-28", // gap
+      // "gap-6 xxs:gap-8 xs:gap-4 mdl:gap-2 lg:gap-4 4xl:gap-28", // gap
+      "gap-lg",
       "pl-0 lg:pl-4 xl:pl-0", // pl
       "pt-0 xs:pt-2 xl:pt-3", // pt
       // grid position
@@ -66,12 +67,12 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
       "mdl:row-start-1 mdl:row-span-1", //mdl
       // children
       locale === "en"
-        ? "[&>*]:w-full [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-5/12 [&>*]:mdl:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-4/12"
-        : "[&>*]:w-10/12 [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-1/2 [&>*]:xl:w-full [&>*]:4xl:w-5/12",
+        ? "[&>*]:w-full [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-5/12 [&>*]:mdl:w-full [&>*]:4xl:w-5/12"
+        : "[&>*]:w-10/12 [&>*]:xxs:w-11/12 [&>*]:xs:w-5/12 [&>*]:sm:w-1/2 [&>*]:mdl:w-full [&>*]:4xl:w-5/12",
       locale === "en"
-        ? "[&>*>span]:max-w-[14rem]"
+        ? "[&>span]:max-w-[12rem] [&>*>span]:2xl:max-w-[16rem]"
         : "[&>*>span]:xxs:max-w-[12rem] [&>*>span]:sm:max-w-[17rem] [&>*>span]:mdl:max-w-[12rem] [&>*>span]:lg:max-w-[17rem]",
-      "[&>*]:flex [&>*]:flex-row [&>*]:justify-start [&>*]:sm:justify-end",
+      "[&>*]:flex-row [&>*]:justify-start [&>*]:sm:justify-end",
       "[&>*]:mdl:ml-2 [&>*]:lg:ml-0"
     ),
     buttonGoNext: cn(
@@ -88,7 +89,7 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
       "justify-self-end mdl:justify-self-start"
     ),
     fullStack: cn(
-      "hidden xs:flex",
+      "hidden sm:flex",
       "row-start-3 row-span-1",
       "mdl:row-start-2 mdl:row-span-1",
       "col-start-1 col-span-3",
@@ -98,7 +99,7 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
       locale === "en"
         ? "xl:col-start-5 xl:col-span-2"
         : "xl:col-start-4 xl:col-span-2",
-      "justify-self-end"
+      "justify-self-end w-full"
     ),
     developer: cn(
       "flex flex-col xxs:flex-row justify-start xs:justify-end",
@@ -106,14 +107,15 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
       "xxs:row-start-3 xxs:row-span-1",
       "mdl:row-start-2 mdl:row-span-1",
       "col-start-1 col-span-12",
-      "xs:col-start-4 xs:col-span-9",
+      "sm:col-start-4 sm:col-span-9",
       locale === "en"
         ? "mdl:col-start-7 mdl:col-span-6"
         : "mdl:col-start-6 mdl:col-span-7", // xs
       locale === "en"
         ? "xl:col-start-7 xl:col-span-6"
         : "xl:col-start-6 xl:col-span-7", // xl
-      "gap-2 sm:gap-1 md:gap-5 mdl:gap-8", // gap
+      // "gap-2 sm:gap-1 md:gap-5 mdl:gap-8", // gap
+      "gap-lg",
       "justify-end mdl:justify-center items-end mdl:items-center",
       "overflow-y-animate"
     )
@@ -153,16 +155,15 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
         <div className="flex order-2 justify-items-start xxs:order-1">
           <ButtonNext goToCases={goToCases} />
         </div>
-        <FullStack className="flex order-1 xxs:order-3" />
+        <FullStack className="flex order-1 xxs:order-3 w-[9rem] xxs:w-full" />
       </div>
 
       <div
         className={classNameLocal.descriptions}
       >
-        <div>
-          <span data-scroll className="overflow-hidden h-fit">
+        <div className="flex mdl:hidden lg:flex">
+          <span className="overflow-hidden h-fit">
             <p
-              data-scroll
               className={text(
                 {
                   degree: "2",
@@ -178,10 +179,9 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
             </p>
           </span>
         </div>
-        <div>
-          <span data-scroll className="overflow-hidden h-fit">
+        <div className="flex">
+          <span className="overflow-hidden h-fit">
             <p
-              data-scroll
               className={text(
                 {
                   degree: "2",
@@ -207,7 +207,7 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
       <div
         className={classNameLocal.fullStack}
       >
-        <FullStack className="hidden xxs:flex w-min" />
+        <FullStack className="hidden xxs:flex w-full" />
       </div>
       {/* DEVELOPER */}
       <div
@@ -333,7 +333,7 @@ const Intro = () => {
         return () => {
           tl?.kill();
         };
-      }, EXTERNAL_LOADING_TIMEOUT);
+      }, LOADING_TIMEOUT);
       return () => {
         tl?.pause();
         tl?.progress(0);
@@ -350,7 +350,7 @@ const Intro = () => {
     >
       <div
         className={cn(
-          "flex flex-row flex-wrap",
+          "flex container flex-row flex-wrap",
           "grid grid-cols-12 grid-row-4 xxs:grid-row-3 mdl:grid-row-2",
           "gap-x-3 md:gap-x-4 gap-y-6 xxs:gap-y-8 xs:gap-y-6 sm:gap-y-8 mdl:gap-y-8 lg:gap-y-10",
           "justify-items-stretch"
@@ -358,7 +358,7 @@ const Intro = () => {
       >
         <Title goToCases={() => goTo("manifesto")} />
       </div>
-      <div className="flex flex-row justify-between items-end gap-0 xl:gap-6 4xl:gap-20">
+      <div className="flex container flex-row justify-between items-end gap-0 xl:gap-6 4xl:gap-20">
         <Menu />
       </div>
     </div>

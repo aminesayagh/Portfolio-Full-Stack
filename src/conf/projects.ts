@@ -61,107 +61,250 @@ export type ProjectTitle =
   | "Jonas Agency"
   | "Lavish Trading"
   | "Maschool"
-  | "FreeLance Projects";
+  | "FreeLance Projects"
+  | "French Dandy"
+  | "Mirrati"
+  | "Horde Studio"
+  | "Iso Watt"
+  | "Maud Diamond"
+  | "Code Wrangler"
+  | "CKM CKP Accelerator"
+  | "Rich Media";
 
 export type CountryNames =
-  | "France"
+  | "French"
   | "Morocco"
   | "United States"
   | "Singapore"
-  | "London";
+  | "London"
+  | "United Arab Emirates";
 
 export interface Project {
-  id: `${number}`;
+  id: string;
   title: ProjectTitle;
   tasks: TaskProject[];
-  category: ("best" | "ongoing" | "completed")[];
+  category: ("best" | "ongoing" | "completed" | "inMyWorksPipeline")[];
   jobTitle: TitleProject[];
   picture?: [string];
   country?: CountryNames;
+  order?: number;
+  date?: {
+    start: string;
+    end?: string;
+    duration?: string;
+  }
 }
 const PROJECTS: Project[] = [
   {
-    id: "1",
+    id: "french_dandy",
+    title: "French Dandy",
+    category: ["best", "completed", "inMyWorksPipeline"],
+    tasks: [WEB_DESIGNER, WEB_DEVELOPER, GRAPHIC_DESIGNER],
+    jobTitle: [FREELANCER],
+    country: "United Arab Emirates",
+    date: {
+      start: "Sep 2024",
+      end: "Nov 2024",
+      duration: "3 months"
+    },
+    order: 30
+  },
+  {
+    id: "happy_water",
     title: "Happy Water",
     category: ["best", "completed"],
     tasks: [WEB_DESIGNER, WEB_DEVELOPER, CRYPTO_DEVELOPER],
     jobTitle: [CTO, CO_FOUNDER],
-    picture: ["/images/project/happy_water_mockup_main.webp"]
+    picture: ["/images/project/happy_water_mockup_main.webp"],
+    country: "French",
+    date: {
+      start: "Jun 2023",
+      end: "Sep 2023",
+      duration: "3 months"
+    }
   },
   {
-    id: "2",
+    id: "sofiane_pamart_musical_nft",
     title: "Sofiane Pamart's Musical NFT",
     category: ["completed"],
     tasks: [FRONTEND_DEVELOPER],
-    jobTitle: [AUTOMATION_SPECIALIST]
+    jobTitle: [AUTOMATION_SPECIALIST],
+    country: "French"
   },
   {
-    id: "3",
+    id: "cyber_cohesion",
     title: "Cyber Cohesion",
     tasks: [WEB_DEVELOPER, DATABASE_CONSULTANT],
-    category: ["ongoing"],
+    category: ["ongoing", "inMyWorksPipeline"],
     jobTitle: [TECHNICAL_ADVISOR, RECHERCHE_AND_DEVELOPMENT],
-    country: "Singapore"
+    country: "Singapore",
+    date: {
+      start: "May 2023",
+      end: "Jun 2024",
+      duration: "15 months"
+    },
+    order: 70
   },
   {
-    id: "4",
+    id: "shinobi_boy",
     title: "Shinobi Boy",
     category: ["completed"],
     tasks: [FULLSTACK_DEVELOPER, SCRAPE_DEVELOPER, INFRASTRUCTURE_DEVELOPER],
-    jobTitle: [FOUNDER]
+    jobTitle: [FOUNDER],
+    country: "Morocco"
   },
   {
-    id: "5",
+    id: "university_projects_management",
     title: "Web Application for managing university Projects",
     tasks: [FULLSTACK_DEVELOPER],
     category: ["completed"],
-    jobTitle: [ACADEMIC_PROJECT_PLATFORM_ARCHITECT]
+    jobTitle: [ACADEMIC_PROJECT_PLATFORM_ARCHITECT],
+    country: "Morocco"
   },
   {
-    id: "6",
+    id: "sodiadd",
     title: "SODIADD",
     category: ["best", "ongoing"],
     tasks: [WEB_DESIGNER, FULLSTACK_DEVELOPER],
     jobTitle: [CTO, CO_FOUNDER],
     picture: ["/images/project/sodiadd_mockup_main.webp"],
-    country: "France"
+    country: "French",
+    date: {
+      start: "Feb 2023",
+      end: "Jun 2023",
+      duration: "4 months"
+    }
   },
   {
-    id: "7",
+    id: "jonas_agency",
     title: "Jonas Agency",
-    category: ["ongoing"],
+    category: ["ongoing", "inMyWorksPipeline"],
     tasks: [FULLSTACK_DEVELOPER],
     jobTitle: [TECHNICAL_ADVISOR],
-    country: "London"
+    country: "London",
+    date: {
+      start: "July 2023",
+      end: "Oct 2024",
+      duration: "15 months"
+    },
+    order: 80
   },
   {
-    id: "8",
-    category: ["best", "completed"],
+    id: "lavish_trading",
+    category: ["best", "completed", "inMyWorksPipeline"],
     title: "Lavish Trading",
     tasks: [WEB_DESIGNER, FULLSTACK_DEVELOPER],
     jobTitle: [FREELANCER],
-    picture: ["/images/project/lavish_mockup_main.webp"]
+    picture: ["/images/project/lavish_mockup_main.webp"],
+    order: 90,
+    date: {
+      start: "Mar 2023",
+      end: "May 2023",
+      duration: "3 months"
+    }
   },
   {
-    id: "9",
+    id: "maschool",
     category: ["completed"],
     title: "Maschool",
     tasks: [WEB_DESIGNER, FRONTEND_DEVELOPER],
     jobTitle: [CO_FOUNDER]
   },
   {
-    id: "10",
+    id: "freelance_project",
     category: ["completed"],
     title: "FreeLance Projects",
     tasks: [WEB_DESIGNER, GRAPHIC_DESIGNER, WEB_DEVELOPER],
     jobTitle: [FREELANCER]
+  },
+  {
+    id: "mirrati",
+    category: ["completed", "inMyWorksPipeline"],
+    title: "Mirrati",
+    tasks: [WEB_DESIGNER, WEB_DEVELOPER],
+    jobTitle: [FREELANCER],
+    date: {
+      start: "Jun 2025"
+    },
+    order: 15
+  },
+  {
+    id: "horde_studio",
+    category: ["completed", "inMyWorksPipeline"],
+    title: "Horde Studio",
+    tasks: [WEB_DESIGNER, WEB_DEVELOPER],
+    jobTitle: [FREELANCER],
+    date: {
+      start: "June 2024",
+      end: "Sep 2024",
+      duration: "3 months"
+    },
+    order: 60
+  },
+  {
+    id: "iso_watt",
+    category: ["completed"],
+    title: "Iso Watt",
+    tasks: [WEB_DESIGNER, WEB_DEVELOPER],
+    jobTitle: [FREELANCER]
+  },
+  {
+    id: "maud",
+    category: ["completed", "inMyWorksPipeline"],
+    title: "Maud Diamond",
+    tasks: [WEB_DESIGNER, WEB_DEVELOPER],
+    jobTitle: [FREELANCER],
+    date: {
+      start: "Sep 2024",
+      end: "Oct 2024",
+      duration: "2 months"
+    },
+    order: 50
+  },
+  {
+    id: "sodiadd",
+    category: ["completed"],
+    title: "SODIADD",
+    tasks: [WEB_DESIGNER, WEB_DEVELOPER],
+    jobTitle: [FREELANCER]
+  },
+  {
+    id: "code_wrangler",
+    category: ["completed"],
+    title: "Code Wrangler",
+    tasks: [WEB_DESIGNER, WEB_DEVELOPER],
+    jobTitle: [FREELANCER]
+  },
+  {
+    id: "ckm_ckp_accelerator",
+    category: ["completed", "inMyWorksPipeline"],
+    title: "CKM CKP Accelerator",
+    tasks: [WEB_DESIGNER, WEB_DEVELOPER],
+    jobTitle: [FREELANCER],
+    date: {
+      start: "Dec 2024"
+    },
+    order: 10
+  },
+  {
+    id: "rich_media",
+    category: ["completed", "inMyWorksPipeline"],
+    title: "Rich Media",
+    tasks: [WEB_DESIGNER, WEB_DEVELOPER],
+    jobTitle: [FREELANCER],
+    date: {
+      start: "Dec 2024",
+      end: "Jun 2025",
+      duration: "2 months"
+    },
+    order: 20
   }
 ];
 
 export const getProject = (id: string) =>
   PROJECTS.find(project => project.id === id);
 export const getProjectsByCategory = (
-  category: "best" | "ongoing" | "completed"
-) => PROJECTS.filter(project => project.category.includes(category));
+  category: Project["category"][number]
+) => PROJECTS.filter(project => project.category.includes(category)).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
 export default PROJECTS;

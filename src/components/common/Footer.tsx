@@ -16,7 +16,7 @@ import { Icon } from "@/components/ui/icon";
 import { Link, text } from "@/components/ui/typography";
 import { getMenuItems } from "@/i18n/routing";
 import { useEventListener } from "@/hook/useEventListener";
-import { useLenis } from "@/lib/Lenis";
+import { useLenisScrollTo } from "@/lib/Lenis/use-lenis";
 import { gsap } from "@/utils/gsap";
 import TextAnimated from "@/components/ui/TextReveal2";
 
@@ -270,7 +270,7 @@ const GoToTop = ({ handler, name }: { handler: () => void; name: string }) => {
       <Icon
         name="IconArrowUpRight"
         size="24"
-        className={cn("stroke-gray-400 icon_gsap", ICON_SIZE_CLASS_NAME)}
+        className={cn("stroke-gray-400 size-4 icon_gsap", ICON_SIZE_CLASS_NAME)}
       />
       <p
         className={text(
@@ -279,7 +279,7 @@ const GoToTop = ({ handler, name }: { handler: () => void; name: string }) => {
             weight: "semibold",
             degree: "3"
           },
-          "text_gsap"
+          "text_gsap !text-nowrap"
         )}
       >
         {name}
@@ -294,13 +294,11 @@ const Footer = () => {
   const t = useTranslations();
   const locale = useLocale();
   // const { scrollTo } = useLocomotiveScroll();
-  const lenis = useLenis();
+  const goTo = useLenisScrollTo();
 
   const goToTop = useCallback(() => {
-    if (lenis) {
-      lenis.scrollTo(0);
-    }
-  }, [lenis]);
+    goTo(0);
+  }, [goTo]);
 
   return (
     <>
@@ -320,14 +318,14 @@ const Footer = () => {
       <div
         className={cn(
           "flex flex-row flex-wrap sm:flex-nowrap justify-between",
-          "gap-y-4",
+          "gap-y-7 sm:gap-y-4",
           "pb-10 pt-6"
         )}
       >
         <div className={cn("flex flex-row flex-1", "order-2 sm:order-1")}>
           <GoToTopMemo handler={goToTop} name={t("footer.action")} />
         </div>
-        <div className="flex flex-row items-center w-full justify-start flex-grow sm:flex-none order-1 sm:grow-0 sm:w-auto sm:justify-center sm:order-2">
+        <div className="flex flex-row items-center  justify-start flex-grow sm:flex-none order-1 sm:grow-0 sm:w-auto sm:justify-center sm:order-2">
           <p
             className={text(
               {
@@ -353,7 +351,7 @@ const Footer = () => {
             {t("footer.copy")}
           </p>
         </div>
-        <div className="flex-1 order-3">
+        <div className="flex-1 order-3 hidden xxs:block">
           <FollowUs />
         </div>
       </div>

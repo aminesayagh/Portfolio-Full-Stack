@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { motion } from "motion/react";
 
-import { RouteSettingPath, getHref } from "@/i18n/routing";
+import { RouteSettingPath, getHref, getIdScroll } from "@/i18n/routing";
 import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 import { useLenis } from "@/lib/Lenis";
 import HoveredScrollUp from "@/components/ui/HoveredScrollUp";
@@ -41,7 +41,7 @@ const MenuItem = ({
       )}
     >
       <motion.span
-        className="w-fit relative"
+        className="w-fit relative flex flex-col gap-1"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -89,7 +89,7 @@ const Menu = () => {
       } else if (key === "resume") {
         router.push(getHref("resume"));
       } else {
-        lenis?.scrollTo(getHref(key));
+        lenis?.scrollTo(getIdScroll(key));
       }
     },
     [lenis, router]

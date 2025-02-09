@@ -22,29 +22,35 @@ const ROUTER_CONFIGS = {
   },
   intro: {
     id: "intro",
-    path: "#intro",
+    path: "/",
+    idScroll: "#intro",
     inDevelopment: false,
     menu: ["secondary", "hamburger"]
   },
   manifesto: {
     id: "manifesto",
-    path: "#manifesto",
+    path: "/",
+    idScroll: "#manifesto",
     inDevelopment: false,
     menu: ["secondary", "hamburger"]
   },
   experience: {
     id: "experience",
-    path: "#experience",
+    path: "/",
+    idScroll: "#experience",
     inDevelopment: false,
     menu: ["secondary", "hamburger"]
   },
   cases: {
+    type: "internal",
     id: "cases",
-    path: "/#cases",
+    path: "/",
+    idScroll: "#cases",
     inDevelopment: false,
     menu: ["secondary"]
   },
   resume: {
+    type: "external",
     id: "resume",
     path: "https://drive.usercontent.google.com/u/0/uc?id=1rhQdSeDsF9sdg_Fp7wqrGnlF1KR4X2km",
     inDevelopment: false,
@@ -52,36 +58,42 @@ const ROUTER_CONFIGS = {
   },
   
   contact: {
+    type: "internal",
     id: "contact",
     path: "/contact",
     inDevelopment: false,
     menu: ["secondary", "hamburger"]
   },
   instagram: {
+    type: "external",
     id: "instagram",
     path: "https://www.instagram.com/mohammedsayagh/",
     inDevelopment: false,
     menu: ["socialNetwork"]
   },
   linkedin: {
+    type: "external",
     id: "linkedin",
     path: "https://www.linkedin.com/in/mohamedamine-sayagh/",
     inDevelopment: false,
     menu: ["socialNetwork"]
   },
   github: {
+    type: "external",
     id: "github",
     path: "https://github.com/aminesayagh",
     inDevelopment: false,
     menu: ["socialNetwork"]
   },
   dribbble: {
+    type: "external",
     id: "dribbble",
     path: "https://dribbble.com/mohammed-sayagh",
     inDevelopment: false,
     menu: ["socialNetwork"]
   },
   medium: {
+    type: "external",
     id: "medium",
     path: "https://medium.com/@masayagh",
     inDevelopment: false,
@@ -93,6 +105,7 @@ export type RouteSettingPath = KeysAsDotNotation<
   typeof ROUTER_CONFIGS,
   {
     path: string;
+    idScroll?: string;
     inDevelopment: boolean;
   }
 >;
@@ -102,6 +115,12 @@ export type RouteSettingMenu =
 
 export type RouteSettingPathKey =
   (typeof ROUTER_CONFIGS)[RouteSettingPath]["path"];
+
+export type RouteSettingIdScroll = Extract<
+  (typeof ROUTER_CONFIGS)[RouteSettingPath],
+  { idScroll: string }
+>["idScroll"];
+
 
 export function getHref(path: RouteSettingPath): RouteSettingPathKey {
   const pathArray = path.split(".") as string[];
@@ -130,15 +149,34 @@ export function getHref(path: RouteSettingPath): RouteSettingPathKey {
   return url as RouteSettingPathKey;
 }
 
+export function getIdScroll(path: RouteSettingPath): RouteSettingIdScroll {
+  const pathArray = path.split(".") as string[];
+  let idScroll = undefined;
+  for (let i = 0; i < pathArray.length; i++) {
+    const current = ROUTER_CONFIGS[pathArray[i] as keyof typeof ROUTER_CONFIGS];
+    if (current && "idScroll" in current) {
+      idScroll = current.idScroll;
+    }
+
+    if (idScroll) {
+      break;
+    }
+  }
+  if (!idScroll) {
+    throw new Error(`No idScroll found for path: ${path}`);
+  }
+  return idScroll;
+}
+
 export function getMenuItems(menu: RouteSettingMenu): {
   path: RouteSettingPathKey;
-  id?: string;
+  id?: RouteSettingPath;
 }[] {
   return Object.values(ROUTER_CONFIGS).filter(
     (item): item is (typeof ROUTER_CONFIGS)[keyof typeof ROUTER_CONFIGS] =>
       Array.isArray(item.menu) && item.menu.includes(menu)
   ) as {
     path: RouteSettingPathKey;
-    id?: string;
+    id?: RouteSettingPath;
   }[];
 }

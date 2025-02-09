@@ -210,6 +210,9 @@
         "date": "Apr 2024 - May 2024",
         "time": "1 month"
       }
+    },
+    "time": {
+      "present": "Présent"
     }
   },
   "manifesto_old": {
@@ -388,54 +391,89 @@
     "Lithuania": "Lituanie"
   },
   "projects": {
-    "1": {
+    "happy_water": {
       "title": "Happy Water",
       "alt": "Happy Water",
-      "description": "Contribué en tant que concepteur et développeur principal pour un site web de plateforme NFT axé sur l'écologie."
+      "description": "Contributed as a key designer and developer for an ecologically-focused NFT platform website."
     },
-    "2": {
-      "title": "NFT Musical de Sofiane Pamart",
-      "alt": "NFT Musical de Sofiane Pamart",
-      "description": "Collaboration au sein d'une équipe de 140 membres, dont 40 développeurs internationaux, sous la direction de l'entrepreneur Oussama Ommar. Piloté la création de NFTs musicaux visuels capturant l'identité unique de l'artiste Sofiane Pamart, ouvrant la voie à une importante campagne de collecte de fonds."
+    "sofiane_pamart_musical_nft": {
+      "title": "Sofiane Pamart's Musical NFT",
+      "alt": "Sofiane Pamart's Musical NFT",
+      "description": "Collaborated within a 140-member team, including 40 international developers, under the leadership of entrepreneur Oussama Ommar. Spearheaded the creation of visual music NFTs capturing the unique identity of artist Sofiane Pamart, paving the way for a significant fundraising campaign."
     },
-    "3": {
-      "title": "Cohésion Cyber",
-      "alt": "Cohésion Cyber",
-      "description": "Entreprise de sécurité basée à Singapour offrant des consultations techniques pour des solutions de développement appropriées."
+    "cyber_cohesion": {
+      "title": "Cyber Cohesion",
+      "alt": "Cyber Cohesion",
+      "description": "Singapore-based security firm offering technical consultation for appropriate development solutions."
     },
-    "4": {
+    "shinobi_boy": {
       "title": "Shinobi Boy",
-      "alt": "Shinobi Boy",
+      "alt": "Shinobi boy",
       "description": ""
     },
-    "5": {
-      "title": "Application Web pour la gestion des projets universitaires",
-      "alt": "Application Web pour la gestion des projets universitaires",
+    "university_projects_management": {
+      "title": "Web Application for managing university Projects",
+      "alt": "Web Application for managing university Projects",
       "description": ""
     },
-    "6": {
+    "sodiadd": {
       "title": "Sodiadd",
       "alt": "Sodiadd",
-      "description": "Agence d'investissement immobilier ; développé une application web monolithique pour les investisseurs individuels."
+      "description": "Real estate investment agency; developed a monolithic web application for individual investors."
     },
-    "7": {
-      "title": "Agence Jonas",
-      "alt": "Agence Jonas",
-      "description": "Agence de marketing digital ; réalisé des sites web sur mesure pour une promotion en ligne stratégique."
+    "jonas_agency": {
+      "title": "Jonas Agency",
+      "alt": "Jonas Agency",
+      "description": "Digital marketing agency; crafted websites tailored for strategic online promotion."
     },
-    "8": {
+    "lavish_trading": {
       "title": "Lavish Trading",
       "alt": "Lavish Trading",
-      "description": "Dirigé la conception et le développement d'une identité web pour une agence de trading axée sur les individus, proposant des plans d'investissement en ligne et des services de conseil d'experts."
+      "description": "Spearheaded the design and development of a web identity for an individual-focused trading agency, offering online investment plans and expert consulting services."
     },
-    "9": {
+    "maschool": {
       "title": "Maschool",
       "alt": "Maschool",
       "description": ""
     },
-    "10": {
-      "title": "Projets FreeLance",
-      "alt": "Projets FreeLance",
+    "freelance_project": {
+      "title": "FreeLance Projects",
+      "alt": "FreeLance Projects",
+      "description": ""
+    },
+    "mirrati": {
+      "title": "Mirrati",
+      "alt": "Mirrati",
+      "description": ""
+    },
+    "horde_studio": {
+      "title": "Horde Studio",
+      "alt": "Horde Studio",
+      "description": ""
+    },
+    "iso_watt": {
+      "title": "Iso Watt",
+      "alt": "Iso Watt",
+      "description": ""
+    },
+    "maud": {
+      "title": "Maud Diamond",
+      "alt": "Maud Diamond",
+      "description": ""
+    },
+    "code_wrangler": {
+      "title": "Code Wrangler",
+      "alt": "Code Wrangler",
+      "description": ""
+    },
+    "ckm_ckp_accelerator": {
+      "title": "CKM CKP Accelerator",
+      "alt": "CKM CKP Accelerator",
+      "description": ""
+    },
+    "rich_media": {
+      "title": "Rich Media",
+      "alt": "Rich Media",
       "description": ""
     }
   }

@@ -36,7 +36,7 @@ const Row = memo(function Row({
   className?: string;
 }) {
   const baseX = useMotionValue(0);
-  const [isHovered, setIsHovered] = useState(false);
+  // const [isHovered, setIsHovered] = useState(false);
   const currentVelocity = useRef(baseVelocity);
   const targetVelocity = useRef(baseVelocity);
   const { scrollY } = useScroll();
@@ -57,7 +57,7 @@ const Row = memo(function Row({
   const directionFactor = useRef<number>(1);
 
   useAnimationFrame((_, delta) => {
-    targetVelocity.current = isHovered ? 0 : baseVelocity;
+    targetVelocity.current = baseVelocity;
 
     const ease = 0.25; // Adjust this value to control the smoothing speed (0-1)
     currentVelocity.current += (targetVelocity.current - currentVelocity.current) * ease;
@@ -96,7 +96,7 @@ const Row = memo(function Row({
       .map((_, index) => (
         <motion.div
           key={`${index}-image`}
-          className="relative h-full overflow-hidden rounded-xl object-cover min-w-[min(90vw,66vh)] md:min-w-[max(66vh,890px)] 3xl:min-w-[900px]"
+          className="relative h-full overflow-hidden rounded-xl object-cover min-w-[440px] xs:min-w-[90vw] lg:min-w-[max(66vh,890px)] 3xl:min-w-[900px]"
           style={{
             aspectRatio: "2/1"
           }}
@@ -118,10 +118,8 @@ const Row = memo(function Row({
 
   return (
     <motion.div
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        "group relative h-full flex flex-row w-full min-w-screen gap-[var(--space-gap)]",
+        "group relative h-full flex flex-row w-full min-w-screen gap-xs sm:gap-sm lg:gap-lg -translate-x-[100vw]",
         ANIMATION_GPU_OPTIMIZATION,
         className
       )}
@@ -235,6 +233,8 @@ function Overview() {
       return;
     }
 
+    // Calculate the scroll position relative to the container, 
+    // and offset it by the window height divided by 2
     const s =
       latest -
       Number(containerRef.current?.getBoundingClientRect().top) -
@@ -246,47 +246,47 @@ function Overview() {
 
   const { width: windowWidth } = useWindowSize();
 
-  const maxHeight = (windowWidth || 0) > 1600 ? 2500 : 3000;
-  
-  // Transform height from initial to final height
-  const height = useTransform(scrollYPosition, [0, 2000], [maxHeight, 900]);
+  const variant = useMemo(() => ([0, 600, 4500]), [])
+
+  const top = useTransform(scrollYPosition, variant, [0, 0, 900]);
 
 
   const widthMax = useMemo(() => (windowWidth || 0) + 60, [windowWidth]);
+  const velocity = useMemo(() => (windowWidth || 0) > 640 ? BASE_VELOCITY : BASE_VELOCITY * 2, [windowWidth]);
 
   // Transform width from initial container width to full viewport width
   const width = useTransform(
     scrollYPosition,
-    [0, 500, 2000],
-    [initialWidth, widthMax, widthMax] // Add 40px to account for the rounded corners
+    variant,
+    [initialWidth, widthMax, widthMax] // Add 60px to account for the rounded corners
   );
 
   return (
     <motion.section
       ref={containerRef}
       style={{
-        height,
         width
       }}
+      id="cases"
       className={cn(
-        "w-full relative overflow-hidden mx-auto rounded-2xl bg-primary-500",
-        "[--space-gap:1.5rem] sm:[--space-gap:2rem] mdl:[--space-gap:2vw] 3xl:[--space-gap:2vw]",
+        "w-full relative overflow-hidden mx-auto rounded-2xl bg-primary-600",
+        "h-[1600px] sm:h-[2000px]", 
         "will-change-transform"
       )}
     >
-      <div
+      <motion.div
         style={{
           transformOrigin: "top center",
-          height: maxHeight
+          top: top
         }}
-        className="w-screen container absolute flex flex-col gap-y-[var(--space-gap)] py-[var(--space-gap)] inset-0 mx-auto"
+        className={cn("w-screen container absolute h-[1600px] sm:h-[2200px] md:h-[2500px] lg:h-[3100px] flex flex-col gap-y-xs sm:gap-y-sm lg:gap-y-lg py-xs sm:py-sm lg:py-lg inset-0 mx-auto", ANIMATION_GPU_OPTIMIZATION)}
       >
-        <Row images={IMAGE_SETS["SET_1"] || []} baseVelocity={BASE_VELOCITY} />
-        <Row images={IMAGE_SETS["SET_2"] || []} baseVelocity={-BASE_VELOCITY} />
-        <Row images={IMAGE_SETS["SET_3"] || []} baseVelocity={BASE_VELOCITY} />
-        <Row images={IMAGE_SETS["SET_4"] || []} baseVelocity={-BASE_VELOCITY} />
-        <Row images={IMAGE_SETS["SET_5"] || []} baseVelocity={BASE_VELOCITY} className="block mdl:hidden" />
-      </div>
+        <Row images={IMAGE_SETS["SET_1"] || []} baseVelocity={velocity} />
+        <Row images={IMAGE_SETS["SET_2"] || []} baseVelocity={-velocity} />
+        <Row images={IMAGE_SETS["SET_3"] || []} baseVelocity={velocity} />
+        <Row images={IMAGE_SETS["SET_4"] || []} baseVelocity={-velocity} />
+        <Row images={IMAGE_SETS["SET_5"] || []} baseVelocity={velocity} className="block" />
+      </motion.div>
     </motion.section>
   );
 }
