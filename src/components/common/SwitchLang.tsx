@@ -77,7 +77,7 @@ const SwitchLang = () => {
   );
 
   return (
-    <div className="flex flex-row items-center justify-start gap-12 xxs:gap-8 mdl:gap-6 lg:gap-8">
+    <div className="flex flex-row items-center justify-start gap-6 lg:gap-7 xl:gap-8">
       {languages.map(l => (
         <SwitchLangItem
           key={l.value}

@@ -15,7 +15,7 @@ const LandingPage = () => (
     <Container as="section" size="lg" id="intro">
       <Intro />
     </Container>
-    <span className="h-xl block" />
+    <span className="h-24 block" />
     <Suspense fallback={<div>Loading...</div>}>
       <Overview />
     </Suspense>

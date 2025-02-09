@@ -29,7 +29,7 @@ import SwitchLang from "./SwitchLang";
 import HoveredScrollUp, { HoveredScrollUpInternal } from "../ui/HoveredScrollUp";
 import { useLenisScrollTo } from "@/lib/Lenis/use-lenis";
 
-const GAP_SIZE_LG = "gap-4 sm:gap-6 lg:gap-7 xl:gap-8";
+const GAP_SIZE_LG = "gap-6 lg:gap-7 xl:gap-8";
 const GAP_SIZE_XL = "gap-8 mdl:gap-12";
 const BASE_LOCALE_MENU = "header.menu";
 const BASE_LOCALE_SOCIAL = "socialNetwork";

@@ -41,7 +41,7 @@ const MenuItem = ({
       )}
     >
       <motion.span
-        className="w-fit relative"
+        className="w-fit relative flex flex-col gap-1"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >

@@ -212,14 +212,14 @@ export default {
           }
         ],
         "body-sm": [
-          "clamp(0.72rem, 2.5vw + 1rem, 0.8rem)",
+          "clamp(0.6rem, 2.5vw + 1rem, 0.81rem)",
           {
             lineHeight: "1.7",
             letterSpacing: "0.05em"
           }
         ],
         "body-xs": [
-          "clamp(0.7rem, 2.5vw + 1rem, 0.76rem)",
+          "clamp(0.58rem, 2.5vw + 1rem, 0.76rem)",
           {
             lineHeight: "1.7",
             letterSpacing: "0.05em"
