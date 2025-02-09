@@ -2,8 +2,6 @@ import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 
-import Container from "@/components/ui/container";
-
 const Intro = dynamic(() => import("./intro"));
 const Overview = dynamic(() => import("./overview"));
 const About = dynamic(() => import("./about"));
@@ -12,9 +10,9 @@ const Works = dynamic(() => import("./works"));
 
 const LandingPage = () => (
   <>
-    <Container as="section" size="lg" id="intro">
+    <Suspense fallback={<div>Loading...</div>}>
       <Intro />
-    </Container>
+    </Suspense>
     <span className="h-24 block" />
     <Suspense fallback={<div>Loading...</div>}>
       <Overview />
