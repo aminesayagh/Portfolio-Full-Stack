@@ -9,15 +9,15 @@ function Works() {
     const t = useTranslations("works");
     return (
         <div className="container flex flex-col gap-xl">
-            <div className="flex flex-row items-end justify-start gap-lg">
-                <div className="w-4/12">
+            <div className="flex flex-col lg:flex-row items-start lg:items-end justify-start gap-lg">
+                <div className="w-full md:w-4/12">
                     <h1 className={title({
-                        size: "h3",
+                        size: "h4",
                         weight: "semibold",
                         degree: "2"
-                    }, "text-black-100")}>{t("title")}</h1>
+                    }, "text-black-100 max-w-72")}>{t("title")}</h1>
                 </div>
-                <div className="flex flex-row justify-between py-2 w-8/12">
+                <div className="flex flex-row justify-between py-2 w-full lg:w-8/12">
                     <p className={text({
                         size: "md",
                         weight: "semibold",
@@ -27,10 +27,10 @@ function Works() {
                 </div>
             </div>
             <div className="flex flex-row items-end justify-end gap-lg">
-                <div className="w-4/12 flex flex-col h-full items-start justify-end">
+                <div className="hidden lg:flex w-2/12 lg:w-4/12 flex-col h-full items-start justify-end">
                     <ArrowFocus direction="UpRight" />
                 </div>
-                <div className="w-8/12 pl-3 flex flex-col h-full justify-between">
+                <div className="w-full sm:w-11/12 md:w-10/12 lg:w-8/12 pl-0 flex flex-col h-full justify-between">
                     {getProjectsByCategory("inMyWorksPipeline").map((project, index) => {
                         let time = "";
                         if (project?.date?.start && project?.date?.end) {

@@ -26,7 +26,7 @@ const LandingPage = () => (
     <Suspense fallback={<div>Loading...</div>}> 
       <Experiences />
     </Suspense>
-    <span className="h-xl block" />
+    <span className="h-sm md:h-xl block" />
     <Suspense fallback={<div>Loading...</div>}>
       <Works />
     </Suspense>
