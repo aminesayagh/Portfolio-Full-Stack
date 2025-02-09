@@ -17,7 +17,7 @@ export default function About() {
   return (
     <div id="manifesto" className="flex flex-row gap-0 container items-start justify-end py-24">
       {/* head */}
-      <div className="w-full lg:w-10/12 flex flex-col items-start justify-start gap-xl">
+      <div className="w-full lg:w-10/12 flex flex-col items-start justify-start gap-14 sm:gap-xl">
         {/* body */}
         <div className="w-full -ml-0 relative">
           <TextReveal text={t("content")} />

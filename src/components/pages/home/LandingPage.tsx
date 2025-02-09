@@ -26,11 +26,11 @@ const LandingPage = () => (
     <Suspense fallback={<div>Loading...</div>}> 
       <Experiences />
     </Suspense>
-    <span className="h-sm md:h-xl block" />
+    <span className="h-24 sm:h-xl block" />
     <Suspense fallback={<div>Loading...</div>}>
       <Works />
     </Suspense>
-    <div className="block w-full h-6 xs:h-[20vh]" />
+    <div className="block w-full h-40 sm:h-xl" />
   </>
 );
 

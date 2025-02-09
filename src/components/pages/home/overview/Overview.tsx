@@ -96,7 +96,7 @@ const Row = memo(function Row({
       .map((_, index) => (
         <motion.div
           key={`${index}-image`}
-          className="relative h-full overflow-hidden rounded-xl object-cover min-w-[90vw] lg:min-w-[max(66vh,890px)] 3xl:min-w-[900px]"
+          className="relative h-full overflow-hidden rounded-xl object-cover min-w-[440px] xs:min-w-[90vw] lg:min-w-[max(66vh,890px)] 3xl:min-w-[900px]"
           style={{
             aspectRatio: "2/1"
           }}

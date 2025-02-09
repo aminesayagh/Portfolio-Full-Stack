@@ -50,7 +50,7 @@ function ExperienceCard({ className, name, image }: { className?: string, name: 
     // const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
     // const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.3, 1, 1, 0.3]);
     return (
-        <div className={cn("object-cover group aspect-square rounded-2xl overflow-hidden relative w-full h-full bg-transparent", className)}>
+        <div className={cn("object-cover group aspect-[9/12] sm:aspect-square rounded-2xl overflow-hidden relative w-full h-full bg-transparent", className)}>
             <ExperienceButton name={name} />
             <motion.div
                 className="absolute inset-0 w-full h-full z-0"

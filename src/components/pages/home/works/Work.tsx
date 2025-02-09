@@ -14,20 +14,22 @@ function Work({ index, time, title }: { index: number, time: string, title: stri
             {index == 0 && (
                 <div className="w-full h-px bg-white-600/70"></div>
             )}
-            <motion.div className="flex flex-row items-start py-lg gap-xl justify-between" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-                <div className="w-3/12">
-                    <p className={text({
-                        size: "xs",
-                        weight: "semibold",
-                        degree: "4"
-                    }, "max-w-32")}>{time}</p>
-                </div>
-                <div className="flex-grow">
-                    <p className={text({
-                        size: "lg",
-                        weight: "medium",
-                        degree: "1"
-                    }, "pt-1")}>{title}</p>
+            <motion.div className="flex flex-row items-end sm:items-start py-lg gap-xl justify-between" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+                <div className="flex flex-col sm:flex-row gap-6 pb-1 sm:pb-0">
+                    <div className="w-full sm:w-3/12">
+                        <p className={text({
+                            size: "xs",
+                            weight: "semibold",
+                            degree: "4"
+                        }, "max-w-32")}>{time}</p>
+                    </div>
+                    <div className="flex-grow">
+                        <p className={text({
+                            size: "lg",
+                            weight: "medium",
+                            degree: "1"
+                        }, "pt-0 sm:pt-1")}>{title}</p>
+                    </div>
                 </div>
                 <div className="aspect-square h-[2.5rem] xl:h-[3rem] rounded-full flex items-center justify-center overflow-hidden bg-white/90">
                     <HoveredScrollUp isHovered={isHovered} x={true}>
