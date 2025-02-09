@@ -17,7 +17,7 @@ function Works() {
                         degree: "2"
                     }, "text-black-100 max-w-96")}>{t("title")}</h1>
                 </div>
-                <div className="flex flex-col xs:flex-row justify-between py-2 w-full gap-6 lg:w-8/12">
+                <div className="flex flex-col xs:flex-row justify-between items-end py-2 w-full gap-6 lg:w-8/12">
                     <p className={text({
                         size: "md",
                         weight: "semibold",

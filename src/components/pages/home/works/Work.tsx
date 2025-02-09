@@ -15,13 +15,13 @@ function Work({ index, time, title }: { index: number, time: string, title: stri
                 <div className="w-full h-px bg-white-600/70"></div>
             )}
             <motion.div className="flex flex-row items-end sm:items-start py-lg gap-xl justify-between" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-                <div className="flex flex-col sm:flex-row gap-6 pb-1 sm:pb-0">
+                <div className="flex flex-col sm:flex-row gap-6 pb-1 sm:pb-0 w-full">
                     <div className="w-full sm:w-3/12">
                         <p className={text({
                             size: "xs",
                             weight: "semibold",
                             degree: "4"
-                        }, "max-w-32")}>{time}</p>
+                        }, "")}>{time}</p>
                     </div>
                     <div className="flex-grow">
                         <p className={text({

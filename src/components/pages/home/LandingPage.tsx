@@ -28,7 +28,7 @@ const LandingPage = () => (
     <Suspense fallback={<div>Loading...</div>}>
       <Works />
     </Suspense>
-    <div className="block w-full h-40 sm:h-xl" />
+    <div className="block w-full h-40 sm:h-52" />
   </>
 );
 
