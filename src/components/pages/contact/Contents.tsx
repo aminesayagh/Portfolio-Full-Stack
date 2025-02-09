@@ -9,26 +9,20 @@ import { cn } from "@/lib/utils";
 import Container from "@/components/ui/container";
 import { text, Link, display } from "@/components/ui/typography";
 import { getMenuItems } from "@/i18n/routing";
-import { useTime } from "@/hook";
 import { gsap } from "@/utils/gsap";
 
 import AgencyList from "./AgencyList";
 import ContactForm from "./ContactForm";
 import { HoveredScrollUpInternal } from "@/components/ui/HoveredScrollUp";
-
+import TimeZone from "@/components/ui/TimeZone";
 const GRID_DEFAULT_CLASS = "col-start-1 col-span-12";
+
 
 const ContactPage = () => {
   const t = useTranslations();
   const contactRef = useRef<HTMLDivElement>(null);
 
   const socialNetworkItems = useMemo(() => getMenuItems("socialNetwork"), []);
-
-  const timer = useTime({
-    city: "Casablanca",
-    country: "Africa",
-    format: "HH:mm"
-  });
 
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -140,28 +134,7 @@ const ContactPage = () => {
                 "sm:row-start-2 sm:row-span-1"
               )}
             >
-              <div className="flex flex-col gap-1">
-                <p
-                  className={text({
-                    size: "sm",
-                    degree: "2",
-                    weight: "medium"
-                  })}
-                  suppressHydrationWarning
-                >
-                  {t("contact.localTime")} {timer?.formattedTime}
-                </p>
-                <p
-                  className={text({
-                    size: "sm",
-                    degree: "2",
-                    weight: "medium"
-                  })}
-                  suppressHydrationWarning
-                >
-                  {t("contact.gmtTime")}({timer?.gmtOffset})
-                </p>
-              </div>
+              <TimeZone />
             </div>
           </div>
           <span className="h-6 md:h-10" />

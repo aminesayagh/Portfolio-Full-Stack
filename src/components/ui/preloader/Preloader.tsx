@@ -10,20 +10,18 @@ import { text, title } from "@/components/ui/typography";
 import Container from "@/components/ui/container";
 import Noise from "@/components/ui/noise";
 import { ANIMATION_GPU_OPTIMIZATION } from "@/lib/utils";
-import Percent from "./Percent";
+import NumberTicker from "../NumberTicker";
+import { LOADING_TIMEOUT } from "./constants";
 
 const Preloader = () => {
     const t = useTranslations();
     const ref = useRef<HTMLSpanElement>(null);
     const [endLoadingProgress, setEndLoadingProgress] = useState(false);
-
-    // const [fontReady, setFontReady] = useState(false);
-
     useEffect(() => {
-        // const timer = setTimeout(() => {
-        //     setFontReady(true);
-        // }, 2000);
-        // return () => clearTimeout(timer);
+        const timer = setTimeout(() => {
+            setEndLoadingProgress(true);
+        }, LOADING_TIMEOUT);
+        return () => clearTimeout(timer);
     }, []);
 
     useIsomorphicLayoutEffect(() => {
@@ -197,15 +195,15 @@ const Preloader = () => {
                     >
                         <div
                             className={cn(
-                                "flex flex-row gap-2 flex-nowrap",
+                                "flex flex-row flex-nowrap",
                                 "uppercase element-counter-gsap",
                                 "font-sans font-black !text-black-500 will-change-transform-animation",
                                 "text-[4.1rem] xxs:text-[6rem] md:text-[7.4rem] lg:text-[8.4rem] xl:text-[10rem] align-baseline leading-[70%]"
                             )}
                         >
-                            <Percent
-                                setEndLoadingProgress={setEndLoadingProgress}
-                            />
+                            <span className="relative flex items-center">
+                                <NumberTicker value={99} totalTime={LOADING_TIMEOUT + 1000} className="flex flex-col w-auto leading-3 align-middle text-end" />
+                            </span>
                             %
                         </div>
                     </div>

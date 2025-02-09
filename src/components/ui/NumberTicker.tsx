@@ -3,13 +3,14 @@
 import { useInView, useMotionValue, useSpring } from "motion/react";
 import { ComponentPropsWithoutRef, useEffect, useRef, memo } from "react";
 
-import { cn } from "@/lib/utils";
+import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 
 interface NumberTickerProps extends ComponentPropsWithoutRef<"span"> {
   value: number;
   direction?: "up" | "down";
   delay?: number; // delay in s
   decimalPlaces?: number;
+  totalTime?: number | null;
 }
 
 function NumberTicker({
@@ -17,6 +18,7 @@ function NumberTicker({
   direction = "up",
   delay = 0,
   className,
+  totalTime = null,
   decimalPlaces = 0,
   ...props
 }: NumberTickerProps) {
@@ -31,9 +33,13 @@ function NumberTicker({
 
   useEffect(() => {
     if (isInView) {
+      let timeDelay = delay * 1000;
+      if (totalTime) {
+        timeDelay = delay * 1000 + (totalTime / value);
+      }
       timeout.current = setTimeout(() => {
         motionValue.set(direction === "down" ? 0 : value);
-      }, delay * 1000);
+      }, timeDelay);
       return () => {
         if (timeout.current) {
           clearTimeout(timeout.current);
@@ -62,6 +68,7 @@ function NumberTicker({
       className={cn(
         "inline-block tabular-nums tracking-wider",
         className,
+        ANIMATION_GPU_OPTIMIZATION
       )}
       {...props}
     />

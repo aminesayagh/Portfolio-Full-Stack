@@ -4,7 +4,7 @@ import { text, title } from "@/components/ui/typography";
 import { getProjectsByCategory } from "@/conf/projects";
 import Work from "./Work";
 import ArrowFocus from "@/components/ui/ArrowFocus";
-
+import TimeZone from "@/components/ui/TimeZone";
 function Works() {
     const t = useTranslations("works");
     return (
@@ -17,15 +17,15 @@ function Works() {
                         degree: "2"
                     }, "text-black-100")}>{t("title")}</h1>
                 </div>
-                <div className="max-w-80 py-2 w-8/12">
+                <div className="flex flex-row justify-between py-2 w-8/12">
                     <p className={text({
                         size: "md",
                         weight: "semibold",
                         degree: "3"
-                    }, "text-black-100")}>{t("description")}</p>
+                    }, "text-black-100 max-w-80")}>{t("description")}</p>
+                    <TimeZone className="max-w-80" />
                 </div>
             </div>
-            <div className="h-xl"></div>
             <div className="flex flex-row items-end justify-end gap-lg">
                 <div className="w-4/12 flex flex-col h-full items-start justify-end">
                     <ArrowFocus direction="UpRight" />
