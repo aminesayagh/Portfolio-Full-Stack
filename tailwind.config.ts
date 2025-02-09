@@ -247,7 +247,7 @@ export default {
           }
         ],
         "title-h2": [
-          "clamp(2rem, 2.5vw + 1rem, 2.5rem)",
+          "clamp(1.75rem, 2.5vw + 1rem, 2.5rem)",
           {
             lineHeight: "1.7",
             letterSpacing: "0.05em"

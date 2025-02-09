@@ -351,7 +351,7 @@ const Footer = () => {
             {t("footer.copy")}
           </p>
         </div>
-        <div className="flex-1 order-3">
+        <div className="flex-1 order-3 hidden xxs:block">
           <FollowUs />
         </div>
       </div>
