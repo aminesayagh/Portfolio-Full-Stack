@@ -246,7 +246,9 @@ function Overview() {
 
   const { width: windowWidth } = useWindowSize();
 
-  const top = useTransform(scrollYPosition, [0, 600, 4000], [0, 100, 900]);
+  const variant = useMemo(() => ([0, 600, 4000]), [])
+
+  const top = useTransform(scrollYPosition, variant, [0, 100, 900]);
 
 
   const widthMax = useMemo(() => (windowWidth || 0) + 60, [windowWidth]);
@@ -254,8 +256,8 @@ function Overview() {
   // Transform width from initial container width to full viewport width
   const width = useTransform(
     scrollYPosition,
-    [0, 500, 2000],
-    [initialWidth, widthMax, widthMax] // Add 40px to account for the rounded corners
+    variant,
+    [initialWidth, widthMax, widthMax] // Add 60px to account for the rounded corners
   );
 
   return (
