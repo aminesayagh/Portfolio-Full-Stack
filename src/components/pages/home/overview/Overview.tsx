@@ -96,7 +96,7 @@ const Row = memo(function Row({
       .map((_, index) => (
         <motion.div
           key={`${index}-image`}
-          className="relative h-full overflow-hidden rounded-xl object-cover min-w-[min(90vw,66vh)] md:min-w-[max(66vh,890px)] 3xl:min-w-[900px]"
+          className="relative h-full overflow-hidden rounded-xl object-cover min-w-[90vw] lg:min-w-[max(66vh,890px)] 3xl:min-w-[900px]"
           style={{
             aspectRatio: "2/1"
           }}
@@ -119,7 +119,7 @@ const Row = memo(function Row({
   return (
     <motion.div
       className={cn(
-        "group relative h-full flex flex-row w-full min-w-screen gap-lg -translate-x-[100vw]",
+        "group relative h-full flex flex-row w-full min-w-screen gap-xs sm:gap-sm lg:gap-lg -translate-x-[100vw]",
         ANIMATION_GPU_OPTIMIZATION,
         className
       )}
@@ -246,12 +246,13 @@ function Overview() {
 
   const { width: windowWidth } = useWindowSize();
 
-  const variant = useMemo(() => ([0, 600, 4000]), [])
+  const variant = useMemo(() => ([0, 600, 4500]), [])
 
-  const top = useTransform(scrollYPosition, variant, [0, 100, 900]);
+  const top = useTransform(scrollYPosition, variant, [0, 0, 900]);
 
 
   const widthMax = useMemo(() => (windowWidth || 0) + 60, [windowWidth]);
+  const velocity = useMemo(() => (windowWidth || 0) > 640 ? BASE_VELOCITY : BASE_VELOCITY * 2, [windowWidth]);
 
   // Transform width from initial container width to full viewport width
   const width = useTransform(
@@ -269,8 +270,7 @@ function Overview() {
       id="cases"
       className={cn(
         "w-full relative overflow-hidden mx-auto rounded-2xl bg-primary-600",
-        "[--space-gap:1.5rem] sm:[--space-gap:2rem] mdl:[--space-gap:2vw] 3xl:[--space-gap:2vw]",
-        "h-[calc(max(160vh,1400px)-600px)]", 
+        "h-[1600px] sm:h-[2000px]", 
         "will-change-transform"
       )}
     >
@@ -279,13 +279,13 @@ function Overview() {
           transformOrigin: "top center",
           top: top
         }}
-        className={cn("w-screen container absolute h-[max(160vh,1400px)] flex flex-col gap-y-lg py-lg inset-0 mx-auto", ANIMATION_GPU_OPTIMIZATION)}
+        className={cn("w-screen container absolute h-[1600px] sm:h-[2200px] md:h-[2500px] lg:h-[3100px] flex flex-col gap-y-xs sm:gap-y-sm lg:gap-y-lg py-xs sm:py-sm lg:py-lg inset-0 mx-auto", ANIMATION_GPU_OPTIMIZATION)}
       >
-        <Row images={IMAGE_SETS["SET_1"] || []} baseVelocity={BASE_VELOCITY} />
-        <Row images={IMAGE_SETS["SET_2"] || []} baseVelocity={-BASE_VELOCITY} />
-        <Row images={IMAGE_SETS["SET_3"] || []} baseVelocity={BASE_VELOCITY} />
-        <Row images={IMAGE_SETS["SET_4"] || []} baseVelocity={-BASE_VELOCITY} />
-        <Row images={IMAGE_SETS["SET_5"] || []} baseVelocity={BASE_VELOCITY} className="block" />
+        <Row images={IMAGE_SETS["SET_1"] || []} baseVelocity={velocity} />
+        <Row images={IMAGE_SETS["SET_2"] || []} baseVelocity={-velocity} />
+        <Row images={IMAGE_SETS["SET_3"] || []} baseVelocity={velocity} />
+        <Row images={IMAGE_SETS["SET_4"] || []} baseVelocity={-velocity} />
+        <Row images={IMAGE_SETS["SET_5"] || []} baseVelocity={velocity} className="block" />
       </motion.div>
     </motion.section>
   );

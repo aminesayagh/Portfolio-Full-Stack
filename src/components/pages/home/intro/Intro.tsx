@@ -350,7 +350,7 @@ const Intro = () => {
     >
       <div
         className={cn(
-          "flex flex-row flex-wrap",
+          "flex container flex-row flex-wrap",
           "grid grid-cols-12 grid-row-4 xxs:grid-row-3 mdl:grid-row-2",
           "gap-x-3 md:gap-x-4 gap-y-6 xxs:gap-y-8 xs:gap-y-6 sm:gap-y-8 mdl:gap-y-8 lg:gap-y-10",
           "justify-items-stretch"
@@ -358,7 +358,7 @@ const Intro = () => {
       >
         <Title goToCases={() => goTo("manifesto")} />
       </div>
-      <div className="flex flex-row justify-between items-end gap-0 xl:gap-6 4xl:gap-20">
+      <div className="flex container flex-row justify-between items-end gap-0 xl:gap-6 4xl:gap-20">
         <Menu />
       </div>
     </div>

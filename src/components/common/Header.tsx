@@ -284,7 +284,7 @@ const Header = () => {
   const pageName = useMemo(() => pathname.split("/")[1], [pathname]);
   return (
     <Modal isOpenExternal={openMenu} menuHandler={menuHandler}>
-      <Navbar inTopOfScroll={openMenu} className="overflow-hidden">
+      <Navbar inTopOfScroll={openMenu} className="overflow-hidden container">
         <span className="flex flex-row items-center justify-between w-full navbar_gsap">
           <Navbar.Brand>
             <span>
