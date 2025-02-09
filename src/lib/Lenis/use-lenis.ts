@@ -85,7 +85,7 @@ export function useLenisScrollTo() {
     }
     const idScroll = typeof path === 'number' ? path : getIdScroll(path)
     lenis.scrollTo(idScroll, {
-      offset: -200,
+      offset: -50,
       duration: 1.5,
       easing: (t) => 1 - Math.cos((t * Math.PI) / 2)
     });

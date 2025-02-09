@@ -9,7 +9,7 @@ import { text, display } from "@/components/ui/typography";
 import useGsap from "@/hook/useGsap";
 import useFitText from "@/hook/useFitText";
 import { ScrollTrigger, gsap, Power4 } from "@/utils/gsap";
-import { EXTERNAL_LOADING_TIMEOUT } from "@/components/ui/preloader";	
+import { LOADING_TIMEOUT } from "@/components/ui/preloader";	
 
 import ButtonNext, { GoTOCases } from "./ButtonNext";
 import FullStack from "./FullStack";
@@ -44,7 +44,8 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
     descriptions: cn(
       // flex
       "flex flex-col xs:flex-row justify-between mdl:justify-end",
-      "gap-6 xxs:gap-8 xs:gap-4 mdl:gap-2 lg:gap-4 4xl:gap-28", // gap
+      // "gap-6 xxs:gap-8 xs:gap-4 mdl:gap-2 lg:gap-4 4xl:gap-28", // gap
+      "gap-lg",
       "pl-0 lg:pl-4 xl:pl-0", // pl
       "pt-0 xs:pt-2 xl:pt-3", // pt
       // grid position
@@ -113,7 +114,8 @@ const Title = ({ goToCases }: { goToCases: GoTOCases }) => {
       locale === "en"
         ? "xl:col-start-7 xl:col-span-6"
         : "xl:col-start-6 xl:col-span-7", // xl
-      "gap-2 sm:gap-1 md:gap-5 mdl:gap-8", // gap
+      // "gap-2 sm:gap-1 md:gap-5 mdl:gap-8", // gap
+      "gap-lg",
       "justify-end mdl:justify-center items-end mdl:items-center",
       "overflow-y-animate"
     )
@@ -333,7 +335,7 @@ const Intro = () => {
         return () => {
           tl?.kill();
         };
-      }, EXTERNAL_LOADING_TIMEOUT);
+      }, LOADING_TIMEOUT);
       return () => {
         tl?.pause();
         tl?.progress(0);

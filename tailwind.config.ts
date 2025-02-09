@@ -136,8 +136,14 @@ export default {
         300: "oklch(24.31% 0.019 281.25 / <alpha-value>)",
         400: "oklch(28.24% 0.019 281.25 / <alpha-value>)"
       }
-    }, 
+    },
     extend: {
+      spacing: {
+        xs: "clamp(0.5rem, 2.5vw + 1rem, 1rem)",
+        sm: "clamp(0.5rem, 2.5vw + 1rem, 1.5rem)",
+        lg: "clamp(0.5rem, 2.5vw + 1rem, 2rem)",
+        xl: "clamp(1rem, 2.5vw + 1rem, 4rem)"
+      },
       animation: {
         underline: "underline 0.3s forwards",
         underlineExit: "underlineExit 0.3s forwards",
@@ -185,14 +191,14 @@ export default {
           }
         ],
         "body-xl": [
-          "clamp(1.5rem, 2.5vw + 1rem, 2rem)",
+          "clamp(1.25rem, 2.5vw + 1rem, 1.5rem)",
           {
             lineHeight: "1.7",
             letterSpacing: "0.05em"
           }
         ],
         "body-lg": [
-          "clamp(1.1rem, 2.5vw + 1rem, 1.5rem)",
+          "clamp(1rem, 2.5vw + 1rem, 1.25rem)",
           {
             lineHeight: "1.7",
             letterSpacing: "0.05em"

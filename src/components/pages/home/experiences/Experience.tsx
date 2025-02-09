@@ -63,7 +63,7 @@ function ExperienceCard({ className, name, image }: { className?: string, name: 
                     alt={name}
                     width={1000}
                     height={1000}
-                    className="object-cover w-full h-full group-hover:scale-[1.5] duration-500 transition-all scale-[1.4]"
+                    className="object-cover select-none w-full h-full group-hover:scale-[1.5] duration-500 transition-all scale-[1.4]"
                 />
             </motion.div>
         </div>

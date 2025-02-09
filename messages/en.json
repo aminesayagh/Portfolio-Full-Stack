@@ -204,7 +204,10 @@
   },
   "works": {
     "title": "Evolution through expertise",
-    "description": "We provide more than solutions, we deliver understanding.",
+    "description": "I provide more than solutions, I deliver understanding.",
+    "time": {
+      "present": "Present"
+    },
     "list": {
       "ckm_ckp_accelerator": {
         "title": "CKM CKP Accelerator",
@@ -359,54 +362,89 @@
     "London": "London"
   },
   "projects": {
-    "1": {
+    "happy_water": {
       "title": "Happy Water",
       "alt": "Happy Water",
       "description": "Contributed as a key designer and developer for an ecologically-focused NFT platform website."
     },
-    "2": {
+    "sofiane_pamart_musical_nft": {
       "title": "Sofiane Pamart's Musical NFT",
       "alt": "Sofiane Pamart's Musical NFT",
       "description": "Collaborated within a 140-member team, including 40 international developers, under the leadership of entrepreneur Oussama Ommar. Spearheaded the creation of visual music NFTs capturing the unique identity of artist Sofiane Pamart, paving the way for a significant fundraising campaign."
     },
-    "3": {
+    "cyber_cohesion": {
       "title": "Cyber Cohesion",
       "alt": "Cyber Cohesion",
       "description": "Singapore-based security firm offering technical consultation for appropriate development solutions."
     },
-    "4": {
+    "shinobi_boy": {
       "title": "Shinobi Boy",
       "alt": "Shinobi boy",
       "description": ""
     },
-    "5": {
+    "university_projects_management": {
       "title": "Web Application for managing university Projects",
       "alt": "Web Application for managing university Projects",
       "description": ""
     },
-    "6": {
+    "sodiadd": {
       "title": "Sodiadd",
       "alt": "Sodiadd",
       "description": "Real estate investment agency; developed a monolithic web application for individual investors."
     },
-    "7": {
+    "jonas_agency": {
       "title": "Jonas Agency",
       "alt": "Jonas Agency",
       "description": "Digital marketing agency; crafted websites tailored for strategic online promotion."
     },
-    "8": {
+    "lavish_trading": {
       "title": "Lavish Trading",
       "alt": "Lavish Trading",
       "description": "Spearheaded the design and development of a web identity for an individual-focused trading agency, offering online investment plans and expert consulting services."
     },
-    "9": {
+    "maschool": {
       "title": "Maschool",
       "alt": "Maschool",
       "description": ""
     },
-    "10": {
+    "freelance_project": {
       "title": "FreeLance Projects",
       "alt": "FreeLance Projects",
+      "description": ""
+    },
+    "mirrati": {
+      "title": "Mirrati",
+      "alt": "Mirrati",
+      "description": ""
+    },
+    "horde_studio": {
+      "title": "Horde Studio",
+      "alt": "Horde Studio",
+      "description": ""
+    },
+    "iso_watt": {
+      "title": "Iso Watt",
+      "alt": "Iso Watt",
+      "description": ""
+    },
+    "maud": {
+      "title": "Maud Diamond",
+      "alt": "Maud Diamond",
+      "description": ""
+    },
+    "code_wrangler": {
+      "title": "Code Wrangler",
+      "alt": "Code Wrangler",
+      "description": ""
+    },
+    "ckm_ckp_accelerator": {
+      "title": "CKM CKP Accelerator",
+      "alt": "CKM CKP Accelerator",
+      "description": ""
+    },
+    "rich_media": {
+      "title": "Rich Media",
+      "alt": "Rich Media",
       "description": ""
     }
   }

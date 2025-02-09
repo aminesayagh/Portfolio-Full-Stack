@@ -8,27 +8,28 @@ const Intro = dynamic(() => import("./intro"));
 const Overview = dynamic(() => import("./overview"));
 const About = dynamic(() => import("./about"));
 const Experiences = dynamic(() => import("./experiences"));
-// const Works = dynamic(() => import("./works"));
+const Works = dynamic(() => import("./works"));
 
 const LandingPage = () => (
   <>
     <Container as="section" size="lg" id="intro">
       <Intro />
     </Container>
-    <span className="h-24 block" />
+    <span className="h-lg block" />
     <Suspense fallback={<div>Loading...</div>}>
       <Overview />
     </Suspense>
     <Suspense fallback={<div>Loading...</div>}>
       <About />
     </Suspense>
-    <span className="h-24 block" />
+    <span className="h-lg block" />
     <Suspense fallback={<div>Loading...</div>}> 
       <Experiences />
     </Suspense>
-    {/* <Suspense fallback={<div>Loading...</div>}>
+    <span className="h-xl block" />
+    <Suspense fallback={<div>Loading...</div>}>
       <Works />
-    </Suspense> */}
+    </Suspense>
     <div className="block w-full h-6 xs:h-[20vh]" />
   </>
 );

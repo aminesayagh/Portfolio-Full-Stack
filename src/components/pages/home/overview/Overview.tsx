@@ -119,7 +119,7 @@ const Row = memo(function Row({
   return (
     <motion.div
       className={cn(
-        "group relative h-full flex flex-row w-full min-w-screen gap-[var(--space-gap)]",
+        "group relative h-full flex flex-row w-full min-w-screen gap-lg -translate-x-[100vw]",
         ANIMATION_GPU_OPTIMIZATION,
         className
       )}
@@ -266,6 +266,7 @@ function Overview() {
       style={{
         width
       }}
+      id="cases"
       className={cn(
         "w-full relative overflow-hidden mx-auto rounded-2xl bg-primary-600",
         "[--space-gap:1.5rem] sm:[--space-gap:2rem] mdl:[--space-gap:2vw] 3xl:[--space-gap:2vw]",
@@ -278,7 +279,7 @@ function Overview() {
           transformOrigin: "top center",
           top: top
         }}
-        className={cn("w-screen container absolute h-[max(160vh,1400px)] flex flex-col gap-y-[var(--space-gap)] py-[var(--space-gap)] inset-0 mx-auto", ANIMATION_GPU_OPTIMIZATION)}
+        className={cn("w-screen container absolute h-[max(160vh,1400px)] flex flex-col gap-y-lg py-lg inset-0 mx-auto", ANIMATION_GPU_OPTIMIZATION)}
       >
         <Row images={IMAGE_SETS["SET_1"] || []} baseVelocity={BASE_VELOCITY} />
         <Row images={IMAGE_SETS["SET_2"] || []} baseVelocity={-BASE_VELOCITY} />
