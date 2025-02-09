@@ -19,6 +19,7 @@ import { useEventListener } from "@/hook/useEventListener";
 import { useLenis } from "@/lib/Lenis";
 import { gsap } from "@/utils/gsap";
 import TextAnimated from "@/components/ui/TextReveal2";
+import { useLenisScrollTo } from "@/lib/Lenis/use-lenis";
 
 const BASE_LOCALE_SOCIAL = "socialNetwork";
 
@@ -294,13 +295,11 @@ const Footer = () => {
   const t = useTranslations();
   const locale = useLocale();
   // const { scrollTo } = useLocomotiveScroll();
-  const lenis = useLenis();
+  const goTo = useLenisScrollTo();
 
   const goToTop = useCallback(() => {
-    if (lenis) {
-      lenis.scrollTo(0);
-    }
-  }, [lenis]);
+    goTo(0);
+  }, [goTo]);
 
   return (
     <>

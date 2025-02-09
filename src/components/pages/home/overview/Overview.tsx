@@ -36,7 +36,7 @@ const Row = memo(function Row({
   className?: string;
 }) {
   const baseX = useMotionValue(0);
-  const [isHovered, setIsHovered] = useState(false);
+  // const [isHovered, setIsHovered] = useState(false);
   const currentVelocity = useRef(baseVelocity);
   const targetVelocity = useRef(baseVelocity);
   const { scrollY } = useScroll();
@@ -57,7 +57,7 @@ const Row = memo(function Row({
   const directionFactor = useRef<number>(1);
 
   useAnimationFrame((_, delta) => {
-    targetVelocity.current = isHovered ? 0 : baseVelocity;
+    targetVelocity.current = baseVelocity;
 
     const ease = 0.25; // Adjust this value to control the smoothing speed (0-1)
     currentVelocity.current += (targetVelocity.current - currentVelocity.current) * ease;
@@ -118,8 +118,6 @@ const Row = memo(function Row({
 
   return (
     <motion.div
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       className={cn(
         "group relative h-full flex flex-row w-full min-w-screen gap-[var(--space-gap)]",
         ANIMATION_GPU_OPTIMIZATION,
@@ -235,6 +233,8 @@ function Overview() {
       return;
     }
 
+    // Calculate the scroll position relative to the container, 
+    // and offset it by the window height divided by 2
     const s =
       latest -
       Number(containerRef.current?.getBoundingClientRect().top) -
@@ -246,10 +246,7 @@ function Overview() {
 
   const { width: windowWidth } = useWindowSize();
 
-  const maxHeight = (windowWidth || 0) > 1600 ? 2500 : 3000;
-  
-  // Transform height from initial to final height
-  const height = useTransform(scrollYPosition, [0, 2000], [maxHeight, 900]);
+  const top = useTransform(scrollYPosition, [0, 600, 4000], [0, 100, 900]);
 
 
   const widthMax = useMemo(() => (windowWidth || 0) + 60, [windowWidth]);
@@ -265,28 +262,28 @@ function Overview() {
     <motion.section
       ref={containerRef}
       style={{
-        height,
         width
       }}
       className={cn(
-        "w-full relative overflow-hidden mx-auto rounded-2xl bg-primary-500",
+        "w-full relative overflow-hidden mx-auto rounded-2xl bg-primary-600",
         "[--space-gap:1.5rem] sm:[--space-gap:2rem] mdl:[--space-gap:2vw] 3xl:[--space-gap:2vw]",
+        "h-[calc(max(160vh,1400px)-600px)]", 
         "will-change-transform"
       )}
     >
-      <div
+      <motion.div
         style={{
           transformOrigin: "top center",
-          height: maxHeight
+          top: top
         }}
-        className="w-screen container absolute flex flex-col gap-y-[var(--space-gap)] py-[var(--space-gap)] inset-0 mx-auto"
+        className={cn("w-screen container absolute h-[max(160vh,1400px)] flex flex-col gap-y-[var(--space-gap)] py-[var(--space-gap)] inset-0 mx-auto", ANIMATION_GPU_OPTIMIZATION)}
       >
         <Row images={IMAGE_SETS["SET_1"] || []} baseVelocity={BASE_VELOCITY} />
         <Row images={IMAGE_SETS["SET_2"] || []} baseVelocity={-BASE_VELOCITY} />
         <Row images={IMAGE_SETS["SET_3"] || []} baseVelocity={BASE_VELOCITY} />
         <Row images={IMAGE_SETS["SET_4"] || []} baseVelocity={-BASE_VELOCITY} />
-        <Row images={IMAGE_SETS["SET_5"] || []} baseVelocity={BASE_VELOCITY} className="block mdl:hidden" />
-      </div>
+        <Row images={IMAGE_SETS["SET_5"] || []} baseVelocity={BASE_VELOCITY} className="block" />
+      </motion.div>
     </motion.section>
   );
 }

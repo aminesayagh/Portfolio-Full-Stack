@@ -14,7 +14,7 @@ import { useTranslations } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { cn } from "@/lib/utils";
 
-import { useRouter, usePathname, RouteSettingPathKey } from "@/i18n/routing";
+import { useRouter, usePathname, RouteSettingPathKey, RouteSettingPath } from "@/i18n/routing";
 import HamburgerMenu from "@/components/common/HamburgerMenu";
 import { containerStyle } from "@/components/ui/container";
 import Logo from "@/components/ui/logo";
@@ -23,11 +23,11 @@ import Modal from "@/components/ui/overlay/modal";
 import { EXTERNAL_LOADING_TIMEOUT } from "@/components/ui/preloader";
 import { text, title, Link } from "@/components/ui/typography";
 import { getMenuItems, getHref } from "@/i18n/routing";
-import { useLenis } from "@/lib/Lenis";
 import { gsap, Power3, ScrollTrigger } from "@/utils/gsap";
 
 import SwitchLang from "./SwitchLang";
 import HoveredScrollUp, { HoveredScrollUpInternal } from "../ui/HoveredScrollUp";
+import { useLenisScrollTo } from "@/lib/Lenis/use-lenis";
 
 const GAP_SIZE_LG = "gap-4 sm:gap-6 lg:gap-7 xl:gap-8";
 const GAP_SIZE_XL = "gap-8 mdl:gap-12";
@@ -81,8 +81,6 @@ const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [openMenu, setOpenMenu] = useState<boolean>(false);
-  // const { endLoading } = usePreloader();
-  const lenis = useLenis();
 
   const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
   const ctx = useRef<gsap.Context>(null);
@@ -240,19 +238,20 @@ const Header = () => {
   }, [openMenu]);
 
   const idTimeout = useRef<NodeJS.Timeout | null>(null);
+  const goTo = useLenisScrollTo();
 
   const scrollToId = useCallback(
-    (path: string, id: string | null = null) => {
-      router.push(path);
-      if (id && lenis && lenis.scrollTo) {
-        lenis.scrollTo(`#${id}`);
+    (path: RouteSettingPathKey, id: RouteSettingPath | null = null) => {
+      router.push(path); // go to the path, cause on the contact page, you have to go to the main page before scroll to the id
+      if (id) {
+        goTo(id);
       }
     },
-    [lenis, router]
+    [goTo, router]
   );
 
   const onButtonClick = useCallback(
-    (path: RouteSettingPathKey, id?: string) => {
+    (path: RouteSettingPathKey, id?: RouteSettingPath) => {
       if (!openMenu) {
           router.push(path);
         
@@ -404,7 +403,7 @@ const Header = () => {
                                 )}
                               >
                                 <HoveredScrollUpInternal
-                                  onPress={() => onButtonClick(item.path, item.id)}
+                                  onPress={() => onButtonClick(item.path, item.id as RouteSettingPath)}
                                   secondaryClassName="text-white-600 bg-black-100 z-10 hover:text-primary-500"
                                   className={cn(
                                     "capitalize relative text-white-600 bg-black-100 z-10",
