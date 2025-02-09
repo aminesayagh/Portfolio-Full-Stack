@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import { text, title } from "@/components/ui/typography";
 import { getProjectsByCategory } from "@/conf/projects";
 import Work from "./Work";
+import ArrowFocus from "@/components/ui/ArrowFocus";
 
 function Works() {
     const t = useTranslations("works");
@@ -16,7 +17,7 @@ function Works() {
                         degree: "2"
                     }, "text-black-100")}>{t("title")}</h1>
                 </div>
-                <div className="max-w-80 py-2 ml-xl w-8/12">
+                <div className="max-w-80 py-2 w-8/12">
                     <p className={text({
                         size: "md",
                         weight: "semibold",
@@ -25,8 +26,9 @@ function Works() {
                 </div>
             </div>
             <div className="h-xl"></div>
-            <div className="flex flex-row items-stretch justify-end gap-lg">
-                <div className="w-4/12 flex flex-col h-full justify-between">
+            <div className="flex flex-row items-end justify-end gap-lg">
+                <div className="w-4/12 flex flex-col h-full items-start justify-end">
+                    <ArrowFocus direction="UpRight" />
                 </div>
                 <div className="w-8/12 pl-3 flex flex-col h-full justify-between">
                     {getProjectsByCategory("inMyWorksPipeline").map((project, index) => {
@@ -40,14 +42,7 @@ function Works() {
                             time = `${time} (${project.date.duration})`;
                         }
                         const title = project.title;
-                        return (<>
-                            {index == 0 && (
-                                <div className="w-full h-px bg-white-600/70"></div>
-                            )}
-                            <Work key={project.id} time={time} title={title} />
-                            <div className="w-full h-px bg-white-600/70"></div>
-                        </>
-                        )
+                        return <Work index={index} key={project.id} time={time} title={title} />
                     })}
                 </div>
             </div>

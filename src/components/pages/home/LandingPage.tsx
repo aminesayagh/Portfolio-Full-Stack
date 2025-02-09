@@ -15,14 +15,14 @@ const LandingPage = () => (
     <Container as="section" size="lg" id="intro">
       <Intro />
     </Container>
-    <span className="h-lg block" />
+    <span className="h-xl block" />
     <Suspense fallback={<div>Loading...</div>}>
       <Overview />
     </Suspense>
     <Suspense fallback={<div>Loading...</div>}>
       <About />
     </Suspense>
-    <span className="h-lg block" />
+    <span className="h-xl block" />
     <Suspense fallback={<div>Loading...</div>}> 
       <Experiences />
     </Suspense>
