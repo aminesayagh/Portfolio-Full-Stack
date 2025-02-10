@@ -286,9 +286,20 @@
     "description": "La créativité requiert un But, une Orientation, une Responsabilité et de la discipline. La volonté de faire des sacrifices, qui est le signe distinctif de la maturité au service d'un objectif plus élevé."
   },
   "contactCall": {
-    "title": "VOUS AVEZ UN PROJET ?",
-    "action": "PARLONS-EN",
-    "description": "Confrontez votre être à la nécessité de transformation"
+    "title": "PARLEZ-MOI DE VOTRE PROJET",
+    "subtitle": "Ensemble",
+    "reppedBy": "Représenté par",
+    "action": "Contactez-moi",
+    "description": "Confrontez votre être à la nécessité de transformation",
+    "info": {
+      "header": "Contact",
+      "email": "contact@masayagh.com",
+      "phone": "(+212) 616-137-124",
+      "address": "Casablanca, Morocco"
+    },
+    "socialNetwork": {
+      "header": "Suivez-moi"
+    }
   },
   "footer": {
     "state": "Je travaille généralement sur plusieurs projets, mais je serais heureux de discuter de nouvelles opportunités.",

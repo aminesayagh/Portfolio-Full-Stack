@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { useInView, motion } from "motion/react";
 
 import { HoveredScrollUpInternal } from "./HoveredScrollUp";
@@ -12,10 +12,10 @@ function ArrowFocus({
     direction = "UpRight"
 }: {
     className?: string;
-    direction?: "UpRight";
+    direction?: "UpRight" | "DownRight" | "UpLeft" | "DownLeft";
 }) {
     const ref = useRef(null);
-    const IconName = `IconArrow${direction}`;
+    const IconName = useMemo(() => `IconArrow${direction}` as IconNames, [direction]);
     const inView = useInView(ref);
     return (
         <motion.div 

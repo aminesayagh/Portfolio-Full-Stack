@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { memo, useRef, useState } from "react";
 import { motion, useScroll, useSpring, useTransform } from "motion/react";
 
 import { cn } from "@/lib/utils";
@@ -43,12 +43,11 @@ function ExperienceCard({ className, name, image }: { className?: string, name: 
         offset: ["start end", "end start"]
     });
 
-    const y = useSpring(useTransform(scrollYProgress, [0, 1], ["20%", "-20%"]), {
+    const y = useSpring(useTransform(scrollYProgress, [0, 1], ["40%", "-40%"]), {
         stiffness: 100,
-        damping: 100
+        damping: 100,
+        mass: 0.2
     });
-    // const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
-    // const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.3, 1, 1, 0.3]);
     return (
         <div className={cn("object-cover group aspect-[9/12] sm:aspect-square rounded-2xl overflow-hidden relative w-full h-full bg-transparent", className)}>
             <ExperienceButton name={name} />
@@ -70,4 +69,8 @@ function ExperienceCard({ className, name, image }: { className?: string, name: 
     )
 }
 
-export default ExperienceCard;
+const ExperienceCardMemo = memo(ExperienceCard);
+
+ExperienceCardMemo.displayName = "ExperienceCard";
+
+export default ExperienceCardMemo;

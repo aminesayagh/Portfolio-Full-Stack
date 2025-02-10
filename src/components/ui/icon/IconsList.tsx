@@ -7,6 +7,9 @@ import {
   IconExclamationCircle,
   IconCornerLeftDown,
   IconArrowUpRight,
+  IconArrowDownRight,
+  IconArrowUpLeft,
+  IconArrowDownLeft,
   IconShare,
   IconArrowBigRightFilled
 } from "@tabler/icons-react";
@@ -24,6 +27,9 @@ export const ListIconComponents = {
   ),
   IconCornerLeftDown: (props: IconProps) => <IconCornerLeftDown {...props} />,
   IconArrowUpRight: (props: IconProps) => <IconArrowUpRight {...props} />,
+  IconArrowDownRight: (props: IconProps) => <IconArrowDownRight {...props} />,
+  IconArrowUpLeft: (props: IconProps) => <IconArrowUpLeft {...props} />,
+  IconArrowDownLeft: (props: IconProps) => <IconArrowDownLeft {...props} />,
   IconShare: (props: IconProps) => <IconShare {...props} />,
   IconArrowBigRightFilled: (props: IconProps) => (
     <IconArrowBigRightFilled {...props} />

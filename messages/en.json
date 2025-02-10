@@ -258,9 +258,20 @@
     "description": "Creativity requires Aim, Orientation, Responsibility, and discipline. the willingness to make sacrifices which is the hallmark of maturity in the service of a higher goal."
   },
   "contactCall": {
-    "title": "GOT A PROJECT?",
-    "action": "LET'S TALK",
-    "description": "Face your being with the necessity of transformation"
+    "title": "Let's talk",
+    "subtitle": "Together",
+    "reppedBy": "Repped by",
+    "action": "Get in touch",
+    "description": "Face your being with the necessity of transformation",
+    "info": {
+      "header": "Contact",
+      "email": "contact@masayagh.com",
+      "phone": "(+212) 616-137-124",
+      "address": "Casablanca, Morocco"
+    },
+    "socialNetwork": {
+      "header": "Follow me"
+    }
   },
   "footer": {
     "state": "I usually work on several projects, but I'll be happy to discuss new opportunities.",

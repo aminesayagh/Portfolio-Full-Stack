@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useRef } from "react";
+import React, { useRef } from "react";
 
 import { useTranslations } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
@@ -17,12 +17,13 @@ import { HoveredScrollUpInternal } from "@/components/ui/HoveredScrollUp";
 import TimeZone from "@/components/ui/TimeZone";
 const GRID_DEFAULT_CLASS = "col-start-1 col-span-12";
 
+const socialNetworkItems = getMenuItems("socialNetwork");
 
 const ContactPage = () => {
   const t = useTranslations();
   const contactRef = useRef<HTMLDivElement>(null);
 
-  const socialNetworkItems = useMemo(() => getMenuItems("socialNetwork"), []);
+  // const socialNetworkItems = useMemo(() => getMenuItems("socialNetwork"), []);
 
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {

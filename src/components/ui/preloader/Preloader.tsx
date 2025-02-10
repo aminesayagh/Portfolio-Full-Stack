@@ -11,7 +11,7 @@ import Container from "@/components/ui/container";
 import Noise from "@/components/ui/noise";
 import { ANIMATION_GPU_OPTIMIZATION } from "@/lib/utils";
 import NumberTicker from "../NumberTicker";
-import { LOADING_TIMEOUT } from "./constants";
+import { LOADING_TIMEOUT, END_LOADING_IN } from "./constants";
 
 const Preloader = () => {
     const t = useTranslations();
@@ -202,7 +202,7 @@ const Preloader = () => {
                             )}
                         >
                             <span className="relative flex items-center">
-                                <NumberTicker value={99} totalTime={LOADING_TIMEOUT + 1000} className="flex flex-col w-auto leading-3 align-middle text-end" />
+                                <NumberTicker value={END_LOADING_IN} totalTime={LOADING_TIMEOUT + 2000} className="flex flex-col w-auto leading-3 align-middle text-end" />
                             </span>
                             %
                         </div>

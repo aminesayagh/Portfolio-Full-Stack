@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "analyze": "next build",
-    "dev": "next dev --port 3007 --turbo",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

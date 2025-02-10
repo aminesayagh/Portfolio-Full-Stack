@@ -250,7 +250,7 @@ const PROJECTS: Project[] = [
   },
   {
     id: "maud",
-    category: ["completed", "inMyWorksPipeline"],
+    category: ["completed"],
     title: "Maud Diamond",
     tasks: [WEB_DESIGNER, WEB_DEVELOPER],
     jobTitle: [FREELANCER],
