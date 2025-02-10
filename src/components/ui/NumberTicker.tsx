@@ -47,7 +47,7 @@ function NumberTicker({
       };
     }
     return () => { };
-  }, [motionValue, isInView, delay, value, direction]);
+  }, [motionValue, isInView, delay, value, direction, totalTime]);
 
   useEffect(
     () =>

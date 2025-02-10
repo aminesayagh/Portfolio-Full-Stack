@@ -18,7 +18,7 @@ const Logo = ({ alt, size, ...props }: LogoProps) => {
       {...props}
     >
       <Image
-        className="size-10 object-contain object-center xxs:size-14"
+        className="size-10 object-contain object-center xxs:size-14 max-w-[3.5rem] xxs:max-w-[4rem]"
         src="/logo/logo.svg"
         alt={alt}
         width={size}

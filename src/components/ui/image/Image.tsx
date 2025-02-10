@@ -21,7 +21,7 @@ const ImageUi = forwardRef<HTMLImageElement, Props>(
         quality={quality}
         loading={priority ? "eager" : "lazy"}
         sizes={sizes || "(max-width: 768px) 100vw, 50vw"}
-        className={cn(className, "w-full")}
+        className={cn("w-full", className)}
         {...props}
       />
     );
