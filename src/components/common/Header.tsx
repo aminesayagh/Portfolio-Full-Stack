@@ -14,7 +14,7 @@ import { useTranslations } from "next-intl";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { cn } from "@/lib/utils";
 
-import { useRouter, usePathname, RouteSettingPathKey, RouteSettingPath } from "@/i18n/routing";
+import { useRouter, usePathname, RouteSettingPathKey, RouteSettingPath, SocialNetworkKeys, HamburgerMenuKeys } from "@/i18n/routing";
 import HamburgerMenu from "@/components/common/HamburgerMenu";
 import { containerStyle } from "@/components/ui/container";
 import Logo from "@/components/ui/logo";
@@ -412,11 +412,11 @@ const Header = () => {
                                   skewY={-20}
                                 >
                                   {t(
-                                    `${BASE_LOCALE_MENU}.${item.id}.attribute`
+                                    `${BASE_LOCALE_MENU}.${item.id as HamburgerMenuKeys}.attribute`
                                   )}
                                 </HoveredScrollUpInternal>
                                 <span className="overflow-hidden">
-                                  {t(`${BASE_LOCALE_MENU}.${item.id}.more`) !==
+                                  {t(`${BASE_LOCALE_MENU}.${item.id as HamburgerMenuKeys}.more`) !==
                                     "null" ? (
                                     <p
                                       className={text(
@@ -428,7 +428,7 @@ const Header = () => {
                                         "absolute overflow-hidden left-[calc(100%_+_4px)] w-full top-[19%] modal-item-info"
                                       )}
                                     >
-                                      {t(`${BASE_LOCALE_MENU}.${item.id}.more`)}
+                                      {t(`${BASE_LOCALE_MENU}.${item.id as HamburgerMenuKeys}.more`)}
                                     </p>
                                   ) : null}
                                 </span>
@@ -515,7 +515,7 @@ const Header = () => {
                                 weight: "bold"
                               }, "modal-footer")}
                             >
-                              {t(`${BASE_LOCALE_SOCIAL}.${item.id}.key`)}
+                              {t(`${BASE_LOCALE_SOCIAL}.${item.id as SocialNetworkKeys}.key`)}
                             </Link>
                           </li>
                         ))}

@@ -71,6 +71,26 @@ export type ProjectTitle =
   | "CKM CKP Accelerator"
   | "Rich Media";
 
+export type ProjectId = 
+  | "french_dandy"
+  | "happy_water"
+  | "sofiane_pamart"
+  | "cyber_cohesion"
+  | "shinobi_boy"
+  | "sodiadd"
+  | "jonas_agency"
+  | "lavish_trading"
+  | "maschool"
+  | "freelance_project"
+  | "miratti_morocco"
+  | "horde_studio"
+  | "iso_watt"
+  | "maud"
+  | "code_wrangler"
+  | "ckm_ckp"
+  | "rich_media"
+  | "university_project_platform";
+
 export type CountryNames =
   | "French"
   | "Morocco"
@@ -80,7 +100,7 @@ export type CountryNames =
   | "United Arab Emirates";
 
 export interface Project {
-  id: string;
+  id: ProjectId;
   title: ProjectTitle;
   tasks: TaskProject[];
   category: ("best" | "ongoing" | "completed" | "inMyWorksPipeline")[];
@@ -124,7 +144,7 @@ const PROJECTS: Project[] = [
     }
   },
   {
-    id: "sofiane_pamart_musical_nft",
+    id: "sofiane_pamart",
     title: "Sofiane Pamart's Musical NFT",
     category: ["completed"],
     tasks: [FRONTEND_DEVELOPER],
@@ -154,7 +174,7 @@ const PROJECTS: Project[] = [
     country: "Morocco"
   },
   {
-    id: "university_projects_management",
+    id: "university_project_platform",
     title: "Web Application for managing university Projects",
     tasks: [FULLSTACK_DEVELOPER],
     category: ["completed"],
@@ -197,6 +217,7 @@ const PROJECTS: Project[] = [
     jobTitle: [FREELANCER],
     picture: ["/images/project/lavish_mockup_main.webp"],
     order: 90,
+    country: "French",
     date: {
       start: "Mar 2023",
       end: "May 2023",
@@ -208,17 +229,19 @@ const PROJECTS: Project[] = [
     category: ["completed"],
     title: "Maschool",
     tasks: [WEB_DESIGNER, FRONTEND_DEVELOPER],
-    jobTitle: [CO_FOUNDER]
+    jobTitle: [CO_FOUNDER],
+    country: "French"
   },
   {
     id: "freelance_project",
     category: ["completed"],
     title: "FreeLance Projects",
     tasks: [WEB_DESIGNER, GRAPHIC_DESIGNER, WEB_DEVELOPER],
-    jobTitle: [FREELANCER]
+    jobTitle: [FREELANCER],
+    country: "French"
   },
   {
-    id: "mirrati",
+    id: "miratti_morocco",
     category: ["completed", "inMyWorksPipeline"],
     title: "Mirrati",
     tasks: [WEB_DESIGNER, WEB_DEVELOPER],
@@ -226,7 +249,8 @@ const PROJECTS: Project[] = [
     date: {
       start: "Jun 2025"
     },
-    order: 15
+    order: 15,
+    country: "French"
   },
   {
     id: "horde_studio",
@@ -239,6 +263,7 @@ const PROJECTS: Project[] = [
       end: "Sep 2024",
       duration: "3 months"
     },
+    country: "French",
     order: 60
   },
   {
@@ -246,7 +271,8 @@ const PROJECTS: Project[] = [
     category: ["completed"],
     title: "Iso Watt",
     tasks: [WEB_DESIGNER, WEB_DEVELOPER],
-    jobTitle: [FREELANCER]
+    jobTitle: [FREELANCER],
+    country: "French"
   },
   {
     id: "maud",
@@ -259,6 +285,7 @@ const PROJECTS: Project[] = [
       end: "Oct 2024",
       duration: "2 months"
     },
+    country: "French",
     order: 50
   },
   {
@@ -266,17 +293,19 @@ const PROJECTS: Project[] = [
     category: ["completed"],
     title: "SODIADD",
     tasks: [WEB_DESIGNER, WEB_DEVELOPER],
-    jobTitle: [FREELANCER]
+    jobTitle: [FREELANCER],
+    country: "French"
   },
   {
     id: "code_wrangler",
     category: ["completed"],
     title: "Code Wrangler",
     tasks: [WEB_DESIGNER, WEB_DEVELOPER],
-    jobTitle: [FREELANCER]
+    jobTitle: [FREELANCER],
+    country: "French"
   },
   {
-    id: "ckm_ckp_accelerator",
+    id: "ckm_ckp",
     category: ["completed", "inMyWorksPipeline"],
     title: "CKM CKP Accelerator",
     tasks: [WEB_DESIGNER, WEB_DEVELOPER],
@@ -284,7 +313,8 @@ const PROJECTS: Project[] = [
     date: {
       start: "Dec 2024"
     },
-    order: 10
+    order: 10,
+    country: "French"
   },
   {
     id: "rich_media",
@@ -297,9 +327,11 @@ const PROJECTS: Project[] = [
       end: "Jun 2025",
       duration: "2 months"
     },
-    order: 20
+    order: 20,
+    country: "French"
   }
-];
+] ;
+
 
 export const getProject = (id: string) =>
   PROJECTS.find(project => project.id === id);

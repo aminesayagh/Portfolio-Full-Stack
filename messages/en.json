@@ -44,6 +44,10 @@
     "medium": {
       "key": "MD",
       "name": "Medium"
+    },
+    "behance": {
+      "key": "BE",
+      "name": "Behance"
     }
   },
   "header": {
@@ -262,7 +266,11 @@
     "subtitle": "Together",
     "reppedBy": "Repped by",
     "action": "Get in touch",
-    "description": "Face your being with the necessity of transformation",
+    "slogan": {
+      "1": "Bright Vision",
+      "2": ["Develop", "Love", "Grow"],
+      "3": "Your Next Project"
+    },
     "info": {
       "header": "Contact",
       "email": "contact@masayagh.com",
@@ -270,7 +278,7 @@
       "address": "Casablanca, Morocco"
     },
     "socialNetwork": {
-      "header": "Follow me"
+      "header": "Find me on"
     }
   },
   "footer": {
@@ -366,11 +374,12 @@
   },
   "country": {
     "Morocco": "Morocco",
-    "France": "France",
+    "French": "France",
     "United States": "United States",
     "Singapore": "Singapore",
     "Lithuania": "Lithuania",
-    "London": "London"
+    "London": "London",
+    "United Arab Emirates": "Emirats Arabes Unis"
   },
   "projects": {
     "happy_water": {
@@ -378,7 +387,7 @@
       "alt": "Happy Water",
       "description": "Contributed as a key designer and developer for an ecologically-focused NFT platform website."
     },
-    "sofiane_pamart_musical_nft": {
+    "sofiane_pamart": {
       "title": "Sofiane Pamart's Musical NFT",
       "alt": "Sofiane Pamart's Musical NFT",
       "description": "Collaborated within a 140-member team, including 40 international developers, under the leadership of entrepreneur Oussama Ommar. Spearheaded the creation of visual music NFTs capturing the unique identity of artist Sofiane Pamart, paving the way for a significant fundraising campaign."
@@ -393,7 +402,7 @@
       "alt": "Shinobi boy",
       "description": ""
     },
-    "university_projects_management": {
+    "university_project_platform": {
       "title": "Web Application for managing university Projects",
       "alt": "Web Application for managing university Projects",
       "description": ""
@@ -423,11 +432,6 @@
       "alt": "FreeLance Projects",
       "description": ""
     },
-    "mirrati": {
-      "title": "Mirrati",
-      "alt": "Mirrati",
-      "description": ""
-    },
     "horde_studio": {
       "title": "Horde Studio",
       "alt": "Horde Studio",
@@ -448,7 +452,7 @@
       "alt": "Code Wrangler",
       "description": ""
     },
-    "ckm_ckp_accelerator": {
+    "ckm_ckp": {
       "title": "CKM CKP Accelerator",
       "alt": "CKM CKP Accelerator",
       "description": ""
@@ -456,6 +460,16 @@
     "rich_media": {
       "title": "Rich Media",
       "alt": "Rich Media",
+      "description": ""
+    },
+    "french_dandy": {
+      "title": "French Dandy",
+      "alt": "French Dandy",
+      "description": ""
+    },
+    "miratti_morocco": {
+      "title": "Miratti Morocco",
+      "alt": "Miratti Morocco",
       "description": ""
     }
   }

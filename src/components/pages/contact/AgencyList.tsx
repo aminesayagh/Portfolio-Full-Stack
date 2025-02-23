@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 import { text, title } from "@/components/ui/typography";
-import { getProjectsByCategory } from "@/conf/projects";
+import { CountryNames, ProjectId, getProjectsByCategory } from "@/conf/projects";
 
 const AgencyList = () => {
   const t = useTranslations();
@@ -57,7 +57,7 @@ const AgencyList = () => {
                 "hidden tracking-wider md:block opacity-80"
               )}
             >
-              {t(`country.${project.country}`)}
+              {t(`country.${project.country  as CountryNames}`)}
             </p>
             <p
               className={text({
@@ -66,7 +66,7 @@ const AgencyList = () => {
                 degree: "2"
               })}
             >
-              {t(`projects.${project.id}.description`)}
+              {t(`projects.${project.id as ProjectId}.description`)}
             </p>
             <div
               className="inline"

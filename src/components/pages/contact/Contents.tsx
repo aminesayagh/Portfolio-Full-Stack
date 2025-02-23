@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 import Container from "@/components/ui/container";
 import { text, Link, display } from "@/components/ui/typography";
-import { getMenuItems } from "@/i18n/routing";
+import { SocialNetworkKeys, getMenuItems } from "@/i18n/routing";
 import { gsap } from "@/utils/gsap";
 
 import AgencyList from "./AgencyList";
@@ -195,7 +195,7 @@ const ContactPage = () => {
                   className="flex overflow-hidden"
                 >
                   <HoveredScrollUpInternal secondaryClassName="text-primary-200">
-                    {t(`socialNetwork.${item.id}.name`)}
+                    {t(`socialNetwork.${item.id as SocialNetworkKeys}.name`)}
                   </HoveredScrollUpInternal>
                 </Link>
               ))}

@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 import Button from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Link, text } from "@/components/ui/typography";
-import { getMenuItems } from "@/i18n/routing";
+import { SocialNetworkKeys, getMenuItems } from "@/i18n/routing";
 import { useEventListener } from "@/hook/useEventListener";
 import { useLenisScrollTo } from "@/lib/Lenis/use-lenis";
 import { gsap } from "@/utils/gsap";
@@ -117,7 +117,7 @@ const FollowUs = () => {
               weight="semibold"
               className="social-button-gsap"
             >
-              {t(`${BASE_LOCALE_SOCIAL}.${item.id}.key`)}
+              {t(`${BASE_LOCALE_SOCIAL}.${item.id as SocialNetworkKeys}.key`)}
             </Link>
           </li>
         ))}

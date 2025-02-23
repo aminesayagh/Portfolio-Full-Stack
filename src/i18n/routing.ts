@@ -110,6 +110,9 @@ export type RouteSettingPath = KeysAsDotNotation<
   }
 >;
 
+export type SocialNetworkKeys = "instagram" | "linkedin" | "github" | "dribbble" | "medium";
+export type HamburgerMenuKeys = "contact" | "experience" | "manifesto" | "intro" | "resume";	
+
 export type RouteSettingMenu =
   (typeof ROUTER_CONFIGS)[RouteSettingPath]["menu"][number];
 

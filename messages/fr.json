@@ -44,6 +44,10 @@
     "medium": {
       "key": "MD",
       "name": "Medium"
+    },
+    "behance": {
+      "key": "BE",
+      "name": "Behance"
     }
   },
   "header": {
@@ -290,7 +294,11 @@
     "subtitle": "Ensemble",
     "reppedBy": "Représenté par",
     "action": "Contactez-moi",
-    "description": "Confrontez votre être à la nécessité de transformation",
+    "slogan": {
+      "1": "Une Brillante Vision",
+      "2": ["Développer", "Aimer", "Grandir"],
+      "3": "Votre Prochain Projet"
+    },
     "info": {
       "header": "Contact",
       "email": "contact@masayagh.com",
@@ -395,19 +403,25 @@
   },
   "country": {
     "Morocco": "Maroc",
-    "France": "France",
+    "French": "France",
     "United States": "États-Unis",
     "Singapore": "Singapour",
     "London": "Londres",
-    "Lithuania": "Lituanie"
+    "Lithuania": "Lituanie",
+    "United Arab Emirates": "Emirats Arabes Unis"
   },
   "projects": {
+    "french_dandy": {
+      "title": "French Dandy",
+      "alt": "French Dandy",
+      "description": ""
+    },
     "happy_water": {
       "title": "Happy Water",
       "alt": "Happy Water",
       "description": "Contributed as a key designer and developer for an ecologically-focused NFT platform website."
     },
-    "sofiane_pamart_musical_nft": {
+    "sofiane_pamart": {
       "title": "Sofiane Pamart's Musical NFT",
       "alt": "Sofiane Pamart's Musical NFT",
       "description": "Collaborated within a 140-member team, including 40 international developers, under the leadership of entrepreneur Oussama Ommar. Spearheaded the creation of visual music NFTs capturing the unique identity of artist Sofiane Pamart, paving the way for a significant fundraising campaign."
@@ -422,7 +436,7 @@
       "alt": "Shinobi boy",
       "description": ""
     },
-    "university_projects_management": {
+    "university_project_platform": {
       "title": "Web Application for managing university Projects",
       "alt": "Web Application for managing university Projects",
       "description": ""
@@ -452,7 +466,7 @@
       "alt": "FreeLance Projects",
       "description": ""
     },
-    "mirrati": {
+    "miratti_morocco": {
       "title": "Mirrati",
       "alt": "Mirrati",
       "description": ""
@@ -485,6 +499,11 @@
     "rich_media": {
       "title": "Rich Media",
       "alt": "Rich Media",
+      "description": ""
+    },
+    "ckm_ckp": {
+      "title": "CKM CKP Accelerator",
+      "alt": "CKM CKP Accelerator",
       "description": ""
     }
   }

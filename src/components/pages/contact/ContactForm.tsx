@@ -185,7 +185,7 @@ const ContactForm = () => {
         {(item: { key: string; text: string }) => {
           return (
             <Item key={item.key} id={item.text}>
-              {t(`form.field.objective.options.${item.key}`)}
+              {t(`form.field.objective.options.${item.key as "1" | "2" | "3" | "4" | "5" | "6"}`)}
             </Item>
           );
         }}

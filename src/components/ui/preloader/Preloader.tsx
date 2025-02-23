@@ -5,13 +5,12 @@ import { useRef, useState, useEffect } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
 import { gsap } from "@/utils/gsap";
 import { cn } from "@/lib/utils";
-import { text, title } from "@/components/ui/typography";
+import { title } from "@/components/ui/typography";
 
-import Container from "@/components/ui/container";
 import Noise from "@/components/ui/noise";
-import { ANIMATION_GPU_OPTIMIZATION } from "@/lib/utils";
 import NumberTicker from "../NumberTicker";
 import { LOADING_TIMEOUT, END_LOADING_IN } from "./constants";
+import PreloadSlogan from "./PreloadSlogan";
 
 const Preloader = () => {
     const t = useTranslations();
@@ -23,35 +22,6 @@ const Preloader = () => {
         }, LOADING_TIMEOUT);
         return () => clearTimeout(timer);
     }, []);
-
-    useIsomorphicLayoutEffect(() => {
-        const ctx = gsap.context(() => {
-            const tl = gsap.timeline({
-                repeat: -1,
-                paused: true,
-                repeatDelay: 0.5
-            });
-            const DELAY = 0.9;
-            const OFFSET = 0.2;
-            const FRAME_DURATION = 0.1;
-            tl.to(".item-gsap", {
-                keyframes: [
-                    { top: "100%", duration: FRAME_DURATION },
-                    { top: "0%" },
-                    { top: "-100%", delay: DELAY, duration: FRAME_DURATION }
-                ],
-                ease: "power2.out",
-                stagger: DELAY + OFFSET
-            });
-
-            tl.play();
-
-            return () => {
-                tl.kill();
-            };
-        }, ref);
-        return () => ctx.revert();
-    }, [ref]);
 
     useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(self => {
@@ -143,11 +113,9 @@ const Preloader = () => {
         <span ref={ref} className="contents">
             <div
                 className="w-screen cursor-none h-screen overflow-hidden z-preload bg-white-400 fixed element-container light">
-                <Container
-                    as="div"
-                    size="lg"
+                <div
                     className={cn(
-                        "h-screen pt-4 sm:pt-8",
+                        "container h-screen pt-4 sm:pt-8",
                         "flex flex-col justify-between"
                     )}
                 >
@@ -159,31 +127,11 @@ const Preloader = () => {
                                     size: "h6",
                                     degree: "1"
                                 }, "!text-black-200")}
-                                suppressHydrationWarning
                             >
                                 {t("loading.intro")}
                             </h6>
                         </span>
-                        <ul className="relative h-6 overflow-hidden element-content-gsap">
-                            {Array.from({ length: 5 }).map((_, index) => (
-                                <li
-                                    suppressHydrationWarning
-                                    key={`${index}`}
-                                    className={text(
-                                        {
-                                            size: "md",
-                                            degree: "1",
-                                            weight: "bold"
-                                        },
-                                        "item-gsap capitalize absolute left-0 right-0 top-[100%]",
-                                        ANIMATION_GPU_OPTIMIZATION,
-                                        index === 4 ? "!text-primary-500" : "!text-black-300/80"
-                                    )}
-                                >
-                                    {t(`loading.message_${index + 1}`)}
-                                </li>
-                            ))}
-                        </ul>
+                        <PreloadSlogan className="element-content-gsap text-loader-gsap" />
                     </div>
                     <div
                         className={cn(
@@ -207,7 +155,7 @@ const Preloader = () => {
                             %
                         </div>
                     </div>
-                </Container>
+                </div>
                 <Noise />
             </div>
             <div className="fixed w-screen h-screen bg-primary-500 element-bg z-preload_bg" />

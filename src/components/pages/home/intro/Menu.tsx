@@ -18,7 +18,9 @@ const menuKeys = [
   "experience",
   "resume",
   "contact"
-] as RouteSettingPath[];
+] as const;
+
+type TMenuKeys = typeof menuKeys;
 
 
 const MenuItem = ({
@@ -101,7 +103,7 @@ const Menu = () => {
         return {
           key: key,
           number: `0${i + 1}`,
-          title: t(`header.menu.${menuKeys[i]}.attribute`)
+          title: t(`header.menu.${menuKeys[i] as TMenuKeys[number]}.attribute`)
         };
       }),
     [t]

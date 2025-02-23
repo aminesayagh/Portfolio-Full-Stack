@@ -6,7 +6,7 @@ import { text, title, Link } from "@/components/ui/typography";
 import TimeZone from "@/components/ui/TimeZone";
 import { getMenuItems } from "@/i18n/routing";
 import { HoveredScrollUpInternal } from "@/components/ui/HoveredScrollUp";
-
+import { SocialNetworkKeys } from "@/i18n/routing";
 const socialNetworkItems = getMenuItems("socialNetwork");
 
 function ContactInfo({
@@ -75,7 +75,7 @@ function ContactSocialNetwork({ header }: { header: string }) {
                   className="flex overflow-hidden"
                 >
                   <HoveredScrollUpInternal secondaryClassName="text-primary-200">
-                    {t(`socialNetwork.${item.id}.name`)}
+                    {t(`socialNetwork.${item.id as SocialNetworkKeys}.name`)}
                   </HoveredScrollUpInternal>
                 </Link>
               ))}
