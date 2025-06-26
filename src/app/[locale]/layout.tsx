@@ -1,6 +1,7 @@
 import { Montserrat } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
+import { Head } from "next/document";
 import { getMessages } from "next-intl/server";
 
 import Scripts from "@/components/common/Script";
@@ -43,10 +44,7 @@ export default async function RootLayout({
       <head>
         <Scripts />
         <link rel="icon" href="/logo/favicon.svg" type="image/svg+xml" />
-        <link
-          rel="apple-touch-icon"
-          href="/logo/favicon.svg"
-          type="image/svg+xml"
+        <link rel="apple-touch-icon" href="/logo/favicon.svg" type="image/svg+xml"
         />
       </head>
       <body className={`${montserrat.variable} antialiased bg-background dark`}>

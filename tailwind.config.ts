@@ -275,7 +275,7 @@ export default {
           }
         ],
         "title-h6": [
-          "clamp(1rem, 2.5vw + 1rem, 1.25rem)",
+          "clamp(1rem, 2.5vw + 1rem, 1.05rem)",
           {
             lineHeight: "1.7",
             letterSpacing: "0.05em"

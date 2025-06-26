@@ -326,9 +326,7 @@ const Header = () => {
             <Modal.Button>
               {({ handler, isOpen }) => {
                 return (
-                  <div
-                    className="flex flex-row items-center gap-6 justify-end"
-                  >
+                  <div className="flex flex-row items-center gap-6 pl-4 py-2 md:py-0 md:pl-0 justify-end">
                     <button
                       className="hidden overflow-hidden cursor-pointer xxs:block"
                       onClick={() => handler()}
@@ -383,8 +381,8 @@ const Header = () => {
                     >
                       <ul
                         className={cn(
-                          "flex flex-col gap-6 lg:gap-4",
-                          "w-full sm:w-8/12"
+                          "flex flex-col gap-3 xs:gap-6 lg:gap-4",
+                          "w-full sm:w-8/12 lg:w-7/12"
                         )}
                       >
                         {menuHamburgerItems.map((item, index) => {
@@ -407,7 +405,7 @@ const Header = () => {
                                   secondaryClassName="text-white-600 bg-black-100 z-10 hover:text-primary-500"
                                   className={cn(
                                     "capitalize relative text-white-600 bg-black-100 z-10",
-                                    "text-7xl sm:text-8xl mdl:text-9xl lg:text-15xl xl:text-[5rem] font-bold leading-tight tracking-wide"
+                                    "text-4xl xs:text-5xl mdl:text-6xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold leading-tight tracking-wide"
                                   )}
                                   skewY={-20}
                                 >
@@ -440,7 +438,7 @@ const Header = () => {
                       <div
                         className={cn(
                           "flex flex-col gap-2 xxs:gap-4",
-                          "w-full xxs:max-w-[75%] sm:max-w-[32%] mdl:w-min"
+                          "w-full xs:max-w-[75%] sm:max-w-[39%] mdl:w-min"
                         )}
                       >
                         <span className="overflow-hidden mdl:w-max">
@@ -451,7 +449,7 @@ const Header = () => {
                                 degree: "2",
                                 weight: "bold"
                               },
-                              "overflow-hidden tracking-widest uppercase modal-description"
+                              "overflow-hidden tracking-widest uppercase modal-description !text-wrap"
                             )}
                           >
                             {t("header.description.title")}

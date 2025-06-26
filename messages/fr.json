@@ -1,18 +1,18 @@
 {
   "head": {
     "home": {
-      "title": "Mohamed Amine SAYAGH - Développeur Web Full Stack",
-      "description": "Mohamed Amine SAYAGH - Développeur Web Full Stack",
-      "keywords": "Mohamed Amine SAYAGH - Développeur Web Full Stack",
+      "title": "Mohamed Amine SAYAGH - Développeur Logiciel",
+      "description": "Mohamed Amine SAYAGH - Développeur Logiciel",
+      "keywords": "Mohamed Amine SAYAGH - Développeur Logiciel",
       "author": "Mohamed Amine SAYAGH",
-      "url": "https://ma-sayagh.vercel.app/"
+      "url": "https://masayagh.com/"
     },
     "contact": {
       "title": "Mohamed Amine SAYAGH - Contact",
       "description": "Mohamed Amine SAYAGH - Contact",
       "keywords": "Mohamed Amine SAYAGH - Contact",
       "author": "Mohamed Amine SAYAGH",
-      "url": "https://ma-sayagh.vercel.app/contact"
+      "url": "https://masayagh.com/contact"
     }
   },
   "loading": {
@@ -386,8 +386,8 @@
     "Frontend Developer": "Développeur Frontend",
     "Infrastructure Developer": "Développeur Infrastructure",
     "Technical Advisor": "Conseiller Technique",
-    "Full Stack Developer": "Développeur Full Stack",
-    "Fullstack Developer": "Développeur Fullstack"
+    "Full Stack Developer": "Développeur Web",
+    "Fullstack Developer": "Développeur Web"
   },
 
   "jobTItle": {

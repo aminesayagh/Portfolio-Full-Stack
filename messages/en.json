@@ -1,18 +1,18 @@
 {
   "head": {
     "home": {
-      "title": "Mohamed Amine SAYAGH - Full Stack Web Developer",
-      "description": "Mohamed Amine SAYAGH - Full Stack Web Developer",
-      "keywords": "Mohamed Amine SAYAGH - Full Stack Web Developer",
+      "title": "Mohamed Amine SAYAGH - Software Developer",
+      "description": "Mohamed Amine SAYAGH - Software Developer",
+      "keywords": "Mohamed Amine SAYAGH - Software Developer",
       "author": "Mohamed Amine SAYAGH",
-      "url": "https://ma-sayagh.vercel.app/"
+      "url": "https://masayagh.com/"
     },
     "contact": {
       "title": "Mohamed Amine SAYAGH - Contact",
       "description": "Mohamed Amine SAYAGH - Contact",
       "keywords": "Mohamed Amine SAYAGH - Contact",
       "author": "Mohamed Amine SAYAGH",
-      "url": "https://ma-sayagh.vercel.app/contact"
+      "url": "https://masayagh.com/contact"
     }
   },
   "loading": {
@@ -51,7 +51,7 @@
     }
   },
   "header": {
-    "email": "AMINESAYAGH1997@GMAIL.COM",
+    "email": "CONTACT@MASAYAGH.COM",
     "locale": "fr",
     "logo": "Mohamed Amine SAYAGH",
     "close": "Close",
@@ -80,7 +80,7 @@
     },
     "description": {
       "title": "Who's Behind the Screen?",
-      "content": "Mohamed Amine Sayagh, Drived by a passion for full stack web development, I dedicate my work to creating web solutions, specifically designed for branding identities. I thrive in kick starting and steering projects from concept to completion."
+      "content": " Software developer who combines practical coding skills with a design foundation to create user-centred digital experiences, I now aim to apply this blend to long-term, large-scale projects and develop as a business application developer"
     },
     "copyright": "© 2023 MOHAMED AMINE SAYAGH.",
     "action": "LET'S TALK",
@@ -358,8 +358,8 @@
     "Frontend Developer": "Frontend Developer",
     "Infrastructure Developer": "Infrastructure Developer",
     "Technical Advisor": "Technical Advisor",
-    "Full Stack Developer": "Full Stack Developer",
-    "Fullstack Developer": "Fullstack Developer"
+    "Full Stack Developer": "Web Developer",
+    "Fullstack Developer": "Web Developer"
   },
   "jobTItle": {
     "CTO": "CTO",
