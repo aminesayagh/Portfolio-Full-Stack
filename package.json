@@ -13,13 +13,12 @@
     "knip": "knip",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "preinstall": "scripts/preinstall",
     "check": "pnpm run lint && pnpm run typecheck && pnpm run knip",
     "fix": "pnpm run lint:fix && pnpm run format",
     "mas": "scripts/mas.sh",
     "clean": "rm -rf .next && rm -rf node_modules && rm -rf pnpm-lock.yaml"
   },
-  "packageManager": "pnpm@8.15.4",
+  "packageManager": "pnpm@10.12.3",
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
     "@next/bundle-analyzer": "^15.1.2",

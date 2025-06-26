@@ -38,7 +38,7 @@ const Preloader = () => {
                     },
                     {
                         yPercent: -10,
-                        duration: 0.4,
+                        duration: 0.3,
                         opacity: 0
                     }
                 )
@@ -49,7 +49,7 @@ const Preloader = () => {
                         skewY: 0
                     },
                     {
-                        duration: 0.5,
+                        duration: 0.4,
                         yPercent: -120,
                         ease: "power2.out",
                         skewY: skew,
@@ -66,7 +66,7 @@ const Preloader = () => {
                     },
                     {
                         skewY: skew,
-                        duration: 0.5,
+                        duration: 0.4,
                         yPercent: -120,
                         ease: "power2.out"
                     }
@@ -97,7 +97,7 @@ const Preloader = () => {
                     },
                     {
                         autoAlpha: 1,
-                        duration: 0.5,
+                        duration: 0.3,
                         ease: "power2.out"
                     }
                 );
@@ -150,7 +150,7 @@ const Preloader = () => {
                             )}
                         >
                             <span className="relative flex items-center">
-                                <NumberTicker value={END_LOADING_IN} totalTime={LOADING_TIMEOUT + 2000} className="flex flex-col w-auto leading-3 align-middle text-end" />
+                                <NumberTicker value={END_LOADING_IN} totalTime={LOADING_TIMEOUT} className="flex flex-col w-auto leading-3 align-middle text-end" />
                             </span>
                             %
                         </div>
