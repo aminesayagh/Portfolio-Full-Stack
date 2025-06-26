@@ -376,7 +376,7 @@ const Header = () => {
                       className={cn(
                         "flex flex-col sm:flex-row sm:justify-between",
                         "gap-10 sm:gap-0",
-                        "items-start sm:items-end md:items-center"
+                        "items-start sm:items-center flex-1 justify-around py-6"
                       )}
                     >
                       <ul
@@ -473,8 +473,8 @@ const Header = () => {
                     </div>
                     <div
                       className={cn(
-                        "flex flex-col xxs:flex-row justify-between items-start xxs:items-end",
-                        "gap-2 xxs:gap-0"
+                        "flex flex-col xs:flex-row justify-between items-start xs:items-end",
+                        "gap-2 xs:gap-0"
                       )}
                     >
                       <div
