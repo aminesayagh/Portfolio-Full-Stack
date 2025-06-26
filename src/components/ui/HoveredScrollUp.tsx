@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, Variants } from "motion/react";
 import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 import React, { memo, useMemo, useState } from "react";
 
@@ -81,7 +81,7 @@ const HoveredScrollUp = memo(
               ANIMATION_GPU_OPTIMIZATION,
               isHovered ? secondaryClassName : undefined
             )}
-            variants={textVariants}
+            variants={textVariants as unknown as Variants}
             initial="enter"
             animate="animate"
             exit="exit"

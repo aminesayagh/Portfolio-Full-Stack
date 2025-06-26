@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { memo } from "react";
-import { motion } from "motion/react";
+import { Easing, motion } from "motion/react";
 
 import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 import { text } from "@/components/ui/typography";
@@ -13,7 +13,7 @@ const animationConfig = {
     transition: (index: number) => ({
         duration: 1.1,
         times: [0, 0.1 / 1.1, 1], // Timing equivalents for 0.1s, 1.0s, and 1.1s
-        ease: "easeOut",
+        ease: "easeOut" as Easing,
         delay: index * 0.7 // Stagger delay between items
     })
 };
@@ -26,7 +26,7 @@ const animationConfigFinal = {
     transition: (index: number) => ({
         duration: 0.8,
         times: [0, 0.1 / 1.1, 1], // Timing equivalents for 0.1s, 1.0s, and 1.1s
-        ease: "easeOut",
+        ease: "easeOut" as Easing,
         delay: index * 0.7 // Stagger delay between items
     })
 }

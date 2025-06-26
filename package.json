@@ -55,6 +55,8 @@
   },
   "devDependencies": {
     "@csstools/postcss-oklab-function": "^3.0.12",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.29.0",
     "@next/eslint-plugin-next": "^15.1.6",
     "@types/imagemin": "^8.0.5",
     "@types/imagemin-jpegtran": "^5.0.4",

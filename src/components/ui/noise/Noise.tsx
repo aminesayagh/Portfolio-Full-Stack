@@ -1,7 +1,7 @@
 "use client";
 import { useMemo, memo } from "react";
 
-import { motion } from "motion/react";
+import { motion, TargetAndTransition } from "motion/react";
 import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 
 const Noise = ({
@@ -33,7 +33,7 @@ const Noise = ({
   ), [className, position]);
   return (
     <motion.div
-      animate={noiseAnimation}
+      animate={noiseAnimation as unknown as TargetAndTransition}
       className={classNameMemo}
     />
   );

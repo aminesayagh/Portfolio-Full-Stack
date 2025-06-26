@@ -9,7 +9,7 @@ import sonarjs from "eslint-plugin-sonarjs";
 import security from "eslint-plugin-security";
 import promise from "eslint-plugin-promise";
 import nextPlugin from "@next/eslint-plugin-next";
-import typescriptPlugin from "@typescript-eslint/parser";
+
 const compat = new FlatCompat({
   // import.meta.dirname is available after Node.js v20.11.0
   baseDirectory: import.meta.dirname,

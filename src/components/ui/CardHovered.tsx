@@ -1,7 +1,7 @@
 "use client";
 
 import React, { memo, useMemo } from "react";
-import { motion, useAnimationControls } from "motion/react";
+import { motion, useAnimationControls, Variants } from "motion/react";
 
 import { ANIMATION_GPU_OPTIMIZATION, cn } from "@/lib/utils";
 import { title, text } from "@/components/ui/typography";
@@ -85,8 +85,7 @@ const Card = ({
                     "border-[2px] border-dashed border-white-600 group-hover:border-[2px] group-hover:border-solid group-hover:border-white-100",
                     "bg-transparent group-hover:bg-white-100 transition-colors duration-300 ease-in-out"
                 )}
-
-                variants={animationVariants}
+                variants={animationVariants as unknown as Variants}
             >
                 <div
                     className={cn(
@@ -119,7 +118,7 @@ const Card = ({
                 </div>
             </motion.div>
             <motion.span className="absolute inset-0 rounded-xl bg-primary-500"
-                variants={animationBgVariants}
+                variants={animationBgVariants as unknown as Variants}
             />
         </motion.span>
     );

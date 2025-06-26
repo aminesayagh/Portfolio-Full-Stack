@@ -31,7 +31,7 @@ export const addToast = (
   const key = toastQueue.add(toast, options);
   if (!options?.timeout) {
     setTimeout(() => {
-      toastQueue.remove(key);
+      toastQueue.close(key);
     }, options?.timeout);
   }
 };
