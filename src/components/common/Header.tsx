@@ -242,16 +242,19 @@ const Header = () => {
 
   const scrollToId = useCallback(
     (path: RouteSettingPathKey, id: RouteSettingPath | null = null) => {
-      router.push(path); // go to the path, cause on the contact page, you have to go to the main page before scroll to the id
-      if (id) {
-        goTo(id);
+      // check the current path
+      if (pathname !== path) {
+        router.push(path);
+        return;
       }
+      goTo(id as RouteSettingPath);
     },
-    [goTo, router]
+    [goTo, router, pathname]
   );
 
   const onButtonClick = useCallback(
     (path: RouteSettingPathKey, id?: RouteSettingPath) => {
+      console.log("path", path, id);
       if (!openMenu) {
           router.push(path);
         
@@ -381,7 +384,7 @@ const Header = () => {
                     >
                       <ul
                         className={cn(
-                          "flex flex-col gap-3 xs:gap-6 lg:gap-4",
+                          "flex flex-col gap-3 xs:gap-6",
                           "w-full sm:w-8/12 lg:w-7/12"
                         )}
                       >

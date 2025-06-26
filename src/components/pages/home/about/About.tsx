@@ -26,7 +26,7 @@ export default function About() {
         <ButtonCallToActionScroll>
           {t("action")}
         </ButtonCallToActionScroll>
-        <span className="h-24"></span>
+        <span className="h-12 xs:h-24"></span>
         <div id="selling_points" className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-lg">
           {sellingPoints.map((point, index) => (
             <CardHovered
