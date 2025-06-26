@@ -379,7 +379,8 @@
     "Singapore": "Singapore",
     "Lithuania": "Lithuania",
     "London": "London",
-    "United Arab Emirates": "Emirats Arabes Unis"
+    "United Arab Emirates": "Emirats Arabes Unis",
+    "Canada": "Canada"
   },
   "projects": {
     "happy_water": {
@@ -452,9 +453,9 @@
       "alt": "Code Wrangler",
       "description": ""
     },
-    "ckm_ckp": {
-      "title": "CKM CKP Accelerator",
-      "alt": "CKM CKP Accelerator",
+    "tardigrade": {
+      "title": "Tardigrade",
+      "alt": "Tardigrade",
       "description": ""
     },
     "rich_media": {

@@ -68,8 +68,8 @@ export type ProjectTitle =
   | "Iso Watt"
   | "Maud Diamond"
   | "Code Wrangler"
-  | "CKM CKP Accelerator"
-  | "Rich Media";
+  | "Rich Media"
+  | "Tardigrade";
 
 export type ProjectId = 
   | "french_dandy"
@@ -87,13 +87,14 @@ export type ProjectId =
   | "iso_watt"
   | "maud"
   | "code_wrangler"
-  | "ckm_ckp"
+  | "tardigrade"
   | "rich_media"
   | "university_project_platform";
 
 export type CountryNames =
   | "French"
   | "Morocco"
+  | "Canada"
   | "United States"
   | "Singapore"
   | "London"
@@ -305,16 +306,16 @@ const PROJECTS: Project[] = [
     country: "French"
   },
   {
-    id: "ckm_ckp",
+    id: "tardigrade",
     category: ["completed", "inMyWorksPipeline"],
-    title: "CKM CKP Accelerator",
+    title: "Tardigrade",
     tasks: [WEB_DESIGNER, WEB_DEVELOPER],
     jobTitle: [FREELANCER],
     date: {
       start: "Dec 2024"
     },
     order: 10,
-    country: "French"
+    country: "Canada"
   },
   {
     id: "rich_media",

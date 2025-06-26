@@ -52,7 +52,7 @@ const ROUTER_CONFIGS = {
   resume: {
     type: "external",
     id: "resume",
-    path: "https://drive.usercontent.google.com/u/0/uc?id=1rhQdSeDsF9sdg_Fp7wqrGnlF1KR4X2km",
+    path: "https://drive.google.com/file/d/1k9Hiuo0QV9MO1Qyg4_Q4_Jp8m977_itR/view?usp=drive_link",
     inDevelopment: false,
     menu: ["secondary", "hamburger"]
   },

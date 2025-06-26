@@ -77,8 +77,8 @@ const Card = ({
         >
             <motion.div
                 className={cn(
-                    "flex flex-col gap-8 sm:gap-12 lg:gap-6 xl:gap-40 justify-between items-baseline",
-                    "p-7 lg:p-5 xl:p-8",
+                    "flex flex-col gap-4 xs:gap-8 sm:gap-12 lg:gap-6 xl:gap-40 justify-between items-baseline",
+                    "p-4 xs:p-7 lg:p-5 xl:p-8",
                     ANIMATION_GPU_OPTIMIZATION,
                     "transition-colors duration-300 ease-in-out relative",
                     "w-full h-full z-10","rounded-xl", 
